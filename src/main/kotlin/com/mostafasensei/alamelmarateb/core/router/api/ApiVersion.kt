@@ -1,4 +1,6 @@
-package com.mostafasensei.alamelmarateb.core.router
+package com.mostafasensei.alamelmarateb.core.router.api
+
+import com.mostafasensei.alamelmarateb.core.router.ApiRoutes
 
 object ApiVersion {
     const val V1 = "${ApiRoutes.API}/v1"

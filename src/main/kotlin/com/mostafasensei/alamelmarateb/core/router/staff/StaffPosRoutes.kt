@@ -7,9 +7,16 @@ object StaffPosRoutes {
 
     const val BASE = PREFIX
     const val SCAN = "/scan/{barcode}"
+    const val DRAFT_ORDER= "/orders/draft"
     const val COMPLETE_SALE = "/complete-sale"
-    const val RECEIPT = "/orders/{orderId}/receipt"
-    const val INVOICE_PDF = "/orders/{orderId}/invoice-pdf"
-    const val RETURN_ORDER = "/orders/{orderId}/returns"
-    const val CASH_DRAWER_SHIFT = "/cash-drawer/shift"
+    const val PLACE_ORDER = "/place-order"
+    const val CUSTOM_ORDER = "/custom-order"
+    const val PRINT_RECEIPT = "/orders/{orderId}/receipt"
+    const val PRINT_INVOICE = "/orders/{orderId}/invoice-pdf"
+    const val PROCESS_RETURN = "/orders/{orderId}/return"
+
+    const val SHIFT_CURRENT = "/drawer/shift/current"
+    const val SHIFT_OPEN = "/drawer/shift/open"
+    const val SHIFT_CLOSE = "/drawer/shift/close"
+    const val SHIFT_DROP_CASH = "/drawer/shift/drop"
 }
