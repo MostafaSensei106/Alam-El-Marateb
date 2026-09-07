@@ -1,9 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.exceptions
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
-import io.netty.channel.unix.Errors
 import jakarta.persistence.OptimisticLockException
-import jdk.internal.net.http.common.Log.errors
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,7 +16,7 @@ class GlobalExceptionHandler {
     ///  Validation
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidationExceptions(ex: MethodArgumentNotValidException): ResponseEntity<ApiResponse<Nothing>> {
-        val errors = ex.bindingResult.fieldErrors.map {
+        val errors = ex.bindingResult?.fieldErrors?.map {
             "${it.field}: ${it.defaultMessage}"
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(message = "Validation error", errors = errors))

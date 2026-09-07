@@ -6,17 +6,18 @@ import com.mostafasensei.alamelmarateb.modules.security.domain.entity.UserJpaEnt
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.Optional
+import java.util.UUID
 
 @Repository
-interface SpringDataJpaUserRepository : JpaRepository<BranchJpaEntity, Long> {
-    fun findByPhoneNumber(phoneNumber: String): Optional<UserJpaEntity>
-    fun findByEmail(email: String): Optional<UserJpaEntity>
+interface SpringDataJpaUserRepository : JpaRepository<UserJpaEntity, UUID> {
+    fun findByPhoneNumber(phoneNumber: String):Result< Optional<UserJpaEntity>>
+    fun findByEmail(email: String): Result< Optional<UserJpaEntity>>
     fun existsByPhoneNumber(phoneNumber: String): Boolean
     fun existsByEmail(email: String): Boolean
-    fun findAllByBranchId(branchId: String): List<UserJpaEntity>
+    fun findAllByBranchId(branchId: UUID): Result< List<UserJpaEntity>>
 }
 
 @Repository
-interface SpringDataJpaRoleRepository : JpaRepository<RoleJpaEntity, Long> {
-    fun findByName(name: String): Optional<RoleJpaEntity>
+interface SpringDataJpaRoleRepository : JpaRepository<RoleJpaEntity, UUID> {
+    fun findByName(name: String): Result< Optional<RoleJpaEntity>>
 }

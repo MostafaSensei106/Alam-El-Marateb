@@ -19,11 +19,10 @@ import kotlin.time.Instant
 
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener::class)
-abstract class EntityBase<ID: Serializable> {
+abstract class EntityBase<UUID: Serializable> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id", updatable = false, nullable = false)
-    open var id: ID? = null
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")    open var id: UUID? = null
 
     @CreationTimestamp
     @Column(name = "creation_time", updatable = false, nullable = false)

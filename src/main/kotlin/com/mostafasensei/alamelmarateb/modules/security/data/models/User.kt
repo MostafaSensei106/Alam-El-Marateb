@@ -1,24 +1,24 @@
-package com.mostafasensei.alamelmarateb.modules.security.domain.model
+package com.mostafasensei.alamelmarateb.modules.security.data.models
 
-import org.hibernate.validator.constraints.UUID
+import java.util.UUID
 import kotlin.time.Clock
 import kotlin.time.Instant
 
-data class UserRole(
-    val id: UUID? = null,
-    val name: String,
-    val description: String,
-)
-
 data class User(
-    val id : UUID? = null,
+    val id: UUID? = null,
     val branchId: UUID? = null,
     val fullName: String,
-    val email: String,
+    val email: String?,
     val phoneNumber: String,
-    val passwordHash:String,
-    val isActive: Boolean,
-    val roles: Set<UserRole> = emptySet(),
-    val createdAt: Instant = Clock.System.now(),
-    val updatedAt: Instant = Clock.System.now(),
-    )
+    val passwordHash: String,
+    val isActive: Boolean = true,
+    val roles: Set<Role> = emptySet(),
+    val createdAt: Instant = Instant.now(),
+    val updatedAt: Instant = Instant.now()
+)
+
+data class Role(
+    val id: UUID? = null,
+    val name: String,
+    val description: String? = null
+)
