@@ -7,5 +7,7 @@ interface AttributeDefinitionRepository {
     fun findById(id: UUID): ProductAttributeDefinition?
     fun findByKey(key: String): ProductAttributeDefinition?
     fun findAllActive(): List<ProductAttributeDefinition>
+    fun existsByKey(key: String): Boolean
     fun save(definition: ProductAttributeDefinition): ProductAttributeDefinition
+    fun deleteById(id: UUID)
 }

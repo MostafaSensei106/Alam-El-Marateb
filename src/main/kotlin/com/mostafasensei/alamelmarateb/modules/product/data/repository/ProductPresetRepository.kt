@@ -8,4 +8,5 @@ interface ProductPresetRepository {
     fun findByCategoryId(categoryId: UUID): List<ProductPreset>
     fun findAll(): List<ProductPreset>
     fun save(preset: ProductPreset): ProductPreset
+    fun deleteById(id: UUID)
 }

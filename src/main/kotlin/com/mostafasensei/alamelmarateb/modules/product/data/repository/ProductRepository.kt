@@ -11,6 +11,9 @@ interface ProductRepository {
     fun findByCategoryId(categoryId: UUID): List<Product>
     fun findVariantByBarcode(barcode: String): ProductVariant?
     fun findVariantById(variantId: UUID): ProductVariant?
+    fun existsBySlug(slug: String): Boolean
+    fun existsBySku(sku: String): Boolean
     fun save(product: Product): Product
     fun saveVariant(variant: ProductVariant): ProductVariant
+    fun deleteById(id: UUID)
 }
