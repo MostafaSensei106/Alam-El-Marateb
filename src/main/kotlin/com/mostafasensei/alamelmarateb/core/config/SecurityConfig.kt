@@ -43,6 +43,7 @@ class SecurityConfig (
 
                     .requestMatchers("${ApiVersion.V1}/ecommerce/products/**").permitAll()
                     .requestMatchers("${ApiVersion.V1}/ecommerce/categories/**").permitAll()
+                    .requestMatchers("${ApiVersion.V1}/ecommerce/presets/**").permitAll()
 
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                     .requestMatchers("/actuator/health/**", "/actuator/info").permitAll()
