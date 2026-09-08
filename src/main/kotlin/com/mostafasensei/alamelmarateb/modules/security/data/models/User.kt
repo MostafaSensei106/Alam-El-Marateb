@@ -13,8 +13,8 @@ data class User(
     val passwordHash: String,
     val isActive: Boolean = true,
     val roles: Set<Role> = emptySet(),
-    val createdAt: Instant = Instant.now(),
-    val updatedAt: Instant = Instant.now()
+    val createdAt: Instant = Clock.System.now(),
+    val updatedAt: Instant = Clock.System.now()
 )
 
 data class Role(

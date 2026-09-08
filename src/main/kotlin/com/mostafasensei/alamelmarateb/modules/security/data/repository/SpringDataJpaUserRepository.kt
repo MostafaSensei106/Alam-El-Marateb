@@ -10,14 +10,14 @@ import java.util.UUID
 
 @Repository
 interface SpringDataJpaUserRepository : JpaRepository<UserJpaEntity, UUID> {
-    fun findByPhoneNumber(phoneNumber: String):Result< Optional<UserJpaEntity>>
-    fun findByEmail(email: String): Result< Optional<UserJpaEntity>>
+    fun findByPhoneNumber(phoneNumber: String): Optional<UserJpaEntity>
+    fun findByEmail(email: String): Optional<UserJpaEntity>
     fun existsByPhoneNumber(phoneNumber: String): Boolean
     fun existsByEmail(email: String): Boolean
-    fun findAllByBranchId(branchId: UUID): Result< List<UserJpaEntity>>
+    fun findAllByBranchId(branchId: UUID): List<UserJpaEntity>
 }
 
 @Repository
 interface SpringDataJpaRoleRepository : JpaRepository<RoleJpaEntity, UUID> {
-    fun findByName(name: String): Result< Optional<RoleJpaEntity>>
+    fun findByName(name: String): Optional<RoleJpaEntity>
 }

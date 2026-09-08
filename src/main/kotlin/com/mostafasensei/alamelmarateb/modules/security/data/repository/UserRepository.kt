@@ -5,11 +5,11 @@ import com.mostafasensei.alamelmarateb.modules.security.domain.entity.UserJpaEnt
 import java.util.UUID
 
 interface UserRepository {
-    fun findById(id: UUID): Result<User>?
-    fun findByPhoneNumber(phoneNumber: String): Result<User>?
-    fun findByEmail(email: String): Result<User>?
+    fun findById(id: UUID): User?
+    fun findByPhoneNumber(phoneNumber: String): User?
+    fun findByEmail(email: String): User?
     fun existsByPhoneNumber(phoneNumber: String): Boolean
     fun existsByEmail(email: String): Boolean
     fun save(user: User): User
-    fun findAllByBranchId(branchId: UUID): Result<List<User>>
+    fun findAllByBranchId(branchId: UUID): List<User>
 }
