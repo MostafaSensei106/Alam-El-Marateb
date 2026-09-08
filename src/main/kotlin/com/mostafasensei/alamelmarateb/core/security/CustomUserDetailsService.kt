@@ -1,6 +1,5 @@
 package com.mostafasensei.alamelmarateb.core.security
 
-import com.mostafasensei.alamelmarateb.modules.security.data.models.User
 import com.mostafasensei.alamelmarateb.modules.security.data.repository.UserRepository
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -21,8 +20,9 @@ class CustomUserDetailsService(
     }
 
 
+    @Transactional(readOnly = true)
     fun loadUserById(userId: UUID): UserDetails {
-        var user = userRepository.findById(userId)
+        val user = userRepository.findById(userId)
             ?: throw UsernameNotFoundException("User not found with id: $userId")
         return UserPrincipal.create(user)
     }

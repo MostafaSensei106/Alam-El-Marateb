@@ -1,6 +1,6 @@
 package com.mostafasensei.alamelmarateb.core.security
 
-import com.nimbusds.oauth2.sdk.util.StringUtils
+import org.springframework.util.StringUtils
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
