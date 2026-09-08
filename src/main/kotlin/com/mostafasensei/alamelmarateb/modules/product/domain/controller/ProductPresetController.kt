@@ -19,19 +19,19 @@ class ProductPresetController(
 
     @GetMapping
     fun getAll(): ResponseEntity<ApiResponse<List<ProductPresetResponse>>> =
-        ResponseEntity.ok(ApiResponse.success(catalogService.getAllPresets().map { it.toResponse() }))
+        ResponseEntity(ApiResponse(true, "Operation Successful", catalogService.getAllPresets().map { it.toResponse() }), org.springframework.http.HttpStatus.OK)
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<ProductPresetResponse>> =
         catalogService.getPreset(id)
-            ?.let { ResponseEntity.ok(ApiResponse.success(it.toResponse())) }
+            ?.let { ResponseEntity(ApiResponse(true, "Operation Successful", it.toResponse()), org.springframework.http.HttpStatus.OK) }
             ?: ResponseEntity.status(404).body(ApiResponse.failure("Preset not found"))
 
     @PostMapping
     fun create(@RequestBody request: ProductPresetCreateRequest): ResponseEntity<ApiResponse<ProductPresetResponse>> {
         val preset = request.toDomain()
         val saved = catalogService.createPreset(preset)
-        return ResponseEntity.ok(ApiResponse.success(saved.toResponse()))
+        return ResponseEntity(ApiResponse(true, "Operation Successful", saved.toResponse()), org.springframework.http.HttpStatus.OK)
     }
 
     @PutMapping("/{id}")
@@ -47,7 +47,7 @@ class ProductPresetController(
             variants = request.variants?.map { it.toDomain() } ?: existing.variants,
         )
         val saved = catalogService.updatePreset(id, updated)
-        return ResponseEntity.ok(ApiResponse.success(saved.toResponse()))
+        return ResponseEntity(ApiResponse(true, "Operation Successful", saved.toResponse()), org.springframework.http.HttpStatus.OK)
     }
 
     @DeleteMapping("/{id}")

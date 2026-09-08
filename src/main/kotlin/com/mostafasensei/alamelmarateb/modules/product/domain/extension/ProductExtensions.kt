@@ -1,20 +1,22 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.extension
 
+import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeValue
 import com.mostafasensei.alamelmarateb.modules.product.data.model.*
-import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductAttributeValueJpaEntity
-import com.mostafasensei.alamelmarateb.modules.product.data.repository.PresetAttributeValueJpaEntity
+import com.mostafasensei.alamelmarateb.modules.product.domain.entity.PresetAttributeValueJpaEntity
+import com.mostafasensei.alamelmarateb.modules.product.domain.entity.ProductAttributeValueJpaEntity
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.*
 import java.math.BigDecimal
+import java.util.UUID
 
 fun com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.toDomain(attributeId: UUID): ProductAttributeValue =
     ProductAttributeValue(
         attributeId = attributeId,
         value = when (this) {
-            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Text -> ProductAttributeValue.Text(value)
-            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Number -> ProductAttributeValue.Number(value = BigDecimal.valueOf(value))
-            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Boolean -> ProductAttributeValue.Boolean(value = value)
-            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Option -> ProductAttributeValue.Option(optionId = optionId)
-            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.MultiOption -> ProductAttributeValue.MultiOption(optionIds = optionIds.toSet())
+            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Text -> AttributeValue.Text(value)
+            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Number -> AttributeValue.Number(value = BigDecimal.valueOf(value))
+            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Boolean -> AttributeValue.Boolean(value = value)
+            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Option -> AttributeValue.Option(optionId = optionId)
+            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.MultiOption -> AttributeValue.MultiOption(optionIds = optionIds.toSet())
         }
     )
 
@@ -22,11 +24,11 @@ fun ProductAttributeValue.toResponse(): ProductAttributeResponse =
     ProductAttributeResponse(
         attributeId = attributeId,
         value = when (value) {
-            is ProductAttributeValue.Text -> ProductAttributeResponse.Value.Text(value.value)
-            is ProductAttributeValue.Number -> ProductAttributeResponse.Value.Number(value.value.toDouble())
-            is ProductAttributeValue.Boolean -> ProductAttributeResponse.Value.Boolean(value.value)
-            is ProductAttributeValue.Option -> ProductAttributeResponse.Value.Option(optionId = value.optionId)
-            is ProductAttributeValue.MultiOption -> ProductAttributeResponse.Value.MultiOption(optionIds = value.optionIds.toList(), labels = emptyList())
+            is AttributeValue.Text -> ProductAttributeResponse.Value.Text(value.value)
+            is AttributeValue.Number -> ProductAttributeResponse.Value.Number(value.value.toDouble())
+            is AttributeValue.Boolean -> ProductAttributeResponse.Value.Boolean(value.value)
+            is AttributeValue.Option -> ProductAttributeResponse.Value.Option(optionId = value.optionId)
+            is AttributeValue.MultiOption -> ProductAttributeResponse.Value.MultiOption(optionIds = value.optionIds.toList(), labels = emptyList())
         }
     )
 
@@ -35,31 +37,31 @@ fun ProductAttributeValue.toJpa(attributeId: UUID): ProductAttributeValueJpaEnti
         productId = null,
         attributeId = attributeId,
         valueType = when (value) {
-            is ProductAttributeValue.Text -> AttributeType.TEXT
-            is ProductAttributeValue.Number -> AttributeType.NUMBER
-            is ProductAttributeValue.Boolean -> AttributeType.BOOLEAN
-            is ProductAttributeValue.Option -> AttributeType.SELECT
-            is ProductAttributeValue.MultiOption -> AttributeType.MULTI_SELECT
+            is AttributeValue.Text -> AttributeType.TEXT
+            is AttributeValue.Number -> AttributeType.NUMBER
+            is AttributeValue.Boolean -> AttributeType.BOOLEAN
+            is AttributeValue.Option -> AttributeType.SELECT
+            is AttributeValue.MultiOption -> AttributeType.MULTI_SELECT
         },
         valueText = when (value) {
-            is ProductAttributeValue.Text -> value.value
-            is ProductAttributeValue.Option -> null
+            is AttributeValue.Text -> value.value
+            is AttributeValue.Option -> null
             else -> null
         },
         valueNumber = when (value) {
-            is ProductAttributeValue.Number -> value.value
+            is AttributeValue.Number -> value.value
             else -> null
         },
         valueBoolean = when (value) {
-            is ProductAttributeValue.Boolean -> value.value
+            is AttributeValue.Boolean -> value.value
             else -> null
         },
         valueOptionId = when (value) {
-            is ProductAttributeValue.Option -> value.optionId
+            is AttributeValue.Option -> value.optionId
             else -> null
         },
         selectedOptionIds = when (value) {
-            is ProductAttributeValue.MultiOption -> value.optionIds.toMutableSet()
+            is AttributeValue.MultiOption -> value.optionIds.toMutableSet()
             else -> mutableSetOf()
         }
     )
@@ -68,11 +70,11 @@ fun ProductAttributeValueJpaEntity.toDomain(): ProductAttributeValue =
     ProductAttributeValue(
         attributeId = attributeId ?: throw IllegalStateException("attributeId needed"),
         value = when (valueType) {
-            AttributeType.TEXT -> ProductAttributeValue.Text(valueText ?: "")
-            AttributeType.NUMBER -> ProductAttributeValue.Number(valueNumber ?: BigDecimal.ZERO)
-            AttributeType.BOOLEAN -> ProductAttributeValue.Boolean(valueBoolean ?: false)
-            AttributeType.SELECT -> ProductAttributeValue.Option(valueOptionId ?: throw IllegalStateException("OptionId needed"))
-            AttributeType.MULTI_SELECT -> ProductAttributeValue.MultiOption(selectedOptionIds.toSet())
+            AttributeType.TEXT -> AttributeValue.Text(valueText ?: "")
+            AttributeType.NUMBER -> AttributeValue.Number(valueNumber ?: BigDecimal.ZERO)
+            AttributeType.BOOLEAN -> AttributeValue.Boolean(valueBoolean ?: false)
+            AttributeType.SELECT -> AttributeValue.Option(valueOptionId ?: throw IllegalStateException("OptionId needed"))
+            AttributeType.MULTI_SELECT -> AttributeValue.MultiOption(selectedOptionIds.toSet())
         }
     )
 
@@ -80,11 +82,11 @@ fun PresetAttributeValueJpaEntity.toDomain(): ProductAttributeValue =
     ProductAttributeValue(
         attributeId = attributeId ?: throw IllegalStateException("attributeId needed"),
         value = when (valueType) {
-            AttributeType.TEXT -> ProductAttributeValue.Text(valueText ?: "")
-            AttributeType.NUMBER -> ProductAttributeValue.Number(valueNumber ?: BigDecimal.ZERO)
-            AttributeType.BOOLEAN -> ProductAttributeValue.Boolean(valueBoolean ?: false)
-            AttributeType.SELECT -> ProductAttributeValue.Option(valueOptionId ?: throw IllegalStateException("OptionId needed"))
-            AttributeType.MULTI_SELECT -> ProductAttributeValue.MultiOption(selectedOptionIds.toSet())
+            AttributeType.TEXT -> AttributeValue.Text(valueText ?: "")
+            AttributeType.NUMBER -> AttributeValue.Number(valueNumber ?: BigDecimal.ZERO)
+            AttributeType.BOOLEAN -> AttributeValue.Boolean(valueBoolean ?: false)
+            AttributeType.SELECT -> AttributeValue.Option(valueOptionId ?: throw IllegalStateException("OptionId needed"))
+            AttributeType.MULTI_SELECT -> AttributeValue.MultiOption(selectedOptionIds.toSet())
         }
     )
 
@@ -205,11 +207,11 @@ fun ProductAttributeValueCreateRequest.toDomain(): ProductAttributeValue =
     ProductAttributeValue(
         attributeId = attributeId,
         value = when (value) {
-            is AttributeValueCreateRequest.Text -> ProductAttributeValue.Text(value.value)
-            is AttributeValueCreateRequest.Number -> ProductAttributeValue.Number(value = BigDecimal.valueOf(value.value))
-            is AttributeValueCreateRequest.Boolean -> ProductAttributeValue.Boolean(value.value)
-            is AttributeValueCreateRequest.Option -> ProductAttributeValue.Option(optionId = value.optionId)
-            is AttributeValueCreateRequest.MultiOption -> ProductAttributeValue.MultiOption(optionIds = value.optionIds.toSet())
+            is AttributeValueCreateRequest.Text -> AttributeValue.Text(value.value)
+            is AttributeValueCreateRequest.Number -> AttributeValue.Number(value = BigDecimal.valueOf(value.value))
+            is AttributeValueCreateRequest.Boolean -> AttributeValue.Boolean(value.value)
+            is AttributeValueCreateRequest.Option -> AttributeValue.Option(optionId = value.optionId)
+            is AttributeValueCreateRequest.MultiOption -> AttributeValue.MultiOption(optionIds = value.optionIds.toSet())
         }
     )
 
@@ -217,11 +219,11 @@ fun ProductPresetAttributeCreateRequest.toDomain(): ProductAttributeValue =
     ProductAttributeValue(
         attributeId = attributeId,
         value = when (value) {
-            is AttributeValueCreateRequest.Text -> ProductAttributeValue.Text(value.value)
-            is AttributeValueCreateRequest.Number -> ProductAttributeValue.Number(value = BigDecimal.valueOf(value.value))
-            is AttributeValueCreateRequest.Boolean -> ProductAttributeValue.Boolean(value.value)
-            is AttributeValueCreateRequest.Option -> ProductAttributeValue.Option(optionId = value.optionId)
-            is AttributeValueCreateRequest.MultiOption -> ProductAttributeValue.MultiOption(optionIds = value.optionIds.toSet())
+            is AttributeValueCreateRequest.Text -> AttributeValue.Text(value.value)
+            is AttributeValueCreateRequest.Number -> AttributeValue.Number(value = BigDecimal.valueOf(value.value))
+            is AttributeValueCreateRequest.Boolean -> AttributeValue.Boolean(value.value)
+            is AttributeValueCreateRequest.Option -> AttributeValue.Option(optionId = value.optionId)
+            is AttributeValueCreateRequest.MultiOption -> AttributeValue.MultiOption(optionIds = value.optionIds.toSet())
         }
     )
 
@@ -257,6 +259,16 @@ fun ProductPresetCreateRequest.toDomain(): ProductPreset =
         warrantyYears = warrantyYears,
         attributes = attributes.map { it.toDomain() },
         variants = variants.map { it.toDomain() },
+    )
+
+fun ProductPresetVariant.toDomain(): ProductVariant =
+    ProductVariant(
+        sku = "PRESET-${id}",
+        widthCm = widthCm,
+        lengthCm = lengthCm,
+        heightCm = heightCm,
+        costPrice = costPrice,
+        sellingPrice = sellingPrice,
     )
 
 fun ProductPresetVariantCreateRequest.toDomain(): ProductPresetVariant =

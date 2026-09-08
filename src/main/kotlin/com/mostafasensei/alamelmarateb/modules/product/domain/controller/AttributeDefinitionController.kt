@@ -24,19 +24,19 @@ class AttributeDefinitionController(
 
     @GetMapping
     fun getAll(): ResponseEntity<ApiResponse<List<ProductAttributeDefinitionResponse>>> =
-        ResponseEntity.ok(ApiResponse.success(catalogService.getAllAttributeDefinitions().map { it.toResponse() }))
+        ResponseEntity(ApiResponse(true, "Operation Successful", catalogService.getAllAttributeDefinitions().map { it.toResponse() }), org.springframework.http.HttpStatus.OK)
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> =
         catalogService.getAttributeDefinition(id)
-            ?.let { ResponseEntity.ok(ApiResponse.success(it.toResponse())) }
+            ?.let { ResponseEntity(ApiResponse(true, "Operation Successful", it.toResponse()), org.springframework.http.HttpStatus.OK) }
             ?: ResponseEntity.status(404).body(ApiResponse.failure("Attribute not found"))
 
     @PostMapping
     fun create(@RequestBody request: AttributeDefinitionCreateRequest): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> {
         val definition = request.toDomain()
         val saved = catalogService.createAttributeDefinition(definition)
-        return ResponseEntity.ok(ApiResponse.success(saved.toResponse()))
+        return ResponseEntity(ApiResponse(true, "Operation Successful", saved.toResponse()), org.springframework.http.HttpStatus.OK)
     }
 
     @PutMapping("/{id}")
@@ -59,7 +59,7 @@ class AttributeDefinitionController(
             isActive = request.isActive ?: existing.isActive,
         )
         val saved = catalogService.updateAttributeDefinition(id, updated)
-        return ResponseEntity.ok(ApiResponse.success(saved.toResponse()))
+        return ResponseEntity(ApiResponse(true, "Operation Successful", saved.toResponse()), org.springframework.http.HttpStatus.OK)
     }
 
     @DeleteMapping("/{id}")
@@ -80,7 +80,7 @@ class AttributeOptionController(
     fun addOption(@PathVariable id: UUID, @RequestBody request: AddOptionRequest): ResponseEntity<ApiResponse<ProductAttributeOptionResponse>> {
         val option = request.toDomain()
         val saved = catalogService.addOptionToAttribute(id, option)
-        return ResponseEntity.ok(ApiResponse.success(saved.toResponse()))
+        return ResponseEntity(ApiResponse(true, "Operation Successful", saved.toResponse()), org.springframework.http.HttpStatus.OK)
     }
 
     @DeleteMapping("/{optionId}")

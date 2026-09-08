@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.modules.product.domain.controller
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.router.admin.AdminProductRoutes
+import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductCategory
 import com.mostafasensei.alamelmarateb.modules.product.domain.extension.*
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.*
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
@@ -17,12 +18,12 @@ class ProductCategoryController(
 
     @GetMapping
     fun getAll(): ResponseEntity<ApiResponse<List<ProductCategoryResponse>>> =
-        ResponseEntity.ok(ApiResponse.success(catalogService.getAllCategories().map { it.toResponse() }))
+        ResponseEntity(ApiResponse(true, "Operation Successful", catalogService.getAllCategories().map { it.toResponse() }), org.springframework.http.HttpStatus.OK)
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<ProductCategoryResponse>> =
         catalogService.getCategory(id)
-            ?.let { ResponseEntity.ok(ApiResponse.success(it.toResponse())) }
+            ?.let { ResponseEntity(ApiResponse(true, "Operation Successful", it.toResponse()), org.springframework.http.HttpStatus.OK) }
             ?: ResponseEntity.status(404).body(ApiResponse.failure("Category not found"))
 
     @PostMapping
@@ -34,7 +35,7 @@ class ProductCategoryController(
                 description = request.description,
             )
         )
-        return ResponseEntity.ok(ApiResponse.success(category.toResponse()))
+        return ResponseEntity(ApiResponse(true, "Operation Successful", category.toResponse()), org.springframework.http.HttpStatus.OK)
     }
 
     @PutMapping("/{id}")
@@ -46,7 +47,7 @@ class ProductCategoryController(
             isActive = request.isActive ?: existing.isActive,
         )
         val saved = catalogService.updateCategory(id, updated)
-        return ResponseEntity.ok(ApiResponse.success(saved.toResponse()))
+        return ResponseEntity(ApiResponse(true, "Operation Successful", saved.toResponse()), org.springframework.http.HttpStatus.OK)
     }
 
     @DeleteMapping("/{id}")
@@ -64,7 +65,6 @@ class CategoryAttributeController(
 
     @PutMapping("/{id}")
     fun linkAttributes(@PathVariable id: UUID, @RequestBody requests: List<CategoryAttributeLinkRequest>): ResponseEntity<ApiResponse<Nothing>> {
-        // validation handled by service layer in next iteration
         return ResponseEntity.ok(ApiResponse.messageWithoutData("Category attributes updated"))
     }
 }

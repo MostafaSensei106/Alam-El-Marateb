@@ -23,23 +23,23 @@ class ProductAdminController(
 
     @GetMapping
     fun getAll(): ResponseEntity<ApiResponse<List<Product>>> =
-        ResponseEntity.ok(ApiResponse.success(catalogService.getAllProducts()))
+        ResponseEntity(ApiResponse(true, "Operation Successful", catalogService.getAllProducts()), org.springframework.http.HttpStatus.OK)
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<Product>> =
         catalogService.getProduct(id)
-            ?.let { ResponseEntity.ok(ApiResponse.success(it)) }
+            ?.let { ResponseEntity(ApiResponse(true, "Operation Successful", it), org.springframework.http.HttpStatus.OK) }
             ?: ResponseEntity.status(404).body(ApiResponse.failure("Product not found"))
 
     @PostMapping
     fun create(@RequestBody request: ProductCreateRequest): ResponseEntity<ApiResponse<Product>> {
-        val product = request.toDomain()
+        val product: com.mostafasensei.alamelmarateb.modules.product.data.model.Product = request.toDomain()
         val errors = catalogService.validateProductAttributes(product)
         if (errors.isNotEmpty()) {
             return ResponseEntity.badRequest().body(ApiResponse.failure("Validation failed", errors))
         }
         val saved = catalogService.createProduct(product)
-        return ResponseEntity.ok(ApiResponse.success(saved))
+        return ResponseEntity(ApiResponse(true, "Operation Successful", saved), org.springframework.http.HttpStatus.OK)
     }
 
     @PutMapping("/{id}")
@@ -55,7 +55,7 @@ class ProductAdminController(
             isActive = request.isActive ?: existing.isActive,
         )
         val saved = catalogService.updateProduct(id, updated)
-        return ResponseEntity.ok(ApiResponse.success(saved))
+        return ResponseEntity(ApiResponse(true, "Operation Successful", saved), org.springframework.http.HttpStatus.OK)
     }
 
     @DeleteMapping("/{id}")
@@ -67,7 +67,7 @@ class ProductAdminController(
     @PostMapping("/from-preset/{presetId}")
     fun createFromPreset(@PathVariable presetId: UUID, @RequestBody request: CreateProductFromPresetRequest): ResponseEntity<ApiResponse<Product>> {
         val product = catalogService.createProductFromPreset(presetId, request.slug)
-        return ResponseEntity.ok(ApiResponse.success(product))
+        return ResponseEntity(ApiResponse(true, "Operation Successful", product), org.springframework.http.HttpStatus.OK)
     }
 }
 
@@ -79,11 +79,11 @@ class EcommerceProductController(
 
     @GetMapping
     fun getAllActive(): ResponseEntity<ApiResponse<List<Product>>> =
-        ResponseEntity.ok(ApiResponse.success(catalogService.getAllProducts()))
+        ResponseEntity(ApiResponse(true, "Operation Successful", catalogService.getAllProducts()), org.springframework.http.HttpStatus.OK)
 
     @GetMapping("/{slug}")
     fun getBySlug(@PathVariable slug: String): ResponseEntity<ApiResponse<Product>> =
         catalogService.getProductBySlug(slug)
-            ?.let { ResponseEntity.ok(ApiResponse.success(it)) }
+            ?.let { ResponseEntity(ApiResponse(true, "Operation Successful", it), org.springframework.http.HttpStatus.OK) }
             ?: ResponseEntity.status(404).body(ApiResponse.failure("Product not found"))
 }
