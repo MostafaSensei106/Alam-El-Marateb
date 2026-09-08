@@ -59,9 +59,7 @@ class SecurityConfig (
 
                     .anyRequest().authenticated()
             }
-
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
-
         return http.build()
     }
 }
