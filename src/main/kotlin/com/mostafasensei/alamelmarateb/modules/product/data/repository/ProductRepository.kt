@@ -15,5 +15,6 @@ interface ProductRepository {
     fun existsBySku(sku: String): Boolean
     fun save(product: Product): Product
     fun saveVariant(variant: ProductVariant): ProductVariant
+    fun deleteVariantById(variantId: UUID)
     fun deleteById(id: UUID)
 }

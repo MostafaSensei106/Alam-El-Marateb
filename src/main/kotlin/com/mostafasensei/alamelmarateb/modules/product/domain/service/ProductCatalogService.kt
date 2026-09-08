@@ -119,46 +119,22 @@ class ProductCatalogService(
     }
 
     @Transactional(readOnly = true)
-    fun getVariantById(variantId: UUID): ProductVariant? = variantRepository.findVariantById(variantId)
+    fun getVariantById(variantId: UUID): ProductVariant? = variantRepository.findById(variantId)
 
     @Transactional(readOnly = true)
-    fun getVariantByBarcode(barcode: String): ProductVariant? = variantRepository.findVariantByBarcode(barcode)
+    fun getVariantByBarcode(barcode: String): ProductVariant? = variantRepository.findByBarcode(barcode)
 
     @Transactional
-    fun createVariant(variant: ProductVariant): ProductVariant = variantRepository.saveVariant(variant)
+    fun createVariant(variant: ProductVariant): ProductVariant = variantRepository.save(variant)
 
     @Transactional
     fun deleteVariant(variantId: UUID) {
-        variantRepository.findVariantById(variantId) ?: throw IllegalArgumentException("Variant not found")
-        variantRepository.deleteById(variantId)
-    }
-
-    @Transactional(readOnly = true)
-    fun getPreset(id: UUID): ProductPreset? = presetRepository.findById(id)
-
-    @Transactional(readOnly = true)
-    fun getPresetsByCategory(categoryId: UUID): List<ProductPreset> = presetRepository.findByCategoryId(categoryId)
-
-    @Transactional(readOnly = true)
-    fun getAllPresets(): List<ProductPreset> = presetRepository.findAll()
-
-    @Transactional
-    fun createPreset(preset: ProductPreset): ProductPreset = presetRepository.save(preset)
-
-    @Transactional
-    fun updatePreset(id: UUID, preset: ProductPreset): ProductPreset {
-        presetRepository.findById(id) ?: throw IllegalArgumentException("Preset not found")
-        return presetRepository.save(preset.copy(id = id))
+        variantRepository.findById(variantId) ?: throw IllegalArgumentException("Variant not found")
+        variantRepository.deleteVariantById(variantId)
     }
 
     @Transactional
-    fun deletePreset(id: UUID) {
-        if (presetRepository.findById(id) == null) throw IllegalArgumentException("Preset not found")
-        presetRepository.deleteById(id)
-    }
-
-    @Transactional
-    fun createProductFromPreset(presetId: UUID): Product {
+    fun createProductFromPreset(presetId: UUID, slug: String): Product {
         val preset = presetRepository.findById(presetId)
             ?: throw IllegalArgumentException("Preset not found")
 
@@ -166,7 +142,7 @@ class ProductCatalogService(
             Product(
                 categoryId = preset.categoryId,
                 name = preset.name,
-                slug = preset.slug,
+                slug = slug,
                 brand = preset.brand,
                 description = preset.description,
                 warrantyYears = preset.warrantyYears,
@@ -199,24 +175,25 @@ class ProductCatalogService(
         for (attrValue in product.attributes) {
             val definition = attributeDefinitionRepository.findById(attrValue.attributeId)
             definition?.let { defn ->
+                val optionIds = defn.options.mapNotNull { it.id }.toSet()
                 when (defn.type) {
                     AttributeType.SELECT -> {
                         if (attrValue.value is ProductAttributeValue.Option) {
-                            val optionIds = defn.options.mapNotNull { it.id }.toSet()
-                            if (attrValue.value.value.optionId !in optionIds) {
+                            val optionId = (attrValue.value as ProductAttributeValue.Option).optionId
+                            if (optionId !in optionIds) {
                                 errors.add("Invalid option for attribute ${defn.key}")
                             }
                         }
                     }
-                    AttributeType.MULTI_SELECT -> {
+                     AttributeType.MULTI_SELECT -> {
                         if (attrValue.value is ProductAttributeValue.MultiOption) {
-                            val optionIds = defn.options.mapNotNull { it.id }.toSet()
-                            val invalid = attrValue.value.value.optionIds.filter { it !in optionIds }
+                            val optionIdsSet = (attrValue.value as ProductAttributeValue.MultiOption).optionIds
+                            val invalid = optionIdsSet.filter { it !in optionIds }
                             if (invalid.isNotEmpty()) {
                                 errors.add("Invalid option(s) for attribute ${defn.key}")
                             }
                         }
-                    }
+                     }
                     else -> {}
                 }
             }

@@ -65,8 +65,8 @@ class ProductAdminController(
     }
 
     @PostMapping("/from-preset/{presetId}")
-    fun createFromPreset(@PathVariable presetId: UUID): ResponseEntity<ApiResponse<Product>> {
-        val product = catalogService.createProductFromPreset(presetId)
+    fun createFromPreset(@PathVariable presetId: UUID, @RequestBody request: CreateProductFromPresetRequest): ResponseEntity<ApiResponse<Product>> {
+        val product = catalogService.createProductFromPreset(presetId, request.slug)
         return ResponseEntity.ok(ApiResponse.success(product))
     }
 }
