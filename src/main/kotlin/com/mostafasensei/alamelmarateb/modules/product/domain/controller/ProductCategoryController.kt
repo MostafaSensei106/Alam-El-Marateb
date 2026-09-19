@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.modules.product.domain.controller
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
+import com.mostafasensei.alamelmarateb.core.i18n.MessageService
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductCategory
 import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toResponse
@@ -71,7 +72,7 @@ class ProductCategoryController(
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
         catalogService.getCategory(id) ?: throw NotFoundException("Category not found")
         catalogService.deleteCategory(id)
-        return deleted("Category deleted")
+        return deleted(MessageService.t("success.deleted"))
     }
 }
 
@@ -88,6 +89,6 @@ class CategoryAttributeController(
         @Valid @RequestBody requests: List<CategoryAttributeLinkRequest>,
     ): ResponseEntity<ApiResponse<Nothing>> {
         catalogService.getCategory(id) ?: throw NotFoundException("Category not found")
-        return deleted("Category attributes updated")
+        return deleted(MessageService.t("success.updated"))
     }
 }

@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.modules.crm.presentation
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
+import com.mostafasensei.alamelmarateb.core.i18n.MessageService
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.core.router.CrmAdminRoutes
 import com.mostafasensei.alamelmarateb.core.router.PortalRoutes
@@ -136,7 +137,7 @@ class PortalController(
         @PathVariable addressId: UUID,
     ): ResponseEntity<ApiResponse<Nothing>> {
         crmService.removeAddress(principal.id, addressId)
-        return deleted("Address removed")
+        return deleted(MessageService.t("success.deleted"))
     }
 
     @Operation(summary = "My favorites")
@@ -161,7 +162,7 @@ class PortalController(
         @PathVariable productId: UUID,
     ): ResponseEntity<ApiResponse<Nothing>> {
         crmService.removeFavorite(principal.id, productId)
-        return deleted("Removed from favorites")
+        return deleted(MessageService.t("success.deleted"))
     }
 
     @Operation(summary = "My warranties")

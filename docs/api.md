@@ -80,6 +80,7 @@
 ## قواعد الردود الموحدة
 
 - النجاح: `ApiResponse{success,message,data}` عبر `BaseController` (201 للإنشاء).
+- اللغة: هيدر `X-Lang: ar|en` يحدد لغة `message` (افتراضي ar) — نفس الشكل في كل اللغات (التفصيل `core/i18n`).
 - القوائم الكبيرة: `PagedResponse{items,page,size,totalElements,totalPages}` + `Pageable`.
 - الأخطاء: `GlobalExceptionHandler` (400 تحقق/404 NotFoundException/409 تعارض).
 - الفلوس: BigDecimal برقمين عشريين دائماً (§10 arch.md).

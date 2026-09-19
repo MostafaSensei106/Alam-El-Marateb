@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.core.common.presentation
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.common.api_response.PagedResponse
+import com.mostafasensei.alamelmarateb.core.i18n.MessageService
 import org.springframework.data.domain.Page
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -18,10 +19,10 @@ import org.springframework.http.ResponseEntity
  */
 abstract class BaseController {
 
-    protected fun <T> ok(data: T, message: String = "Operation Successful"): ResponseEntity<ApiResponse<T>> =
+    protected fun <T> ok(data: T, message: String = MessageService.t("success.operation")): ResponseEntity<ApiResponse<T>> =
         ResponseEntity.ok(ApiResponse.success(data, message))
 
-    protected fun <T> created(data: T, message: String = "Created Successfully"): ResponseEntity<ApiResponse<T>> =
+    protected fun <T> created(data: T, message: String = MessageService.t("success.created")): ResponseEntity<ApiResponse<T>> =
         ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(data, message))
 
     protected fun deleted(message: String): ResponseEntity<ApiResponse<Nothing>> =
@@ -32,7 +33,7 @@ abstract class BaseController {
 
     protected fun <T : Any> paged(
         page: Page<T>,
-        message: String = "Operation Successful",
+        message: String = MessageService.t("success.operation"),
     ): ResponseEntity<ApiResponse<PagedResponse<T>>> =
         ResponseEntity.ok(
             ApiResponse.success(
@@ -46,7 +47,7 @@ abstract class BaseController {
         page: Int,
         size: Int,
         totalElements: Long,
-        message: String = "Operation Successful",
+        message: String = MessageService.t("success.operation"),
     ): ResponseEntity<ApiResponse<PagedResponse<T>>> =
         ResponseEntity.ok(ApiResponse.success(PagedResponse.of(items, page, size, totalElements), message))
 }

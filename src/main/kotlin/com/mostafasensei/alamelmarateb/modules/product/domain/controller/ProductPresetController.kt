@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.modules.product.domain.controller
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
+import com.mostafasensei.alamelmarateb.core.i18n.MessageService
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
 import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toResponse
@@ -68,6 +69,6 @@ class ProductPresetController(
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
         catalogService.getPreset(id) ?: throw NotFoundException("Preset not found")
         catalogService.deletePreset(id)
-        return deleted("Preset deleted")
+        return deleted(MessageService.t("success.deleted"))
     }
 }

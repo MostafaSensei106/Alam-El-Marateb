@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.modules.product.domain.controller
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
+import com.mostafasensei.alamelmarateb.core.i18n.MessageService
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.product.data.model.Product
@@ -76,7 +77,7 @@ class ProductAdminController(
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
         catalogService.getProduct(id) ?: throw NotFoundException("Product not found")
         catalogService.deleteProduct(id)
-        return deleted("Product deleted")
+        return deleted(MessageService.t("success.deleted"))
     }
 
     @PostMapping("/from-preset/{presetId}")

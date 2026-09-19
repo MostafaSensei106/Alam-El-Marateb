@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.modules.product.domain.controller
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
+import com.mostafasensei.alamelmarateb.core.i18n.MessageService
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeType
 import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
@@ -78,7 +79,7 @@ class AttributeDefinitionController(
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
         catalogService.getAttributeDefinition(id) ?: throw NotFoundException("Attribute not found")
         catalogService.deleteAttributeDefinition(id)
-        return deleted("Attribute deleted")
+        return deleted(MessageService.t("success.deleted"))
     }
 }
 
@@ -104,6 +105,6 @@ class AttributeOptionController(
         @PathVariable optionId: UUID,
     ): ResponseEntity<ApiResponse<Nothing>> {
         catalogService.removeOptionFromAttribute(optionId)
-        return deleted("Option removed")
+        return deleted(MessageService.t("success.deleted"))
     }
 }
