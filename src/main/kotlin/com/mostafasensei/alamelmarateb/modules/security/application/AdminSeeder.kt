@@ -33,7 +33,7 @@ class AdminSeeder(
         val hasAdmin = users.findAll().any { u -> u.roles.any { it.name == "ROLE_SUPER_ADMIN" } }
         if (hasAdmin) return
         val branch = branches.save(
-            BranchJpaEntity(name = "Main Branch", code = "MAIN", phone = adminPhone, city = "Tanta"),
+            BranchJpaEntity(name = "Main Branch", code = "MAIN", phone = adminPhone, city = "Tanta", address = "Tanta"),
         )
         val superAdmin = roles.findByName("ROLE_SUPER_ADMIN")
             .orElseThrow { IllegalStateException("ROLE_SUPER_ADMIN seed missing — is V1 applied?") }

@@ -52,13 +52,13 @@ class IdentityService(
     fun listBranches(): List<BranchView> = branches.findAll().map { toBranchView(it) }
 
     @Transactional
-    fun createBranch(name: String, code: String, phone: String?, city: String, by: String?): BranchView {
+    fun createBranch(name: String, code: String, phone: String?, city: String, address: String, by: String?): BranchView {
         if (name.isBlank()) throw BadRequestException("Branch name is required")
         val normalized = code.trim().uppercase()
         if (normalized.isBlank()) throw BadRequestException("Branch code is required")
         if (branches.existsByCode(normalized)) throw ConflictException("Branch code exists: $code")
         val saved = branches.save(
-            BranchJpaEntity(name = name.trim(), code = normalized, phone = phone ?: "", city = city.ifBlank { "Tanta" }),
+            BranchJpaEntity(name = name.trim(), code = normalized, phone = phone, city = city.ifBlank { "Tanta" }, address = address),
         )
         auditLog.record("BRANCH_CREATE", "branch", null, null, by, normalized)
         return toBranchView(saved)
@@ -124,7 +124,7 @@ class IdentityService(
     }
 
     private fun toBranchView(e: BranchJpaEntity) =
-        BranchView(e.id, e.name, e.code, e.phone.ifBlank { null }, e.city, e.isActive)
+        BranchView(e.id, e.name, e.code, e.phone?.ifBlank { null }, e.city, e.isActive)
 
     private fun toStaffView(e: UserJpaEntity) = StaffView(
         e.id, e.fullName, e.phoneNumber, e.email, e.branchId,

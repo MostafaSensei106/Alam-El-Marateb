@@ -52,9 +52,86 @@
     {
       "key": "claimId",
       "value": ""
+    },
+    {
+      "key": "adminJwt",
+      "value": ""
+    },
+    {
+      "key": "userId",
+      "value": ""
     }
   ],
   "item": [
+    {
+      "name": "Auth — public (start here)",
+      "item": [
+        {
+          "name": "Register customer",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/register",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"fullName\": \"Test Customer\", \"phone\": \"01012345678\", \"password\": \"secret123\"}"
+            }
+          }
+        },
+        {
+          "name": "Login (admin seeded: ADMIN_PHONE/ADMIN_PASSWORD)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/login",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"phone\": \"01000000000\", \"password\": \"admin123\"}"
+            }
+          }
+        },
+        {
+          "name": "Refresh",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/refresh",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"refreshToken\": \"REFRESH_TOKEN\"}"
+            }
+          }
+        },
+        {
+          "name": "My profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/auth/me"
+          }
+        }
+      ]
+    },
     {
       "name": "Catalog — management (managerJwt)",
       "item": [
@@ -851,6 +928,113 @@
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/warranties/claims"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Identity — admin (super-admin JWT)",
+      "item": [
+        {
+          "name": "List branches",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/identity/branches"
+          }
+        },
+        {
+          "name": "Create branch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/identity/branches",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Tanta Showroom\", \"code\": \"TAN-01\", \"city\": \"Tanta\", \"address\": \"Main St\"}"
+            }
+          }
+        },
+        {
+          "name": "List roles",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/identity/access/roles"
+          }
+        },
+        {
+          "name": "List users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/identity/access/users"
+          }
+        },
+        {
+          "name": "Create staff",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/identity/access/users",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"fullName\": \"Ahmed Cashier\", \"phone\": \"01022222222\", \"password\": \"secret123\", \"roles\": [\"ROLE_CASHIER\"]}"
+            }
+          }
+        },
+        {
+          "name": "Set roles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/identity/access/users/{{userId}}/roles",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"roles\": [\"ROLE_CASHIER\", \"ROLE_WAREHOUSE_KEEPER\"]}"
+            }
           }
         }
       ]

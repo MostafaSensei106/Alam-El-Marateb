@@ -16,10 +16,13 @@ class BranchJpaEntity (
     var code: String = "",
 
     @Column(name = "phone", length = 20)
-    var phone: String = "",
+    var phone: String? = null,
 
     @Column(name = "city", nullable = false, length = 100)
     var city: String = "Tanta",
+
+    @Column(name = "address", nullable = false, columnDefinition = "TEXT")
+    var address: String = "",
 
     @Column(name = "is_active", nullable = false)
     var isActive: Boolean = true,

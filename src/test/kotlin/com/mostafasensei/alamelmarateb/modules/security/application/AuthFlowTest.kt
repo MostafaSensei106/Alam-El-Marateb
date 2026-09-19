@@ -4,10 +4,10 @@ import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.transaction.annotation.Transactional
+import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
-
 @SpringBootTest
 @Transactional
 class AuthFlowTest {
@@ -17,6 +17,9 @@ class AuthFlowTest {
 
     @Autowired
     private lateinit var identityService: IdentityService
+
+    @Autowired
+    private lateinit var txManager: org.springframework.transaction.PlatformTransactionManager
 
     @Test
     fun `register, login, refresh, me and duplicate rejection`() {
@@ -44,7 +47,13 @@ class AuthFlowTest {
 
     @Test
     fun `staff lifecycle with roles and branch`() {
-        val branch = identityService.createBranch("Auth Branch", "AB-${System.nanoTime()}", null, "Cairo", "test")
+        val branchId: UUID = org.springframework.transaction.support.TransactionTemplate(
+            txManager,
+        ).apply { propagationBehavior = org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRES_NEW }
+            .execute<UUID> {
+                identityService.createBranch("Auth Branch", "AB-${System.nanoTime()}", null, "Cairo", "Cairo St", "test").id!!
+            }!!
+        val branch = branchId.let { identityService.listBranches().first { b -> b.id == it } }
         assertTrue(branch.id != null)
 
         val phone = "018${System.nanoTime().toString().takeLast(8)}"

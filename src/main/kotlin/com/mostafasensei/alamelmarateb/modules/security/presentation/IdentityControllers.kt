@@ -48,6 +48,7 @@ data class BranchRequest(
     @field:NotBlank val code: String,
     val phone: String? = null,
     val city: String = "Tanta",
+    val address: String = "",
 )
 
 data class StaffCreateRequest(
@@ -62,7 +63,7 @@ data class StaffCreateRequest(
 data class SetRolesRequest(val roles: List<String> = emptyList())
 
 /**
- * Public auth — /api/v1/auth/**. No login required (except /me).
+ * Public auth — /api/v1/auth/... No login required (except /me).
  */
 @Tag(name = "Auth", description = "Register, login, refresh — public")
 @RestController
@@ -115,7 +116,7 @@ class IdentityAdminController(
         @RequestBody request: BranchRequest,
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<BranchView>> =
-        created(identityService.createBranch(request.name, request.code, request.phone, request.city, principal.fullName))
+        created(identityService.createBranch(request.name, request.code, request.phone, request.city, request.address, principal.fullName))
 
     @Operation(summary = "Enable/disable branch")
     @PostMapping("/branches/{id}/toggle")
