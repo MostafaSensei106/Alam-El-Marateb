@@ -58,6 +58,7 @@ class SecurityConfig (
                     .requestMatchers("$v1/portal/**").hasAnyRole("CUSTOMER", "SUPER_ADMIN")
 
                     // Staff operations
+                    .requestMatchers("$v1/sales/promotions/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
                     .requestMatchers("$v1/sales/**").hasAnyRole("CASHIER", "BRANCH_MANAGER", "SUPER_ADMIN")
                     .requestMatchers("$v1/warehouse/**").hasAnyRole("WAREHOUSE_KEEPER", "BRANCH_MANAGER", "SUPER_ADMIN")
                     .requestMatchers("$v1/delivery/**").hasAnyRole("DELIVERY_DRIVER", "SUPER_ADMIN")

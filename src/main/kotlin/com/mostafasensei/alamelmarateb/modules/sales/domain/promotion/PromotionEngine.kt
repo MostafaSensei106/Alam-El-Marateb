@@ -77,7 +77,7 @@ object PromotionEngine {
                         unitPrice = price,
                         gross = gross,
                         discount = gross,
-                        net = BigDecimal.ZERO,
+                        net = BigDecimal.ZERO.setScale(2, RoundingMode.HALF_EVEN),
                         appliedCodes = listOf(promo.code),
                         isGift = true,
                     ),

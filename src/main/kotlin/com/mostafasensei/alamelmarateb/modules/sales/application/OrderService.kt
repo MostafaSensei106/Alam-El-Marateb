@@ -80,9 +80,8 @@ class OrderService(
         if (input.channel != "pos" && input.channel != "shop") throw BadRequestException("Unknown channel")
 
         input.idempotencyKey?.let { key ->
-            orderRepository.findByIdempotencyKey(key).ifPresent {
-                return PlacedOrder(toDomain(it), replayed = true)
-            }
+            val existing = orderRepository.findByIdempotencyKey(key).orElse(null)
+            if (existing != null) return PlacedOrder(toDomain(existing), replayed = true)
         }
 
         val order = orderRepository.save(
@@ -302,6 +301,22 @@ class OrderService(
         val order = orderRepository.findByTrackingNumber(tracking)
             .orElseThrow { NotFoundException("Order not found") }
         return toDomain(order)
+    }
+
+    /** POS scan: barcode (or SKU fallback listing candidates is client-side via lookup). */
+    @Transactional(readOnly = true)
+    fun scanVariant(barcode: String): Map<String, Any?> {
+        val variant = variantRepository.findByBarcode(barcode)
+            ?: throw NotFoundException("No variant found for: $barcode")
+        return mapOf(
+            "variantId" to variant.id,
+            "productId" to variant.productId,
+            "sku" to variant.sku,
+            "barcode" to variant.barcode,
+            "dimensions" to variant.dimensionsLabel,
+            "sellingPrice" to variant.sellingPrice,
+            "isActive" to variant.isActive,
+        )
     }
 
     @Transactional(readOnly = true)

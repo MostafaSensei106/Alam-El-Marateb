@@ -219,8 +219,6 @@ class ShopCartController(
     private val cartService: CartService,
 ) : BaseController() {
 
-    private fun id(@AuthenticationPrincipal principal: UserPrincipal) = principal.id
-
     @Operation(summary = "My cart")
     @GetMapping
     fun get(
@@ -264,7 +262,7 @@ class ShopCartController(
         ok(cartService.merge(request.guestKey, principal.id))
 }
 
-@Tag(name = "Shop checkout", description = "Estimate, preview, place, track")
+@Tag(name = "Shop checkout", description = "Estimate, preview, place")
 @RestController
 @RequestMapping(ShopRoutes.CHECKOUT_BASE)
 @PreAuthorize("hasAnyRole('CUSTOMER', 'CASHIER', 'BRANCH_MANAGER', 'SUPER_ADMIN')")
@@ -302,15 +300,37 @@ class ShopCheckoutController(
         )
         return if (placed.replayed) ok(OrderResponse.fromDomain(placed.order)) else created(OrderResponse.fromDomain(placed.order))
     }
+}
+
+/**
+ * Customer orders — /api/v1/shop/orders. Owner views own orders.
+ */
+@Tag(name = "Shop orders", description = "My orders — CUSTOMER")
+@RestController
+@RequestMapping(ShopRoutes.MY_ORDERS)
+@PreAuthorize("hasAnyRole('CUSTOMER', 'SUPER_ADMIN')")
+class ShopOrderController(
+    private val orderService: OrderService,
+) : BaseController() {
 
     @Operation(summary = "My orders")
-    @GetMapping("/../orders")
-    @PreAuthorize("hasAnyRole('CUSTOMER', 'SUPER_ADMIN')")
+    @GetMapping
     fun myOrders(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<List<OrderResponse>>> =
         ok(orderService.myOrders(principal.id).map { OrderResponse.fromDomain(it) })
 
+    @Operation(summary = "My order details")
+    @GetMapping("/{orderId}")
+    fun myOrder(
+        @PathVariable orderId: UUID,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<OrderResponse>> {
+        val order = orderService.myOrders(principal.id).firstOrNull { it.id == orderId }
+            ?: throw com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException("Order not found")
+        return ok(OrderResponse.fromDomain(order))
+    }
+
     @Operation(summary = "Track by tracking number")
-    @GetMapping("/../orders/track/{trackingNumber}")
+    @GetMapping("/track/{trackingNumber}")
     fun track(@PathVariable trackingNumber: String): ResponseEntity<ApiResponse<OrderResponse>> =
         ok(OrderResponse.fromDomain(orderService.track(trackingNumber)))
 }
