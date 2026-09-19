@@ -1,0 +1,180 @@
+{
+  "info": {
+    "name": "Alamelmarateb ERP — v1",
+    "description": "Catalog + Inventory. Auth: login endpoint pending (identity P7) — paste JWT manually into managerJwt/keeperJwt. Swagger UI: {{baseUrl}}/swagger-ui.html",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:8080" },
+    { "key": "managerJwt", "value": "PASTE_BRANCH_MANAGER_JWT" },
+    { "key": "keeperJwt", "value": "PASTE_WAREHOUSE_KEEPER_JWT" },
+    { "key": "warehouseA", "value": "" },
+    { "key": "warehouseB", "value": "" },
+    { "key": "transferId", "value": "" },
+    { "key": "auditId", "value": "" },
+    { "key": "categoryId", "value": "" },
+    { "key": "productId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Catalog — management (managerJwt)",
+      "item": [
+        {
+          "name": "Create category",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerJwt}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/v1/catalog/categories",
+            "body": { "mode": "raw", "raw": "{\"name\": \"Mattresses\", \"slug\": \"mattresses\", \"description\": \"All mattresses\"}" }
+          }
+        },
+        {
+          "name": "List products",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerJwt}}" }],
+            "url": "{{baseUrl}}/api/v1/catalog/products"
+          }
+        },
+        {
+          "name": "Create product",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerJwt}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/v1/catalog/products",
+            "body": { "mode": "raw", "raw": "{\"categoryId\": \"{{categoryId}}\", \"name\": \"Serta 120\", \"slug\": \"serta-120\", \"brand\": \"Serta\", \"warrantyYears\": 10}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Catalog — storefront (public)",
+      "item": [
+        {
+          "name": "Browse products",
+          "request": { "method": "GET", "url": "{{baseUrl}}/api/v1/catalog/public/products" }
+        }
+      ]
+    },
+    {
+      "name": "Inventory — management (managerJwt)",
+      "item": [
+        {
+          "name": "Create warehouse",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerJwt}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/v1/inventory/warehouses",
+            "body": { "mode": "raw", "raw": "{\"name\": \"Cairo WH\", \"code\": \"CAI-01\"}" }
+          }
+        },
+        {
+          "name": "Stock overview",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerJwt}}" }],
+            "url": "{{baseUrl}}/api/v1/inventory/stocks?warehouseId={{warehouseA}}"
+          }
+        },
+        {
+          "name": "Low-stock alerts",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerJwt}}" }],
+            "url": "{{baseUrl}}/api/v1/inventory/stocks/low-alerts"
+          }
+        },
+        {
+          "name": "Create transfer (draft)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerJwt}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/v1/inventory/transfers",
+            "body": { "mode": "raw", "raw": "{\"fromWarehouseId\": \"{{warehouseA}}\", \"toWarehouseId\": \"{{warehouseB}}\", \"note\": \"Restock\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 6}]}" }
+          }
+        },
+        {
+          "name": "Dispatch transfer",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerJwt}}" }],
+            "url": "{{baseUrl}}/api/v1/inventory/transfers/{{transferId}}/dispatch"
+          }
+        },
+        {
+          "name": "Approve transfer (final)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerJwt}}" }],
+            "url": "{{baseUrl}}/api/v1/inventory/transfers/{{transferId}}/approve"
+          }
+        },
+        {
+          "name": "Open audit",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerJwt}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/v1/inventory/audits",
+            "body": { "mode": "raw", "raw": "{\"warehouseId\": \"{{warehouseB}}\", \"note\": \"Cycle count\"}" }
+          }
+        },
+        {
+          "name": "Reconcile audit",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{managerJwt}}" }],
+            "url": "{{baseUrl}}/api/v1/inventory/audits/{{auditId}}/reconcile"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Warehouse — operations (keeperJwt)",
+      "item": [
+        {
+          "name": "Stock lookup by barcode/SKU",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{keeperJwt}}" }],
+            "url": "{{baseUrl}}/api/v1/warehouse/stocks/lookup/SKU-XYZ?warehouseId={{warehouseB}}"
+          }
+        },
+        {
+          "name": "Quick adjustment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{keeperJwt}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/v1/warehouse/stocks/adjustment",
+            "body": { "mode": "raw", "raw": "{\"warehouseId\": \"{{warehouseB}}\", \"variantId\": \"VARIANT_ID\", \"qtyDelta\": 10, \"note\": \"Opening balance\"}" }
+          }
+        },
+        {
+          "name": "Pending transfers",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{keeperJwt}}" }],
+            "url": "{{baseUrl}}/api/v1/warehouse/transfers/pending?warehouseId={{warehouseB}}"
+          }
+        },
+        {
+          "name": "Receive batch",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{keeperJwt}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/v1/warehouse/transfers/{{transferId}}/confirm-receipt",
+            "body": { "mode": "raw", "raw": "{\"lines\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 4}], \"damaged\": {\"VARIANT_ID\": 2}}" }
+          }
+        },
+        {
+          "name": "Submit audit count",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{keeperJwt}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/api/v1/warehouse/audits/{{auditId}}/count",
+            "body": { "mode": "raw", "raw": "{\"variantId\": \"VARIANT_ID\", \"countedQty\": 3}" }
+          }
+        }
+      ]
+    }
+  ]
+}

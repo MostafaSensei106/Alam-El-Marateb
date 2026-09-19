@@ -13,6 +13,7 @@ import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductAttri
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductAttributeOptionResponse
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
 import com.mostafasensei.alamelmarateb.core.router.CatalogAdminRoutes
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
+@Tag(name = "Catalog (management)", description = "Attributes + options — BRANCH_MANAGER")
 @RestController
 @RequestMapping(CatalogAdminRoutes.ATTRIBUTES)
 @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")

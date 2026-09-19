@@ -1,7 +1,7 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 -- 1. Branches / Showrooms
 CREATE TABLE branches (
-                          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),                          name VARCHAR(150) NOT NULL,
+                          id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                           name VARCHAR(150) NOT NULL,
                           code VARCHAR(50) NOT NULL UNIQUE,
                           phone VARCHAR(20),
@@ -12,7 +12,7 @@ CREATE TABLE branches (
                           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
                           created_by VARCHAR(100),
                           updated_by VARCHAR(100),
-                          version BIGINT NOT NULL DEFAULT
+                          version BIGINT NOT NULL DEFAULT 0
 );
 
 -- 2. Roles and Permissions

@@ -12,6 +12,7 @@ import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductUpdat
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
 import com.mostafasensei.alamelmarateb.core.router.CatalogAdminRoutes
 import com.mostafasensei.alamelmarateb.core.router.CatalogStoreRoutes
+import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -29,6 +30,7 @@ import java.util.UUID
  * Management controller — staff only. Role enforced here, not via URL prefix.
  * Canonical path: /api/v1/catalog/products
  */
+@Tag(name = "Catalog (management)", description = "Products CRUD + from-preset — BRANCH_MANAGER")
 @RestController
 @RequestMapping(CatalogAdminRoutes.PRODUCTS)
 @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")

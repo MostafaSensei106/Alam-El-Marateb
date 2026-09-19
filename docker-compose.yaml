@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: postgres:alpine
+    image: postgres:16-alpine
     environment:
       - "POSTGRES_DB=mydatabase"
       - "POSTGRES_PASSWORD=root"
@@ -13,8 +13,6 @@ services:
 
   redis:
     image: redis:alpine
-    environment:
-      -
     container_name: shop-redis
     ports:
       - "6379:6379"

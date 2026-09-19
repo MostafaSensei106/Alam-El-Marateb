@@ -24,7 +24,7 @@ abstract class EntityBase<UUID: Serializable> {
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")    open var id: UUID? = null
 
     @CreationTimestamp
-    @Column(name = "creation_time", updatable = false, nullable = false)
+    @Column(name = "created_at", updatable = false, nullable = false)
     open var createdAt: Instant = Clock.System.now()
 
     @UpdateTimestamp
@@ -42,7 +42,7 @@ abstract class EntityBase<UUID: Serializable> {
 
     @Version
     @Column(name = "version", nullable = false)
-    open var version: Int = 0
+    open var version: Long = 0
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

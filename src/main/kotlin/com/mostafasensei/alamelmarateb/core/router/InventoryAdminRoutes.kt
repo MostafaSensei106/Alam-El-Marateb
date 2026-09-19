@@ -16,6 +16,7 @@ object InventoryAdminRoutes {
     const val LOW_STOCK_ALERTS = "$PREFIX/stocks/low-alerts"
     const val TRANSFERS = "$PREFIX/transfers"
     const val TRANSFER_BY_ID = "$PREFIX/transfers/{transferId}"
+    const val TRANSFER_APPROVE = "$PREFIX/transfers/{transferId}/approve"
     const val AUDITS = "$PREFIX/audits"
     const val AUDIT_RECONCILE = "$PREFIX/audits/{auditId}/reconcile"
 }
