@@ -73,7 +73,8 @@
 | `/me/attendance/*` ← **يُحذف**؛ يبقى `/me/leaves/request|commissions|payslips` (موظف) | أي موظف | مخطط P6 |
 | `/accounting/*` (شجرة/قيود/خزن/مصاريف/شيكات/تقارير) | ACCOUNTANT | مخطط P6 |
 | `/delivery/my-trips|trips|stops|orders` | DELIVERY_DRIVER | مخطط P5 |
-| `/analytics/*` (11 endpoint) | BRANCH_MANAGER | مخطط P7 |
+| `/analytics/summary`, `/product-velocity`, `/audit-trail/...` | BRANCH_MANAGER | **موجود** |
+| باقي `/analytics/*` (إيراد، RFM، فروع...) | BRANCH_MANAGER | مخطط (مع المبيعات) |
 | `/auth/**` (عام) + `/identity/branches|access|fleet` | مدير | مخطط P7 (الـ auth موجود جزئياً) |
 
 ## قواعد الردود الموحدة

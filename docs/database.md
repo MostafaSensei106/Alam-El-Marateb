@@ -95,7 +95,7 @@
 - `vehicles`: id, branch_id, plate UQ, kind, capacity, status.
 - `delivery_trips`: id, branch_id, driver_id, vehicle_id, trip_date, status + `trip_stops`: (trip_id, order_id, seq, window, status, proof_photo, fail_reason, delivered_at).
 
-## 10. التحليلات والسلوك واللوجز (مخطط V14/V15 — التفصيل في `modules/analytics.md`)
+## 10. التحليلات والسلوك واللوجز (V5 مُنفذ: audit_logs + sales_daily_facts — التفصيل في `modules/analytics.md`)
 
 - `sales_daily_facts`: (day, branch_id, variant_id) UQ, qty, revenue, cost, profit NUMERIC — تُغذى incrementally مع كل فاتورة (قرار: لحظي).
 - `customer_rfm`: user_id UQ, recency_days, frequency, monetary + segment.
@@ -108,7 +108,7 @@
 
 ## 11. ترتيب المايجريشنز (محدّث — التنفيذ بدأ بالمخازن أولاً)
 
-V1 (مُصلح: عمود مكرر + DEFAULT) → V2,V3 (موجودة) → **V4 inventory (مُنفذ)** →
-V5 favorites (مخطط) → V6 promotions (مخطط) → V7 sales (مخطط) → V8 purchasing (مخطط) →
-V9 crm (مخطط) → V10 hr (مخطط) → V11 accounting (مخطط) → V12 delivery (مخطط) →
-V13 reviews+quiz (مخطط) → V14/V15 analytics facts + inquiries + audit_logs + idempotency (مخطط).
+V1 (مُصلح: عمود مكرر + DEFAULT) → V2,V3 (موجودة) → **V4 inventory (مُنفذ)** → **V5 analytics: audit_logs + sales_daily_facts (مُنفذ؛ product_velocity تُحسب live من stock_moves)** →
+V6 favorites (مخطط) → V7 promotions (مخطط) → V8 sales (مخطط) → V9 purchasing (مخطط) →
+V10 crm (مخطط) → V11 hr (مخطط) → V12 accounting (مخطط) → V13 delivery (مخطط) →
+V14 reviews+quiz (مخطط) → V15 inquiries + app_events + idempotency (مخطط).

@@ -16,6 +16,7 @@ import java.util.UUID
 @Repository
 interface WarehouseRepository : JpaRepository<WarehouseJpaEntity, UUID> {
     fun existsByCode(code: String): Boolean
+    fun findByBranchId(branchId: UUID): List<WarehouseJpaEntity>
 }
 
 @Repository

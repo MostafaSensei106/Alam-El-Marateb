@@ -1,0 +1,427 @@
+package com.mostafasensei.alamelmarateb.modules.sales.application
+
+import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
+import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
+import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
+import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
+import com.mostafasensei.alamelmarateb.modules.inventory.application.StockService
+import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.WarehouseRepository
+import com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType
+import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
+import com.mostafasensei.alamelmarateb.modules.sales.data.repository.CarryUpFeeRepository
+import com.mostafasensei.alamelmarateb.modules.sales.data.repository.DeliveryZoneRepository
+import com.mostafasensei.alamelmarateb.modules.sales.data.repository.InstallmentPlanRepository
+import com.mostafasensei.alamelmarateb.modules.sales.data.repository.InvoiceRepository
+import com.mostafasensei.alamelmarateb.modules.sales.data.repository.OrderItemRepository
+import com.mostafasensei.alamelmarateb.modules.sales.data.repository.OrderRepository
+import com.mostafasensei.alamelmarateb.modules.sales.data.repository.ReservationRepository
+import com.mostafasensei.alamelmarateb.modules.sales.data.repository.ReturnRepository
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentPlanJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InvoiceJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.OrderItemJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.OrderJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.ReservationJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.ReturnJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.model.Order
+import com.mostafasensei.alamelmarateb.modules.sales.domain.model.OrderLine
+import com.mostafasensei.alamelmarateb.modules.sales.domain.model.OrderStatus
+import com.mostafasensei.alamelmarateb.modules.sales.domain.model.PaymentMethod
+import com.mostafasensei.alamelmarateb.modules.sales.domain.model.PaymentStatus
+import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
+import java.math.BigDecimal
+import java.math.RoundingMode
+import java.time.LocalDate
+import java.util.UUID
+
+data class OrderItemInput(val variantId: UUID, val qty: Int)
+
+data class PlaceOrderInput(
+    val branchId: UUID,
+    val customerId: UUID? = null,
+    val guestPhone: String? = null,
+    val channel: String = "pos",
+    val items: List<OrderItemInput> = emptyList(),
+    val paymentMethod: PaymentMethod,
+    val deliveryZoneId: UUID? = null,
+    val floorNumber: Int? = null,
+    val collectFromBranch: Boolean = false,
+    val salesRepId: UUID? = null,
+    val idempotencyKey: String? = null,
+    val downPayment: BigDecimal? = null,
+    val months: Int? = null,
+    val by: String? = null,
+)
+
+data class PlacedOrder(val order: Order, val replayed: Boolean)
+
+@Service
+class OrderService(
+    private val orderRepository: OrderRepository,
+    private val orderItemRepository: OrderItemRepository,
+    private val invoiceRepository: InvoiceRepository,
+    private val returnRepository: ReturnRepository,
+    private val reservationRepository: ReservationRepository,
+    private val installmentPlanRepository: InstallmentPlanRepository,
+    private val zoneRepository: DeliveryZoneRepository,
+    private val carryFeeRepository: CarryUpFeeRepository,
+    private val promotionService: PromotionService,
+    private val stockService: StockService,
+    private val warehouseRepository: WarehouseRepository,
+    private val variantRepository: ProductVariantRepository,
+    private val auditLog: AuditLogService,
+) {
+
+    @Transactional
+    fun place(input: PlaceOrderInput): PlacedOrder {
+        validateIdentity(input)
+        if (input.items.isEmpty()) throw BadRequestException("Order must contain items")
+        if (input.channel != "pos" && input.channel != "shop") throw BadRequestException("Unknown channel")
+
+        input.idempotencyKey?.let { key ->
+            orderRepository.findByIdempotencyKey(key).ifPresent {
+                return PlacedOrder(toDomain(it), replayed = true)
+            }
+        }
+
+        val order = orderRepository.save(
+            OrderJpaEntity(
+                branchId = input.branchId, customerId = input.customerId, guestPhone = input.guestPhone,
+                channel = input.channel, status = OrderStatus.draft.name,
+                idempotencyKey = input.idempotencyKey, salesRepId = input.salesRepId,
+            ),
+        )
+        return PlacedOrder(finalize(order.id!!, input), replayed = false)
+    }
+
+    /** POS ticket: saved with list prices, no stock hold, no invoice — completed later. */
+    @Transactional
+    fun saveDraft(input: PlaceOrderInput): Order {
+        validateIdentity(input)
+        if (input.items.isEmpty()) throw BadRequestException("Order must contain items")
+        val order = OrderJpaEntity(
+            branchId = input.branchId, customerId = input.customerId, guestPhone = input.guestPhone,
+            channel = input.channel, status = OrderStatus.draft.name, salesRepId = input.salesRepId,
+        )
+        promotionService.resolveLines(input.items.map { it.variantId to it.qty }).forEach { line ->
+            val gross = line.unitPrice.multiply(line.qty.toBigDecimal())
+            order.lines.add(
+                OrderItemJpaEntity(
+                    order = order, variantId = line.variantId, qty = line.qty,
+                    unitPrice = line.unitPrice, discount = BigDecimal.ZERO, net = gross,
+                ),
+            )
+        }
+        order.subtotal = order.lines.fold(BigDecimal.ZERO) { acc, l -> acc.add(l.net) }.scaled()
+        order.grandTotal = order.subtotal
+        return toDomain(orderRepository.save(order))
+    }
+
+    /** Complete a draft: fresh pricing + promos + stock hold + invoice. */
+    @Transactional
+    fun completeDraft(
+        id: UUID, paymentMethod: PaymentMethod, deliveryZoneId: UUID?, floorNumber: Int?,
+        collect: Boolean, downPayment: BigDecimal?, months: Int?, by: String?,
+    ): Order {
+        val order = load(id)
+        if (order.status != OrderStatus.draft.name) throw ConflictException("Only draft orders can be completed")
+        val items = order.lines.map { OrderItemInput(it.variantId!!, it.qty) }
+        return finalize(
+            id,
+            PlaceOrderInput(
+                branchId = order.branchId!!, customerId = order.customerId, guestPhone = order.guestPhone,
+                channel = order.channel, items = items, paymentMethod = paymentMethod,
+                deliveryZoneId = deliveryZoneId, floorNumber = floorNumber, collectFromBranch = collect,
+                salesRepId = order.salesRepId, downPayment = downPayment, months = months, by = by,
+            ),
+        )
+    }
+
+    private fun validateIdentity(input: PlaceOrderInput) {
+        if (input.customerId == null && input.guestPhone.isNullOrBlank()) {
+            throw BadRequestException("Customer or guest phone is required")
+        }
+    }
+
+    private fun finalize(orderId: UUID, input: PlaceOrderInput): Order {
+        val order = load(orderId)
+        val warehouseId = warehouseFor(input.branchId)
+        val preview = promotionService.priceAndConsume(
+            promotionService.resolveLines(input.items.map { it.variantId to it.qty }),
+        )
+        val fees = feesOf(input.deliveryZoneId, input.floorNumber, input.collectFromBranch)
+        val grand = preview.total.add(fees.first).add(fees.second).scaled()
+
+        val paymentStatus = when (input.paymentMethod) {
+            PaymentMethod.CASH, PaymentMethod.CARD -> if (input.channel == "pos") PaymentStatus.paid else PaymentStatus.pending_confirmation
+            PaymentMethod.COD -> PaymentStatus.unpaid
+            PaymentMethod.TRANSFER, PaymentMethod.WALLET -> PaymentStatus.pending_confirmation
+            PaymentMethod.INSTALLMENT -> PaymentStatus.partial
+        }
+        if (input.paymentMethod == PaymentMethod.INSTALLMENT) {
+            require((input.months ?: 0) > 0) { "Installment needs months" }
+        }
+
+        order.status = OrderStatus.confirmed.name
+        order.paymentMethod = input.paymentMethod.name
+        order.paymentStatus = paymentStatus.name
+        order.subtotal = preview.subtotal
+        order.discountTotal = preview.totalDiscount
+        order.deliveryFee = fees.first
+        order.carryUpFee = fees.second
+        order.grandTotal = grand
+        order.deliveryZoneId = input.deliveryZoneId
+        order.floorNumber = input.floorNumber
+        order.collectFromBranch = input.collectFromBranch
+        order.trackingNumber = order.trackingNumber
+            ?: "TRK-${UUID.randomUUID().toString().take(8).uppercase()}"
+        order.lines.clear()
+        preview.lines.forEach { line ->
+            order.lines.add(
+                OrderItemJpaEntity(
+                    order = order, variantId = line.variantId, qty = line.qty,
+                    unitPrice = line.unitPrice, discount = line.discount, net = line.net,
+                    appliedPromoCodes = line.appliedCodes.joinToString(","),
+                    isGift = line.isGift,
+                ),
+            )
+        }
+        val saved = orderRepository.save(order)
+
+        // Hold stock for every line including gifts.
+        saved.lines.forEach { stockService.reserve(warehouseId, it.variantId!!, it.qty) }
+
+        if (invoiceRepository.findAll().none { it.orderId == saved.id }) {
+            invoiceRepository.save(InvoiceJpaEntity(orderId = saved.id, serial = nextSerial(input.branchId)))
+        }
+
+        if (input.paymentMethod == PaymentMethod.INSTALLMENT) {
+            createPlan(saved.id!!, grand, input.downPayment ?: BigDecimal.ZERO, input.months!!)
+        }
+        auditLog.record("PLACE", "order", saved.id, input.branchId, input.by, "channel=${input.channel} total=$grand")
+        return toDomain(saved)
+    }
+
+    /** POS immediate sale: paid + delivered, stock deducted now. */
+    @Transactional
+    fun completeSale(input: PlaceOrderInput, by: String?): Order {
+        require(input.channel == "pos") { "Complete sale is POS only" }
+        require(input.paymentMethod == PaymentMethod.CASH || input.paymentMethod == PaymentMethod.CARD) {
+            "Complete sale needs immediate payment"
+        }
+        val placed = place(input.copy(by = by))
+        deductReserved(placed.order)
+        val entity = orderRepository.findById(placed.order.id!!).orElseThrow()
+        entity.status = OrderStatus.delivered.name
+        auditLog.record("COMPLETE", "order", entity.id, entity.branchId, by, "paid on spot")
+        return toDomain(orderRepository.save(entity))
+    }
+
+    @Transactional
+    fun confirmPayment(id: UUID, by: String?): Order {
+        val order = load(id)
+        if (order.paymentStatus != PaymentStatus.pending_confirmation.name) {
+            throw ConflictException("Nothing to confirm (status: ${order.paymentStatus})")
+        }
+        order.paymentStatus = PaymentStatus.paid.name
+        auditLog.record("CONFIRM_PAYMENT", "order", id, order.branchId, by, null)
+        return toDomain(orderRepository.save(order))
+    }
+
+    @Transactional
+    fun cancel(id: UUID, by: String?): Order {
+        val order = load(id)
+        if (order.status != OrderStatus.draft.name && order.status != OrderStatus.confirmed.name) {
+            throw ConflictException("Cannot cancel order in status ${order.status}")
+        }
+        releaseAll(order)
+        order.status = OrderStatus.cancelled.name
+        auditLog.record("CANCEL", "order", id, order.branchId, by, null)
+        return toDomain(orderRepository.save(order))
+    }
+
+    /** Delivery module (later) calls this on successful handover. */
+    @Transactional
+    fun markDelivered(id: UUID, by: String?): Order {
+        val order = load(id)
+        if (order.status == OrderStatus.delivered.name) return toDomain(order)
+        if (order.status != OrderStatus.confirmed.name && order.status != OrderStatus.preparing.name &&
+            order.status != OrderStatus.delivering.name
+        ) {
+            throw ConflictException("Cannot deliver order in status ${order.status}")
+        }
+        deductReserved(toDomain(order))
+        order.status = OrderStatus.delivered.name
+        auditLog.record("DELIVER", "order", id, order.branchId, by, null)
+        return toDomain(orderRepository.save(order))
+    }
+
+    @Transactional
+    fun requestReturn(orderId: UUID, reason: String, lines: List<OrderItemInput>, by: String?): Order {
+        val order = load(orderId)
+        if (order.status != OrderStatus.delivered.name) throw ConflictException("Only delivered orders can be returned")
+        if (reason.isBlank()) throw BadRequestException("Return reason is required")
+        var refund = BigDecimal.ZERO
+        lines.forEach { req ->
+            val line = order.lines.firstOrNull { it.variantId == req.variantId }
+                ?: throw BadRequestException("Variant not in order: ${req.variantId}")
+            if (req.qty != line.qty) throw BadRequestException("Only full-line returns supported (variant ${req.variantId})")
+            refund = refund.add(line.net)
+        }
+        returnRepository.save(
+            ReturnJpaEntity(orderId = orderId, status = "requested", reason = reason, refundAmount = refund.scaled()),
+        )
+        auditLog.record("RETURN_REQUEST", "order", orderId, order.branchId, by, "refund=$refund")
+        return toDomain(order)
+    }
+
+    @Transactional
+    fun approveReturn(orderId: UUID, by: String?): Order {
+        val order = load(orderId)
+        val returns = returnRepository.findAll().filter { it.orderId == orderId && it.status == "requested" }
+        if (returns.isEmpty()) throw ConflictException("No requested returns for this order")
+        val warehouseId = warehouseFor(order.branchId!!)
+        returns.forEach { ret ->
+            order.lines.forEach { line ->
+                stockService.applyMove(
+                    warehouseId, line.variantId!!, line.qty, com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType.RETURN,
+                    "RETURN", ret.id, "Return approved",
+                )
+            }
+            ret.status = "approved"
+            returnRepository.save(ret)
+        }
+        order.status = OrderStatus.returned.name
+        auditLog.record("RETURN_APPROVE", "order", orderId, order.branchId, by, null)
+        return toDomain(orderRepository.save(order))
+    }
+
+    @Transactional(readOnly = true)
+    fun track(tracking: String): Order {
+        val order = orderRepository.findByTrackingNumber(tracking)
+            .orElseThrow { NotFoundException("Order not found") }
+        return toDomain(order)
+    }
+
+    @Transactional(readOnly = true)
+    fun myOrders(customerId: UUID): List<Order> =
+        orderRepository.findByCustomerIdOrderByCreatedAtDesc(customerId).map { toDomain(it) }
+
+    @Transactional(readOnly = true)
+    fun estimate(governorate: String, area: String, floor: Int?): Pair<BigDecimal, BigDecimal> =
+        feesOf(
+            zoneRepository.findByGovernorateAndAreaAndIsActiveTrue(governorate, area)
+                .orElseThrow { BadRequestException("Delivery not available for $governorate - $area") }.id,
+            floor, false,
+        )
+
+    // ---- reservations ----
+
+    @Transactional
+    fun reserve(
+        branchId: UUID, customerId: UUID?, guestPhone: String?,
+        variantId: UUID, qty: Int, deposit: BigDecimal, deliverAt: LocalDate?, by: String?,
+    ): UUID {
+        if (customerId == null && guestPhone.isNullOrBlank()) throw BadRequestException("Customer or guest phone required")
+        if (qty <= 0) throw BadRequestException("Quantity must be positive")
+        variantRepository.findById(variantId) ?: throw BadRequestException("Unknown variant")
+        val warehouseId = warehouseFor(branchId)
+        stockService.reserve(warehouseId, variantId, qty)
+        val saved = reservationRepository.save(
+            ReservationJpaEntity(
+                branchId = branchId, customerId = customerId, guestPhone = guestPhone,
+                variantId = variantId, qty = qty, deposit = deposit, deliverAt = deliverAt, status = "active",
+            ),
+        )
+        auditLog.record("RESERVE", "reservation", saved.id, branchId, by, "qty=$qty deposit=$deposit")
+        return saved.id!!
+    }
+
+    // ---- internals ----
+
+    private fun deductReserved(order: Order) {
+        val warehouseId = warehouseFor(order.branchId!!)
+        order.lines.forEach { line ->
+            stockService.release(warehouseId, line.variantId, line.qty)
+            stockService.applyMove(
+                warehouseId, line.variantId, -line.qty,
+                com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType.SALE,
+                "ORDER", order.id, "Sale ${order.trackingNumber}",
+            )
+        }
+    }
+
+    private fun releaseAll(order: OrderJpaEntity) {
+        val warehouseId = warehouseFor(order.branchId!!)
+        order.lines.forEach { stockService.release(warehouseId, it.variantId!!, it.qty) }
+    }
+
+    private fun warehouseFor(branchId: UUID): UUID =
+        warehouseRepository.findByBranchId(branchId).firstOrNull()?.id
+            ?: throw BadRequestException("Branch has no warehouse")
+
+    private fun feesOf(zoneId: UUID?, floor: Int?, collect: Boolean): Pair<BigDecimal, BigDecimal> {
+        if (collect == true) return BigDecimal.ZERO to BigDecimal.ZERO
+        val delivery = zoneId?.let {
+            zoneRepository.findById(it).map { z -> z.fee }.orElse(BigDecimal.ZERO)
+        } ?: BigDecimal.ZERO
+        val carry = if (floor == null || floor <= 0) {
+            BigDecimal.ZERO
+        } else {
+            carryFeeRepository.findAll()
+                .firstOrNull { floor in it.floorFrom..it.floorTo }?.fee ?: BigDecimal.ZERO
+        }
+        return delivery to carry
+    }
+
+    private fun nextSerial(branchId: UUID): String {
+        val year = LocalDate.now().year
+        val prefix = "INV-$year-${branchId.toString().take(8).uppercase()}"
+        val seq = invoiceRepository.countBySerialStartingWith(prefix) + 1
+        return "$prefix-${seq.toString().padStart(4, '0')}"
+    }
+
+    private fun createPlan(orderId: UUID, total: BigDecimal, down: BigDecimal, months: Int) {
+        if (down < BigDecimal.ZERO || down > total) throw BadRequestException("Invalid down payment")
+        val financed = total.minus(down)
+        val monthly = financed.divide(months.toBigDecimal(), 2, RoundingMode.HALF_EVEN)
+        val plan = InstallmentPlanJpaEntity(
+            orderId = orderId, total = total, downPayment = down,
+            months = months, monthlyAmount = monthly,
+        )
+        repeat(months) { i ->
+            plan.installments.add(
+                com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentJpaEntity(
+                    plan = plan, dueDate = LocalDate.now().plusMonths((i + 1).toLong()), amount = monthly,
+                ),
+            )
+        }
+        installmentPlanRepository.save(plan)
+    }
+
+    private fun load(id: UUID): OrderJpaEntity =
+        orderRepository.findById(id).orElseThrow { NotFoundException("Order not found") }
+
+    private fun toDomain(e: OrderJpaEntity): Order = Order(
+        id = e.id, branchId = e.branchId, customerId = e.customerId, guestPhone = e.guestPhone,
+        channel = e.channel, status = OrderStatus.valueOf(e.status),
+        paymentMethod = e.paymentMethod?.let { PaymentMethod.valueOf(it) },
+        paymentStatus = PaymentStatus.valueOf(e.paymentStatus),
+        subtotal = e.subtotal, discountTotal = e.discountTotal,
+        deliveryFee = e.deliveryFee, carryUpFee = e.carryUpFee, grandTotal = e.grandTotal,
+        deliveryZoneId = e.deliveryZoneId, floorNumber = e.floorNumber,
+        collectFromBranch = e.collectFromBranch, trackingNumber = e.trackingNumber,
+        salesRepId = e.salesRepId,
+        lines = e.lines.map {
+            OrderLine(
+                variantId = it.variantId!!, productId = variantRepository.findById(it.variantId!!)?.productId!!,
+                qty = it.qty, unitPrice = it.unitPrice, discount = it.discount, net = it.net,
+                appliedPromoCodes = it.appliedPromoCodes.split(",").filter { c -> c.isNotBlank() },
+                isGift = it.isGift,
+            )
+        },
+    )
+
+    private fun BigDecimal.scaled(): BigDecimal = setScale(2, RoundingMode.HALF_EVEN)
+}
