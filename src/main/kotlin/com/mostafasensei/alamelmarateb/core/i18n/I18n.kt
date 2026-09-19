@@ -5,10 +5,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.MessageSource
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
 import org.springframework.context.i18n.LocaleContextHolder
-import org.springframework.context.support.ReloadableResourceBundleMessageSource
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
@@ -26,20 +23,10 @@ import java.util.Locale
  *
  * Single source of truth is [AppLocaleResolver] (a Spring MVC LocaleResolver),
  * so DispatcherServlet and MessageService always agree.
+ *
+ * Bundle wiring lives in application.yaml (spring.messages.*) — Boot auto-config
+ * builds the MessageSource; no manual bean needed.
  */
-@Configuration
-class MessageConfig {
-    @Bean
-    fun messageSource(): MessageSource {
-        val source = ReloadableResourceBundleMessageSource()
-        source.setBasename("classpath:messages/messages")
-        source.defaultEncoding = "UTF-8"
-        source.setDefaultLocale(Locale("ar"))
-        source.isUseCodeAsDefaultMessage = true
-        return source
-    }
-}
-
 @Service
 class MessageService(
     private val source: MessageSource,
