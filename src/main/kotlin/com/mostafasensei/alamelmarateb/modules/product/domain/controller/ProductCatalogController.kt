@@ -1,50 +1,63 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.controller
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
-import com.mostafasensei.alamelmarateb.core.router.admin.AdminProductRoutes
-import com.mostafasensei.alamelmarateb.core.router.ecommerce.EcommerceCatalogRoutes
+import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
+import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
+import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.product.data.model.Product
-import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductRepository
-import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
-import com.mostafasensei.alamelmarateb.modules.product.domain.extension.*
-import com.mostafasensei.alamelmarateb.modules.product.domain.model.*
+import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.CreateProductFromPresetRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductCreateRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductUpdateRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
+import com.mostafasensei.alamelmarateb.core.router.CatalogAdminRoutes
+import com.mostafasensei.alamelmarateb.core.router.CatalogStoreRoutes
+import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
+/**
+ * Management controller — staff only. Role enforced here, not via URL prefix.
+ * Canonical path: /api/v1/catalog/products
+ */
 @RestController
-@RequestMapping(AdminProductRoutes.PRODUCTS)
+@RequestMapping(CatalogAdminRoutes.PRODUCTS)
+@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
 class ProductAdminController(
     private val catalogService: ProductCatalogService,
-    private val productRepository: ProductRepository,
-    private val variantRepository: ProductVariantRepository,
-) {
+) : BaseController() {
 
     @GetMapping
     fun getAll(): ResponseEntity<ApiResponse<List<Product>>> =
-        ResponseEntity(ApiResponse(true, "Operation Successful", catalogService.getAllProducts()), org.springframework.http.HttpStatus.OK)
+        ok(catalogService.getAllProducts())
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<Product>> =
-        catalogService.getProduct(id)
-            ?.let { ResponseEntity(ApiResponse(true, "Operation Successful", it), org.springframework.http.HttpStatus.OK) }
-            ?: ResponseEntity.status(404).body(ApiResponse.failure("Product not found"))
+        ok(catalogService.getProduct(id) ?: throw NotFoundException("Product not found"))
 
     @PostMapping
-    fun create(@RequestBody request: ProductCreateRequest): ResponseEntity<ApiResponse<Product>> {
-        val product: com.mostafasensei.alamelmarateb.modules.product.data.model.Product = request.toDomain()
+    fun create(@Valid @RequestBody request: ProductCreateRequest): ResponseEntity<ApiResponse<Product>> {
+        val product: Product = request.toDomain()
         val errors = catalogService.validateProductAttributes(product)
-        if (errors.isNotEmpty()) {
-            return ResponseEntity.badRequest().body(ApiResponse.failure("Validation failed", errors))
-        }
-        val saved = catalogService.createProduct(product)
-        return ResponseEntity(ApiResponse(true, "Operation Successful", saved), org.springframework.http.HttpStatus.OK)
+        if (errors.isNotEmpty()) throw BadRequestException("Validation failed", errors)
+        return created(catalogService.createProduct(product))
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: UUID, @RequestBody request: ProductUpdateRequest): ResponseEntity<ApiResponse<Product>> {
-        val existing = catalogService.getProduct(id) ?: return ResponseEntity.status(404).body(ApiResponse.failure("Product not found"))
+    fun update(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: ProductUpdateRequest,
+    ): ResponseEntity<ApiResponse<Product>> {
+        val existing = catalogService.getProduct(id) ?: throw NotFoundException("Product not found")
         val updated = existing.copy(
             name = request.name ?: existing.name,
             slug = request.slug ?: existing.slug,
@@ -54,36 +67,39 @@ class ProductAdminController(
             attributes = request.attributes?.map { it.toDomain() } ?: existing.attributes,
             isActive = request.isActive ?: existing.isActive,
         )
-        val saved = catalogService.updateProduct(id, updated)
-        return ResponseEntity(ApiResponse(true, "Operation Successful", saved), org.springframework.http.HttpStatus.OK)
+        return ok(catalogService.updateProduct(id, updated))
     }
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
+        catalogService.getProduct(id) ?: throw NotFoundException("Product not found")
         catalogService.deleteProduct(id)
-        return ResponseEntity.ok(ApiResponse.messageWithoutData("Product deleted"))
+        return deleted("Product deleted")
     }
 
     @PostMapping("/from-preset/{presetId}")
-    fun createFromPreset(@PathVariable presetId: UUID, @RequestBody request: CreateProductFromPresetRequest): ResponseEntity<ApiResponse<Product>> {
-        val product = catalogService.createProductFromPreset(presetId, request.slug)
-        return ResponseEntity(ApiResponse(true, "Operation Successful", product), org.springframework.http.HttpStatus.OK)
-    }
+    fun createFromPreset(
+        @PathVariable presetId: UUID,
+        @Valid @RequestBody request: CreateProductFromPresetRequest,
+    ): ResponseEntity<ApiResponse<Product>> =
+        created(catalogService.createProductFromPreset(presetId, request.slug))
 }
 
+/**
+ * Public storefront controller — open read.
+ * Canonical path: /api/v1/catalog/public/products
+ */
 @RestController
-@RequestMapping(EcommerceCatalogRoutes.BASE)
+@RequestMapping(CatalogStoreRoutes.PRODUCTS)
 class EcommerceProductController(
     private val catalogService: ProductCatalogService,
-) {
+) : BaseController() {
 
     @GetMapping
     fun getAllActive(): ResponseEntity<ApiResponse<List<Product>>> =
-        ResponseEntity(ApiResponse(true, "Operation Successful", catalogService.getAllProducts()), org.springframework.http.HttpStatus.OK)
+        ok(catalogService.getAllProducts())
 
     @GetMapping("/{slug}")
     fun getBySlug(@PathVariable slug: String): ResponseEntity<ApiResponse<Product>> =
-        catalogService.getProductBySlug(slug)
-            ?.let { ResponseEntity(ApiResponse(true, "Operation Successful", it), org.springframework.http.HttpStatus.OK) }
-            ?: ResponseEntity.status(404).body(ApiResponse.failure("Product not found"))
+        ok(catalogService.getProductBySlug(slug) ?: throw NotFoundException("Product not found"))
 }

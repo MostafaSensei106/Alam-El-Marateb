@@ -1,42 +1,55 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.controller
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
-import com.mostafasensei.alamelmarateb.core.router.admin.AdminProductRoutes
-import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductPresetRepository
-import com.mostafasensei.alamelmarateb.modules.product.domain.extension.*
-import com.mostafasensei.alamelmarateb.modules.product.domain.model.*
+import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
+import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
+import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
+import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toResponse
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductPresetCreateRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductPresetResponse
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductPresetUpdateRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
+import com.mostafasensei.alamelmarateb.core.router.CatalogAdminRoutes
+import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 @RestController
-@RequestMapping(AdminProductRoutes.PRESETS)
+@RequestMapping(CatalogAdminRoutes.PRESETS)
+@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
 class ProductPresetController(
     private val catalogService: ProductCatalogService,
-    private val presetRepository: ProductPresetRepository,
-) {
+) : BaseController() {
 
     @GetMapping
     fun getAll(): ResponseEntity<ApiResponse<List<ProductPresetResponse>>> =
-        ResponseEntity(ApiResponse(true, "Operation Successful", catalogService.getAllPresets().map { it.toResponse() }), org.springframework.http.HttpStatus.OK)
+        ok(catalogService.getAllPresets().map { it.toResponse() })
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<ProductPresetResponse>> =
-        catalogService.getPreset(id)
-            ?.let { ResponseEntity(ApiResponse(true, "Operation Successful", it.toResponse()), org.springframework.http.HttpStatus.OK) }
-            ?: ResponseEntity.status(404).body(ApiResponse.failure("Preset not found"))
+        ok((catalogService.getPreset(id) ?: throw NotFoundException("Preset not found")).toResponse())
 
     @PostMapping
-    fun create(@RequestBody request: ProductPresetCreateRequest): ResponseEntity<ApiResponse<ProductPresetResponse>> {
-        val preset = request.toDomain()
-        val saved = catalogService.createPreset(preset)
-        return ResponseEntity(ApiResponse(true, "Operation Successful", saved.toResponse()), org.springframework.http.HttpStatus.OK)
+    fun create(@Valid @RequestBody request: ProductPresetCreateRequest): ResponseEntity<ApiResponse<ProductPresetResponse>> {
+        val saved = catalogService.createPreset(request.toDomain())
+        return created(saved.toResponse())
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: UUID, @RequestBody request: ProductPresetUpdateRequest): ResponseEntity<ApiResponse<ProductPresetResponse>> {
-        val existing = catalogService.getPreset(id) ?: return ResponseEntity.status(404).body(ApiResponse.failure("Preset not found"))
+    fun update(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: ProductPresetUpdateRequest,
+    ): ResponseEntity<ApiResponse<ProductPresetResponse>> {
+        val existing = catalogService.getPreset(id) ?: throw NotFoundException("Preset not found")
         val updated = existing.copy(
             name = request.name ?: existing.name,
             brand = request.brand ?: existing.brand,
@@ -46,13 +59,13 @@ class ProductPresetController(
             attributes = request.attributes?.map { it.toDomain() } ?: existing.attributes,
             variants = request.variants?.map { it.toDomain() } ?: existing.variants,
         )
-        val saved = catalogService.updatePreset(id, updated)
-        return ResponseEntity(ApiResponse(true, "Operation Successful", saved.toResponse()), org.springframework.http.HttpStatus.OK)
+        return ok(catalogService.updatePreset(id, updated).toResponse())
     }
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
+        catalogService.getPreset(id) ?: throw NotFoundException("Preset not found")
         catalogService.deletePreset(id)
-        return ResponseEntity.ok(ApiResponse.messageWithoutData("Preset deleted"))
+        return deleted("Preset deleted")
     }
 }

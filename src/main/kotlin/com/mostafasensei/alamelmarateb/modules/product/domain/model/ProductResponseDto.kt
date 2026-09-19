@@ -24,7 +24,7 @@ data class ProductAttributeResponse(
 sealed interface AttributeValueResponse {
     data class Text(val value: String) : AttributeValueResponse
     data class Number(val value: Double) : AttributeValueResponse
-    data class Boolean(val value: Boolean) : AttributeValueResponse
+    data class Boolean(val value: kotlin.Boolean) : AttributeValueResponse
     data class Option(val optionId: UUID) : AttributeValueResponse
     data class MultiOption(val optionIds: List<UUID>) : AttributeValueResponse
 }

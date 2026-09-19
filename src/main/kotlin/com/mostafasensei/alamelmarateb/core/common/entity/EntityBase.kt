@@ -1,6 +1,5 @@
 package com.mostafasensei.alamelmarateb.core.common.entity
 
-import com.mostafasensei.alamelmarateb.core.router.staff.StaffDeliveryRoutes.CONFIRM_DELIVER
 import jakarta.persistence.Column
 import jakarta.persistence.EntityListeners
 import jakarta.persistence.GeneratedValue

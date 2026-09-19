@@ -5,8 +5,8 @@ import jakarta.persistence.OptimisticLockException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.messaging.handler.annotation.support.MethodArgumentNotValidException
 import org.springframework.web.HttpRequestMethodNotSupportedException
+import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.resource.NoResourceFoundException
@@ -16,14 +16,27 @@ class GlobalExceptionHandler {
     ///  Validation
     @ExceptionHandler(MethodArgumentNotValidException::class)
     fun handleValidationExceptions(ex: MethodArgumentNotValidException): ResponseEntity<ApiResponse<Nothing>> {
-        val errors = ex.bindingResult?.fieldErrors?.map {
+        val errors = ex.bindingResult.fieldErrors.map {
             "${it.field}: ${it.defaultMessage}"
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(message = "Validation error", errors = errors))
     }
 
+    /// Domain not-found -> 404 (controllers throw this instead of building 404 manually)
+    @ExceptionHandler(NotFoundException::class)
+    fun handleNotFound(ex: NotFoundException): ResponseEntity<ApiResponse<Nothing>> =
+        ResponseEntity.status(HttpStatus.NOT_FOUND).body(ApiResponse.failure(ex.message ?: "Resource not found"))
+
+    @ExceptionHandler(ConflictException::class)
+    fun handleConflict(ex: ConflictException): ResponseEntity<ApiResponse<Nothing>> =
+        ResponseEntity.status(HttpStatus.CONFLICT).body(ApiResponse.failure(ex.message ?: "Conflict"))
+
+    @ExceptionHandler(BadRequestException::class)
+    fun handleBadRequest(ex: BadRequestException): ResponseEntity<ApiResponse<Nothing>> =
+        ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ApiResponse.failure(ex.message ?: "Bad request", ex.errors))
+
     /// Optimistic locking
-    @ExceptionHandler
+    @ExceptionHandler(OptimisticLockException::class)
     fun handleOptimisticLockingFailure(ex: OptimisticLockException): ResponseEntity<ApiResponse<Nothing>> {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ApiResponse.failure(message = "This data has been modified by other process press refresh and try aging late"))
     }

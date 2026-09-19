@@ -1,47 +1,58 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.controller
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
-import com.mostafasensei.alamelmarateb.core.router.admin.AdminProductRoutes
+import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
+import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeType
-import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductAttributeDefinition
-import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductAttributeOption
-import com.mostafasensei.alamelmarateb.modules.product.data.repository.AttributeDefinitionRepository
-import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductAttributeOptionRepository
-import com.mostafasensei.alamelmarateb.modules.product.domain.extension.*
-import com.mostafasensei.alamelmarateb.modules.product.domain.model.*
+import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
+import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toResponse
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.AddOptionRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeDefinitionCreateRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeDefinitionUpdateRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductAttributeDefinitionResponse
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductAttributeOptionResponse
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
+import com.mostafasensei.alamelmarateb.core.router.CatalogAdminRoutes
+import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.*
+import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
+import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 @RestController
-@RequestMapping(AdminProductRoutes.ATTRIBUTES)
+@RequestMapping(CatalogAdminRoutes.ATTRIBUTES)
+@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
 class AttributeDefinitionController(
     private val catalogService: ProductCatalogService,
-    private val attributeDefinitionRepository: AttributeDefinitionRepository,
-    private val attributeOptionRepository: ProductAttributeOptionRepository,
-) {
+) : BaseController() {
 
     @GetMapping
     fun getAll(): ResponseEntity<ApiResponse<List<ProductAttributeDefinitionResponse>>> =
-        ResponseEntity(ApiResponse(true, "Operation Successful", catalogService.getAllAttributeDefinitions().map { it.toResponse() }), org.springframework.http.HttpStatus.OK)
+        ok(catalogService.getAllAttributeDefinitions().map { it.toResponse() })
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> =
-        catalogService.getAttributeDefinition(id)
-            ?.let { ResponseEntity(ApiResponse(true, "Operation Successful", it.toResponse()), org.springframework.http.HttpStatus.OK) }
-            ?: ResponseEntity.status(404).body(ApiResponse.failure("Attribute not found"))
+        ok((catalogService.getAttributeDefinition(id) ?: throw NotFoundException("Attribute not found")).toResponse())
 
     @PostMapping
-    fun create(@RequestBody request: AttributeDefinitionCreateRequest): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> {
-        val definition = request.toDomain()
-        val saved = catalogService.createAttributeDefinition(definition)
-        return ResponseEntity(ApiResponse(true, "Operation Successful", saved.toResponse()), org.springframework.http.HttpStatus.OK)
+    fun create(@Valid @RequestBody request: AttributeDefinitionCreateRequest): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> {
+        val saved = catalogService.createAttributeDefinition(request.toDomain())
+        return created(saved.toResponse())
     }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: UUID, @RequestBody request: AttributeDefinitionUpdateRequest): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> {
-        val existing = catalogService.getAttributeDefinition(id) ?: return ResponseEntity.status(404).body(ApiResponse.failure("Attribute not found"))
+    fun update(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: AttributeDefinitionUpdateRequest,
+    ): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> {
+        val existing = catalogService.getAttributeDefinition(id) ?: throw NotFoundException("Attribute not found")
         val type = request.type?.let {
             when (it.uppercase()) {
                 "TEXT" -> AttributeType.TEXT
@@ -58,34 +69,39 @@ class AttributeDefinitionController(
             type = type,
             isActive = request.isActive ?: existing.isActive,
         )
-        val saved = catalogService.updateAttributeDefinition(id, updated)
-        return ResponseEntity(ApiResponse(true, "Operation Successful", saved.toResponse()), org.springframework.http.HttpStatus.OK)
+        return ok(catalogService.updateAttributeDefinition(id, updated).toResponse())
     }
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
+        catalogService.getAttributeDefinition(id) ?: throw NotFoundException("Attribute not found")
         catalogService.deleteAttributeDefinition(id)
-        return ResponseEntity.ok(ApiResponse.messageWithoutData("Attribute deleted"))
+        return deleted("Attribute deleted")
     }
 }
 
 @RestController
-@RequestMapping(AdminProductRoutes.ATTRIBUTE_OPTIONS)
+@RequestMapping(CatalogAdminRoutes.ATTRIBUTE_OPTIONS)
+@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
 class AttributeOptionController(
     private val catalogService: ProductCatalogService,
-    private val attributeOptionRepository: ProductAttributeOptionRepository,
-) {
+) : BaseController() {
 
     @PostMapping
-    fun addOption(@PathVariable id: UUID, @RequestBody request: AddOptionRequest): ResponseEntity<ApiResponse<ProductAttributeOptionResponse>> {
-        val option = request.toDomain()
-        val saved = catalogService.addOptionToAttribute(id, option)
-        return ResponseEntity(ApiResponse(true, "Operation Successful", saved.toResponse()), org.springframework.http.HttpStatus.OK)
+    fun addOption(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: AddOptionRequest,
+    ): ResponseEntity<ApiResponse<ProductAttributeOptionResponse>> {
+        catalogService.getAttributeDefinition(id) ?: throw NotFoundException("Attribute not found")
+        return created(catalogService.addOptionToAttribute(id, request.toDomain()).toResponse())
     }
 
     @DeleteMapping("/{optionId}")
-    fun removeOption(@PathVariable id: UUID, @PathVariable optionId: UUID): ResponseEntity<ApiResponse<Nothing>> {
+    fun removeOption(
+        @PathVariable id: UUID,
+        @PathVariable optionId: UUID,
+    ): ResponseEntity<ApiResponse<Nothing>> {
         catalogService.removeOptionFromAttribute(optionId)
-        return ResponseEntity.ok(ApiResponse.messageWithoutData("Option removed"))
+        return deleted("Option removed")
     }
 }

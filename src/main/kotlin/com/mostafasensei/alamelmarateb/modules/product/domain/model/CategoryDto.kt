@@ -1,10 +1,11 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.model
 
+import jakarta.validation.constraints.NotBlank
 import java.util.UUID
 
 data class CategoryCreateRequest(
-    val name: String,
-    val slug: String,
+    @field:NotBlank val name: String,
+    @field:NotBlank val slug: String,
     val description: String? = null,
 )
 

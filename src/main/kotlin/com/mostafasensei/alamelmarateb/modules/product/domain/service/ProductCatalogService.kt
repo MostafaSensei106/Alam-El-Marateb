@@ -1,6 +1,7 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.service
 
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeType
+import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeValue
 import com.mostafasensei.alamelmarateb.modules.product.data.model.Product
 import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductAttributeDefinition
 import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductAttributeOption
@@ -15,7 +16,7 @@ import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductCa
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductPresetRepository
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductRepository
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
-import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
+import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.util.UUID

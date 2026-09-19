@@ -8,27 +8,30 @@ import com.mostafasensei.alamelmarateb.modules.product.domain.model.*
 import java.math.BigDecimal
 import java.util.UUID
 
-fun com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.toDomain(attributeId: UUID): ProductAttributeValue =
+fun ProductAttributeValueRequest.toDomain(): ProductAttributeValue =
     ProductAttributeValue(
         attributeId = attributeId,
-        value = when (this) {
-            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Text -> AttributeValue.Text(value)
-            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Number -> AttributeValue.Number(value = BigDecimal.valueOf(value))
-            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Boolean -> AttributeValue.Boolean(value = value)
-            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.Option -> AttributeValue.Option(optionId = optionId)
-            is com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.MultiOption -> AttributeValue.MultiOption(optionIds = optionIds.toSet())
+        value = when (val v = value) {
+            is AttributeValueRequest.Text -> AttributeValue.Text(v.value)
+            is AttributeValueRequest.Number -> AttributeValue.Number(value = BigDecimal.valueOf(v.value))
+            is AttributeValueRequest.Boolean -> AttributeValue.Boolean(value = v.value)
+            is AttributeValueRequest.Option -> AttributeValue.Option(optionId = v.optionId)
+            is AttributeValueRequest.MultiOption -> AttributeValue.MultiOption(optionIds = v.optionIds.toSet())
         }
     )
+
+fun com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.toDomain(attributeId: UUID): ProductAttributeValue =
+    ProductAttributeValueRequest(attributeId = attributeId, value = this).toDomain()
 
 fun ProductAttributeValue.toResponse(): ProductAttributeResponse =
     ProductAttributeResponse(
         attributeId = attributeId,
         value = when (value) {
-            is AttributeValue.Text -> ProductAttributeResponse.Value.Text(value.value)
-            is AttributeValue.Number -> ProductAttributeResponse.Value.Number(value.value.toDouble())
-            is AttributeValue.Boolean -> ProductAttributeResponse.Value.Boolean(value.value)
-            is AttributeValue.Option -> ProductAttributeResponse.Value.Option(optionId = value.optionId)
-            is AttributeValue.MultiOption -> ProductAttributeResponse.Value.MultiOption(optionIds = value.optionIds.toList(), labels = emptyList())
+            is AttributeValue.Text -> AttributeValueResponse.Text(value.value)
+            is AttributeValue.Number -> AttributeValueResponse.Number(value.value.toDouble())
+            is AttributeValue.Boolean -> AttributeValueResponse.Boolean(value.value)
+            is AttributeValue.Option -> AttributeValueResponse.Option(optionId = value.optionId)
+            is AttributeValue.MultiOption -> AttributeValueResponse.MultiOption(optionIds = value.optionIds.toList())
         }
     )
 
@@ -176,9 +179,6 @@ fun Product.toResponse(): ProductResponse =
         isActive = isActive,
     )
 
-fun ProductAttributeOptionCreateRequest.toDomain(): ProductAttributeOption =
-    ProductAttributeOption(value = value, label = label, sortOrder = sortOrder)
-
 fun AddOptionRequest.toDomain(): ProductAttributeOption =
     ProductAttributeOption(value = value, label = label, sortOrder = sortOrder)
 
@@ -203,19 +203,7 @@ fun AttributeDefinitionCreateRequest.toDomain(): ProductAttributeDefinition =
 fun CategoryAttributeLinkRequest.toDomain(attributeDef: ProductAttributeDefinition): CategoryAttribute =
     CategoryAttribute(attribute = attributeDef, required = required, sortOrder = sortOrder)
 
-fun ProductAttributeValueCreateRequest.toDomain(): ProductAttributeValue =
-    ProductAttributeValue(
-        attributeId = attributeId,
-        value = when (value) {
-            is AttributeValueCreateRequest.Text -> AttributeValue.Text(value.value)
-            is AttributeValueCreateRequest.Number -> AttributeValue.Number(value = BigDecimal.valueOf(value.value))
-            is AttributeValueCreateRequest.Boolean -> AttributeValue.Boolean(value.value)
-            is AttributeValueCreateRequest.Option -> AttributeValue.Option(optionId = value.optionId)
-            is AttributeValueCreateRequest.MultiOption -> AttributeValue.MultiOption(optionIds = value.optionIds.toSet())
-        }
-    )
-
-fun ProductPresetAttributeCreateRequest.toDomain(): ProductAttributeValue =
+fun ProductAttributeCreateRequest.toDomain(): ProductAttributeValue =
     ProductAttributeValue(
         attributeId = attributeId,
         value = when (value) {
@@ -264,6 +252,7 @@ fun ProductPresetCreateRequest.toDomain(): ProductPreset =
 fun ProductPresetVariant.toDomain(): ProductVariant =
     ProductVariant(
         sku = "PRESET-${id}",
+        barcode = null,
         widthCm = widthCm,
         lengthCm = lengthCm,
         heightCm = heightCm,

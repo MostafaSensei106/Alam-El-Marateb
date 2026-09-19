@@ -1,15 +1,17 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.model
 
+import jakarta.validation.constraints.NotBlank
+
 data class AttributeDefinitionCreateRequest(
-    val name: String,
-    val key: String,
-    val type: String,
+    @field:NotBlank val name: String,
+    @field:NotBlank val key: String,
+    @field:NotBlank val type: String,
     val options: List<AttributeOptionCreateRequest> = emptyList(),
 )
 
 data class AttributeOptionCreateRequest(
-    val value: String,
-    val label: String,
+    @field:NotBlank val value: String,
+    @field:NotBlank val label: String,
     val sortOrder: Int = 0,
 )
 
@@ -21,7 +23,7 @@ data class AttributeDefinitionUpdateRequest(
 )
 
 data class AddOptionRequest(
-    val value: String,
-    val label: String,
+    @field:NotBlank val value: String,
+    @field:NotBlank val label: String,
     val sortOrder: Int = 0,
 )
