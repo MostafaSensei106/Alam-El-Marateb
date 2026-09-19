@@ -4,6 +4,7 @@ import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
 import com.mostafasensei.alamelmarateb.core.router.InventoryAdminRoutes
 import com.mostafasensei.alamelmarateb.core.router.WarehouseOpsRoutes
+import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 import com.mostafasensei.alamelmarateb.modules.inventory.application.AuditResult
 import com.mostafasensei.alamelmarateb.modules.inventory.application.AuditService
 import com.mostafasensei.alamelmarateb.modules.inventory.application.AuditVariance
@@ -28,6 +29,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
@@ -98,8 +100,11 @@ class InventoryAdminController(
 
     @Operation(summary = "Dispatch transfer (draft → in_transit, deducts source)")
     @PostMapping("/transfers/{transferId}/dispatch")
-    fun dispatch(@PathVariable transferId: UUID): ResponseEntity<ApiResponse<Transfer>> =
-        ok(transferService.dispatch(transferId))
+    fun dispatch(
+        @PathVariable transferId: UUID,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<Transfer>> =
+        ok(transferService.dispatch(transferId, principal.fullName))
 
     @Operation(summary = "Get transfer by id")
     @GetMapping("/transfers/{transferId}")
@@ -108,8 +113,11 @@ class InventoryAdminController(
 
     @Operation(summary = "Approve transfer (final, deducts approved damage)")
     @PostMapping("/transfers/{transferId}/approve")
-    fun approve(@PathVariable transferId: UUID): ResponseEntity<ApiResponse<Transfer>> =
-        ok(transferService.approve(transferId))
+    fun approve(
+        @PathVariable transferId: UUID,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<Transfer>> =
+        ok(transferService.approve(transferId, principal.fullName))
 
     @Operation(summary = "Open stock audit (snapshots system qty)")
     @PostMapping("/audits")
@@ -118,8 +126,11 @@ class InventoryAdminController(
 
     @Operation(summary = "Reconcile audit (variances become moves, final)")
     @PostMapping("/audits/{auditId}/reconcile")
-    fun reconcile(@PathVariable auditId: UUID): ResponseEntity<ApiResponse<AuditResult>> =
-        ok(auditService.reconcile(auditId))
+    fun reconcile(
+        @PathVariable auditId: UUID,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<AuditResult>> =
+        ok(auditService.reconcile(auditId, principal.fullName))
 }
 
 /**
@@ -146,8 +157,11 @@ class WarehouseOpsController(
 
     @Operation(summary = "Quick stock adjustment (reason required, logged)")
     @PostMapping("/stocks/adjustment")
-    fun adjust(@Valid @RequestBody request: AdjustStockRequest): ResponseEntity<ApiResponse<StockLevel>> =
-        ok(stockService.adjust(request.warehouseId, request.variantId, request.qtyDelta, request.note))
+    fun adjust(
+        @Valid @RequestBody request: AdjustStockRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<StockLevel>> =
+        ok(stockService.adjust(request.warehouseId, request.variantId, request.qtyDelta, request.note, principal.fullName))
 
     @Operation(summary = "Pending incoming transfers for my warehouse")
     @GetMapping("/transfers/pending")

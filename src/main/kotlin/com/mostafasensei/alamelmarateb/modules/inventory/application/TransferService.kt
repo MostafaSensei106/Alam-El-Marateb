@@ -1,9 +1,11 @@
 package com.mostafasensei.alamelmarateb.modules.inventory.application
 
+import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.StockTransferRepository
+import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.WarehouseRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockTransferJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.TransferItemJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType
@@ -22,6 +24,8 @@ class TransferService(
     private val transferRepository: StockTransferRepository,
     private val stockService: StockService,
     private val variantRepository: ProductVariantRepository,
+    private val warehouseRepository: WarehouseRepository,
+    private val auditLog: AuditLogService,
 ) {
 
     @Transactional
@@ -57,7 +61,7 @@ class TransferService(
 
     /** Manager: move from draft to in_transit, deducting source stock. */
     @Transactional
-    fun dispatch(id: UUID): Transfer {
+    fun dispatch(id: UUID, by: String? = null): Transfer {
         val transfer = load(id)
         requireStatus(transfer, TransferStatus.draft, "Only draft transfers can be dispatched")
         val from = transfer.fromWarehouseId!!
@@ -73,7 +77,10 @@ class TransferService(
             )
         }
         transfer.status = TransferStatus.in_transit.name
-        return toDomain(transferRepository.save(transfer))
+        val result = toDomain(transferRepository.save(transfer))
+        val branch = warehouseRepository.findById(transfer.fromWarehouseId!!).map { it.branchId }.orElse(null)
+        auditLog.record("DISPATCH", "transfer", transfer.id, branch, by, "from=${transfer.fromWarehouseId} to=${transfer.toWarehouseId}")
+        return result
     }
 
     /**
@@ -137,7 +144,7 @@ class TransferService(
      * (this approval IS the damage authorization per business decision).
      */
     @Transactional
-    fun approve(id: UUID): Transfer {
+    fun approve(id: UUID, by: String? = null): Transfer {
         val transfer = load(id)
         requireStatusIn(
             transfer,
@@ -156,7 +163,10 @@ class TransferService(
             )
         }
         transfer.status = TransferStatus.confirmed.name
-        return toDomain(transferRepository.save(transfer))
+        val result = toDomain(transferRepository.save(transfer))
+        val branch = warehouseRepository.findById(transfer.toWarehouseId!!).map { it.branchId }.orElse(null)
+        auditLog.record("APPROVE", "transfer", transfer.id, branch, by, "warehouse=${transfer.toWarehouseId} confirmed")
+        return result
     }
 
     @Transactional

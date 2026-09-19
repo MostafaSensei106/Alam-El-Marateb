@@ -21,4 +21,6 @@ object AnalyticsRoutes {
     const val CHASSIS_TRENDS = "$PREFIX/chassis-trends"
     const val BRANCH_PERFORMANCE = "$PREFIX/performance/branches"
     const val SALES_REP_METRICS = "$PREFIX/performance/sales-reps"
+
+    const val AUDIT_TRAIL = "$PREFIX/audit-trail/{entity}/{entityId}"
 }

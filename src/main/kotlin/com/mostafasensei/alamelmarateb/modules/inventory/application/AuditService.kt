@@ -1,9 +1,11 @@
 package com.mostafasensei.alamelmarateb.modules.inventory.application
 
+import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.StockAuditRepository
+import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.WarehouseRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.AuditCountJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockAuditJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.model.AuditStatus
@@ -32,6 +34,8 @@ class AuditService(
     private val auditRepository: StockAuditRepository,
     private val stockService: StockService,
     private val variantRepository: ProductVariantRepository,
+    private val warehouseRepository: WarehouseRepository,
+    private val auditLog: AuditLogService,
 ) {
 
     /** Manager: open audit, snapshotting current system qty per stocked variant. */
@@ -76,7 +80,7 @@ class AuditService(
 
     /** Manager: reconcile — variances become AUDIT moves, audit is final. */
     @Transactional
-    fun reconcile(auditId: UUID): AuditResult {
+    fun reconcile(auditId: UUID, by: String? = null): AuditResult {
         val audit = load(auditId)
         if (audit.status != AuditStatus.counting.name && audit.status != AuditStatus.open.name) {
             throw ConflictException("Audit cannot be reconciled in status ${audit.status}")
@@ -97,7 +101,10 @@ class AuditService(
             }
         }
         audit.status = AuditStatus.reconciled.name
-        return toResult(auditRepository.save(audit))
+        val result = toResult(auditRepository.save(audit))
+        val branch = warehouseRepository.findById(audit.warehouseId!!).map { it.branchId }.orElse(null)
+        auditLog.record("RECONCILE", "audit", audit.id, branch, by, "warehouse=${audit.warehouseId} variances=${result.variances.count { it.variance != 0 }}")
+        return result
     }
 
     private fun load(auditId: UUID): StockAuditJpaEntity =

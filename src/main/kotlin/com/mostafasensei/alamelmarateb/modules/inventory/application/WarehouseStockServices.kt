@@ -1,5 +1,6 @@
 package com.mostafasensei.alamelmarateb.modules.inventory.application
 
+import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
@@ -69,6 +70,7 @@ class StockService(
     private val warehouseRepository: WarehouseRepository,
     // One-directional link: inventory reads variants from catalog.
     private val variantRepository: ProductVariantRepository,
+    private val auditLog: AuditLogService,
 ) {
 
     @Transactional(readOnly = true)
@@ -89,12 +91,14 @@ class StockService(
     }
 
     @Transactional
-    fun adjust(warehouseId: UUID, variantId: UUID, qtyDelta: Int, note: String?): StockLevel {
-        requireWarehouse(warehouseId)
+    fun adjust(warehouseId: UUID, variantId: UUID, qtyDelta: Int, note: String?, by: String? = null): StockLevel {
+        val warehouse = warehouseRepository.findById(warehouseId)
+            .orElseThrow { NotFoundException("Warehouse not found") }
         requireVariant(variantId)
         if (qtyDelta == 0) throw BadRequestException("Adjustment quantity cannot be zero")
         if (note.isNullOrBlank()) throw BadRequestException("Adjustment reason is required")
         applyMove(warehouseId, variantId, qtyDelta, MoveType.ADJUST, null, null, note)
+        auditLog.record("ADJUST", "stock_level", variantId, warehouse.branchId, by, "delta=$qtyDelta note=$note warehouse=$warehouseId")
         return levelOf(warehouseId, variantId)
     }
 
