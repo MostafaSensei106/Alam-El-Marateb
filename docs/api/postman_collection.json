@@ -40,6 +40,18 @@
     {
       "key": "productId",
       "value": ""
+    },
+    {
+      "key": "orderId",
+      "value": ""
+    },
+    {
+      "key": "warrantyId",
+      "value": ""
+    },
+    {
+      "key": "claimId",
+      "value": ""
     }
   ],
   "item": [
@@ -382,6 +394,463 @@
               }
             ],
             "url": "{{baseUrl}}/api/v1/analytics/audit-trail/transfer/{{transferId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Sales — POS (managerJwt/cashier)",
+      "item": [
+        {
+          "name": "Complete sale (cash)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/sales/pos/complete-sale",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"CASH\"}"
+            }
+          }
+        },
+        {
+          "name": "Save draft",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/sales/pos/orders/draft",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"COD\"}"
+            }
+          }
+        },
+        {
+          "name": "Create promotion 10%",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/sales/promotions",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"code\": \"SAVE10\", \"name\": \"Save 10%\", \"type\": \"CART_PERCENT\", \"valuePercent\": 10}"
+            }
+          }
+        },
+        {
+          "name": "Confirm manual payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/sales/orders/{{orderId}}/confirm-payment"
+          }
+        },
+        {
+          "name": "Approve return",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/sales/orders/{{orderId}}/approve-return"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Shop — customer",
+      "item": [
+        {
+          "name": "Add to cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/shop/cart/items?guestKey=g1",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"variantId\": \"VARIANT_ID\", \"qty\": 1}"
+            }
+          }
+        },
+        {
+          "name": "Price preview",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/shop/checkout/price-preview",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"lines\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}]}"
+            }
+          }
+        },
+        {
+          "name": "Estimate shipping",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/shop/checkout/estimate-shipping",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"governorate\": \"الجيزة\", \"area\": \"فيصل\", \"floor\": 3}"
+            }
+          }
+        },
+        {
+          "name": "Place order (COD)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/shop/checkout/place-order",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"COD\"}"
+            }
+          }
+        },
+        {
+          "name": "My orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/shop/orders"
+          }
+        },
+        {
+          "name": "Track order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/shop/orders/track/TRK-XXXXXXXX"
+          }
+        }
+      ]
+    },
+    {
+      "name": "CRM — management (managerJwt)",
+      "item": [
+        {
+          "name": "Register warranty",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/crm/warranties/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"invoiceId\": \"INVOICE_ID\"}"
+            }
+          }
+        },
+        {
+          "name": "Verify warranty",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/crm/warranties/{{warrantyId}}"
+          }
+        },
+        {
+          "name": "Warranty claims",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/crm/warranties/{{warrantyId}}/claims"
+          }
+        },
+        {
+          "name": "Schedule inspection",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/crm/claims/{{claimId}}/inspection",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"inspectionAt\": \"2026-09-25T10:00:00Z\"}"
+            }
+          }
+        },
+        {
+          "name": "Resolve claim",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/crm/claims/{{claimId}}/resolve",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"resolution\": \"replace\"}"
+            }
+          }
+        },
+        {
+          "name": "Close claim",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/crm/claims/{{claimId}}/close"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Portal — customer",
+      "item": [
+        {
+          "name": "My profile (upsert)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{CUSTOMER}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/portal/profile",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"governorate\": \"الجيزة\", \"city\": \"فيصل\"}"
+            }
+          }
+        },
+        {
+          "name": "My addresses",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{CUSTOMER}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/portal/addresses"
+          }
+        },
+        {
+          "name": "Add address",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{CUSTOMER}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/portal/addresses",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"phone\": \"01011111111\", \"governorate\": \"الجيزة\", \"addressText\": \"شارع 1\", \"isDefault\": true}"
+            }
+          }
+        },
+        {
+          "name": "My favorites",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{CUSTOMER}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/portal/favorites"
+          }
+        },
+        {
+          "name": "Add favorite",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{CUSTOMER}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/portal/favorites",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"productId\": \"PRODUCT_ID\"}"
+            }
+          }
+        },
+        {
+          "name": "My warranties",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{CUSTOMER}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/portal/warranties"
+          }
+        },
+        {
+          "name": "File claim",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{CUSTOMER}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/portal/warranties/claims",
+            "body": {
+              "mode": "raw",
+              "raw": "{\"warrantyId\": \"WARRANTY_ID\", \"description\": \"Sagging middle\"}"
+            }
+          }
+        },
+        {
+          "name": "My claims",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{CUSTOMER}}"
+              }
+            ],
+            "url": "{{baseUrl}}/api/v1/portal/warranties/claims"
           }
         }
       ]

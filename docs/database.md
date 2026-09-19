@@ -108,7 +108,8 @@
 
 ## 11. ترتيب المايجريشنز (محدّث — التنفيذ بدأ بالمخازن أولاً)
 
-V1 (مُصلح: عمود مكرر + DEFAULT) → V2,V3 (موجودة) → **V4 inventory (مُنفذ)** → **V5 analytics: audit_logs + sales_daily_facts (مُنفذ؛ product_velocity تُحسب live من stock_moves)** →
-V6 favorites (مخطط) → V7 promotions (مخطط) → V8 sales (مخطط) → V9 purchasing (مخطط) →
-V10 crm (مخطط) → V11 hr (مخطط) → V12 accounting (مخطط) → V13 delivery (مخطط) →
-V14 reviews+quiz (مخطط) → V15 inquiries + app_events + idempotency (مخطط).
+V1 (مُصلح: عمود مكرر + DEFAULT) → V2,V3 (موجودة) → **V4 inventory (مُنفذ)** → **V5 analytics: audit_logs + sales_daily_facts (مُنفذ)** →
+**V6 sales + V7 audit-cols (مُنفذ)** →
+**V8 crm (مُنفذ: profiles/addresses/favorites/warranties/claims)** →
+V9 purchasing (مخطط) → V10 hr (مخطط) → V11 accounting (مخطط) → V12 delivery (مخطط) →
+V13 reviews+quiz (مخطط) → V14 inquiries + app_events (مخطط).

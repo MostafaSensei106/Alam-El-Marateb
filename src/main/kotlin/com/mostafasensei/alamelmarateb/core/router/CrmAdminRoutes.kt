@@ -8,6 +8,7 @@ package com.mostafasensei.alamelmarateb.core.router
 object CrmAdminRoutes {
     private const val PREFIX = "/api/v1/crm"
 
+    const val BASE = PREFIX
     const val CUSTOMERS = "$PREFIX/customers"
     const val CUSTOMER_BY_ID = "$PREFIX/customers/{id}"
 

@@ -45,7 +45,10 @@ class CartService(
     fun add(customerId: UUID?, guestKey: String?, variantId: UUID, qty: Int): CartView {
         if (qty <= 0) throw BadRequestException("Quantity must be positive")
         variantRepository.findById(variantId) ?: throw BadRequestException("Unknown variant")
-        val cart = load(customerId, guestKey)
+        if (customerId == null && guestKey.isNullOrBlank()) throw BadRequestException("Customer or guest key required")
+        val cart = (customerId?.let { cartRepository.findByCustomerId(it).orElse(null) }
+            ?: guestKey?.let { cartRepository.findByGuestKey(it).orElse(null) })
+            ?: cartRepository.save(CartJpaEntity(customerId = customerId, guestKey = guestKey))
         val existing = cart.items.firstOrNull { it.variantId == variantId }
         if (existing == null) {
             cart.items.add(CartItemJpaEntity(cart = cart, variantId = variantId, qty = qty))
@@ -104,13 +107,19 @@ class CartService(
     private fun view(cart: CartJpaEntity): CartView {
         val lines = cart.items.mapNotNull { item ->
             val variant = variantRepository.findById(item.variantId!!) ?: return@mapNotNull null
+            val total = variant.sellingPrice.multiply(item.qty.toBigDecimal())
+                .setScale(2, java.math.RoundingMode.HALF_EVEN)
             CartLineView(
                 variantId = item.variantId!!,
                 qty = item.qty,
                 unitPrice = variant.sellingPrice,
-                lineTotal = variant.sellingPrice.multiply(item.qty.toBigDecimal()),
+                lineTotal = total,
             )
         }
-        return CartView(cart.id, lines, lines.fold(BigDecimal.ZERO) { acc, l -> acc.add(l.lineTotal) })
+        return CartView(
+            cart.id, lines,
+            lines.fold(BigDecimal.ZERO) { acc, l -> acc.add(l.lineTotal) }
+                .setScale(2, java.math.RoundingMode.HALF_EVEN),
+        )
     }
 }

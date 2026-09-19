@@ -8,6 +8,7 @@ package com.mostafasensei.alamelmarateb.core.router
 object PortalRoutes {
     private const val PREFIX = "/api/v1/portal"
 
+    const val BASE = PREFIX
     const val ADDRESSES = "$PREFIX/addresses"
     const val ADDRESS_BY_ID = "$PREFIX/addresses/{addressId}"
 

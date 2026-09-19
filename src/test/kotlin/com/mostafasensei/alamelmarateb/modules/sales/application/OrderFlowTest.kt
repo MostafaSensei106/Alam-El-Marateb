@@ -41,6 +41,40 @@ class OrderFlowTest {
     @Autowired
     private lateinit var catalogService: ProductCatalogService
 
+    @Autowired
+    private lateinit var jdbc: JdbcTemplate
+
+    @Autowired
+    private lateinit var txManager: org.springframework.transaction.PlatformTransactionManager
+
+    private fun newBranch(): UUID {
+        // Committed immediately: AuditLogService writes in its own tx (REQUIRES_NEW)
+        // and cannot see uncommitted rows of the test transaction.
+        val template = org.springframework.transaction.support.TransactionTemplate(txManager)
+        template.propagationBehavior = org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRES_NEW
+        val id = UUID.randomUUID()
+        template.execute {
+            jdbc.update(
+                "INSERT INTO branches (id, name, code, city, address) VALUES (?, ?, ?, ?, ?)",
+                id, "Test Branch", "BR-${System.nanoTime()}", "Cairo", "Test St",
+            )
+        }
+        return id
+    }
+
+    private fun newCustomer(): UUID {
+        val template = org.springframework.transaction.support.TransactionTemplate(txManager)
+        template.propagationBehavior = org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRES_NEW
+        val id = UUID.randomUUID()
+        template.execute {
+            jdbc.update(
+                "INSERT INTO users (id, full_name, phone_number, password_hash) VALUES (?, ?, ?, ?)",
+                id, "Test Customer", "01${System.nanoTime().toString().takeLast(9)}", "hash",
+            )
+        }
+        return id
+    }
+
     private fun seedVariant(suffix: String): UUID {
         val category = catalogService.createCategory(
             ProductCategory(name = "Sales Cat", slug = "sales-cat-$suffix-${System.nanoTime()}"),
@@ -63,7 +97,7 @@ class OrderFlowTest {
     @Test
     fun `place with promo reserves, complete deducts, idempotency replays`() {
         val variantId = seedVariant("a")
-        val branchId = UUID.randomUUID()
+        val branchId = newBranch()
         val warehouse = warehouseService.create(branchId, "Sales WH", "SWH-${System.nanoTime()}")
         stockService.adjust(warehouse.id!!, variantId, 10, "Opening", by = "test")
 
@@ -98,7 +132,7 @@ class OrderFlowTest {
     @Test
     fun `complete sale is paid and delivered immediately`() {
         val variantId = seedVariant("b")
-        val branchId = UUID.randomUUID()
+        val branchId = newBranch()
         val warehouse = warehouseService.create(branchId, "POS WH", "PWH-${System.nanoTime()}")
         stockService.adjust(warehouse.id!!, variantId, 5, "Opening", by = "test")
 
@@ -118,7 +152,7 @@ class OrderFlowTest {
     @Test
     fun `cart add merge and clear`() {
         val variantId = seedVariant("c")
-        val customer = UUID.randomUUID()
+        val customer = newCustomer()
         var cart = cartService.add(customer, null, variantId, 2)
         assertEquals(1, cart.lines.size)
         assertEquals(BigDecimal("16000.00"), cart.subtotal)
