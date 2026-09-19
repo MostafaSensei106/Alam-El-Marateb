@@ -33,9 +33,9 @@ class MessageConfig {
     fun messageSource(): MessageSource {
         val source = ReloadableResourceBundleMessageSource()
         source.setBasename("classpath:messages/messages")
-        source.setDefaultEncoding("UTF-8")
+        source.defaultEncoding = "UTF-8"
         source.setDefaultLocale(Locale("ar"))
-        source.setUseCodeAsDefaultMessage(true)
+        source.isUseCodeAsDefaultMessage = true
         return source
     }
 }
@@ -65,7 +65,7 @@ class MessageService(
     fun get(code: String, locale: Locale, vararg args: Any): String {
         val effective = if (locale.language.lowercase() in supportedCodes) locale else defaultLocale
         return try {
-            source.getMessage(code, args, effective) ?: code
+            source.getMessage(code, args, effective)
         } catch (_: Exception) {
             code
         }
@@ -89,7 +89,7 @@ class AppLocaleResolver(
     private val fallback = Locale(default)
 
     init {
-        setDefaultLocale(fallback)
+        defaultLocale = fallback
     }
 
     override fun resolveLocale(request: HttpServletRequest): Locale {

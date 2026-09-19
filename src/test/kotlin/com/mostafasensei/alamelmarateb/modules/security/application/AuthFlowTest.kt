@@ -52,7 +52,7 @@ class AuthFlowTest {
         ).apply { propagationBehavior = org.springframework.transaction.TransactionDefinition.PROPAGATION_REQUIRES_NEW }
             .execute<UUID> {
                 identityService.createBranch("Auth Branch", "AB-${System.nanoTime()}", null, "Cairo", "Cairo St", "test").id!!
-            }!!
+            }
         val branch = branchId.let { identityService.listBranches().first { b -> b.id == it } }
         assertTrue(branch.id != null)
 
@@ -68,7 +68,7 @@ class AuthFlowTest {
         val updated = identityService.setRoles(staff.id!!, listOf("ROLE_CASHIER", "ROLE_WAREHOUSE_KEEPER"), "test")
         assertEquals(2, updated.roles.size)
 
-        val toggled = identityService.toggleUser(staff.id!!, "test")
+        val toggled = identityService.toggleUser(staff.id, "test")
         assertEquals(false, toggled.isActive)
         assertFailsWith<AuthService.UnauthorizedException> {
             authService.login(phone, "secret123")

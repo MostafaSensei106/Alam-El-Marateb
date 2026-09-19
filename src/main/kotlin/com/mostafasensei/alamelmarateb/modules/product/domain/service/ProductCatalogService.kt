@@ -202,7 +202,7 @@ class ProductCatalogService(
                 when (defn.type) {
                      AttributeType.SELECT -> {
                         if (attrValue.value is AttributeValue.Option) {
-                            val optionId = (attrValue.value as AttributeValue.Option).optionId
+                            val optionId = attrValue.value.optionId
                             if (optionId !in optionIds) {
                                 errors.add("Invalid option for attribute ${defn.key}")
                             }
@@ -210,7 +210,7 @@ class ProductCatalogService(
                      }
                      AttributeType.MULTI_SELECT -> {
                         if (attrValue.value is AttributeValue.MultiOption) {
-                            val optionIdsSet = (attrValue.value as AttributeValue.MultiOption).optionIds
+                            val optionIdsSet = attrValue.value.optionIds
                             val invalid = optionIdsSet.filter { it !in optionIds }
                             if (invalid.isNotEmpty()) {
                                 errors.add("Invalid option(s) for attribute ${defn.key}")

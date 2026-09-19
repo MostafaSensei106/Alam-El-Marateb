@@ -69,7 +69,7 @@ class AnalyticsOverviewTest {
 
         stockService.adjust(main.id!!, variant.id!!, 10, "Opening", by = "tester")
         val transfer = transferService.create(
-            main.id!!, branch.id!!, null, listOf(TransferItemRequest(variant.id!!, 4)),
+            main.id, branch.id!!, null, listOf(TransferItemRequest(variant.id, 4)),
         )
         transferService.dispatch(transfer.id!!, by = "tester")
 
@@ -84,14 +84,14 @@ class AnalyticsOverviewTest {
         assertEquals(6, mainValue.totalQty)
 
         // Velocity sees the 4-unit outbound move with cover math.
-        val velocity = analyticsService.velocity(main.id!!)
+        val velocity = analyticsService.velocity(main.id)
         val row = velocity.first { it.variantId == variant.id }
         assertEquals(4, row.sold30d)
         assertEquals(6, row.currentQty)
         assertTrue((row.daysOfCover ?: 0) > 0)
 
         // Audit trail recorded dispatch with actor.
-        val trail = analyticsService.auditTrail("transfer", transfer.id!!)
+        val trail = analyticsService.auditTrail("transfer", transfer.id)
         assertTrue(trail.any { it.action == "DISPATCH" && it.actor == "tester" })
     }
 }

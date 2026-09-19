@@ -284,7 +284,7 @@ class OrderService(
         returns.forEach { ret ->
             order.lines.forEach { line ->
                 stockService.applyMove(
-                    warehouseId, line.variantId!!, line.qty, com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType.RETURN,
+                    warehouseId, line.variantId!!, line.qty, MoveType.RETURN,
                     "RETURN", ret.id, "Return approved",
                 )
             }
@@ -361,7 +361,7 @@ class OrderService(
             stockService.release(warehouseId, line.variantId, line.qty)
             stockService.applyMove(
                 warehouseId, line.variantId, -line.qty,
-                com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType.SALE,
+                MoveType.SALE,
                 "ORDER", order.id, "Sale ${order.trackingNumber}",
             )
         }
@@ -407,7 +407,7 @@ class OrderService(
         )
         repeat(months) { i ->
             plan.installments.add(
-                com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentJpaEntity(
+                InstallmentJpaEntity(
                     plan = plan, dueDate = LocalDate.now().plusMonths((i + 1).toLong()), amount = monthly,
                 ),
             )

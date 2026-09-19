@@ -105,13 +105,13 @@ class CrmFlowTest {
         // Favorites.
         crmService.addFavorite(customerId, product.id!!)
         assertEquals(listOf(product.id), crmService.favorites(customerId))
-        crmService.removeFavorite(customerId, product.id!!)
+        crmService.removeFavorite(customerId, product.id)
         assertTrue(crmService.favorites(customerId).isEmpty())
 
         val order = orderService.completeSale(
             PlaceOrderInput(
                 branchId = branchId, customerId = customerId, channel = "pos",
-                items = listOf(OrderItemInput(variant.id!!, 1)),
+                items = listOf(OrderItemInput(variant.id, 1)),
                 paymentMethod = PaymentMethod.CASH, by = "test",
             ),
             by = "test",
@@ -123,13 +123,13 @@ class CrmFlowTest {
         assertTrue(warrantyService.verify(warranty.id!!).valid)
         assertEquals(1, warrantyService.myWarranties(customerId).size)
 
-        val claim = warrantyService.fileClaim(warranty.id!!, "Sagging middle", null, "test")
+        val claim = warrantyService.fileClaim(warranty.id, "Sagging middle", null, "test")
         assertEquals("reported", claim.status)
         val inspecting = warrantyService.scheduleInspection(claim.id!!, Instant.now().plusSeconds(86400), "manager")
         assertEquals("inspecting", inspecting.status)
-        val resolved = warrantyService.resolve(claim.id!!, "replace", "manager")
+        val resolved = warrantyService.resolve(claim.id, "replace", "manager")
         assertEquals("replaced", resolved.status)
-        assertEquals("closed", warrantyService.close(claim.id!!, "manager").status)
+        assertEquals("closed", warrantyService.close(claim.id, "manager").status)
         assertEquals(1, warrantyService.myClaims(customerId).size)
     }
 }

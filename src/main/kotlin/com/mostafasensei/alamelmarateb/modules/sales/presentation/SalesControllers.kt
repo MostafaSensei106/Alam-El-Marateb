@@ -280,9 +280,9 @@ class ShopCheckoutController(
 
     @Operation(summary = "Price preview (non-binding invoice math)")
     @PostMapping("/price-preview")
-    fun preview(@Valid @RequestBody request: PricePreviewRequest): ResponseEntity<ApiResponse<com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.PricePreviewResponse>> {
+    fun preview(@Valid @RequestBody request: PricePreviewRequest): ResponseEntity<ApiResponse<PricePreviewResponse>> {
         val lines = promotionService.resolveLines(request.lines.map { it.variantId to it.qty })
-        return ok(com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.PricePreviewResponse.fromDomain(promotionService.preview(lines)))
+        return ok(PricePreviewResponse.fromDomain(promotionService.preview(lines)))
     }
 
     @Operation(summary = "Place order")

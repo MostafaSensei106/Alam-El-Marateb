@@ -20,7 +20,7 @@ fun ProductAttributeValueRequest.toDomain(): ProductAttributeValue =
         }
     )
 
-fun com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest.toDomain(attributeId: UUID): ProductAttributeValue =
+fun AttributeValueRequest.toDomain(attributeId: UUID): ProductAttributeValue =
     ProductAttributeValueRequest(attributeId = attributeId, value = this).toDomain()
 
 fun ProductAttributeValue.toResponse(): ProductAttributeResponse =

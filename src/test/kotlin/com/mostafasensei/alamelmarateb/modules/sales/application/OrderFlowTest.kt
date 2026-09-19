@@ -116,17 +116,17 @@ class OrderFlowTest {
         assertEquals(BigDecimal("7200.00"), placed.order.grandTotal)
         assertEquals(OrderStatus.confirmed, placed.order.status)
         // Reserved: available drops to 9.
-        assertEquals(9, stockService.levels(warehouse.id!!).first().available)
+        assertEquals(9, stockService.levels(warehouse.id).first().available)
 
         // Replay same key → same order, no double reserve.
         val replay = orderService.place(input)
         assertTrue(replay.replayed)
         assertEquals(placed.order.id, replay.order.id)
-        assertEquals(9, stockService.levels(warehouse.id!!).first().available)
+        assertEquals(9, stockService.levels(warehouse.id).first().available)
 
         // Deliver deducts.
         orderService.markDelivered(placed.order.id!!, by = "test")
-        assertEquals(9, stockService.levels(warehouse.id!!).first().qty)
+        assertEquals(9, stockService.levels(warehouse.id).first().qty)
     }
 
     @Test
@@ -146,7 +146,7 @@ class OrderFlowTest {
         )
         assertEquals(OrderStatus.delivered, order.status)
         assertEquals(BigDecimal("16000.00"), order.grandTotal)
-        assertEquals(3, stockService.levels(warehouse.id!!).first().qty)
+        assertEquals(3, stockService.levels(warehouse.id).first().qty)
     }
 
     @Test

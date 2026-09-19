@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Alamelmarateb ERP — v1",
-    "description": "Catalog + Inventory. Auth: login endpoint pending (identity P7) — paste JWT manually into managerJwt/keeperJwt. Swagger UI: {{baseUrl}}/swagger-ui.html",
+    "description": "Alamelmarateb ERP v1 — Catalog, Inventory, Sales, CRM, Identity. Login first, paste tokens into variables. Swagger UI: {{baseUrl}}/swagger-ui.html",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -60,14 +60,18 @@
     {
       "key": "userId",
       "value": ""
+    },
+    {
+      "key": "customerJwt",
+      "value": ""
     }
   ],
   "item": [
     {
-      "name": "Auth — public (start here)",
+      "name": "🔐 Auth — public (start here)",
       "item": [
         {
-          "name": "Register customer",
+          "name": "📝 Register customer",
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/api/v1/auth/register",
@@ -84,7 +88,7 @@
           }
         },
         {
-          "name": "Login (admin seeded: ADMIN_PHONE/ADMIN_PASSWORD)",
+          "name": "🔑 Login (admin seeded: ADMIN_PHONE/ADMIN_PASSWORD)",
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/api/v1/auth/login",
@@ -101,7 +105,7 @@
           }
         },
         {
-          "name": "Refresh",
+          "name": "🔄 Refresh",
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/api/v1/auth/refresh",
@@ -118,7 +122,7 @@
           }
         },
         {
-          "name": "My profile",
+          "name": "🙋 My profile",
           "request": {
             "method": "GET",
             "header": [
@@ -133,10 +137,10 @@
       ]
     },
     {
-      "name": "Catalog — management (managerJwt)",
+      "name": "🗄️ Catalog — management",
       "item": [
         {
-          "name": "Create category",
+          "name": "➕ Create category",
           "request": {
             "method": "POST",
             "header": [
@@ -157,7 +161,7 @@
           }
         },
         {
-          "name": "List products",
+          "name": "📋 List products",
           "request": {
             "method": "GET",
             "header": [
@@ -170,7 +174,7 @@
           }
         },
         {
-          "name": "Create product",
+          "name": "➕ Create product",
           "request": {
             "method": "POST",
             "header": [
@@ -193,10 +197,10 @@
       ]
     },
     {
-      "name": "Catalog — storefront (public)",
+      "name": "🛍️ Catalog — storefront (public)",
       "item": [
         {
-          "name": "Browse products",
+          "name": "🛍️ Browse products",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/catalog/public/products"
@@ -205,10 +209,10 @@
       ]
     },
     {
-      "name": "Inventory — management (managerJwt)",
+      "name": "📦 Inventory — management",
       "item": [
         {
-          "name": "Create warehouse",
+          "name": "➕ Create warehouse",
           "request": {
             "method": "POST",
             "header": [
@@ -229,7 +233,7 @@
           }
         },
         {
-          "name": "Stock overview",
+          "name": "📊 Stock overview",
           "request": {
             "method": "GET",
             "header": [
@@ -242,7 +246,7 @@
           }
         },
         {
-          "name": "Low-stock alerts",
+          "name": "⚠️ Low-stock alerts",
           "request": {
             "method": "GET",
             "header": [
@@ -255,7 +259,7 @@
           }
         },
         {
-          "name": "Create transfer (draft)",
+          "name": "➕ Create transfer (draft)",
           "request": {
             "method": "POST",
             "header": [
@@ -276,7 +280,7 @@
           }
         },
         {
-          "name": "Dispatch transfer",
+          "name": "🚚 Dispatch transfer",
           "request": {
             "method": "POST",
             "header": [
@@ -289,7 +293,7 @@
           }
         },
         {
-          "name": "Approve transfer (final)",
+          "name": "✔️ Approve transfer (final)",
           "request": {
             "method": "POST",
             "header": [
@@ -302,7 +306,7 @@
           }
         },
         {
-          "name": "Open audit",
+          "name": "🧮 Open audit",
           "request": {
             "method": "POST",
             "header": [
@@ -323,7 +327,7 @@
           }
         },
         {
-          "name": "Reconcile audit",
+          "name": "⚖️ Reconcile audit",
           "request": {
             "method": "POST",
             "header": [
@@ -338,10 +342,10 @@
       ]
     },
     {
-      "name": "Warehouse — operations (keeperJwt)",
+      "name": "🏭 Warehouse — operations",
       "item": [
         {
-          "name": "Stock lookup by barcode/SKU",
+          "name": "🔎 Stock lookup by barcode/SKU",
           "request": {
             "method": "GET",
             "header": [
@@ -354,7 +358,7 @@
           }
         },
         {
-          "name": "Quick adjustment",
+          "name": "🔧 Quick adjustment",
           "request": {
             "method": "POST",
             "header": [
@@ -375,7 +379,7 @@
           }
         },
         {
-          "name": "Pending transfers",
+          "name": "⏳ Pending transfers",
           "request": {
             "method": "GET",
             "header": [
@@ -388,7 +392,7 @@
           }
         },
         {
-          "name": "Receive batch",
+          "name": "📥 Receive batch",
           "request": {
             "method": "POST",
             "header": [
@@ -409,7 +413,7 @@
           }
         },
         {
-          "name": "Submit audit count",
+          "name": "🧮 Submit audit count",
           "request": {
             "method": "POST",
             "header": [
@@ -432,10 +436,10 @@
       ]
     },
     {
-      "name": "Analytics — dashboard (managerJwt)",
+      "name": "📊 Analytics — dashboard",
       "item": [
         {
-          "name": "Executive summary",
+          "name": "📊 Executive summary",
           "request": {
             "method": "GET",
             "header": [
@@ -448,7 +452,7 @@
           }
         },
         {
-          "name": "Product velocity",
+          "name": "🚀 Product velocity",
           "request": {
             "method": "GET",
             "header": [
@@ -461,7 +465,7 @@
           }
         },
         {
-          "name": "Audit trail (transfer)",
+          "name": "📜 Audit trail (transfer)",
           "request": {
             "method": "GET",
             "header": [
@@ -476,10 +480,10 @@
       ]
     },
     {
-      "name": "Sales — POS (managerJwt/cashier)",
+      "name": "🧾 Sales — POS",
       "item": [
         {
-          "name": "Complete sale (cash)",
+          "name": "✅ Complete sale (cash)",
           "request": {
             "method": "POST",
             "header": [
@@ -500,7 +504,7 @@
           }
         },
         {
-          "name": "Save draft",
+          "name": "• Save draft",
           "request": {
             "method": "POST",
             "header": [
@@ -521,7 +525,7 @@
           }
         },
         {
-          "name": "Create promotion 10%",
+          "name": "➕ Create promotion 10%",
           "request": {
             "method": "POST",
             "header": [
@@ -542,7 +546,7 @@
           }
         },
         {
-          "name": "Confirm manual payment",
+          "name": "✅ Confirm manual payment",
           "request": {
             "method": "POST",
             "header": [
@@ -555,7 +559,7 @@
           }
         },
         {
-          "name": "Approve return",
+          "name": "✔️ Approve return",
           "request": {
             "method": "POST",
             "header": [
@@ -570,10 +574,10 @@
       ]
     },
     {
-      "name": "Shop — customer",
+      "name": "🛒 Shop — customer",
       "item": [
         {
-          "name": "Add to cart",
+          "name": "➕ Add to cart",
           "request": {
             "method": "POST",
             "header": [
@@ -594,7 +598,7 @@
           }
         },
         {
-          "name": "Price preview",
+          "name": "👁️ Price preview",
           "request": {
             "method": "POST",
             "header": [
@@ -615,7 +619,7 @@
           }
         },
         {
-          "name": "Estimate shipping",
+          "name": "🧮 Estimate shipping",
           "request": {
             "method": "POST",
             "header": [
@@ -636,7 +640,7 @@
           }
         },
         {
-          "name": "Place order (COD)",
+          "name": "🧾 Place order (COD)",
           "request": {
             "method": "POST",
             "header": [
@@ -657,7 +661,7 @@
           }
         },
         {
-          "name": "My orders",
+          "name": "📦 My orders",
           "request": {
             "method": "GET",
             "header": [
@@ -670,7 +674,7 @@
           }
         },
         {
-          "name": "Track order",
+          "name": "📍 Track order",
           "request": {
             "method": "GET",
             "header": [
@@ -685,10 +689,10 @@
       ]
     },
     {
-      "name": "CRM — management (managerJwt)",
+      "name": "👥 CRM — management",
       "item": [
         {
-          "name": "Register warranty",
+          "name": "📝 Register warranty",
           "request": {
             "method": "POST",
             "header": [
@@ -709,7 +713,7 @@
           }
         },
         {
-          "name": "Verify warranty",
+          "name": "🔍 Verify warranty",
           "request": {
             "method": "GET",
             "header": [
@@ -722,7 +726,7 @@
           }
         },
         {
-          "name": "Warranty claims",
+          "name": "📝 Warranty claims",
           "request": {
             "method": "GET",
             "header": [
@@ -735,7 +739,7 @@
           }
         },
         {
-          "name": "Schedule inspection",
+          "name": "🔍 Schedule inspection",
           "request": {
             "method": "POST",
             "header": [
@@ -756,7 +760,7 @@
           }
         },
         {
-          "name": "Resolve claim",
+          "name": "🛠️ Resolve claim",
           "request": {
             "method": "POST",
             "header": [
@@ -777,7 +781,7 @@
           }
         },
         {
-          "name": "Close claim",
+          "name": "🔒 Close claim",
           "request": {
             "method": "POST",
             "header": [
@@ -792,16 +796,16 @@
       ]
     },
     {
-      "name": "Portal — customer",
+      "name": "🙋 Portal — customer",
       "item": [
         {
-          "name": "My profile (upsert)",
+          "name": "🙋 My profile (upsert)",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{CUSTOMER}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -816,26 +820,26 @@
           }
         },
         {
-          "name": "My addresses",
+          "name": "📍 My addresses",
           "request": {
             "method": "GET",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{CUSTOMER}}"
+                "value": "Bearer {{customerJwt}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/addresses"
           }
         },
         {
-          "name": "Add address",
+          "name": "➕ Add address",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{CUSTOMER}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -850,26 +854,26 @@
           }
         },
         {
-          "name": "My favorites",
+          "name": "❤️ My favorites",
           "request": {
             "method": "GET",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{CUSTOMER}}"
+                "value": "Bearer {{customerJwt}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/favorites"
           }
         },
         {
-          "name": "Add favorite",
+          "name": "➕ Add favorite",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{CUSTOMER}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -884,26 +888,26 @@
           }
         },
         {
-          "name": "My warranties",
+          "name": "📜 My warranties",
           "request": {
             "method": "GET",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{CUSTOMER}}"
+                "value": "Bearer {{customerJwt}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/warranties"
           }
         },
         {
-          "name": "File claim",
+          "name": "📝 File claim",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{CUSTOMER}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -918,13 +922,13 @@
           }
         },
         {
-          "name": "My claims",
+          "name": "📝 My claims",
           "request": {
             "method": "GET",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{CUSTOMER}}"
+                "value": "Bearer {{customerJwt}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/warranties/claims"
@@ -933,10 +937,10 @@
       ]
     },
     {
-      "name": "Identity — admin (super-admin JWT)",
+      "name": "🔑 Identity — admin",
       "item": [
         {
-          "name": "List branches",
+          "name": "📋 List branches",
           "request": {
             "method": "GET",
             "header": [
@@ -949,7 +953,7 @@
           }
         },
         {
-          "name": "Create branch",
+          "name": "➕ Create branch",
           "request": {
             "method": "POST",
             "header": [
@@ -970,7 +974,7 @@
           }
         },
         {
-          "name": "List roles",
+          "name": "📋 List roles",
           "request": {
             "method": "GET",
             "header": [
@@ -983,7 +987,7 @@
           }
         },
         {
-          "name": "List users",
+          "name": "📋 List users",
           "request": {
             "method": "GET",
             "header": [
@@ -996,7 +1000,7 @@
           }
         },
         {
-          "name": "Create staff",
+          "name": "➕ Create staff",
           "request": {
             "method": "POST",
             "header": [
@@ -1017,7 +1021,7 @@
           }
         },
         {
-          "name": "Set roles",
+          "name": "👔 Set roles",
           "request": {
             "method": "POST",
             "header": [

@@ -67,39 +67,39 @@ class InventoryLifecycleTest {
 
         // 1. Opening stock.
         stockService.adjust(cairo.id!!, variantId, 10, "Opening balance")
-        assertEquals(10, stockService.levels(cairo.id!!).first().qty)
+        assertEquals(10, stockService.levels(cairo.id).first().qty)
 
         // 2. Transfer 6 units, dispatch deducts source.
         val transfer = transferService.create(
-            cairo.id!!, giza.id!!, "Restock",
+            cairo.id, giza.id!!, "Restock",
             listOf(TransferItemRequest(variantId, 6)),
         )
         assertEquals(TransferStatus.draft, transfer.status)
         transferService.dispatch(transfer.id!!)
-        assertEquals(4, stockService.levels(cairo.id!!).first().qty)
+        assertEquals(4, stockService.levels(cairo.id).first().qty)
 
         // 3. Receive 4 good + 2 damaged (pending).
         val received = transferService.receiveBatch(
-            transfer.id!!,
+            transfer.id,
             listOf(TransferItemRequest(variantId, 4)),
             mapOf(variantId to 2),
         )
         assertEquals(TransferStatus.received, received.status)
         // Dest: 4 good + 2 damaged-pending = 6.
-        assertEquals(6, stockService.levels(giza.id!!).first().qty)
+        assertEquals(6, stockService.levels(giza.id).first().qty)
 
         // 4. Manager approves → damaged deducted.
-        transferService.approve(transfer.id!!)
-        assertEquals(4, stockService.levels(giza.id!!).first().qty)
+        transferService.approve(transfer.id)
+        assertEquals(4, stockService.levels(giza.id).first().qty)
 
         // 5. Audit: count 3, reconcile writes -1 move.
-        val audit = auditService.open(giza.id!!, "Cycle count")
+        val audit = auditService.open(giza.id, "Cycle count")
         auditService.submitCount(audit.id!!, variantId, 3)
-        auditService.reconcile(audit.id!!)
-        assertEquals(3, stockService.levels(giza.id!!).first().qty)
+        auditService.reconcile(audit.id)
+        assertEquals(3, stockService.levels(giza.id).first().qty)
 
         // 6. Low-stock alert fires with threshold.
-        stockService.setThreshold(giza.id!!, variantId, 5)
+        stockService.setThreshold(giza.id, variantId, 5)
         val alerts = stockService.lowStockAlerts()
         assertNotNull(alerts.firstOrNull { it.variantId == variantId })
     }
