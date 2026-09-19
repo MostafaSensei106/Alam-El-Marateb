@@ -72,7 +72,7 @@ class SecurityConfig (
                     .requestMatchers("$v1/crm/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
                     .requestMatchers("$v1/hr/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
                     .requestMatchers("$v1/analytics/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
-                    .requestMatchers("$v1/identity/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
+                    .requestMatchers("$v1/identity/**").hasAnyRole("SUPER_ADMIN")
 
                     .anyRequest().authenticated()
             }

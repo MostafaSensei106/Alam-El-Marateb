@@ -1,6 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.exceptions
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
+import com.mostafasensei.alamelmarateb.modules.security.application.AuthService
 import jakarta.persistence.OptimisticLockException
 import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
@@ -30,6 +31,11 @@ class GlobalExceptionHandler {
     @ExceptionHandler(ConflictException::class)
     fun handleConflict(ex: ConflictException): ResponseEntity<ApiResponse<Nothing>> =
         ResponseEntity.status(HttpStatus.CONFLICT).body(ApiResponse.failure(ex.message ?: "Conflict"))
+
+    @ExceptionHandler(AuthService.UnauthorizedException::class)
+    fun handleUnauthorized(ex: AuthService.UnauthorizedException): ResponseEntity<ApiResponse<Nothing>> =
+        ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+            .body(ApiResponse.failure(ex.message ?: "Invalid phone or password"))
 
     @ExceptionHandler(BadRequestException::class)
     fun handleBadRequest(ex: BadRequestException): ResponseEntity<ApiResponse<Nothing>> =

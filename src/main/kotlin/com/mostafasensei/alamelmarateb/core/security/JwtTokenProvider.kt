@@ -16,7 +16,8 @@ import javax.crypto.SecretKey
 @Component
 class JwtTokenProvider(
     @Value("\${app.jwt.secret}") private val jwtSecret: String,
-    @Value("\${app.jwt.expiration-ms:86400000}") private val jwtExpirationMs: Long
+    @Value("\${app.jwt.expiration-ms:86400000}") private val jwtExpirationMs: Long,
+    @Value("\${app.jwt.refresh-expiration-ms:604800000}") private val refreshExpirationMs: Long,
 ) {
 
     private val key: SecretKey by lazy {
@@ -37,6 +38,26 @@ class JwtTokenProvider(
             .expiration(expiryDate)
             .signWith(key)
             .compact()
+    }
+
+    fun generateRefreshToken(userId: UUID): String {
+        val now = Date()
+        return Jwts.builder()
+            .subject(userId.toString())
+            .claim("type", "refresh")
+            .issuedAt(now)
+            .expiration(Date(now.time + refreshExpirationMs))
+            .signWith(key)
+            .compact()
+    }
+
+    fun isRefreshToken(token: String): Boolean {
+        return try {
+            val claims: Claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).payload
+            claims["type"] == "refresh"
+        } catch (_: Exception) {
+            false
+        }
     }
 
     fun getUserIdFromToken(token: String): UUID {

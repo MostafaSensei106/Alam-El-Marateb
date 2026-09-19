@@ -20,6 +20,7 @@ object AuthRoutes {
 object IdentityAdminRoutes {
     private const val PREFIX = "/api/v1/identity"
 
+    const val BASE = PREFIX
     const val BRANCHES = "$PREFIX/branches"
     const val BRANCH_BY_ID = "$PREFIX/branches/{id}"
     const val BRANCH_STATUS = "$PREFIX/branches/{id}/status"
