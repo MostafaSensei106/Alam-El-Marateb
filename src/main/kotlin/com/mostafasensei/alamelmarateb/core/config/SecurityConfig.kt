@@ -1,6 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.config
 
 import com.mostafasensei.alamelmarateb.core.router.api.ApiVersion
+import com.mostafasensei.alamelmarateb.core.security.ApiAccessDeniedHandler
 import com.mostafasensei.alamelmarateb.core.security.JwtAuthenticationEntryPoint
 import com.mostafasensei.alamelmarateb.core.security.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
@@ -27,7 +28,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity(prePostEnabled = true)
 class SecurityConfig (
     private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
-    private val jwtAuthenticationFilter: JwtAuthenticationFilter
+    private val jwtAuthenticationFilter: JwtAuthenticationFilter,
+    private val apiAccessDeniedHandler: ApiAccessDeniedHandler
 ){
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
@@ -42,7 +44,10 @@ class SecurityConfig (
         http
             .csrf { it.disable() }
             .cors { }
-            .exceptionHandling { it.authenticationEntryPoint(jwtAuthenticationEntryPoint) }
+            .exceptionHandling {
+                it.authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                it.accessDeniedHandler(apiAccessDeniedHandler)
+            }
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { auth ->
                 auth

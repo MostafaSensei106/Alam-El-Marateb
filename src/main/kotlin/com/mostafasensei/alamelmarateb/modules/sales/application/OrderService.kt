@@ -4,6 +4,7 @@ import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
+import com.mostafasensei.alamelmarateb.core.exceptions.UnprocessableException
 import com.mostafasensei.alamelmarateb.modules.inventory.application.StockService
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.WarehouseRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType
@@ -76,8 +77,8 @@ class OrderService(
     @Transactional
     fun place(input: PlaceOrderInput): PlacedOrder {
         validateIdentity(input)
-        if (input.items.isEmpty()) throw BadRequestException("Order must contain items")
-        if (input.channel != "pos" && input.channel != "shop") throw BadRequestException("Unknown channel")
+        if (input.items.isEmpty()) throw UnprocessableException("error.order.empty_items")
+        if (input.channel != "pos" && input.channel != "shop") throw BadRequestException("error.order.unknown_channel")
 
         input.idempotencyKey?.let { key ->
             val existing = orderRepository.findByIdempotencyKey(key).orElse(null)
@@ -98,7 +99,7 @@ class OrderService(
     @Transactional
     fun saveDraft(input: PlaceOrderInput): Order {
         validateIdentity(input)
-        if (input.items.isEmpty()) throw BadRequestException("Order must contain items")
+        if (input.items.isEmpty()) throw UnprocessableException("error.order.empty_items")
         val order = OrderJpaEntity(
             branchId = input.branchId, customerId = input.customerId, guestPhone = input.guestPhone,
             channel = input.channel, status = OrderStatus.draft.name, salesRepId = input.salesRepId,
@@ -124,7 +125,7 @@ class OrderService(
         collect: Boolean, downPayment: BigDecimal?, months: Int?, by: String?,
     ): Order {
         val order = load(id)
-        if (order.status != OrderStatus.draft.name) throw ConflictException("Only draft orders can be completed")
+        if (order.status != OrderStatus.draft.name) throw ConflictException("error.order.draft_only", listOf(order.status))
         val items = order.lines.map { OrderItemInput(it.variantId!!, it.qty) }
         return finalize(
             id,
@@ -139,7 +140,7 @@ class OrderService(
 
     private fun validateIdentity(input: PlaceOrderInput) {
         if (input.customerId == null && input.guestPhone.isNullOrBlank()) {
-            throw BadRequestException("Customer or guest phone is required")
+            throw BadRequestException("error.order.identity_required")
         }
     }
 
@@ -159,7 +160,7 @@ class OrderService(
             PaymentMethod.INSTALLMENT -> PaymentStatus.partial
         }
         if (input.paymentMethod == PaymentMethod.INSTALLMENT) {
-            require((input.months ?: 0) > 0) { "Installment needs months" }
+            if ((input.months ?: 0) <= 0) throw UnprocessableException("error.order.months_positive")
         }
 
         order.status = OrderStatus.confirmed.name
@@ -205,9 +206,9 @@ class OrderService(
     /** POS immediate sale: paid + delivered, stock deducted now. */
     @Transactional
     fun completeSale(input: PlaceOrderInput, by: String?): Order {
-        require(input.channel == "pos") { "Complete sale is POS only" }
-        require(input.paymentMethod == PaymentMethod.CASH || input.paymentMethod == PaymentMethod.CARD) {
-            "Complete sale needs immediate payment"
+        if (input.channel != "pos") throw UnprocessableException("error.order.pos_only")
+        if (input.paymentMethod != PaymentMethod.CASH && input.paymentMethod != PaymentMethod.CARD) {
+            throw UnprocessableException("error.order.immediate_payment")
         }
         val placed = place(input.copy(by = by))
         deductReserved(placed.order)
@@ -221,7 +222,7 @@ class OrderService(
     fun confirmPayment(id: UUID, by: String?): Order {
         val order = load(id)
         if (order.paymentStatus != PaymentStatus.pending_confirmation.name) {
-            throw ConflictException("Nothing to confirm (status: ${order.paymentStatus})")
+            throw ConflictException("error.order.nothing_to_confirm", listOf(order.paymentStatus))
         }
         order.paymentStatus = PaymentStatus.paid.name
         auditLog.record("CONFIRM_PAYMENT", "order", id, order.branchId, by, null)
@@ -232,7 +233,7 @@ class OrderService(
     fun cancel(id: UUID, by: String?): Order {
         val order = load(id)
         if (order.status != OrderStatus.draft.name && order.status != OrderStatus.confirmed.name) {
-            throw ConflictException("Cannot cancel order in status ${order.status}")
+            throw ConflictException("error.order.cannot_cancel", listOf(order.status))
         }
         releaseAll(order)
         order.status = OrderStatus.cancelled.name
@@ -248,7 +249,7 @@ class OrderService(
         if (order.status != OrderStatus.confirmed.name && order.status != OrderStatus.preparing.name &&
             order.status != OrderStatus.delivering.name
         ) {
-            throw ConflictException("Cannot deliver order in status ${order.status}")
+            throw ConflictException("error.order.cannot_deliver", listOf(order.status))
         }
         deductReserved(toDomain(order))
         order.status = OrderStatus.delivered.name
@@ -259,13 +260,13 @@ class OrderService(
     @Transactional
     fun requestReturn(orderId: UUID, reason: String, lines: List<OrderItemInput>, by: String?): Order {
         val order = load(orderId)
-        if (order.status != OrderStatus.delivered.name) throw ConflictException("Only delivered orders can be returned")
-        if (reason.isBlank()) throw BadRequestException("Return reason is required")
+        if (order.status != OrderStatus.delivered.name) throw ConflictException("error.order.delivered_only", listOf(order.status))
+        if (reason.isBlank()) throw BadRequestException("error.order.return_reason_required")
         var refund = BigDecimal.ZERO
         lines.forEach { req ->
             val line = order.lines.firstOrNull { it.variantId == req.variantId }
-                ?: throw BadRequestException("Variant not in order: ${req.variantId}")
-            if (req.qty != line.qty) throw BadRequestException("Only full-line returns supported (variant ${req.variantId})")
+                ?: throw UnprocessableException("error.order.variant_not_in_order", listOf(req.variantId))
+            if (req.qty != line.qty) throw UnprocessableException("error.order.full_line_only", listOf(req.variantId))
             refund = refund.add(line.net)
         }
         returnRepository.save(
@@ -279,7 +280,7 @@ class OrderService(
     fun approveReturn(orderId: UUID, by: String?): Order {
         val order = load(orderId)
         val returns = returnRepository.findAll().filter { it.orderId == orderId && it.status == "requested" }
-        if (returns.isEmpty()) throw ConflictException("No requested returns for this order")
+        if (returns.isEmpty()) throw ConflictException("error.order.no_requested_returns")
         val warehouseId = warehouseFor(order.branchId!!)
         returns.forEach { ret ->
             order.lines.forEach { line ->
@@ -299,7 +300,7 @@ class OrderService(
     @Transactional(readOnly = true)
     fun track(tracking: String): Order {
         val order = orderRepository.findByTrackingNumber(tracking)
-            .orElseThrow { NotFoundException("Order not found") }
+            .orElseThrow { NotFoundException("error.order.not_found") }
         return toDomain(order)
     }
 
@@ -307,7 +308,7 @@ class OrderService(
     @Transactional(readOnly = true)
     fun scanVariant(barcode: String): Map<String, Any?> {
         val variant = variantRepository.findByBarcode(barcode)
-            ?: throw NotFoundException("No variant found for: $barcode")
+            ?: throw NotFoundException("error.order.no_variant_barcode", listOf(barcode))
         return mapOf(
             "variantId" to variant.id,
             "productId" to variant.productId,
@@ -327,7 +328,7 @@ class OrderService(
     fun estimate(governorate: String, area: String, floor: Int?): Pair<BigDecimal, BigDecimal> =
         feesOf(
             zoneRepository.findByGovernorateAndAreaAndIsActiveTrue(governorate, area)
-                .orElseThrow { BadRequestException("Delivery not available for $governorate - $area") }.id,
+                .orElseThrow { UnprocessableException("error.order.delivery_unavailable", listOf(governorate, area)) }.id,
             floor, false,
         )
 
@@ -338,9 +339,9 @@ class OrderService(
         branchId: UUID, customerId: UUID?, guestPhone: String?,
         variantId: UUID, qty: Int, deposit: BigDecimal, deliverAt: LocalDate?, by: String?,
     ): UUID {
-        if (customerId == null && guestPhone.isNullOrBlank()) throw BadRequestException("Customer or guest phone required")
-        if (qty <= 0) throw BadRequestException("Quantity must be positive")
-        variantRepository.findById(variantId) ?: throw BadRequestException("Unknown variant")
+        if (customerId == null && guestPhone.isNullOrBlank()) throw BadRequestException("error.order.identity_required")
+        if (qty <= 0) throw BadRequestException("error.order.qty_positive")
+        variantRepository.findById(variantId) ?: throw NotFoundException("error.order.unknown_variant", listOf(variantId))
         val warehouseId = warehouseFor(branchId)
         stockService.reserve(warehouseId, variantId, qty)
         val saved = reservationRepository.save(
@@ -374,7 +375,7 @@ class OrderService(
 
     private fun warehouseFor(branchId: UUID): UUID =
         warehouseRepository.findByBranchId(branchId).firstOrNull()?.id
-            ?: throw BadRequestException("Branch has no warehouse")
+            ?: throw ConflictException("error.order.no_warehouse")
 
     private fun feesOf(zoneId: UUID?, floor: Int?, collect: Boolean): Pair<BigDecimal, BigDecimal> {
         if (collect == true) return BigDecimal.ZERO to BigDecimal.ZERO
@@ -398,7 +399,7 @@ class OrderService(
     }
 
     private fun createPlan(orderId: UUID, total: BigDecimal, down: BigDecimal, months: Int) {
-        if (down < BigDecimal.ZERO || down > total) throw BadRequestException("Invalid down payment")
+        if (down < BigDecimal.ZERO || down > total) throw UnprocessableException("error.order.down_payment_invalid")
         val financed = total.minus(down)
         val monthly = financed.divide(months.toBigDecimal(), 2, RoundingMode.HALF_EVEN)
         val plan = InstallmentPlanJpaEntity(
@@ -416,7 +417,7 @@ class OrderService(
     }
 
     private fun load(id: UUID): OrderJpaEntity =
-        orderRepository.findById(id).orElseThrow { NotFoundException("Order not found") }
+        orderRepository.findById(id).orElseThrow { NotFoundException("error.order.not_found") }
 
     private fun toDomain(e: OrderJpaEntity): Order = Order(
         id = e.id, branchId = e.branchId, customerId = e.customerId, guestPhone = e.guestPhone,

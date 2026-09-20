@@ -39,7 +39,7 @@ class ProductPresetController(
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<ProductPresetResponse>> =
-        ok((catalogService.getPreset(id) ?: throw NotFoundException("Preset not found")).toResponse())
+        ok((catalogService.getPreset(id) ?: throw NotFoundException("error.catalog.preset_not_found")).toResponse())
 
     @PostMapping
     fun create(@Valid @RequestBody request: ProductPresetCreateRequest): ResponseEntity<ApiResponse<ProductPresetResponse>> {
@@ -52,7 +52,7 @@ class ProductPresetController(
         @PathVariable id: UUID,
         @Valid @RequestBody request: ProductPresetUpdateRequest,
     ): ResponseEntity<ApiResponse<ProductPresetResponse>> {
-        val existing = catalogService.getPreset(id) ?: throw NotFoundException("Preset not found")
+        val existing = catalogService.getPreset(id) ?: throw NotFoundException("error.catalog.preset_not_found")
         val updated = existing.copy(
             name = request.name ?: existing.name,
             brand = request.brand ?: existing.brand,
@@ -67,7 +67,7 @@ class ProductPresetController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
-        catalogService.getPreset(id) ?: throw NotFoundException("Preset not found")
+        catalogService.getPreset(id) ?: throw NotFoundException("error.catalog.preset_not_found")
         catalogService.deletePreset(id)
         return deleted(MessageService.t("success.deleted"))
     }

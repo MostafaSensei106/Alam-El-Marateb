@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Alamelmarateb ERP — v1",
-    "description": "Alamelmarateb ERP v1 — Catalog, Inventory, Sales, CRM, Identity. Login first, paste tokens into variables. Swagger UI: {{baseUrl}}/swagger-ui.html",
+    "description": "Alamelmarateb ERP v1 — Catalog, Inventory, Sales, CRM, Identity. Login first, paste tokens into variables. Swagger UI: {{baseUrl}}/swagger-ui.html | Contract: ApiResponse{success,message,data,errors,traceId,timestamp}; X-Lang ar|en; Idempotency-Key on place-order/complete-sale; X-Trace-Id echoed; 400 syntax vs 422 semantics vs 409 conflict; 404 unknown route; 405 wrong method + Allow; 429 + Retry-After.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -64,6 +64,18 @@
     {
       "key": "customerJwt",
       "value": ""
+    },
+    {
+      "key": "idempotencyKey",
+      "value": "order-2026-09-20-001"
+    },
+    {
+      "key": "traceId",
+      "value": ""
+    },
+    {
+      "key": "trackingNumber",
+      "value": "TRK-XXXXXXXX"
     }
   ],
   "item": [
@@ -1039,6 +1051,205 @@
               "mode": "raw",
               "raw": "{\"roles\": [\"ROLE_CASHIER\", \"ROLE_WAREHOUSE_KEEPER\"]}"
             }
+          }
+        }
+      ]
+    },
+    {
+      "name": "⚠️ Edge cases & HTTP policy",
+      "item": [
+        {
+          "name": "404 — unknown route",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/no-such-thing",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "405 — wrong method (DELETE on collection)",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/catalog/products",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "400 — @Valid failure (negative qty)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/shop/cart/items?guestKey=g1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"variantId\": \"VARIANT_ID\", \"qty\": -1}"
+            }
+          }
+        },
+        {
+          "name": "422 — empty cart preview",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/shop/checkout/price-preview",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"lines\": []}"
+            }
+          }
+        },
+        {
+          "name": "422 — bad down payment (exceeds total)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/shop/checkout/place-order",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"INSTALLMENT\", \"downPayment\": 99999999, \"months\": 6}"
+            }
+          }
+        },
+        {
+          "name": "409 — insufficient stock (huge qty)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/pos/complete-sale",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 999999}], \"paymentMethod\": \"CASH\"}"
+            }
+          }
+        },
+        {
+          "name": "403 — customer hits manager analytics",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/summary",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "401 — no token on protected route",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/summary",
+            "header": []
+          }
+        },
+        {
+          "name": "Idempotency replay — same key twice",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/shop/checkout/place-order",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Idempotency-Key",
+                "value": "{{idempotencyKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"COD\"}"
+            }
+          }
+        },
+        {
+          "name": "X-Lang EN — same shape, English message",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/products/00000000-0000-0000-0000-000000000000",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Lang",
+                "value": "en"
+              }
+            ]
+          }
+        },
+        {
+          "name": "X-Trace-Id echo",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/summary",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Trace-Id",
+                "value": "demo-trace-001"
+              }
+            ]
           }
         }
       ]

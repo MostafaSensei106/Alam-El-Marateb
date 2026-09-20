@@ -2,7 +2,9 @@ package com.mostafasensei.alamelmarateb.modules.sales.application
 
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
+import com.mostafasensei.alamelmarateb.core.exceptions.ErrorDetail
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
+import com.mostafasensei.alamelmarateb.core.exceptions.UnprocessableException
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.PromotionBundleItemRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.PromotionRepository
@@ -62,7 +64,7 @@ class PromotionService(
     fun create(input: PromotionInput): PromotionView {
         validate(input)
         val code = input.code.trim().uppercase()
-        if (promotionRepository.existsByCode(code)) throw ConflictException("Promotion code exists: $code")
+        if (promotionRepository.existsByCode(code)) throw ConflictException("error.promo.code_exists", listOf(code))
         val entity = PromotionJpaEntity(
             code = code, name = input.name, promoType = input.type.name,
             valuePercent = input.valuePercent, valueAmount = input.valueAmount, bundlePrice = input.bundlePrice,
@@ -94,7 +96,7 @@ class PromotionService(
 
     @Transactional
     fun toggle(id: UUID): PromotionView {
-        val entity = promotionRepository.findById(id).orElseThrow { NotFoundException("Promotion not found") }
+        val entity = promotionRepository.findById(id).orElseThrow { NotFoundException("error.promo.not_found") }
         entity.isActive = !entity.isActive
         return toView(promotionRepository.save(entity))
     }
@@ -119,12 +121,12 @@ class PromotionService(
     }
 
     fun resolveLines(items: List<Pair<UUID, Int>>): List<PreviewLine> {
-        if (items.isEmpty()) throw BadRequestException("Cart is empty")
+        if (items.isEmpty()) throw UnprocessableException("error.promo.cart_empty")
         return items.map { (variantId, qty) ->
-            if (qty <= 0) throw BadRequestException("Quantity must be positive")
+            if (qty <= 0) throw BadRequestException("error.promo.qty_positive")
             val variant = variantRepository.findById(variantId)
-                ?: throw BadRequestException("Unknown variant: $variantId")
-            val productId = variant.productId ?: throw BadRequestException("Variant has no product")
+                ?: throw NotFoundException("error.promo.unknown_variant", listOf(variantId))
+            val productId = variant.productId ?: throw UnprocessableException("error.promo.variant_no_product", listOf(variantId))
             PreviewLine(productId, variantId, qty, variant.sellingPrice)
         }
     }
@@ -157,36 +159,36 @@ class PromotionService(
     }
 
     private fun validate(input: PromotionInput) {
-        val errors = mutableListOf<String>()
+        val errors = mutableListOf<ErrorDetail>()
         if (input.startsAt != null && input.endsAt != null && !input.endsAt.isAfter(input.startsAt)) {
-            errors.add("endsAt must be after startsAt")
+            errors.add(ErrorDetail("error.promo.ends_after_starts"))
         }
         when (input.type) {
             PromoType.ITEM_PERCENT, PromoType.CART_PERCENT -> {
                 val p = input.valuePercent
-                if (p == null || p <= BigDecimal.ZERO || p > BigDecimal(100)) errors.add("valuePercent must be within (0, 100]")
+                if (p == null || p <= BigDecimal.ZERO || p > BigDecimal(100)) errors.add(ErrorDetail("error.promo.percent_range"))
             }
             PromoType.ITEM_FIXED, PromoType.CART_FIXED -> {
-                if (input.valueAmount == null || input.valueAmount <= BigDecimal.ZERO) errors.add("valueAmount must be positive")
+                if (input.valueAmount == null || input.valueAmount <= BigDecimal.ZERO) errors.add(ErrorDetail("error.promo.amount_positive"))
             }
             PromoType.BUNDLE_FIXED -> {
-                if (input.bundlePrice == null || input.bundlePrice <= BigDecimal.ZERO) errors.add("bundlePrice must be positive")
-                if (input.bundleItems.isEmpty()) errors.add("bundle needs items")
-                if (input.bundleItems.any { it.productId == null && it.variantId == null }) errors.add("bundle items need product or variant")
+                if (input.bundlePrice == null || input.bundlePrice <= BigDecimal.ZERO) errors.add(ErrorDetail("error.promo.bundle_price_positive"))
+                if (input.bundleItems.isEmpty()) errors.add(ErrorDetail("error.promo.bundle_needs_items"))
+                if (input.bundleItems.any { it.productId == null && it.variantId == null }) errors.add(ErrorDetail("error.promo.bundle_item_target"))
             }
             PromoType.GIFT -> {
-                if (input.giftVariantId == null && input.giftProductId == null) errors.add("gift needs a target")
+                if (input.giftVariantId == null && input.giftProductId == null) errors.add(ErrorDetail("error.promo.gift_needs_target"))
                 if (input.giftVariantId != null && variantRepository.findById(input.giftVariantId) == null) {
-                    errors.add("unknown gift variant")
+                    errors.add(ErrorDetail("error.promo.unknown_gift_variant"))
                 }
             }
         }
         if ((input.type == PromoType.ITEM_PERCENT || input.type == PromoType.ITEM_FIXED) &&
             input.targetProductId == null && input.targetVariantId == null
         ) {
-            errors.add("item promos need a target")
+            errors.add(ErrorDetail("error.promo.item_needs_target"))
         }
-        if (errors.isNotEmpty()) throw BadRequestException("Invalid promotion", errors)
+        if (errors.isNotEmpty()) throw BadRequestException("error.promo.invalid", errorDetails = errors)
     }
 
     private fun toView(e: PromotionJpaEntity) = PromotionView(

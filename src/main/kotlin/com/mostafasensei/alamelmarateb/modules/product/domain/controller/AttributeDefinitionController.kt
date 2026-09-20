@@ -3,6 +3,7 @@ package com.mostafasensei.alamelmarateb.modules.product.domain.controller
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
 import com.mostafasensei.alamelmarateb.core.i18n.MessageService
+import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeType
 import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
@@ -42,7 +43,7 @@ class AttributeDefinitionController(
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> =
-        ok((catalogService.getAttributeDefinition(id) ?: throw NotFoundException("Attribute not found")).toResponse())
+        ok((catalogService.getAttributeDefinition(id) ?: throw NotFoundException("error.catalog.attribute_not_found")).toResponse())
 
     @PostMapping
     fun create(@Valid @RequestBody request: AttributeDefinitionCreateRequest): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> {
@@ -55,7 +56,7 @@ class AttributeDefinitionController(
         @PathVariable id: UUID,
         @Valid @RequestBody request: AttributeDefinitionUpdateRequest,
     ): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> {
-        val existing = catalogService.getAttributeDefinition(id) ?: throw NotFoundException("Attribute not found")
+        val existing = catalogService.getAttributeDefinition(id) ?: throw NotFoundException("error.catalog.attribute_not_found")
         val type = request.type?.let {
             when (it.uppercase()) {
                 "TEXT" -> AttributeType.TEXT
@@ -63,7 +64,7 @@ class AttributeDefinitionController(
                 "BOOLEAN" -> AttributeType.BOOLEAN
                 "SELECT" -> AttributeType.SELECT
                 "MULTI_SELECT" -> AttributeType.MULTI_SELECT
-                else -> throw IllegalArgumentException("Invalid attribute type")
+                else -> throw BadRequestException("error.catalog.invalid_attribute_type")
             }
         } ?: existing.type
         val updated = existing.copy(
@@ -77,7 +78,7 @@ class AttributeDefinitionController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
-        catalogService.getAttributeDefinition(id) ?: throw NotFoundException("Attribute not found")
+        catalogService.getAttributeDefinition(id) ?: throw NotFoundException("error.catalog.attribute_not_found")
         catalogService.deleteAttributeDefinition(id)
         return deleted(MessageService.t("success.deleted"))
     }
@@ -95,7 +96,7 @@ class AttributeOptionController(
         @PathVariable id: UUID,
         @Valid @RequestBody request: AddOptionRequest,
     ): ResponseEntity<ApiResponse<ProductAttributeOptionResponse>> {
-        catalogService.getAttributeDefinition(id) ?: throw NotFoundException("Attribute not found")
+        catalogService.getAttributeDefinition(id) ?: throw NotFoundException("error.catalog.attribute_not_found")
         return created(catalogService.addOptionToAttribute(id, request.toDomain()).toResponse())
     }
 

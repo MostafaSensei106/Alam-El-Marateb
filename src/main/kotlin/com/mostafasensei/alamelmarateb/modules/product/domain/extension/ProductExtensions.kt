@@ -1,5 +1,6 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.extension
 
+import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeValue
 import com.mostafasensei.alamelmarateb.modules.product.data.model.*
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.PresetAttributeValueJpaEntity
@@ -195,7 +196,7 @@ fun AttributeDefinitionCreateRequest.toDomain(): ProductAttributeDefinition =
             "BOOLEAN" -> AttributeType.BOOLEAN
             "SELECT" -> AttributeType.SELECT
             "MULTI_SELECT" -> AttributeType.MULTI_SELECT
-            else -> throw IllegalArgumentException("Invalid type: $type")
+            else -> throw BadRequestException("error.catalog.invalid_type", listOf(type))
         },
         options = options.map { it.toDomain() },
     )

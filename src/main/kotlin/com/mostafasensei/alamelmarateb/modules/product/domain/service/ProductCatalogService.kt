@@ -1,5 +1,7 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.service
 
+import com.mostafasensei.alamelmarateb.core.exceptions.ErrorDetail
+import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeType
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeValue
 import com.mostafasensei.alamelmarateb.modules.product.data.model.Product
@@ -45,13 +47,13 @@ class ProductCatalogService(
 
     @Transactional
     fun updateCategory(id: UUID, category: ProductCategory): ProductCategory {
-        categoryRepository.findById(id) ?: throw IllegalArgumentException("Category not found")
+        categoryRepository.findById(id) ?: throw NotFoundException("error.catalog.category_not_found")
         return categoryRepository.save(category.copy(id = id))
     }
 
     @Transactional
     fun deleteCategory(id: UUID) {
-        if (categoryRepository.findById(id) == null) throw IllegalArgumentException("Category not found")
+        if (categoryRepository.findById(id) == null) throw NotFoundException("error.catalog.category_not_found")
         categoryRepository.deleteById(id)
     }
 
@@ -73,13 +75,13 @@ class ProductCatalogService(
 
     @Transactional
     fun updateAttributeDefinition(id: UUID, definition: ProductAttributeDefinition): ProductAttributeDefinition {
-        attributeDefinitionRepository.findById(id) ?: throw IllegalArgumentException("Attribute not found")
+        attributeDefinitionRepository.findById(id) ?: throw NotFoundException("error.catalog.attribute_not_found")
         return attributeDefinitionRepository.save(definition.copy(id = id))
     }
 
     @Transactional
     fun deleteAttributeDefinition(id: UUID) {
-        if (attributeDefinitionRepository.findById(id) == null) throw IllegalArgumentException("Attribute not found")
+        if (attributeDefinitionRepository.findById(id) == null) throw NotFoundException("error.catalog.attribute_not_found")
         attributeDefinitionRepository.deleteById(id)
     }
 
@@ -109,13 +111,13 @@ class ProductCatalogService(
 
     @Transactional
     fun updateProduct(id: UUID, product: Product): Product {
-        productRepository.findById(id) ?: throw IllegalArgumentException("Product not found")
+        productRepository.findById(id) ?: throw NotFoundException("error.catalog.product_not_found")
         return productRepository.save(product.copy(id = id))
     }
 
     @Transactional
     fun deleteProduct(id: UUID) {
-        if (productRepository.findById(id) == null) throw IllegalArgumentException("Product not found")
+        if (productRepository.findById(id) == null) throw NotFoundException("error.catalog.product_not_found")
         productRepository.deleteById(id)
     }
 
@@ -130,7 +132,7 @@ class ProductCatalogService(
 
     @Transactional
     fun deleteVariant(variantId: UUID) {
-        variantRepository.findById(variantId) ?: throw IllegalArgumentException("Variant not found")
+        variantRepository.findById(variantId) ?: throw NotFoundException("error.catalog.variant_not_found")
         variantRepository.deleteVariantById(variantId)
     }
 
@@ -145,20 +147,20 @@ class ProductCatalogService(
 
     @Transactional
     fun updatePreset(id: UUID, preset: ProductPreset): ProductPreset {
-        presetRepository.findById(id) ?: throw IllegalArgumentException("Preset not found")
+        presetRepository.findById(id) ?: throw NotFoundException("error.catalog.preset_not_found")
         return presetRepository.save(preset.copy(id = id))
     }
 
     @Transactional
     fun deletePreset(id: UUID) {
-        if (presetRepository.findById(id) == null) throw IllegalArgumentException("Preset not found")
+        if (presetRepository.findById(id) == null) throw NotFoundException("error.catalog.preset_not_found")
         presetRepository.deleteById(id)
     }
 
     @Transactional
     fun createProductFromPreset(presetId: UUID, slug: String): Product {
         val preset = presetRepository.findById(presetId)
-            ?: throw IllegalArgumentException("Preset not found")
+            ?: throw NotFoundException("error.catalog.preset_not_found")
 
         val product = productRepository.save(
             Product(
@@ -183,15 +185,15 @@ class ProductCatalogService(
     }
 
     @Transactional
-    fun validateProductAttributes(product: Product): List<String> {
-        val errors = mutableListOf<String>()
+    fun validateProductAttributes(product: Product): List<ErrorDetail> {
+        val errors = mutableListOf<ErrorDetail>()
         val category = categoryRepository.findById(product.categoryId) ?: return errors
 
         val requiredAttributes = category.attributes.filter { it.required }
         for (required in requiredAttributes) {
             val hasValue = product.attributes.any { it.attributeId == required.attribute.id }
             if (!hasValue) {
-                errors.add("Required attribute missing: ${required.attribute.name}")
+                errors.add(ErrorDetail("error.catalog.required_attr_missing", listOf(required.attribute.name)))
             }
         }
 
@@ -204,7 +206,7 @@ class ProductCatalogService(
                         if (attrValue.value is AttributeValue.Option) {
                             val optionId = attrValue.value.optionId
                             if (optionId !in optionIds) {
-                                errors.add("Invalid option for attribute ${defn.key}")
+                                errors.add(ErrorDetail("error.catalog.invalid_option", listOf(defn.key)))
                             }
                         }
                      }
@@ -213,7 +215,7 @@ class ProductCatalogService(
                             val optionIdsSet = attrValue.value.optionIds
                             val invalid = optionIdsSet.filter { it !in optionIds }
                             if (invalid.isNotEmpty()) {
-                                errors.add("Invalid option(s) for attribute ${defn.key}")
+                                errors.add(ErrorDetail("error.catalog.invalid_option", listOf(defn.key)))
                             }
                         }
                      }

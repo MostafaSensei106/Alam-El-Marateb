@@ -53,10 +53,10 @@ class IdentityService(
 
     @Transactional
     fun createBranch(name: String, code: String, phone: String?, city: String, address: String, by: String?): BranchView {
-        if (name.isBlank()) throw BadRequestException("Branch name is required")
+        if (name.isBlank()) throw BadRequestException("error.branch.name_required")
         val normalized = code.trim().uppercase()
-        if (normalized.isBlank()) throw BadRequestException("Branch code is required")
-        if (branches.existsByCode(normalized)) throw ConflictException("Branch code exists: $code")
+        if (normalized.isBlank()) throw BadRequestException("error.branch.code_required")
+        if (branches.existsByCode(normalized)) throw ConflictException("error.branch.code_exists", listOf(code))
         val saved = branches.save(
             BranchJpaEntity(name = name.trim(), code = normalized, phone = phone, city = city.ifBlank { "Tanta" }, address = address),
         )
@@ -66,7 +66,7 @@ class IdentityService(
 
     @Transactional
     fun toggleBranch(id: UUID, by: String?): BranchView {
-        val entity = branches.findById(id).orElseThrow { NotFoundException("Branch not found") }
+        val entity = branches.findById(id).orElseThrow { NotFoundException("error.branch.not_found") }
         entity.isActive = !entity.isActive
         auditLog.record("BRANCH_TOGGLE", "branch", id, null, by, "active=${entity.isActive}")
         return toBranchView(branches.save(entity))
@@ -86,12 +86,12 @@ class IdentityService(
         fullName: String, phone: String, password: String, email: String?,
         branchId: UUID?, roleNames: List<String>, by: String?,
     ): StaffView {
-        if (fullName.isBlank()) throw BadRequestException("Full name is required")
-        if (users.existsByPhoneNumber(phone)) throw ConflictException("Phone already registered")
-        if (password.length < 6) throw BadRequestException("Password must be at least 6 characters")
-        if (roleNames.isEmpty()) throw BadRequestException("At least one role is required")
+        if (fullName.isBlank()) throw BadRequestException("error.auth.full_name_required")
+        if (users.existsByPhoneNumber(phone)) throw ConflictException("error.auth.phone_exists")
+        if (password.length < 6) throw BadRequestException("error.auth.password_short")
+        if (roleNames.isEmpty()) throw BadRequestException("error.user.role_required")
         val managed = roleNames.map {
-            roles.findByName(it).orElseThrow { BadRequestException("Unknown role: $it") }
+            roles.findByName(it).orElseThrow { BadRequestException("error.auth.unknown_role", listOf(it)) }
         }.toMutableSet()
         val saved = users.save(
             UserJpaEntity(
@@ -106,10 +106,10 @@ class IdentityService(
 
     @Transactional
     fun setRoles(userId: UUID, roleNames: List<String>, by: String?): StaffView {
-        if (roleNames.isEmpty()) throw BadRequestException("At least one role is required")
-        val user = users.findById(userId).orElseThrow { NotFoundException("User not found") }
+        if (roleNames.isEmpty()) throw BadRequestException("error.user.role_required")
+        val user = users.findById(userId).orElseThrow { NotFoundException("error.auth.user_not_found") }
         user.roles = roleNames.map {
-            roles.findByName(it).orElseThrow { BadRequestException("Unknown role: $it") }
+            roles.findByName(it).orElseThrow { BadRequestException("error.auth.unknown_role", listOf(it)) }
         }.toMutableSet()
         auditLog.record("USER_ROLES", "user", userId, user.branchId, by, roleNames.joinToString(","))
         return toStaffView(users.save(user))
@@ -117,7 +117,7 @@ class IdentityService(
 
     @Transactional
     fun toggleUser(userId: UUID, by: String?): StaffView {
-        val user = users.findById(userId).orElseThrow { NotFoundException("User not found") }
+        val user = users.findById(userId).orElseThrow { NotFoundException("error.auth.user_not_found") }
         user.isActive = !user.isActive
         auditLog.record("USER_TOGGLE", "user", userId, user.branchId, by, "active=${user.isActive}")
         return toStaffView(users.save(user))

@@ -26,6 +26,10 @@ spring:
         format_sql: false
         dialect: org.hibernate.dialect.PostgreSQLDialect
 
+  # Unknown routes must reach MVC so NoResourceFoundException -> 404 JSON (api-status.md).
+  mvc:
+    throw-exception-if-no-handler-found: true
+
   # Database Migrations
   flyway:
     enabled: true
@@ -73,6 +77,10 @@ app:
   i18n:
     supported: ar,en
     default: ar
+  rate-limit:
+    enabled: true
+    login-per-minute: 10
+    preview-per-minute: 60
 
 # Production Probes & Metrics
 management:

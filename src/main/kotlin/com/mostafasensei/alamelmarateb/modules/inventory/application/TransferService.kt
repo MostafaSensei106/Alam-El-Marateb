@@ -4,6 +4,7 @@ import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
+import com.mostafasensei.alamelmarateb.core.exceptions.UnprocessableException
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.StockTransferRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.WarehouseRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockTransferJpaEntity
@@ -30,11 +31,11 @@ class TransferService(
 
     @Transactional
     fun create(fromWarehouseId: UUID, toWarehouseId: UUID, note: String?, items: List<TransferItemRequest>): Transfer {
-        if (fromWarehouseId == toWarehouseId) throw BadRequestException("Source and destination must differ")
-        if (items.isEmpty()) throw BadRequestException("Transfer must contain at least one item")
+        if (fromWarehouseId == toWarehouseId) throw BadRequestException("error.transfer.diff_warehouses")
+        if (items.isEmpty()) throw UnprocessableException("error.transfer.empty_items")
         items.forEach {
-            if (it.qty <= 0) throw BadRequestException("Item quantity must be positive")
-            variantRepository.findById(it.variantId) ?: throw BadRequestException("Unknown variant: ${it.variantId}")
+            if (it.qty <= 0) throw BadRequestException("error.transfer.item_positive")
+            variantRepository.findById(it.variantId) ?: throw NotFoundException("error.transfer.unknown_variant", listOf(it.variantId))
         }
         val transfer = StockTransferJpaEntity(
             fromWarehouseId = fromWarehouseId,
@@ -63,7 +64,7 @@ class TransferService(
     @Transactional
     fun dispatch(id: UUID, by: String? = null): Transfer {
         val transfer = load(id)
-        requireStatus(transfer, TransferStatus.draft, "Only draft transfers can be dispatched")
+        requireStatus(transfer, TransferStatus.draft, "error.transfer.dispatch_draft_only")
         val from = transfer.fromWarehouseId!!
         transfer.items.forEach { item ->
             stockService.applyMove(
@@ -93,16 +94,16 @@ class TransferService(
         requireStatusIn(
             transfer,
             setOf(TransferStatus.in_transit, TransferStatus.partially_received),
-            "Transfer is not receivable in status ${transfer.status}",
+            "error.transfer.not_receivable",
         )
-        if (lines.isEmpty()) throw BadRequestException("Batch must contain at least one line")
+        if (lines.isEmpty()) throw UnprocessableException("error.transfer.batch_empty")
         val to = transfer.toWarehouseId!!
         lines.forEach { line ->
             val item = transfer.items.firstOrNull { it.variantId == line.variantId }
-                ?: throw BadRequestException("Variant not in transfer: ${line.variantId}")
-            if (line.qty <= 0) throw BadRequestException("Batch quantity must be positive")
+                ?: throw UnprocessableException("error.transfer.variant_not_in_transfer", listOf(line.variantId))
+            if (line.qty <= 0) throw BadRequestException("error.transfer.batch_positive")
             if (item.receivedQty + line.qty > item.sentQty) {
-                throw BadRequestException("Batch exceeds remaining qty for variant ${line.variantId}")
+                throw UnprocessableException("error.transfer.batch_exceeds", listOf(line.variantId))
             }
             item.receivedQty += line.qty
             stockService.applyMove(
@@ -117,9 +118,9 @@ class TransferService(
         }
         damaged.forEach { (variantId, qty) ->
             val item = transfer.items.firstOrNull { it.variantId == variantId }
-                ?: throw BadRequestException("Variant not in transfer: $variantId")
+                ?: throw UnprocessableException("error.transfer.variant_not_in_transfer", listOf(variantId))
             if (qty < 0 || item.receivedQty + item.damagedQty + qty > item.sentQty) {
-                throw BadRequestException("Invalid damaged qty for variant $variantId")
+                throw UnprocessableException("error.transfer.damaged_invalid", listOf(variantId))
             }
             item.damagedQty += qty
             // Damaged goods physically arrive: enter stock as pending,
@@ -149,7 +150,7 @@ class TransferService(
         requireStatusIn(
             transfer,
             setOf(TransferStatus.received, TransferStatus.partially_received),
-            "Transfer cannot be approved in status ${transfer.status}",
+            "error.transfer.approve_status",
         )
         transfer.items.filter { it.damagedQty > 0 }.forEach { item ->
             stockService.applyMove(
@@ -172,20 +173,20 @@ class TransferService(
     @Transactional
     fun cancel(id: UUID): Transfer {
         val transfer = load(id)
-        requireStatus(transfer, TransferStatus.draft, "Only draft transfers can be cancelled")
+        requireStatus(transfer, TransferStatus.draft, "error.transfer.cancel_draft_only")
         transfer.status = TransferStatus.cancelled.name
         return toDomain(transferRepository.save(transfer))
     }
 
     private fun load(id: UUID): StockTransferJpaEntity =
-        transferRepository.findById(id).orElseThrow { NotFoundException("Transfer not found") }
+        transferRepository.findById(id).orElseThrow { NotFoundException("error.transfer.not_found") }
 
-    private fun requireStatus(entity: StockTransferJpaEntity, expected: TransferStatus, message: String) {
-        if (entity.status != expected.name) throw ConflictException("$message (current: ${entity.status})")
+    private fun requireStatus(entity: StockTransferJpaEntity, expected: TransferStatus, errorKey: String) {
+        if (entity.status != expected.name) throw ConflictException(errorKey, listOf(entity.status))
     }
 
-    private fun requireStatusIn(entity: StockTransferJpaEntity, expected: Set<TransferStatus>, message: String) {
-        if (TransferStatus.valueOf(entity.status) !in expected) throw ConflictException("$message (current: ${entity.status})")
+    private fun requireStatusIn(entity: StockTransferJpaEntity, expected: Set<TransferStatus>, errorKey: String) {
+        if (TransferStatus.valueOf(entity.status) !in expected) throw ConflictException(errorKey, listOf(entity.status))
     }
 
     private fun toDomain(e: StockTransferJpaEntity) = Transfer(

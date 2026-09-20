@@ -28,13 +28,13 @@ class WarehouseService(
     @Transactional(readOnly = true)
     fun get(id: UUID): Warehouse =
         warehouseRepository.findById(id).map { toDomain(it) }
-            .orElseThrow { NotFoundException("Warehouse not found") }
+            .orElseThrow { NotFoundException("error.inventory.warehouse_not_found") }
 
     @Transactional
     fun create(branchId: UUID?, name: String, code: String): Warehouse {
-        if (name.isBlank()) throw BadRequestException("Warehouse name is required")
+        if (name.isBlank()) throw BadRequestException("error.inventory.warehouse_name_required")
         if (warehouseRepository.existsByCode(code.trim().uppercase())) {
-            throw ConflictException("Warehouse code already exists: $code")
+            throw ConflictException("error.inventory.warehouse_code_exists", listOf(code))
         }
         val saved = warehouseRepository.save(
             WarehouseJpaEntity(branchId = branchId, name = name.trim(), code = code.trim().uppercase()),
@@ -45,9 +45,9 @@ class WarehouseService(
     @Transactional
     fun update(id: UUID, name: String?, isActive: Boolean?): Warehouse {
         val entity = warehouseRepository.findById(id)
-            .orElseThrow { NotFoundException("Warehouse not found") }
+            .orElseThrow { NotFoundException("error.inventory.warehouse_not_found") }
         if (name != null) {
-            if (name.isBlank()) throw BadRequestException("Warehouse name is required")
+            if (name.isBlank()) throw BadRequestException("error.inventory.warehouse_name_required")
             entity.name = name.trim()
         }
         if (isActive != null) entity.isActive = isActive
@@ -83,8 +83,8 @@ class StockService(
     fun lookup(warehouseId: UUID, barcodeOrSku: String): StockLevel {
         requireWarehouse(warehouseId)
         val variant = variantRepository.findByBarcode(barcodeOrSku)
-            ?: throw NotFoundException("No variant found for: $barcodeOrSku")
-        val id = variant.id ?: throw NotFoundException("Variant has no id")
+            ?: throw NotFoundException("error.inventory.no_variant_for", listOf(barcodeOrSku))
+        val id = variant.id ?: throw NotFoundException("error.inventory.variant_no_id")
         return stockLevelRepository.findByWarehouseIdAndVariantId(warehouseId, id)
             .map { toDomain(it) }
             .orElse(StockLevel(warehouseId, id, 0, 0, null))
@@ -93,10 +93,10 @@ class StockService(
     @Transactional
     fun adjust(warehouseId: UUID, variantId: UUID, qtyDelta: Int, note: String?, by: String? = null): StockLevel {
         val warehouse = warehouseRepository.findById(warehouseId)
-            .orElseThrow { NotFoundException("Warehouse not found") }
+            .orElseThrow { NotFoundException("error.inventory.warehouse_not_found") }
         requireVariant(variantId)
-        if (qtyDelta == 0) throw BadRequestException("Adjustment quantity cannot be zero")
-        if (note.isNullOrBlank()) throw BadRequestException("Adjustment reason is required")
+        if (qtyDelta == 0) throw BadRequestException("error.inventory.adjust_zero")
+        if (note.isNullOrBlank()) throw BadRequestException("error.inventory.adjust_reason_required")
         applyMove(warehouseId, variantId, qtyDelta, MoveType.ADJUST, null, null, note)
         auditLog.record("ADJUST", "stock_level", variantId, warehouse.branchId, by, "delta=$qtyDelta note=$note warehouse=$warehouseId")
         return levelOf(warehouseId, variantId)
@@ -106,7 +106,7 @@ class StockService(
     fun setThreshold(warehouseId: UUID, variantId: UUID, minQty: Int?): StockLevel {
         requireWarehouse(warehouseId)
         requireVariant(variantId)
-        if (minQty != null && minQty < 0) throw BadRequestException("Threshold cannot be negative")
+        if (minQty != null && minQty < 0) throw BadRequestException("error.inventory.threshold_negative")
         val level = levelEntity(warehouseId, variantId)
         level.minQty = minQty
         return toDomain(stockLevelRepository.save(level))
@@ -127,12 +127,13 @@ class StockService(
         refId: UUID?,
         note: String?,
     ) {
-        if (qtySigned == 0) throw BadRequestException("Move quantity cannot be zero")
+        if (qtySigned == 0) throw BadRequestException("error.inventory.move_zero")
         val level = levelEntity(warehouseId, variantId)
         val newQty = level.qty + qtySigned
         if (newQty < 0) {
             throw ConflictException(
-                "Insufficient stock: available=${level.qty - level.reservedQty}, requested=${-qtySigned}",
+                "error.inventory.stock_insufficient",
+                listOf(level.qty - level.reservedQty, -qtySigned),
             )
         }
         level.qty = newQty
@@ -153,10 +154,10 @@ class StockService(
     /** Used by future orders: hold qty without deducting. */
     @Transactional
     fun reserve(warehouseId: UUID, variantId: UUID, qty: Int) {
-        if (qty <= 0) throw BadRequestException("Reserve quantity must be positive")
+        if (qty <= 0) throw BadRequestException("error.inventory.reserve_positive")
         val level = levelEntity(warehouseId, variantId)
         if (level.qty - level.reservedQty < qty) {
-            throw ConflictException("Insufficient available stock: available=${level.qty - level.reservedQty}")
+            throw ConflictException("error.inventory.available_insufficient", listOf(level.qty - level.reservedQty))
         }
         level.reservedQty += qty
         stockLevelRepository.save(level)
@@ -164,7 +165,7 @@ class StockService(
 
     @Transactional
     fun release(warehouseId: UUID, variantId: UUID, qty: Int) {
-        if (qty <= 0) throw BadRequestException("Release quantity must be positive")
+        if (qty <= 0) throw BadRequestException("error.inventory.release_positive")
         val level = levelEntity(warehouseId, variantId)
         level.reservedQty = (level.reservedQty - qty).coerceAtLeast(0)
         stockLevelRepository.save(level)
@@ -184,11 +185,11 @@ class StockService(
             }
 
     private fun requireWarehouse(warehouseId: UUID) {
-        if (!warehouseRepository.existsById(warehouseId)) throw NotFoundException("Warehouse not found")
+        if (!warehouseRepository.existsById(warehouseId)) throw NotFoundException("error.inventory.warehouse_not_found")
     }
 
     private fun requireVariant(variantId: UUID) {
-        variantRepository.findById(variantId) ?: throw BadRequestException("Unknown variant: $variantId")
+        variantRepository.findById(variantId) ?: throw NotFoundException("error.inventory.unknown_variant", listOf(variantId))
     }
 
     private fun toDomain(e: StockLevelJpaEntity) = StockLevel(

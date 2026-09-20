@@ -40,7 +40,7 @@ class ProductCategoryController(
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<ProductCategoryResponse>> =
-        ok((catalogService.getCategory(id) ?: throw NotFoundException("Category not found")).toResponse())
+        ok((catalogService.getCategory(id) ?: throw NotFoundException("error.catalog.category_not_found")).toResponse())
 
     @PostMapping
     fun create(@Valid @RequestBody request: CategoryCreateRequest): ResponseEntity<ApiResponse<ProductCategoryResponse>> {
@@ -59,7 +59,7 @@ class ProductCategoryController(
         @PathVariable id: UUID,
         @Valid @RequestBody request: CategoryUpdateRequest,
     ): ResponseEntity<ApiResponse<ProductCategoryResponse>> {
-        val existing = catalogService.getCategory(id) ?: throw NotFoundException("Category not found")
+        val existing = catalogService.getCategory(id) ?: throw NotFoundException("error.catalog.category_not_found")
         val updated = existing.copy(
             name = request.name ?: existing.name,
             description = request.description ?: existing.description,
@@ -70,7 +70,7 @@ class ProductCategoryController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
-        catalogService.getCategory(id) ?: throw NotFoundException("Category not found")
+        catalogService.getCategory(id) ?: throw NotFoundException("error.catalog.category_not_found")
         catalogService.deleteCategory(id)
         return deleted(MessageService.t("success.deleted"))
     }
@@ -88,7 +88,7 @@ class CategoryAttributeController(
         @PathVariable id: UUID,
         @Valid @RequestBody requests: List<CategoryAttributeLinkRequest>,
     ): ResponseEntity<ApiResponse<Nothing>> {
-        catalogService.getCategory(id) ?: throw NotFoundException("Category not found")
+        catalogService.getCategory(id) ?: throw NotFoundException("error.catalog.category_not_found")
         return deleted(MessageService.t("success.updated"))
     }
 }

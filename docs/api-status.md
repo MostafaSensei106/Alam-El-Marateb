@@ -86,8 +86,11 @@
 
 ## 7. ما يُضاف للكود (مخطط — لا تنفيذ الآن)
 
-1. `traceId` في `ApiResponse` (MDC + filter).
-2. استثناءات: `UnprocessableException → 422`، `GoneException → 410`، `PreconditionException → 412`، `RateLimitException → 429`.
-3. فصل `MethodArgumentNotValid` (400) عن أخطاء البيزنس (422) في السيرفسز.
-4. `Idempotency-Key` filter + جدول `idempotency_keys` في P3.
-5. Rate limiter (login/OTP/preview) في P3.
+1. `traceId` في `ApiResponse` (MDC + filter). — ✅ تم: `TraceIdFilter` + `ApiResponse.traceId` + هيدر `X-Trace-Id`.
+2. استثناءات: `UnprocessableException → 422`، `GoneException → 410`، `PreconditionException → 412`، `RateLimitException → 429`. — ✅ تم في `DomainExceptions` + `GlobalExceptionHandler`.
+3. فصل `MethodArgumentNotValid` (400) عن أخطاء البيزنس (422) في السيرفسز. — ✅ تم: سلة فاضية/variant غلط/دفع مقدم مخالف/قناة POS → 422، و`resolveLines` الغامض → 404.
+4. `Idempotency-Key` filter + جدول `idempotency_keys` في P3. — ⚠️ جزئي: إعادة نفس المفتاح تُرجع نفس الأوردر + هيدر `Idempotent-Replay: true` (place-order POS/shop)؛ الجدول العام والفلتر الشامل مؤجلان لـ P3.
+5. Rate limiter (login/OTP/preview) في P3. — ✅ جزئي: `RateLimitFilter` داخل الذاكرة (login/refresh 10/min، price-preview 60/min) يُرجع 429 + `Retry-After`؛ نسخة Redis متعددة النسخ مؤجلة.
+6. `405 Method Not Allowed` يُرجع 405 + هيدر `Allow` (كان 400 خطأً). — ✅ تم.
+7. روت غير موجود يُرجع 404 JSON موحد (`spring.mvc.throw-exception-if-no-handler-found=true`). — ✅ تم؛ غير المسجل بـ 401 يبقى 401 للأمان.
+8. كل الردود (نجاح/فشل، و401/403 من الـ filter-chain) بنفس غلاف `ApiResponse` + `traceId`. — ✅ تم (`ApiAccessDeniedHandler` + `JwtAuthenticationEntryPoint`).

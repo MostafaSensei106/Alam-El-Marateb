@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.modules.sales.presentation
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
+import com.mostafasensei.alamelmarateb.core.i18n.MessageService
 import com.mostafasensei.alamelmarateb.core.router.PromotionRoutes
 import com.mostafasensei.alamelmarateb.core.router.SalesPosRoutes
 import com.mostafasensei.alamelmarateb.core.router.ShopRoutes
@@ -28,6 +29,7 @@ import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.PromotionC
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.ReservationRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.ReturnRequest
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
@@ -133,11 +135,14 @@ class PosOrderController(
     @PostMapping("/place-order", "/custom-order")
     fun placeOrder(
         @Valid @RequestBody request: PlaceOrderRequest,
+        @Parameter(description = "Idempotency key — same key returns the original order + Idempotent-Replay: true")
         @RequestHeader(value = "Idempotency-Key", required = false) key: String?,
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<OrderResponse>> {
         val placed = orderService.place(request.toInput("pos", principal.fullName).copy(idempotencyKey = key ?: request.idempotencyKey))
-        return if (placed.replayed) ok(OrderResponse.fromDomain(placed.order)) else created(OrderResponse.fromDomain(placed.order))
+        val body = ApiResponse.success(OrderResponse.fromDomain(placed.order), MessageService.t("success.created"))
+        return if (placed.replayed) ResponseEntity.ok().header("Idempotent-Replay", "true").body(body)
+        else ResponseEntity.status(201).body(body)
     }
 
     @Operation(summary = "Request return (full lines)")
@@ -289,6 +294,7 @@ class ShopCheckoutController(
     @PostMapping("/place-order")
     fun place(
         @Valid @RequestBody request: PlaceOrderRequest,
+        @Parameter(description = "Idempotency key — same key returns the original order + Idempotent-Replay: true")
         @RequestHeader(value = "Idempotency-Key", required = false) key: String?,
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<OrderResponse>> {
@@ -298,7 +304,9 @@ class ShopCheckoutController(
                 idempotencyKey = key ?: request.idempotencyKey,
             ),
         )
-        return if (placed.replayed) ok(OrderResponse.fromDomain(placed.order)) else created(OrderResponse.fromDomain(placed.order))
+        val body = ApiResponse.success(OrderResponse.fromDomain(placed.order), MessageService.t("success.created"))
+        return if (placed.replayed) ResponseEntity.ok().header("Idempotent-Replay", "true").body(body)
+        else ResponseEntity.status(201).body(body)
     }
 }
 

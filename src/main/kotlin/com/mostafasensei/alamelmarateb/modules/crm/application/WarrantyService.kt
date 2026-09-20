@@ -4,6 +4,7 @@ import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
+import com.mostafasensei.alamelmarateb.core.exceptions.UnprocessableException
 import com.mostafasensei.alamelmarateb.modules.crm.data.repository.WarrantyClaimRepository
 import com.mostafasensei.alamelmarateb.modules.crm.data.repository.WarrantyRepository
 import com.mostafasensei.alamelmarateb.modules.crm.domain.entity.WarrantyClaimJpaEntity
@@ -50,16 +51,16 @@ class WarrantyService(
     @Transactional
     fun register(invoiceId: UUID, by: String?): WarrantyView {
         warrantyRepository.findByInvoiceId(invoiceId).ifPresent {
-            throw ConflictException("Warranty already registered for this invoice")
+            throw ConflictException("error.crm.warranty_exists")
         }
         val invoice = invoiceRepository.findById(invoiceId)
-            .orElseThrow { NotFoundException("Invoice not found") }
+            .orElseThrow { NotFoundException("error.crm.invoice_not_found") }
         val order = orderRepository.findById(invoice.orderId!!)
-            .orElseThrow { NotFoundException("Order not found") }
+            .orElseThrow { NotFoundException("error.order.not_found") }
         val years = order.lines.mapNotNull { line ->
             val variant = variantRepository.findById(line.variantId!!) ?: return@mapNotNull null
             variant.productId?.let { productRepository.findById(it)?.warrantyYears }
-        }.maxOrNull() ?: throw BadRequestException("Invoice has no warrantied items")
+        }.maxOrNull() ?: throw UnprocessableException("error.crm.invoice_no_items")
         val saved = warrantyRepository.save(
             WarrantyJpaEntity(
                 invoiceId = invoiceId,
@@ -74,7 +75,7 @@ class WarrantyService(
     @Transactional(readOnly = true)
     fun verify(warrantyId: UUID): WarrantyView {
         val warranty = warrantyRepository.findById(warrantyId)
-            .orElseThrow { NotFoundException("Warranty not found") }
+            .orElseThrow { NotFoundException("error.crm.warranty_not_found") }
         return toView(refresh(warranty))
     }
 
@@ -91,11 +92,11 @@ class WarrantyService(
 
     @Transactional
     fun fileClaim(warrantyId: UUID, description: String, photos: String?, by: String?): ClaimView {
-        if (description.isBlank()) throw BadRequestException("Claim description is required")
+        if (description.isBlank()) throw BadRequestException("error.crm.claim_desc_required")
         val warranty = refresh(
-            warrantyRepository.findById(warrantyId).orElseThrow { NotFoundException("Warranty not found") },
+            warrantyRepository.findById(warrantyId).orElseThrow { NotFoundException("error.crm.warranty_not_found") },
         )
-        if (!isValid(warranty)) throw ConflictException("Warranty is expired or closed")
+        if (!isValid(warranty)) throw ConflictException("error.crm.warranty_expired")
         val saved = claimRepository.save(
             WarrantyClaimJpaEntity(warrantyId = warrantyId, status = "reported", description = description, photos = photos),
         )
@@ -112,7 +113,7 @@ class WarrantyService(
     @Transactional
     fun scheduleInspection(claimId: UUID, at: Instant, by: String?): ClaimView {
         val claim = loadClaim(claimId)
-        if (claim.status != "reported") throw ConflictException("Only reported claims can be scheduled")
+        if (claim.status != "reported") throw ConflictException("error.crm.claim_reported_only", listOf(claim.status))
         claim.status = "inspecting"
         claim.inspectionAt = at
         auditLog.record("CLAIM_INSPECT", "claim", claimId, null, by, "at=$at")
@@ -121,10 +122,10 @@ class WarrantyService(
 
     @Transactional
     fun resolve(claimId: UUID, resolution: String, by: String?): ClaimView {
-        if (resolution != "repair" && resolution != "replace") throw BadRequestException("Resolution must be repair or replace")
+        if (resolution != "repair" && resolution != "replace") throw BadRequestException("error.crm.resolution_invalid")
         val claim = loadClaim(claimId)
         if (claim.status != "inspecting" && claim.status != "reported") {
-            throw ConflictException("Claim cannot be resolved in status ${claim.status}")
+            throw ConflictException("error.crm.claim_status", listOf(claim.status))
         }
         claim.status = if (resolution == "replace") "replaced" else "repairing"
         claim.resolution = resolution
@@ -145,7 +146,7 @@ class WarrantyService(
         claimRepository.findByWarrantyId(warrantyId).map { toClaim(it) }
 
     private fun loadClaim(claimId: UUID): WarrantyClaimJpaEntity =
-        claimRepository.findById(claimId).orElseThrow { NotFoundException("Claim not found") }
+        claimRepository.findById(claimId).orElseThrow { NotFoundException("error.crm.claim_not_found") }
 
     private fun refresh(w: WarrantyJpaEntity): WarrantyJpaEntity {
         if (w.status == "active" && w.coversUntil!!.isBefore(LocalDate.now())) {

@@ -1,6 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.common.api_response
 
 import com.fasterxml.jackson.annotation.JsonInclude
+import org.slf4j.MDC
 import kotlin.time.Clock
 import kotlin.time.Instant
 
@@ -10,6 +11,7 @@ data class ApiResponse<T>(
     val message: String,
     val data: T? = null,
     val errors : List<String>? = null,
+    val traceId: String? = MDC.get("traceId"),
     val timestamp: Instant = Clock.System.now()
 ) {
     companion object {

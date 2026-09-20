@@ -34,7 +34,7 @@ class CartService(
 
     @Transactional
     fun getOrCreate(customerId: UUID?, guestKey: String?): CartView {
-        if (customerId == null && guestKey.isNullOrBlank()) throw BadRequestException("Customer or guest key required")
+        if (customerId == null && guestKey.isNullOrBlank()) throw BadRequestException("error.cart.identity_required")
         val cart = (customerId?.let { cartRepository.findByCustomerId(it).orElse(null) }
             ?: guestKey?.let { cartRepository.findByGuestKey(it).orElse(null) })
             ?: cartRepository.save(CartJpaEntity(customerId = customerId, guestKey = guestKey))
@@ -43,9 +43,9 @@ class CartService(
 
     @Transactional
     fun add(customerId: UUID?, guestKey: String?, variantId: UUID, qty: Int): CartView {
-        if (qty <= 0) throw BadRequestException("Quantity must be positive")
-        variantRepository.findById(variantId) ?: throw BadRequestException("Unknown variant")
-        if (customerId == null && guestKey.isNullOrBlank()) throw BadRequestException("Customer or guest key required")
+        if (qty <= 0) throw BadRequestException("error.cart.qty_positive")
+        variantRepository.findById(variantId) ?: throw NotFoundException("error.cart.unknown_variant")
+        if (customerId == null && guestKey.isNullOrBlank()) throw BadRequestException("error.cart.identity_required")
         val cart = (customerId?.let { cartRepository.findByCustomerId(it).orElse(null) }
             ?: guestKey?.let { cartRepository.findByGuestKey(it).orElse(null) })
             ?: cartRepository.save(CartJpaEntity(customerId = customerId, guestKey = guestKey))
@@ -60,10 +60,10 @@ class CartService(
 
     @Transactional
     fun setQty(customerId: UUID?, guestKey: String?, variantId: UUID, qty: Int): CartView {
-        if (qty < 0) throw BadRequestException("Quantity cannot be negative")
+        if (qty < 0) throw BadRequestException("error.cart.qty_negative")
         val cart = load(customerId, guestKey)
         val existing = cart.items.firstOrNull { it.variantId == variantId }
-            ?: throw NotFoundException("Item not in cart")
+            ?: throw NotFoundException("error.cart.item_not_found")
         if (qty == 0) {
             cart.items.remove(existing)
             cartItemRepository.delete(existing)
@@ -83,7 +83,7 @@ class CartService(
     /** On login: fold guest cart into the customer cart. */
     @Transactional
     fun merge(guestKey: String, customerId: UUID): CartView {
-        val guest = cartRepository.findByGuestKey(guestKey).orElseThrow { NotFoundException("Guest cart not found") }
+        val guest = cartRepository.findByGuestKey(guestKey).orElseThrow { NotFoundException("error.cart.not_found") }
         val mine = cartRepository.findByCustomerId(customerId)
             .orElseGet { cartRepository.save(CartJpaEntity(customerId = customerId)) }
         guest.items.forEach { g ->
@@ -102,7 +102,7 @@ class CartService(
     private fun load(customerId: UUID?, guestKey: String?): CartJpaEntity =
         (customerId?.let { cartRepository.findByCustomerId(it).orElse(null) }
             ?: guestKey?.let { cartRepository.findByGuestKey(it).orElse(null) })
-            ?: throw NotFoundException("Cart not found")
+            ?: throw NotFoundException("error.cart.not_found")
 
     private fun view(cart: CartJpaEntity): CartView {
         val lines = cart.items.mapNotNull { item ->

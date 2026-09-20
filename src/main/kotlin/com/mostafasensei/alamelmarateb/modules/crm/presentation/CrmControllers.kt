@@ -152,7 +152,7 @@ class PortalController(
         @Valid @RequestBody request: FavoriteRequest,
     ): ResponseEntity<ApiResponse<Nothing>> {
         crmService.addFavorite(principal.id, request.productId)
-        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.messageWithoutData("Added to favorites"))
+        return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.messageWithoutData(MessageService.t("success.created")))
     }
 
     @Operation(summary = "Remove favorite")
@@ -185,7 +185,7 @@ class PortalController(
         @Valid @RequestBody request: ClaimFileRequest,
     ): ResponseEntity<ApiResponse<ClaimView>> {
         val mine = warrantyService.myWarranties(principal.id).mapNotNull { it.id }.toSet()
-        if (request.warrantyId !in mine) throw NotFoundException("Warranty not found")
+        if (request.warrantyId !in mine) throw NotFoundException("error.portal.warranty_not_found")
         return created(warrantyService.fileClaim(request.warrantyId, request.description, request.photos, principal.fullName))
     }
 

@@ -64,7 +64,7 @@ class CrmService(
         addressText: String, isDefault: Boolean, by: String?,
     ): AddressView {
         if (phone.isBlank() || governorate.isBlank() || addressText.isBlank()) {
-            throw BadRequestException("Phone, governorate and address are required")
+            throw BadRequestException("error.crm.address_fields_required")
         }
         if (isDefault) {
             addressRepository.findByUserIdOrderByIsDefaultDesc(userId)
@@ -86,7 +86,7 @@ class CrmService(
     @Transactional
     fun removeAddress(userId: UUID, addressId: UUID) {
         val entity = addressRepository.findById(addressId).orElseThrow { NotFoundException("Address not found") }
-        if (entity.userId != userId) throw NotFoundException("Address not found")
+        if (entity.userId != userId) throw NotFoundException("error.crm.address_not_found")
         addressRepository.delete(entity)
     }
 
@@ -97,7 +97,7 @@ class CrmService(
     @Transactional
     fun addFavorite(userId: UUID, productId: UUID) {
         if (favoriteRepository.existsByUserIdAndProductId(userId, productId)) {
-            throw ConflictException("Already in favorites")
+            throw ConflictException("error.crm.already_favorite")
         }
         favoriteRepository.save(FavoriteJpaEntity(userId = userId, productId = productId))
     }
@@ -105,7 +105,7 @@ class CrmService(
     @Transactional
     fun removeFavorite(userId: UUID, productId: UUID) {
         if (favoriteRepository.deleteByUserIdAndProductId(userId, productId) == 0L) {
-            throw NotFoundException("Favorite not found")
+            throw NotFoundException("error.crm.favorite_not_found")
         }
     }
 

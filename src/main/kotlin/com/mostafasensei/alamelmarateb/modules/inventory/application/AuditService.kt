@@ -44,7 +44,7 @@ class AuditService(
         val open = auditRepository.findByWarehouseIdAndStatusIn(
             warehouseId, listOf(AuditStatus.open.name, AuditStatus.counting.name),
         )
-        if (open.isNotEmpty()) throw ConflictException("Warehouse already has an open audit")
+        if (open.isNotEmpty()) throw ConflictException("error.audit.open_exists")
         val levels = stockService.levels(warehouseId)
         val audit = StockAuditJpaEntity(
             warehouseId = warehouseId,
@@ -61,12 +61,12 @@ class AuditService(
     /** Keeper: submit a count line by scan. */
     @Transactional
     fun submitCount(auditId: UUID, variantId: UUID, countedQty: Int): AuditResult {
-        if (countedQty < 0) throw BadRequestException("Counted quantity cannot be negative")
+        if (countedQty < 0) throw BadRequestException("error.audit.count_negative")
         val audit = load(auditId)
         if (audit.status != AuditStatus.open.name && audit.status != AuditStatus.counting.name) {
-            throw ConflictException("Audit is not countable in status ${audit.status}")
+            throw ConflictException("error.audit.not_countable", listOf(audit.status))
         }
-        variantRepository.findById(variantId) ?: throw BadRequestException("Unknown variant: $variantId")
+        variantRepository.findById(variantId) ?: throw NotFoundException("error.audit.unknown_variant", listOf(variantId))
         val row = audit.counts.firstOrNull { it.variantId == variantId }
         if (row == null) {
             // Variant never stocked here: system qty is 0.
@@ -83,7 +83,7 @@ class AuditService(
     fun reconcile(auditId: UUID, by: String? = null): AuditResult {
         val audit = load(auditId)
         if (audit.status != AuditStatus.counting.name && audit.status != AuditStatus.open.name) {
-            throw ConflictException("Audit cannot be reconciled in status ${audit.status}")
+            throw ConflictException("error.audit.not_reconcilable", listOf(audit.status))
         }
         val warehouseId = audit.warehouseId!!
         audit.counts.forEach { row ->
@@ -108,7 +108,7 @@ class AuditService(
     }
 
     private fun load(auditId: UUID): StockAuditJpaEntity =
-        auditRepository.findById(auditId).orElseThrow { NotFoundException("Audit not found") }
+        auditRepository.findById(auditId).orElseThrow { NotFoundException("error.audit.not_found") }
 
     private fun toResult(e: StockAuditJpaEntity) = AuditResult(
         id = e.id,

@@ -45,13 +45,13 @@ class ProductAdminController(
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<Product>> =
-        ok(catalogService.getProduct(id) ?: throw NotFoundException("Product not found"))
+        ok(catalogService.getProduct(id) ?: throw NotFoundException("error.catalog.product_not_found"))
 
     @PostMapping
     fun create(@Valid @RequestBody request: ProductCreateRequest): ResponseEntity<ApiResponse<Product>> {
         val product: Product = request.toDomain()
         val errors = catalogService.validateProductAttributes(product)
-        if (errors.isNotEmpty()) throw BadRequestException("Validation failed", errors)
+        if (errors.isNotEmpty()) throw BadRequestException("error.catalog.validation_failed", errorDetails = errors)
         return created(catalogService.createProduct(product))
     }
 
@@ -60,7 +60,7 @@ class ProductAdminController(
         @PathVariable id: UUID,
         @Valid @RequestBody request: ProductUpdateRequest,
     ): ResponseEntity<ApiResponse<Product>> {
-        val existing = catalogService.getProduct(id) ?: throw NotFoundException("Product not found")
+        val existing = catalogService.getProduct(id) ?: throw NotFoundException("error.catalog.product_not_found")
         val updated = existing.copy(
             name = request.name ?: existing.name,
             slug = request.slug ?: existing.slug,
@@ -75,7 +75,7 @@ class ProductAdminController(
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
-        catalogService.getProduct(id) ?: throw NotFoundException("Product not found")
+        catalogService.getProduct(id) ?: throw NotFoundException("error.catalog.product_not_found")
         catalogService.deleteProduct(id)
         return deleted(MessageService.t("success.deleted"))
     }
@@ -104,5 +104,5 @@ class EcommerceProductController(
 
     @GetMapping("/{slug}")
     fun getBySlug(@PathVariable slug: String): ResponseEntity<ApiResponse<Product>> =
-        ok(catalogService.getProductBySlug(slug) ?: throw NotFoundException("Product not found"))
+        ok(catalogService.getProductBySlug(slug) ?: throw NotFoundException("error.catalog.product_not_found"))
 }

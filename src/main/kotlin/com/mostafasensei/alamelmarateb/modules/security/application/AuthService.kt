@@ -39,12 +39,12 @@ class AuthService(
 
     @Transactional
     fun register(fullName: String, phone: String, password: String, email: String?): TokenPair {
-        if (fullName.isBlank()) throw BadRequestException("Full name is required")
-        if (phone.isBlank()) throw BadRequestException("Phone number is required")
-        if (password.length < 6) throw BadRequestException("Password must be at least 6 characters")
-        if (userRepository.existsByPhoneNumber(phone)) throw ConflictException("Phone already registered")
+        if (fullName.isBlank()) throw BadRequestException("error.auth.full_name_required")
+        if (phone.isBlank()) throw BadRequestException("error.auth.phone_required")
+        if (password.length < 6) throw BadRequestException("error.auth.password_short")
+        if (userRepository.existsByPhoneNumber(phone)) throw ConflictException("error.auth.phone_exists")
         if (!email.isNullOrBlank() && userRepository.existsByEmail(email)) {
-            throw ConflictException("Email already registered")
+            throw ConflictException("error.auth.email_exists")
         }
         val customerRole = jpaRoles.findByName("ROLE_CUSTOMER")
             .orElseThrow { IllegalStateException("ROLE_CUSTOMER seed missing") }
@@ -80,7 +80,7 @@ class AuthService(
 
     @Transactional(readOnly = true)
     fun me(userId: UUID): AuthUserView {
-        val user = userRepository.findById(userId) ?: throw NotFoundException("User not found")
+        val user = userRepository.findById(userId) ?: throw NotFoundException("error.auth.user_not_found")
         return AuthUserView(
             user.id, user.fullName, user.phoneNumber, user.email,
             user.branchId, user.roles.map { it.name }, user.isActive,
@@ -88,7 +88,7 @@ class AuthService(
     }
 
     fun managedRole(name: String): com.mostafasensei.alamelmarateb.modules.security.domain.entity.RoleJpaEntity =
-        jpaRoles.findByName(name).orElseThrow { BadRequestException("Unknown role: $name") }
+        jpaRoles.findByName(name).orElseThrow { BadRequestException("error.auth.unknown_role", listOf(name)) }
 
     private fun tokensFor(userId: UUID): TokenPair {
         val principal = UserPrincipal.create(userRepository.findById(userId)!!)
