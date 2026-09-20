@@ -7,7 +7,6 @@ import com.mostafasensei.alamelmarateb.core.router.HrAdminRoutes
 import com.mostafasensei.alamelmarateb.core.router.SelfServiceRoutes
 import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 import com.mostafasensei.alamelmarateb.modules.hr.application.AdvanceView
-import com.mostafasensei.alamelmarateb.modules.hr.application.AttendanceView
 import com.mostafasensei.alamelmarateb.modules.hr.application.CommissionRuleView
 import com.mostafasensei.alamelmarateb.modules.hr.application.DeductionView
 import com.mostafasensei.alamelmarateb.modules.hr.application.EmployeeView
@@ -103,11 +102,6 @@ class HrAdminController(
     ): ResponseEntity<ApiResponse<List<EmployeeView>>> =
         ok(hrService.searchEmployees(branchId, q))
 
-    @Operation(summary = "Attendance logs")
-    @GetMapping(HrAdminRoutes.ATTENDANCE_LOGS)
-    fun attendanceLogs(@RequestParam(required = false) employeeId: UUID?): ResponseEntity<ApiResponse<List<AttendanceView>>> =
-        ok(hrService.attendanceLogs(employeeId))
-
     @Operation(summary = "List leave requests")
     @GetMapping(HrAdminRoutes.LEAVES)
     fun leaves(@RequestParam(required = false) employeeId: UUID?): ResponseEntity<ApiResponse<List<LeaveView>>> =
@@ -182,22 +176,12 @@ class HrAdminController(
  * Staff SELF-SERVICE — /api/v1/me/... Any authenticated employee, own record only.
  * All paths come from SelfServiceRoutes; no literals here.
  */
-@Tag(name = "Self service", description = "Clock in/out, leave requests, commissions, payslips — authenticated staff")
+@Tag(name = "Self service", description = "Leave requests, commissions, payslips — authenticated staff")
 @RestController
 @PreAuthorize("isAuthenticated()")
 class SelfServiceController(
     private val hrService: HrService,
 ) : BaseController() {
-
-    @Operation(summary = "Clock in")
-    @PostMapping(SelfServiceRoutes.CLOCK_IN)
-    fun clockIn(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<AttendanceView>> =
-        created(hrService.clock(principal.id, "in"))
-
-    @Operation(summary = "Clock out")
-    @PostMapping(SelfServiceRoutes.CLOCK_OUT)
-    fun clockOut(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<AttendanceView>> =
-        created(hrService.clock(principal.id, "out"))
 
     @Operation(summary = "Request leave (own record)")
     @PostMapping(SelfServiceRoutes.REQUEST_LEAVE)

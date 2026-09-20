@@ -13,8 +13,6 @@ object HrAdminRoutes {
     const val EMPLOYEE_BY_ID = "$PREFIX/employees/{id}"
     const val EMPLOYEE_SEARCH = "$PREFIX/employees/search"
 
-    const val ATTENDANCE_LOGS = "$PREFIX/attendance/logs"
-
     const val LEAVES = "$PREFIX/leaves"
     const val LEAVE_ACTION = "$PREFIX/leaves/{id}/action"
 

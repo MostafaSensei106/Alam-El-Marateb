@@ -1,7 +1,6 @@
 package com.mostafasensei.alamelmarateb.modules.hr.data.repository
 
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.AdvanceJpaEntity
-import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.AttendanceLogJpaEntity
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.CommissionRuleJpaEntity
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.DeductionJpaEntity
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.EmployeeJpaEntity
@@ -51,9 +50,4 @@ interface PayrollLineRepository : JpaRepository<PayrollLineJpaEntity, UUID> {
     fun findByRunId(runId: UUID): List<PayrollLineJpaEntity>
     fun findByEmployeeId(employeeId: UUID): List<PayrollLineJpaEntity>
     fun deleteByRunId(runId: UUID)
-}
-
-@Repository
-interface AttendanceLogRepository : JpaRepository<AttendanceLogJpaEntity, UUID> {
-    fun findByEmployeeIdOrderByAtDesc(employeeId: UUID): List<AttendanceLogJpaEntity>
 }

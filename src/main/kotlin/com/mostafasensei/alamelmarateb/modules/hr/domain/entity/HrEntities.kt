@@ -152,16 +152,3 @@ class PayrollLineJpaEntity(
     @Column(name = "net_amount", nullable = false, precision = 12, scale = 2)
     var netAmount: BigDecimal = BigDecimal.ZERO,
 ) : EntityBase<UUID>()
-
-@Entity
-@Table(name = "attendance_logs")
-class AttendanceLogJpaEntity(
-    @Column(name = "employee_id", nullable = false, columnDefinition = "UUID")
-    var employeeId: UUID? = null,
-
-    @Column(name = "type", nullable = false, length = 10)
-    var type: String = "",
-
-    @Column(name = "at", nullable = false)
-    var at: Instant? = null,
-) : EntityBase<UUID>()

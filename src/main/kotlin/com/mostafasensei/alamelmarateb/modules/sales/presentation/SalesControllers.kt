@@ -103,6 +103,13 @@ class PosOrderController(
     private val orderService: OrderService,
 ) : BaseController() {
 
+    /**
+     * In-store sales attribute to the staff member behind the till unless
+     * a rep is stated explicitly — this drives HR sales commission.
+     */
+    private fun withSeller(request: PlaceOrderRequest, principal: UserPrincipal): PlaceOrderInput =
+        request.toInput("pos", principal.fullName).copy(salesRepId = request.salesRepId ?: principal.id)
+
     @Operation(summary = "Scan barcode/SKU (variant info for the ticket)")
     @GetMapping("/scan/{barcode}")
     fun scan(@PathVariable barcode: String): ResponseEntity<ApiResponse<Map<String, Any?>>> =
@@ -114,7 +121,7 @@ class PosOrderController(
         @Valid @RequestBody request: PlaceOrderRequest,
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<OrderResponse>> =
-        created(OrderResponse.fromDomain(orderService.saveDraft(request.toInput("pos", principal.fullName))))
+        created(OrderResponse.fromDomain(orderService.saveDraft(withSeller(request, principal))))
 
     @Operation(summary = "Complete a draft (pricing + stock hold + invoice)")
     @PostMapping("/orders/{orderId}/complete")
@@ -139,7 +146,7 @@ class PosOrderController(
         @Valid @RequestBody request: PlaceOrderRequest,
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<OrderResponse>> =
-        created(OrderResponse.fromDomain(orderService.completeSale(request.toInput("pos", principal.fullName), principal.fullName)))
+        created(OrderResponse.fromDomain(orderService.completeSale(withSeller(request, principal), principal.fullName)))
 
     @Operation(summary = "Place order for later delivery/pickup")
     @PostMapping("/place-order")
@@ -149,7 +156,7 @@ class PosOrderController(
         @RequestHeader(value = "Idempotency-Key", required = false) key: String?,
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<OrderResponse>> {
-        val placed = orderService.place(request.toInput("pos", principal.fullName).copy(idempotencyKey = key ?: request.idempotencyKey))
+        val placed = orderService.place(withSeller(request, principal).copy(idempotencyKey = key ?: request.idempotencyKey))
         val body = ApiResponse.success(OrderResponse.fromDomain(placed.order), MessageService.t("success.created"))
         return if (placed.replayed) ResponseEntity.ok().header("Idempotent-Replay", "true").body(body)
         else ResponseEntity.status(201).body(body)
@@ -195,7 +202,7 @@ class PosOrderController(
             productId = request.productId, shape = request.shape,
             widthCm = request.widthCm, lengthCm = request.lengthCm, heightCm = request.heightCm,
             qty = request.qty, paymentMethod = request.paymentMethod, downPayment = request.downPayment,
-            deliverAt = request.deliverAt, salesRepId = request.salesRepId,
+            deliverAt = request.deliverAt, salesRepId = request.salesRepId ?: principal.id,
             idempotencyKey = request.idempotencyKey, by = principal.fullName,
         )
         return if (placed.replayed) {

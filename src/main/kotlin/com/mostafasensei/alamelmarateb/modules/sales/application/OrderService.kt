@@ -383,6 +383,28 @@ class OrderService(
     @Transactional(readOnly = true)
     fun trackById(id: UUID): Order = toDomain(load(id))
 
+    /**
+     * Sales totals per rep (invoice issuer / in-store seller) for a branch
+     * and date range. Only realized sales count: confirmed + delivered.
+     * Used by HR payroll commission (PERCENT_OF_SALES).
+     */
+    @Transactional(readOnly = true)
+    fun salesTotalsByRep(branchId: UUID, from: LocalDate, to: LocalDate): Map<UUID, BigDecimal> {
+        val fromMs = from.atStartOfDay().toInstant(java.time.ZoneOffset.UTC).toEpochMilli()
+        val toMs = to.plusDays(1).atStartOfDay().toInstant(java.time.ZoneOffset.UTC).toEpochMilli()
+        return orderRepository.findAll()
+            .filter { order ->
+                order.branchId == branchId &&
+                    order.salesRepId != null &&
+                    (order.status == OrderStatus.confirmed.name || order.status == OrderStatus.delivered.name) &&
+                    order.createdAt.toEpochMilliseconds() in fromMs until toMs
+            }
+            .groupBy { it.salesRepId!! }
+            .mapValues { (_, orders) ->
+                orders.fold(BigDecimal.ZERO) { acc, o -> acc.add(o.grandTotal) }.scaled()
+            }
+    }
+
     /** POS scan: barcode (or SKU fallback listing candidates is client-side via lookup). */
     @Transactional(readOnly = true)
     fun scanVariant(barcode: String): Map<String, Any?> {

@@ -4,7 +4,6 @@ import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.hr.data.repository.AdvanceRepository
-import com.mostafasensei.alamelmarateb.modules.hr.data.repository.AttendanceLogRepository
 import com.mostafasensei.alamelmarateb.modules.hr.data.repository.CommissionRuleRepository
 import com.mostafasensei.alamelmarateb.modules.hr.data.repository.DeductionRepository
 import com.mostafasensei.alamelmarateb.modules.hr.data.repository.EmployeeRepository
@@ -12,13 +11,13 @@ import com.mostafasensei.alamelmarateb.modules.hr.data.repository.LeaveRequestRe
 import com.mostafasensei.alamelmarateb.modules.hr.data.repository.PayrollLineRepository
 import com.mostafasensei.alamelmarateb.modules.hr.data.repository.PayrollRunRepository
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.AdvanceJpaEntity
-import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.AttendanceLogJpaEntity
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.CommissionRuleJpaEntity
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.DeductionJpaEntity
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.EmployeeJpaEntity
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.LeaveRequestJpaEntity
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.PayrollLineJpaEntity
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.PayrollRunJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.application.OrderService
 import com.mostafasensei.alamelmarateb.modules.security.data.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -92,13 +91,6 @@ data class PayrollRunView(
     val lines: List<PayrollLineView> = emptyList(),
 )
 
-data class AttendanceView(
-    val id: UUID?,
-    val employeeId: UUID?,
-    val type: String,
-    val at: Instant?,
-)
-
 @Service
 class HrService(
     private val employeeRepository: EmployeeRepository,
@@ -108,13 +100,14 @@ class HrService(
     private val deductionRepository: DeductionRepository,
     private val payrollRunRepository: PayrollRunRepository,
     private val payrollLineRepository: PayrollLineRepository,
-    private val attendanceRepository: AttendanceLogRepository,
     private val userRepository: UserRepository,
+    private val orderService: OrderService,
 ) {
 
     companion object {
         const val KIND_FIXED = "FIXED_MONTHLY"
         const val KIND_PERCENT = "PERCENT_OF_BASE"
+        const val KIND_SALES = "PERCENT_OF_SALES"
     }
 
     private fun money(value: BigDecimal): BigDecimal =
@@ -198,7 +191,7 @@ class HrService(
 
     @Transactional
     fun createRule(name: String, kind: String, value: BigDecimal, appliesToCategory: UUID?): CommissionRuleView {
-        if (kind != KIND_FIXED && kind != KIND_PERCENT) throw BadRequestException("error.hr.commission_not_found", listOf(kind))
+        if (kind != KIND_FIXED && kind != KIND_PERCENT && kind != KIND_SALES) throw BadRequestException("error.hr.commission_not_found", listOf(kind))
         val saved = commissionRuleRepository.save(
             CommissionRuleJpaEntity(name = name, kind = kind, value = money(value), appliesToCategory = appliesToCategory),
         )
@@ -218,7 +211,7 @@ class HrService(
         val entity = commissionRuleRepository.findById(id).orElseThrow { NotFoundException("error.hr.commission_not_found") }
         if (name != null) entity.name = name
         if (kind != null) {
-            if (kind != KIND_FIXED && kind != KIND_PERCENT) throw BadRequestException("error.hr.commission_not_found", listOf(kind))
+            if (kind != KIND_FIXED && kind != KIND_PERCENT && kind != KIND_SALES) throw BadRequestException("error.hr.commission_not_found", listOf(kind))
             entity.kind = kind
         }
         if (value != null) entity.value = money(value)
@@ -317,8 +310,16 @@ class HrService(
 
     @Transactional
     fun calculate(branchId: UUID, month: String): PayrollRunView {
+        val parts = month.split("-")
+        if (parts.size != 2) throw BadRequestException("error.hr.bad_month")
+        val year = parts[0].toIntOrNull() ?: throw BadRequestException("error.hr.bad_month")
+        val mon = parts[1].toIntOrNull()?.takeIf { it in 1..12 } ?: throw BadRequestException("error.hr.bad_month")
+        val from = LocalDate.of(year, mon, 1)
+        val to = from.plusMonths(1).minusDays(1)
         val employees = employeeRepository.findByBranchIdAndIsActiveTrue(branchId)
         if (employees.isEmpty()) throw BadRequestException("error.hr.payroll_empty")
+        // Sales per rep (invoice issuer / in-store seller) for the payroll month.
+        val salesByRep = orderService.salesTotalsByRep(branchId, from, to)
 
         val existing = payrollRunRepository.findByBranchIdAndMonth(branchId, month)
         val run = if (existing.isPresent) {
@@ -333,7 +334,8 @@ class HrService(
 
         val lines = employees.map { employee ->
             val base = money(employee.baseSalary)
-            val commission = commissionFor(employee, base)
+            val salesTotal = employee.userId?.let { salesByRep[it] } ?: BigDecimal.ZERO
+            val commission = commissionFor(employee, base, money(salesTotal))
             val gross = base.add(commission)
 
             var advanceTaken = BigDecimal.ZERO
@@ -402,34 +404,18 @@ class HrService(
         return rows.toString()
     }
 
-    private fun commissionFor(employee: EmployeeJpaEntity, base: BigDecimal): BigDecimal {
+    private fun commissionFor(employee: EmployeeJpaEntity, base: BigDecimal, salesTotal: BigDecimal): BigDecimal {
         val ruleId = employee.commissionRuleId ?: return money(BigDecimal.ZERO)
         val rule = commissionRuleRepository.findById(ruleId).orElse(null) ?: return money(BigDecimal.ZERO)
         return when (rule.kind) {
             KIND_FIXED -> money(rule.value)
             KIND_PERCENT -> money(base.multiply(rule.value).divide(BigDecimal(100), 2, RoundingMode.HALF_UP))
+            KIND_SALES -> money(salesTotal.multiply(rule.value).divide(BigDecimal(100), 2, RoundingMode.HALF_UP))
             else -> money(BigDecimal.ZERO)
         }
     }
 
-    // ---- Attendance + self-service ----
-
-    @Transactional
-    fun clock(employeeUserId: UUID, type: String): AttendanceView {
-        val employee = requireEmployeeByUser(employeeUserId)
-        if (type != "in" && type != "out") throw BadRequestException("error.hr.leave_status", listOf(type))
-        val saved = attendanceRepository.save(
-            AttendanceLogJpaEntity(employeeId = employee.id, type = type, at = Instant.now()),
-        )
-        return toAttendanceView(saved)
-    }
-
-    @Transactional(readOnly = true)
-    fun attendanceLogs(employeeId: UUID?): List<AttendanceView> {
-        val entities = if (employeeId != null) attendanceRepository.findByEmployeeIdOrderByAtDesc(employeeId)
-        else attendanceRepository.findAll()
-        return entities.map { toAttendanceView(it) }
-    }
+    // ---- Self-service ----
 
     @Transactional(readOnly = true)
     fun myCommissions(employeeUserId: UUID): List<PayrollLineView> {
@@ -473,9 +459,5 @@ class HrService(
 
     private fun toRunView(run: PayrollRunJpaEntity, lines: List<PayrollLineView>) = PayrollRunView(
         run.id, run.branchId, run.month, run.status, lines,
-    )
-
-    private fun toAttendanceView(e: AttendanceLogJpaEntity) = AttendanceView(
-        e.id, e.employeeId, e.type, e.at,
     )
 }
