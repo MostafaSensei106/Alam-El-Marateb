@@ -2,6 +2,10 @@ package com.mostafasensei.alamelmarateb.modules.product.domain.service
 
 import com.mostafasensei.alamelmarateb.core.exceptions.ErrorDetail
 import com.mostafasensei.alamelmarateb.core.cache.RedisCache
+import com.mostafasensei.alamelmarateb.core.events.CatalogProductChangedEvent
+import com.mostafasensei.alamelmarateb.core.outbox.OutboxWriter
+import com.mostafasensei.alamelmarateb.core.search.ProductSearch
+import com.mostafasensei.alamelmarateb.core.search.ProductSearchQuery
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
@@ -45,6 +49,8 @@ class ProductCatalogService(
     private val variantJpa: SpringDataJpaProductVariantRepository,
     private val translations: TranslationService,
     private val cache: RedisCache,
+    private val outbox: OutboxWriter,
+    private val search: ProductSearch,
 ) {
 
     companion object {
@@ -171,6 +177,7 @@ class ProductCatalogService(
     fun createProduct(product: Product): Product {
         val saved = productRepository.save(product)
         translations.saveProduct(saved.id!!, product.translations.ifEmpty { null })
+        emitSearchChange(saved.id!!)
         return getProduct(saved.id!!)!!
     }
 
@@ -180,6 +187,7 @@ class ProductCatalogService(
         val saved = productRepository.save(product.copy(id = id))
         if (product.translations.isNotEmpty()) translations.saveProduct(id, product.translations)
         cache.evict("cat:prod:$id", "cat:prod:slug:${saved.slug}")
+        emitSearchChange(id)
         return getProduct(id)!!
     }
 
@@ -188,6 +196,8 @@ class ProductCatalogService(
         if (productRepository.findById(id) == null) throw NotFoundException("error.catalog.product_not_found")
         productRepository.deleteById(id)
         cache.evict("cat:prod:$id")
+        // Indexer treats missing products as document deletes.
+        emitSearchChange(id)
     }
 
     @Transactional(readOnly = true)
@@ -199,13 +209,19 @@ class ProductCatalogService(
         cache.getOrLoad("cat:var:bc:$barcode", CATALOG_TTL, ProductVariant::class.java) { variantRepository.findByBarcode(barcode) }
 
     @Transactional
-    fun createVariant(variant: ProductVariant): ProductVariant = variantRepository.save(variant)
+    fun createVariant(variant: ProductVariant): ProductVariant {
+        val saved = variantRepository.save(variant)
+        saved.productId?.let { emitSearchChange(it) }
+        return saved
+    }
 
     @Transactional
     fun deleteVariant(variantId: UUID) {
-        variantRepository.findById(variantId) ?: throw NotFoundException("error.catalog.variant_not_found")
+        val existing = variantRepository.findById(variantId)
+            ?: throw NotFoundException("error.catalog.variant_not_found")
         variantRepository.deleteVariantById(variantId)
         cache.evict("cat:var:$variantId")
+        existing.productId?.let { emitSearchChange(it) }
     }
 
     @Transactional(readOnly = true)
@@ -262,11 +278,32 @@ class ProductCatalogService(
         )
         val errors = validateProductAttributes(product)
         if (errors.isNotEmpty()) throw BadRequestException("error.catalog.validation_failed", errorDetails = errors)
-        return productRepository.save(product)
+        val saved = productRepository.save(product)
+        emitSearchChange(saved.id!!)
+        return saved
     }
 
     @Transactional(readOnly = true)
     fun search(
+        query: String?,
+        categoryId: UUID?,
+        brand: String?,
+        minPrice: java.math.BigDecimal?,
+        maxPrice: java.math.BigDecimal?,
+    ): List<Product> {
+        // Search backend first (ranked ids, hydrated from Postgres so the DB
+        // stays the source of truth); any failure falls back to the filter.
+        val ids = runCatching {
+            search.searchIds(ProductSearchQuery(query, categoryId, brand, minPrice, maxPrice))
+        }.getOrNull()
+        if (ids != null) {
+            val byId = ids.mapNotNull { getProduct(it) }.associateBy { it.id }
+            return ids.mapNotNull { byId[it] }
+        }
+        return dbSearch(query, categoryId, brand, minPrice, maxPrice)
+    }
+
+    private fun dbSearch(
         query: String?,
         categoryId: UUID?,
         brand: String?,
@@ -280,6 +317,27 @@ class ProductCatalogService(
                 (minPrice == null || (product.variants.minOfOrNull { it.sellingPrice } ?: java.math.BigDecimal.ZERO) >= minPrice) &&
                 (maxPrice == null || (product.variants.minOfOrNull { it.sellingPrice } ?: java.math.BigDecimal.ZERO) <= maxPrice)
         }
+
+    /** Same-transaction outbox event: the relay indexes asynchronously. */
+    private fun emitSearchChange(productId: UUID) {
+        outbox.emit(
+            "product", productId, OutboxWriter.CATALOG_PRODUCT_CHANGED,
+            CatalogProductChangedEvent(productId = productId),
+        )
+    }
+
+    @Transactional(readOnly = true)
+    fun suggest(query: String, limit: Int = 8): List<String> {
+        if (query.isBlank()) return emptyList()
+        runCatching { search.suggest(query, limit) }.getOrNull()?.let { return it }
+        return productRepository.findAllActive()
+            .filter {
+                it.name.contains(query, ignoreCase = true) ||
+                    it.slug.contains(query, ignoreCase = true) ||
+                    it.brand.contains(query, ignoreCase = true)
+            }
+            .map { it.name }.distinct().take(limit)
+    }
 
     @Transactional(readOnly = true)
     fun featured(): List<Product> =
@@ -423,6 +481,7 @@ class ProductCatalogService(
             v
         }
 
+        emitSearchChange(product.id!!)
         return product.copy(variants = savedVariants)
     }
 

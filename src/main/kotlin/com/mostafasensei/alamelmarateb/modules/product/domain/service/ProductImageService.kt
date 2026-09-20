@@ -1,6 +1,8 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.service
 
+import com.mostafasensei.alamelmarateb.core.events.MediaUploadedEvent
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
+import com.mostafasensei.alamelmarateb.core.outbox.OutboxWriter
 import com.mostafasensei.alamelmarateb.core.storage.StorageService
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductImageRepository
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.SpringDataJpaProductRepository
@@ -21,6 +23,7 @@ class ProductImageService(
     private val imageRepository: ProductImageRepository,
     private val productRepository: SpringDataJpaProductRepository,
     private val storage: StorageService,
+    private val outbox: OutboxWriter,
 ) {
 
     @Transactional
@@ -29,9 +32,16 @@ class ProductImageService(
             .orElseThrow { NotFoundException("error.catalog.product_not_found") }
         val url = storage.store("products", file)
         val nextSort = (imageRepository.findByProductIdOrderBySortOrderAsc(productId).maxOfOrNull { it.sortOrder } ?: -1) + 1
-        return toView(
-            imageRepository.save(ProductImageJpaEntity(productId = productId, url = url, sortOrder = nextSort)),
+        val saved = imageRepository.save(
+            ProductImageJpaEntity(productId = productId, url = url, sortOrder = nextSort),
         )
+        // Same-transaction event for future async processors (search index,
+        // thumbnails in Phase 3) — upload response never waits for them.
+        outbox.emit(
+            "product-image", saved.id, OutboxWriter.MEDIA_UPLOADED,
+            MediaUploadedEvent(imageId = saved.id!!, productId = productId, url = url),
+        )
+        return toView(saved)
     }
 
     @Transactional(readOnly = true)
@@ -44,8 +54,17 @@ class ProductImageService(
 
     @Transactional
     fun delete(imageId: UUID) {
-        if (!imageRepository.existsById(imageId)) throw NotFoundException("error.catalog.image_not_found")
+        val entity = imageRepository.findById(imageId).orElseThrow {
+            NotFoundException("error.catalog.image_not_found")
+        }
         imageRepository.deleteById(imageId)
+        // Best-effort file cleanup: DB row is the source of truth, orphan
+        // files must never fail the request (purge jobs catch leftovers).
+        try {
+            storage.delete(entity.url)
+        } catch (_: Exception) {
+            // swallowed by contract; logged inside the storage backend
+        }
     }
 
     private fun toView(e: ProductImageJpaEntity) = ProductImageView(e.id, e.url, e.sortOrder)

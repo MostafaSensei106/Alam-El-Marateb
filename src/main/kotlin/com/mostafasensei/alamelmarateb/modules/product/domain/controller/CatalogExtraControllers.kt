@@ -85,6 +85,14 @@ class CatalogDiscoveryController(
     ): ResponseEntity<ApiResponse<List<Product>>> =
         ok(catalogService.search(q, categoryId, brand, minPrice, maxPrice))
 
+    @Operation(summary = "Autocomplete product names")
+    @GetMapping(CatalogStoreRoutes.PRODUCT_SUGGEST)
+    fun suggest(
+        @RequestParam q: String,
+        @RequestParam(required = false, defaultValue = "8") limit: Int,
+    ): ResponseEntity<ApiResponse<List<String>>> =
+        ok(catalogService.suggest(q, limit))
+
     @Operation(summary = "Featured products")
     @GetMapping(CatalogStoreRoutes.PRODUCT_FEATURED)
     fun featured(): ResponseEntity<ApiResponse<List<Product>>> =

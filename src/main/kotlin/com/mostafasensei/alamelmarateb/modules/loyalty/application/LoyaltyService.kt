@@ -3,6 +3,7 @@ package com.mostafasensei.alamelmarateb.modules.loyalty.application
 import com.mostafasensei.alamelmarateb.core.events.OrderDeliveredEvent
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
+import com.mostafasensei.alamelmarateb.core.outbox.IdempotencyGuard
 import com.mostafasensei.alamelmarateb.modules.loyalty.data.repository.LoyaltyAccountRepository
 import com.mostafasensei.alamelmarateb.modules.loyalty.data.repository.LoyaltyLedgerRepository
 import com.mostafasensei.alamelmarateb.modules.loyalty.domain.entity.LoyaltyAccountJpaEntity
@@ -37,6 +38,7 @@ data class LoyaltyEntry(
 class LoyaltyService(
     private val accountRepository: LoyaltyAccountRepository,
     private val ledgerRepository: LoyaltyLedgerRepository,
+    private val guard: IdempotencyGuard,
     @Value("\${app.loyalty.enabled:true}") private val enabled: Boolean,
     @Value("\${app.loyalty.earn-per-egp:10}") private val earnPerEgp: Int,
     @Value("\${app.loyalty.egp-per-point:1}") private val egpPerPoint: Int,
@@ -44,6 +46,17 @@ class LoyaltyService(
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
     fun onOrderDelivered(event: OrderDeliveredEvent) {
+        awardFor(event)
+    }
+
+    /**
+     * Shared by the in-process listener and the Kafka consumer.
+     * Two dedup layers: transport-level [IdempotencyGuard] (same event
+     * redelivered) + ledger check (same order, different event — e.g.
+     * markDelivered retried after a crash between commit and publish).
+     */
+    fun awardFor(event: OrderDeliveredEvent) {
+        if (!guard.claim(event.eventId, "loyalty")) return
         if (!enabled) return
         val userId = event.customerId ?: return
         val points = event.grandTotal.divide(earnPerEgp.toBigDecimal(), 0, RoundingMode.DOWN).toInt()

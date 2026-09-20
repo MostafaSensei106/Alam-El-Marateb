@@ -10,9 +10,11 @@ import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.CreateProductFromPresetRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductCreateRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductUpdateRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.service.CatalogSearchIndexer
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
 import com.mostafasensei.alamelmarateb.core.router.CatalogAdminRoutes
 import com.mostafasensei.alamelmarateb.core.router.CatalogStoreRoutes
+import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
@@ -37,6 +39,7 @@ import java.util.UUID
 @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
 class ProductAdminController(
     private val catalogService: ProductCatalogService,
+    private val searchIndexer: CatalogSearchIndexer,
 ) : BaseController() {
 
     @GetMapping
@@ -90,6 +93,14 @@ class ProductAdminController(
         @Valid @RequestBody request: CreateProductFromPresetRequest,
     ): ResponseEntity<ApiResponse<Product>> =
         created(catalogService.createProductFromPreset(presetId, request.slug))
+
+    @Operation(summary = "Rebuild the search index (after enabling the backend)")
+    @PostMapping("/search/reindex")
+    fun reindex(): ResponseEntity<ApiResponse<Map<String, Int>>> {
+        val count = searchIndexer.rebuildAll()
+        if (count < 0) throw BadRequestException("error.search.backend_unavailable")
+        return ok(mapOf("indexed" to count))
+    }
 }
 
 /**

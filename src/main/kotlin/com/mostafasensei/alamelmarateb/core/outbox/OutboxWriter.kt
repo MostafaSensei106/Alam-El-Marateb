@@ -1,5 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.outbox
 
+import com.mostafasensei.alamelmarateb.core.events.CatalogProductChangedEvent
+import com.mostafasensei.alamelmarateb.core.events.MediaUploadedEvent
 import com.mostafasensei.alamelmarateb.core.events.OrderDeliveredEvent
 import com.mostafasensei.alamelmarateb.core.events.OrderInvoicedEvent
 import org.springframework.stereotype.Service
@@ -32,10 +34,14 @@ class OutboxWriter(
     companion object {
         const val ORDER_INVOICED = "order.invoiced"
         const val ORDER_DELIVERED = "order.delivered"
+        const val MEDIA_UPLOADED = "media.uploaded"
+        const val CATALOG_PRODUCT_CHANGED = "catalog.product_changed"
 
         fun eventClass(type: String): Class<*> = when (type) {
             ORDER_INVOICED -> OrderInvoicedEvent::class.java
             ORDER_DELIVERED -> OrderDeliveredEvent::class.java
+            MEDIA_UPLOADED -> MediaUploadedEvent::class.java
+            CATALOG_PRODUCT_CHANGED -> CatalogProductChangedEvent::class.java
             else -> throw IllegalArgumentException("unknown outbox type: $type")
         }
     }

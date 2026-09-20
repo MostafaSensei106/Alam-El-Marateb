@@ -26,6 +26,8 @@ object CatalogAdminRoutes {
 
     const val QUICK_CREATE = "$PREFIX/products/quick-create"
 
+    const val SEARCH_REINDEX = "$PREFIX/search/reindex"
+
     const val BRANDS = "$PREFIX/brands"
     const val BRAND_BY_ID = "$PREFIX/brands/{id}"
 

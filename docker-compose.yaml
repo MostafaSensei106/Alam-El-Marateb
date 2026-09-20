@@ -7,8 +7,45 @@ services:
       - "POSTGRES_USER=root"
     ports:
       - "5432:5432"
+    # WAL sender settings for the opt-in streaming replica (Phase 4).
+    # Harmless without a replica; required before pg_basebackup.
+    command: >
+      postgres
+      -c wal_level=replica
+      -c max_wal_senders=5
+      -c max_replication_slots=5
+      -c hot_standby=on
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U root -d mydatabase"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     volumes:
       - pgdata:/var/lib/postgresql/data
+      - ./docker/postgres-initdb:/docker-entrypoint-initdb.d:ro
+
+  # Streaming read replica (Phase 4). Opt-in: docker compose --profile replica up -d.
+  # App side: REPLICA_URL=jdbc:postgresql://localhost:5433/mydatabase.
+  # Async replication: pure-read @Transactional(readOnly=true) methods route here;
+  # writes and read-your-write flows stay on primary by design.
+  postgres-replica:
+    image: postgres:16-alpine
+    container_name: shop-postgres-replica
+    profiles: ["replica"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "5433:5432"
+    environment:
+      - "PRIMARY_HOST=postgres"
+      - "POSTGRES_USER=root"
+      - "POSTGRES_PASSWORD=root"
+      - "PGDATA=/var/lib/postgresql/data/pgdata"
+    entrypoint: ["/opt/replica-entrypoint.sh"]
+    volumes:
+      - replica_data:/var/lib/postgresql/data
+      - ./docker/postgres-replica/replica-entrypoint.sh:/opt/replica-entrypoint.sh:ro
 
 
   redis:
@@ -86,6 +123,7 @@ services:
 
 volumes:
   pgdata:
+  replica_data:
   redis_data:
   kafka_data:
   minio_data:

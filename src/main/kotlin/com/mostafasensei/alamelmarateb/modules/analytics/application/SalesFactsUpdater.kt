@@ -1,6 +1,7 @@
 package com.mostafasensei.alamelmarateb.modules.analytics.application
 
 import com.mostafasensei.alamelmarateb.core.events.OrderInvoicedEvent
+import com.mostafasensei.alamelmarateb.core.outbox.IdempotencyGuard
 import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Service
@@ -12,14 +13,14 @@ import java.time.LocalDate
  * Builds `sales_daily_facts` incrementally from every invoice
  * (docs/database.md 10 — read-model, no strict FKs needed at write time).
  *
- * AFTER_COMMIT => a rolled-back sale never produces facts. Idempotent per
- * (day, branch, variant) upsert, so a redelivered event only accumulates
- * once per delivery... replays must therefore be de-duplicated upstream
- * (idempotency keys) — same rule Kafka consumers would follow.
+ * AFTER_COMMIT (with fallback for outbox-relay delivery) => a rolled-back
+ * sale never produces facts. At-least-once safe: [IdempotencyGuard] drops
+ * redelivered events before the upsert, so a replay never double-counts.
  */
 @Service
 class SalesFactsUpdater(
     private val jdbc: JdbcTemplate,
+    private val guard: IdempotencyGuard,
 ) {
 
     private val log = LoggerFactory.getLogger(SalesFactsUpdater::class.java)
@@ -31,6 +32,10 @@ class SalesFactsUpdater(
 
     /** Shared by the in-process listener and the Kafka consumer. */
     fun apply(event: OrderInvoicedEvent) {
+        if (!guard.claim(event.eventId, "analytics-facts")) {
+            log.debug("facts skipped duplicate event={}", event.eventId)
+            return
+        }
         val day: LocalDate = event.day
         event.lines.forEach { line ->
             val revenue = line.net

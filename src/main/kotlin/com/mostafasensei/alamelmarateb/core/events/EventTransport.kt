@@ -38,12 +38,25 @@ class KafkaDomainEventPublisher(
 
     override fun publish(event: Any) {
         val topic = TOPICS[event::class] ?: "domain.events"
-        kafka.send(topic, objectMapper.writeValueAsString(event))
+        // Key by aggregate so all events of one order land on one partition
+        // (ordering per aggregate; consumers stay idempotent anyway).
+        kafka.send(topic, routingKey(event), objectMapper.writeValueAsString(event))
     }
 
     companion object {
         val TOPICS: Map<kotlin.reflect.KClass<*>, String> = mapOf(
             OrderInvoicedEvent::class to "order.invoiced",
+            OrderDeliveredEvent::class to "order.delivered",
+            MediaUploadedEvent::class to "media.uploaded",
+            CatalogProductChangedEvent::class to "catalog.product_changed",
         )
+
+        fun routingKey(event: Any): String = when (event) {
+            is OrderInvoicedEvent -> event.orderId.toString()
+            is OrderDeliveredEvent -> event.orderId.toString()
+            is MediaUploadedEvent -> event.productId.toString()
+            is CatalogProductChangedEvent -> event.productId.toString()
+            else -> event::class.simpleName ?: "event"
+        }
     }
 }

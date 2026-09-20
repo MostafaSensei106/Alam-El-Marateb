@@ -49,16 +49,31 @@ class SalesFactsUpdaterTest {
                 lines = listOf(InvoicedLine(variantId, 2, BigDecimal("3000.00"), BigDecimal("1000.00"))),
             )
             updater.onOrderInvoiced(event)
+            // At-least-once redelivery of the SAME event must not double-count.
             updater.onOrderInvoiced(event)
 
             val row = jdbc.queryForMap(
                 "SELECT qty, revenue, cost, profit FROM sales_daily_facts WHERE day = ? AND branch_id = ? AND variant_id = ?",
                 day, branchId, variantId,
             )
-            assertEquals(4, (row["qty"] as Number).toInt())
-            assertEquals(BigDecimal("6000.00"), BigDecimal(row["revenue"].toString()))
-            assertEquals(BigDecimal("4000.00"), BigDecimal(row["cost"].toString()))
-            assertEquals(BigDecimal("2000.00"), BigDecimal(row["profit"].toString()))
+            assertEquals(2, (row["qty"] as Number).toInt())
+            assertEquals(BigDecimal("3000.00"), BigDecimal(row["revenue"].toString()))
+            assertEquals(BigDecimal("2000.00"), BigDecimal(row["cost"].toString()))
+            assertEquals(BigDecimal("1000.00"), BigDecimal(row["profit"].toString()))
+
+            // A DIFFERENT event (new eventId) for the same facts still accumulates.
+            updater.onOrderInvoiced(
+                OrderInvoicedEvent(
+                    orderId = UUID.randomUUID(), branchId = branchId, day = day,
+                    lines = listOf(InvoicedLine(variantId, 2, BigDecimal("3000.00"), BigDecimal("1000.00"))),
+                ),
+            )
+            val row2 = jdbc.queryForMap(
+                "SELECT qty, revenue, cost, profit FROM sales_daily_facts WHERE day = ? AND branch_id = ? AND variant_id = ?",
+                day, branchId, variantId,
+            )
+            assertEquals(4, (row2["qty"] as Number).toInt())
+            assertEquals(BigDecimal("6000.00"), BigDecimal(row2["revenue"].toString()))
         } finally {
             jdbc.update("DELETE FROM sales_daily_facts WHERE branch_id = ?", branchId)
             jdbc.update("DELETE FROM product_variants WHERE id = ?", variantId)
