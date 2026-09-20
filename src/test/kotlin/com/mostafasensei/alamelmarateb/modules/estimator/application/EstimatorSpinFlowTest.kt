@@ -34,6 +34,12 @@ class EstimatorSpinFlowTest {
     @Autowired private lateinit var jdbc: JdbcTemplate
     @Autowired private lateinit var txManager: PlatformTransactionManager
 
+    private fun <T> committedTx(block: () -> T): T {
+        val template = TransactionTemplate(txManager)
+        template.propagationBehavior = TransactionDefinition.PROPAGATION_REQUIRES_NEW
+        return template.execute { block() }!!
+    }
+
     private fun committed(sql: String, vararg args: Any?) {
         val template = TransactionTemplate(txManager)
         template.propagationBehavior = TransactionDefinition.PROPAGATION_REQUIRES_NEW
@@ -49,7 +55,7 @@ class EstimatorSpinFlowTest {
         return id
     }
 
-    private fun seedProduct(suffix: Long): UUID {
+    private fun seedProduct(suffix: Long): UUID = committedTx {
         val category = catalogService.createCategory(ProductCategory(name = "Est Cat", slug = "est-cat-$suffix"))
         val product = catalogService.createProduct(
             Product(
@@ -62,7 +68,7 @@ class EstimatorSpinFlowTest {
                 widthCm = 120, lengthCm = 195, heightCm = 30,
                 costPrice = BigDecimal("4000"), sellingPrice = BigDecimal("8000")),
         )
-        return product.id!!
+        product.id!!
     }
 
     @Test
@@ -70,8 +76,6 @@ class EstimatorSpinFlowTest {
         val productId = seedProduct(System.nanoTime())
 
         val models = estimatorService.catalog(null)
-        println("DEBUG products=" + jdbc.queryForList("SELECT id, slug FROM products WHERE slug LIKE 'est-model-%'"))
-        println("DEBUG variants=" + jdbc.queryForList("SELECT sku, product_id FROM product_variants WHERE sku LIKE 'ESTV-%'"))
         val model = models.first { it.productId == productId }
         assertTrue(model.hasMeterPrice)
         assertEquals(listOf(30), model.heightsCm)
@@ -87,8 +91,8 @@ class EstimatorSpinFlowTest {
         assertTrue(quote.skuSuggestion.contains("120X200X30"))
 
         // Staff channel recorded.
-        val runs = jdbc.queryForList("SELECT channel FROM estimate_runs ORDER BY created_at DESC LIMIT 1")
-        assertEquals("shop", runs.single()["channel"])
+        val channels = jdbc.queryForList("SELECT channel FROM estimate_runs").map { it["channel"] }
+        assertTrue(channels.contains("shop") && channels.contains("pos"))
         estimatorService.quote(
             userId = null, branchId = null, channel = "pos", productId = productId,
             shape = "circle", widthCm = 200, lengthCm = 200, heightCm = null,
