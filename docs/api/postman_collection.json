@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Alamelmarateb ERP — v1",
-    "description": "Alamelmarateb ERP v1 — Catalog, Inventory, Sales, CRM, Identity. Login first, paste tokens into variables. Swagger UI: {{baseUrl}}/swagger-ui.html | Contract: ApiResponse{success,message,data,errors,traceId,timestamp}; X-Lang ar|en; Idempotency-Key on place-order/complete-sale; X-Trace-Id echoed; 400 syntax vs 422 semantics vs 409 conflict; 404 unknown route; 405 wrong method + Allow; 429 + Retry-After.",
+    "description": "Alamelmarateb ERP v1 — Catalog, Inventory, Sales, CRM, Identity. Login first, paste tokens into variables. Swagger UI: {{baseUrl}}/swagger-ui.html | Contract: ApiResponse{success,message,data,errors,traceId,timestamp}; X-Lang ar|en; Idempotency-Key on place-order/complete-sale; X-Trace-Id echoed; 400 syntax vs 422 semantics vs 409 conflict; 404 unknown route; 405 wrong method + Allow; 429 + Retry-After. | Tokens auto-save: login/register/refresh store access+refresh into adminJwt/managerJwt/customerJwt/keeperJwt/cashierJwt (+*Refresh, refreshToken, userId) based on the account role. Just log in and call the rest.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -76,6 +76,34 @@
     {
       "key": "trackingNumber",
       "value": "TRK-XXXXXXXX"
+    },
+    {
+      "key": "cashierJwt",
+      "value": "PASTE_CASHIER_JWT"
+    },
+    {
+      "key": "adminRefresh",
+      "value": ""
+    },
+    {
+      "key": "managerRefresh",
+      "value": ""
+    },
+    {
+      "key": "customerRefresh",
+      "value": ""
+    },
+    {
+      "key": "keeperRefresh",
+      "value": ""
+    },
+    {
+      "key": "cashierRefresh",
+      "value": ""
+    },
+    {
+      "key": "refreshToken",
+      "value": ""
     }
   ],
   "item": [
@@ -97,10 +125,31 @@
               "mode": "raw",
               "raw": "{\"fullName\": \"Test Customer\", \"phone\": \"01012345678\", \"password\": \"secret123\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json;",
+                  "    try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data || !data.accessToken) return;",
+                  "    pm.collectionVariables.set(\"customerJwt\", data.accessToken);",
+                  "    pm.collectionVariables.set(\"customerRefresh\", data.refreshToken || \"\");",
+                  "    pm.collectionVariables.set(\"refreshToken\", data.refreshToken || \"\");",
+                  "    if (data.userId) pm.collectionVariables.set(\"userId\", data.userId);",
+                  "    console.log(\"auto-saved customerJwt\");",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
-          "name": "🔑 Login (admin seeded: ADMIN_PHONE/ADMIN_PASSWORD)",
+          "name": "🔑 Login (auto-saves token by role: admin/manager/customer/keeper/cashier)",
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/api/v1/auth/login",
@@ -114,7 +163,42 @@
               "mode": "raw",
               "raw": "{\"phone\": \"01000000000\", \"password\": \"admin123\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json;",
+                  "    try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data || !data.accessToken) return;",
+                  "    pm.collectionVariables.set(\"refreshToken\", data.refreshToken || \"\");",
+                  "    if (data.userId) pm.collectionVariables.set(\"userId\", data.userId);",
+                  "    var base = (pm.collectionVariables.get(\"baseUrl\") || \"http://localhost:8080\").replace(/\\/$/, \"\");",
+                  "    pm.sendRequest({",
+                  "        url: base + \"/api/v1/auth/me\",",
+                  "        method: \"GET\",",
+                  "        header: { \"Authorization\": \"Bearer \" + data.accessToken }",
+                  "    }, function (err, res) {",
+                  "        var roles = [];",
+                  "        try { roles = (res.json().data || {}).roles || []; } catch (e) {}",
+                  "        var jwtVar = null, refreshVar = null;",
+                  "        if (roles.indexOf(\"ROLE_SUPER_ADMIN\") !== -1) { jwtVar = \"adminJwt\"; refreshVar = \"adminRefresh\"; }",
+                  "        else if (roles.indexOf(\"ROLE_BRANCH_MANAGER\") !== -1) { jwtVar = \"managerJwt\"; refreshVar = \"managerRefresh\"; }",
+                  "        else if (roles.indexOf(\"ROLE_CUSTOMER\") !== -1) { jwtVar = \"customerJwt\"; refreshVar = \"customerRefresh\"; }",
+                  "        else if (roles.indexOf(\"ROLE_WAREHOUSE_KEEPER\") !== -1) { jwtVar = \"keeperJwt\"; refreshVar = \"keeperRefresh\"; }",
+                  "        else if (roles.indexOf(\"ROLE_CASHIER\") !== -1) { jwtVar = \"cashierJwt\"; refreshVar = \"cashierRefresh\"; }",
+                  "        if (jwtVar) { pm.collectionVariables.set(jwtVar, data.accessToken); console.log(\"auto-saved \" + jwtVar); }",
+                  "        if (refreshVar && data.refreshToken) pm.collectionVariables.set(refreshVar, data.refreshToken);",
+                  "    });",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "🔄 Refresh",
@@ -129,9 +213,44 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"refreshToken\": \"REFRESH_TOKEN\"}"
+              "raw": "{\"refreshToken\": \"{{refreshToken}}\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json;",
+                  "    try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data || !data.accessToken) return;",
+                  "    pm.collectionVariables.set(\"refreshToken\", data.refreshToken || \"\");",
+                  "    if (data.userId) pm.collectionVariables.set(\"userId\", data.userId);",
+                  "    var base = (pm.collectionVariables.get(\"baseUrl\") || \"http://localhost:8080\").replace(/\\/$/, \"\");",
+                  "    pm.sendRequest({",
+                  "        url: base + \"/api/v1/auth/me\",",
+                  "        method: \"GET\",",
+                  "        header: { \"Authorization\": \"Bearer \" + data.accessToken }",
+                  "    }, function (err, res) {",
+                  "        var roles = [];",
+                  "        try { roles = (res.json().data || {}).roles || []; } catch (e) {}",
+                  "        var jwtVar = null, refreshVar = null;",
+                  "        if (roles.indexOf(\"ROLE_SUPER_ADMIN\") !== -1) { jwtVar = \"adminJwt\"; refreshVar = \"adminRefresh\"; }",
+                  "        else if (roles.indexOf(\"ROLE_BRANCH_MANAGER\") !== -1) { jwtVar = \"managerJwt\"; refreshVar = \"managerRefresh\"; }",
+                  "        else if (roles.indexOf(\"ROLE_CUSTOMER\") !== -1) { jwtVar = \"customerJwt\"; refreshVar = \"customerRefresh\"; }",
+                  "        else if (roles.indexOf(\"ROLE_WAREHOUSE_KEEPER\") !== -1) { jwtVar = \"keeperJwt\"; refreshVar = \"keeperRefresh\"; }",
+                  "        else if (roles.indexOf(\"ROLE_CASHIER\") !== -1) { jwtVar = \"cashierJwt\"; refreshVar = \"cashierRefresh\"; }",
+                  "        if (jwtVar) { pm.collectionVariables.set(jwtVar, data.accessToken); console.log(\"auto-saved \" + jwtVar); }",
+                  "        if (refreshVar && data.refreshToken) pm.collectionVariables.set(refreshVar, data.refreshToken);",
+                  "    });",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "🙋 My profile",
@@ -144,7 +263,23 @@
               }
             ],
             "url": "{{baseUrl}}/api/v1/auth/me"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json;",
+                  "    try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (data && data.id) pm.collectionVariables.set(\"userId\", data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
