@@ -208,8 +208,8 @@ class AccountingService(
     ): JournalView {
         if (lines.isEmpty()) throw BadRequestException("error.accounting.journal_empty")
         val normalized = lines.map { line ->
-            val debit = (line.debit ?: BigDecimal.ZERO).money()
-            val credit = (line.credit ?: BigDecimal.ZERO).money()
+            val debit = line.debit.money()
+            val credit = line.credit.money()
             val debitPositive = debit.compareTo(BigDecimal.ZERO) > 0
             val creditPositive = credit.compareTo(BigDecimal.ZERO) > 0
             if (debitPositive == creditPositive) {
@@ -318,7 +318,7 @@ class AccountingService(
     fun transfer(fromId: UUID, toId: UUID, amount: BigDecimal, by: String?): TransferView {
         val from = getTreasury(fromId)
         val to = getTreasury(toId)
-        val value = (amount ?: BigDecimal.ZERO).money()
+        val value = amount.money()
         if (value.compareTo(BigDecimal.ZERO) <= 0 || fromId == toId) {
             throw BadRequestException("error.accounting.treasury_funds", listOf(from.balance))
         }
@@ -442,7 +442,7 @@ class AccountingService(
 
     private fun reportRange(from: LocalDate?, to: LocalDate?): Pair<LocalDate, LocalDate> {
         if (from == null || to == null || from.isAfter(to)) {
-            throw BadRequestException("error.accounting.report_dates", listOf(from, to))
+            throw BadRequestException("error.accounting.report_dates", listOf(from ?: "", to ?: ""))
         }
         return from to to
     }
@@ -486,7 +486,7 @@ class AccountingService(
 
     @Transactional(readOnly = true)
     fun balanceSheet(to: LocalDate?): BalanceSheetView {
-        if (to == null) throw BadRequestException("error.accounting.report_dates", listOf(null, null))
+        if (to == null) throw BadRequestException("error.accounting.report_dates", listOf("", ""))
         val types = accountTypes()
         val entries = entryRepository.findByEntryDateLessThanEqual(to)
         val lines = if (entries.isEmpty()) emptyList()

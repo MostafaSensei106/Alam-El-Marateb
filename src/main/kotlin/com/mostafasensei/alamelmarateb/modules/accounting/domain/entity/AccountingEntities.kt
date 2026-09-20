@@ -45,11 +45,11 @@ class ChartOfAccountJpaEntity(
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)
-    var createdAt: java.time.Instant = kotlin.time.Clock.System.now(),
+    var createdAt: java.time.Instant = java.time.Instant.now(),
 
     @UpdateTimestamp
     @Column(name = "updated_at", nullable = false)
-    var updatedAt: java.time.Instant = kotlin.time.Clock.System.now(),
+    var updatedAt: java.time.Instant = java.time.Instant.now(),
 
     @CreatedBy
     @Column(name = "created_by", nullable = false, updatable = false)
@@ -125,7 +125,7 @@ class TreasuryTransferJpaEntity(
     var amount: BigDecimal = BigDecimal.ZERO,
 
     @Column(name = "at", nullable = false)
-    var at: java.time.Instant = kotlin.time.Clock.System.now(),
+    var at: java.time.Instant = java.time.Instant.now(),
 
     @Column(name = "by_name", length = 100)
     var by: String? = null,
