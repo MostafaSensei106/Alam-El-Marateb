@@ -30,4 +30,7 @@ object CatalogAdminRoutes {
     const val BRAND_BY_ID = "$PREFIX/brands/{id}"
 
     const val VARIANT_ATTRIBUTES = "$PREFIX/variants/{variantId}/attributes"
+
+    const val PRODUCT_IMAGES = "$PREFIX/products/{id}/images"
+    const val IMAGE_BY_ID = "$PREFIX/images/{imageId}"
 }

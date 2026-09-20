@@ -26,6 +26,11 @@ class SalesFactsUpdater(
 
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
     fun onOrderInvoiced(event: OrderInvoicedEvent) {
+        apply(event)
+    }
+
+    /** Shared by the in-process listener and the Kafka consumer. */
+    fun apply(event: OrderInvoicedEvent) {
         val day: LocalDate = event.day
         event.lines.forEach { line ->
             val revenue = line.net

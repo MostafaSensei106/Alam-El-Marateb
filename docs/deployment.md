@@ -17,11 +17,17 @@
 | `ADMIN_PHONE` | 01000000000 | هاتف السوبر أدمن الأول |
 | `ADMIN_PASSWORD` | admin123 | **يُغيَّر فوراً بعد أول دخول** |
 | `ADMIN_NAME` | System Admin | اسم الأدمن |
+| `EVENTS_TRANSPORT` | in-process | `kafka` للنقل عبر البروكر |
+| `KAFKA_BOOTSTRAP` | localhost:9092 | بروكر كافكا |
+| `STORAGE_DIR` | ./data/uploads | مجلد الصور المحلي |
+| `STORAGE_MAX_MB` | 5 | حد حجم الصورة |
 
 ## 3. التشغيل محلياً
 
 ```bash
 docker compose up -d postgres redis
+docker compose --profile kafka up -d   # اختياري: نقل الأحداث عبر Kafka
+docker compose --profile minio up -d   # اختياري: S3 مستقبلاً (بديل التخزين المحلي)
 ./gradlew bootRun
 ```
 

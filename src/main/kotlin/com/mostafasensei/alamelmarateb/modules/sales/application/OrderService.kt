@@ -1,6 +1,7 @@
 package com.mostafasensei.alamelmarateb.modules.sales.application
 
 import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
+import com.mostafasensei.alamelmarateb.core.events.DomainEventPublisher
 import com.mostafasensei.alamelmarateb.core.events.InvoicedLine
 import com.mostafasensei.alamelmarateb.core.events.OrderInvoicedEvent
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
@@ -31,7 +32,6 @@ import com.mostafasensei.alamelmarateb.modules.sales.domain.model.PaymentMethod
 import com.mostafasensei.alamelmarateb.modules.sales.domain.model.PaymentStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
-import org.springframework.context.ApplicationEventPublisher
 import org.springframework.jdbc.core.JdbcTemplate
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -73,7 +73,7 @@ class OrderService(
     private val variantRepository: ProductVariantRepository,
     private val auditLog: AuditLogService,
     private val shippingRates: ShippingRates,
-    private val events: ApplicationEventPublisher,
+    private val events: DomainEventPublisher,
     private val jdbc: JdbcTemplate,
 ) {
 
@@ -210,7 +210,7 @@ class OrderService(
             invoiceRepository.save(InvoiceJpaEntity(orderId = saved.id, serial = nextSerial(input.branchId)))
         }
 
-        events.publishEvent(
+        events.publish(
             OrderInvoicedEvent(
                 orderId = saved.id!!,
                 branchId = input.branchId,

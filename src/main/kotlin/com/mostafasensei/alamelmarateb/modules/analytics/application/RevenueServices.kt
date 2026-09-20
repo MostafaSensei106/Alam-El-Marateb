@@ -2,11 +2,13 @@ package com.mostafasensei.alamelmarateb.modules.analytics.application
 
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
+import com.mostafasensei.alamelmarateb.core.i18n.MessageService
 import com.mostafasensei.alamelmarateb.modules.analytics.data.repository.AppEventRepository
 import com.mostafasensei.alamelmarateb.modules.analytics.data.repository.InquiryRepository
 import com.mostafasensei.alamelmarateb.modules.analytics.domain.entity.AppEventJpaEntity
 import com.mostafasensei.alamelmarateb.modules.analytics.domain.entity.InquiryJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.DeliveryZoneRepository
+import com.mostafasensei.alamelmarateb.modules.sales.data.repository.DeliveryZoneTranslationRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.OrderRepository
 import org.slf4j.LoggerFactory
 import org.springframework.jdbc.core.JdbcTemplate
@@ -63,6 +65,8 @@ class RevenueService(
     private val jdbc: JdbcTemplate,
     private val orderRepository: OrderRepository,
     private val zoneRepository: DeliveryZoneRepository,
+    private val zoneTrRepository: DeliveryZoneTranslationRepository,
+    private val messages: MessageService,
 ) {
 
     @Transactional(readOnly = true)
@@ -151,9 +155,17 @@ class RevenueService(
     @Transactional(readOnly = true)
     fun geoHeatmap(from: LocalDate, to: LocalDate): List<GeoCell> {
         val zones = zoneRepository.findAll().associateBy { it.id }
+        val lang = messages.currentLanguage()
+        val govNames = zoneTrRepository.findByZoneIdIn(zones.keys.filterNotNull())
+            .groupBy({ it.zoneId }, { it.lang to it.governorate }).mapValues { it.value.toMap() }
+        fun governorateOf(zoneId: UUID?): String {
+            val canonical = zoneId?.let { zones[it]?.governorate } ?: "غير محدد"
+            val map = zoneId?.let { govNames[it] } ?: emptyMap()
+            return map[lang] ?: map["ar"] ?: canonical
+        }
         return orderRepository.findAll()
             .filter { it.status != "cancelled" && it.deliveryZoneId != null }
-            .groupBy { zones[it.deliveryZoneId]?.governorate ?: "غير محدد" }
+            .groupBy { governorateOf(it.deliveryZoneId) }
             .map { (gov, orders) ->
                 GeoCell(gov, orders.size, orders.fold(BigDecimal.ZERO) { a, o -> a.add(o.grandTotal) }.scaled())
             }.sortedByDescending { it.revenue }

@@ -28,6 +28,7 @@ object AnalyticsRoutes {
     const val INQUIRIES = "$PREFIX/inquiries"
     const val INQUIRY_TOP = "$PREFIX/inquiries/top-asked"
     const val EVENTS = "$PREFIX/events"
+    const val NOTIFICATIONS = "$PREFIX/notifications"
 
     const val AUDIT_TRAIL = "$PREFIX/audit-trail/{entity}/{entityId}"
 }

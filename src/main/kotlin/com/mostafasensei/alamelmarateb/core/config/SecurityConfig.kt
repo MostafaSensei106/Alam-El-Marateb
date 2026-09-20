@@ -58,6 +58,7 @@ class SecurityConfig (
                     .requestMatchers(HttpMethod.POST, "$v1/analytics/events").permitAll()
 
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                     .requestMatchers("/actuator/health/**", "/actuator/info").permitAll()
 
                     // Customers: shop + self-service portal

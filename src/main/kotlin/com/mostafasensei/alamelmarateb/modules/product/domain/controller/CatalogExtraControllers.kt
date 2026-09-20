@@ -24,6 +24,8 @@ import com.mostafasensei.alamelmarateb.modules.product.domain.model.VariantAttri
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.BrandService
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.BrandView
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
+import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductImageService
+import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductImageView
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.QaService
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.QuestionView
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.QuizAnswer
@@ -157,7 +159,6 @@ class CatalogAdminExtraController(
     private val brandService: BrandService,
     private val reviewService: ReviewService,
 ) : BaseController() {
-
     @Operation(summary = "Quick-create product from preset + one size")
     @PostMapping(CatalogAdminRoutes.QUICK_CREATE)
     fun quickCreate(@Valid @RequestBody request: QuickCreateRequest): ResponseEntity<ApiResponse<Product>> =
@@ -205,7 +206,6 @@ class CatalogAdminExtraController(
         @Valid @RequestBody request: VariantAttributeRequest,
     ): ResponseEntity<ApiResponse<VariantAttributeDto>> =
         created(catalogService.attachVariantAttribute(variantId, request.attributeId, request.value))
-
     @Operation(summary = "Moderate review (approve/reject)")
     @PostMapping(CrmAdminRoutes.REVIEW_MODERATE)
     fun moderate(
@@ -213,6 +213,42 @@ class CatalogAdminExtraController(
         @Valid @RequestBody request: ReviewModerateRequest,
     ): ResponseEntity<ApiResponse<ReviewView>> =
         ok(reviewService.moderate(id, request.approve))
+}
+
+/**
+ * Product images — upload (BRANCH_MANAGER) + public list.
+ */
+@Tag(name = "Catalog images", description = "Product photos — upload is management only")
+@RestController
+class ProductImageController(
+    private val imageService: ProductImageService,
+    private val catalogService: ProductCatalogService,
+) : BaseController() {
+
+    @Operation(summary = "Upload product image")
+    @PostMapping(CatalogAdminRoutes.PRODUCT_IMAGES, consumes = ["multipart/form-data"])
+    @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+    fun upload(
+        @PathVariable id: UUID,
+        @RequestParam file: org.springframework.web.multipart.MultipartFile,
+    ): ResponseEntity<ApiResponse<ProductImageView>> =
+        created(imageService.upload(id, file))
+
+    @Operation(summary = "Delete product image")
+    @DeleteMapping(CatalogAdminRoutes.IMAGE_BY_ID)
+    @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+    fun delete(@PathVariable imageId: UUID): ResponseEntity<ApiResponse<Nothing>> {
+        imageService.delete(imageId)
+        return deleted(com.mostafasensei.alamelmarateb.core.i18n.MessageService.t("success.deleted"))
+    }
+
+    @Operation(summary = "Public product images")
+    @GetMapping(CatalogStoreRoutes.PRODUCT_IMAGES)
+    fun list(@PathVariable slug: String): ResponseEntity<ApiResponse<List<ProductImageView>>> {
+        val product = catalogService.getProductBySlug(slug)
+            ?: throw com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException("error.catalog.product_not_found")
+        return ok(imageService.list(product.id!!))
+    }
 }
 
 /**

@@ -38,7 +38,24 @@ services:
     volumes:
       - kafka_data:/var/lib/kafka/data
 
+  # S3-compatible object storage (future): image backend swap target.
+  # Opt-in only: docker compose --profile minio up -d (console :9001).
+  minio:
+    image: minio/minio:latest
+    container_name: shop-minio
+    profiles: ["minio"]
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    environment:
+      - "MINIO_ROOT_USER=minioadmin"
+      - "MINIO_ROOT_PASSWORD=minioadmin123"
+    command: server /data --console-address ":9001"
+    volumes:
+      - minio_data:/data
+
 volumes:
   pgdata:
   redis_data:
   kafka_data:
+  minio_data:

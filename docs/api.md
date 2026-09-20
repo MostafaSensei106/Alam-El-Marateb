@@ -21,6 +21,8 @@
 | GET `/catalog/public/products` + `?category&brand&minPrice&maxPrice&rating` | موجود (الفلاتر تُستكمل P2) |
 | GET `/catalog/public/products/search?q=` + GET `/featured` + GET `/compare?ids=` | موجود |
 | GET `/catalog/public/products/{slug}` + GET `/{id}/variants` | موجود |
+| POST `/catalog/products/{id}/images` + DELETE `/catalog/images/{imageId}` + GET `/catalog/public/products/{slug}/images` | موجود |
+| GET `/analytics/notifications` (طابور المتابعة) | موجود |
 | GET `/catalog/public/categories` + GET `/catalog/public/products/{slug}/reviews` + brands/quiz/compare/bought-together/Q&A | موجود |
 
 ## Sales — POS (CASHIER)
@@ -81,6 +83,7 @@
 
 - النجاح: `ApiResponse{success,message,data}` عبر `BaseController` (201 للإنشاء).
 - اللغة: هيدر `X-Lang: ar|en` يحدد لغة `message` (افتراضي ar) — نفس الشكل في كل اللغات (التفصيل `core/i18n`).
+- المحتوى ثنائي اللغة: الكتابة تقبل `translations: {lang: {name, description}}` (الأكواد من `app.i18n.supported` فقط)، والقراءة تُحل بلغة الطلب (المطلوبة ← ar ← canonical). لغة جديدة = صفوف فقط.
 - القوائم الكبيرة: `PagedResponse{items,page,size,totalElements,totalPages}` + `Pageable`.
 - الأخطاء: `GlobalExceptionHandler` (400 تحقق/404 NotFoundException/409 تعارض).
 - الفلوس: BigDecimal برقمين عشريين دائماً (10 arch.md).

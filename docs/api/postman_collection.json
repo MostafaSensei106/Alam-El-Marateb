@@ -205,6 +205,40 @@
               "raw": "{\"categoryId\": \"{{categoryId}}\", \"name\": \"Serta 120\", \"slug\": \"serta-120\", \"brand\": \"Serta\", \"warrantyYears\": 10}"
             }
           }
+        },
+        {
+          "name": "➕ Create product (translations)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/products",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"categoryId\": \"{{categoryId}}\", \"name\": \"مرتبة سيرتا\", \"slug\": \"serta-120\", \"brand\": \"سيرتا\", \"translations\": {\"en\": {\"name\": \"Serta Mattress\", \"description\": \"Pocket springs\"}}}"
+            }
+          }
+        },
+        {
+          "name": "🖼️ Upload image (multipart: file)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/products/{{productId}}/images",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ]
+          }
         }
       ]
     },
@@ -1792,6 +1826,19 @@
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/catalog/public/brands",
             "header": []
+          }
+        },
+        {
+          "name": "🔔 Notifications queue",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/notifications",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ]
           }
         }
       ]

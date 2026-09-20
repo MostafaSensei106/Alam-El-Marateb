@@ -176,6 +176,11 @@ src/main/kotlin/com/mostafasensei/alamelmarateb/
 
 ## 11. تعدد اللغات AR/EN (مُنفذ — قابل للتوسع)
 
+**محتوى الداتابيز (منتجات/أصناف/براندات/صفات/مناطق/كويز)**: نفس المبدأ بلا أعمدة per-language —
+الجدول الأم يحمل العربية canonical، وكل لغة زيادة = صفوف في `*_translations` (مفتاح entity+lang).
+لغة جديدة = إضافة الكود لـ `app.i18n.supported` + صفوف ترجمة. صفر DDL وصفر كود.
+القراءة تُحل بلغة الطلب (`X-Lang`) بسقوط: المطلوبة ← ar ← canonical.
+
 العقد: **نفس شكل الرسبونس دائماً، لغة واحدة لكل طلب** — لا يُرجع en+ar معاً.
 - مفتاح اللغة من هيدر `X-Lang: ar|en` (ثم Accept-Language ثم الافتراضي ar).
 - لغة جديدة = ملف `messages_<code>.properties` + إضافة الكود لـ `app.i18n.supported` — بدون تغيير كود.

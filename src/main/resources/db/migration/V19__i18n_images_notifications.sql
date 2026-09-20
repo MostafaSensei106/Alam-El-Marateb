@@ -107,6 +107,7 @@ CREATE TABLE notification_outbox (
     channel VARCHAR(20) NOT NULL DEFAULT 'log'
         CONSTRAINT ck_notify_channel CHECK (channel IN ('log', 'sms', 'whatsapp')),
     recipient VARCHAR(80) NOT NULL,
+    ref VARCHAR(120),
     status VARCHAR(20) NOT NULL DEFAULT 'pending'
         CONSTRAINT ck_notify_status CHECK (status IN ('pending', 'sent', 'failed')),
     attempts INT NOT NULL DEFAULT 0,

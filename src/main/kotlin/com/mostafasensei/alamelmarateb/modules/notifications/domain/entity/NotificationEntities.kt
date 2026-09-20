@@ -17,6 +17,9 @@ class NotificationJpaEntity(
     @Column(name = "recipient", nullable = false, length = 80)
     var recipient: String = "",
 
+    @Column(name = "ref", length = 120)
+    var ref: String? = null,
+
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "pending",
 

@@ -5,6 +5,12 @@
 
 ## 0. اتفاقيات ملزمة
 
+**نمط الترجمات**: بلا أعمدة `name_ar/name_en/...` أبداً — لغة جديدة صفوف لا DDL.
+`product/category/brand/attribute/option/zone/quiz/notification_translations` بمفتاح (entity, lang).
+القراءة: المطلوبة ← ar ← canonical. الكتابة ترفض أكواد خارج `app.i18n.supported` (400).
+
+## 0. اتفاقيات ملزمة
+
 | البند | القاعدة |
 |---|---|
 | المفتاح | `id UUID DEFAULT gen_random_uuid()` PK |
@@ -112,4 +118,6 @@ V1 (مُصلح: عمود مكرر + DEFAULT) → V2,V3 (موجودة) → **V4 i
 **V6 sales + V7 audit-cols (مُنفذ)** →
 **V8 crm (مُنفذ: profiles/addresses/favorites/warranties/claims)** →
 V9 purchasing (مخطط) → V10 hr (مخطط) → V11 accounting (مخطط) → V12 delivery (مخطط) →
-V13 reviews+quiz (مخطط) → V14 inquiries + app_events (مخطط).
+V13 reviews+quiz (مُنفذ) → V14 inquiries + app_events + idempotency_keys (مُنفذ) →
+V15 brands + variant-attrs + seed (مُنفذ) → V16/V17 إصلاحات → V18 Q&A + صور تقييمات (مُنفذ) →
+V19 ترجمات + صور منتجات + outbox إشعارات (مُنفذ) → V20 ترجمات الكويز (مُنفذ) → V21 إصلاح audit.

@@ -19,4 +19,5 @@ object CatalogStoreRoutes {
     const val QUIZ = "$PREFIX/quiz"
     const val QUIZ_RECOMMEND = "$PREFIX/quiz/recommend"
     const val BRANDS = "$PREFIX/brands"
+    const val PRODUCT_IMAGES = "$PREFIX/products/{slug}/images"
 }
