@@ -9,8 +9,6 @@
 `product/category/brand/attribute/option/zone/quiz/notification_translations` بمفتاح (entity, lang).
 القراءة: المطلوبة ← ar ← canonical. الكتابة ترفض أكواد خارج `app.i18n.supported` (400).
 
-## 0. اتفاقيات ملزمة
-
 | البند | القاعدة |
 |---|---|
 | المفتاح | `id UUID DEFAULT gen_random_uuid()` PK |
@@ -112,12 +110,19 @@
 - `idempotency_keys`: key UQ, response_code, response_body (P3).
 - خريطة FK: جداول التحليلات read-model بلا FKs صارمة — تُعاد بناؤها عند الحاجة.
 
+## 12. الولاء والمدفوعات والتتبع (V22)
+
+- `loyalty_accounts (user_id PK, points, lifetime_earned)` + `loyalty_ledger (user, order nullable, delta≠0, reason, balance_after)` — الكسب حدثي عند التسليم (idempotent لكل طلب)، والاستبدال خصم عند الإنشاء.
+- `payment_intents (order, gateway, amount>0, status: pending/authorized/captured/failed/cancelled/refunded, provider_ref UNIQUE, payload JSONB)` — الكولباك يتحقق من التوقيع أولاً ثم يطبق idempotently.
+- `trip_locations (trip, lat/lng, recorded_at)` + `trip_stops.lat/lng` + `driver_ratings (order UNIQUE, driver, 1..5)`.
+
 ## 11. ترتيب المايجريشنز (محدّث — التنفيذ بدأ بالمخازن أولاً)
 
 V1 (مُصلح: عمود مكرر + DEFAULT) → V2,V3 (موجودة) → **V4 inventory (مُنفذ)** → **V5 analytics: audit_logs + sales_daily_facts (مُنفذ)** →
 **V6 sales + V7 audit-cols (مُنفذ)** →
 **V8 crm (مُنفذ: profiles/addresses/favorites/warranties/claims)** →
-V9 purchasing (مخطط) → V10 hr (مخطط) → V11 accounting (مخطط) → V12 delivery (مخطط) →
+V9 purchasing (مُنفذ) → V10 hr (مُنفذ) → V11 accounting (مُنفذ) → V12 delivery (مُنفذ) →
 V13 reviews+quiz (مُنفذ) → V14 inquiries + app_events + idempotency_keys (مُنفذ) →
 V15 brands + variant-attrs + seed (مُنفذ) → V16/V17 إصلاحات → V18 Q&A + صور تقييمات (مُنفذ) →
-V19 ترجمات + صور منتجات + outbox إشعارات (مُنفذ) → V20 ترجمات الكويز (مُنفذ) → V21 إصلاح audit.
+V19 ترجمات + صور منتجات + outbox إشعارات (مُنفذ) → V20 ترجمات الكويز (مُنفذ) → V21 إصلاح audit →
+V22 ولاء + مدفوعات + GPS وتقييم سائق (مُنفذ) → V23 إصلاح.

@@ -190,5 +190,5 @@ src/main/kotlin/com/mostafasensei/alamelmarateb/
 
 1. `users` موحد (الحالي) مقابل فصل `customers` — المقترح: إبقاء الموحد + `customer_profiles`.
 2. أسعار الضرائب والخصومات: على مستوى الصنف أم الفاتورة أم الاثنين؟
-3. الدفع الأونلاين: بوابات (فوري/Paymob) في P3 أم تُؤجل؟
+3. الدفع الأونلاين: ~~بوابات (فوري/Paymob) في P3 أم تُؤجل؟~~ — تم: fake/paymob/fawry (الحية خلف credentials).
 4. صور المنتجات: تخزين محلي أم S3-compatible؟

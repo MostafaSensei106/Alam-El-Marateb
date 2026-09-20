@@ -21,13 +21,21 @@
 | `KAFKA_BOOTSTRAP` | localhost:9092 | بروكر كافكا |
 | `STORAGE_DIR` | ./data/uploads | مجلد الصور المحلي |
 | `STORAGE_MAX_MB` | 5 | حد حجم الصورة |
+| `STORAGE_BACKEND` | local | `s3` للتخزين السحابي |
+| `S3_ENDPOINT/BUCKET/...` | minio محلي | إعدادات S3 |
+| `CLICKHOUSE_ENABLED` | false | `true` للتحليلات الثقيلة |
+| `CLICKHOUSE_URL/USER/PASSWORD` | localhost:8123 | اتصال ClickHouse |
+| `PAYMOB_ENABLED/FAWRY_ENABLED` | false | تفعيل البوابات الحية |
+| `PAYMOB_API_KEY/HMAC_SECRET` | - | أسرار Paymob |
+| `FAWRY_MERCHANT/SECRET` | - | أسرار Fawry |
 
 ## 3. التشغيل محلياً
 
 ```bash
 docker compose up -d postgres redis
 docker compose --profile kafka up -d   # اختياري: نقل الأحداث عبر Kafka
-docker compose --profile minio up -d   # اختياري: S3 مستقبلاً (بديل التخزين المحلي)
+docker compose --profile minio up -d   # S3 للتخزين السحابي (STORAGE_BACKEND=s3)
+docker compose --profile clickhouse up -d   # تحليلات ثقيلة (CLICKHOUSE_ENABLED=true)
 ./gradlew bootRun
 ```
 
