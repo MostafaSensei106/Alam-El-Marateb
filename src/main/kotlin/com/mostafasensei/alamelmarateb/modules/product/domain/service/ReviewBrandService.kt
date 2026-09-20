@@ -1,4 +1,5 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.service
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
@@ -116,6 +117,7 @@ data class BrandView(
     val description: String?,
     val sortOrder: Int,
     val isActive: Boolean,
+    @get:JsonIgnore
     val translations: Map<String, Map<String, String?>> = emptyMap(),
 )
 

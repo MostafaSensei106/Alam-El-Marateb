@@ -124,12 +124,12 @@ class GlobalExceptionHandler(private val msg: MessageService) {
     @ExceptionHandler(AuthService.UnauthorizedException::class)
     fun handleUnauthorized(ex: AuthService.UnauthorizedException): ResponseEntity<ApiResponse<Nothing>> =
         ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-            .body(ApiResponse.failure(msg.get("auth.invalid_credentials")))
+            .body(ApiResponse.failure(msg.get("auth.invalid_credentials"), listOf("INVALID_CREDENTIALS")))
 
     @ExceptionHandler(AuthenticationException::class)
     fun handleAuthentication(ex: AuthenticationException): ResponseEntity<ApiResponse<Nothing>> =
         ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-            .body(ApiResponse.failure(msg.get("auth.unauthorized"), listOf("TOKEN_EXPIRED")))
+            .body(ApiResponse.failure(msg.get("auth.unauthorized"), listOf("TOKEN_INVALID")))
 
     @ExceptionHandler(BadRequestException::class)
     fun handleBadRequest(ex: BadRequestException): ResponseEntity<ApiResponse<Nothing>> =
@@ -139,19 +139,20 @@ class GlobalExceptionHandler(private val msg: MessageService) {
     @ExceptionHandler(OptimisticLockException::class)
     fun handleOptimisticLockingFailure(ex: OptimisticLockException): ResponseEntity<ApiResponse<Nothing>> {
         return ResponseEntity.status(HttpStatus.CONFLICT)
-            .body(ApiResponse.failure(message = msg.get("error.locked")))
+            .body(ApiResponse.failure(message = msg.get("error.locked"), errors = listOf("VERSION_CONFLICT")))
     }
 
     @ExceptionHandler(AccessDeniedException::class)
     fun handleAccessDeniedException(ex: AccessDeniedException): ResponseEntity<ApiResponse<Nothing>> {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
-            .body(ApiResponse.failure(message = msg.get("error.forbidden")))
+            .body(ApiResponse.failure(message = msg.get("error.forbidden"), errors = listOf("FORBIDDEN")))
     }
 
     @ExceptionHandler(DataIntegrityViolationException::class)
     fun handleDataIntegrityViolationException(ex: DataIntegrityViolationException): ResponseEntity<ApiResponse<String>> {
+        val detail = ex.mostSpecificCause.message?.take(200) ?: "constraint violation"
         return ResponseEntity.status(HttpStatus.CONFLICT).body(
-            ApiResponse.failure(message = msg.get("error.integrity")),
+            ApiResponse.failure(message = msg.get("error.integrity"), errors = listOf(detail)),
         )
     }
 
@@ -180,6 +181,6 @@ class GlobalExceptionHandler(private val msg: MessageService) {
     fun handleGeneralException(ex: Exception): ResponseEntity<ApiResponse<String>> {
         log.error("Unhandled error traceId={} : {}", MDC.get("traceId"), ex.message, ex)
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-            .body(ApiResponse.failure(message = msg.get("error.internal")))
+            .body(ApiResponse.failure(message = msg.get("error.internal"), errors = listOf("INTERNAL_ERROR")))
     }
 }

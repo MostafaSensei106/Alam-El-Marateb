@@ -1,4 +1,5 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.model
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 import java.util.UUID
 
@@ -9,6 +10,7 @@ data class ProductCategoryResponse(
     val description: String? = null,
     val isActive: Boolean = true,
     val attributes: List<CategoryAttributeResponse> = emptyList(),
+    @get:JsonIgnore
     val translations: Map<String, Map<String, String?>> = emptyMap(),
 )
 
@@ -25,6 +27,7 @@ data class ProductAttributeDefinitionResponse(
     val type: String,
     val options: List<ProductAttributeOptionResponse> = emptyList(),
     val isActive: Boolean = true,
+    @get:JsonIgnore
     val translations: Map<String, Map<String, String?>> = emptyMap(),
 )
 
@@ -33,5 +36,6 @@ data class ProductAttributeOptionResponse(
     val value: String,
     val label: String,
     val sortOrder: Int = 0,
+    @get:JsonIgnore
     val translations: Map<String, Map<String, String?>> = emptyMap(),
 )

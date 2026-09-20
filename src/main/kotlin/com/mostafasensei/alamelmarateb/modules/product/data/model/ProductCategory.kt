@@ -1,4 +1,5 @@
 package com.mostafasensei.alamelmarateb.modules.product.data.model
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 import java.util.UUID
 import kotlin.time.Clock
@@ -17,6 +18,7 @@ data class ProductCategory(
     val description: String? = null,
     val isActive: Boolean = true,
     val attributes: List<CategoryAttribute> = emptyList(),
+    @get:JsonIgnore
     val translations: Map<String, Map<String, String?>> = emptyMap(),
     val createdAt: Instant = Clock.System.now(),
     val updatedAt: Instant = Clock.System.now(),

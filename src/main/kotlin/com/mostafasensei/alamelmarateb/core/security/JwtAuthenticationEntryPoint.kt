@@ -16,6 +16,7 @@ class JwtAuthenticationEntryPoint(
     private val objectMapper: ObjectMapper,
     private val msg: MessageService,
     private val locales: AppLocaleResolver,
+    private val tokenProvider: JwtTokenProvider,
 ) : AuthenticationEntryPoint {
     override fun commence(
         request: HttpServletRequest,
@@ -25,10 +26,20 @@ class JwtAuthenticationEntryPoint(
         response.contentType = MediaType.APPLICATION_JSON_VALUE
         response.status = HttpServletResponse.SC_UNAUTHORIZED
         // Security chain runs before MVC: resolve locale straight from the request.
-        // Detail is a machine code (locale-independent) so the frontend can auto-refresh.
+        // Detail is a machine code (locale-independent) so the frontend knows
+        // exactly what to do: MISSING/INVALID -> login again, EXPIRED -> refresh.
+        val raw = request.getHeader("Authorization")
+        val code = when {
+            raw.isNullOrBlank() || !raw.startsWith("Bearer ") || raw.removePrefix("Bearer ").isBlank() ->
+                "TOKEN_MISSING"
+            else -> when (tokenProvider.tokenStatus(raw.removePrefix("Bearer "))) {
+                JwtTokenProvider.TokenStatus.EXPIRED -> "TOKEN_EXPIRED"
+                else -> "TOKEN_INVALID"
+            }
+        }
         val body = ApiResponse.failure<Nothing>(
             message = msg.get("auth.unauthorized", locales.resolveLocale(request)),
-            errors = listOf("TOKEN_EXPIRED"),
+            errors = listOf(code),
         )
 
         objectMapper.writeValue(response.outputStream, body)

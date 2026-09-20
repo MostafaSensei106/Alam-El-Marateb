@@ -1,4 +1,5 @@
 package com.mostafasensei.alamelmarateb.modules.product.data.model
+import com.fasterxml.jackson.annotation.JsonIgnore
 
 import java.math.BigDecimal
 import java.util.UUID
@@ -38,6 +39,7 @@ data class ProductAttributeOption(
     val value: String,
     val label: String,
     val sortOrder: Int = 0,
+    @get:JsonIgnore
     val translations: Map<String, Map<String, String?>> = emptyMap(),
 )
 
@@ -48,6 +50,7 @@ data class ProductAttributeDefinition(
     val type: AttributeType,
     val options: List<ProductAttributeOption> = emptyList(),
     val isActive: Boolean = true,
+    @get:JsonIgnore
     val translations: Map<String, Map<String, String?>> = emptyMap(),
     val createdAt: Instant = Clock.System.now(),
     val updatedAt: Instant = Clock.System.now(),

@@ -80,4 +80,20 @@ class JwtTokenProvider(
             false
         }
     }
+
+    /** Machine-readable token state for 401 responses (frontend refresh logic). */
+    enum class TokenStatus { VALID, EXPIRED, INVALID }
+
+    fun tokenStatus(authToken: String): TokenStatus {
+        return try {
+            Jwts.parser().verifyWith(key).build().parseSignedClaims(authToken)
+            TokenStatus.VALID
+        } catch (_: io.jsonwebtoken.ExpiredJwtException) {
+            TokenStatus.EXPIRED
+        } catch (_: JwtException) {
+            TokenStatus.INVALID
+        } catch (_: IllegalArgumentException) {
+            TokenStatus.INVALID
+        }
+    }
 }
