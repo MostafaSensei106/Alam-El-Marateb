@@ -11,6 +11,8 @@
 <p align="center">
   <a href="#-why-alam-el-marateb">Why?</a> •
   <a href="#-architecture--modular-monolith">Architecture</a> •
+  <a href="#-database-architecture--entity-relationships-erd">Database & ERD</a> •
+  <a href="#-core-domain-state-machines--workflows">State Machines</a> •
   <a href="#-quick-start">Quick Start</a> •
   <a href="#-complete-api-catalog">API Catalog</a> •
   <a href="#-practical-usage-walkthroughs">Usage Examples</a> •
@@ -61,7 +63,128 @@ Most retail backend systems suffer from three fundamental architectural flaws:
 
 ## 🏛️ Architecture & Modular Monolith
 
-The codebase is engineered as a **Modular Monolith** adhering strictly to **Clean Architecture** principles inside each bounded context. Modules communicate only through domain events or explicit application ports.
+The codebase is engineered as an enterprise-grade **Modular Monolith** adhering strictly to **Clean Architecture** principles inside each bounded context. Modules communicate only through domain events or explicit application ports, preserving high cohesion and loose coupling without the operational tax of microservices.
+
+### 📐 High-Level System Architecture & Tier Topology
+
+```mermaid
+flowchart TB
+    subgraph Clients["📱 Client & Channel Tier"]
+        POS["🖥️ POS Touchscreens & Barcode Scanners"]
+        Web["🌐 Next.js / React E-Commerce Storefront"]
+        Mobile["📱 Flutter / Kotlin Customer Mobile App"]
+        DriverApp["🚚 Driver Mobile App (GPS Telemetry)"]
+        WarehousePDA["📦 Warehouse Handheld Scanner PDAs"]
+        AdminSPA["💼 Backoffice Management SPA"]
+    end
+
+    subgraph Gateway["🛡️ Gateway, Security & Cross-Cutting Kernel"]
+        direction TB
+        SecFilter["Spring Security 6 (Stateless JWT Filter)"]
+        Router["Central Router Registry (/api/v1/*)"]
+        TenantCtx["Multi-Branch Context & Tenancy Resolver"]
+        I18n["X-Lang Content Resolver (AR / EN)"]
+        AuditFilter["Audit Trail Interceptor & Idempotency Key Gate"]
+        SecFilter --> Router --> TenantCtx --> I18n --> AuditFilter
+    end
+
+    Clients -->|"HTTPS / REST / JSON"| Gateway
+
+    subgraph ModularMonolith["🏛️ Modular Monolith Domain Engine (Spring Boot 4.x / Kotlin 2.3)"]
+        subgraph Cluster1["Identity & Security"]
+            ModAuth["🔐 Identity & RBAC"]
+        end
+
+        subgraph Cluster2["Product & Pricing Engine"]
+            ModCatalog["🛋️ Catalog & Categories"]
+            ModEAV["🧩 Dynamic EAV Engine"]
+            ModPricing["📐 Geometric Meter Quoter"]
+            ModEstimator["🎲 Estimator & Spin"]
+        end
+
+        subgraph Cluster3["Omni-Channel Sales"]
+            ModPOS["🛒 POS & Shift Drawers"]
+            ModCheckout["🛍️ Storefront Cart & Checkout"]
+            ModPromotions["🏷️ Promotional Rules Engine"]
+        end
+
+        subgraph Cluster4["Supply Chain & Fulfillment"]
+            ModInventory["📦 Immutable Stock Ledger"]
+            ModPurchasing["🏭 Purchasing & Goods Receipts"]
+            ModDelivery["🚚 Fleet Dispatch & Driver GPS"]
+        end
+
+        subgraph Cluster5["Financial Integrity"]
+            ModAccounting["⚖️ Double-Entry General Ledger"]
+            ModTreasury["💵 Treasuries, Safes & Checks"]
+            ModPayroll["👥 HR Commissions & Payroll"]
+        end
+
+        subgraph Cluster6["Customer Experience & BI"]
+            ModCRM["🛡️ CRM & Warranty Portal"]
+            ModLoyalty["🎁 Gamified Loyalty Points"]
+            ModAnalytics["📊 Real-Time BI & Analytics"]
+        end
+    end
+
+    Gateway --> ModularMonolith
+
+    subgraph EventBackbone["⚡ Event-Driven Backbone"]
+        SpringEvents["In-Process ApplicationEventPublisher"]
+        OutboxTable[("notification_outbox & app_events")]
+        AsyncPool["Spring @Async Dedicated Thread Pools"]
+        KafkaProfile["Optional Apache Kafka Event Broker"]
+        SpringEvents --> AsyncPool
+        SpringEvents --> OutboxTable
+        OutboxTable -.-> KafkaProfile
+    end
+
+    ModularMonolith <--> EventBackbone
+
+    subgraph StorageTier["💾 Persistence & Infrastructure Storage"]
+        Postgres[("🐘 PostgreSQL 16<br/>(27 Flyway Migrations, Foreign Key Integrity)")]
+        RedisStore[("⚡ Redis 7.x<br/>(L1 Entity Cache, Driver GPS & Locks)")]
+        S3Storage[("🪣 AWS S3 / MinIO<br/>(Mattress Photos, Invoices, POD Signatures)")]
+        ClickhouseStore[("📈 ClickHouse OLAP<br/>(High-Volume Telemetry & Log Ingest)")]
+    end
+
+    ModularMonolith -->|"Spring Data JPA / HikariCP"| Postgres
+    ModularMonolith -->|"Spring Data Redis"| RedisStore
+    ModularMonolith -->|"S3 Storage Port"| S3Storage
+    EventBackbone -.->|"CDC / Stream"| ClickhouseStore
+```
+
+### 🧩 Bounded Contexts & Inter-Module Communication
+
+Modules communicate asynchronously across bounded context boundaries via strongly-typed domain events, preventing direct circular coupling:
+
+```mermaid
+flowchart LR
+    Catalog["🛋️ Catalog & Pricing"]
+    POS["🛒 Sales / POS"]
+    Inv["📦 Inventory Ledger"]
+    Acc["⚖️ Double-Entry Accounting"]
+    Del["🚚 Fleet & Delivery"]
+    CRM["🛡️ CRM & Warranties"]
+    Loy["🎁 Loyalty Engine"]
+    BI["📊 Analytics & BI"]
+
+    Catalog -->|"Price & Variant Master"| POS
+    POS -->|"OrderPlacedEvent"| Inv
+    POS -->|"OrderPlacedEvent"| Acc
+    POS -->|"OrderPlacedEvent"| Del
+    POS -->|"OrderPlacedEvent"| Loy
+    POS -->|"OrderPlacedEvent"| BI
+    
+    Inv -->|"StockBelowThresholdEvent"| BI
+    Del -->|"OrderDeliveredEvent"| CRM
+    Del -->|"OrderDeliveredEvent"| Acc
+    CRM -->|"WarrantyClaimApprovedEvent"| Del
+    CRM -->|"WarrantyClaimApprovedEvent"| Inv
+    Loy -->|"PointsRedeemedEvent"| POS
+```
+
+### 📁 Codebase Directory Topology
 
 ```
 src/main/kotlin/com/mostafasensei/alamelmarateb/
@@ -111,6 +234,511 @@ sequenceDiagram
     end
     Svc-->>Ctrl: Result DTO
     Ctrl-->>Client: HTTP 200/201 ApiResponse<T> (Localized JSON)
+```
+
+---
+
+## 🗄️ Database Architecture & Entity Relationships (ERD)
+
+The database layer is managed by **PostgreSQL 16** with **27 versioned Flyway migrations (`V1` to `V27`)**. It enforces strict relational integrity, immutable audit ledgers, zero-DDL catalog extensibility, and double-entry accounting invariants.
+
+### Architectural Invariants in PostgreSQL:
+1. **Multi-Tenancy & Branch Scoping**: Showrooms and warehouses are partitioned via `branch_id` foreign keys with `DEFERRABLE INITIALLY IMMEDIATE` constraints.
+2. **The Ledger Pattern (`stock_moves`)**: `stock_levels` represents a materialized view; every single physical alteration (sale, receipt, transfer, damage) is strictly inserted into `stock_moves` with a non-zero signed quantity (`qty_signed`).
+3. **Double-Entry Financial Balanced Vouchers**: All financial events generate `journal_entries` containing balanced `journal_lines` where $\sum(\text{debit}) = \sum(\text{credit})$.
+4. **Dynamic EAV & Preset Inheritance**: Product categories link dynamic attributes (`product_attribute_definitions`), enabling zero-DDL runtime specification changes without schema migrations.
+5. **Zero-DDL Translation (`*_translations`)**: Multilingual data (Arabic / English) is stored in auxiliary translation tables resolved on-the-fly via the `X-Lang` HTTP request header.
+
+---
+
+### 1. 🛒 Core Commerce, Fulfillment & Stock Ledger ERD
+
+This core relationship diagram illustrates the backbone connecting branches, users, the product catalog, customer orders, invoices, and the immutable warehouse stock ledger:
+
+```mermaid
+erDiagram
+    BRANCHES ||--o{ USERS : "employs"
+    BRANCHES ||--o{ WAREHOUSES : "operates"
+    BRANCHES ||--o{ CASH_SHIFTS : "hosts"
+    BRANCHES ||--o{ ORDERS : "fulfills"
+
+    CATEGORIES ||--o{ PRODUCTS : "classifies"
+    BRANDS ||--o{ PRODUCTS : "manufactures"
+    PRODUCTS ||--|{ PRODUCT_VARIANTS : "offers"
+
+    WAREHOUSES ||--o{ STOCK_LEVELS : "maintains"
+    PRODUCT_VARIANTS ||--o{ STOCK_LEVELS : "stocked_as"
+    WAREHOUSES ||--o{ STOCK_MOVES : "records"
+    PRODUCT_VARIANTS ||--o{ STOCK_MOVES : "moved"
+
+    USERS ||--o{ ORDERS : "places_or_serves"
+    CASH_SHIFTS ||--o{ ORDERS : "collects"
+    ORDERS ||--|{ ORDER_ITEMS : "contains"
+    PRODUCT_VARIANTS ||--o{ ORDER_ITEMS : "line_item"
+    ORDERS ||--o| INVOICES : "billed_by"
+    ORDERS ||--o{ RETURNS : "refunded_by"
+
+    BRANCHES {
+        uuid id PK
+        string code UK
+        string name
+        string city
+        boolean is_active
+    }
+    USERS {
+        uuid id PK
+        uuid branch_id FK
+        string phone_number UK
+        string full_name
+        string password_hash
+        boolean is_active
+    }
+    CATEGORIES {
+        uuid id PK
+        string slug UK
+        string name
+    }
+    PRODUCTS {
+        uuid id PK
+        uuid category_id FK
+        string slug UK
+        string name
+        string brand
+        string product_type
+        string chassis_type
+        int warranty_years
+    }
+    PRODUCT_VARIANTS {
+        uuid id PK
+        uuid product_id FK
+        string sku UK
+        string barcode UK
+        int width_cm
+        int length_cm
+        int height_cm
+        numeric selling_price
+        numeric cost_price
+    }
+    WAREHOUSES {
+        uuid id PK
+        uuid branch_id FK
+        string code UK
+        string name
+    }
+    STOCK_LEVELS {
+        uuid id PK
+        uuid warehouse_id FK
+        uuid variant_id FK
+        int qty
+        int reserved_qty
+    }
+    STOCK_MOVES {
+        uuid id PK
+        uuid warehouse_id FK
+        uuid variant_id FK
+        int qty_signed
+        string move_type
+        string ref_type
+        uuid ref_id
+    }
+    ORDERS {
+        uuid id PK
+        uuid branch_id FK
+        uuid customer_id FK
+        uuid cashier_id FK
+        uuid cash_shift_id FK
+        string order_number UK
+        string order_type
+        string status
+        numeric total_amount
+        numeric paid_amount
+    }
+    ORDER_ITEMS {
+        uuid id PK
+        uuid order_id FK
+        uuid variant_id FK
+        int quantity
+        numeric unit_price
+        numeric subtotal
+    }
+    INVOICES {
+        uuid id PK
+        uuid order_id FK
+        string invoice_number UK
+        numeric total_amount
+        numeric tax_amount
+    }
+```
+
+---
+
+### 2. 📐 Custom Sizing & Dynamic EAV Pricing Engine ERD
+
+Models the algorithmic custom mattress pricing engine (supporting Rectangular, Oval, and Round geometric configurations) alongside the zero-DDL dynamic attribute system:
+
+```mermaid
+erDiagram
+    PRODUCTS ||--o{ METER_PRICES : "defines_rates"
+    PRODUCTS ||--o{ PRODUCT_TRANSLATIONS : "localized_as"
+    CATEGORIES ||--o{ CATEGORY_ATTRIBUTES : "binds"
+    PRODUCT_ATTRIBUTE_DEFINITIONS ||--o{ CATEGORY_ATTRIBUTES : "linked_in"
+    PRODUCT_ATTRIBUTE_DEFINITIONS ||--o{ PRODUCT_ATTRIBUTE_OPTIONS : "has_choices"
+    PRODUCTS ||--o{ PRODUCT_ATTRIBUTE_VALUES : "customized_with"
+    PRODUCT_ATTRIBUTE_DEFINITIONS ||--o{ PRODUCT_ATTRIBUTE_VALUES : "types"
+    PRODUCT_PRESETS ||--o{ PRODUCT_PRESET_VARIANTS : "preconfigures"
+
+    METER_PRICES {
+        uuid id PK
+        uuid product_id FK
+        string shape
+        numeric price_per_meter
+    }
+    OPERATING_BRACKETS {
+        uuid id PK
+        int min_width_cm
+        int max_width_cm
+        numeric surcharge_percent
+    }
+    PRODUCT_ATTRIBUTE_DEFINITIONS {
+        uuid id PK
+        string code UK
+        string name
+        string attribute_type
+        boolean is_required
+    }
+    PRODUCT_ATTRIBUTE_OPTIONS {
+        uuid id PK
+        uuid attribute_id FK
+        string option_value
+        string display_name
+    }
+    PRODUCT_ATTRIBUTE_VALUES {
+        uuid id PK
+        uuid product_id FK
+        uuid attribute_id FK
+        string text_value
+        numeric numeric_value
+        boolean boolean_value
+    }
+    PRODUCT_PRESETS {
+        uuid id PK
+        uuid category_id FK
+        string name
+        string brand
+        int default_warranty_years
+    }
+    PRODUCT_PRESET_VARIANTS {
+        uuid id PK
+        uuid preset_id FK
+        int width_cm
+        int length_cm
+        int height_cm
+        numeric base_price
+    }
+```
+
+---
+
+### 3. ⚖️ Shift Cash Register & Double-Entry Accounting ERD
+
+Covers cashier cash drawer shifts with mid-day safe drops, blind count closing variances, alongside double-entry general ledger vouchers and branch treasury management:
+
+```mermaid
+erDiagram
+    BRANCHES ||--o{ CASH_SHIFTS : "hosts"
+    USERS ||--o{ CASH_SHIFTS : "operates"
+    CASH_SHIFTS ||--o{ CASH_DROPS : "drops_cash"
+    CASH_SHIFTS ||--o{ ORDERS : "settles"
+
+    CHART_OF_ACCOUNTS ||--o{ CHART_OF_ACCOUNTS : "parent_account"
+    CHART_OF_ACCOUNTS ||--o{ JOURNAL_LINES : "records_into"
+    JOURNAL_ENTRIES ||--|{ JOURNAL_LINES : "consists_of"
+    BRANCHES ||--o{ JOURNAL_ENTRIES : "originates"
+
+    TREASURIES ||--o{ TREASURY_TRANSFERS : "transfers_source"
+    TREASURIES ||--o{ TREASURY_TRANSFERS : "transfers_dest"
+    BRANCHES ||--o{ EXPENSES : "incurs"
+
+    CASH_SHIFTS {
+        uuid id PK
+        uuid branch_id FK
+        uuid cashier_id FK
+        numeric opening_cash
+        numeric total_cash_sales
+        numeric total_drops
+        numeric expected_cash
+        numeric actual_cash
+        numeric variance
+        string status
+        timestamp opened_at
+        timestamp closed_at
+    }
+    CASH_DROPS {
+        uuid id PK
+        uuid cash_shift_id FK
+        numeric amount
+        timestamp drop_time
+        string drop_reason
+    }
+    CHART_OF_ACCOUNTS {
+        uuid id PK
+        string code UK
+        string name
+        string account_type
+        uuid parent_id FK
+        boolean is_active
+    }
+    JOURNAL_ENTRIES {
+        uuid id PK
+        uuid branch_id FK
+        string entry_number UK
+        date entry_date
+        string memo
+        string source
+        numeric total_debit
+        numeric total_credit
+        boolean is_balanced
+    }
+    JOURNAL_LINES {
+        uuid id PK
+        uuid journal_entry_id FK
+        string account_code FK
+        numeric debit
+        numeric credit
+        string description
+    }
+    TREASURIES {
+        uuid id PK
+        uuid branch_id FK
+        string code UK
+        string name
+        string treasury_type
+        numeric current_balance
+    }
+    EXPENSES {
+        uuid id PK
+        uuid branch_id FK
+        string category
+        numeric amount
+        string receipt_url
+    }
+```
+
+---
+
+### 4. 🚚 CRM, Warranties, Fleet Logistics & Live GPS ERD
+
+Covers customer profiles, digital warranty certificates, technician inspection claims, fleet vehicles, delivery trips, and real-time driver GPS coordinate telemetry:
+
+```mermaid
+erDiagram
+    USERS ||--o| CUSTOMER_PROFILES : "extends"
+    USERS ||--o{ CUSTOMER_ADDRESSES : "saves"
+    USERS ||--o| LOYALTY_ACCOUNTS : "owns"
+    LOYALTY_ACCOUNTS ||--o{ LOYALTY_LEDGER : "logs_points"
+
+    ORDERS ||--o{ WARRANTIES : "activates"
+    WARRANTIES ||--o{ WARRANTY_CLAIMS : "submits"
+    PRODUCTS ||--o{ PRODUCT_REVIEWS : "reviewed_in"
+    USERS ||--o{ PRODUCT_REVIEWS : "writes"
+
+    VEHICLES ||--o{ DELIVERY_TRIPS : "executes"
+    USERS ||--o{ DELIVERY_TRIPS : "drives"
+    DELIVERY_TRIPS ||--|{ TRIP_STOPS : "serves"
+    ORDERS ||--o| TRIP_STOPS : "assigned_order"
+    DELIVERY_TRIPS ||--o{ TRIP_LOCATIONS : "streams_gps"
+
+    CUSTOMER_PROFILES {
+        uuid id PK
+        uuid user_id FK
+        string rfm_segment
+        numeric total_spend
+        int total_orders
+    }
+    WARRANTIES {
+        uuid id PK
+        uuid order_id FK
+        uuid customer_id FK
+        string serial_number UK
+        date start_date
+        date end_date
+        string status
+    }
+    WARRANTY_CLAIMS {
+        uuid id PK
+        uuid warranty_id FK
+        string claim_reason
+        string status
+        string inspection_notes
+        string resolution
+    }
+    LOYALTY_ACCOUNTS {
+        uuid id PK
+        uuid user_id FK
+        int current_points
+        string tier
+    }
+    LOYALTY_LEDGER {
+        uuid id PK
+        uuid account_id FK
+        int points_delta
+        string event_type
+        uuid ref_order_id
+    }
+    VEHICLES {
+        uuid id PK
+        string plate_number UK
+        string model
+        string vehicle_type
+        numeric max_volume_m3
+    }
+    DELIVERY_TRIPS {
+        uuid id PK
+        uuid vehicle_id FK
+        uuid driver_id FK
+        string trip_number UK
+        string status
+        timestamp departed_at
+        timestamp completed_at
+    }
+    TRIP_STOPS {
+        uuid id PK
+        uuid trip_id FK
+        uuid order_id FK
+        int stop_sequence
+        string status
+        string recipient_name
+        string pod_image_url
+        string pod_signature_url
+    }
+    TRIP_LOCATIONS {
+        uuid id PK
+        uuid trip_id FK
+        numeric latitude
+        numeric longitude
+        numeric speed_kmh
+        timestamp recorded_at
+    }
+```
+
+---
+
+## 🔄 Core Domain State Machines & Workflows
+
+### 1. 🛍️ Omni-Channel Sales Order & Delivery State Machine
+
+Tracks an order from in-store POS creation or online e-commerce checkout through staging, delivery routing, and POD signature completion:
+
+```mermaid
+stateDiagram-v2
+    [*] --> DRAFT : Create Order / Add Cart
+    DRAFT --> CONFIRMED : POS Cash Sale / Web Payment Success
+    DRAFT --> CANCELLED : Customer Abandons Cart
+
+    CONFIRMED --> PROCESSING : Warehouse Allocation & Staging
+    
+    PROCESSING --> READY_FOR_DISPATCH : Packaged & Quality Inspected
+    
+    READY_FOR_DISPATCH --> IN_TRANSIT : Assigned to Delivery Trip & Departed
+    
+    state IN_TRANSIT {
+        [*] --> ROUTED
+        ROUTED --> OUT_FOR_DELIVERY : Driver En-Route (Live GPS)
+        OUT_FOR_DELIVERY --> ATTEMPT_FAILED : Customer Unavailable
+        ATTEMPT_FAILED --> ROUTED : Rescheduled Stop
+        OUT_FOR_DELIVERY --> DELIVERED : Recipient Signature & POD Photo Upload
+    }
+    
+    IN_TRANSIT --> COMPLETED : Customer Signs & Handover Confirmed
+    
+    COMPLETED --> RETURN_REQUESTED : 14-Day Return / Defect Notice
+    RETURN_REQUESTED --> RETURNED : Warehouse Verifies Restocked Items
+    
+    COMPLETED --> [*]
+    RETURNED --> [*]
+    CANCELLED --> [*]
+```
+
+---
+
+### 2. 💵 POS Cashier Shift Life-Cycle & Cash Variance Balancing
+
+Guarantees drawer security by enforcing blind counting at the end of each sales shift, automatically calculating surplus or shortage variances:
+
+```mermaid
+stateDiagram-v2
+    [*] --> CLOSED : Drawer Inactive
+    CLOSED --> OPENING : Cashier Initiates Shift
+    OPENING --> ACTIVE : Count Initial Float (e.g. 1,000 EGP)
+
+    state ACTIVE {
+        [*] --> READY
+        READY --> READY : Cash Sale (+Paid Cash)
+        READY --> READY : Mid-Day Drop (-Cash to Main Safe)
+        READY --> READY : Sales Return (-Cash Refund)
+    }
+
+    ACTIVE --> CLOSING : Cashier Ends Shift
+    CLOSING --> BLIND_COUNT : Submit Actual Physical Cash Count
+    
+    state BLIND_COUNT {
+        [*] --> VARIANCE_CALCULATION
+        note right of VARIANCE_CALCULATION
+            Expected Cash = Initial Float + Total Cash Sales - Cash Drops - Cash Refunds
+            Variance = Actual Cash - Expected Cash
+        end note
+    }
+
+    BLIND_COUNT --> RECONCILED : Variance == 0.00 EGP (Balanced)
+    BLIND_COUNT --> DISCREPANCY : Variance != 0.00 EGP (Short / Over)
+
+    RECONCILED --> CLOSED : Shift Audit Signed Off
+    DISCREPANCY --> CLOSED : Manager Approved with Audit Note
+```
+
+---
+
+### 3. 📦 Immutable Stock Ledger Movement Pipeline
+
+Every physical inventory change is recorded as an immutable transactional ledger move before adjusting the materialized stock balance:
+
+```mermaid
+flowchart TD
+    subgraph TriggerEvents["⚡ Inventory Event Triggers"]
+        POReceipt["🏭 Supplier PO Received<br/>(GoodsReceipt)"]
+        POSCheckout["🛒 POS / Web Sale<br/>(Order Placed)"]
+        InterTransfer["🔄 Inter-Warehouse Transfer<br/>(Dispatch & Receipt)"]
+        DamageAdjust["⚠️ Damage / Discrepancy<br/>(Stock Adjustment)"]
+        CustomerReturn["↩️ Customer Return<br/>(Restocked)"]
+    end
+
+    subgraph LedgerGate["🛡️ Ledger Immutability Gate"]
+        Validate["Validate Transaction & Warehouse Context"]
+        ComputeSigned["Compute Signed Delta (+qty or -qty)<br/>(Strictly Non-Zero)"]
+        Validate --> ComputeSigned
+    end
+
+    TriggerEvents --> LedgerGate
+
+    subgraph DatabaseCommit["🐘 Atomic PostgreSQL 16 Transaction"]
+        direction TB
+        InsertMove[("INSERT INTO stock_moves<br/>(warehouse_id, variant_id, qty_signed, ref_type, ref_id)")]
+        UpdateLevel[("UPDATE stock_levels<br/>SET qty = qty + qty_signed<br/>CHECK (qty >= 0)")]
+        InsertMove --> UpdateLevel
+    end
+
+    LedgerGate --> DatabaseCommit
+
+    subgraph PostMutationActions["📢 Downstream Reactions"]
+        CheckSafety{"qty < min_qty ?"}
+        TriggerAlert["🚨 Low-Stock Push Notification & Email"]
+        UpdateBI["📊 Update Inventory Turnover & Velocity"]
+        
+        DatabaseCommit --> CheckSafety
+        CheckSafety -->|Yes| TriggerAlert
+        CheckSafety -->|No| UpdateBI
+        TriggerAlert --> UpdateBI
+    end
 ```
 
 ---
