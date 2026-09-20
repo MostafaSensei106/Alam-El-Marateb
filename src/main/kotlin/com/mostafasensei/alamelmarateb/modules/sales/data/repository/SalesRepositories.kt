@@ -3,6 +3,7 @@ package com.mostafasensei.alamelmarateb.modules.sales.data.repository
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CarryUpFeeJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CartItemJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CartJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CashDropJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CashShiftJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.DeliveryZoneJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentPlanJpaEntity
@@ -57,6 +58,11 @@ interface InstallmentPlanRepository : JpaRepository<InstallmentPlanJpaEntity, UU
 @Repository
 interface CashShiftRepository : JpaRepository<CashShiftJpaEntity, UUID> {
     fun findByCashierIdAndStatus(cashierId: UUID, status: String): Optional<CashShiftJpaEntity>
+}
+
+@Repository
+interface CashDropRepository : JpaRepository<CashDropJpaEntity, UUID> {
+    fun findByShiftId(shiftId: UUID): List<CashDropJpaEntity>
 }
 
 @Repository

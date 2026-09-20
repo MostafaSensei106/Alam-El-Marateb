@@ -54,6 +54,7 @@ class SecurityConfig (
                     // Public: auth + storefront browsing
                     .requestMatchers("$v1/auth/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "$v1/catalog/public/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "$v1/catalog/public/quiz/**").permitAll()
 
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                     .requestMatchers("/actuator/health/**", "/actuator/info").permitAll()

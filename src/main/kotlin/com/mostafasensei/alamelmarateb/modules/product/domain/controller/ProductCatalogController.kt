@@ -65,10 +65,12 @@ class ProductAdminController(
             name = request.name ?: existing.name,
             slug = request.slug ?: existing.slug,
             brand = request.brand ?: existing.brand,
+            brandId = request.brandId ?: existing.brandId,
             description = request.description ?: existing.description,
             warrantyYears = request.warrantyYears ?: existing.warrantyYears,
             attributes = request.attributes?.map { it.toDomain() } ?: existing.attributes,
             isActive = request.isActive ?: existing.isActive,
+            isFeatured = request.isFeatured ?: existing.isFeatured,
         )
         return ok(catalogService.updateProduct(id, updated))
     }

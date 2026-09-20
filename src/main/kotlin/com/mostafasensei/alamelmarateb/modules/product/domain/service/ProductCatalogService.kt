@@ -21,7 +21,11 @@ import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductCa
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductPresetRepository
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductRepository
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
+import com.mostafasensei.alamelmarateb.modules.product.data.repository.VariantAttributeValueRepository
+import com.mostafasensei.alamelmarateb.modules.product.domain.entity.VariantAttributeValueJpaEntity
 import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.AttributeValueRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.VariantAttributeDto
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.Duration
@@ -35,6 +39,7 @@ class ProductCatalogService(
     private val attributeOptionRepository: ProductAttributeOptionRepository,
     private val variantRepository: ProductVariantRepository,
     private val presetRepository: ProductPresetRepository,
+    private val variantAttributeRepository: VariantAttributeValueRepository,
     private val cache: RedisCache,
 ) {
 
@@ -243,6 +248,69 @@ class ProductCatalogService(
     @Transactional(readOnly = true)
     fun compare(ids: List<UUID>): List<Product> =
         ids.distinct().take(4).mapNotNull { productRepository.findById(it)?.takeIf { p -> p.isActive } }
+
+    @Transactional(readOnly = true)
+    fun variantAttributes(variantId: UUID): List<VariantAttributeDto> {
+        variantRepository.findById(variantId)
+            ?: throw NotFoundException("error.catalog.variant_not_found")
+        return variantAttributeRepository.findByVariantId(variantId).map { toVariantAttrDto(it) }
+    }
+
+    @Transactional
+    fun attachVariantAttribute(variantId: UUID, attributeId: UUID, value: AttributeValueRequest): VariantAttributeDto {
+        variantRepository.findById(variantId)
+            ?: throw NotFoundException("error.catalog.variant_not_found")
+        attributeDefinitionRepository.findById(attributeId)
+            ?: throw NotFoundException("error.catalog.attribute_not_found")
+        val domain = value.toDomain(attributeId)
+        variantAttributeRepository.findByVariantId(variantId)
+            .firstOrNull { it.attributeId == attributeId }
+            ?.let { variantAttributeRepository.delete(it) }
+        val saved = variantAttributeRepository.save(toVariantAttrEntity(variantId, domain))
+        cache.evict("cat:var:$variantId")
+        return toVariantAttrDto(saved)
+    }
+
+    private fun toVariantAttrEntity(
+        variantId: UUID,
+        attr: com.mostafasensei.alamelmarateb.modules.product.data.model.ProductAttributeValue,
+    ): VariantAttributeValueJpaEntity {
+        val (type, text, number, boolean, optionId) = when (val v = attr.value) {
+            is AttributeValue.Text -> Quint(AttributeType.TEXT, v.value, null, null, null)
+            is AttributeValue.Number -> Quint(AttributeType.NUMBER, null, v.value, null, null)
+            is AttributeValue.Boolean -> Quint(AttributeType.BOOLEAN, null, null, v.value, null)
+            is AttributeValue.Option -> Quint(AttributeType.SELECT, null, null, null, v.optionId)
+            is AttributeValue.MultiOption -> Quint(AttributeType.MULTI_SELECT, null, null, null, v.optionIds.firstOrNull())
+        }
+        return VariantAttributeValueJpaEntity(
+            variantId = variantId,
+            attributeId = attr.attributeId,
+            valueType = type.name,
+            valueText = text,
+            valueNumber = number,
+            valueBoolean = boolean,
+            valueOptionId = optionId,
+        )
+    }
+
+    private fun toVariantAttrDto(e: VariantAttributeValueJpaEntity) = VariantAttributeDto(
+        id = e.id,
+        variantId = e.variantId,
+        attributeId = e.attributeId,
+        valueType = e.valueType,
+        valueText = e.valueText,
+        valueNumber = e.valueNumber,
+        valueBoolean = e.valueBoolean,
+        valueOptionId = e.valueOptionId,
+    )
+
+    private data class Quint(
+        val type: AttributeType,
+        val text: String?,
+        val number: java.math.BigDecimal?,
+        val boolean: Boolean?,
+        val optionId: UUID?,
+    )
 
     @Transactional(readOnly = true)
     fun getAllPresets(): List<ProductPreset> = presetRepository.findAll()

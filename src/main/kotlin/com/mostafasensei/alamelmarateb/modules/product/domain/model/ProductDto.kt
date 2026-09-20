@@ -22,10 +22,12 @@ data class ProductUpdateRequest(
     val name: String? = null,
     val slug: String? = null,
     val brand: String? = null,
+    val brandId: UUID? = null,
     val description: String? = null,
     @field:PositiveOrZero val warrantyYears: Int? = null,
     @field:Valid val attributes: List<ProductAttributeValueRequest>? = null,
     val isActive: Boolean? = null,
+    val isFeatured: Boolean? = null,
 )
 
 data class ProductVariantCreateRequest(

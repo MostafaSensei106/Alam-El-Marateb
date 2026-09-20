@@ -183,6 +183,9 @@ class InvoiceJpaEntity(
 
     @Column(name = "pdf_path", columnDefinition = "TEXT")
     var pdfPath: String? = null,
+
+    @Column(name = "issued_at", nullable = false)
+    var issuedAt: java.time.Instant = java.time.Instant.now(),
 ) : EntityBase<UUID>()
 
 @Entity
@@ -358,3 +361,24 @@ class CarryUpFeeJpaEntity(
     @Column(name = "fee", nullable = false, precision = 12, scale = 2)
     var fee: BigDecimal = BigDecimal.ZERO,
 ) : EntityBase<UUID>()
+
+@Entity
+@Table(name = "cash_drops")
+class CashDropJpaEntity(
+    @jakarta.persistence.Id
+    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
+    var id: UUID? = null,
+
+    @Column(name = "shift_id", nullable = false, columnDefinition = "UUID")
+    var shiftId: UUID? = null,
+
+    @Column(name = "amount", nullable = false, precision = 12, scale = 2)
+    var amount: BigDecimal = BigDecimal.ZERO,
+
+    @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
+    var createdAt: java.time.Instant? = null,
+
+    @Column(name = "created_by", length = 100)
+    var createdBy: String? = null,
+)
