@@ -253,6 +253,60 @@
           ]
         },
         {
+          "name": "🔄 Refresh ALL role tokens (one click)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/auth/me",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ]
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var base = (pm.collectionVariables.get(\"baseUrl\") || \"http://localhost:8080\").replace(/\\/$/, \"\");",
+                  "    var pairs = [",
+                  "        [\"adminRefresh\", \"adminJwt\"],",
+                  "        [\"managerRefresh\", \"managerJwt\"],",
+                  "        [\"customerRefresh\", \"customerJwt\"],",
+                  "        [\"keeperRefresh\", \"keeperJwt\"],",
+                  "        [\"cashierRefresh\", \"cashierJwt\"]",
+                  "    ];",
+                  "    var queue = pairs.filter(function (pr) { return pm.collectionVariables.get(pr[0]); });",
+                  "    function next() {",
+                  "        if (!queue.length) { console.log(\"refresh-all done\"); return; }",
+                  "        var pr = queue.shift();",
+                  "        pm.sendRequest({",
+                  "            url: base + \"/api/v1/auth/refresh\",",
+                  "            method: \"POST\",",
+                  "            header: { \"Content-Type\": \"application/json\" },",
+                  "            body: { mode: \"raw\", raw: JSON.stringify({ refreshToken: pm.collectionVariables.get(pr[0]) }) }",
+                  "        }, function (err, res) {",
+                  "            try {",
+                  "                var data = res.json().data || {};",
+                  "                if (data.accessToken) pm.collectionVariables.set(pr[1], data.accessToken);",
+                  "                if (data.refreshToken) pm.collectionVariables.set(pr[0], data.refreshToken);",
+                  "                if (data.accessToken) console.log(\"refreshed \" + pr[1]);",
+                  "                else console.log(\"refresh failed for \" + pr[1] + \": \" + res.code);",
+                  "            } catch (e) { console.log(\"refresh error for \" + pr[1]); }",
+                  "            next();",
+                  "        });",
+                  "    }",
+                  "    next();",
+                  "})();"
+                ]
+              }
+            }
+          ]
+        },
+        {
           "name": "🙋 My profile",
           "request": {
             "method": "GET",

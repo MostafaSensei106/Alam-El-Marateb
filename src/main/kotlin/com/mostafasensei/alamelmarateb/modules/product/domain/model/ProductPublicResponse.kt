@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.modules.product.domain.model
 
 import com.mostafasensei.alamelmarateb.modules.product.data.model.Product
 import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductVariant
+import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toResponse
 import java.math.BigDecimal
 import java.util.UUID
 
@@ -44,10 +45,11 @@ fun ProductVariant.toPublic(): ProductVariantPublicResponse =
         sellingPrice = sellingPrice, isActive = isActive,
     )
 
-fun Product.toPublic(attributes: List<ProductAttributeResponse> = emptyList()): ProductPublicResponse =
+fun Product.toPublic(): ProductPublicResponse =
     ProductPublicResponse(
         id = id, categoryId = categoryId, name = name, slug = slug, brand = brand,
         description = description, warrantyYears = warrantyYears,
-        attributes = attributes, variants = variants.map { it.toPublic() },
+        attributes = attributes.map { it.toResponse() },
+        variants = variants.map { it.toPublic() },
         isActive = isActive,
     )

@@ -9,7 +9,9 @@ import com.mostafasensei.alamelmarateb.modules.product.data.model.Product
 import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.CreateProductFromPresetRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductCreateRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductPublicResponse
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductUpdateRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.toPublic
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.CatalogSearchIndexer
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
 import com.mostafasensei.alamelmarateb.core.router.CatalogAdminRoutes
@@ -114,10 +116,13 @@ class EcommerceProductController(
 ) : BaseController() {
 
     @GetMapping
-    fun getAllActive(): ResponseEntity<ApiResponse<List<Product>>> =
-        ok(catalogService.getAllProducts())
+    fun getAllActive(): ResponseEntity<ApiResponse<List<ProductPublicResponse>>> =
+        ok(catalogService.getAllProducts().map { it.toPublic() })
 
     @GetMapping("/{slug}")
-    fun getBySlug(@PathVariable slug: String): ResponseEntity<ApiResponse<Product>> =
-        ok(catalogService.getProductBySlug(slug) ?: throw NotFoundException("error.catalog.product_not_found"))
+    fun getBySlug(@PathVariable slug: String): ResponseEntity<ApiResponse<ProductPublicResponse>> =
+        ok(
+            catalogService.getProductBySlug(slug)?.toPublic()
+                ?: throw NotFoundException("error.catalog.product_not_found"),
+        )
 }

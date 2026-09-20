@@ -16,6 +16,9 @@ import com.mostafasensei.alamelmarateb.modules.product.domain.model.BracketReque
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.BracketUpdateRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.CustomQuoteRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.MeterPriceRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductPublicResponse
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.ProductVariantPublicResponse
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.toPublic
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QaAnswerRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QaAskRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QuickCreateRequest
@@ -82,8 +85,8 @@ class CatalogDiscoveryController(
         @RequestParam(required = false) brand: String?,
         @RequestParam(required = false) minPrice: java.math.BigDecimal?,
         @RequestParam(required = false) maxPrice: java.math.BigDecimal?,
-    ): ResponseEntity<ApiResponse<List<Product>>> =
-        ok(catalogService.search(q, categoryId, brand, minPrice, maxPrice))
+    ): ResponseEntity<ApiResponse<List<ProductPublicResponse>>> =
+        ok(catalogService.search(q, categoryId, brand, minPrice, maxPrice).map { it.toPublic() })
 
     @Operation(summary = "Autocomplete product names")
     @GetMapping(CatalogStoreRoutes.PRODUCT_SUGGEST)
@@ -95,18 +98,18 @@ class CatalogDiscoveryController(
 
     @Operation(summary = "Featured products")
     @GetMapping(CatalogStoreRoutes.PRODUCT_FEATURED)
-    fun featured(): ResponseEntity<ApiResponse<List<Product>>> =
-        ok(catalogService.featured())
+    fun featured(): ResponseEntity<ApiResponse<List<ProductPublicResponse>>> =
+        ok(catalogService.featured().map { it.toPublic() })
 
     @Operation(summary = "Compare up to 4 products side-by-side")
     @GetMapping(CatalogStoreRoutes.PRODUCT_COMPARE)
-    fun compare(@RequestParam ids: List<UUID>): ResponseEntity<ApiResponse<List<Product>>> =
-        ok(catalogService.compare(ids))
+    fun compare(@RequestParam ids: List<UUID>): ResponseEntity<ApiResponse<List<ProductPublicResponse>>> =
+        ok(catalogService.compare(ids).map { it.toPublic() })
 
     @Operation(summary = "Variants of a product")
     @GetMapping(CatalogStoreRoutes.PRODUCT_VARIANTS)
-    fun variants(@PathVariable id: UUID): ResponseEntity<ApiResponse<List<ProductVariant>>> =
-        ok(catalogService.getProduct(id)?.variants ?: emptyList())
+    fun variants(@PathVariable id: UUID): ResponseEntity<ApiResponse<List<ProductVariantPublicResponse>>> =
+        ok(catalogService.getProduct(id)?.variants?.map { it.toPublic() } ?: emptyList())
 
     @Operation(summary = "Public categories")
     @GetMapping(CatalogStoreRoutes.CATEGORIES)
@@ -147,10 +150,10 @@ class CatalogDiscoveryController(
         )
 
     @Operation(summary = "Bought-together (from order history)")
-    @GetMapping(CatalogStoreRoutes.PRODUCT_BY_SLUG + "/bought-together")    fun boughtTogether(@PathVariable slug: String): ResponseEntity<ApiResponse<List<Product>>> {
+    @GetMapping(CatalogStoreRoutes.PRODUCT_BY_SLUG + "/bought-together")    fun boughtTogether(@PathVariable slug: String): ResponseEntity<ApiResponse<List<ProductPublicResponse>>> {
         val product = catalogService.getProductBySlug(slug)
             ?: throw com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException("error.catalog.product_not_found")
-        return ok(catalogService.boughtTogether(product.id!!))
+        return ok(catalogService.boughtTogether(product.id!!).map { it.toPublic() })
     }
 
     @Operation(summary = "Custom-size quote (rect/oval/circle + width operating %)")
