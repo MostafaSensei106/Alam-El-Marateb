@@ -42,7 +42,7 @@ class LoyaltyService(
     @Value("\${app.loyalty.egp-per-point:1}") private val egpPerPoint: Int,
 ) {
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
     fun onOrderDelivered(event: OrderDeliveredEvent) {
         if (!enabled) return
         val userId = event.customerId ?: return

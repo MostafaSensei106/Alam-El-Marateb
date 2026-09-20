@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.modules.sales.application
 
 import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
 import com.mostafasensei.alamelmarateb.core.events.DomainEventPublisher
+import com.mostafasensei.alamelmarateb.core.outbox.OutboxWriter
 import com.mostafasensei.alamelmarateb.core.events.InvoicedLine
 import com.mostafasensei.alamelmarateb.core.events.OrderDeliveredEvent
 import com.mostafasensei.alamelmarateb.core.events.OrderInvoicedEvent
@@ -104,6 +105,7 @@ class OrderService(
     private val shippingRates: ShippingRates,
     private val loyaltyService: com.mostafasensei.alamelmarateb.modules.loyalty.application.LoyaltyService,
     private val events: DomainEventPublisher,
+    private val outbox: OutboxWriter,
     private val jdbc: JdbcTemplate,
 ) {
 
@@ -267,6 +269,25 @@ class OrderService(
                 },
             ),
         )
+        // Outbox copy in the same DB transaction: relay publishes even if the
+        // broker is down at commit time (Phase 1 foundation).
+        outbox.emit(
+            "order", saved.id, OutboxWriter.ORDER_INVOICED,
+            OrderInvoicedEvent(
+                orderId = saved.id!!,
+                branchId = input.branchId,
+                day = LocalDate.now(),
+                lines = preview.lines.mapNotNull { line ->
+                    val variantId = line.variantId ?: return@mapNotNull null
+                    InvoicedLine(
+                        variantId = variantId,
+                        qty = line.qty,
+                        net = line.net,
+                        costPrice = variantRepository.findById(variantId)?.costPrice ?: BigDecimal.ZERO,
+                    )
+                },
+            ),
+        )
 
         if (input.paymentMethod == PaymentMethod.INSTALLMENT) {
             createPlan(saved.id!!, saved.grandTotal, input.downPayment ?: BigDecimal.ZERO, input.months!!)
@@ -289,6 +310,10 @@ class OrderService(
         auditLog.record("COMPLETE", "order", entity.id, entity.branchId, by, "paid on spot")
         val saved = orderRepository.save(entity)
         events.publish(OrderDeliveredEvent(saved.id!!, saved.customerId, saved.grandTotal))
+        outbox.emit(
+            "order", saved.id, OutboxWriter.ORDER_DELIVERED,
+            OrderDeliveredEvent(saved.id!!, saved.customerId, saved.grandTotal),
+        )
         return toDomain(saved)
     }
 
@@ -330,6 +355,10 @@ class OrderService(
         auditLog.record("DELIVER", "order", id, order.branchId, by, null)
         val saved = orderRepository.save(order)
         events.publish(OrderDeliveredEvent(saved.id!!, saved.customerId, saved.grandTotal))
+        outbox.emit(
+            "order", saved.id, OutboxWriter.ORDER_DELIVERED,
+            OrderDeliveredEvent(saved.id!!, saved.customerId, saved.grandTotal),
+        )
         return toDomain(saved)
     }
 
@@ -610,6 +639,15 @@ class OrderService(
             invoiceRepository.save(InvoiceJpaEntity(orderId = saved.id, serial = nextSerial(branchId)))
         }
         events.publish(
+            OrderInvoicedEvent(
+                orderId = saved.id!!, branchId = branchId, day = LocalDate.now(),
+                lines = listOf(
+                    InvoicedLine(variant.id!!, qty, lineNet, quote.basePrice),
+                ),
+            ),
+        )
+        outbox.emit(
+            "order", saved.id, OutboxWriter.ORDER_INVOICED,
             OrderInvoicedEvent(
                 orderId = saved.id!!, branchId = branchId, day = LocalDate.now(),
                 lines = listOf(

@@ -24,7 +24,7 @@ class SalesFactsUpdater(
 
     private val log = LoggerFactory.getLogger(SalesFactsUpdater::class.java)
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
     fun onOrderInvoiced(event: OrderInvoicedEvent) {
         apply(event)
     }

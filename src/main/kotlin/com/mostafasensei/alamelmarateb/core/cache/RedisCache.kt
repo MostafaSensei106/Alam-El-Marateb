@@ -58,6 +58,25 @@ class RedisCache(
         }
     }
 
+    /** Best-effort prefix eviction (SCAN, bounded). Used after bulk mutations. */
+    fun evictByPrefix(prefix: String, limit: Int = 1000) {
+        try {
+            val conn = redis.connectionFactory?.connection ?: return
+            conn.use { c ->
+                c.scan(
+                    org.springframework.data.redis.core.ScanOptions.scanOptions()
+                        .match("$prefix*").count(limit.toLong()).build(),
+                ).use { cursor ->
+                    val keys = mutableListOf<ByteArray>()
+                    while (cursor.hasNext() && keys.size < limit) keys.add(cursor.next())
+                    if (keys.isNotEmpty()) c.keyCommands().del(*keys.toTypedArray())
+                }
+            }
+        } catch (ex: Exception) {
+            log.warn("redis evictByPrefix failed prefix={}: {}", prefix, ex.message)
+        }
+    }
+
     fun <T : Any> read(key: String, type: Class<T>): T? {
         return try {
             val json = redis.opsForValue().get(key) ?: return null

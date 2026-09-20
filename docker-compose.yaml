@@ -71,9 +71,23 @@ services:
       - clickhouse_data:/var/lib/clickhouse
       - ./docker/clickhouse/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
 
+  # Catalog search (Meilisearch, Phase 3). Opt-in: docker compose --profile search up -d (:7700).
+  # App side (Phase 3): SEARCH_BACKEND=meilisearch (+MEILI_HOST/MEILI_KEY).
+  meilisearch:
+    image: getmeili/meilisearch:v1.13
+    container_name: shop-search
+    profiles: ["search"]
+    ports:
+      - "7700:7700"
+    environment:
+      - "MEILI_MASTER_KEY=${MEILI_KEY:-dev-master-key}"
+    volumes:
+      - meili_data:/meili_data
+
 volumes:
   pgdata:
   redis_data:
   kafka_data:
   minio_data:
   clickhouse_data:
+  meili_data:

@@ -17,7 +17,7 @@ class ClickHouseReplicator(
     private val clickHouse: ClickHouseClient,
 ) {
 
-    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+    @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
     fun onOrderInvoiced(event: OrderInvoicedEvent) {
         clickHouse.insertJsonEachRow(
             "order_lines",

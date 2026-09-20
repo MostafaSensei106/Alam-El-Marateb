@@ -34,7 +34,6 @@ class S3StorageService(
 ) : StorageService {
 
     private val log = LoggerFactory.getLogger(S3StorageService::class.java)
-    private val allowed = setOf("image/jpeg", "image/png", "image/webp", "image/gif")
 
     private lateinit var s3: S3Client
 
@@ -54,18 +53,8 @@ class S3StorageService(
     }
 
     override fun store(namespace: String, file: MultipartFile): String {
-        if (file.isEmpty) throw com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException("error.storage.empty_file")
+        val ext = StorageRules.check(namespace, file, maxMb)
         val contentType = file.contentType ?: ""
-        if (contentType !in allowed) throw com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException("error.storage.bad_type")
-        if (file.size > maxMb * 1024 * 1024) {
-            throw com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException("error.storage.too_large", listOf(maxMb))
-        }
-        val ext = when (contentType) {
-            "image/jpeg" -> "jpg"
-            "image/png" -> "png"
-            "image/webp" -> "webp"
-            else -> "gif"
-        }
         val key = "$namespace/${UUID.randomUUID()}.$ext"
         try {
             s3.putObject(
@@ -77,5 +66,28 @@ class S3StorageService(
             return local.store(namespace, file)
         }
         return "$publicBase/$key"
+    }
+
+    override fun delete(publicUrl: String): Boolean {
+        val key = publicUrl.removePrefix("$publicBase/").removePrefix("/")
+        if (key.isBlank() || key == publicUrl) return local.delete(publicUrl)
+        return try {
+            s3.deleteObject { it.bucket(bucket).key(key) }
+            true
+        } catch (ex: Exception) {
+            log.warn("s3 delete failed key={}: {}", key, ex.message)
+            false
+        }
+    }
+
+    override fun exists(publicUrl: String): Boolean {
+        val key = publicUrl.removePrefix("$publicBase/").removePrefix("/")
+        if (key.isBlank() || key == publicUrl) return local.exists(publicUrl)
+        return try {
+            s3.headObject { it.bucket(bucket).key(key) }
+            true
+        } catch (_: Exception) {
+            false
+        }
     }
 }

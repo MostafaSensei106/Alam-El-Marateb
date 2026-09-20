@@ -61,6 +61,11 @@ spring:
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD:}
       timeout: 2000ms
+  # Spring Session backed by Redis (Phase 1: infra ready, API stays JWT stateless).
+  # Sessions are only created where explicitly used (admin console later).
+  session:
+    store-type: ${SESSION_STORE:redis}
+    timeout: ${SESSION_TIMEOUT:86400s}
 
   # OAuth2 / Social Login
   security:
@@ -91,6 +96,20 @@ app:
     default: ar
   events:
     transport: ${EVENTS_TRANSPORT:in-process}
+  # Transactional outbox (Phase 1): business tx writes outbox_events,
+  # OutboxRelay publishes afterwards. Survives broker outages.
+  outbox:
+    relay-enabled: ${OUTBOX_RELAY_ENABLED:true}
+    batch-size: ${OUTBOX_BATCH_SIZE:100}
+    poll-delay-ms: ${OUTBOX_POLL_DELAY_MS:2000}
+    max-attempts: ${OUTBOX_MAX_ATTEMPTS:10}
+  # Read routing abstraction (Phase 1): both point at primary.
+  # Phase 4 only changes REPLICA_URL to a real replica, zero code change.
+  datasource:
+    replica:
+      url: ${REPLICA_URL:${DB_URL:jdbc:postgresql://localhost:5432/mydatabase}}
+      username: ${REPLICA_USER:${DB_USER:root}}
+      password: ${REPLICA_PASSWORD:${DB_PASSWORD:root}}
   storage:
     dir: ${STORAGE_DIR:./data/uploads}
     max-mb: ${STORAGE_MAX_MB:5}
