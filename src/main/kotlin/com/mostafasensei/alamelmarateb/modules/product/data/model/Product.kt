@@ -10,11 +10,13 @@ data class Product(
     val name: String,
     val slug: String,
     val brand: String,
+    val brandId: UUID? = null,
     val description: String? = null,
     val warrantyYears: Int? = null,
     val attributes: List<ProductAttributeValue> = emptyList(),
     val variants: List<ProductVariant> = emptyList(),
     val isActive: Boolean = true,
+    val isFeatured: Boolean = false,
     val createdAt: Instant = Clock.System.now(),
     val updatedAt: Instant = Clock.System.now(),
 )

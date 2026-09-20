@@ -26,6 +26,9 @@ class ProductJpaEntity(
     @Column(name = "brand", nullable = false, length = 100)
     var brand: String = "",
 
+    @Column(name = "brand_id", columnDefinition = "UUID")
+    var brandId: UUID? = null,
+
     @Column(name = "warranty_years")
     var warrantyYears: Int? = null,
 
@@ -34,6 +37,9 @@ class ProductJpaEntity(
 
     @Column(name = "is_active", nullable = false)
     var isActive: Boolean = true,
+
+    @Column(name = "is_featured", nullable = false)
+    var isFeatured: Boolean = false,
 
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "product_id")
@@ -51,9 +57,11 @@ class ProductJpaEntity(
             name = this.name,
             slug = this.slug,
             brand = this.brand,
+            brandId = this.brandId,
             warrantyYears = this.warrantyYears,
             description = this.description,
             isActive = this.isActive,
+            isFeatured = this.isFeatured,
             attributes = this.attributeValues.map { it.toDomain() },
             variants = this.variants.map { it.toDomain() },
             createdAt = this.createdAt,
@@ -67,9 +75,11 @@ class ProductJpaEntity(
                 name = domain.name,
                 slug = domain.slug,
                 brand = domain.brand,
+                brandId = domain.brandId,
                 warrantyYears = domain.warrantyYears,
                 description = domain.description,
                 isActive = domain.isActive,
+                isFeatured = domain.isFeatured,
                 attributeValues = domain.attributes
                     .map { ProductAttributeValueJpaEntity.fromDomain(it) }
                     .toMutableList(),
