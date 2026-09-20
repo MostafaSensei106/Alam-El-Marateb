@@ -54,6 +54,31 @@ class ProductReviewJpaEntity(
 
     @Column(name = "helpful_count", nullable = false)
     var helpfulCount: Int = 0,
+
+    @Column(name = "photo_urls", nullable = false, columnDefinition = "TEXT")
+    var photoUrls: String = "",
+) : EntityBase<UUID>()
+
+@Entity
+@Table(name = "product_questions")
+class ProductQuestionJpaEntity(
+    @Column(name = "product_id", nullable = false, columnDefinition = "UUID")
+    var productId: UUID? = null,
+
+    @Column(name = "user_id", nullable = false, columnDefinition = "UUID")
+    var userId: UUID? = null,
+
+    @Column(name = "question", nullable = false, columnDefinition = "TEXT")
+    var question: String = "",
+
+    @Column(name = "answer", columnDefinition = "TEXT")
+    var answer: String? = null,
+
+    @Column(name = "answered_by", length = 100)
+    var answeredBy: String? = null,
+
+    @Column(name = "status", nullable = false, length = 20)
+    var status: String = "pending",
 ) : EntityBase<UUID>()
 
 @Entity
@@ -88,6 +113,7 @@ class QuizOptionJpaEntity(
     var labelEn: String? = null,
 
     @Column(name = "scores", nullable = false, columnDefinition = "JSONB")
+    @org.hibernate.annotations.ColumnTransformer(write = "?::jsonb")
     var scores: String = "{}",
 ) : EntityBase<UUID>()
 
@@ -103,9 +129,11 @@ class RecommendationRunJpaEntity(
     var userId: UUID? = null,
 
     @Column(name = "answers", nullable = false, columnDefinition = "JSONB")
+    @org.hibernate.annotations.ColumnTransformer(write = "?::jsonb")
     var answers: String = "[]",
 
     @Column(name = "results", nullable = false, columnDefinition = "JSONB")
+    @org.hibernate.annotations.ColumnTransformer(write = "?::jsonb")
     var results: String = "[]",
 
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)

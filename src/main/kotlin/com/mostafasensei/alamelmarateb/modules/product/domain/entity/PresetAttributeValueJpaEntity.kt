@@ -23,7 +23,7 @@ import java.util.UUID
     uniqueConstraints = [UniqueConstraint(columnNames = ["preset_id", "attribute_id"])]
 )
 class PresetAttributeValueJpaEntity(
-    @Column(name = "preset_id", nullable = false, columnDefinition = "UUID", insertable = false, updatable = false)
+    @Column(name = "preset_id", nullable = false, columnDefinition = "UUID")
     var presetId: UUID? = null,
 
     @Column(name = "attribute_id", nullable = false, columnDefinition = "UUID")

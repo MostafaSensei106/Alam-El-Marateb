@@ -1253,6 +1253,722 @@
           }
         }
       ]
+    },
+    {
+      "name": "📦 Purchasing",
+      "item": [
+        {
+          "name": "➕ Supplier",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/suppliers",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Foam Co\", \"phone\": \"01000000001\"}"
+            }
+          }
+        },
+        {
+          "name": "📋 POs",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/purchasing/purchase-orders",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "➕ PO draft",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/purchase-orders",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"supplierId\": \"SUPPLIER_ID\", \"branchId\": \"BRANCH_ID\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 10, \"unitCost\": 100}]}"
+            }
+          }
+        },
+        {
+          "name": "📤 Send PO",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/purchase-orders/{{orderId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"action\": \"send\"}"
+            }
+          }
+        },
+        {
+          "name": "📥 Receive",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/purchase-orders/{{orderId}}/receive",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"warehouseId\": \"{{warehouseA}}\", \"lines\": [{\"variantId\": \"VARIANT_ID\", \"actualQty\": 6, \"damagedQty\": 1}]}"
+            }
+          }
+        },
+        {
+          "name": "💰 Pay supplier",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/supplier-payments",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"supplierId\": \"SUPPLIER_ID\", \"amount\": 200}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "🚚 Delivery",
+      "item": [
+        {
+          "name": "🚛 Create trip",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/delivery/trips",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"driverId\": \"{{userId}}\", \"orderIds\": [\"{{orderId}}\"]}"
+            }
+          }
+        },
+        {
+          "name": "🗺️ My trips",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/delivery/my-trips",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "✅ Confirm deliver",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/delivery/orders/{{orderId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"proof\": \"photo-key-1\"}"
+            }
+          }
+        },
+        {
+          "name": "❌ Report failed",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/delivery/orders/{{orderId}}/failed",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"reason\": \"closed\"}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "👔 HR",
+      "item": [
+        {
+          "name": "➕ Employee",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/hr/employees",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"userId\": \"{{userId}}\", \"branchId\": \"BRANCH_ID\", \"jobTitle\": \"Sales\", \"baseSalary\": 10000}"
+            }
+          }
+        },
+        {
+          "name": "📝 Leave request",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/me/leaves/request",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"type\": \"annual\", \"fromDate\": \"2026-10-01\", \"toDate\": \"2026-10-03\"}"
+            }
+          }
+        },
+        {
+          "name": "✅ Leave action",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/hr/leaves/{{orderId}}/action",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"approve\": true}"
+            }
+          }
+        },
+        {
+          "name": "🧮 Payroll calculate",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/hr/payroll/calculate",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"month\": \"2026-09\"}"
+            }
+          }
+        },
+        {
+          "name": "✔️ Payroll approve",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/hr/payroll/{{orderId}}/approve",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🧾 My payslips",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/me/payslips",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "📒 Accounting",
+      "item": [
+        {
+          "name": "🌳 Chart",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/accounting/chart-of-accounts",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📝 Post journal",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/accounting/journal-entries",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"entryDate\": \"2026-09-20\", \"source\": \"MANUAL\", \"lines\": [{\"accountCode\": \"1010\", \"debit\": 1000}, {\"accountCode\": \"3010\", \"credit\": 1000}]}"
+            }
+          }
+        },
+        {
+          "name": "📖 Ledger",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/accounting/general-ledger?accountCode=1010",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "💰 Transfer treasury",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/accounting/treasuries/transfers",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"fromId\": \"TREASURY_A\", \"toId\": \"TREASURY_B\", \"amount\": 500}"
+            }
+          }
+        },
+        {
+          "name": "📊 P&L",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/accounting/reports/profit-loss?from=2026-09-01&to=2026-09-30",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "⭐ Reviews / Quiz / Brands",
+      "item": [
+        {
+          "name": "⚡ Quick-create",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/products/quick-create",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"presetId\": \"PRESET_ID\", \"slug\": \"qc-120\", \"widthCm\": 120, \"lengthCm\": 195}"
+            }
+          }
+        },
+        {
+          "name": "🔎 Search",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/products/search?q=serta&minPrice=1000",
+            "header": []
+          }
+        },
+        {
+          "name": "🌟 Featured",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/products/featured",
+            "header": []
+          }
+        },
+        {
+          "name": "⚖️ Compare",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/products/compare?ids=ID1&ids=ID2",
+            "header": []
+          }
+        },
+        {
+          "name": "⭐ Submit review",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/portal/reviews",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"productId\": \"{{productId}}\", \"rating\": 5, \"title\": \"Great\"}"
+            }
+          }
+        },
+        {
+          "name": "✅ Moderate review",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/crm/reviews/{{orderId}}/moderate",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"approve\": true}"
+            }
+          }
+        },
+        {
+          "name": "❓ Quiz questions",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/quiz",
+            "header": []
+          }
+        },
+        {
+          "name": "🎯 Quiz recommend",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/public/quiz/recommend",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"answers\": [{\"questionId\": \"QID\", \"optionId\": \"OID\"}]}"
+            }
+          }
+        },
+        {
+          "name": "🏷️ Brands",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/brands",
+            "header": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "💵 Shifts / Receipts / Revenue",
+      "item": [
+        {
+          "name": "🟢 Open shift",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/pos/drawer/shift/open",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"openingBalance\": 1000}"
+            }
+          }
+        },
+        {
+          "name": "💧 Drop cash",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/pos/drawer/shift/drop",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"shiftId\": \"SHIFT_ID\", \"amount\": 200}"
+            }
+          }
+        },
+        {
+          "name": "🔴 Close shift",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/pos/drawer/shift/close",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"shiftId\": \"SHIFT_ID\", \"actualCash\": 8800}"
+            }
+          }
+        },
+        {
+          "name": "🧾 Receipt",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/sales/pos/orders/{{orderId}}/receipt",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🖨️ Invoice HTML",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/sales/pos/orders/{{orderId}}/invoice-pdf",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📈 Revenue",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/revenue?from=2026-09-01&to=2026-09-30",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "👥 RFM",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/customers/rfm",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📡 Beacon (202)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/analytics/events",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"type\": \"ProductViewed\", \"anonymousId\": \"a1\", \"payload\": {}, \"consent\": true}"
+            }
+          }
+        },
+        {
+          "name": "❓ Log inquiry",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/analytics/inquiries",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"note\": \"سأل عن مرتبة\", \"outcome\": \"price\"}"
+            }
+          }
+        }
+      ]
     }
   ]
 }

@@ -126,13 +126,13 @@ src/main/kotlin/com/mostafasensei/alamelmarateb/
 ## 6. خطة المراحل (نشتغلها واحدة واحدة)
 
 - [x] **P0**: توحيد الروتس + versioning + BaseController (تم).
-- [ ] **P1**: إصلاح عطل V1 + تثبيت `EntityBase` على كل الكيانات + `customer_profiles`/`employees` كامتداد لـ `users`.
-- [ ] **P2**: تقسية `catalog` (variant attributes الاختيارية) + seed أصناف حقيقية (مراتب/مخدات/طبي/مصاحف/مصليات) + **القوالب السريعة (8)**.
-- [ ] **P3**: `sales` (POS + orders + idempotency) + **محرك الخصومات (10)** + **price-preview قبل الدفع** ← أول revenue path.
-- [ ] **P4**: `inventory` + `purchasing` (ledger + transfers + receipt).
-- [ ] **P5**: `crm` (ضمان سيريال + مطالبات + **مفضلة 8**) + `delivery` (رحلات + إثبات تسليم) + **اختبار الترشيح Quiz (9)**.
-- [ ] **P6**: `hr` + `accounting` (قيود تلقائية من البيع والشراء والمرتبات).
-- [ ] **P7**: `analytics` (materialized facts + داشبورد) + identity hardening (users/roles للفروع).
+- [x] **P1**: إصلاح عطل V1 + تثبيت `EntityBase` على كل الكيانات + `customer_profiles`/`employees` (employees بجدول مستقل مرتبط بـ user).
+- [x] **P2**: تقسية `catalog` (variant attributes + brands + reviews + Q&A + quiz + quick-create + search/featured/compare) + seed أصناف وبراندات وأسئلة.
+- [x] **P3**: `sales` (POS + orders + idempotency + shifts + receipt/invoice) + **محرك الخصومات (10)** + **price-preview قبل الدفع** ← أول revenue path.
+- [x] **P4**: `inventory` + `purchasing` (suppliers + POs + receipt دفعات + payments).
+- [x] **P5**: `crm` (ضمان شهادة + مطالبات + **مفضلة 8**) + `delivery` (مركبات + رحلات + إثبات تسليم) + **اختبار الترشيح Quiz (9)**.
+- [x] **P6**: `hr` (ملفات + إجازات + عمولات + سلف + مرتبات + self-service) + `accounting` (شجرة + قيود + خزن + مصاريف + شيكات + تقارير). القيود التلقائية من الأحداث: بيع→facts؛ قيد محاسبي تلقائي للمرتبات/المشتريات: مؤجل (manual journals).
+- [x] **P7**: `analytics` (facts لحظية + إيراد/RFM/فروع/heatmap + beacon + inquiries) + identity (users/roles/branches). الباقي المؤجل: Kafka transport (profile جاهز)، Redis للـ rate-limiter متعدد النسخ، ClickHouse.
 
 ## 8. القوالب والمفضلة والخصومات (تصميم — يُنفذ في P2/P3/P5)
 

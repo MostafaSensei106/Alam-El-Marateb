@@ -1,6 +1,8 @@
 # تخطيط موديول الكتالوج (v1 — مسودة للنقاش)
 
 > يغطي: الأصناف، البراندات، المقاسات، الصفات، القوالب، التقييم والمراجعات، والـ APIs.
+>
+> **الحالة: مُنفذ ومُختبر** (quick-create + search/featured/compare + reviews + Q&A + brands + quiz + variant-attrs + bought-together + `CatalogExtraFlowTest` أخضر).
 > المبدأ: أي نوع جديد = داتا من الداشبورد، بدون كود.
 
 ## 1. شجرة الأصناف المقترحة (seed أولي)

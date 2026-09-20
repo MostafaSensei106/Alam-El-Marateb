@@ -21,6 +21,7 @@ import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductCa
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductPresetRepository
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductRepository
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
+import com.mostafasensei.alamelmarateb.modules.product.data.repository.SpringDataJpaProductVariantRepository
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.VariantAttributeValueRepository
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.VariantAttributeValueJpaEntity
 import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
@@ -40,6 +41,8 @@ class ProductCatalogService(
     private val variantRepository: ProductVariantRepository,
     private val presetRepository: ProductPresetRepository,
     private val variantAttributeRepository: VariantAttributeValueRepository,
+    private val orderRepository: com.mostafasensei.alamelmarateb.modules.sales.data.repository.OrderRepository,
+    private val variantJpa: SpringDataJpaProductVariantRepository,
     private val cache: RedisCache,
 ) {
 
@@ -249,6 +252,32 @@ class ProductCatalogService(
     fun compare(ids: List<UUID>): List<Product> =
         ids.distinct().take(4).mapNotNull { productRepository.findById(it)?.takeIf { p -> p.isActive } }
 
+    /**
+     * Bought-together (catalog nice-to-have): products co-occurring with the
+     * given product in delivered/confirmed orders, ranked by frequency.
+     */
+    @Transactional(readOnly = true)
+    fun boughtTogether(productId: UUID, limit: Int = 4): List<Product> {
+        val mine = variantJpa.findAll()
+            .filter { it.productId == productId }.mapNotNull { it.id }.toSet()
+        if (mine.isEmpty()) return emptyList()
+        val counts = mutableMapOf<UUID, Int>()
+        orderRepository.findAll()
+            .filter { it.status != "cancelled" }
+            .forEach { order ->
+                val variants = order.lines.mapNotNull { it.variantId }.toSet()
+                if (variants.any { it in mine }) {
+                    variants.filter { it !in mine }.forEach { other ->
+                        variantJpa.findById(other).map { it.productId }.orElse(null)?.let { otherProduct ->
+                            if (otherProduct != productId) counts[otherProduct] = (counts[otherProduct] ?: 0) + 1
+                        }
+                    }
+                }
+            }
+        return counts.entries.sortedByDescending { it.value }.take(limit.coerceIn(1, 8))
+            .mapNotNull { productRepository.findById(it.key)?.takeIf { p -> p.isActive } }
+    }
+
     @Transactional(readOnly = true)
     fun variantAttributes(variantId: UUID): List<VariantAttributeDto> {
         variantRepository.findById(variantId)
@@ -353,7 +382,7 @@ class ProductCatalogService(
         )
 
         val savedVariants = preset.variants.map { variant ->
-            val v = variantRepository.save(variant.toDomain())
+            val v = variantRepository.save(variant.toDomain().copy(productId = product.id))
             v
         }
 

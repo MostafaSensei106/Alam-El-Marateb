@@ -50,11 +50,13 @@ interface SpringDataJpaProductRepository : JpaRepository<ProductJpaEntity, UUID>
 interface SpringDataJpaProductVariantRepository : JpaRepository<ProductVariantJpaEntity, UUID> {
     fun findByBarcode(barcode: String): Optional<ProductVariantJpaEntity>
     fun existsBySku(sku: String): Boolean
+    fun deleteByProductId(productId: UUID)
 }
 
 @Repository
 interface SpringDataJpaProductAttributeValueRepository : JpaRepository<ProductAttributeValueJpaEntity, UUID> {
     fun findByProductId(productId: UUID): List<ProductAttributeValueJpaEntity>
+    fun deleteByProductId(productId: UUID)
 }
 
 @Repository
@@ -65,9 +67,11 @@ interface SpringDataJpaProductPresetRepository : JpaRepository<ProductPresetJpaE
 @Repository
 interface SpringDataJpaPresetAttributeValueRepository : JpaRepository<PresetAttributeValueJpaEntity, UUID> {
     fun findByPresetId(presetId: UUID): List<PresetAttributeValueJpaEntity>
+    fun deleteByPresetId(presetId: UUID)
 }
 
 @Repository
 interface SpringDataJpaProductPresetVariantRepository : JpaRepository<ProductPresetVariantJpaEntity, UUID> {
     fun findByPresetId(presetId: UUID): List<ProductPresetVariantJpaEntity>
+    fun deleteByPresetId(presetId: UUID)
 }

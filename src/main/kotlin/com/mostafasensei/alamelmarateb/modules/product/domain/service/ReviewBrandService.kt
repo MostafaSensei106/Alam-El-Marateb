@@ -1,5 +1,6 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.service
 
+import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.core.exceptions.UnprocessableException
@@ -20,6 +21,7 @@ data class ReviewView(
     val rating: Int,
     val title: String?,
     val body: String?,
+    val photos: List<String>,
     val verifiedPurchase: Boolean,
     val status: String,
     val helpfulCount: Int,
@@ -48,8 +50,9 @@ class ReviewService(
     }
 
     @Transactional
-    fun submit(userId: UUID, productId: UUID, rating: Int, title: String?, body: String?): ReviewView {
+    fun submit(userId: UUID, productId: UUID, rating: Int, title: String?, body: String?, photos: List<String>): ReviewView {
         if (rating !in 1..5) throw UnprocessableException("error.review.rating_range")
+        if (photos.size > 5) throw BadRequestException("error.review.photo_limit")
         productRepository.findById(productId)
             .orElseThrow { NotFoundException("error.catalog.product_not_found") }
         if (reviewRepository.findByUserIdAndProductId(userId, productId).isPresent) {
@@ -61,7 +64,8 @@ class ReviewService(
         val saved = reviewRepository.save(
             ProductReviewJpaEntity(
                 productId = productId, userId = userId, rating = rating,
-                title = title, body = body, verifiedPurchase = true, status = "pending",
+                title = title, body = body, photoUrls = photos.joinToString(","),
+                verifiedPurchase = true, status = "pending",
             ),
         )
         return toView(saved)
@@ -98,7 +102,9 @@ class ReviewService(
     }
 
     private fun toView(e: ProductReviewJpaEntity) = ReviewView(
-        e.id, e.productId, e.rating, e.title, e.body, e.verifiedPurchase, e.status, e.helpfulCount,
+        e.id, e.productId, e.rating, e.title, e.body,
+        e.photoUrls.split(",").map { it.trim() }.filter { it.isNotEmpty() },
+        e.verifiedPurchase, e.status, e.helpfulCount,
     )
 }
 

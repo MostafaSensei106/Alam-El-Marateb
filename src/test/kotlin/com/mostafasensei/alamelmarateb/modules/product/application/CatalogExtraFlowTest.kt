@@ -102,7 +102,7 @@ class CatalogExtraFlowTest {
         val variantId = catalogService.createVariant(
             ProductVariant(
                 productId = quick.id, sku = "QCV-$suffix", barcode = null,
-                widthCm = 120, lengthCm = 195, heightCm = 25,
+                widthCm = 150, lengthCm = 195, heightCm = 25,
                 costPrice = BigDecimal("4000"), sellingPrice = BigDecimal("7000"),
             ),
         ).id!!
@@ -114,7 +114,7 @@ class CatalogExtraFlowTest {
             ),
             by = "test",
         )
-        val submitted = reviewService.submit(customerId, quick.id!!, 5, "Great", "Very comfy")
+        val submitted = reviewService.submit(customerId, quick.id!!, 5, "Great", "Very comfy", emptyList())
         assertEquals("pending", submitted.status)
         assertTrue(submitted.verifiedPurchase)
         val approved = reviewService.moderate(submitted.id!!, true)

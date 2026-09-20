@@ -12,6 +12,8 @@ import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductCategor
 import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductVariant
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.BrandCreateRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.BrandUpdateRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.QaAnswerRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.QaAskRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QuickCreateRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QuizAnswerRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QuizRecommendRequest
@@ -22,6 +24,8 @@ import com.mostafasensei.alamelmarateb.modules.product.domain.model.VariantAttri
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.BrandService
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.BrandView
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
+import com.mostafasensei.alamelmarateb.modules.product.domain.service.QaService
+import com.mostafasensei.alamelmarateb.modules.product.domain.service.QuestionView
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.QuizAnswer
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.QuizQuestionView
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.QuizService
@@ -56,6 +60,7 @@ class CatalogDiscoveryController(
     private val brandService: BrandService,
     private val reviewService: ReviewService,
     private val quizService: QuizService,
+    private val qaService: QaService,
 ) : BaseController() {
 
     @Operation(summary = "Search products (name/slug/category/brand/price)")
@@ -121,6 +126,22 @@ class CatalogDiscoveryController(
                 request.categoryId, request.maxPrice, request.limit,
             ),
         )
+
+    @Operation(summary = "Bought-together (from order history)")
+    @GetMapping(CatalogStoreRoutes.PRODUCT_BY_SLUG + "/bought-together")
+    fun boughtTogether(@PathVariable slug: String): ResponseEntity<ApiResponse<List<Product>>> {
+        val product = catalogService.getProductBySlug(slug)
+            ?: throw com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException("error.catalog.product_not_found")
+        return ok(catalogService.boughtTogether(product.id!!))
+    }
+
+    @Operation(summary = "Answered Q&A for a product")
+    @GetMapping(CatalogStoreRoutes.PRODUCT_BY_SLUG + "/qa")
+    fun qa(@PathVariable slug: String): ResponseEntity<ApiResponse<List<QuestionView>>> {
+        val product = catalogService.getProductBySlug(slug)
+            ?: throw com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException("error.catalog.product_not_found")
+        return ok(qaService.answered(product.id!!))
+    }
 }
 
 data class ReviewSummaryDto(val average: Double, val count: Int)
@@ -203,6 +224,7 @@ class CatalogAdminExtraController(
 @PreAuthorize("hasAnyRole('CUSTOMER', 'SUPER_ADMIN')")
 class PortalReviewController(
     private val reviewService: ReviewService,
+    private val qaService: QaService,
 ) : BaseController() {
 
     @Operation(summary = "Submit review (verified buyers only)")
@@ -211,7 +233,7 @@ class PortalReviewController(
         @AuthenticationPrincipal principal: UserPrincipal,
         @Valid @RequestBody request: ReviewCreateRequest,
     ): ResponseEntity<ApiResponse<ReviewView>> =
-        created(reviewService.submit(principal.id, request.productId, request.rating, request.title, request.body))
+        created(reviewService.submit(principal.id, request.productId, request.rating, request.title, request.body, request.photos))
 
     @Operation(summary = "My reviews")
     @GetMapping
@@ -222,4 +244,33 @@ class PortalReviewController(
     @PostMapping("/{id}/helpful")
     fun helpful(@PathVariable id: UUID): ResponseEntity<ApiResponse<ReviewView>> =
         ok(reviewService.helpful(id))
+
+    @Operation(summary = "Ask a product question")
+    @PostMapping("/qa")
+    fun ask(
+        @AuthenticationPrincipal principal: UserPrincipal,
+        @Valid @RequestBody request: QaAskRequest,
+    ): ResponseEntity<ApiResponse<QuestionView>> =
+        created(qaService.ask(principal.id, request.productId, request.question))
+}
+
+/**
+ * Q&A answers — BRANCH_MANAGER.
+ */
+@Tag(name = "Q&A (management)", description = "Answer product questions — BRANCH_MANAGER")
+@RestController
+@RequestMapping(CatalogAdminRoutes.PRODUCTS + "/qa")
+@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+class QaAdminController(
+    private val qaService: QaService,
+) : BaseController() {
+
+    @Operation(summary = "Answer a question")
+    @PostMapping("/{id}/answer")
+    fun answer(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: QaAnswerRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<QuestionView>> =
+        ok(qaService.answer(id, request.answer, principal.fullName))
 }

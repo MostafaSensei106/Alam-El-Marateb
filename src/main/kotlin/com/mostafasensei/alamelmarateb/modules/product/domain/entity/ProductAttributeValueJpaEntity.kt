@@ -23,7 +23,7 @@ import java.util.UUID
     uniqueConstraints = [UniqueConstraint(columnNames = ["product_id", "attribute_id"])]
 )
 class ProductAttributeValueJpaEntity(
-    @Column(name = "product_id", nullable = false, columnDefinition = "UUID", insertable = false, updatable = false)
+    @Column(name = "product_id", nullable = false, columnDefinition = "UUID")
     var productId: UUID? = null,
 
     @Column(name = "attribute_id", nullable = false, columnDefinition = "UUID")

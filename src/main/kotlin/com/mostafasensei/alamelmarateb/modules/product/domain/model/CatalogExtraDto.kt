@@ -45,6 +45,16 @@ data class ReviewCreateRequest(
     @field:Min(1) @field:Max(5) val rating: Int,
     val title: String? = null,
     val body: String? = null,
+    val photos: List<String> = emptyList(),
+)
+
+data class QaAskRequest(
+    @field:NotNull val productId: UUID,
+    @field:NotBlank val question: String,
+)
+
+data class QaAnswerRequest(
+    @field:NotBlank val answer: String,
 )
 
 data class ReviewModerateRequest(

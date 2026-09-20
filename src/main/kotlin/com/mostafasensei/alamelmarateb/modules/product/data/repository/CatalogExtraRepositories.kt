@@ -1,6 +1,7 @@
 package com.mostafasensei.alamelmarateb.modules.product.data.repository
 
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.BrandJpaEntity
+import com.mostafasensei.alamelmarateb.modules.product.domain.entity.ProductQuestionJpaEntity
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.ProductReviewJpaEntity
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.QuizOptionJpaEntity
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.QuizQuestionJpaEntity
@@ -23,6 +24,11 @@ interface ProductReviewRepository : JpaRepository<ProductReviewJpaEntity, UUID> 
     fun findByProductIdAndStatusOrderByCreatedAtDesc(productId: UUID, status: String): List<ProductReviewJpaEntity>
     fun findByUserIdAndProductId(userId: UUID, productId: UUID): Optional<ProductReviewJpaEntity>
     fun findByUserIdOrderByCreatedAtDesc(userId: UUID): List<ProductReviewJpaEntity>
+}
+
+@Repository
+interface ProductQuestionRepository : JpaRepository<ProductQuestionJpaEntity, UUID> {
+    fun findByProductIdAndStatusOrderByCreatedAtDesc(productId: UUID, status: String): List<ProductQuestionJpaEntity>
 }
 
 @Repository

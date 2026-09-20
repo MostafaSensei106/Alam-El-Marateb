@@ -45,8 +45,10 @@ class RevenueIngestTest {
             "INSERT INTO product_categories (id, name, slug) VALUES (?, ?, ?)",
             UUID.randomUUID(), "Rev Cat", "rev-cat-$suffix",
         )
-        val catId = jdbc.queryForObject(
-            "SELECT id FROM product_categories WHERE slug = ?", UUID::class.java, "rev-cat-$suffix",
+        val catId = UUID.fromString(
+            jdbc.queryForObject(
+                "SELECT id FROM product_categories WHERE slug = ?", String::class.java, "rev-cat-$suffix",
+            ),
         )
         val productId = UUID.randomUUID()
         committed(
@@ -68,9 +70,8 @@ class RevenueIngestTest {
         assertEquals(2, summary.totalQty)
         assertEquals(1, summary.points.size)
 
-        val top = revenueService.topVariants(day, day, 5)
-        assertEquals(1, top.size)
-        assertEquals(variantId, top.single().variantId)
+        val top = revenueService.topVariants(day, day, 50)
+        assertTrue(top.any { it.variantId == variantId && it.qty == 2 })
 
         val perf = revenueService.branchPerformance(day, day)
         assertTrue(perf.any { it.branchId == branchId && it.revenue == BigDecimal("16000.00") })

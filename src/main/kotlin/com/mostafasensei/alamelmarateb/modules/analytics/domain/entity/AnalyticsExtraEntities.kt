@@ -44,6 +44,7 @@ class AppEventJpaEntity(
     var anonymousId: String? = null,
 
     @Column(name = "payload", nullable = false, columnDefinition = "JSONB")
+    @org.hibernate.annotations.ColumnTransformer(write = "?::jsonb")
     var payload: String = "{}",
 
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)

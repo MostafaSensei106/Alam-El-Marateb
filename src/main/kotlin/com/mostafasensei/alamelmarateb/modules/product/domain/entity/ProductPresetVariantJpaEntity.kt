@@ -15,7 +15,7 @@ import java.util.UUID
     uniqueConstraints = [UniqueConstraint(columnNames = ["preset_id", "width_cm", "length_cm", "height_cm"])]
 )
 class ProductPresetVariantJpaEntity(
-    @Column(name = "preset_id", nullable = false, columnDefinition = "UUID", insertable = false, updatable = false)
+    @Column(name = "preset_id", nullable = false, columnDefinition = "UUID")
     var presetId: UUID? = null,
 
     @Column(name = "width_cm", nullable = false)
