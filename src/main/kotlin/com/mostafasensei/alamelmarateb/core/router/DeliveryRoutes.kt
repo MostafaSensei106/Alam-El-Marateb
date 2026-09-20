@@ -14,4 +14,9 @@ object DeliveryRoutes {
     const val UPDATE_STOP_STATUS = "$PREFIX/stops/{stopId}/status"
     const val CONFIRM_DELIVER = "$PREFIX/orders/{orderId}"
     const val REPORT_FAILED_DELIVERY = "$PREFIX/orders/{orderId}/failed"
+
+    const val TRIPS = "$PREFIX/trips"
+    const val TRIP_DISPATCH = "$PREFIX/trips/{tripId}/dispatch"
+    const val TRIP_CANCEL = "$PREFIX/trips/{tripId}/cancel"
+    const val TRIP_COMPLETE = "$PREFIX/trips/{tripId}/complete"
 }
