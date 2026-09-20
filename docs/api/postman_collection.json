@@ -2259,6 +2259,146 @@
           }
         }
       ]
+    },
+    {
+      "name": "📐 Custom sizes & reservations",
+      "item": [
+        {
+          "name": "📐 Custom quote (oval 160x210)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/public/products/SLUG/custom-quote",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"shape\": \"oval\", \"widthCm\": 160, \"lengthCm\": 210}"
+            }
+          }
+        },
+        {
+          "name": "🛠️ Custom order + deposit",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/pos/custom-order",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"productId\": \"PRODUCT_ID\", \"shape\": \"rect\", \"widthCm\": 120, \"lengthCm\": 200, \"qty\": 1, \"paymentMethod\": \"TRANSFER\", \"downPayment\": 4000}"
+            }
+          }
+        },
+        {
+          "name": "💰 Pay order balance",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/orders/{{orderId}}/pay-balance",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"amount\": 1000, \"method\": \"CASH\"}"
+            }
+          }
+        },
+        {
+          "name": "📅 Reserve + deposit",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/pos/reservations",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"variantId\": \"VARIANT_ID\", \"qty\": 1, \"deposit\": 2000}"
+            }
+          }
+        },
+        {
+          "name": "💰 Pay reservation",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/pos/reservations/RES_ID/pay",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"amount\": 6000, \"method\": \"TRANSFER\"}"
+            }
+          }
+        },
+        {
+          "name": "✅ Fulfill reservation",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/pos/reservations/RES_ID/fulfill",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔍 Reservation details",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/sales/pos/reservations/RES_ID",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 }

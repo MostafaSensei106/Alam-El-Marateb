@@ -116,6 +116,15 @@
 - `payment_intents (order, gateway, amount>0, status: pending/authorized/captured/failed/cancelled/refunded, provider_ref UNIQUE, payload JSONB)` — الكولباك يتحقق من التوقيع أولاً ثم يطبق idempotently.
 - `trip_locations (trip, lat/lng, recorded_at)` + `trip_stops.lat/lng` + `driver_ratings (order UNIQUE, driver, 1..5)`.
 
+## 13. المقاسات الخاصة والحجوزات (V24)
+
+- `products.price_per_meter` (أساس تسعير المتر المربع) + `order_items.is_custom/custom_spec` (بدون حجز مخزن).
+- `reservations.total/paid_amount` + `reservation_payments (reservation, amount>0, method, paid_at, received_by)`.
+- `orders.paid_amount` لدفع البواقي على الطلبات المؤكدة.
+- **قاعدة التسعير**: مساحة الشكل (مستطيل/بيضاوي/دائري بالقطر=العرض) × سعر المتر + نسبة تشغيل حسب العرض
+  (90-100: 24%، 101-120: 20%، 121-140: 13%، 141-160: 8%، 161-180: 4%، 181-200: 2%، 201-210: 0%، خارجها: 0%).
+  بلا حدود دنيا/عليا — أي طول (حتى فوق 205) يُسعّر بنفس نسبة عرضه.
+
 ## 11. ترتيب المايجريشنز (محدّث — التنفيذ بدأ بالمخازن أولاً)
 
 V1 (مُصلح: عمود مكرر + DEFAULT) → V2,V3 (موجودة) → **V4 inventory (مُنفذ)** → **V5 analytics: audit_logs + sales_daily_facts (مُنفذ)** →
@@ -125,4 +134,5 @@ V9 purchasing (مُنفذ) → V10 hr (مُنفذ) → V11 accounting (مُنف�
 V13 reviews+quiz (مُنفذ) → V14 inquiries + app_events + idempotency_keys (مُنفذ) →
 V15 brands + variant-attrs + seed (مُنفذ) → V16/V17 إصلاحات → V18 Q&A + صور تقييمات (مُنفذ) →
 V19 ترجمات + صور منتجات + outbox إشعارات (مُنفذ) → V20 ترجمات الكويز (مُنفذ) → V21 إصلاح audit →
-V22 ولاء + مدفوعات + GPS وتقييم سائق (مُنفذ) → V23 إصلاح.
+V22 ولاء + مدفوعات + GPS وتقييم سائق (مُنفذ) → V23 إصلاح →
+V24 مقاسات خاصة + حجوزات بالأرصدة + دفع جزئي للطلبات (مُنفذ).

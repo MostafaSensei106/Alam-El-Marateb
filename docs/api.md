@@ -32,6 +32,9 @@
 | GET `/sales/pos/scan/{barcode}` | مخطط P3 (بحث SKU/باركود/اسم) |
 | POST `/sales/pos/orders/draft` + POST `/complete-sale` + POST `/place-order` + POST `/custom-order` | مخطط P3 (idempotency_key إجباري) |
 | GET `/sales/pos/orders/{orderId}/receipt` + GET `/invoice-pdf` (HTML قابل للطباعة) + POST `/{orderId}/return` | موجود |
+| POST `/sales/pos/custom-order` (مقاس خاص: شكل+أبعاد+عربون) + POST `/sales/orders/{id}/pay-balance` | موجود |
+| POST `/sales/pos/reservations` + GET `/{id}` + POST `/{id}/pay|fulfill|cancel` (حجز + دفع أجزاء + استلام يوم معين) | موجود |
+| POST `/catalog/public/products/{slug}/custom-quote` (عام: تسعير هندسي + نسبة تشغيل حسب العرض) | موجود |
 | GET/POST `/sales/pos/drawer/shift/current|open|close` + POST `/drop` | موجود |
 | GET `/sales/orders` + GET `/sales/orders/{orderId}` + POST `/{id}/confirm-payment` (مدير) | مخطط P3 |
 | GET/POST `/sales/promotions` + POST `/{id}/toggle` (مدير فقط) | مخطط P3 |
