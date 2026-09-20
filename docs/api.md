@@ -22,6 +22,7 @@
 | GET `/catalog/public/products/search?q=` + GET `/featured` + GET `/compare?ids=` | موجود |
 | GET `/catalog/public/products/{slug}` + GET `/{id}/variants` | موجود |
 | POST `/catalog/products/{id}/images` + DELETE `/catalog/images/{imageId}` + GET `/catalog/public/products/{slug}/images` | موجود |
+| GET/POST `/catalog/products/{id}/meter-prices` + DELETE `/catalog/meter-prices/{id}` + GET/POST/PUT/DELETE `/catalog/operating-brackets[/{id}]` (تسعير متغير من الداشبورد) | موجود |
 | GET `/analytics/notifications` (طابور المتابعة) | موجود |
 | GET `/catalog/public/categories` + GET `/catalog/public/products/{slug}/reviews` + brands/quiz/compare/bought-together/Q&A | موجود |
 

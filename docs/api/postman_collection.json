@@ -239,6 +239,65 @@
               }
             ]
           }
+        },
+        {
+          "name": "💲 Set meter price (oval)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/products/{{productId}}/meter-prices",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"shape\": \"oval\", \"price\": 6500}"
+            }
+          }
+        },
+        {
+          "name": "📊 Brackets (global)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/operating-brackets",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📊 Add model bracket",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/operating-brackets",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"productId\": \"{{productId}}\", \"widthFrom\": 150, \"widthTo\": 160, \"pct\": 50}"
+            }
+          }
         }
       ]
     },
