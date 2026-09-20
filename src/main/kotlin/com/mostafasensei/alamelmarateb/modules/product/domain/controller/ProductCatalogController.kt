@@ -71,6 +71,7 @@ class ProductAdminController(
             attributes = request.attributes?.map { it.toDomain() } ?: existing.attributes,
             isActive = request.isActive ?: existing.isActive,
             isFeatured = request.isFeatured ?: existing.isFeatured,
+            translations = request.translations ?: existing.translations,
         )
         return ok(catalogService.updateProduct(id, updated))
     }

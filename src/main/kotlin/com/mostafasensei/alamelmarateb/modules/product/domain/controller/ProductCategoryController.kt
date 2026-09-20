@@ -49,6 +49,7 @@ class ProductCategoryController(
                 name = request.name,
                 slug = request.slug,
                 description = request.description,
+                translations = request.translations ?: emptyMap(),
             ),
         )
         return created(category.toResponse())
@@ -64,6 +65,7 @@ class ProductCategoryController(
             name = request.name ?: existing.name,
             description = request.description ?: existing.description,
             isActive = request.isActive ?: existing.isActive,
+            translations = request.translations ?: existing.translations,
         )
         return ok(catalogService.updateCategory(id, updated).toResponse())
     }

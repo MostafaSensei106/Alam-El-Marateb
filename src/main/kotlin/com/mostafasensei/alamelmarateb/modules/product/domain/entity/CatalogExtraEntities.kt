@@ -4,6 +4,7 @@ import com.mostafasensei.alamelmarateb.core.common.entity.EntityBase
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.Table
+import jakarta.persistence.UniqueConstraint
 import java.util.UUID
 
 @Entity
@@ -87,12 +88,6 @@ class QuizQuestionJpaEntity(
     @Column(name = "sort_order", nullable = false)
     var sortOrder: Int = 0,
 
-    @Column(name = "text_ar", nullable = false, columnDefinition = "TEXT")
-    var textAr: String = "",
-
-    @Column(name = "text_en", columnDefinition = "TEXT")
-    var textEn: String? = null,
-
     @Column(name = "dimension", nullable = false, length = 30)
     var dimension: String = "",
 
@@ -105,12 +100,6 @@ class QuizQuestionJpaEntity(
 class QuizOptionJpaEntity(
     @Column(name = "question_id", nullable = false, columnDefinition = "UUID")
     var questionId: UUID? = null,
-
-    @Column(name = "label_ar", nullable = false, columnDefinition = "TEXT")
-    var labelAr: String = "",
-
-    @Column(name = "label_en", columnDefinition = "TEXT")
-    var labelEn: String? = null,
 
     @Column(name = "scores", nullable = false, columnDefinition = "JSONB")
     @org.hibernate.annotations.ColumnTransformer(write = "?::jsonb")
@@ -163,4 +152,37 @@ class VariantAttributeValueJpaEntity(
 
     @Column(name = "value_option_id", columnDefinition = "UUID")
     var valueOptionId: UUID? = null,
+) : EntityBase<UUID>()
+
+
+@Entity
+@Table(
+    name = "quiz_question_translations",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["question_id", "lang"])],
+)
+class QuizQuestionTranslationJpaEntity(
+    @Column(name = "question_id", nullable = false, columnDefinition = "UUID")
+    var questionId: UUID? = null,
+
+    @Column(name = "lang", nullable = false, length = 10)
+    var lang: String = "",
+
+    @Column(name = "text", columnDefinition = "TEXT")
+    var text: String? = null,
+) : EntityBase<UUID>()
+
+@Entity
+@Table(
+    name = "quiz_option_translations",
+    uniqueConstraints = [UniqueConstraint(columnNames = ["option_id", "lang"])],
+)
+class QuizOptionTranslationJpaEntity(
+    @Column(name = "option_id", nullable = false, columnDefinition = "UUID")
+    var optionId: UUID? = null,
+
+    @Column(name = "lang", nullable = false, length = 10)
+    var lang: String = "",
+
+    @Column(name = "label", columnDefinition = "TEXT")
+    var label: String? = null,
 ) : EntityBase<UUID>()

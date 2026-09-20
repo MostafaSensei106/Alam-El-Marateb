@@ -1,9 +1,12 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.service
 
 import com.mostafasensei.alamelmarateb.core.exceptions.UnprocessableException
+import com.mostafasensei.alamelmarateb.core.i18n.MessageService
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeValue
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.QuizOptionRepository
+import com.mostafasensei.alamelmarateb.modules.product.data.repository.QuizOptionTranslationRepository
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.QuizQuestionRepository
+import com.mostafasensei.alamelmarateb.modules.product.data.repository.QuizQuestionTranslationRepository
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.RecommendationRunRepository
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.RecommendationRunJpaEntity
 import org.springframework.stereotype.Service
@@ -18,16 +21,16 @@ import kotlin.math.roundToInt
 data class QuizQuestionView(
     val id: UUID?,
     val sortOrder: Int,
-    val textAr: String,
-    val textEn: String?,
+    val text: String,
     val dimension: String,
     val options: List<QuizOptionView>,
+    val texts: Map<String, String?> = emptyMap(),
 )
 
 data class QuizOptionView(
     val id: UUID?,
-    val labelAr: String,
-    val labelEn: String?,
+    val label: String,
+    val labels: Map<String, String?> = emptyMap(),
 )
 
 data class QuizAnswer(val questionId: UUID, val optionId: UUID)
@@ -44,9 +47,12 @@ data class Recommendation(
 class QuizService(
     private val questionRepository: QuizQuestionRepository,
     private val optionRepository: QuizOptionRepository,
+    private val questionTrRepository: QuizQuestionTranslationRepository,
+    private val optionTrRepository: QuizOptionTranslationRepository,
     private val runRepository: RecommendationRunRepository,
     private val catalogService: ProductCatalogService,
     private val objectMapper: ObjectMapper,
+    private val messages: MessageService,
 ) {
 
     companion object {
@@ -63,13 +69,28 @@ class QuizService(
     }
 
     @Transactional(readOnly = true)
-    fun questions(): List<QuizQuestionView> =
-        questionRepository.findByIsActiveTrueOrderBySortOrderAsc().map { q ->
+    fun questions(): List<QuizQuestionView> {
+        val questions = questionRepository.findByIsActiveTrueOrderBySortOrderAsc()
+        val texts = questionTrRepository.findByQuestionIdIn(questions.mapNotNull { it.id })
+            .groupBy({ it.questionId }, { it.lang to it.text }).mapValues { it.value.toMap() }
+        val lang = messages.currentLanguage()
+        return questions.map { q ->
+            val options = optionRepository.findByQuestionId(q.id!!)
+            val labels = optionTrRepository.findByOptionIdIn(options.mapNotNull { it.id })
+                .groupBy({ it.optionId }, { it.lang to it.label }).mapValues { it.value.toMap() }
+            val qTexts = q.id?.let { texts[it] } ?: emptyMap()
             QuizQuestionView(
-                q.id, q.sortOrder, q.textAr, q.textEn, q.dimension,
-                optionRepository.findByQuestionId(q.id!!).map { QuizOptionView(it.id, it.labelAr, it.labelEn) },
+                q.id, q.sortOrder,
+                qTexts[lang] ?: qTexts["ar"] ?: "",
+                q.dimension,
+                options.map { o ->
+                    val oLabels = o.id?.let { labels[it] } ?: emptyMap()
+                    QuizOptionView(o.id, oLabels[lang] ?: oLabels["ar"] ?: "", oLabels)
+                },
+                qTexts,
             )
         }
+    }
 
     @Transactional
     fun recommend(

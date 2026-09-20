@@ -382,3 +382,22 @@ class CashDropJpaEntity(
     @Column(name = "created_by", length = 100)
     var createdBy: String? = null,
 )
+
+@Entity
+@Table(
+    name = "delivery_zone_translations",
+    uniqueConstraints = [jakarta.persistence.UniqueConstraint(columnNames = ["zone_id", "lang"])],
+)
+class DeliveryZoneTranslationJpaEntity(
+    @Column(name = "zone_id", nullable = false, columnDefinition = "UUID")
+    var zoneId: UUID? = null,
+
+    @Column(name = "lang", nullable = false, length = 10)
+    var lang: String = "",
+
+    @Column(name = "governorate", length = 100)
+    var governorate: String? = null,
+
+    @Column(name = "area", length = 150)
+    var area: String? = null,
+) : EntityBase<UUID>()

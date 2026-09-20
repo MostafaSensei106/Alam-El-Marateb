@@ -42,7 +42,7 @@ class TranslationService(
 
     fun lang(): String = messages.currentLanguage()
 
-    fun validateLangs(translations: Map<String, Map<String, String>>?) {
+    fun validateLangs(translations: Map<String, Map<String, String?>>?) {
         translations?.keys?.forEach { code ->
             if (!messages.isSupportedLang(code)) {
                 throw BadRequestException("error.i18n.unsupported_lang", listOf(code))
@@ -59,7 +59,7 @@ class TranslationService(
     // ---- products ----
 
     @Transactional
-    fun saveProduct(id: UUID, translations: Map<String, Map<String, String>>?) {
+    fun saveProduct(id: UUID, translations: Map<String, Map<String, String?>>?) {
         validateLangs(translations)
         productTr.deleteByProductId(id)
         translations?.forEach { (lang, fields) ->
@@ -92,7 +92,7 @@ class TranslationService(
     // ---- categories ----
 
     @Transactional
-    fun saveCategory(id: UUID, translations: Map<String, Map<String, String>>?) {
+    fun saveCategory(id: UUID, translations: Map<String, Map<String, String?>>?) {
         validateLangs(translations)
         categoryTr.deleteByCategoryId(id)
         translations?.forEach { (lang, fields) ->
@@ -124,7 +124,7 @@ class TranslationService(
     // ---- brands (views carry translations map) ----
 
     @Transactional
-    fun saveBrand(id: UUID, translations: Map<String, Map<String, String>>?) {
+    fun saveBrand(id: UUID, translations: Map<String, Map<String, String?>>?) {
         validateLangs(translations)
         brandTr.deleteByBrandId(id)
         translations?.forEach { (lang, fields) ->
@@ -144,7 +144,7 @@ class TranslationService(
     // ---- attributes + options ----
 
     @Transactional
-    fun saveAttribute(id: UUID, translations: Map<String, Map<String, String>>?) {
+    fun saveAttribute(id: UUID, translations: Map<String, Map<String, String?>>?) {
         validateLangs(translations)
         attributeTr.deleteByAttributeId(id)
         translations?.forEach { (lang, fields) ->
@@ -155,7 +155,7 @@ class TranslationService(
     }
 
     @Transactional
-    fun saveOption(id: UUID, translations: Map<String, Map<String, String>>?) {
+    fun saveOption(id: UUID, translations: Map<String, Map<String, String?>>?) {
         validateLangs(translations)
         optionTr.deleteByOptionId(id)
         translations?.forEach { (lang, fields) ->

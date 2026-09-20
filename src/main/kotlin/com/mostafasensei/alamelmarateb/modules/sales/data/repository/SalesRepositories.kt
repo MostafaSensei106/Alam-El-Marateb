@@ -6,6 +6,7 @@ import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CartJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CashDropJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CashShiftJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.DeliveryZoneJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.DeliveryZoneTranslationJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentPlanJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InvoiceJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.OrderItemJpaEntity
@@ -77,6 +78,11 @@ interface CartItemRepository : JpaRepository<CartItemJpaEntity, UUID>
 @Repository
 interface DeliveryZoneRepository : JpaRepository<DeliveryZoneJpaEntity, UUID> {
     fun findByGovernorateAndAreaAndIsActiveTrue(governorate: String, area: String): Optional<DeliveryZoneJpaEntity>
+}
+
+@Repository
+interface DeliveryZoneTranslationRepository : JpaRepository<DeliveryZoneTranslationJpaEntity, UUID> {
+    fun findByZoneIdIn(zoneIds: Collection<UUID>): List<DeliveryZoneTranslationJpaEntity>
 }
 
 @Repository

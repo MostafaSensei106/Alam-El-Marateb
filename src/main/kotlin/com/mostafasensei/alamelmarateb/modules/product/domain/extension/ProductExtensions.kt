@@ -184,14 +184,15 @@ fun Product.toResponse(): ProductResponse =
     )
 
 fun AddOptionRequest.toDomain(): ProductAttributeOption =
-    ProductAttributeOption(value = value, label = label, sortOrder = sortOrder)
+    ProductAttributeOption(value = value, label = label, sortOrder = sortOrder, translations = translations ?: emptyMap())
 
 fun AttributeOptionCreateRequest.toDomain(): ProductAttributeOption =
-    ProductAttributeOption(value = value, label = label, sortOrder = sortOrder)
+    ProductAttributeOption(value = value, label = label, sortOrder = sortOrder, translations = translations ?: emptyMap())
 
 fun AttributeDefinitionCreateRequest.toDomain(): ProductAttributeDefinition =
     ProductAttributeDefinition(
         name = name,
+        translations = translations ?: emptyMap(),
         key = key,
         type = when (type.uppercase()) {
             "TEXT" -> AttributeType.TEXT

@@ -176,7 +176,7 @@ class CatalogAdminExtraController(
     @Operation(summary = "Create brand")
     @PostMapping(CatalogAdminRoutes.BRANDS)
     fun createBrand(@Valid @RequestBody request: BrandCreateRequest): ResponseEntity<ApiResponse<BrandView>> =
-        created(brandService.create(request.name, request.slug, request.logoUrl, request.description, request.sortOrder))
+        created(brandService.create(request.name, request.slug, request.logoUrl, request.description, request.sortOrder, request.translations))
 
     @Operation(summary = "Update brand")
     @PutMapping(CatalogAdminRoutes.BRAND_BY_ID)
@@ -184,7 +184,7 @@ class CatalogAdminExtraController(
         @PathVariable id: UUID,
         @Valid @RequestBody request: BrandUpdateRequest,
     ): ResponseEntity<ApiResponse<BrandView>> =
-        ok(brandService.update(id, request.name, request.slug, request.logoUrl, request.description, request.sortOrder, request.isActive))
+        ok(brandService.update(id, request.name, request.slug, request.logoUrl, request.description, request.sortOrder, request.isActive, request.translations))
 
     @Operation(summary = "Delete brand")
     @DeleteMapping(CatalogAdminRoutes.BRAND_BY_ID)

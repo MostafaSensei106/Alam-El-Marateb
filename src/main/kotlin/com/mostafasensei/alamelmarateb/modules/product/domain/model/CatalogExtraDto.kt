@@ -29,6 +29,7 @@ data class BrandCreateRequest(
     val logoUrl: String? = null,
     val description: String? = null,
     @field:PositiveOrZero val sortOrder: Int = 0,
+    val translations: Map<String, Map<String, String>>? = null,
 )
 
 data class BrandUpdateRequest(
@@ -38,6 +39,7 @@ data class BrandUpdateRequest(
     val description: String? = null,
     @field:PositiveOrZero val sortOrder: Int? = null,
     val isActive: Boolean? = null,
+    val translations: Map<String, Map<String, String>>? = null,
 )
 
 data class ReviewCreateRequest(

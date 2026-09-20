@@ -4,7 +4,9 @@ import com.mostafasensei.alamelmarateb.modules.product.domain.entity.BrandJpaEnt
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.ProductQuestionJpaEntity
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.ProductReviewJpaEntity
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.QuizOptionJpaEntity
+import com.mostafasensei.alamelmarateb.modules.product.domain.entity.QuizOptionTranslationJpaEntity
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.QuizQuestionJpaEntity
+import com.mostafasensei.alamelmarateb.modules.product.domain.entity.QuizQuestionTranslationJpaEntity
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.RecommendationRunJpaEntity
 import com.mostafasensei.alamelmarateb.modules.product.domain.entity.VariantAttributeValueJpaEntity
 import org.springframework.data.jpa.repository.JpaRepository
@@ -39,6 +41,16 @@ interface QuizQuestionRepository : JpaRepository<QuizQuestionJpaEntity, UUID> {
 @Repository
 interface QuizOptionRepository : JpaRepository<QuizOptionJpaEntity, UUID> {
     fun findByQuestionId(questionId: UUID): List<QuizOptionJpaEntity>
+}
+
+@Repository
+interface QuizQuestionTranslationRepository : JpaRepository<QuizQuestionTranslationJpaEntity, UUID> {
+    fun findByQuestionIdIn(questionIds: Collection<UUID>): List<QuizQuestionTranslationJpaEntity>
+}
+
+@Repository
+interface QuizOptionTranslationRepository : JpaRepository<QuizOptionTranslationJpaEntity, UUID> {
+    fun findByOptionIdIn(optionIds: Collection<UUID>): List<QuizOptionTranslationJpaEntity>
 }
 
 @Repository

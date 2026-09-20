@@ -116,36 +116,44 @@ data class BrandView(
     val description: String?,
     val sortOrder: Int,
     val isActive: Boolean,
+    val translations: Map<String, Map<String, String?>> = emptyMap(),
 )
 
 @Service
 class BrandService(
     private val brandRepository: BrandRepository,
+    private val translations: TranslationService,
 ) {
 
     @Transactional(readOnly = true)
     fun listAll(): List<BrandView> =
-        brandRepository.findAll().sortedBy { it.sortOrder }.map { toView(it) }
+        brandRepository.findAll().sortedBy { it.sortOrder }.map { resolve(it) }
 
     @Transactional(readOnly = true)
     fun listActive(): List<BrandView> =
-        brandRepository.findAllByIsActiveTrueOrderBySortOrderAsc().map { toView(it) }
+        brandRepository.findAllByIsActiveTrueOrderBySortOrderAsc().map { resolve(it) }
 
     @Transactional
-    fun create(name: String, slug: String, logoUrl: String?, description: String?, sortOrder: Int): BrandView {
+    fun create(
+        name: String, slug: String, logoUrl: String?, description: String?, sortOrder: Int,
+        translationsMap: Map<String, Map<String, String>>? = null,
+    ): BrandView {
         val normalized = slug.trim().lowercase()
         if (brandRepository.existsBySlug(normalized)) {
             throw ConflictException("error.brand.slug_exists", listOf(slug))
         }
-        return toView(
-            brandRepository.save(
-                BrandJpaEntity(name = name.trim(), slug = normalized, logoUrl = logoUrl, description = description, sortOrder = sortOrder),
-            ),
+        val saved = brandRepository.save(
+            BrandJpaEntity(name = name.trim(), slug = normalized, logoUrl = logoUrl, description = description, sortOrder = sortOrder),
         )
+        translations.saveBrand(saved.id!!, translationsMap)
+        return resolve(saved)
     }
 
     @Transactional
-    fun update(id: UUID, name: String?, slug: String?, logoUrl: String?, description: String?, sortOrder: Int?, isActive: Boolean?): BrandView {
+    fun update(
+        id: UUID, name: String?, slug: String?, logoUrl: String?, description: String?, sortOrder: Int?, isActive: Boolean?,
+        translationsMap: Map<String, Map<String, String>>? = null,
+    ): BrandView {
         val entity = brandRepository.findById(id)
             .orElseThrow { NotFoundException("error.brand.not_found") }
         if (name != null) entity.name = name.trim()
@@ -160,7 +168,9 @@ class BrandService(
         if (description != null) entity.description = description
         if (sortOrder != null) entity.sortOrder = sortOrder
         if (isActive != null) entity.isActive = isActive
-        return toView(brandRepository.save(entity))
+        val saved = brandRepository.save(entity)
+        if (translationsMap != null) translations.saveBrand(id, translationsMap)
+        return resolve(saved)
     }
 
     @Transactional
@@ -169,7 +179,13 @@ class BrandService(
         brandRepository.deleteById(id)
     }
 
-    private fun toView(e: BrandJpaEntity) = BrandView(
-        e.id, e.name, e.slug, e.logoUrl, e.description, e.sortOrder, e.isActive,
-    )
+    private fun resolve(e: BrandJpaEntity): BrandView {
+        val map = translations.brandMap(e.id!!)
+        return BrandView(
+            e.id, translations.pick(e.name, map.mapValues { it.value["name"] }, "name"),
+            e.slug, e.logoUrl,
+            translations.pick(e.description, map.mapValues { it.value["description"] }, "description").ifBlank { null },
+            e.sortOrder, e.isActive, map,
+        )
+    }
 }

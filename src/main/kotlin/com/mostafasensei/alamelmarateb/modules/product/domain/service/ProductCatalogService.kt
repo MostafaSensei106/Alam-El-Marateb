@@ -140,8 +140,11 @@ class ProductCatalogService(
     }
 
     @Transactional
-    fun addOptionToAttribute(attributeId: UUID, option: ProductAttributeOption): ProductAttributeOption =
-        attributeOptionRepository.save(option)
+    fun addOptionToAttribute(attributeId: UUID, option: ProductAttributeOption): ProductAttributeOption {
+        val saved = attributeOptionRepository.save(option)
+        translations.saveOption(saved.id!!, option.translations.ifEmpty { null })
+        return saved
+    }
 
     @Transactional
     fun removeOptionFromAttribute(optionId: UUID) {
@@ -165,14 +168,19 @@ class ProductCatalogService(
         translations.attachProducts(productRepository.findByCategoryId(categoryId))
 
     @Transactional
-    fun createProduct(product: Product): Product = productRepository.save(product)
+    fun createProduct(product: Product): Product {
+        val saved = productRepository.save(product)
+        translations.saveProduct(saved.id!!, product.translations.ifEmpty { null })
+        return getProduct(saved.id!!)!!
+    }
 
     @Transactional
     fun updateProduct(id: UUID, product: Product): Product {
         productRepository.findById(id) ?: throw NotFoundException("error.catalog.product_not_found")
         val saved = productRepository.save(product.copy(id = id))
+        if (product.translations.isNotEmpty()) translations.saveProduct(id, product.translations)
         cache.evict("cat:prod:$id", "cat:prod:slug:${saved.slug}")
-        return saved
+        return getProduct(id)!!
     }
 
     @Transactional
