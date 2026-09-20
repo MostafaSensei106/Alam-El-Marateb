@@ -8,7 +8,7 @@ plugins {
 
 group = "com.mostafasensei"
 version = "0.0.1-SNAPSHOT"
-description = "alamelmarateb"
+description = "alam-el-marateb"
 
 java {
     toolchain {
