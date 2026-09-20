@@ -49,13 +49,13 @@ class PurchasingFlowTest {
         )
         val categoryId = UUID.randomUUID()
         committed(
-            "INSERT INTO categories (id, name, slug) VALUES (?, ?, ?)",
+            "INSERT INTO product_categories (id, name, slug) VALUES (?, ?, ?)",
             categoryId, "Purchasing Cat", "pur-cat-${System.nanoTime()}",
         )
         val productId = UUID.randomUUID()
         committed(
-            "INSERT INTO products (id, category_id, name, slug, brand, product_type) VALUES (?, ?, ?, ?, ?, ?)",
-            productId, categoryId, "Purchasing Mattress", "pur-mattress-${System.nanoTime()}", "B", "MATTRESS",
+            "INSERT INTO products (id, category_id, name, slug, brand) VALUES (?, ?, ?, ?, ?)",
+            productId, categoryId, "Purchasing Mattress", "pur-mattress-${System.nanoTime()}", "B",
         )
         val variantId = UUID.randomUUID()
         committed(
@@ -81,8 +81,8 @@ class PurchasingFlowTest {
         assertEquals(6, stockService.levels(warehouseId).single().qty)
         assertEquals(BigDecimal("600.00"), purchasingService.getSupplier(supplier.id).balance)
 
-        // Receive the rest: 3 good + 1 damaged -> 9 actual + 2 damaged >= 10 ordered -> closed.
-        purchasingService.receive(order.id, warehouseId, listOf(ReceiveLineInput(variantId, 3, 1)), "keeper")
+        // Receive the rest: 3 good -> 9 actual + 1 damaged >= 10 ordered -> closed.
+        purchasingService.receive(order.id, warehouseId, listOf(ReceiveLineInput(variantId, 3, 0)), "keeper")
         assertEquals("closed", purchasingService.getOrder(order.id).status)
         assertEquals(9, stockService.levels(warehouseId).single().qty)
         assertEquals(BigDecimal("900.00"), purchasingService.getSupplier(supplier.id).balance)

@@ -80,9 +80,9 @@ class DeliveryDriverController(
 }
 
 /**
- * Delivery MANAGEMENT — fleet vehicles (/api/v1/identity/...) + trip lifecycle.
- * Vehicles sit under identity/** so they are SUPER_ADMIN-only (SecurityConfig);
- * trip management under delivery/** is likewise SUPER_ADMIN-only.
+ * Delivery MANAGEMENT — fleet vehicles (identity prefix) + trip lifecycle.
+ * Vehicles sit under the identity prefix so they are SUPER_ADMIN-only (SecurityConfig);
+ * trip management under the delivery prefix is likewise SUPER_ADMIN-only.
  */
 
 

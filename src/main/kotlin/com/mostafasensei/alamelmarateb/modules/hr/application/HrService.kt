@@ -474,4 +474,8 @@ class HrService(
     private fun toRunView(run: PayrollRunJpaEntity, lines: List<PayrollLineView>) = PayrollRunView(
         run.id, run.branchId, run.month, run.status, lines,
     )
+
+    private fun toAttendanceView(e: AttendanceLogJpaEntity) = AttendanceView(
+        e.id, e.employeeId, e.type, e.at,
+    )
 }

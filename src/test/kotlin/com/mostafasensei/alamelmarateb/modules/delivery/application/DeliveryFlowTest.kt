@@ -31,6 +31,7 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
+import kotlin.test.fail
 
 @SpringBootTest
 @Transactional
@@ -169,7 +170,8 @@ class DeliveryFlowTest {
 
         // Sales order closed + trip auto-completed (all stops terminal).
         val tracked = orderService.track(
-            jdbc.queryForObject("SELECT tracking_number FROM orders WHERE id = ?", String::class.java, orderId),
+            jdbc.queryForObject("SELECT tracking_number FROM orders WHERE id = ?", String::class.java, orderId)
+                ?: fail("tracking number missing"),
         )
         assertEquals(OrderStatus.delivered, tracked.status)
         assertEquals("done", deliveryService.myTrips(driverId).first().status)
