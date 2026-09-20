@@ -16,6 +16,7 @@ data class ProductCreateRequest(
     @field:PositiveOrZero val warrantyYears: Int? = null,
     @field:Valid val attributes: List<ProductAttributeValueRequest> = emptyList(),
     @field:Valid val variants: List<ProductVariantCreateRequest> = emptyList(),
+    val translations: Map<String, Map<String, String>>? = null,
 )
 
 data class ProductUpdateRequest(
@@ -28,6 +29,7 @@ data class ProductUpdateRequest(
     @field:Valid val attributes: List<ProductAttributeValueRequest>? = null,
     val isActive: Boolean? = null,
     val isFeatured: Boolean? = null,
+    val translations: Map<String, Map<String, String>>? = null,
 )
 
 data class ProductVariantCreateRequest(

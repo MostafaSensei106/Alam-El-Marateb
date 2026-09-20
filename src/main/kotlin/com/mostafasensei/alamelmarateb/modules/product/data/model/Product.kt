@@ -17,6 +17,7 @@ data class Product(
     val variants: List<ProductVariant> = emptyList(),
     val isActive: Boolean = true,
     val isFeatured: Boolean = false,
+    val translations: Map<String, Map<String, String?>> = emptyMap(),
     val createdAt: Instant = Clock.System.now(),
     val updatedAt: Instant = Clock.System.now(),
 )

@@ -9,6 +9,7 @@ data class ProductCategoryResponse(
     val description: String? = null,
     val isActive: Boolean = true,
     val attributes: List<CategoryAttributeResponse> = emptyList(),
+    val translations: Map<String, Map<String, String?>> = emptyMap(),
 )
 
 data class CategoryAttributeResponse(
@@ -24,6 +25,7 @@ data class ProductAttributeDefinitionResponse(
     val type: String,
     val options: List<ProductAttributeOptionResponse> = emptyList(),
     val isActive: Boolean = true,
+    val translations: Map<String, Map<String, String?>> = emptyMap(),
 )
 
 data class ProductAttributeOptionResponse(
@@ -31,4 +33,5 @@ data class ProductAttributeOptionResponse(
     val value: String,
     val label: String,
     val sortOrder: Int = 0,
+    val translations: Map<String, Map<String, String?>> = emptyMap(),
 )

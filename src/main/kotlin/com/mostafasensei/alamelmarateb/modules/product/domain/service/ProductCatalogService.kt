@@ -43,6 +43,7 @@ class ProductCatalogService(
     private val variantAttributeRepository: VariantAttributeValueRepository,
     private val orderRepository: com.mostafasensei.alamelmarateb.modules.sales.data.repository.OrderRepository,
     private val variantJpa: SpringDataJpaProductVariantRepository,
+    private val translations: TranslationService,
     private val cache: RedisCache,
 ) {
 
@@ -52,24 +53,30 @@ class ProductCatalogService(
 
     @Transactional(readOnly = true)
     fun getCategory(id: UUID): ProductCategory? =
-        cache.getOrLoad("cat:cat:$id", CATALOG_TTL, ProductCategory::class.java) { categoryRepository.findById(id) }
+        categoryRepository.findById(id)?.let { translations.attachCategories(listOf(it)).single() }
 
     @Transactional(readOnly = true)
     fun getCategoryBySlug(slug: String): ProductCategory? =
-        cache.getOrLoad("cat:cat:slug:$slug", CATALOG_TTL, ProductCategory::class.java) { categoryRepository.findBySlug(slug) }
+        categoryRepository.findBySlug(slug)?.let { translations.attachCategories(listOf(it)).single() }
 
     @Transactional(readOnly = true)
-    fun getAllCategories(): List<ProductCategory> = categoryRepository.findAll()
+    fun getAllCategories(): List<ProductCategory> =
+        translations.attachCategories(categoryRepository.findAll())
 
     @Transactional
-    fun createCategory(category: ProductCategory): ProductCategory = categoryRepository.save(category)
+    fun createCategory(category: ProductCategory): ProductCategory {
+        val saved = categoryRepository.save(category)
+        translations.saveCategory(saved.id!!, category.translations.ifEmpty { null })
+        return getCategory(saved.id!!)!!
+    }
 
     @Transactional
     fun updateCategory(id: UUID, category: ProductCategory): ProductCategory {
         categoryRepository.findById(id) ?: throw NotFoundException("error.catalog.category_not_found")
         val saved = categoryRepository.save(category.copy(id = id))
+        if (category.translations.isNotEmpty()) translations.saveCategory(id, category.translations)
         cache.evict("cat:cat:$id")
-        return saved
+        return getCategory(id)!!
     }
 
     @Transactional
@@ -81,28 +88,48 @@ class ProductCatalogService(
 
     @Transactional(readOnly = true)
     fun getAttributeDefinition(id: UUID): ProductAttributeDefinition? =
-        cache.getOrLoad("cat:attr:$id", CATALOG_TTL, ProductAttributeDefinition::class.java) { attributeDefinitionRepository.findById(id) }
+        attributeDefinitionRepository.findById(id)?.let { translations.attachDefinitions(listOf(it)).single() }
 
     @Transactional(readOnly = true)
     fun getAttributeByKey(key: String): ProductAttributeDefinition? =
-        cache.getOrLoad("cat:attr:key:$key", CATALOG_TTL, ProductAttributeDefinition::class.java) { attributeDefinitionRepository.findByKey(key) }
+        attributeDefinitionRepository.findByKey(key)?.let { translations.attachDefinitions(listOf(it)).single() }
 
     @Transactional(readOnly = true)
-    fun getAllAttributeDefinitions(): List<ProductAttributeDefinition> = attributeDefinitionRepository.findAllActive()
+    fun getAllAttributeDefinitions(): List<ProductAttributeDefinition> =
+        translations.attachDefinitions(attributeDefinitionRepository.findAllActive())
 
     @Transactional(readOnly = true)
-    fun getOptionsForAttribute(attributeId: UUID): List<ProductAttributeOption> = attributeOptionRepository.findByAttributeId(attributeId)
+    fun getOptionsForAttribute(attributeId: UUID): List<ProductAttributeOption> =
+        translations.attachOptions(attributeOptionRepository.findByAttributeId(attributeId))
 
     @Transactional
-    fun createAttributeDefinition(definition: ProductAttributeDefinition): ProductAttributeDefinition =
-        attributeDefinitionRepository.save(definition)
+    fun createAttributeDefinition(definition: ProductAttributeDefinition): ProductAttributeDefinition {
+        val saved = attributeDefinitionRepository.save(definition)
+        translations.saveAttribute(saved.id!!, definition.translations.ifEmpty { null })
+        persistOptionTranslations(saved.id!!, definition.options)
+        return getAttributeDefinition(saved.id!!)!!
+    }
+
+    private fun persistOptionTranslations(attributeId: UUID, options: List<ProductAttributeOption>) {
+        // Options are saved inline with their definition; link translations by value.
+        val persisted = attributeOptionRepository.findByAttributeId(attributeId)
+        options.forEach { incoming ->
+            if (incoming.translations.isNotEmpty()) {
+                persisted.firstOrNull { it.value == incoming.value }?.id?.let { oid ->
+                    translations.saveOption(oid, incoming.translations)
+                }
+            }
+        }
+    }
 
     @Transactional
     fun updateAttributeDefinition(id: UUID, definition: ProductAttributeDefinition): ProductAttributeDefinition {
         attributeDefinitionRepository.findById(id) ?: throw NotFoundException("error.catalog.attribute_not_found")
         val saved = attributeDefinitionRepository.save(definition.copy(id = id))
+        if (definition.translations.isNotEmpty()) translations.saveAttribute(id, definition.translations)
+        persistOptionTranslations(id, definition.options)
         cache.evict("cat:attr:$id")
-        return saved
+        return getAttributeDefinition(id)!!
     }
 
     @Transactional
@@ -123,17 +150,19 @@ class ProductCatalogService(
 
     @Transactional(readOnly = true)
     fun getProduct(id: UUID): Product? =
-        cache.getOrLoad("cat:prod:$id", CATALOG_TTL, Product::class.java) { productRepository.findById(id) }
+        productRepository.findById(id)?.let { translations.attachProducts(listOf(it)).single() }
 
     @Transactional(readOnly = true)
     fun getProductBySlug(slug: String): Product? =
-        cache.getOrLoad("cat:prod:slug:$slug", CATALOG_TTL, Product::class.java) { productRepository.findBySlug(slug) }
+        productRepository.findBySlug(slug)?.let { translations.attachProducts(listOf(it)).single() }
 
     @Transactional(readOnly = true)
-    fun getAllProducts(): List<Product> = productRepository.findAllActive()
+    fun getAllProducts(): List<Product> =
+        translations.attachProducts(productRepository.findAllActive())
 
     @Transactional(readOnly = true)
-    fun getProductsByCategory(categoryId: UUID): List<Product> = productRepository.findByCategoryId(categoryId)
+    fun getProductsByCategory(categoryId: UUID): List<Product> =
+        translations.attachProducts(productRepository.findByCategoryId(categoryId))
 
     @Transactional
     fun createProduct(product: Product): Product = productRepository.save(product)

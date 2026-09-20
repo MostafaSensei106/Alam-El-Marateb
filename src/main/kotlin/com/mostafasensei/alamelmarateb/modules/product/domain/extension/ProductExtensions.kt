@@ -102,6 +102,7 @@ fun ProductCategory.toResponse(): ProductCategoryResponse =
         description = description,
         isActive = isActive,
         attributes = attributes.map { it.toResponse() },
+        translations = translations,
     )
 
 fun CategoryAttribute.toResponse(): CategoryAttributeResponse =
@@ -119,6 +120,7 @@ fun ProductAttributeDefinition.toResponse(): ProductAttributeDefinitionResponse 
         type = type.name,
         options = options.map { it.toResponse() },
         isActive = isActive,
+        translations = translations,
     )
 
 fun ProductAttributeOption.toResponse(): ProductAttributeOptionResponse =
@@ -127,6 +129,7 @@ fun ProductAttributeOption.toResponse(): ProductAttributeOptionResponse =
         value = value,
         label = label,
         sortOrder = sortOrder,
+        translations = translations,
     )
 
 fun ProductPreset.toResponse(): ProductPresetResponse =
@@ -226,6 +229,7 @@ fun ProductCreateRequest.toDomain(): Product =
         warrantyYears = warrantyYears,
         attributes = attributes.map { it.toDomain() },
         variants = variants.map { it.toDomain() },
+        translations = translations ?: emptyMap(),
     )
 
 fun ProductVariantCreateRequest.toDomain(): ProductVariant =

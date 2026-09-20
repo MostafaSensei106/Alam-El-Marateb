@@ -58,6 +58,21 @@ class MessageService(
         }
     }
 
+    /** Request language (X-Lang header) if supported, else the configured default. */
+    fun currentLanguage(): String {
+        val requested = try {
+            LocaleContextHolder.getLocale()
+        } catch (_: Exception) {
+            defaultLocale
+        }
+        val lang = requested.language.lowercase()
+        return if (lang in supportedCodes) lang else defaultLocale.language
+    }
+
+    fun isSupportedLang(code: String): Boolean = code.lowercase() in supportedCodes
+
+    fun supportedLanguages(): Set<String> = supportedCodes
+
     companion object {
         private var holder: MessageService? = null
 

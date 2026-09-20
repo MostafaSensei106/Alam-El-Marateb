@@ -72,6 +72,7 @@ class AttributeDefinitionController(
             key = request.key ?: existing.key,
             type = type,
             isActive = request.isActive ?: existing.isActive,
+            translations = request.translations ?: existing.translations,
         )
         return ok(catalogService.updateAttributeDefinition(id, updated).toResponse())
     }

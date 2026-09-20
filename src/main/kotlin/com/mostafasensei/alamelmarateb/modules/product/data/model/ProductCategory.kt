@@ -17,6 +17,7 @@ data class ProductCategory(
     val description: String? = null,
     val isActive: Boolean = true,
     val attributes: List<CategoryAttribute> = emptyList(),
+    val translations: Map<String, Map<String, String?>> = emptyMap(),
     val createdAt: Instant = Clock.System.now(),
     val updatedAt: Instant = Clock.System.now(),
 )

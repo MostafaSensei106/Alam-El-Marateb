@@ -38,6 +38,7 @@ data class ProductAttributeOption(
     val value: String,
     val label: String,
     val sortOrder: Int = 0,
+    val translations: Map<String, Map<String, String?>> = emptyMap(),
 )
 
 data class ProductAttributeDefinition(
@@ -47,6 +48,7 @@ data class ProductAttributeDefinition(
     val type: AttributeType,
     val options: List<ProductAttributeOption> = emptyList(),
     val isActive: Boolean = true,
+    val translations: Map<String, Map<String, String?>> = emptyMap(),
     val createdAt: Instant = Clock.System.now(),
     val updatedAt: Instant = Clock.System.now(),
 )
