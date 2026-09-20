@@ -18,7 +18,7 @@ import java.time.Instant
 import java.util.concurrent.ConcurrentHashMap
 
 /**
- * Minimal in-memory sliding-window limiter (api-status.md §3: 429 + Retry-After).
+ * Minimal in-memory sliding-window limiter (api-status.md 3: 429 + Retry-After).
  * Guards brute-force/expensive endpoints only: login, refresh, price-preview.
  * For multi-instance production replace with Redis; contract (429 shape) stays identical.
  */

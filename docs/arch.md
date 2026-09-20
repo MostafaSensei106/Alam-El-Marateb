@@ -127,10 +127,10 @@ src/main/kotlin/com/mostafasensei/alamelmarateb/
 
 - [x] **P0**: توحيد الروتس + versioning + BaseController (تم).
 - [ ] **P1**: إصلاح عطل V1 + تثبيت `EntityBase` على كل الكيانات + `customer_profiles`/`employees` كامتداد لـ `users`.
-- [ ] **P2**: تقسية `catalog` (variant attributes الاختيارية) + seed أصناف حقيقية (مراتب/مخدات/طبي/مصاحف/مصليات) + **القوالب السريعة (§8)**.
-- [ ] **P3**: `sales` (POS + orders + idempotency) + **محرك الخصومات (§10)** + **price-preview قبل الدفع** ← أول revenue path.
+- [ ] **P2**: تقسية `catalog` (variant attributes الاختيارية) + seed أصناف حقيقية (مراتب/مخدات/طبي/مصاحف/مصليات) + **القوالب السريعة (8)**.
+- [ ] **P3**: `sales` (POS + orders + idempotency) + **محرك الخصومات (10)** + **price-preview قبل الدفع** ← أول revenue path.
 - [ ] **P4**: `inventory` + `purchasing` (ledger + transfers + receipt).
-- [ ] **P5**: `crm` (ضمان سيريال + مطالبات + **مفضلة §8**) + `delivery` (رحلات + إثبات تسليم) + **اختبار الترشيح Quiz (§9)**.
+- [ ] **P5**: `crm` (ضمان سيريال + مطالبات + **مفضلة 8**) + `delivery` (رحلات + إثبات تسليم) + **اختبار الترشيح Quiz (9)**.
 - [ ] **P6**: `hr` + `accounting` (قيود تلقائية من البيع والشراء والمرتبات).
 - [ ] **P7**: `analytics` (materialized facts + داشبورد) + identity hardening (users/roles للفروع).
 

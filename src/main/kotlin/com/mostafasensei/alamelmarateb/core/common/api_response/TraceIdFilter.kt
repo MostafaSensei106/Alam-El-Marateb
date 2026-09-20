@@ -11,7 +11,7 @@ import org.springframework.web.filter.OncePerRequestFilter
 import java.util.UUID
 
 /**
- * Trace correlation (api-status.md §5): every response carries `traceId`
+ * Trace correlation (api-status.md 5): every response carries `traceId`
  * (ApiResponse.traceId + `X-Trace-Id` header). Client may send
  * `X-Trace-Id`; otherwise a UUID is generated. Also stored in MDC
  * so application logs can be correlated with the user-facing id.

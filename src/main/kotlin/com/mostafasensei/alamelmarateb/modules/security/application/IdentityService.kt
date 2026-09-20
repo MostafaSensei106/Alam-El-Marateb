@@ -1,6 +1,7 @@
 package com.mostafasensei.alamelmarateb.modules.security.application
 
 import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
+import com.mostafasensei.alamelmarateb.core.cache.RedisCache
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Repository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.Duration
 import java.util.UUID
 
 @Repository
@@ -46,10 +48,16 @@ class IdentityService(
     private val roles: SpringDataJpaRoleRepository,
     private val passwordEncoder: PasswordEncoder,
     private val auditLog: AuditLogService,
+    private val cache: RedisCache,
 ) {
 
+    companion object {
+        private val REF_TTL: Duration = Duration.ofHours(1)
+    }
+
     @Transactional(readOnly = true)
-    fun listBranches(): List<BranchView> = branches.findAll().map { toBranchView(it) }
+    fun listBranches(): List<BranchView> =
+        cache.getOrLoadList("ref:branches", REF_TTL, BranchView::class.java) { branches.findAll().map { toBranchView(it) } }
 
     @Transactional
     fun createBranch(name: String, code: String, phone: String?, city: String, address: String, by: String?): BranchView {
@@ -61,6 +69,7 @@ class IdentityService(
             BranchJpaEntity(name = name.trim(), code = normalized, phone = phone, city = city.ifBlank { "Tanta" }, address = address),
         )
         auditLog.record("BRANCH_CREATE", "branch", null, null, by, normalized)
+        cache.evict("ref:branches")
         return toBranchView(saved)
     }
 
@@ -69,11 +78,13 @@ class IdentityService(
         val entity = branches.findById(id).orElseThrow { NotFoundException("error.branch.not_found") }
         entity.isActive = !entity.isActive
         auditLog.record("BRANCH_TOGGLE", "branch", id, null, by, "active=${entity.isActive}")
+        cache.evict("ref:branches")
         return toBranchView(branches.save(entity))
     }
 
     @Transactional(readOnly = true)
-    fun listRoles(): List<RoleView> = roles.findAll().map { RoleView(it.id, it.name, it.description) }
+    fun listRoles(): List<RoleView> =
+        cache.getOrLoadList("ref:roles", REF_TTL, RoleView::class.java) { roles.findAll().map { RoleView(it.id, it.name, it.description) } }
 
     @Transactional(readOnly = true)
     fun listUsers(branchId: UUID?): List<StaffView> {

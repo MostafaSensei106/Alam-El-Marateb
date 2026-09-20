@@ -1,6 +1,7 @@
 package com.mostafasensei.alamelmarateb.modules.product.domain.service
 
 import com.mostafasensei.alamelmarateb.core.exceptions.ErrorDetail
+import com.mostafasensei.alamelmarateb.core.cache.RedisCache
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeType
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeValue
@@ -21,6 +22,7 @@ import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVa
 import com.mostafasensei.alamelmarateb.modules.product.domain.extension.toDomain
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.Duration
 import java.util.UUID
 
 @Service
@@ -31,13 +33,20 @@ class ProductCatalogService(
     private val attributeOptionRepository: ProductAttributeOptionRepository,
     private val variantRepository: ProductVariantRepository,
     private val presetRepository: ProductPresetRepository,
+    private val cache: RedisCache,
 ) {
 
-    @Transactional(readOnly = true)
-    fun getCategory(id: UUID): ProductCategory? = categoryRepository.findById(id)
+    companion object {
+        private val CATALOG_TTL: Duration = Duration.ofMinutes(10)
+    }
 
     @Transactional(readOnly = true)
-    fun getCategoryBySlug(slug: String): ProductCategory? = categoryRepository.findBySlug(slug)
+    fun getCategory(id: UUID): ProductCategory? =
+        cache.getOrLoad("cat:cat:$id", CATALOG_TTL, ProductCategory::class.java) { categoryRepository.findById(id) }
+
+    @Transactional(readOnly = true)
+    fun getCategoryBySlug(slug: String): ProductCategory? =
+        cache.getOrLoad("cat:cat:slug:$slug", CATALOG_TTL, ProductCategory::class.java) { categoryRepository.findBySlug(slug) }
 
     @Transactional(readOnly = true)
     fun getAllCategories(): List<ProductCategory> = categoryRepository.findAll()
@@ -48,20 +57,25 @@ class ProductCatalogService(
     @Transactional
     fun updateCategory(id: UUID, category: ProductCategory): ProductCategory {
         categoryRepository.findById(id) ?: throw NotFoundException("error.catalog.category_not_found")
-        return categoryRepository.save(category.copy(id = id))
+        val saved = categoryRepository.save(category.copy(id = id))
+        cache.evict("cat:cat:$id")
+        return saved
     }
 
     @Transactional
     fun deleteCategory(id: UUID) {
         if (categoryRepository.findById(id) == null) throw NotFoundException("error.catalog.category_not_found")
         categoryRepository.deleteById(id)
+        cache.evict("cat:cat:$id")
     }
 
     @Transactional(readOnly = true)
-    fun getAttributeDefinition(id: UUID): ProductAttributeDefinition? = attributeDefinitionRepository.findById(id)
+    fun getAttributeDefinition(id: UUID): ProductAttributeDefinition? =
+        cache.getOrLoad("cat:attr:$id", CATALOG_TTL, ProductAttributeDefinition::class.java) { attributeDefinitionRepository.findById(id) }
 
     @Transactional(readOnly = true)
-    fun getAttributeByKey(key: String): ProductAttributeDefinition? = attributeDefinitionRepository.findByKey(key)
+    fun getAttributeByKey(key: String): ProductAttributeDefinition? =
+        cache.getOrLoad("cat:attr:key:$key", CATALOG_TTL, ProductAttributeDefinition::class.java) { attributeDefinitionRepository.findByKey(key) }
 
     @Transactional(readOnly = true)
     fun getAllAttributeDefinitions(): List<ProductAttributeDefinition> = attributeDefinitionRepository.findAllActive()
@@ -76,13 +90,16 @@ class ProductCatalogService(
     @Transactional
     fun updateAttributeDefinition(id: UUID, definition: ProductAttributeDefinition): ProductAttributeDefinition {
         attributeDefinitionRepository.findById(id) ?: throw NotFoundException("error.catalog.attribute_not_found")
-        return attributeDefinitionRepository.save(definition.copy(id = id))
+        val saved = attributeDefinitionRepository.save(definition.copy(id = id))
+        cache.evict("cat:attr:$id")
+        return saved
     }
 
     @Transactional
     fun deleteAttributeDefinition(id: UUID) {
         if (attributeDefinitionRepository.findById(id) == null) throw NotFoundException("error.catalog.attribute_not_found")
         attributeDefinitionRepository.deleteById(id)
+        cache.evict("cat:attr:$id")
     }
 
     @Transactional
@@ -95,10 +112,12 @@ class ProductCatalogService(
     }
 
     @Transactional(readOnly = true)
-    fun getProduct(id: UUID): Product? = productRepository.findById(id)
+    fun getProduct(id: UUID): Product? =
+        cache.getOrLoad("cat:prod:$id", CATALOG_TTL, Product::class.java) { productRepository.findById(id) }
 
     @Transactional(readOnly = true)
-    fun getProductBySlug(slug: String): Product? = productRepository.findBySlug(slug)
+    fun getProductBySlug(slug: String): Product? =
+        cache.getOrLoad("cat:prod:slug:$slug", CATALOG_TTL, Product::class.java) { productRepository.findBySlug(slug) }
 
     @Transactional(readOnly = true)
     fun getAllProducts(): List<Product> = productRepository.findAllActive()
@@ -112,20 +131,25 @@ class ProductCatalogService(
     @Transactional
     fun updateProduct(id: UUID, product: Product): Product {
         productRepository.findById(id) ?: throw NotFoundException("error.catalog.product_not_found")
-        return productRepository.save(product.copy(id = id))
+        val saved = productRepository.save(product.copy(id = id))
+        cache.evict("cat:prod:$id", "cat:prod:slug:${saved.slug}")
+        return saved
     }
 
     @Transactional
     fun deleteProduct(id: UUID) {
         if (productRepository.findById(id) == null) throw NotFoundException("error.catalog.product_not_found")
         productRepository.deleteById(id)
+        cache.evict("cat:prod:$id")
     }
 
     @Transactional(readOnly = true)
-    fun getVariantById(variantId: UUID): ProductVariant? = variantRepository.findById(variantId)
+    fun getVariantById(variantId: UUID): ProductVariant? =
+        cache.getOrLoad("cat:var:$variantId", CATALOG_TTL, ProductVariant::class.java) { variantRepository.findById(variantId) }
 
     @Transactional(readOnly = true)
-    fun getVariantByBarcode(barcode: String): ProductVariant? = variantRepository.findByBarcode(barcode)
+    fun getVariantByBarcode(barcode: String): ProductVariant? =
+        cache.getOrLoad("cat:var:bc:$barcode", CATALOG_TTL, ProductVariant::class.java) { variantRepository.findByBarcode(barcode) }
 
     @Transactional
     fun createVariant(variant: ProductVariant): ProductVariant = variantRepository.save(variant)
@@ -134,10 +158,12 @@ class ProductCatalogService(
     fun deleteVariant(variantId: UUID) {
         variantRepository.findById(variantId) ?: throw NotFoundException("error.catalog.variant_not_found")
         variantRepository.deleteVariantById(variantId)
+        cache.evict("cat:var:$variantId")
     }
 
     @Transactional(readOnly = true)
-    fun getPreset(id: UUID): ProductPreset? = presetRepository.findById(id)
+    fun getPreset(id: UUID): ProductPreset? =
+        cache.getOrLoad("cat:preset:$id", CATALOG_TTL, ProductPreset::class.java) { presetRepository.findById(id) }
 
     @Transactional(readOnly = true)
     fun getAllPresets(): List<ProductPreset> = presetRepository.findAll()
@@ -148,13 +174,16 @@ class ProductCatalogService(
     @Transactional
     fun updatePreset(id: UUID, preset: ProductPreset): ProductPreset {
         presetRepository.findById(id) ?: throw NotFoundException("error.catalog.preset_not_found")
-        return presetRepository.save(preset.copy(id = id))
+        val saved = presetRepository.save(preset.copy(id = id))
+        cache.evict("cat:preset:$id")
+        return saved
     }
 
     @Transactional
     fun deletePreset(id: UUID) {
         if (presetRepository.findById(id) == null) throw NotFoundException("error.catalog.preset_not_found")
         presetRepository.deleteById(id)
+        cache.evict("cat:preset:$id")
     }
 
     @Transactional

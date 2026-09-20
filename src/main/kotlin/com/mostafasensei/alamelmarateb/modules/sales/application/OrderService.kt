@@ -1,6 +1,8 @@
 package com.mostafasensei.alamelmarateb.modules.sales.application
 
 import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
+import com.mostafasensei.alamelmarateb.core.events.InvoicedLine
+import com.mostafasensei.alamelmarateb.core.events.OrderInvoicedEvent
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
@@ -9,8 +11,6 @@ import com.mostafasensei.alamelmarateb.modules.inventory.application.StockServic
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.WarehouseRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
-import com.mostafasensei.alamelmarateb.modules.sales.data.repository.CarryUpFeeRepository
-import com.mostafasensei.alamelmarateb.modules.sales.data.repository.DeliveryZoneRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.InstallmentPlanRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.InvoiceRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.OrderItemRepository
@@ -31,6 +31,7 @@ import com.mostafasensei.alamelmarateb.modules.sales.domain.model.PaymentMethod
 import com.mostafasensei.alamelmarateb.modules.sales.domain.model.PaymentStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import org.springframework.context.ApplicationEventPublisher
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
@@ -65,13 +66,13 @@ class OrderService(
     private val returnRepository: ReturnRepository,
     private val reservationRepository: ReservationRepository,
     private val installmentPlanRepository: InstallmentPlanRepository,
-    private val zoneRepository: DeliveryZoneRepository,
-    private val carryFeeRepository: CarryUpFeeRepository,
     private val promotionService: PromotionService,
     private val stockService: StockService,
     private val warehouseRepository: WarehouseRepository,
     private val variantRepository: ProductVariantRepository,
     private val auditLog: AuditLogService,
+    private val shippingRates: ShippingRates,
+    private val events: ApplicationEventPublisher,
 ) {
 
     @Transactional
@@ -195,6 +196,23 @@ class OrderService(
         if (invoiceRepository.findAll().none { it.orderId == saved.id }) {
             invoiceRepository.save(InvoiceJpaEntity(orderId = saved.id, serial = nextSerial(input.branchId)))
         }
+
+        events.publishEvent(
+            OrderInvoicedEvent(
+                orderId = saved.id!!,
+                branchId = input.branchId,
+                day = LocalDate.now(),
+                lines = preview.lines.mapNotNull { line ->
+                    val variantId = line.variantId ?: return@mapNotNull null
+                    InvoicedLine(
+                        variantId = variantId,
+                        qty = line.qty,
+                        net = line.net,
+                        costPrice = variantRepository.findById(variantId)?.costPrice ?: BigDecimal.ZERO,
+                    )
+                },
+            ),
+        )
 
         if (input.paymentMethod == PaymentMethod.INSTALLMENT) {
             createPlan(saved.id!!, grand, input.downPayment ?: BigDecimal.ZERO, input.months!!)
@@ -326,11 +344,7 @@ class OrderService(
 
     @Transactional(readOnly = true)
     fun estimate(governorate: String, area: String, floor: Int?): Pair<BigDecimal, BigDecimal> =
-        feesOf(
-            zoneRepository.findByGovernorateAndAreaAndIsActiveTrue(governorate, area)
-                .orElseThrow { UnprocessableException("error.order.delivery_unavailable", listOf(governorate, area)) }.id,
-            floor, false,
-        )
+        feesOf(shippingRates.zoneId(governorate, area), floor, false)
 
     // ---- reservations ----
 
@@ -379,15 +393,8 @@ class OrderService(
 
     private fun feesOf(zoneId: UUID?, floor: Int?, collect: Boolean): Pair<BigDecimal, BigDecimal> {
         if (collect == true) return BigDecimal.ZERO to BigDecimal.ZERO
-        val delivery = zoneId?.let {
-            zoneRepository.findById(it).map { z -> z.fee }.orElse(BigDecimal.ZERO)
-        } ?: BigDecimal.ZERO
-        val carry = if (floor == null || floor <= 0) {
-            BigDecimal.ZERO
-        } else {
-            carryFeeRepository.findAll()
-                .firstOrNull { floor in it.floorFrom..it.floorTo }?.fee ?: BigDecimal.ZERO
-        }
+        val delivery = zoneId?.let { shippingRates.zoneFee(it) } ?: BigDecimal.ZERO
+        val carry = shippingRates.carryFee(floor)
         return delivery to carry
     }
 

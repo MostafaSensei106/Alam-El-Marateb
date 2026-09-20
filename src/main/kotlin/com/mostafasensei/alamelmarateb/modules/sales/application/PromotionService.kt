@@ -1,5 +1,6 @@
 package com.mostafasensei.alamelmarateb.modules.sales.application
 
+import com.mostafasensei.alamelmarateb.core.cache.RedisCache
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.ErrorDetail
@@ -19,6 +20,7 @@ import com.mostafasensei.alamelmarateb.modules.sales.domain.promotion.PromotionE
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal
+import java.time.Duration
 import java.time.Instant
 import java.util.UUID
 
@@ -58,7 +60,12 @@ class PromotionService(
     private val promotionRepository: PromotionRepository,
     private val bundleItemRepository: PromotionBundleItemRepository,
     private val variantRepository: ProductVariantRepository,
+    private val cache: RedisCache,
 ) {
+
+    companion object {
+        private val PREVIEW_TTL: Duration = Duration.ofSeconds(60)
+    }
 
     @Transactional
     fun create(input: PromotionInput): PromotionView {
@@ -88,7 +95,9 @@ class PromotionService(
                 ),
             )
         }
-        return toView(promotionRepository.save(entity))
+        val saved = toView(promotionRepository.save(entity))
+        cache.evict("promo:valid")
+        return saved
     }
 
     @Transactional(readOnly = true)
@@ -98,12 +107,19 @@ class PromotionService(
     fun toggle(id: UUID): PromotionView {
         val entity = promotionRepository.findById(id).orElseThrow { NotFoundException("error.promo.not_found") }
         entity.isActive = !entity.isActive
-        return toView(promotionRepository.save(entity))
+        val saved = toView(promotionRepository.save(entity))
+        cache.evict("promo:valid")
+        return saved
     }
 
+    /**
+     * Non-binding preview path may use a short-lived cached promo list
+     * (price-preview is explicitly non-binding). The binding path
+     * [priceAndConsume] always loads fresh so maxUses is exact.
+     */
     @Transactional(readOnly = true)
     fun preview(lines: List<PreviewLine>): PricePreview =
-        PromotionEngine.calculate(lines, loadValid())
+        PromotionEngine.calculate(lines, cachedValid())
 
     /** Applies usage counters for codes the engine actually used. Returns the preview. */
     @Transactional
@@ -131,8 +147,10 @@ class PromotionService(
         }
     }
 
-    private fun loadValid(): List<Promotion> {
-        val now = Instant.now()
+    private fun cachedValid(): List<Promotion> =
+        cache.getOrLoadList("promo:valid", PREVIEW_TTL, Promotion::class.java) { loadValid() }
+
+    private fun loadValid(): List<Promotion> {        val now = Instant.now()
         val entities = promotionRepository.findByIsActiveTrue().filter { e ->
             (e.startsAt == null || !now.isBefore(e.startsAt)) &&
                 (e.endsAt == null || !now.isAfter(e.endsAt)) &&

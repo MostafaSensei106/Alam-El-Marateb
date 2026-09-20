@@ -48,7 +48,7 @@
 - `reservations`: id, branch_id, customer_id/guest_phone, variant_id, qty, deposit NUMERIC, deliver_at, status (active/fulfilled/expired/cancelled).
 - `installment_plans`: id, order_id, total NUMERIC, down_payment, months, monthly_amount + `installments`: (plan_id, due_date, amount, paid_amount, status).
 - `cash_shifts`: id, branch_id, cashier_id, opened_at, opening_balance, closed_at, expected_cash, actual_cash, variance + `cash_drops`: (shift_id, amount, at).
-- `promotions` + `promotion_bundle_items` (الأنواع الستة — راجع §8.3 arch.md).
+- `promotions` + `promotion_bundle_items` (الأنواع الستة — راجع 8.3 arch.md).
 
 ## 4. المخازن inventory (مخطط V7) — التفصيل الكامل في `modules/inventory.md`
 

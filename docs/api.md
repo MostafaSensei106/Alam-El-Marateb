@@ -9,7 +9,7 @@
 |---|---|---|
 | GET/POST `/catalog/products` + GET/PUT/DELETE `/catalog/products/{id}` | موجود | `ProductAdminController` — POST تُرجع 201 + `@Valid` |
 | POST `/catalog/products/from-preset/{presetId}` | موجود | نسخ كل مقاسات القالب |
-| POST `/catalog/products/quick-create` | مخطط P2 | قالب + مقاس واحد (§8.1 arch.md) |
+| POST `/catalog/products/quick-create` | مخطط P2 | قالب + مقاس واحد (8.1 arch.md) |
 | CRUD `/catalog/categories[/{id}]` + PUT `/catalog/categories/{id}/attributes` | موجود | ربط الصفات |
 | CRUD `/catalog/attributes[/{id}]` + POST/DELETE `/catalog/attributes/{id}/options[/{optionId}]` | موجود | |
 | CRUD `/catalog/presets[/{id}]` | موجود | |
@@ -83,4 +83,4 @@
 - اللغة: هيدر `X-Lang: ar|en` يحدد لغة `message` (افتراضي ar) — نفس الشكل في كل اللغات (التفصيل `core/i18n`).
 - القوائم الكبيرة: `PagedResponse{items,page,size,totalElements,totalPages}` + `Pageable`.
 - الأخطاء: `GlobalExceptionHandler` (400 تحقق/404 NotFoundException/409 تعارض).
-- الفلوس: BigDecimal برقمين عشريين دائماً (§10 arch.md).
+- الفلوس: BigDecimal برقمين عشريين دائماً (10 arch.md).

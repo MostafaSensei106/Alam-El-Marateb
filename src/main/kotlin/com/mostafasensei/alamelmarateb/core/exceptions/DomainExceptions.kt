@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.exceptions
 
 /**
- * Localized failures (arch.md §11 — one language per request).
+ * Localized failures (arch.md 11 — one language per request).
  *
  * Convention: services throw with an [errorKey] from messages_*.properties
  * plus [errorArgs] for placeholders — NEVER a hardcoded English sentence.
@@ -32,7 +32,7 @@ class BadRequestException(
     errorDetails: List<ErrorDetail> = emptyList(),
 ) : LocalizedException(errorKey, errorArgs, errorDetails)
 
-/** 422 — request syntax is valid but business semantics reject it (api-status.md §3). */
+/** 422 — request syntax is valid but business semantics reject it (api-status.md 3). */
 class UnprocessableException(
     errorKey: String,
     errorArgs: List<Any> = emptyList(),

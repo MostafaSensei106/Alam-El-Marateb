@@ -38,7 +38,7 @@
 1. **Audit log (من فعل ماذا)**: جدول `audit_logs (actor_id, action, entity, entity_id, before/after JSONB, branch_id, at)` —
    يُكتب من السيرفسز للعمليات الحساسة (طلبات، مخزن، مرتبات، صلاحيات). للقراءة من الداشبورد.
 2. **Application logs (تشخيص)**: Logback بصيغة JSON (`logstash-logback-encoder`) + `traceId` في MDC
-   (نفس `traceId` الرد — §7 في api-status.md) + Micrometer Tracing للربط بين الطلبات.
+   (نفس `traceId` الرد — 7 في api-status.md) + Micrometer Tracing للربط بين الطلبات.
 3. **Metrics (صحة وأداء)**: Micrometer + Prometheus + Grafana (زمن الاستجابة، أخطاء 5xx، طول الطوابير، hit rate الكاش).
 
 ## 4. التقنيات الموصى بها — أين تُستخدم

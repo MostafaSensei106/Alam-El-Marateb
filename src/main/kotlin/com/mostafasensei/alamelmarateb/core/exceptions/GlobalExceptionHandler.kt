@@ -27,7 +27,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException
  * Rules: @Valid syntax errors -> 400; business semantics -> 422;
  * state conflicts -> 409; unknown path -> 404; wrong method -> 405 + Allow.
  *
- * Localization (arch.md §11): `message` and every entry of `errors` are
+ * Localization (arch.md 11): `message` and every entry of `errors` are
  * resolved from messages_*.properties in the request locale (X-Lang).
  * Services throw keys ([LocalizedException.errorKey]) — never English text.
  */
