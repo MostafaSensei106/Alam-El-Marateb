@@ -210,3 +210,18 @@ data class CartSetQtyRequest(
 data class CartMergeRequest(
     @field:NotBlank val guestKey: String,
 )
+
+data class ShiftOpenRequest(
+    @field:NotNull val branchId: UUID,
+    @field:PositiveOrZero val openingBalance: BigDecimal = BigDecimal.ZERO,
+)
+
+data class ShiftDropRequest(
+    @field:NotNull val shiftId: UUID,
+    @field:Positive val amount: BigDecimal,
+)
+
+data class ShiftCloseRequest(
+    @field:NotNull val shiftId: UUID,
+    @field:PositiveOrZero val actualCash: BigDecimal,
+)

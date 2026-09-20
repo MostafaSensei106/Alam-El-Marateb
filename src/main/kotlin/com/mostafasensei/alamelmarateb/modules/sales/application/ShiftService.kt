@@ -145,7 +145,7 @@ class ShiftService(
             listOf(OrderStatus.confirmed.name, OrderStatus.delivered.name),
         ).filter { order ->
             order.channel == "pos" && order.paymentMethod == PaymentMethod.CASH.name &&
-                order.createdAt < openedAt
+                order.createdAt >= openedAt
         }.fold(BigDecimal.ZERO) { acc, order -> acc.add(order.grandTotal) }
         val drops = dropRepository.findByShiftId(shift.id!!)
             .fold(BigDecimal.ZERO) { acc, drop -> acc.add(drop.amount) }

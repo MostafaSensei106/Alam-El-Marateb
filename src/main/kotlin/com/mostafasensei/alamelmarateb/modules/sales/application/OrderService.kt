@@ -32,6 +32,7 @@ import com.mostafasensei.alamelmarateb.modules.sales.domain.model.PaymentStatus
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.context.ApplicationEventPublisher
+import org.springframework.jdbc.core.JdbcTemplate
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
@@ -73,6 +74,7 @@ class OrderService(
     private val auditLog: AuditLogService,
     private val shippingRates: ShippingRates,
     private val events: ApplicationEventPublisher,
+    private val jdbc: JdbcTemplate,
 ) {
 
     @Transactional
@@ -93,7 +95,18 @@ class OrderService(
                 idempotencyKey = input.idempotencyKey, salesRepId = input.salesRepId,
             ),
         )
-        return PlacedOrder(finalize(order.id!!, input), replayed = false)
+        val placed = PlacedOrder(finalize(order.id!!, input), replayed = false)
+        input.idempotencyKey?.let { key ->
+            try {
+                jdbc.update(
+                    "INSERT INTO idempotency_keys (key, order_id, response_code) VALUES (?, ?, 201) ON CONFLICT (key) DO NOTHING",
+                    key, placed.order.id,
+                )
+            } catch (_: Exception) {
+                // Best-effort durable record; the order itself is the source of truth.
+            }
+        }
+        return placed
     }
 
     /** POS ticket: saved with list prices, no stock hold, no invoice — completed later. */

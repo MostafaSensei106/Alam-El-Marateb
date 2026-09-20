@@ -22,5 +22,12 @@ object AnalyticsRoutes {
     const val BRANCH_PERFORMANCE = "$PREFIX/performance/branches"
     const val SALES_REP_METRICS = "$PREFIX/performance/sales-reps"
 
+    const val RFM = "$PREFIX/customers/rfm"
+    const val TOP_VARIANTS = "$PREFIX/products/top"
+
+    const val INQUIRIES = "$PREFIX/inquiries"
+    const val INQUIRY_TOP = "$PREFIX/inquiries/top-asked"
+    const val EVENTS = "$PREFIX/events"
+
     const val AUDIT_TRAIL = "$PREFIX/audit-trail/{entity}/{entityId}"
 }

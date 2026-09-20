@@ -9,9 +9,12 @@ import com.mostafasensei.alamelmarateb.core.router.ShopRoutes
 import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 import com.mostafasensei.alamelmarateb.modules.sales.application.CartService
 import com.mostafasensei.alamelmarateb.modules.sales.application.CartView
+import com.mostafasensei.alamelmarateb.modules.sales.application.ShiftService
+import com.mostafasensei.alamelmarateb.modules.sales.application.ShiftView
 import com.mostafasensei.alamelmarateb.modules.sales.application.OrderItemInput
 import com.mostafasensei.alamelmarateb.modules.sales.application.OrderService
 import com.mostafasensei.alamelmarateb.modules.sales.application.PlaceOrderInput
+import com.mostafasensei.alamelmarateb.modules.sales.application.ReceiptView
 import com.mostafasensei.alamelmarateb.modules.sales.application.PromotionService
 import com.mostafasensei.alamelmarateb.modules.sales.application.PromotionView
 import com.mostafasensei.alamelmarateb.modules.sales.domain.model.Order
@@ -28,6 +31,9 @@ import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.PricePrevi
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.PromotionCreateRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.ReservationRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.ReturnRequest
+import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.ShiftCloseRequest
+import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.ShiftDropRequest
+import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.ShiftOpenRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -211,6 +217,75 @@ class SalesOrderController(
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<OrderResponse>> =
         ok(OrderResponse.fromDomain(orderService.cancel(orderId, principal.fullName)))
+}
+
+/**
+ * Cash drawer shifts + receipts — /api/v1/sales/pos. Cashiers and managers.
+ */
+@Tag(name = "Sales shifts", description = "Drawer open/drop/close + receipts — CASHIER")
+@RestController
+@RequestMapping(SalesPosRoutes.BASE)
+@PreAuthorize("hasAnyRole('CASHIER', 'BRANCH_MANAGER', 'SUPER_ADMIN')")
+class PosShiftController(
+    private val shiftService: ShiftService,
+) : BaseController() {
+
+    @Operation(summary = "Open drawer shift")
+    @PostMapping("/drawer/shift/open")
+    fun open(
+        @Valid @RequestBody request: ShiftOpenRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<ShiftView>> =
+        created(shiftService.open(request.branchId, principal.id, request.openingBalance, principal.fullName))
+
+    @Operation(summary = "Current open shift")
+    @GetMapping("/drawer/shift/current")
+    fun current(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<ShiftView>> =
+        ok(shiftService.current(principal.id))
+
+    @Operation(summary = "Cash drop (safe)")
+    @PostMapping("/drawer/shift/drop")
+    fun drop(
+        @Valid @RequestBody request: ShiftDropRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<ShiftView>> =
+        ok(shiftService.drop(request.shiftId, request.amount, principal.fullName))
+
+    @Operation(summary = "Close shift (expected vs actual + variance)")
+    @PostMapping("/drawer/shift/close")
+    fun close(
+        @Valid @RequestBody request: ShiftCloseRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<ShiftView>> =
+        ok(shiftService.close(request.shiftId, request.actualCash, principal.fullName))
+
+    @Operation(summary = "Printable receipt (JSON)")
+    @GetMapping("/orders/{orderId}/receipt")
+    fun receipt(@PathVariable orderId: UUID): ResponseEntity<ApiResponse<ReceiptView>> =
+        ok(shiftService.receipt(orderId))
+
+    @Operation(summary = "Invoice (print-ready HTML, RTL Arabic)")
+    @GetMapping("/orders/{orderId}/invoice-pdf", produces = ["text/html"])
+    fun invoice(@PathVariable orderId: UUID): ResponseEntity<String> {
+        val r = shiftService.receipt(orderId)
+        val rows = r.lines.joinToString("") {
+            "<tr><td>${it.qty}</td><td>${it.unitPrice}</td><td>${it.discount}</td><td>${it.net}</td></tr>"
+        }
+        val html = """
+            <!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="utf-8">
+            <title>فاتورة ${r.serial ?: r.orderId}</title></head><body>
+            <h1>فاتورة ${r.serial ?: ""}</h1>
+            <p>التتبع: ${r.trackingNumber ?: ""} — الحالة: ${r.status} — الدفع: ${r.paymentMethod ?: ""}</p>
+            <table border="1" cellpadding="6"><tr><th>الكمية</th><th>السعر</th><th>الخصم</th><th>الصافي</th></tr>$rows</table>
+            <p>الإجمالي الفرعي: ${r.subtotal} — الخصم: ${r.discountTotal}</p>
+            <p>التوصيل: ${r.deliveryFee} — التطليع: ${r.carryUpFee}</p>
+            <h2>الإجمالي: ${r.grandTotal} ج.م</h2>
+            </body></html>
+        """.trimIndent()
+        return ResponseEntity.ok()
+            .header("Content-Disposition", "inline; filename=\"invoice-${r.serial ?: orderId}.html\"")
+            .body(html)
+    }
 }
 
 /**
