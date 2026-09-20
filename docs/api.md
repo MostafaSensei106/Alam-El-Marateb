@@ -40,6 +40,15 @@
 
 | الميثود والمسار | الحالة |
 |---|---|
+| POST `/shop/checkout/payment-intent` + POST `/shop/checkout/payment-callback/{gateway}` (عام + HMAC) | موجود (fake/paymob/fawry) |
+| GET `/portal/loyalty[/ledger]` + POST `/portal/loyalty/quote` + `redeemPoints` في place-order | موجود |
+| GET `/shop/orders/track/{n}/location` + POST `/portal/deliveries/{orderId}/rate` | موجود |
+| POST `/delivery/trips/{id}/location|optimize` + POST `/delivery/stops/{id}/pin` | موجود |
+
+## Shop — عميل (CUSTOMER)
+
+| الميثود والمسار | الحالة |
+|---|---|
 | GET/POST `/shop/cart` + POST `/items` + PUT/DELETE `/items/{itemId}` + POST `/merge|clear` | مخطط P3 |
 | POST `/shop/checkout/estimate-shipping` (منطقة+دور ← رسوم) + POST `/place-order` | مخطط P3 |
 | POST `/shop/checkout/price-preview` | مخطط P3 (الحسبة قبل الدفع) |

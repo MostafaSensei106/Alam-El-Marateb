@@ -1,6 +1,8 @@
 package com.mostafasensei.alamelmarateb.modules.delivery.data.repository
 
 import com.mostafasensei.alamelmarateb.modules.delivery.domain.entity.DeliveryTripJpaEntity
+import com.mostafasensei.alamelmarateb.modules.delivery.domain.entity.DriverRatingJpaEntity
+import com.mostafasensei.alamelmarateb.modules.delivery.domain.entity.TripLocationJpaEntity
 import com.mostafasensei.alamelmarateb.modules.delivery.domain.entity.TripStopJpaEntity
 import com.mostafasensei.alamelmarateb.modules.delivery.domain.entity.VehicleJpaEntity
 import org.springframework.data.jpa.repository.JpaRepository
@@ -23,4 +25,14 @@ interface DeliveryTripRepository : JpaRepository<DeliveryTripJpaEntity, UUID> {
 interface TripStopRepository : JpaRepository<TripStopJpaEntity, UUID> {
     fun findByTripIdOrderBySeqAsc(tripId: UUID): List<TripStopJpaEntity>
     fun findByOrderId(orderId: UUID): List<TripStopJpaEntity>
+}
+
+@Repository
+interface TripLocationRepository : JpaRepository<TripLocationJpaEntity, UUID> {
+    fun findFirstByTripIdOrderByRecordedAtDesc(tripId: UUID): Optional<TripLocationJpaEntity>
+}
+
+@Repository
+interface DriverRatingRepository : JpaRepository<DriverRatingJpaEntity, UUID> {
+    fun findByDriverId(driverId: UUID): List<DriverRatingJpaEntity>
 }

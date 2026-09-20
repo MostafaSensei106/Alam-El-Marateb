@@ -72,4 +72,10 @@ class TripStopJpaEntity(
 
     @Column(name = "delivered_at")
     var deliveredAt: java.time.Instant? = null,
+
+    @Column(name = "lat")
+    var lat: Double? = null,
+
+    @Column(name = "lng")
+    var lng: Double? = null,
 ) : EntityBase<UUID>()

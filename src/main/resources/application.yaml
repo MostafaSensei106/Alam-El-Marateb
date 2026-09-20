@@ -94,8 +94,36 @@ app:
   storage:
     dir: ${STORAGE_DIR:./data/uploads}
     max-mb: ${STORAGE_MAX_MB:5}
+    backend: ${STORAGE_BACKEND:local}
+    s3:
+      endpoint: ${S3_ENDPOINT:http://localhost:9000}
+      region: ${S3_REGION:us-east-1}
+      bucket: ${S3_BUCKET:alamelmarateb}
+      access-key: ${S3_ACCESS_KEY:minioadmin}
+      secret-key: ${S3_SECRET_KEY:minioadmin123}
+      public-base: ${S3_PUBLIC_BASE:http://localhost:9000/alamelmarateb}
   scheduler:
     enabled: true
+  clickhouse:
+    enabled: ${CLICKHOUSE_ENABLED:false}
+    url: ${CLICKHOUSE_URL:http://localhost:8123}
+    user: ${CLICKHOUSE_USER:default}
+    password: ${CLICKHOUSE_PASSWORD:}
+    database: ${CLICKHOUSE_DB:alamelmarateb}
+  payments:
+    fake-secret: ${PAYMENTS_FAKE_SECRET:dev-secret}
+    paymob:
+      enabled: ${PAYMOB_ENABLED:false}
+      api-key: ${PAYMOB_API_KEY:}
+      hmac-secret: ${PAYMOB_HMAC_SECRET:}
+    fawry:
+      enabled: ${FAWRY_ENABLED:false}
+      merchant-code: ${FAWRY_MERCHANT:}
+      secret: ${FAWRY_SECRET:}
+  loyalty:
+    enabled: true
+    earn-per-egp: 10
+    egp-per-point: 1
   rate-limit:
     enabled: true
     login-per-minute: 10

@@ -128,6 +128,7 @@ data class PlaceOrderRequest(
     val idempotencyKey: String? = null,
     @field:PositiveOrZero val downPayment: BigDecimal? = null,
     @field:Positive val months: Int? = null,
+    @field:PositiveOrZero val redeemPoints: Int? = null,
 )
 
 data class CompleteDraftRequest(

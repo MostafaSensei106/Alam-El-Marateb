@@ -30,6 +30,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.kafka:spring-kafka")
+    implementation("software.amazon.awssdk:s3:2.29.0")
     implementation("org.flywaydb:flyway-database-postgresql")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.0")

@@ -2016,6 +2016,249 @@
           }
         }
       ]
+    },
+    {
+      "name": "💎 Loyalty",
+      "item": [
+        {
+          "name": "💰 My balance",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/portal/loyalty",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📒 Ledger",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/portal/loyalty/ledger",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🧮 Quote redeem",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/portal/loyalty/quote",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"points\": 100}"
+            }
+          }
+        },
+        {
+          "name": "🛒 Place with redeem",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/shop/checkout/place-order",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"BRANCH_ID\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"COD\", \"redeemPoints\": 100}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "💳 Payments",
+      "item": [
+        {
+          "name": "🎫 Create intent (fake)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/shop/checkout/payment-intent",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"orderId\": \"{{orderId}}\", \"gateway\": \"fake\"}"
+            }
+          }
+        },
+        {
+          "name": "📨 Fake callback",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/shop/checkout/payment-callback/fake",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"provider_ref\": \"fake_REF\", \"success\": true, \"amount\": 8000}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "📍 GPS & rating",
+      "item": [
+        {
+          "name": "📌 Pin stop",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/delivery/stops/STOP_ID/pin",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"lat\": 30.0, \"lng\": 31.0}"
+            }
+          }
+        },
+        {
+          "name": "🧭 Optimize trip",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/delivery/trips/TRIP_ID/optimize",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📡 Push location",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/delivery/trips/TRIP_ID/location",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"lat\": 30.05, \"lng\": 31.05}"
+            }
+          }
+        },
+        {
+          "name": "👁️ Live location (customer)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/shop/orders/track/TRK-XXXX/location",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        },
+        {
+          "name": "⭐ Rate driver",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/portal/deliveries/{{orderId}}/rate",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"rating\": 5}"
+            }
+          }
+        },
+        {
+          "name": "📊 Drilldown",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/sales-drilldown?from=2026-09-01&to=2026-09-30",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ]
+          }
+        }
+      ]
     }
   ]
 }

@@ -19,4 +19,8 @@ object DeliveryRoutes {
     const val TRIP_DISPATCH = "$PREFIX/trips/{tripId}/dispatch"
     const val TRIP_CANCEL = "$PREFIX/trips/{tripId}/cancel"
     const val TRIP_COMPLETE = "$PREFIX/trips/{tripId}/complete"
+    const val PUSH_LOCATION = "$PREFIX/trips/{tripId}/location"
+    const val PIN_STOP = "$PREFIX/stops/{stopId}/pin"
+    const val OPTIMIZE_TRIP = "$PREFIX/trips/{tripId}/optimize"
+    const val RATE_DRIVER = "$PREFIX/orders/{orderId}/rate"
 }

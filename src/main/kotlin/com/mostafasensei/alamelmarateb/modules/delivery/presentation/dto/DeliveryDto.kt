@@ -44,3 +44,18 @@ data class ConfirmDeliverRequest(
 data class ReportFailedRequest(
     @field:NotBlank val failReason: String,
 )
+
+data class LocationRequest(
+    val lat: Double,
+    val lng: Double,
+)
+
+data class PinStopRequest(
+    val lat: Double,
+    val lng: Double,
+)
+
+data class RateDriverRequest(
+    @field:jakarta.validation.constraints.Min(1) @field:jakarta.validation.constraints.Max(5) val rating: Int,
+    val note: String? = null,
+)

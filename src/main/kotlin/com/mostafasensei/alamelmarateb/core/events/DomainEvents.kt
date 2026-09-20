@@ -29,3 +29,9 @@ data class OrderInvoicedEvent(
     val day: LocalDate,
     val lines: List<InvoicedLine>,
 )
+
+data class OrderDeliveredEvent(
+    val orderId: UUID,
+    val customerId: UUID?,
+    val grandTotal: BigDecimal,
+)

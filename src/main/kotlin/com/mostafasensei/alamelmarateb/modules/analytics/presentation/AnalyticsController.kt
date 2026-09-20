@@ -6,6 +6,8 @@ import com.mostafasensei.alamelmarateb.core.router.AnalyticsRoutes
 import com.mostafasensei.alamelmarateb.modules.analytics.application.AnalyticsService
 import com.mostafasensei.alamelmarateb.modules.analytics.application.BeaconService
 import com.mostafasensei.alamelmarateb.modules.analytics.application.BranchPerformance
+import com.mostafasensei.alamelmarateb.modules.analytics.application.DrilldownRow
+import com.mostafasensei.alamelmarateb.modules.analytics.application.DrilldownService
 import com.mostafasensei.alamelmarateb.modules.analytics.application.GeoCell
 import com.mostafasensei.alamelmarateb.modules.analytics.application.InquiryService
 import com.mostafasensei.alamelmarateb.modules.analytics.application.InquiryView
@@ -75,6 +77,7 @@ class AnalyticsController(
 class RevenueController(
     private val revenueService: RevenueService,
     private val inquiryService: InquiryService,
+    private val drilldownService: DrilldownService,
 ) : BaseController() {
 
     @Operation(summary = "Revenue + profit from daily facts")
@@ -124,6 +127,16 @@ class RevenueController(
         @RequestParam to: LocalDate,
     ): ResponseEntity<ApiResponse<List<GeoCell>>> =
         ok(revenueService.geoHeatmap(from, to))
+
+    @Operation(summary = "Heavy sales drilldown (ClickHouse when enabled, else Postgres facts)")
+    @GetMapping("/sales-drilldown")
+    fun drilldown(
+        @RequestParam from: LocalDate,
+        @RequestParam to: LocalDate,
+        @RequestParam(required = false) branchId: UUID?,
+        @RequestParam(defaultValue = "100") limit: Int,
+    ): ResponseEntity<ApiResponse<List<DrilldownRow>>> =
+        ok(drilldownService.drilldown(from, to, branchId, limit))
 
     @Operation(summary = "Showroom inquiries")
     @GetMapping("/inquiries")

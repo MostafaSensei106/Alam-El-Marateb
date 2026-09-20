@@ -7,11 +7,16 @@ import com.mostafasensei.alamelmarateb.core.router.DeliveryRoutes
 import com.mostafasensei.alamelmarateb.core.router.IdentityAdminRoutes
 import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 import com.mostafasensei.alamelmarateb.modules.delivery.application.DeliveryService
+import com.mostafasensei.alamelmarateb.modules.delivery.application.DriverRatingView
 import com.mostafasensei.alamelmarateb.modules.delivery.application.StopView
+import com.mostafasensei.alamelmarateb.modules.delivery.application.TripLocationView
 import com.mostafasensei.alamelmarateb.modules.delivery.application.TripView
 import com.mostafasensei.alamelmarateb.modules.delivery.application.VehicleView
 import com.mostafasensei.alamelmarateb.modules.delivery.presentation.dto.ConfirmDeliverRequest
 import com.mostafasensei.alamelmarateb.modules.delivery.presentation.dto.CreateTripRequest
+import com.mostafasensei.alamelmarateb.modules.delivery.presentation.dto.LocationRequest
+import com.mostafasensei.alamelmarateb.modules.delivery.presentation.dto.PinStopRequest
+import com.mostafasensei.alamelmarateb.modules.delivery.presentation.dto.RateDriverRequest
 import com.mostafasensei.alamelmarateb.modules.delivery.presentation.dto.ReportFailedRequest
 import com.mostafasensei.alamelmarateb.modules.delivery.presentation.dto.UpdateStopRequest
 import com.mostafasensei.alamelmarateb.modules.delivery.presentation.dto.VehicleRequest
@@ -77,6 +82,15 @@ class DeliveryDriverController(
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<StopView>> =
         ok(deliveryService.reportFailed(orderId, request.failReason, principal))
+
+    @Operation(summary = "Push live GPS location (trip must be in transit)")
+    @PostMapping(DeliveryRoutes.PUSH_LOCATION)
+    fun pushLocation(
+        @PathVariable tripId: UUID,
+        @Valid @RequestBody request: LocationRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<TripLocationView>> =
+        ok(deliveryService.pushLocation(tripId, request.lat, request.lng, principal))
 }
 
 /**
@@ -184,4 +198,23 @@ class DeliveryManagerController(
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<TripView>> =
         ok(deliveryService.completeTrip(tripId, principal.fullName))
+
+    @Operation(summary = "Pin stop coordinates")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @PostMapping(DeliveryRoutes.PIN_STOP)
+    fun pin(
+        @PathVariable stopId: UUID,
+        @Valid @RequestBody request: PinStopRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<StopView>> =
+        ok(deliveryService.pinStop(stopId, request.lat, request.lng, principal.fullName))
+
+    @Operation(summary = "Optimize stop order (nearest-neighbor, draft only)")
+    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @PostMapping(DeliveryRoutes.OPTIMIZE_TRIP)
+    fun optimize(
+        @PathVariable tripId: UUID,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<List<StopView>>> =
+        ok(deliveryService.optimize(tripId, principal.fullName))
 }

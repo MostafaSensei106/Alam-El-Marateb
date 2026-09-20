@@ -17,4 +17,8 @@ object PortalRoutes {
     const val WARRANTY_CLAIMS = "$PREFIX/warranties/claims"
 
     const val REVIEWS = "$PREFIX/reviews"
+    const val LOYALTY = "$PREFIX/loyalty"
+    const val LOYALTY_LEDGER = "$PREFIX/loyalty/ledger"
+    const val LOYALTY_QUOTE = "$PREFIX/loyalty/quote"
+    const val DELIVERY_RATING = "$PREFIX/deliveries/{orderId}/rate"
 }

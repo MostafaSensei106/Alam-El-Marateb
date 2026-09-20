@@ -56,6 +56,7 @@ class SecurityConfig (
                     .requestMatchers(HttpMethod.GET, "$v1/catalog/public/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "$v1/catalog/public/quiz/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "$v1/analytics/events").permitAll()
+                    .requestMatchers(HttpMethod.POST, "$v1/shop/checkout/payment-callback/**").permitAll()
 
                     .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
                     .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()

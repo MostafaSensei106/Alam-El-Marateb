@@ -58,7 +58,7 @@ private fun PlaceOrderRequest.toInput(channel: String, by: String?) = PlaceOrder
     items = items.map { OrderItemInput(it.variantId, it.qty) }, paymentMethod = paymentMethod,
     deliveryZoneId = deliveryZoneId, floorNumber = floorNumber, collectFromBranch = collectFromBranch,
     salesRepId = salesRepId, idempotencyKey = idempotencyKey,
-    downPayment = downPayment, months = months, by = by,
+    downPayment = downPayment, months = months, redeemPoints = redeemPoints, by = by,
 )
 
 /**

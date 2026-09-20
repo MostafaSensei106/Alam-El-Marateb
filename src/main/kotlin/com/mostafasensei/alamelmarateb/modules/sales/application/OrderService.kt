@@ -3,6 +3,7 @@ package com.mostafasensei.alamelmarateb.modules.sales.application
 import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
 import com.mostafasensei.alamelmarateb.core.events.DomainEventPublisher
 import com.mostafasensei.alamelmarateb.core.events.InvoicedLine
+import com.mostafasensei.alamelmarateb.core.events.OrderDeliveredEvent
 import com.mostafasensei.alamelmarateb.core.events.OrderInvoicedEvent
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
@@ -54,6 +55,7 @@ data class PlaceOrderInput(
     val idempotencyKey: String? = null,
     val downPayment: BigDecimal? = null,
     val months: Int? = null,
+    val redeemPoints: Int? = null,
     val by: String? = null,
 )
 
@@ -73,6 +75,7 @@ class OrderService(
     private val variantRepository: ProductVariantRepository,
     private val auditLog: AuditLogService,
     private val shippingRates: ShippingRates,
+    private val loyaltyService: com.mostafasensei.alamelmarateb.modules.loyalty.application.LoyaltyService,
     private val events: DomainEventPublisher,
     private val jdbc: JdbcTemplate,
 ) {
@@ -165,7 +168,13 @@ class OrderService(
             promotionService.resolveLines(input.items.map { it.variantId to it.qty }),
         )
         val fees = feesOf(input.deliveryZoneId, input.floorNumber, input.collectFromBranch)
-        val grand = preview.total.add(fees.first).add(fees.second).scaled()
+        var grand = preview.total.add(fees.first).add(fees.second).scaled()
+        var loyaltyDiscount = BigDecimal.ZERO
+        var loyaltyPoints = 0
+        if (input.channel == "shop" && input.customerId != null && (input.redeemPoints ?: 0) > 0) {
+            // Quoted now, charged after a successful finalize (no points lost on failure).
+            loyaltyDiscount = loyaltyService.quoteRedemption(input.customerId, input.redeemPoints!!).coerceAtMost(grand)
+        }
 
         val paymentStatus = when (input.paymentMethod) {
             PaymentMethod.CASH, PaymentMethod.CARD -> if (input.channel == "pos") PaymentStatus.paid else PaymentStatus.pending_confirmation
@@ -181,10 +190,10 @@ class OrderService(
         order.paymentMethod = input.paymentMethod.name
         order.paymentStatus = paymentStatus.name
         order.subtotal = preview.subtotal
-        order.discountTotal = preview.totalDiscount
+        order.discountTotal = preview.totalDiscount.add(loyaltyDiscount).scaled()
         order.deliveryFee = fees.first
         order.carryUpFee = fees.second
-        order.grandTotal = grand
+        order.grandTotal = grand.subtract(loyaltyDiscount).scaled()
         order.deliveryZoneId = input.deliveryZoneId
         order.floorNumber = input.floorNumber
         order.collectFromBranch = input.collectFromBranch
@@ -202,6 +211,11 @@ class OrderService(
             )
         }
         val saved = orderRepository.save(order)
+
+        if (loyaltyDiscount > BigDecimal.ZERO && input.customerId != null) {
+            val (used, _) = loyaltyService.spend(input.customerId, saved.id!!, input.redeemPoints!!, grand)
+            loyaltyPoints = used
+        }
 
         // Hold stock for every line including gifts.
         saved.lines.forEach { stockService.reserve(warehouseId, it.variantId!!, it.qty) }
@@ -228,9 +242,9 @@ class OrderService(
         )
 
         if (input.paymentMethod == PaymentMethod.INSTALLMENT) {
-            createPlan(saved.id!!, grand, input.downPayment ?: BigDecimal.ZERO, input.months!!)
+            createPlan(saved.id!!, saved.grandTotal, input.downPayment ?: BigDecimal.ZERO, input.months!!)
         }
-        auditLog.record("PLACE", "order", saved.id, input.branchId, input.by, "channel=${input.channel} total=$grand")
+        auditLog.record("PLACE", "order", saved.id, input.branchId, input.by, "channel=${input.channel} total=${saved.grandTotal} loyaltyPts=$loyaltyPoints")
         return toDomain(saved)
     }
 
@@ -246,7 +260,9 @@ class OrderService(
         val entity = orderRepository.findById(placed.order.id!!).orElseThrow()
         entity.status = OrderStatus.delivered.name
         auditLog.record("COMPLETE", "order", entity.id, entity.branchId, by, "paid on spot")
-        return toDomain(orderRepository.save(entity))
+        val saved = orderRepository.save(entity)
+        events.publish(OrderDeliveredEvent(saved.id!!, saved.customerId, saved.grandTotal))
+        return toDomain(saved)
     }
 
     @Transactional
@@ -285,7 +301,9 @@ class OrderService(
         deductReserved(toDomain(order))
         order.status = OrderStatus.delivered.name
         auditLog.record("DELIVER", "order", id, order.branchId, by, null)
-        return toDomain(orderRepository.save(order))
+        val saved = orderRepository.save(order)
+        events.publish(OrderDeliveredEvent(saved.id!!, saved.customerId, saved.grandTotal))
+        return toDomain(saved)
     }
 
     @Transactional
@@ -334,6 +352,9 @@ class OrderService(
             .orElseThrow { NotFoundException("error.order.not_found") }
         return toDomain(order)
     }
+
+    @Transactional(readOnly = true)
+    fun trackById(id: UUID): Order = toDomain(load(id))
 
     /** POS scan: barcode (or SKU fallback listing candidates is client-side via lookup). */
     @Transactional(readOnly = true)

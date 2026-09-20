@@ -54,8 +54,26 @@ services:
     volumes:
       - minio_data:/data
 
+  # Heavy analytics (ClickHouse). Opt-in: docker compose --profile clickhouse up -d (HTTP :8123).
+  # App side: CLICKHOUSE_ENABLED=true (+CLICKHOUSE_URL/USER/PASSWORD).
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    container_name: shop-clickhouse
+    profiles: ["clickhouse"]
+    ports:
+      - "8123:8123"
+      - "9009:9000"
+    environment:
+      - "CLICKHOUSE_DB=alamelmarateb"
+      - "CLICKHOUSE_USER=analytics"
+      - "CLICKHOUSE_PASSWORD=analytics123"
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - ./docker/clickhouse/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
 volumes:
   pgdata:
   redis_data:
   kafka_data:
   minio_data:
+  clickhouse_data:

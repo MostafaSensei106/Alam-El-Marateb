@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.core.storage
 
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.nio.file.Files
@@ -20,8 +21,8 @@ interface StorageService {
 }
 
 @Component
-class LocalStorageService(
-    @Value("\${app.storage.dir:./data/uploads}") private val baseDir: String,
+@ConditionalOnProperty(name = ["app.storage.backend"], havingValue = "local", matchIfMissing = true)
+class LocalStorageService(    @Value("\${app.storage.dir:./data/uploads}") private val baseDir: String,
     @Value("\${app.storage.max-mb:5}") private val maxMb: Long,
 ) : StorageService {
 
