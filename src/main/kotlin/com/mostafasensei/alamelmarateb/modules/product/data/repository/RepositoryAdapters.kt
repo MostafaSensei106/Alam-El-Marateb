@@ -65,6 +65,7 @@ class ProductRepositoryAdapter(
         existing.brandId = product.brandId
         existing.warrantyYears = product.warrantyYears
         existing.description = product.description
+        existing.pricePerMeter = product.pricePerMeter
         existing.isActive = product.isActive
         existing.isFeatured = product.isFeatured
         // Orphan-removal deletes old rows at flush (before inserts) — no explicit deletes.

@@ -12,7 +12,10 @@ import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductCategor
 import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductVariant
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.BrandCreateRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.BrandUpdateRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.BracketRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.BracketUpdateRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.CustomQuoteRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.MeterPriceRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QaAnswerRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QaAskRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QuickCreateRequest
@@ -23,9 +26,11 @@ import com.mostafasensei.alamelmarateb.modules.product.domain.model.ReviewModera
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.VariantAttributeDto
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.VariantAttributeRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.pricing.CustomQuote
+import com.mostafasensei.alamelmarateb.modules.product.domain.service.BracketView
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.BrandService
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.BrandView
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.CustomSizeService
+import com.mostafasensei.alamelmarateb.modules.product.domain.service.MeterPriceView
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductImageService
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductImageView
@@ -220,6 +225,7 @@ class CatalogAdminExtraController(
         @Valid @RequestBody request: VariantAttributeRequest,
     ): ResponseEntity<ApiResponse<VariantAttributeDto>> =
         created(catalogService.attachVariantAttribute(variantId, request.attributeId, request.value))
+
     @Operation(summary = "Moderate review (approve/reject)")
     @PostMapping(CrmAdminRoutes.REVIEW_MODERATE)
     fun moderate(
@@ -227,6 +233,75 @@ class CatalogAdminExtraController(
         @Valid @RequestBody request: ReviewModerateRequest,
     ): ResponseEntity<ApiResponse<ReviewView>> =
         ok(reviewService.moderate(id, request.approve))
+}
+
+/**
+ * Variable pricing tables — BRANCH_MANAGER (dashboard edits meter prices
+ * per model/shape and operating brackets globally or per model).
+ */
+@Tag(name = "Pricing tables (management)", description = "Meter prices + operating brackets — BRANCH_MANAGER")
+@RestController
+@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+class PricingAdminController(
+    private val customSizeService: CustomSizeService,
+) : BaseController() {
+
+    @Operation(summary = "List meter prices of a model")
+    @GetMapping(CatalogAdminRoutes.METER_PRICES)
+    fun meterPrices(@PathVariable id: UUID): ResponseEntity<ApiResponse<List<MeterPriceView>>> =
+        ok(customSizeService.meterPrices(id))
+
+    @Operation(summary = "Set meter price of a model for a shape")
+    @PostMapping(CatalogAdminRoutes.METER_PRICES)
+    fun setMeterPrice(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: MeterPriceRequest,
+    ): ResponseEntity<ApiResponse<MeterPriceView>> =
+        created(customSizeService.setMeterPrice(id, request.shape, request.price))
+
+    @Operation(summary = "Delete meter price")
+    @DeleteMapping(CatalogAdminRoutes.METER_PRICE_BY_ID)
+    fun deleteMeterPrice(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
+        customSizeService.deleteMeterPrice(id)
+        return deleted(com.mostafasensei.alamelmarateb.core.i18n.MessageService.t("success.deleted"))
+    }
+}
+
+/**
+ * Operating brackets — BRANCH_MANAGER.
+ */
+@Tag(name = "Pricing tables (management)", description = "Meter prices + operating brackets — BRANCH_MANAGER")
+@RestController
+@RequestMapping("/api/v1/catalog/operating-brackets")
+@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+class BracketAdminController(
+    private val customSizeService: CustomSizeService,
+) : BaseController() {
+
+    @Operation(summary = "List brackets (global or per model)")
+    @GetMapping
+    fun list(@RequestParam(required = false) productId: UUID?): ResponseEntity<ApiResponse<List<BracketView>>> =
+        ok(customSizeService.brackets(productId))
+
+    @Operation(summary = "Create bracket (productId null = global)")
+    @PostMapping
+    fun create(@Valid @RequestBody request: BracketRequest): ResponseEntity<ApiResponse<BracketView>> =
+        created(customSizeService.createBracket(request.productId, request.widthFrom, request.widthTo, request.pct))
+
+    @Operation(summary = "Update bracket")
+    @PutMapping("/{id}")
+    fun update(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: BracketUpdateRequest,
+    ): ResponseEntity<ApiResponse<BracketView>> =
+        ok(customSizeService.updateBracket(id, request.widthFrom, request.widthTo, request.pct))
+
+    @Operation(summary = "Delete bracket")
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
+        customSizeService.deleteBracket(id)
+        return deleted(com.mostafasensei.alamelmarateb.core.i18n.MessageService.t("success.deleted"))
+    }
 }
 
 /**

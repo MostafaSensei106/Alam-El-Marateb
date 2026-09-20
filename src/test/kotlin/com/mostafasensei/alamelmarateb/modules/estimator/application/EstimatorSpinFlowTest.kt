@@ -90,15 +90,16 @@ class EstimatorSpinFlowTest {
         assertEquals(BigDecimal("14400.00"), quote.grandTotal)
         assertTrue(quote.skuSuggestion.contains("120X200X30"))
 
-        // Staff channel recorded.
-        val channels = jdbc.queryForList("SELECT channel FROM estimate_runs").map { it["channel"] }
-        assertTrue(channels.contains("shop") && channels.contains("pos"))
         estimatorService.quote(
             userId = null, branchId = null, channel = "pos", productId = productId,
             shape = "circle", widthCm = 200, lengthCm = 200, heightCm = null,
             governorate = null, area = null, floor = null, qty = 2,
         )
-        val last = jdbc.queryForList("SELECT channel, result FROM estimate_runs ORDER BY created_at DESC LIMIT 1").single()
+
+        // Both channels recorded.
+        val channels = jdbc.queryForList("SELECT channel FROM estimate_runs").map { it["channel"] }
+        assertTrue(channels.contains("shop") && channels.contains("pos"))
+        val last = jdbc.queryForList("SELECT channel, result FROM estimate_runs WHERE channel = 'pos' LIMIT 1").single()
         assertEquals("pos", last["channel"])
         assertTrue(last["result"].toString().contains("32044.32"))
     }

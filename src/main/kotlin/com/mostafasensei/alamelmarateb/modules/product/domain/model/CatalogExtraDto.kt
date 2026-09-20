@@ -96,3 +96,21 @@ data class VariantAttributeDto(
     val valueBoolean: Boolean?,
     val valueOptionId: UUID?,
 )
+
+data class MeterPriceRequest(
+    @field:NotBlank val shape: String,
+    @field:Positive val price: BigDecimal,
+)
+
+data class BracketRequest(
+    val productId: UUID? = null,
+    @field:Positive val widthFrom: Int,
+    @field:Positive val widthTo: Int,
+    @field:PositiveOrZero val pct: Int,
+)
+
+data class BracketUpdateRequest(
+    @field:Positive val widthFrom: Int? = null,
+    @field:Positive val widthTo: Int? = null,
+    @field:PositiveOrZero val pct: Int? = null,
+)

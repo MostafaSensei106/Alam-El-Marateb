@@ -35,26 +35,24 @@ data class CustomQuote(
  *
  * NO size limits: any positive width/length is quotable. Area by shape
  * (meters) x price-per-meter, plus an operating-cost surcharge driven by
- * the requested WIDTH (narrow widths waste more material per piece):
- *   90-100 -> 24%, 101-120 -> 20%, 121-140 -> 13%, 141-160 -> 8%,
- *   161-180 -> 4%, 181-200 -> 2%, 201-210 -> 0%.
- * Widths outside 90-210 carry no surcharge (0%). The surcharge applies to
- * every length — including mattresses longer than 205 cm.
+ * the requested WIDTH. Brackets come from the operating_brackets table
+ * (global rows, or per-model overrides) — never hardcoded here.
+ * Widths outside every bracket carry no surcharge (0%).
  */
 object CustomSizeEngine {
 
-    fun operatingPct(widthCm: Int): Int = when (widthCm) {
-        in 90..100 -> 24
-        in 101..120 -> 20
-        in 121..140 -> 13
-        in 141..160 -> 8
-        in 161..180 -> 4
-        in 181..200 -> 2
-        in 201..210 -> 0
-        else -> 0
-    }
+    data class Bracket(val from: Int, val to: Int, val pct: Int)
 
-    fun quote(shapeRaw: String, widthCm: Int, lengthCm: Int, pricePerMeter: BigDecimal?): CustomQuote {
+    fun operatingPct(widthCm: Int, brackets: List<Bracket>): Int =
+        brackets.firstOrNull { widthCm in it.from..it.to }?.pct ?: 0
+
+    fun quote(
+        shapeRaw: String,
+        widthCm: Int,
+        lengthCm: Int,
+        pricePerMeter: BigDecimal?,
+        brackets: List<Bracket>,
+    ): CustomQuote {
         val shape = CustomShape.parse(shapeRaw)
         if (widthCm <= 0 || lengthCm <= 0) throw BadRequestException("error.custom.bad_dims")
         if (pricePerMeter == null || pricePerMeter <= BigDecimal.ZERO) {
@@ -70,7 +68,7 @@ object CustomSizeEngine {
                 BigDecimal(Math.PI).multiply(r).multiply(r)
             }
         }.setScale(4, RoundingMode.HALF_UP)
-        val pct = operatingPct(widthCm)
+        val pct = operatingPct(widthCm, brackets)
         val base = area.multiply(pricePerMeter).scaled()
         val total = base.multiply(BigDecimal(100 + pct)).divide(BigDecimal(100), 2, RoundingMode.HALF_EVEN)
         return CustomQuote(

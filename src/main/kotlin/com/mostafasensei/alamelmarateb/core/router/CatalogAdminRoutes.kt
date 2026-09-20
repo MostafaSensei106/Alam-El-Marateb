@@ -33,4 +33,9 @@ object CatalogAdminRoutes {
 
     const val PRODUCT_IMAGES = "$PREFIX/products/{id}/images"
     const val IMAGE_BY_ID = "$PREFIX/images/{imageId}"
+
+    const val METER_PRICES = "$PREFIX/products/{id}/meter-prices"
+    const val METER_PRICE_BY_ID = "$PREFIX/meter-prices/{id}"
+    const val BRACKETS = "$PREFIX/operating-brackets"
+    const val BRACKET_BY_ID = "$PREFIX/operating-brackets/{id}"
 }

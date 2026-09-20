@@ -49,7 +49,7 @@ class CustomReservationFlowTest {
         val customerId = UUID.randomUUID()
         committed(
             "INSERT INTO users (id, full_name, phone_number, password_hash) VALUES (?, ?, ?, ?)",
-            customerId, "Custom Client", "01033$suffix".take(11), "hash",
+            customerId, "Custom Client", "010" + UUID.randomUUID().toString().replace("-", "").take(8), "hash",
         )
         val warehouse = warehouseService.create(branchId, "Custom WH", "CWH-$suffix")
         val category = catalogService.createCategory(ProductCategory(name = "Custom Cat", slug = "cust-cat-$suffix"))

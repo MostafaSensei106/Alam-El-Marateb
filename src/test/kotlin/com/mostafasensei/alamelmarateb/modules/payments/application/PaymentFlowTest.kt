@@ -57,7 +57,7 @@ class PaymentFlowTest {
         )
         committed(
             "INSERT INTO users (id, full_name, phone_number, password_hash) VALUES (?, ?, ?, ?)",
-            customerId, "Payer", "01066$suffix".take(11), "hash",
+            customerId, "Payer", "010" + UUID.randomUUID().toString().replace("-", "").take(8), "hash",
         )
         val warehouse = warehouseService.create(branchId, "Pay WH", "PWH-$suffix")
         val category = catalogService.createCategory(ProductCategory(name = "Pay Cat", slug = "pay-cat-$suffix"))

@@ -5,9 +5,8 @@ import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.estimator.data.repository.EstimateRunRepository
 import com.mostafasensei.alamelmarateb.modules.estimator.domain.entity.EstimateRunJpaEntity
-import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductRepository
 import com.mostafasensei.alamelmarateb.modules.product.domain.pricing.CustomQuote
-import com.mostafasensei.alamelmarateb.modules.product.domain.pricing.CustomSizeEngine
+import com.mostafasensei.alamelmarateb.modules.product.domain.service.CustomSizeService
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
 import com.mostafasensei.alamelmarateb.modules.sales.application.ShippingRates
 import org.springframework.stereotype.Service
@@ -44,7 +43,7 @@ data class EstimateBreakdown(
 @Service
 class EstimatorService(
     private val catalogService: ProductCatalogService,
-    private val productRepository: ProductRepository,
+    private val customSizeService: CustomSizeService,
     private val shippingRates: ShippingRates,
     private val runRepository: EstimateRunRepository,
     private val objectMapper: ObjectMapper,
@@ -94,9 +93,7 @@ class EstimatorService(
     ): EstimateBreakdown {
         val useChannel = if (channel == "pos") "pos" else "shop"
         if (qty <= 0) throw BadRequestException("error.cart.qty_positive")
-        val product = productRepository.findById(productId)
-            ?: throw NotFoundException("error.estimator.product_not_found")
-        val quote: CustomQuote = CustomSizeEngine.quote(shape, widthCm, lengthCm, product.pricePerMeter)
+        val quote: CustomQuote = customSizeService.quoteByProduct(productId, shape, widthCm, lengthCm)
         val height = (heightCm?.takeIf { it > 0 }) ?: 25
         val mattressTotal = quote.total.multiply(qty.toBigDecimal()).scaled()
 
@@ -118,7 +115,7 @@ class EstimatorService(
             deliveryFee = deliveryFee.scaled(),
             carryUpFee = carryUpFee.scaled(),
             grandTotal = grand,
-            skuSuggestion = "EST-${product.slug.trim().uppercase()}-${widthCm}X${lengthCm}X$height",
+            skuSuggestion = "EST-${productId.toString().take(8).uppercase()}-${widthCm}X${lengthCm}X$height",
         )
         runRepository.save(
             EstimateRunJpaEntity(
