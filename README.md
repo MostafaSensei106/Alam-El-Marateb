@@ -1,6 +1,6 @@
 <h1 align="center">Alam El Marateb (عالم المراتب)</h1>
 <p align="center">
-  <img src="https://socialify.git.ci/MostafaSensei106/Alamelmarateb/image?custom_language=Kotlin&font=KoHo&language=1&name=1&owner=1&pattern=Floating+Cogs&theme=Light" alt="Alam El Marateb Banner">
+  <img src="https://socialify.git.ci/MostafaSensei106/Alam-El-Marateb/image?custom_language=Kotlin&font=KoHo&language=1&name=1&owner=1&pattern=Floating+Cogs&theme=Light" alt="Alam El Marateb Banner">
 </p>
 
 <p align="center">
