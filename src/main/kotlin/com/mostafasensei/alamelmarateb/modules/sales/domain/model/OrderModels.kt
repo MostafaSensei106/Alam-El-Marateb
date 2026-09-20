@@ -24,6 +24,8 @@ data class OrderLine(
     val net: BigDecimal = unitPrice.multiply(qty.toBigDecimal()),
     val appliedPromoCodes: List<String> = emptyList(),
     val isGift: Boolean = false,
+    val isCustom: Boolean = false,
+    val customSpec: String? = null,
 )
 
 data class Order(
@@ -40,6 +42,7 @@ data class Order(
     val deliveryFee: BigDecimal = BigDecimal.ZERO,
     val carryUpFee: BigDecimal = BigDecimal.ZERO,
     val grandTotal: BigDecimal = BigDecimal.ZERO,
+    val paidAmount: BigDecimal = BigDecimal.ZERO,
     val deliveryZoneId: UUID? = null,
     val floorNumber: Int? = null,
     val collectFromBranch: Boolean = false,

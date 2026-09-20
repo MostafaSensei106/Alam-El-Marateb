@@ -11,6 +11,7 @@ data class Product(
     val slug: String,
     val brand: String,
     val brandId: UUID? = null,
+    val pricePerMeter: java.math.BigDecimal? = null,
     val description: String? = null,
     val warrantyYears: Int? = null,
     val attributes: List<ProductAttributeValue> = emptyList(),

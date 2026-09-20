@@ -23,8 +23,15 @@ object SalesPosRoutes {
     const val SHIFT_CLOSE = "$POS/drawer/shift/close"
     const val SHIFT_DROP_CASH = "$POS/drawer/shift/drop"
 
+    const val RESERVATIONS = "$POS/reservations"
+    const val RESERVATION_BY_ID = "$POS/reservations/{id}"
+    const val RESERVATION_PAY = "$POS/reservations/{id}/pay"
+    const val RESERVATION_FULFILL = "$POS/reservations/{id}/fulfill"
+    const val RESERVATION_CANCEL = "$POS/reservations/{id}/cancel"
+
     private const val ORDERS = "/api/v1/sales/orders"
 
     const val ORDER_LIST = ORDERS
     const val ORDER_BY_ID = "$ORDERS/{orderId}"
+    const val ORDER_PAY_BALANCE = "$ORDERS/{orderId}/pay-balance"
 }

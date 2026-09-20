@@ -5,6 +5,7 @@ import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CartItemJpaEn
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CartJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CashDropJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.CashShiftJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.ReservationPaymentJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.DeliveryZoneJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.DeliveryZoneTranslationJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentPlanJpaEntity
@@ -64,6 +65,11 @@ interface CashShiftRepository : JpaRepository<CashShiftJpaEntity, UUID> {
 @Repository
 interface CashDropRepository : JpaRepository<CashDropJpaEntity, UUID> {
     fun findByShiftId(shiftId: UUID): List<CashDropJpaEntity>
+}
+
+@Repository
+interface ReservationPaymentRepository : JpaRepository<ReservationPaymentJpaEntity, UUID> {
+    fun findByReservationIdOrderByPaidAtAsc(reservationId: UUID): List<ReservationPaymentJpaEntity>
 }
 
 @Repository

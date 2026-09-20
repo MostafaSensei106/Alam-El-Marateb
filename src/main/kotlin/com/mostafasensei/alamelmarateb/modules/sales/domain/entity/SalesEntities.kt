@@ -121,6 +121,9 @@ class OrderJpaEntity(
     @Column(name = "grand_total", nullable = false, precision = 12, scale = 2)
     var grandTotal: BigDecimal = BigDecimal.ZERO,
 
+    @Column(name = "paid_amount", nullable = false, precision = 12, scale = 2)
+    var paidAmount: BigDecimal = BigDecimal.ZERO,
+
     @Column(name = "delivery_zone_id", columnDefinition = "UUID")
     var deliveryZoneId: UUID? = null,
 
@@ -170,6 +173,12 @@ class OrderItemJpaEntity(
 
     @Column(name = "is_gift", nullable = false)
     var isGift: Boolean = false,
+
+    @Column(name = "is_custom", nullable = false)
+    var isCustom: Boolean = false,
+
+    @Column(name = "custom_spec", columnDefinition = "TEXT")
+    var customSpec: String? = null,
 ) : EntityBase<UUID>()
 
 @Entity
@@ -227,6 +236,12 @@ class ReservationJpaEntity(
 
     @Column(name = "deposit", nullable = false, precision = 12, scale = 2)
     var deposit: BigDecimal = BigDecimal.ZERO,
+
+    @Column(name = "total", nullable = false, precision = 12, scale = 2)
+    var total: BigDecimal = BigDecimal.ZERO,
+
+    @Column(name = "paid_amount", nullable = false, precision = 12, scale = 2)
+    var paidAmount: BigDecimal = BigDecimal.ZERO,
 
     @Column(name = "deliver_at")
     var deliverAt: LocalDate? = null,
@@ -401,3 +416,30 @@ class DeliveryZoneTranslationJpaEntity(
     @Column(name = "area", length = 150)
     var area: String? = null,
 ) : EntityBase<UUID>()
+
+@Entity
+@Table(name = "reservation_payments")
+class ReservationPaymentJpaEntity(
+    @Column(name = "reservation_id", nullable = false, columnDefinition = "UUID")
+    var reservationId: UUID? = null,
+
+    @Column(name = "amount", nullable = false, precision = 12, scale = 2)
+    var amount: BigDecimal = BigDecimal.ZERO,
+
+    @Column(name = "method", nullable = false, length = 20)
+    var method: String = "CASH",
+
+    @Column(name = "paid_at", nullable = false)
+    var paidAt: java.time.Instant = java.time.Instant.now(),
+
+    @Column(name = "received_by", length = 100)
+    var receivedBy: String? = null,
+
+    @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
+    var createdAt: java.time.Instant? = null,
+) {
+    @jakarta.persistence.Id
+    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
+    var id: UUID? = null
+}

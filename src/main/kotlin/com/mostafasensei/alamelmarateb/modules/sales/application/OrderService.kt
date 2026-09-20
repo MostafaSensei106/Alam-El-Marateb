@@ -17,7 +17,9 @@ import com.mostafasensei.alamelmarateb.modules.sales.data.repository.Installment
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.InvoiceRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.OrderItemRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.OrderRepository
+import com.mostafasensei.alamelmarateb.modules.sales.data.repository.ReservationPaymentRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.ReservationRepository
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.ReservationPaymentJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.ReturnRepository
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentPlanJpaEntity
@@ -61,6 +63,28 @@ data class PlaceOrderInput(
 
 data class PlacedOrder(val order: Order, val replayed: Boolean)
 
+data class ReservationPaymentView(
+    val amount: BigDecimal,
+    val method: String,
+    val paidAt: String?,
+    val receivedBy: String?,
+)
+
+data class ReservationView(
+    val id: UUID?,
+    val branchId: UUID?,
+    val customerId: UUID?,
+    val guestPhone: String?,
+    val variantId: UUID?,
+    val qty: Int,
+    val total: BigDecimal,
+    val paidAmount: BigDecimal,
+    val remaining: BigDecimal,
+    val deliverAt: LocalDate?,
+    val status: String,
+    val payments: List<ReservationPaymentView> = emptyList(),
+)
+
 @Service
 class OrderService(
     private val orderRepository: OrderRepository,
@@ -68,11 +92,14 @@ class OrderService(
     private val invoiceRepository: InvoiceRepository,
     private val returnRepository: ReturnRepository,
     private val reservationRepository: ReservationRepository,
+    private val reservationPaymentRepository: ReservationPaymentRepository,
     private val installmentPlanRepository: InstallmentPlanRepository,
     private val promotionService: PromotionService,
     private val stockService: StockService,
     private val warehouseRepository: WarehouseRepository,
     private val variantRepository: ProductVariantRepository,
+    private val customSizeService: com.mostafasensei.alamelmarateb.modules.product.domain.service.CustomSizeService,
+    private val objectMapper: tools.jackson.databind.ObjectMapper,
     private val auditLog: AuditLogService,
     private val shippingRates: ShippingRates,
     private val loyaltyService: com.mostafasensei.alamelmarateb.modules.loyalty.application.LoyaltyService,
@@ -332,7 +359,7 @@ class OrderService(
         if (returns.isEmpty()) throw ConflictException("error.order.no_requested_returns")
         val warehouseId = warehouseFor(order.branchId!!)
         returns.forEach { ret ->
-            order.lines.forEach { line ->
+            order.lines.filter { !it.isCustom }.forEach { line ->
                 stockService.applyMove(
                     warehouseId, line.variantId!!, line.qty, MoveType.RETURN,
                     "RETURN", ret.id, "Return approved",
@@ -380,7 +407,7 @@ class OrderService(
     fun estimate(governorate: String, area: String, floor: Int?): Pair<BigDecimal, BigDecimal> =
         feesOf(shippingRates.zoneId(governorate, area), floor, false)
 
-    // ---- reservations ----
+    // ---- reservations (book now, pay in parts, receive on a set day) ----
 
     @Transactional
     fun reserve(
@@ -389,24 +416,212 @@ class OrderService(
     ): UUID {
         if (customerId == null && guestPhone.isNullOrBlank()) throw BadRequestException("error.order.identity_required")
         if (qty <= 0) throw BadRequestException("error.order.qty_positive")
-        variantRepository.findById(variantId) ?: throw NotFoundException("error.order.unknown_variant", listOf(variantId))
+        val variant = variantRepository.findById(variantId)
+            ?: throw NotFoundException("error.order.unknown_variant", listOf(variantId))
+        if (deposit < BigDecimal.ZERO) throw BadRequestException("error.shift.amount_negative")
+        val total = variant.sellingPrice.multiply(qty.toBigDecimal()).scaled()
+        if (deposit > total) throw UnprocessableException("error.order.down_payment_invalid")
         val warehouseId = warehouseFor(branchId)
         stockService.reserve(warehouseId, variantId, qty)
         val saved = reservationRepository.save(
             ReservationJpaEntity(
                 branchId = branchId, customerId = customerId, guestPhone = guestPhone,
-                variantId = variantId, qty = qty, deposit = deposit, deliverAt = deliverAt, status = "active",
+                variantId = variantId, qty = qty, deposit = deposit.scaled(),
+                total = total, paidAmount = deposit.scaled(),
+                deliverAt = deliverAt, status = "active",
             ),
         )
-        auditLog.record("RESERVE", "reservation", saved.id, branchId, by, "qty=$qty deposit=$deposit")
+        if (deposit > BigDecimal.ZERO) {
+            reservationPaymentRepository.save(
+                ReservationPaymentJpaEntity(
+                    reservationId = saved.id, amount = deposit.scaled(), method = "CASH", receivedBy = by,
+                ),
+            )
+        }
+        auditLog.record("RESERVE", "reservation", saved.id, branchId, by, "qty=$qty total=$total deposit=$deposit")
         return saved.id!!
+    }
+
+    @Transactional(readOnly = true)
+    fun getReservation(id: UUID): ReservationView {
+        val reservation = reservationRepository.findById(id)
+            .orElseThrow { NotFoundException("error.reservation.not_found") }
+        return toReservationView(reservation)
+    }
+
+    @Transactional
+    fun payReservation(id: UUID, amount: BigDecimal, method: String, by: String?): ReservationView {
+        val reservation = reservationRepository.findById(id)
+            .orElseThrow { NotFoundException("error.reservation.not_found") }
+        if (reservation.status != "active") {
+            throw ConflictException("error.reservation.bad_status", listOf(reservation.status))
+        }
+        if (amount <= BigDecimal.ZERO) throw BadRequestException("error.shift.amount_negative")
+        val remaining = reservation.total.subtract(reservation.paidAmount)
+        if (amount > remaining) throw UnprocessableException("error.reservation.pay_exceeds", listOf(remaining))
+        reservation.paidAmount = reservation.paidAmount.add(amount).scaled()
+        reservationRepository.save(reservation)
+        reservationPaymentRepository.save(
+            ReservationPaymentJpaEntity(reservationId = id, amount = amount.scaled(), method = method, receivedBy = by),
+        )
+        auditLog.record("RESERVE_PAY", "reservation", id, reservation.branchId, by, "amount=$amount")
+        return toReservationView(reservation)
+    }
+
+    @Transactional
+    fun fulfillReservation(id: UUID, by: String?): ReservationView {
+        val reservation = reservationRepository.findById(id)
+            .orElseThrow { NotFoundException("error.reservation.not_found") }
+        if (reservation.status != "active") {
+            throw ConflictException("error.reservation.bad_status", listOf(reservation.status))
+        }
+        val remaining = reservation.total.subtract(reservation.paidAmount)
+        if (remaining > BigDecimal.ZERO) {
+            throw ConflictException("error.reservation.unpaid_balance", listOf(remaining))
+        }
+        val warehouseId = warehouseFor(reservation.branchId!!)
+        stockService.release(warehouseId, reservation.variantId!!, reservation.qty)
+        stockService.applyMove(
+            warehouseId, reservation.variantId!!, -reservation.qty,
+            MoveType.SALE, "RESERVATION", id, "Reservation fulfilled",
+        )
+        reservation.status = "fulfilled"
+        auditLog.record("RESERVE_FULFILL", "reservation", id, reservation.branchId, by, null)
+        return toReservationView(reservationRepository.save(reservation))
+    }
+
+    @Transactional
+    fun cancelReservation(id: UUID, by: String?): ReservationView {
+        val reservation = reservationRepository.findById(id)
+            .orElseThrow { NotFoundException("error.reservation.not_found") }
+        if (reservation.status != "active") {
+            throw ConflictException("error.reservation.bad_status", listOf(reservation.status))
+        }
+        val warehouseId = warehouseFor(reservation.branchId!!)
+        stockService.release(warehouseId, reservation.variantId!!, reservation.qty)
+        reservation.status = "cancelled"
+        auditLog.record("RESERVE_CANCEL", "reservation", id, reservation.branchId, by, "refund deposit=${reservation.paidAmount}")
+        return toReservationView(reservationRepository.save(reservation))
+    }
+
+    private fun toReservationView(e: ReservationJpaEntity) = ReservationView(
+        id = e.id, branchId = e.branchId, customerId = e.customerId, guestPhone = e.guestPhone,
+        variantId = e.variantId, qty = e.qty, total = e.total, paidAmount = e.paidAmount,
+        remaining = e.total.subtract(e.paidAmount).scaled(),
+        deliverAt = e.deliverAt, status = e.status,
+        payments = reservationPaymentRepository.findByReservationIdOrderByPaidAtAsc(e.id!!).map {
+            ReservationPaymentView(it.amount, it.method, it.paidAt.toString(), it.receivedBy)
+        },
+    )
+
+    // ---- custom-size orders (made-to-order, no stock) ----
+
+    @Transactional
+    fun placeCustomOrder(
+        branchId: UUID, customerId: UUID?, guestPhone: String?,
+        productId: UUID, shape: String, widthCm: Int, lengthCm: Int, heightCm: Int?,
+        qty: Int, paymentMethod: PaymentMethod, downPayment: BigDecimal?,
+        deliverAt: LocalDate?, salesRepId: UUID?, idempotencyKey: String?, by: String?,
+    ): PlacedOrder {
+        if (customerId == null && guestPhone.isNullOrBlank()) {
+            throw BadRequestException("error.order.identity_required")
+        }
+        if (qty <= 0) throw BadRequestException("error.order.qty_positive")
+        warehouseFor(branchId)
+
+        idempotencyKey?.let { key ->
+            val existing = orderRepository.findByIdempotencyKey(key).orElse(null)
+            if (existing != null) return PlacedOrder(toDomain(existing), replayed = true)
+        }
+
+        val quote = customSizeService.quoteByProduct(productId, shape, widthCm, lengthCm)
+        val height = heightCm?.takeIf { it > 0 } ?: 25
+        val sku = "CUST-${productId.toString().take(8).uppercase()}-${widthCm}X${lengthCm}X$height"
+        val variant = variantRepository.save(
+            com.mostafasensei.alamelmarateb.modules.product.data.model.ProductVariant(
+                productId = productId, sku = sku, barcode = null,
+                widthCm = widthCm, lengthCm = lengthCm, heightCm = height,
+                costPrice = quote.basePrice, sellingPrice = quote.total,
+            ),
+        )
+        val spec = objectMapper.writeValueAsString(
+            mapOf(
+                "shape" to quote.shape.name, "widthCm" to widthCm, "lengthCm" to lengthCm,
+                "heightCm" to height, "areaM2" to quote.areaM2.toPlainString(),
+                "pricePerMeter" to quote.pricePerMeter.toPlainString(),
+                "operatingPct" to quote.operatingPct, "deliverAt" to deliverAt?.toString(),
+            ),
+        )
+        val lineNet = quote.total.multiply(qty.toBigDecimal()).scaled()
+        val down = (downPayment ?: BigDecimal.ZERO).scaled()
+        if (down < BigDecimal.ZERO || down > lineNet) {
+            throw UnprocessableException("error.order.down_payment_invalid")
+        }
+
+        val order = orderRepository.save(
+            OrderJpaEntity(
+                branchId = branchId, customerId = customerId, guestPhone = guestPhone,
+                channel = "pos", status = OrderStatus.confirmed.name,
+                idempotencyKey = idempotencyKey, salesRepId = salesRepId,
+            ),
+        )
+        order.paymentMethod = paymentMethod.name
+        order.paymentStatus = if (down >= lineNet) PaymentStatus.paid.name else PaymentStatus.partial.name
+        order.subtotal = lineNet
+        order.discountTotal = BigDecimal.ZERO
+        order.deliveryFee = BigDecimal.ZERO
+        order.carryUpFee = BigDecimal.ZERO
+        order.grandTotal = lineNet
+        order.paidAmount = down
+        order.collectFromBranch = true
+        order.trackingNumber = "TRK-${UUID.randomUUID().toString().take(8).uppercase()}"
+        order.lines.add(
+            OrderItemJpaEntity(
+                order = order, variantId = variant.id, qty = qty,
+                unitPrice = quote.total, discount = BigDecimal.ZERO, net = lineNet,
+                appliedPromoCodes = "", isGift = false, isCustom = true, customSpec = spec,
+            ),
+        )
+        val saved = orderRepository.save(order)
+
+        if (invoiceRepository.findAll().none { it.orderId == saved.id }) {
+            invoiceRepository.save(InvoiceJpaEntity(orderId = saved.id, serial = nextSerial(branchId)))
+        }
+        events.publish(
+            OrderInvoicedEvent(
+                orderId = saved.id!!, branchId = branchId, day = LocalDate.now(),
+                lines = listOf(
+                    InvoicedLine(variant.id!!, qty, lineNet, quote.basePrice),
+                ),
+            ),
+        )
+        auditLog.record("CUSTOM_ORDER", "order", saved.id, branchId, by, "spec=$spec total=$lineNet down=$down")
+        return PlacedOrder(toDomain(saved), replayed = false)
+    }
+
+    // ---- order balance payments (custom orders, deposits) ----
+
+    @Transactional
+    fun payOrderBalance(id: UUID, amount: BigDecimal, method: String, by: String?): Order {
+        val order = load(id)
+        if (order.status == OrderStatus.cancelled.name || order.status == OrderStatus.returned.name) {
+            throw ConflictException("error.order.cannot_cancel", listOf(order.status))
+        }
+        if (amount <= BigDecimal.ZERO) throw BadRequestException("error.shift.amount_negative")
+        val remaining = order.grandTotal.subtract(order.paidAmount)
+        if (amount > remaining) throw UnprocessableException("error.payment.exceeds_balance", listOf(remaining))
+        order.paidAmount = order.paidAmount.add(amount).scaled()
+        if (order.paidAmount >= order.grandTotal) order.paymentStatus = PaymentStatus.paid.name
+        else if (order.paymentStatus == PaymentStatus.unpaid.name) order.paymentStatus = PaymentStatus.partial.name
+        auditLog.record("ORDER_PAY", "order", id, order.branchId, by, "amount=$amount method=$method")
+        return toDomain(orderRepository.save(order))
     }
 
     // ---- internals ----
 
     private fun deductReserved(order: Order) {
         val warehouseId = warehouseFor(order.branchId!!)
-        order.lines.forEach { line ->
+        order.lines.filter { !it.isCustom }.forEach { line ->
             stockService.release(warehouseId, line.variantId, line.qty)
             stockService.applyMove(
                 warehouseId, line.variantId, -line.qty,
@@ -467,6 +682,7 @@ class OrderService(
         paymentStatus = PaymentStatus.valueOf(e.paymentStatus),
         subtotal = e.subtotal, discountTotal = e.discountTotal,
         deliveryFee = e.deliveryFee, carryUpFee = e.carryUpFee, grandTotal = e.grandTotal,
+        paidAmount = e.paidAmount,
         deliveryZoneId = e.deliveryZoneId, floorNumber = e.floorNumber,
         collectFromBranch = e.collectFromBranch, trackingNumber = e.trackingNumber,
         salesRepId = e.salesRepId,
@@ -475,7 +691,7 @@ class OrderService(
                 variantId = it.variantId!!, productId = variantRepository.findById(it.variantId!!)?.productId!!,
                 qty = it.qty, unitPrice = it.unitPrice, discount = it.discount, net = it.net,
                 appliedPromoCodes = it.appliedPromoCodes.split(",").filter { c -> c.isNotBlank() },
-                isGift = it.isGift,
+                isGift = it.isGift, isCustom = it.isCustom, customSpec = it.customSpec,
             )
         },
     )

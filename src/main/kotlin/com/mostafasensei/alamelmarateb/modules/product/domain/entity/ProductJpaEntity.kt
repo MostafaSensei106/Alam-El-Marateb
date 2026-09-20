@@ -29,6 +29,9 @@ class ProductJpaEntity(
     @Column(name = "brand_id", columnDefinition = "UUID")
     var brandId: UUID? = null,
 
+    @Column(name = "price_per_meter", precision = 12, scale = 2)
+    var pricePerMeter: java.math.BigDecimal? = null,
+
     @Column(name = "warranty_years")
     var warrantyYears: Int? = null,
 
@@ -58,6 +61,7 @@ class ProductJpaEntity(
             slug = this.slug,
             brand = this.brand,
             brandId = this.brandId,
+            pricePerMeter = this.pricePerMeter,
             warrantyYears = this.warrantyYears,
             description = this.description,
             isActive = this.isActive,
@@ -76,6 +80,7 @@ class ProductJpaEntity(
                 slug = domain.slug,
                 brand = domain.brand,
                 brandId = domain.brandId,
+                pricePerMeter = domain.pricePerMeter,
                 warrantyYears = domain.warrantyYears,
                 description = domain.description,
                 isActive = domain.isActive,

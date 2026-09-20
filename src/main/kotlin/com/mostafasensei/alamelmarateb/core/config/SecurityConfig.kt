@@ -55,6 +55,7 @@ class SecurityConfig (
                     .requestMatchers("$v1/auth/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "$v1/catalog/public/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "$v1/catalog/public/quiz/**").permitAll()
+                    .requestMatchers(HttpMethod.POST, "$v1/catalog/public/products/*/custom-quote").permitAll()
                     .requestMatchers(HttpMethod.POST, "$v1/analytics/events").permitAll()
                     .requestMatchers(HttpMethod.POST, "$v1/shop/checkout/payment-callback/**").permitAll()
 

@@ -12,6 +12,7 @@ import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductCategor
 import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductVariant
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.BrandCreateRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.BrandUpdateRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.model.CustomQuoteRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QaAnswerRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QaAskRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.QuickCreateRequest
@@ -21,8 +22,10 @@ import com.mostafasensei.alamelmarateb.modules.product.domain.model.ReviewCreate
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.ReviewModerateRequest
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.VariantAttributeDto
 import com.mostafasensei.alamelmarateb.modules.product.domain.model.VariantAttributeRequest
+import com.mostafasensei.alamelmarateb.modules.product.domain.pricing.CustomQuote
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.BrandService
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.BrandView
+import com.mostafasensei.alamelmarateb.modules.product.domain.service.CustomSizeService
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductCatalogService
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductImageService
 import com.mostafasensei.alamelmarateb.modules.product.domain.service.ProductImageView
@@ -63,6 +66,7 @@ class CatalogDiscoveryController(
     private val reviewService: ReviewService,
     private val quizService: QuizService,
     private val qaService: QaService,
+    private val customSizeService: CustomSizeService,
 ) : BaseController() {
 
     @Operation(summary = "Search products (name/slug/category/brand/price)")
@@ -130,11 +134,21 @@ class CatalogDiscoveryController(
         )
 
     @Operation(summary = "Bought-together (from order history)")
-    @GetMapping(CatalogStoreRoutes.PRODUCT_BY_SLUG + "/bought-together")
-    fun boughtTogether(@PathVariable slug: String): ResponseEntity<ApiResponse<List<Product>>> {
+    @GetMapping(CatalogStoreRoutes.PRODUCT_BY_SLUG + "/bought-together")    fun boughtTogether(@PathVariable slug: String): ResponseEntity<ApiResponse<List<Product>>> {
         val product = catalogService.getProductBySlug(slug)
             ?: throw com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException("error.catalog.product_not_found")
         return ok(catalogService.boughtTogether(product.id!!))
+    }
+
+    @Operation(summary = "Custom-size quote (rect/oval/circle + width operating %)")
+    @PostMapping(CatalogStoreRoutes.CUSTOM_QUOTE)
+    fun customQuote(
+        @PathVariable slug: String,
+        @Valid @RequestBody request: CustomQuoteRequest,
+    ): ResponseEntity<ApiResponse<CustomQuote>> {
+        val product = catalogService.getProductBySlug(slug)
+            ?: throw com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException("error.catalog.product_not_found")
+        return ok(customSizeService.quoteByProduct(product.id!!, request.shape, request.widthCm, request.lengthCm))
     }
 
     @Operation(summary = "Answered Q&A for a product")

@@ -228,6 +228,7 @@ fun ProductCreateRequest.toDomain(): Product =
         brand = brand,
         description = description,
         warrantyYears = warrantyYears,
+        pricePerMeter = pricePerMeter,
         attributes = attributes.map { it.toDomain() },
         variants = variants.map { it.toDomain() },
         translations = translations ?: emptyMap(),

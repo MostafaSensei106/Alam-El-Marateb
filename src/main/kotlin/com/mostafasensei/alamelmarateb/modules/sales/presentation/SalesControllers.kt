@@ -9,6 +9,7 @@ import com.mostafasensei.alamelmarateb.core.router.ShopRoutes
 import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 import com.mostafasensei.alamelmarateb.modules.sales.application.CartService
 import com.mostafasensei.alamelmarateb.modules.sales.application.CartView
+import com.mostafasensei.alamelmarateb.modules.sales.application.ReservationView
 import com.mostafasensei.alamelmarateb.modules.sales.application.ShiftService
 import com.mostafasensei.alamelmarateb.modules.sales.application.ShiftView
 import com.mostafasensei.alamelmarateb.modules.sales.application.OrderItemInput
@@ -22,13 +23,16 @@ import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.CartItemRe
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.CartMergeRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.CartSetQtyRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.CompleteDraftRequest
+import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.CustomOrderRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.EstimateRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.EstimateResponse
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.OrderResponse
+import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.PayBalanceRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.PlaceOrderRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.PricePreviewRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.PricePreviewResponse
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.PromotionCreateRequest
+import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.ReservationPayRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.ReservationRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.ReturnRequest
 import com.mostafasensei.alamelmarateb.modules.sales.presentation.dto.ShiftCloseRequest
@@ -138,7 +142,7 @@ class PosOrderController(
         created(OrderResponse.fromDomain(orderService.completeSale(request.toInput("pos", principal.fullName), principal.fullName)))
 
     @Operation(summary = "Place order for later delivery/pickup")
-    @PostMapping("/place-order", "/custom-order")
+    @PostMapping("/place-order")
     fun placeOrder(
         @Valid @RequestBody request: PlaceOrderRequest,
         @Parameter(description = "Idempotency key — same key returns the original order + Idempotent-Replay: true")
@@ -167,7 +171,7 @@ class PosOrderController(
             ),
         )
 
-    @Operation(summary = "Create reservation (holds stock)")
+    @Operation(summary = "Create reservation (holds stock, pay in parts)")
     @PostMapping("/reservations")
     fun reserve(
         @Valid @RequestBody request: ReservationRequest,
@@ -179,6 +183,70 @@ class PosOrderController(
                 request.variantId, request.qty, request.deposit, request.deliverAt, principal.fullName,
             ),
         )
+
+    @Operation(summary = "Custom-size order (made-to-order, priced by geometry)")
+    @PostMapping("/custom-order")
+    fun customOrder(
+        @Valid @RequestBody request: CustomOrderRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<OrderResponse>> {
+        val placed = orderService.placeCustomOrder(
+            branchId = request.branchId, customerId = request.customerId, guestPhone = request.guestPhone,
+            productId = request.productId, shape = request.shape,
+            widthCm = request.widthCm, lengthCm = request.lengthCm, heightCm = request.heightCm,
+            qty = request.qty, paymentMethod = request.paymentMethod, downPayment = request.downPayment,
+            deliverAt = request.deliverAt, salesRepId = request.salesRepId,
+            idempotencyKey = request.idempotencyKey, by = principal.fullName,
+        )
+        return if (placed.replayed) {
+            ResponseEntity.ok().header("Idempotent-Replay", "true")
+                .body(ApiResponse.success(OrderResponse.fromDomain(placed.order), MessageService.t("success.operation")))
+        } else {
+            created(OrderResponse.fromDomain(placed.order))
+        }
+    }
+}
+
+/**
+ * Reservations balance flow — /api/v1/sales/pos/reservations.
+ */
+@Tag(name = "Reservations", description = "Book now, pay in parts, receive on a set day — CASHIER")
+@RestController
+@RequestMapping(SalesPosRoutes.BASE)
+@PreAuthorize("hasAnyRole('CASHIER', 'BRANCH_MANAGER', 'SUPER_ADMIN')")
+class ReservationController(
+    private val orderService: OrderService,
+) : BaseController() {
+
+    @Operation(summary = "Reservation details + remaining balance")
+    @GetMapping("/reservations/{id}")
+    fun get(@PathVariable id: UUID): ResponseEntity<ApiResponse<ReservationView>> =
+        ok(orderService.getReservation(id))
+
+    @Operation(summary = "Pay part of the remaining balance")
+    @PostMapping("/reservations/{id}/pay")
+    fun pay(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: ReservationPayRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<ReservationView>> =
+        ok(orderService.payReservation(id, request.amount, request.method, principal.fullName))
+
+    @Operation(summary = "Fulfill reservation (paid in full, hand over goods)")
+    @PostMapping("/reservations/{id}/fulfill")
+    fun fulfill(
+        @PathVariable id: UUID,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<ReservationView>> =
+        ok(orderService.fulfillReservation(id, principal.fullName))
+
+    @Operation(summary = "Cancel reservation (release hold)")
+    @PostMapping("/reservations/{id}/cancel")
+    fun cancel(
+        @PathVariable id: UUID,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<ReservationView>> =
+        ok(orderService.cancelReservation(id, principal.fullName))
 }
 
 /**
@@ -217,6 +285,15 @@ class SalesOrderController(
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<OrderResponse>> =
         ok(OrderResponse.fromDomain(orderService.cancel(orderId, principal.fullName)))
+
+    @Operation(summary = "Pay part of the remaining balance (custom orders, deposits)")
+    @PostMapping("/{orderId}/pay-balance")
+    fun payBalance(
+        @PathVariable orderId: UUID,
+        @Valid @RequestBody request: PayBalanceRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<OrderResponse>> =
+        ok(OrderResponse.fromDomain(orderService.payOrderBalance(orderId, request.amount, request.method, principal.fullName)))
 }
 
 /**

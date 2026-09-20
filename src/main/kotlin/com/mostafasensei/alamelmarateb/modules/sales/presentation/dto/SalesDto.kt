@@ -148,6 +148,8 @@ data class OrderLineResponse(
     val net: BigDecimal,
     val appliedPromoCodes: List<String>,
     val isGift: Boolean,
+    val isCustom: Boolean = false,
+    val customSpec: String? = null,
 )
 
 data class OrderResponse(
@@ -161,6 +163,7 @@ data class OrderResponse(
     val deliveryFee: BigDecimal,
     val carryUpFee: BigDecimal,
     val grandTotal: BigDecimal,
+    val paidAmount: BigDecimal,
     val trackingNumber: String?,
     val lines: List<OrderLineResponse>,
 ) {
@@ -170,11 +173,11 @@ data class OrderResponse(
             paymentMethod = order.paymentMethod?.name, paymentStatus = order.paymentStatus.name,
             subtotal = order.subtotal, discountTotal = order.discountTotal,
             deliveryFee = order.deliveryFee, carryUpFee = order.carryUpFee,
-            grandTotal = order.grandTotal, trackingNumber = order.trackingNumber,
+            grandTotal = order.grandTotal, paidAmount = order.paidAmount, trackingNumber = order.trackingNumber,
             lines = order.lines.map {
                 OrderLineResponse(
                     it.variantId, it.qty, it.unitPrice, it.discount, it.net,
-                    it.appliedPromoCodes, it.isGift,
+                    it.appliedPromoCodes, it.isGift, it.isCustom, it.customSpec,
                 )
             },
         )
@@ -194,6 +197,33 @@ data class ReservationRequest(
     @field:Positive val qty: Int,
     @field:PositiveOrZero val deposit: BigDecimal = BigDecimal.ZERO,
     val deliverAt: LocalDate? = null,
+)
+
+data class ReservationPayRequest(
+    @field:Positive val amount: BigDecimal,
+    @field:NotBlank val method: String = "CASH",
+)
+
+data class PayBalanceRequest(
+    @field:Positive val amount: BigDecimal,
+    @field:NotBlank val method: String = "CASH",
+)
+
+data class CustomOrderRequest(
+    @field:NotNull val branchId: UUID,
+    val customerId: UUID? = null,
+    val guestPhone: String? = null,
+    @field:NotNull val productId: UUID,
+    @field:NotBlank val shape: String,
+    @field:Positive val widthCm: Int,
+    @field:Positive val lengthCm: Int,
+    @field:Positive val heightCm: Int? = null,
+    @field:Positive val qty: Int = 1,
+    @field:NotNull val paymentMethod: PaymentMethod,
+    @field:PositiveOrZero val downPayment: BigDecimal? = null,
+    val deliverAt: LocalDate? = null,
+    val salesRepId: UUID? = null,
+    val idempotencyKey: String? = null,
 )
 
 // ---------- cart ----------

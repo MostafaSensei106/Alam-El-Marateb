@@ -75,6 +75,12 @@ data class QuizAnswerRequest(
     @field:NotNull val optionId: UUID,
 )
 
+data class CustomQuoteRequest(
+    @field:NotBlank val shape: String,
+    @field:Positive val widthCm: Int,
+    @field:Positive val lengthCm: Int,
+)
+
 data class VariantAttributeRequest(
     @field:NotNull val attributeId: UUID,
     @field:NotNull @field:Valid val value: AttributeValueRequest,
