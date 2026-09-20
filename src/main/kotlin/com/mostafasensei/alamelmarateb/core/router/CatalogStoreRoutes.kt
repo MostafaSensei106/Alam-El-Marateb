@@ -15,4 +15,8 @@ object CatalogStoreRoutes {
     const val PRODUCT_FEATURED = "$PREFIX/products/featured"
     const val PRODUCT_SEARCH = "$PREFIX/products/search"
     const val CATEGORIES = "$PREFIX/categories"
+    const val PRODUCT_REVIEWS = "$PREFIX/products/{slug}/reviews"
+    const val QUIZ = "$PREFIX/quiz"
+    const val QUIZ_RECOMMEND = "$PREFIX/quiz/recommend"
+    const val BRANDS = "$PREFIX/brands"
 }

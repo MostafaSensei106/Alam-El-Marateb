@@ -20,4 +20,6 @@ object CrmAdminRoutes {
     const val SCHEDULE_INSPECTION = "$PREFIX/claims/{claimId}/inspection"
     const val RESOLVE_REPLACE = "$PREFIX/claims/{claimId}/replace"
     const val RESOLVE_REPAIR = "$PREFIX/claims/{claimId}/repair"
+
+    const val REVIEW_MODERATE = "$PREFIX/reviews/{id}/moderate"
 }

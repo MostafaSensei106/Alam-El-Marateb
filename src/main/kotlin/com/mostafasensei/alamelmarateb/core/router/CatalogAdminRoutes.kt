@@ -23,4 +23,11 @@ object CatalogAdminRoutes {
 
     const val PRESETS = "$PREFIX/presets"
     const val PRESET_BY_ID = "$PREFIX/presets/{id}"
+
+    const val QUICK_CREATE = "$PREFIX/products/quick-create"
+
+    const val BRANDS = "$PREFIX/brands"
+    const val BRAND_BY_ID = "$PREFIX/brands/{id}"
+
+    const val VARIANT_ATTRIBUTES = "$PREFIX/variants/{variantId}/attributes"
 }

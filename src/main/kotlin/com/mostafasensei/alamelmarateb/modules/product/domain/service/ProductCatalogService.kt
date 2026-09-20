@@ -2,6 +2,8 @@ package com.mostafasensei.alamelmarateb.modules.product.domain.service
 
 import com.mostafasensei.alamelmarateb.core.exceptions.ErrorDetail
 import com.mostafasensei.alamelmarateb.core.cache.RedisCache
+import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
+import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeType
 import com.mostafasensei.alamelmarateb.modules.product.data.model.AttributeValue
@@ -164,6 +166,83 @@ class ProductCatalogService(
     @Transactional(readOnly = true)
     fun getPreset(id: UUID): ProductPreset? =
         cache.getOrLoad("cat:preset:$id", CATALOG_TTL, ProductPreset::class.java) { presetRepository.findById(id) }
+
+    /**
+     * Quick-create (arch.md §8.1): preset + ONE size only. Price is taken from
+     * the preset variant with the same width/length (or overridden manually),
+     * SKU auto-generated as {SLUG}-{W}X{L}X{H}.
+     */
+    @Transactional
+    fun quickCreate(
+        presetId: UUID,
+        slug: String,
+        name: String?,
+        widthCm: Int,
+        lengthCm: Int,
+        heightCm: Int?,
+        sku: String?,
+        costPrice: java.math.BigDecimal?,
+        sellingPrice: java.math.BigDecimal?,
+        brandId: UUID?,
+    ): Product {
+        val preset = presetRepository.findById(presetId)
+            ?: throw NotFoundException("error.catalog.preset_not_found")
+        if (productRepository.findBySlug(slug) != null) {
+            throw ConflictException("error.catalog.slug_exists", listOf(slug))
+        }
+        val match = preset.variants.firstOrNull { it.widthCm == widthCm && it.lengthCm == lengthCm }
+        val height = heightCm ?: match?.heightCm ?: 25
+        val finalSku = sku?.trim()?.uppercase()
+            ?: "${slug.trim().uppercase()}-${widthCm}X${lengthCm}X$height"
+        val product = Product(
+            categoryId = preset.categoryId,
+            name = name?.ifBlank { preset.name } ?: preset.name,
+            slug = slug,
+            brand = preset.brand,
+            brandId = brandId,
+            description = preset.description,
+            warrantyYears = null,
+            attributes = preset.attributes,
+            variants = listOf(
+                ProductVariant(
+                    sku = finalSku,
+                    barcode = null,
+                    widthCm = widthCm,
+                    lengthCm = lengthCm,
+                    heightCm = height,
+                    costPrice = costPrice ?: match?.costPrice ?: java.math.BigDecimal.ZERO,
+                    sellingPrice = sellingPrice ?: match?.sellingPrice ?: java.math.BigDecimal.ZERO,
+                ),
+            ),
+        )
+        val errors = validateProductAttributes(product)
+        if (errors.isNotEmpty()) throw BadRequestException("error.catalog.validation_failed", errorDetails = errors)
+        return productRepository.save(product)
+    }
+
+    @Transactional(readOnly = true)
+    fun search(
+        query: String?,
+        categoryId: UUID?,
+        brand: String?,
+        minPrice: java.math.BigDecimal?,
+        maxPrice: java.math.BigDecimal?,
+    ): List<Product> =
+        productRepository.findAllActive().filter { product ->
+            (query.isNullOrBlank() || product.name.contains(query, ignoreCase = true) || product.slug.contains(query, ignoreCase = true)) &&
+                (categoryId == null || product.categoryId == categoryId) &&
+                (brand.isNullOrBlank() || product.brand.equals(brand, ignoreCase = true)) &&
+                (minPrice == null || (product.variants.minOfOrNull { it.sellingPrice } ?: java.math.BigDecimal.ZERO) >= minPrice) &&
+                (maxPrice == null || (product.variants.minOfOrNull { it.sellingPrice } ?: java.math.BigDecimal.ZERO) <= maxPrice)
+        }
+
+    @Transactional(readOnly = true)
+    fun featured(): List<Product> =
+        productRepository.findAllActive().filter { it.isFeatured }
+
+    @Transactional(readOnly = true)
+    fun compare(ids: List<UUID>): List<Product> =
+        ids.distinct().take(4).mapNotNull { productRepository.findById(it)?.takeIf { p -> p.isActive } }
 
     @Transactional(readOnly = true)
     fun getAllPresets(): List<ProductPreset> = presetRepository.findAll()

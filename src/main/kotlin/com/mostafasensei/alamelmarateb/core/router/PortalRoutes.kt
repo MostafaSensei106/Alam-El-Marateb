@@ -15,4 +15,6 @@ object PortalRoutes {
     const val WARRANTY_REGISTER = "$PREFIX/warranties/register"
     const val WARRANTY_VERIFY = "$PREFIX/warranties/verify/{serialNumber}"
     const val WARRANTY_CLAIMS = "$PREFIX/warranties/claims"
+
+    const val REVIEWS = "$PREFIX/reviews"
 }
