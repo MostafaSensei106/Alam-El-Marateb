@@ -38,4 +38,24 @@ class I18nTest {
     fun `unknown code falls back to code`() {
         assertEquals("no.such.key", messages.get("no.such.key"))
     }
+
+    @Test
+    fun `domain error keys resolve in both locales with args`() {
+        LocaleContextHolder.setLocale(Locale("ar"))
+        try {
+            assertEquals("السلة فارغة", messages.get("error.promo.cart_empty"))
+            assertEquals("كود الفرع موجود بالفعل: TAN-01", messages.get("error.branch.code_exists", "TAN-01"))
+            assertEquals("الحقل qty مطلوب", messages.get("validation.NotBlank", "qty"))
+        } finally {
+            LocaleContextHolder.resetLocaleContext()
+        }
+        LocaleContextHolder.setLocale(Locale("en"))
+        try {
+            assertEquals("Cart is empty", messages.get("error.promo.cart_empty"))
+            assertEquals("Branch code already exists: TAN-01", messages.get("error.branch.code_exists", "TAN-01"))
+            assertEquals("Field qty is required", messages.get("validation.NotBlank", "qty"))
+        } finally {
+            LocaleContextHolder.resetLocaleContext()
+        }
+    }
 }
