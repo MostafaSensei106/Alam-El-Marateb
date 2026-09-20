@@ -16,27 +16,50 @@ import tools.jackson.databind.node.ObjectNode
 import java.security.MessageDigest
 
 /**
- * HTTP caching via content ETags (conditional GET).
+ * HTTP caching via content ETags (conditional GET) — allowlisted endpoints only.
  *
- * Why not Spring's ShallowEtagHeaderFilter: every ApiResponse body carries a
- * random traceId and a fresh timestamp, so a whole-body hash never repeats
- * and 304 would never fire. This filter hashes the STABLE part only
- * (top-level traceId and timestamp excluded) — 304 fires exactly when the
- * data is unchanged. Frontend flow: cache body + ETag, send If-None-Match
- * next time, 304 means reuse.
+ * Covered (stable, shared, high-traffic reads):
+ * - storefront catalog under catalog-public: products, search, suggest,
+ *   featured, compare, categories, brands, reviews, quiz, variants
+ * - estimator catalog + spin campaigns (reference-like reads)
+ * - identity reference data (branches, roles)
  *
- * Scope: GET under the api prefix with a JSON 200 body. Everything else
- * passes through untouched. Best-effort: any failure serves the body as-is.
+ * Deliberately NOT covered: carts, orders, shifts, analytics, loyalty,
+ * portal/personal data, auth, live GPS, notifications, audit trails —
+ * per-user or constantly-changing payloads where hashing costs more than
+ * any 304 could ever save, and a stale 304 would be a bug magnet.
+ *
+ * Why a custom filter instead of Spring's ShallowEtagHeaderFilter: every
+ * ApiResponse body carries a random traceId and a fresh timestamp, so a
+ * whole-body hash never repeats and 304 would never fire. This filter hashes
+ * the STABLE part only (top-level traceId and timestamp excluded) — 304
+ * fires exactly when the data is unchanged. Frontend flow: cache body +
+ * ETag, send If-None-Match next time, 304 means reuse.
+ *
+ * Scope: GET with a JSON 200 body. Everything else passes through untouched.
+ * Best-effort: any failure serves the body as-is.
  */
 @Configuration
 class EtagConfig(
     private val objectMapper: ObjectMapper,
 ) {
 
+    companion object {
+        /** Endpoints worth an ETag. Everything else skips hashing entirely. */
+        val ETAG_PATHS = listOf(
+            "/api/v1/catalog/public/*",
+            "/api/v1/estimator/catalog",
+            "/api/v1/estimator/spin/campaigns",
+            "/api/v1/estimator/spin/campaigns/*",
+            "/api/v1/identity/branches",
+            "/api/v1/identity/access/roles",
+        )
+    }
+
     @Bean
     fun etagFilter(): FilterRegistrationBean<StableEtagFilter> {
         val registration = FilterRegistrationBean(StableEtagFilter(objectMapper))
-        registration.urlPatterns = listOf("/api/*")
+        registration.urlPatterns = ETAG_PATHS
         registration.order = Ordered.HIGHEST_PRECEDENCE + 3
         return registration
     }
