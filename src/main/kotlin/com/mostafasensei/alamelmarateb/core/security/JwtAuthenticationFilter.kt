@@ -26,13 +26,19 @@ class JwtAuthenticationFilter(
         if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt!!)) {
             val userId = tokenProvider.getUserIdFromToken(jwt)
             val userDetails = customUserDetailsService.loadUserById(userId)
-            val authentication = UsernamePasswordAuthenticationToken(
-                userDetails,
-                null,
-                userDetails.authorities
-            )
-            authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
-            SecurityContextHolder.getContext().authentication = authentication
+            // Stateless logout-everywhere: tokens issued before the last
+            // password change/reset (different or missing `tv`) are rejected.
+            val liveVersion = (userDetails as? UserPrincipal)?.tokenVersion
+            val tokenVersion = tokenProvider.tokenVersionOf(jwt) ?: 0
+            if (liveVersion != null && tokenVersion == liveVersion) {
+                val authentication = UsernamePasswordAuthenticationToken(
+                    userDetails,
+                    null,
+                    userDetails.authorities
+                )
+                authentication.details = WebAuthenticationDetailsSource().buildDetails(request)
+                SecurityContextHolder.getContext().authentication = authentication
+            }
         }
         filterChain.doFilter(request, response)
         }

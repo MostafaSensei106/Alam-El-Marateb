@@ -43,6 +43,20 @@ data class RefreshRequest(
     @field:NotBlank val refreshToken: String,
 )
 
+data class ForgotPasswordRequest(
+    @field:NotBlank val phone: String,
+)
+
+data class ResetPasswordRequest(
+    @field:NotBlank val token: String,
+    @field:NotBlank @field:Size(min = 6) val newPassword: String,
+)
+
+data class ChangePasswordRequest(
+    @field:NotBlank val currentPassword: String,
+    @field:NotBlank @field:Size(min = 6) val newPassword: String,
+)
+
 data class BranchRequest(
     @field:NotBlank val name: String,
     @field:NotBlank val code: String,
@@ -86,6 +100,30 @@ class AuthController(
     @PostMapping("/refresh")
     fun refresh(@RequestBody request: RefreshRequest): ResponseEntity<ApiResponse<TokenPair>> =
         ok(authService.refresh(request.refreshToken))
+
+    @Operation(summary = "Request password reset (generic response, no enumeration)")
+    @PostMapping("/forgot-password")
+    fun forgotPassword(@RequestBody request: ForgotPasswordRequest): ResponseEntity<ApiResponse<Nothing>> {
+        authService.forgotPassword(request.phone)
+        return ok(null)
+    }
+
+    @Operation(summary = "Reset password with a single-use token")
+    @PostMapping("/reset-password")
+    fun resetPassword(@RequestBody request: ResetPasswordRequest): ResponseEntity<ApiResponse<Nothing>> {
+        authService.resetPassword(request.token, request.newPassword)
+        return ok(null)
+    }
+
+    @Operation(summary = "Change password (kills all other sessions)")
+    @PostMapping("/change-password")
+    fun changePassword(
+        @AuthenticationPrincipal principal: UserPrincipal,
+        @RequestBody request: ChangePasswordRequest,
+    ): ResponseEntity<ApiResponse<Nothing>> {
+        authService.changePassword(principal.id, request.currentPassword, request.newPassword)
+        return ok(null)
+    }
 
     @Operation(summary = "My profile")
     @GetMapping("/me")

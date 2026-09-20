@@ -34,21 +34,33 @@ class JwtTokenProvider(
             .claim("branchId", userPrincipal.branchId?.toString())
             .claim("phone", userPrincipal.username)
             .claim("roles", userPrincipal.authorities.map { it.authority })
+            .claim("tv", userPrincipal.tokenVersion)
             .issuedAt(now)
             .expiration(expiryDate)
             .signWith(key)
             .compact()
     }
 
-    fun generateRefreshToken(userId: UUID): String {
+    fun generateRefreshToken(userId: UUID, tokenVersion: Int): String {
         val now = Date()
         return Jwts.builder()
             .subject(userId.toString())
             .claim("type", "refresh")
+            .claim("tv", tokenVersion)
             .issuedAt(now)
             .expiration(Date(now.time + refreshExpirationMs))
             .signWith(key)
             .compact()
+    }
+
+    /** Token version embedded at issuance; compared against the live user row. */
+    fun tokenVersionOf(token: String): Int? {
+        return try {
+            val claims: Claims = Jwts.parser().verifyWith(key).build().parseSignedClaims(token).payload
+            (claims["tv"] as? Number)?.toInt()
+        } catch (_: Exception) {
+            null
+        }
     }
 
     fun isRefreshToken(token: String): Boolean {

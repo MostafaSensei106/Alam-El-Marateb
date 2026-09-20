@@ -13,6 +13,7 @@ class UserPrincipal(
     private val phoneNumber: String,
     private val passwordHash: String,
     private val active: Boolean,
+    val tokenVersion: Int,
     private val authorities: Collection<GrantedAuthority>
     ) : UserDetails {
     override fun getAuthorities(): Collection<GrantedAuthority> = authorities
@@ -33,6 +34,7 @@ class UserPrincipal(
                 phoneNumber = user.phoneNumber,
                 passwordHash = user.passwordHash,
                 active = user.isActive,
+                tokenVersion = user.tokenVersion,
                 authorities = authorities
             )
         }

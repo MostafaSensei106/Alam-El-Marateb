@@ -12,6 +12,7 @@ data class User(
     val phoneNumber: String,
     val passwordHash: String,
     val isActive: Boolean = true,
+    val tokenVersion: Int = 0,
     val roles: Set<Role> = emptySet(),
     val createdAt: Instant = Clock.System.now(),
     val updatedAt: Instant = Clock.System.now()

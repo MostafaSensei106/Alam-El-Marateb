@@ -32,6 +32,9 @@ class UserJpaEntity(
     @Column(name = "is_active", nullable = false)
     var isActive: Boolean = true,
 
+    @Column(name = "token_version", nullable = false)
+    var tokenVersion: Int = 0,
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
         name = "user_roles",
@@ -50,6 +53,7 @@ class UserJpaEntity(
             phoneNumber = this.phoneNumber,
             passwordHash = this.passwordHash,
             isActive = this.isActive,
+            tokenVersion = this.tokenVersion,
             roles = this.roles.map { it.toDomain() }.toSet(),
             createdAt = this.createdAt,
             updatedAt = this.updatedAt
