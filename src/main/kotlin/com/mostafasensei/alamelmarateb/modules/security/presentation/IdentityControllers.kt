@@ -107,30 +107,33 @@ class AuthController(
     @PostMapping("/forgot-password")
     fun forgotPassword(@RequestBody request: ForgotPasswordRequest): ResponseEntity<ApiResponse<Nothing>> {
         authService.forgotPassword(request.phone)
-        return ok(null, MessageService.t("auth.reset_sent"))
+        return ResponseEntity.ok(ApiResponse.messageWithoutData(MessageService.t("auth.reset_sent")))
     }
 
     @Operation(summary = "Reset password with a single-use token")
     @PostMapping("/reset-password")
     fun resetPassword(@RequestBody request: ResetPasswordRequest): ResponseEntity<ApiResponse<Nothing>> {
         authService.resetPassword(request.token, request.newPassword)
-        return ok(null, MessageService.t("auth.reset_done"))
+        return ResponseEntity.ok(ApiResponse.messageWithoutData(MessageService.t("auth.reset_done")))
     }
 
     @Operation(summary = "Change password (kills all other sessions)")
     @PostMapping("/change-password")
     fun changePassword(
-        @AuthenticationPrincipal principal: UserPrincipal,
+        @AuthenticationPrincipal principal: UserPrincipal?,
         @RequestBody request: ChangePasswordRequest,
     ): ResponseEntity<ApiResponse<Nothing>> {
-        authService.changePassword(principal.id, request.currentPassword, request.newPassword)
-        return ok(null, MessageService.t("auth.password_changed"))
+        val id = principal?.id ?: throw AuthService.UnauthorizedException()
+        authService.changePassword(id, request.currentPassword, request.newPassword)
+        return ResponseEntity.ok(ApiResponse.messageWithoutData(MessageService.t("auth.password_changed")))
     }
 
     @Operation(summary = "My profile")
     @GetMapping("/me")
-    fun me(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<AuthUserView>> =
-        ok(authService.me(principal.id))
+    fun me(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<AuthUserView>> {
+        val id = principal?.id ?: throw AuthService.UnauthorizedException()
+        return ok(authService.me(id))
+    }
 }
 
 /**

@@ -307,6 +307,82 @@
           ]
         },
         {
+          "name": "❓ Forgot password (generic, rate-limited)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/forgot-password",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"phone\": \"01012345678\"}"
+            }
+          }
+        },
+        {
+          "name": "🔑 Reset password (single-use code)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/reset-password",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"token\": \"PASTE_RESET_CODE\", \"newPassword\": \"newsecret123\"}"
+            }
+          }
+        },
+        {
+          "name": "🔐 Change password (kills other sessions)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/auth/change-password",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"currentPassword\": \"secret123\", \"newPassword\": \"newsecret123\"}"
+            }
+          }
+        },
+        {
+          "name": "🩹 PATCH example — partial category update",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/v1/catalog/categories/{{categoryId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"New name only\"}"
+            }
+          }
+        },
+        {
           "name": "🙋 My profile",
           "request": {
             "method": "GET",

@@ -1,5 +1,6 @@
 package com.mostafasensei.alamelmarateb.modules.product.data.repository
 
+import com.mostafasensei.alamelmarateb.core.common.entity.EntityBase
 import com.mostafasensei.alamelmarateb.modules.product.data.model.Product
 import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductAttributeDefinition
 import com.mostafasensei.alamelmarateb.modules.product.data.model.ProductAttributeOption
@@ -22,6 +23,15 @@ import java.util.UUID
  * Port adapters: domain ports → Spring Data JPA.
  * IDs are DB-generated (gen_random_uuid); null ids on save mean "new".
  */
+
+/**
+ * fromDomain always builds version 0: on update, carry the live version or
+ * @Version merge fails after the first write (second update -> 500).
+ */
+internal fun <E : EntityBase<UUID>> E.withLiveVersion(id: UUID?, find: (UUID) -> E?): E {
+    if (id != null) find(id)?.let { this.version = it.version }
+    return this
+}
 @Repository
 class ProductRepositoryAdapter(
     private val jpa: SpringDataJpaProductRepository,
@@ -91,7 +101,7 @@ class ProductVariantRepositoryAdapter(
     override fun findById(id: UUID): ProductVariant? = jpa.findById(id).map { it.toDomain() }.orElse(null)
     override fun findByBarcode(barcode: String): ProductVariant? = jpa.findByBarcode(barcode).map { it.toDomain() }.orElse(null)
     override fun save(variant: ProductVariant): ProductVariant =
-        jpa.save(ProductVariantJpaEntity.fromDomain(variant)).toDomain()
+        jpa.save(ProductVariantJpaEntity.fromDomain(variant).withLiveVersion(variant.id) { jpa.findById(it).orElse(null) }).toDomain()
     override fun deleteVariantById(variantId: UUID) = jpa.deleteById(variantId)
 }
 
@@ -104,7 +114,7 @@ class ProductCategoryRepositoryAdapter(
     override fun findAll(): List<ProductCategory> = jpa.findAll().map { it.toDomain() }
     override fun existsBySlug(slug: String): Boolean = jpa.existsBySlug(slug)
     override fun save(category: ProductCategory): ProductCategory =
-        jpa.save(ProductCategoryJpaEntity.fromDomain(category)).toDomain()
+        jpa.save(ProductCategoryJpaEntity.fromDomain(category).withLiveVersion(category.id) { jpa.findById(it).orElse(null) }).toDomain()
     override fun deleteById(id: UUID) = jpa.deleteById(id)
 }
 
@@ -117,7 +127,7 @@ class AttributeDefinitionRepositoryAdapter(
     override fun findAllActive(): List<ProductAttributeDefinition> = jpa.findByIsActiveTrue().map { it.toDomain() }
     override fun existsByKey(key: String): Boolean = jpa.existsByKey(key)
     override fun save(definition: ProductAttributeDefinition): ProductAttributeDefinition =
-        jpa.save(AttributeDefinitionJpaEntity.fromDomain(definition)).toDomain()
+        jpa.save(AttributeDefinitionJpaEntity.fromDomain(definition).withLiveVersion(definition.id) { jpa.findById(it).orElse(null) }).toDomain()
     override fun deleteById(id: UUID) = jpa.deleteById(id)
 }
 
@@ -141,7 +151,7 @@ class ProductAttributeOptionRepositoryAdapter(
     override fun findByAttributeId(attributeId: UUID): List<ProductAttributeOption> =
         jpa.findByAttributeId(attributeId).map { it.toDomain() }
     override fun save(option: ProductAttributeOption): ProductAttributeOption =
-        jpa.save(AttributeOptionJpaEntity.fromDomain(option)).toDomain()
+        jpa.save(AttributeOptionJpaEntity.fromDomain(option).withLiveVersion(option.id) { jpa.findById(it).orElse(null) }).toDomain()
     override fun deleteById(id: UUID) = jpa.deleteById(id)
 }
 

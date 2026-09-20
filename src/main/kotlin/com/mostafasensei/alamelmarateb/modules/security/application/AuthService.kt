@@ -119,7 +119,7 @@ class AuthService(
         if (!passwordEncoder.matches(currentPassword, entity.passwordHash)) {
             throw BadRequestException("error.auth.current_password_wrong")
         }
-        entity.passwordHash = passwordEncoder.encode(newPassword)
+        entity.passwordHash = checkNotNull(passwordEncoder.encode(newPassword)) { "Password encoding failed" }
         entity.tokenVersion += 1
         jpaUsers.save(entity)
         auditLog.record("PASSWORD_CHANGE", "user", userId, entity.branchId, userId.toString(), null)
@@ -173,12 +173,12 @@ class AuthService(
         val entity = jpaUsers.findById(row.userId!!)
             .orElseThrow { BadRequestException("error.auth.reset_invalid") }
         if (!entity.isActive) throw BadRequestException("error.auth.reset_invalid")
-        entity.passwordHash = passwordEncoder.encode(newPassword)
+        entity.passwordHash = checkNotNull(passwordEncoder.encode(newPassword)) { "Password encoding failed" }
         entity.tokenVersion += 1
         jpaUsers.save(entity)
         // Clear outstanding sibling tokens, then keep this one as the
         // consumed single-use marker.
-        resetTokens.deleteByUserId(entity.id!!)
+        resetTokens.deleteByUserIdAndIdNot(entity.id!!, row.id)
         row.usedAt = OffsetDateTime.now()
         resetTokens.save(row)
         auditLog.record("PASSWORD_RESET", "user", entity.id, entity.branchId, entity.id.toString(), null)

@@ -30,12 +30,14 @@ import org.springframework.http.ContentDisposition
 import org.springframework.http.HttpHeaders
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
@@ -75,6 +77,13 @@ class HrAdminController(
         ok(hrService.getEmployee(id))
 
     @Operation(summary = "Update employee")
+    @PatchMapping(HrAdminRoutes.EMPLOYEE_BY_ID)
+    fun patchUpdateEmployee(
+        @PathVariable("id") id: UUID,
+        @Valid @RequestBody request: EmployeeUpdateRequest,
+    ): ResponseEntity<ApiResponse<EmployeeView>> =
+        updateEmployee(id, request)
+
     @PutMapping(HrAdminRoutes.EMPLOYEE_BY_ID)
     fun updateEmployee(
         @PathVariable("id") id: UUID,
@@ -189,17 +198,17 @@ class SelfServiceController(
         @AuthenticationPrincipal principal: UserPrincipal,
         @Valid @RequestBody request: SelfLeaveRequestBody,
     ): ResponseEntity<ApiResponse<LeaveView>> {
-        val employeeId = hrService.employeeIdForUser(principal.id)
+        val employeeId = hrService.employeeIdForUser(principal?.id ?: throw BadCredentialsException("missing authentication"))
         return created(hrService.requestLeave(employeeId, request.type, request.fromDate, request.toDate, request.substitute))
     }
 
     @Operation(summary = "My commissions (payroll lines)")
     @GetMapping(SelfServiceRoutes.MY_COMMISSIONS)
-    fun myCommissions(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<List<PayrollLineView>>> =
-        ok(hrService.myCommissions(principal.id))
+    fun myCommissions(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<List<PayrollLineView>>> =
+        ok(hrService.myCommissions(principal?.id ?: throw BadCredentialsException("missing authentication")))
 
     @Operation(summary = "My payslips (payroll lines)")
     @GetMapping(SelfServiceRoutes.MY_PAYSLIPS)
-    fun myPayslips(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<List<PayrollLineView>>> =
-        ok(hrService.myPayslips(principal.id))
+    fun myPayslips(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<List<PayrollLineView>>> =
+        ok(hrService.myPayslips(principal?.id ?: throw BadCredentialsException("missing authentication")))
 }

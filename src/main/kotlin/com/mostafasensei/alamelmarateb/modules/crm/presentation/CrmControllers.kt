@@ -25,6 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -114,8 +115,8 @@ class PortalController(
 
     @Operation(summary = "My addresses")
     @GetMapping("/addresses")
-    fun addresses(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<List<AddressView>>> =
-        ok(crmService.addresses(principal.id))
+    fun addresses(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<List<AddressView>>> =
+        ok(crmService.addresses(principal?.id ?: throw BadCredentialsException("missing authentication")))
 
     @Operation(summary = "Add address")
     @PostMapping("/addresses")
@@ -142,8 +143,8 @@ class PortalController(
 
     @Operation(summary = "My favorites")
     @GetMapping("/favorites")
-    fun favorites(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<List<UUID>>> =
-        ok(crmService.favorites(principal.id))
+    fun favorites(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<List<UUID>>> =
+        ok(crmService.favorites(principal?.id ?: throw BadCredentialsException("missing authentication")))
 
     @Operation(summary = "Add favorite")
     @PostMapping("/favorites")
@@ -167,8 +168,8 @@ class PortalController(
 
     @Operation(summary = "My warranties")
     @GetMapping("/warranties")
-    fun myWarranties(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<List<WarrantyView>>> =
-        ok(warrantyService.myWarranties(principal.id))
+    fun myWarranties(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<List<WarrantyView>>> =
+        ok(warrantyService.myWarranties(principal?.id ?: throw BadCredentialsException("missing authentication")))
 
     @Operation(summary = "Register my warranty")
     @PostMapping("/warranties/register")
@@ -184,13 +185,13 @@ class PortalController(
         @AuthenticationPrincipal principal: UserPrincipal,
         @Valid @RequestBody request: ClaimFileRequest,
     ): ResponseEntity<ApiResponse<ClaimView>> {
-        val mine = warrantyService.myWarranties(principal.id).mapNotNull { it.id }.toSet()
+        val mine = warrantyService.myWarranties(principal?.id ?: throw BadCredentialsException("missing authentication")).mapNotNull { it.id }.toSet()
         if (request.warrantyId !in mine) throw NotFoundException("error.portal.warranty_not_found")
         return created(warrantyService.fileClaim(request.warrantyId, request.description, request.photos, principal.fullName))
     }
 
     @Operation(summary = "My claims")
     @GetMapping("/warranties/claims")
-    fun myClaims(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<List<ClaimView>>> =
-        ok(warrantyService.myClaims(principal.id))
+    fun myClaims(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<List<ClaimView>>> =
+        ok(warrantyService.myClaims(principal?.id ?: throw BadCredentialsException("missing authentication")))
 }

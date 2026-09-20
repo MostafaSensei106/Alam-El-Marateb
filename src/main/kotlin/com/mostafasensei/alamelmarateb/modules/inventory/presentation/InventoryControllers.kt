@@ -33,6 +33,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -71,6 +72,13 @@ class InventoryAdminController(
         ok(warehouseService.get(warehouseId))
 
     @Operation(summary = "Update warehouse")
+    @PatchMapping("/warehouses/{warehouseId}")
+    fun patchUpdateWarehouse(
+        @PathVariable warehouseId: UUID,
+        @Valid @RequestBody request: WarehouseUpdateRequest,
+    ): ResponseEntity<ApiResponse<Warehouse>> =
+        updateWarehouse(warehouseId, request)
+
     @PutMapping("/warehouses/{warehouseId}")
     fun updateWarehouse(
         @PathVariable warehouseId: UUID,

@@ -43,6 +43,7 @@ import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -324,8 +325,8 @@ class PosShiftController(
 
     @Operation(summary = "Current open shift")
     @GetMapping("/drawer/shift/current")
-    fun current(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<ShiftView>> =
-        ok(shiftService.current(principal.id))
+    fun current(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<ShiftView>> =
+        ok(shiftService.current(principal?.id ?: throw BadCredentialsException("missing authentication")))
 
     @Operation(summary = "Cash drop (safe)")
     @PostMapping("/drawer/shift/drop")
@@ -482,8 +483,8 @@ class ShopOrderController(
 
     @Operation(summary = "My orders")
     @GetMapping
-    fun myOrders(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<List<OrderResponse>>> =
-        ok(orderService.myOrders(principal.id).map { OrderResponse.fromDomain(it) })
+    fun myOrders(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<List<OrderResponse>>> =
+        ok(orderService.myOrders(principal?.id ?: throw BadCredentialsException("missing authentication")).map { OrderResponse.fromDomain(it) })
 
     @Operation(summary = "My order details")
     @GetMapping("/{orderId}")
@@ -491,7 +492,7 @@ class ShopOrderController(
         @PathVariable orderId: UUID,
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<OrderResponse>> {
-        val order = orderService.myOrders(principal.id).firstOrNull { it.id == orderId }
+        val order = orderService.myOrders(principal?.id ?: throw BadCredentialsException("missing authentication")).firstOrNull { it.id == orderId }
             ?: throw com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException("Order not found")
         return ok(OrderResponse.fromDomain(order))
     }

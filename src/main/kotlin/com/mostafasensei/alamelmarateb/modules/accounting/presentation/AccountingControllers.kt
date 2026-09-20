@@ -39,6 +39,7 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -81,6 +82,13 @@ class ChartOfAccountsController(
         ok(accountingService.account(code))
 
     @Operation(summary = "Update account")
+    @PatchMapping("/{code}")
+    fun patchUpdate(
+        @PathVariable code: String,
+        @Valid @RequestBody request: UpdateAccountRequest,
+    ): ResponseEntity<ApiResponse<AccountView>> =
+        update(code, request)
+
     @PutMapping("/{code}")
     fun update(
         @PathVariable code: String,
@@ -171,6 +179,13 @@ class TreasuriesController(
         ok(accountingService.treasury(id))
 
     @Operation(summary = "Update treasury")
+    @PatchMapping("/{id}")
+    fun patchUpdate(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: UpdateTreasuryRequest,
+    ): ResponseEntity<ApiResponse<TreasuryView>> =
+        update(id, request)
+
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: UUID,
@@ -232,6 +247,13 @@ class ExpensesController(
         ok(accountingService.expense(id))
 
     @Operation(summary = "Update expense")
+    @PatchMapping("/{id}")
+    fun patchUpdate(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: UpdateExpenseRequest,
+    ): ResponseEntity<ApiResponse<ExpenseView>> =
+        update(id, request)
+
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: UUID,
@@ -271,6 +293,13 @@ class ChecksController(
         ok(accountingService.check(id))
 
     @Operation(summary = "Update check")
+    @PatchMapping("/{id}")
+    fun patchUpdate(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: UpdateCheckRequest,
+    ): ResponseEntity<ApiResponse<CheckView>> =
+        update(id, request)
+
     @PutMapping("/{id}")
     fun update(
         @PathVariable id: UUID,

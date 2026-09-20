@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
@@ -67,6 +68,14 @@ class SupplierController(
         ok(purchasingService.getSupplier(id))
 
     @Operation(summary = "Update supplier")
+    @PatchMapping(PurchasingRoutes.SUPPLIER_BY_ID)
+    fun patchUpdate(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: SupplierUpdateRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<SupplierView>> =
+        update(id, request, principal)
+
     @PutMapping(PurchasingRoutes.SUPPLIER_BY_ID)
     fun update(
         @PathVariable id: UUID,

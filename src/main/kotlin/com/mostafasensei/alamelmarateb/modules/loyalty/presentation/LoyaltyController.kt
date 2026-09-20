@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Positive
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
@@ -41,13 +42,13 @@ class LoyaltyController(
 
     @Operation(summary = "My points balance")
     @GetMapping
-    fun balance(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<LoyaltyBalance>> =
-        ok(loyaltyService.balance(principal.id))
+    fun balance(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<LoyaltyBalance>> =
+        ok(loyaltyService.balance(principal?.id ?: throw BadCredentialsException("missing authentication")))
 
     @Operation(summary = "My points ledger")
     @GetMapping("/ledger")
-    fun ledger(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<List<LoyaltyEntry>>> =
-        ok(loyaltyService.ledger(principal.id))
+    fun ledger(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<List<LoyaltyEntry>>> =
+        ok(loyaltyService.ledger(principal?.id ?: throw BadCredentialsException("missing authentication")))
 
     @Operation(summary = "Quote redemption value (validates balance)")
     @PostMapping("/quote")

@@ -10,4 +10,5 @@ import java.util.UUID
 interface PasswordResetTokenRepository : JpaRepository<PasswordResetTokenJpaEntity, UUID> {
     fun findByTokenHash(tokenHash: String): Optional<PasswordResetTokenJpaEntity>
     fun deleteByUserId(userId: UUID)
+    fun deleteByUserIdAndIdNot(userId: UUID, id: UUID)
 }

@@ -25,12 +25,14 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.BadCredentialsException
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PatchMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
@@ -48,8 +50,8 @@ class DeliveryDriverController(
 
     @Operation(summary = "My delivery trips")
     @GetMapping(DeliveryRoutes.MY_TRIPS)
-    fun myTrips(@AuthenticationPrincipal principal: UserPrincipal): ResponseEntity<ApiResponse<List<TripView>>> =
-        ok(deliveryService.myTrips(principal.id))
+    fun myTrips(@AuthenticationPrincipal principal: UserPrincipal?): ResponseEntity<ApiResponse<List<TripView>>> =
+        ok(deliveryService.myTrips(principal?.id ?: throw BadCredentialsException("missing authentication")))
 
     @Operation(summary = "Stops of a trip")
     @GetMapping(DeliveryRoutes.TRIP_STOPS)
@@ -134,6 +136,14 @@ class DeliveryManagerController(
 
     @Operation(summary = "Update vehicle")
     @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @PatchMapping(IdentityAdminRoutes.VEHICLE_BY_ID)
+    fun patchUpdateVehicle(
+        @PathVariable id: UUID,
+        @Valid @RequestBody request: VehicleUpdateRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
+    ): ResponseEntity<ApiResponse<VehicleView>> =
+        updateVehicle(id, request, principal)
+
     @PutMapping(IdentityAdminRoutes.VEHICLE_BY_ID)
     fun updateVehicle(
         @PathVariable id: UUID,
