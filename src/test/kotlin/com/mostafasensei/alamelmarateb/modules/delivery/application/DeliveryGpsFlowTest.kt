@@ -61,12 +61,12 @@ class DeliveryGpsFlowTest {
         val customerId = UUID.randomUUID()
         committed(
             "INSERT INTO users (id, full_name, phone_number, password_hash) VALUES (?, ?, ?, ?)",
-            customerId, "Customer", "01055$suffix".take(11), "hash",
+            customerId, "Customer", "010" + UUID.randomUUID().toString().replace("-", "").take(8), "hash",
         )
         val driverId = UUID.randomUUID()
         committed(
             "INSERT INTO users (id, full_name, phone_number, password_hash) VALUES (?, ?, ?, ?)",
-            driverId, "Driver", "01044$suffix".take(11), "hash",
+            driverId, "Driver", "010" + UUID.randomUUID().toString().replace("-", "").take(8), "hash",
         )
         val warehouse = warehouseService.create(branchId, "GPS WH", "GWH-$suffix")
         val category = catalogService.createCategory(ProductCategory(name = "GPS Cat", slug = "gps-cat-$suffix"))

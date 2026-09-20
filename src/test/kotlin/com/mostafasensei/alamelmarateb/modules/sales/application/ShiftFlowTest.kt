@@ -52,7 +52,7 @@ class ShiftFlowTest {
         val cashierId = UUID.randomUUID()
         committed(
             "INSERT INTO users (id, full_name, phone_number, password_hash) VALUES (?, ?, ?, ?)",
-            cashierId, "Cashier", "01088$suffix".take(11), "hash",
+            cashierId, "Cashier", "010" + UUID.randomUUID().toString().replace("-", "").take(8), "hash",
         )
         val warehouse = warehouseService.create(branchId, "Shift WH", "SWH-$suffix")
         val category = catalogService.createCategory(ProductCategory(name = "Shift Cat", slug = "shift-cat-$suffix"))

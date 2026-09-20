@@ -36,7 +36,8 @@ data class BracketView(
  * Variable pricing tables (no hardcoded ratios):
  * - meter price per (model, shape), falling back to the product's generic
  *   price_per_meter;
- * - operating brackets global, or per-model overrides when rows exist.
+ * - operating brackets: model rows overlay the global table (a model range
+ *   wins for its own span, other widths fall back to global).
  */
 @Service
 class CustomSizeService(

@@ -62,7 +62,7 @@ class CatalogExtraFlowTest {
         val customerId = UUID.randomUUID()
         committed(
             "INSERT INTO users (id, full_name, phone_number, password_hash) VALUES (?, ?, ?, ?)",
-            customerId, "Reviewer", "01099$suffix".take(11), "hash",
+            customerId, "Reviewer", "010" + UUID.randomUUID().toString().replace("-", "").take(8), "hash",
         )
         val warehouse = warehouseService.create(branchId, "Cat WH", "CWH-$suffix")
 

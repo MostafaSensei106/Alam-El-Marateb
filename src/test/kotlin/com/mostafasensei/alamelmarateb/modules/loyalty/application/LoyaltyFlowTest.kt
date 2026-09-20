@@ -55,7 +55,7 @@ class LoyaltyFlowTest {
         val customerId = UUID.randomUUID()
         committed(
             "INSERT INTO users (id, full_name, phone_number, password_hash) VALUES (?, ?, ?, ?)",
-            customerId, "Loyal", "01077$suffix".take(11), "hash",
+            customerId, "Loyal", "010" + UUID.randomUUID().toString().replace("-", "").take(8), "hash",
         )
         val warehouse = warehouseService.create(branchId, "Loy WH", "LWH-$suffix")
         val category = catalogService.createCategory(ProductCategory(name = "Loy Cat", slug = "loy-cat-$suffix"))
