@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.modules.security.presentation
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
+import com.mostafasensei.alamelmarateb.core.i18n.MessageService
 import com.mostafasensei.alamelmarateb.core.router.AuthRoutes
 import com.mostafasensei.alamelmarateb.core.router.IdentityAdminRoutes
 import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
@@ -15,6 +16,7 @@ import com.mostafasensei.alamelmarateb.modules.security.application.TokenPair
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.Size
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -105,14 +107,14 @@ class AuthController(
     @PostMapping("/forgot-password")
     fun forgotPassword(@RequestBody request: ForgotPasswordRequest): ResponseEntity<ApiResponse<Nothing>> {
         authService.forgotPassword(request.phone)
-        return ok(null)
+        return ok(null, MessageService.t("auth.reset_sent"))
     }
 
     @Operation(summary = "Reset password with a single-use token")
     @PostMapping("/reset-password")
     fun resetPassword(@RequestBody request: ResetPasswordRequest): ResponseEntity<ApiResponse<Nothing>> {
         authService.resetPassword(request.token, request.newPassword)
-        return ok(null)
+        return ok(null, MessageService.t("auth.reset_done"))
     }
 
     @Operation(summary = "Change password (kills all other sessions)")
@@ -122,7 +124,7 @@ class AuthController(
         @RequestBody request: ChangePasswordRequest,
     ): ResponseEntity<ApiResponse<Nothing>> {
         authService.changePassword(principal.id, request.currentPassword, request.newPassword)
-        return ok(null)
+        return ok(null, MessageService.t("auth.password_changed"))
     }
 
     @Operation(summary = "My profile")

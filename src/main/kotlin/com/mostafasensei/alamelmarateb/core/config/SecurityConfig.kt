@@ -52,6 +52,8 @@ class SecurityConfig (
             .authorizeHttpRequests { auth ->
                 auth
                     // Public: auth + storefront browsing
+                    // (change-password stays authenticated despite the /auth prefix)
+                    .requestMatchers("$v1/auth/change-password").authenticated()
                     .requestMatchers("$v1/auth/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "$v1/catalog/public/**").permitAll()
                     .requestMatchers(HttpMethod.POST, "$v1/catalog/public/quiz/**").permitAll()

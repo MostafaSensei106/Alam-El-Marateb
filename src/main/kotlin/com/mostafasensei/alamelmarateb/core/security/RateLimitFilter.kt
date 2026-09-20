@@ -66,7 +66,11 @@ class RateLimitFilter(
 
     private fun limitFor(request: HttpServletRequest): Int? {
         val uri = request.requestURI
-        if (request.method == "POST" && (uri.endsWith("/auth/login") || uri.endsWith("/auth/refresh"))) {
+        if (request.method == "POST" && (
+            uri.endsWith("/auth/login") || uri.endsWith("/auth/refresh") ||
+                uri.endsWith("/auth/forgot-password") || uri.endsWith("/auth/reset-password")
+            )
+        ) {
             return loginPerMinute
         }
         if (request.method == "POST" && uri.endsWith("/shop/checkout/price-preview")) {
