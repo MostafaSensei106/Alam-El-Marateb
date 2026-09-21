@@ -9,3 +9,6 @@ workspace:
 - apps/staff
 - apps/admin
 - apps/e_commerce
+
+- packages/core/network
+- packages/modules/
