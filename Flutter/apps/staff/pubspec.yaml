@@ -1,5 +1,6 @@
 resolution: workspace
 name: staff
+description: Alam El Marateb Staff app.
 publish_to: none
 environment:
   sdk: ^3.6.0

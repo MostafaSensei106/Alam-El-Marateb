@@ -1,5 +1,6 @@
 resolution: workspace
 name: customer
+description: Alam El Marateb Customer app.
 publish_to: none
 environment:
   sdk: ^3.6.0

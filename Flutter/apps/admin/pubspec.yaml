@@ -1,5 +1,6 @@
 resolution: workspace
 name: admin
+description: Alam El Marateb Admin app.
 publish_to: none
 environment:
   sdk: ^3.6.0
