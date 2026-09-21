@@ -61,7 +61,7 @@ final class PagedResponse<T> {
 
   factory PagedResponse.fromJson(
     Map<String, dynamic> json,
-    T Function(Map<String, dynamic> item) fromItem,
+    T Function(Object? item) fromItem,
   ) => _$PagedResponseFromJson(json, fromItem);
 
   final List<T> items;

@@ -161,3 +161,23 @@ final class ShippingEstimateDto {
 
   double get total => deliveryFee + carryUpFee;
 }
+
+/// Backend live-GPS envelope for public order tracking
+/// (`GET /api/v1/shop/orders/track/{trackingNumber}/location`).
+@JsonSerializable()
+final class TrackingLocationDto {
+  const TrackingLocationDto({
+    this.lat = 0.0,
+    this.lng = 0.0,
+    this.recordedAt,
+  });
+
+  factory TrackingLocationDto.fromJson(Map<String, dynamic> json) =>
+      _$TrackingLocationDtoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$TrackingLocationDtoToJson(this);
+
+  final double lat;
+  final double lng;
+  final String? recordedAt;
+}

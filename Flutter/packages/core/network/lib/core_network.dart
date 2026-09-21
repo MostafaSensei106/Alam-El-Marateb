@@ -17,4 +17,5 @@ export 'src/interceptors/idempotency_interceptor.dart';
 export 'src/interceptors/lang_interceptor.dart';
 export 'src/interceptors/logging_interceptor.dart';
 export 'src/network_info.dart';
+export 'src/payloads.dart';
 export 'src/request_deduplicator.dart';
