@@ -17,7 +17,7 @@ final class RequestDeduplicator {
     try {
       return await future;
     } finally {
-      _inFlight.remove(key);
+      _inFlight.removeWhere((k, _) => k == key);
     }
   }
 }

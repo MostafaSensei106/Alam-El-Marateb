@@ -18,7 +18,7 @@ dependencies:
   core_notifications: {path: ../../packages/core/notifications}
   core_files: {path: ../../packages/core/files}
   design_system: {path: ../../packages/core/design_system}
-  api_client: {path: ../../packages/core/api_client}
+  api_services: {path: ../../packages/core/api}
   auth: {path: ../../packages/modules/auth}
   catalog: {path: ../../packages/modules/catalog}
   orders: {path: ../../packages/modules/orders}

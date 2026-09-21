@@ -4,7 +4,7 @@
 /// `core/networking` architecture but targeting the new backend
 /// (`/api/v1`, [ApiResponse] envelope, `X-Lang`, `Idempotency-Key`,
 /// `X-Trace-Id`, ETag conditional GET).
-library core_network;
+library;
 
 export 'src/api_exception.dart';
 export 'src/api_executor.dart';

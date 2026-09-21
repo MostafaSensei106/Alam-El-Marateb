@@ -2,7 +2,7 @@
   "roots": [
     "admin",
     "alam_el_marateb",
-    "api_client",
+    "api_services",
     "auth",
     "catalog",
     "core_auth",
@@ -31,7 +31,7 @@
       "name": "staff",
       "version": "0.0.0",
       "dependencies": [
-        "api_client",
+        "api_services",
         "auth",
         "core_auth",
         "core_files",
@@ -65,7 +65,7 @@
       "name": "customer",
       "version": "0.0.0",
       "dependencies": [
-        "api_client",
+        "api_services",
         "auth",
         "catalog",
         "core_auth",
@@ -95,7 +95,7 @@
       "name": "admin",
       "version": "0.0.0",
       "dependencies": [
-        "api_client",
+        "api_services",
         "auth",
         "catalog",
         "core_auth",
@@ -261,7 +261,7 @@
       ]
     },
     {
-      "name": "api_client",
+      "name": "api_services",
       "version": "0.0.0",
       "dependencies": [
         "core_network",
@@ -283,7 +283,7 @@
       "name": "auth",
       "version": "0.0.0",
       "dependencies": [
-        "api_client",
+        "api_services",
         "core_network",
         "core_utils",
         "design_system",
@@ -306,7 +306,7 @@
       "name": "catalog",
       "version": "0.0.0",
       "dependencies": [
-        "api_client",
+        "api_services",
         "core_network",
         "core_utils",
         "design_system",
@@ -329,7 +329,7 @@
       "name": "pos",
       "version": "0.0.0",
       "dependencies": [
-        "api_client",
+        "api_services",
         "core_network",
         "core_utils",
         "design_system",
@@ -352,7 +352,7 @@
       "name": "inventory",
       "version": "0.0.0",
       "dependencies": [
-        "api_client",
+        "api_services",
         "core_network",
         "core_utils",
         "design_system",
@@ -375,7 +375,7 @@
       "name": "delivery",
       "version": "0.0.0",
       "dependencies": [
-        "api_client",
+        "api_services",
         "core_network",
         "core_utils",
         "design_system",
@@ -398,7 +398,7 @@
       "name": "orders",
       "version": "0.0.0",
       "dependencies": [
-        "api_client",
+        "api_services",
         "core_network",
         "core_utils",
         "design_system",
@@ -421,7 +421,7 @@
       "name": "crm",
       "version": "0.0.0",
       "dependencies": [
-        "api_client",
+        "api_services",
         "core_network",
         "core_utils",
         "design_system",

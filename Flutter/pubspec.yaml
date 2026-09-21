@@ -13,7 +13,7 @@ workspace:
 - packages/core/notifications
 - packages/core/files
 - packages/core/design_system
-- packages/core/api_client
+- packages/core/api
 - packages/modules/auth
 - packages/modules/catalog
 - packages/modules/pos

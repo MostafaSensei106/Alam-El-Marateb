@@ -9,8 +9,8 @@ dependencies:
   freezed_annotation: ^3.1.0
   json_annotation: ^4.11.0
   get_it: ^9.2.1
-  api_client:
-    path: ../../core/api_client
+  api_services:
+    path: ../../core/api
   core_utils:
     path: ../../core/utils
   core_network:

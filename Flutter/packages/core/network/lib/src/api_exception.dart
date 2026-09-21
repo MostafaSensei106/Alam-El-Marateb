@@ -184,7 +184,7 @@ abstract final class ApiErrorHandler {
     final errorType = _errorTypeFromStatus(statusCode);
     final data = response?.data;
 
-    String? traceId = response?.headers['X-Trace-Id']?.firstOrNull;
+    final traceId = response?.headers['X-Trace-Id']?.firstOrNull;
 
     // 1. Structured `ApiResponse` error body.
     if (data is Map) {

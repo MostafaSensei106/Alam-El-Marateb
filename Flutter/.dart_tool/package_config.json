@@ -1634,8 +1634,8 @@
       "languageVersion": "3.6"
     },
     {
-      "name": "api_client",
-      "rootUri": "../packages/core/api_client",
+      "name": "api_services",
+      "rootUri": "../packages/core/api",
       "packageUri": "lib/",
       "languageVersion": "3.6"
     },
