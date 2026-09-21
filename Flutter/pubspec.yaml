@@ -3,24 +3,24 @@ publish_to: none
 environment:
   sdk: ^3.6.0
 workspace:
-  - apps/staff
-  - apps/customer
-  - apps/admin
-  - packages/core/network
-  - packages/core/storage
-  - packages/core/utils
-  - packages/core/auth
-  - packages/core/notifications
-  - packages/core/files
-  - packages/design_system
-  - packages/api_client
-  - packages/modules/auth
-  - packages/modules/catalog
-  - packages/modules/pos
-  - packages/modules/inventory
-  - packages/modules/delivery
-  - packages/modules/orders
-  - packages/modules/crm
+- apps/staff
+- apps/customer
+- apps/admin
+- packages/core/network
+- packages/core/storage
+- packages/core/utils
+- packages/core/auth
+- packages/core/notifications
+- packages/core/files
+- packages/core/design_system
+- packages/core/api_client
+- packages/modules/auth
+- packages/modules/catalog
+- packages/modules/pos
+- packages/modules/inventory
+- packages/modules/delivery
+- packages/modules/orders
+- packages/modules/crm
 
 dependency_overrides:
   intl: ^0.20.3

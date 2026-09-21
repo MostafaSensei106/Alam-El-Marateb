@@ -1629,13 +1629,13 @@
     },
     {
       "name": "design_system",
-      "rootUri": "../packages/design_system",
+      "rootUri": "../packages/core/design_system",
       "packageUri": "lib/",
       "languageVersion": "3.6"
     },
     {
       "name": "api_client",
-      "rootUri": "../packages/api_client",
+      "rootUri": "../packages/core/api_client",
       "packageUri": "lib/",
       "languageVersion": "3.6"
     },
