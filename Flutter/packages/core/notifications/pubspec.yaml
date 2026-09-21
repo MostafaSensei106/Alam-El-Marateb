@@ -1,0 +1,15 @@
+name: core_notifications
+resolution: workspace
+environment:
+  sdk: ^3.6.0
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^4.10.0
+  firebase_messaging: ^16.3.0
+  firebase_crashlytics: ^5.2.4
+  firebase_analytics: ^12.4.5
+  firebase_performance: ^0.11.4+5
+  flutter_local_notifications: ^22.0.1
+dev_dependencies:
+  flutter_lints: ^6.0.0

@@ -1,0 +1,16 @@
+# Dart / Flutter
+.dart_tool/
+.build/
+build/
+*.g.dart
+*.freezed.dart
+ios/Pods/
+ios/.symlinks/
+android/.gradle/
+android/local.properties
+*.iml
+.idea/
+.vscode/
+.DS_Store
+melos_mate/
+coverage/
