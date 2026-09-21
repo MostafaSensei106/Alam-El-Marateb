@@ -1,27 +1,30 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'api_response.g.dart';
+
+/// Normalizes the backend `errors` field: `List<String>` on this backend,
+/// tolerating legacy `Map<String, List<String>>` bodies.
+List<String> parseApiErrors(Object? raw) {
+  if (raw == null) return const [];
+  if (raw is List) return raw.map((e) => e.toString()).toList();
+  if (raw is Map) {
+    return raw.values
+        .expand((v) => v is List ? v : [v])
+        .map((e) => e.toString())
+        .toList();
+  }
+  return [raw.toString()];
+}
+
 /// Typed envelope matching the backend `ApiResponse<T>`.
 ///
-/// Backend shape (Kotlin `ApiResponse`):
-/// ```json
-/// {
-///   "success": true,
-///   "message": "...",
-///   "data": {...},
-///   "errors": ["..."],
-///   "traceId": "abc123",
-///   "timestamp": "2026-09-20T14:32:00Z"
-/// }
-/// ```
-///
-/// Notes:
-/// - `timestamp` and `traceId` are metadata only: never use them for ETag
-///   hashing or business logic (backend computes stable ETags without them).
-/// - `errors` is `List<String>` on this backend. For forward-compat with
-///   Hadidi-style `Map<String, List<String>>` bodies, both are accepted and
-///   normalized to a flat list.
+/// `timestamp` / `traceId` are metadata only (backend excludes them from
+/// stable ETag hashes).
+@JsonSerializable(genericArgumentFactories: true, createToJson: false)
 final class ApiResponse<T> {
   const ApiResponse({
-    required this.success,
-    required this.message,
+    this.success = false,
+    this.message = '',
     this.data,
     this.errors = const [],
     this.traceId,
@@ -31,64 +34,35 @@ final class ApiResponse<T> {
   factory ApiResponse.fromJson(
     Map<String, dynamic> json,
     T Function(Object? data) fromData,
-  ) {
-    return ApiResponse(
-      success: json['success'] as bool? ?? false,
-      message: json['message'] as String? ?? '',
-      data: json.containsKey('data') && json['data'] != null
-          ? fromData(json['data'])
-          : null,
-      errors: _parseErrors(json['errors']),
-      traceId: json['traceId'] as String?,
-      timestamp: json['timestamp'] as String?,
-    );
-  }
+  ) => _$ApiResponseFromJson(json, fromData);
 
   final bool success;
   final String message;
   final T? data;
+
+  @JsonKey(fromJson: parseApiErrors)
   final List<String> errors;
+
   final String? traceId;
   final String? timestamp;
-
-  static List<String> _parseErrors(Object? raw) {
-    if (raw == null) return const [];
-    if (raw is List) return raw.map((e) => e.toString()).toList();
-    if (raw is Map) {
-      return raw.values
-          .expand((v) => v is List ? v : [v])
-          .map((e) => e.toString())
-          .toList();
-    }
-    return [raw.toString()];
-  }
 }
 
-/// Paginated wrapper matching backend `PagedResponse<T>`.
+/// Paginated wrapper matching backend `PagedResponse<T>`
+/// (`items`, `page`, `size`, `totalElements`, `totalPages`).
+@JsonSerializable(genericArgumentFactories: true, createToJson: false)
 final class PagedResponse<T> {
   const PagedResponse({
-    required this.items,
-    required this.page,
-    required this.size,
-    required this.totalElements,
-    required this.totalPages,
+    this.items = const [],
+    this.page = 0,
+    this.size = 0,
+    this.totalElements = 0,
+    this.totalPages = 0,
   });
 
   factory PagedResponse.fromJson(
     Map<String, dynamic> json,
     T Function(Map<String, dynamic> item) fromItem,
-  ) {
-    final rawItems = json['items'] as List? ?? const [];
-    return PagedResponse(
-      items: rawItems
-          .map((e) => fromItem(Map<String, dynamic>.from(e as Map)))
-          .toList(),
-      page: (json['page'] as num?)?.toInt() ?? 0,
-      size: (json['size'] as num?)?.toInt() ?? rawItems.length,
-      totalElements: (json['totalElements'] as num?)?.toInt() ?? rawItems.length,
-      totalPages: (json['totalPages'] as num?)?.toInt() ?? 1,
-    );
-  }
+  ) => _$PagedResponseFromJson(json, fromItem);
 
   final List<T> items;
   final int page;

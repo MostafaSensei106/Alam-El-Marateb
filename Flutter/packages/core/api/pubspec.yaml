@@ -1,4 +1,4 @@
-name: api_client
+name: api_services
 resolution: workspace
 environment:
   sdk: ^3.6.0
