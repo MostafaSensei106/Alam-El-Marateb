@@ -1,0 +1,82 @@
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+
+  errors:
+    missing_return: error
+    dead_code: error
+    unused_import: warning
+    unused_local_variable: warning
+    unused_element: error
+    invalid_assignment: error
+    override_on_non_overriding_member: error
+    avoid_print: error
+
+    todo: info
+
+  exclude:
+  - "**/*.g.dart"
+  - "**/*.freezed.dart"
+  - "**/*.gr.dart"
+  - "lib/l10n/**"
+  - "lib/generated/**"
+  - build/**
+  - android/**
+  - ios/**
+  - web/**
+  - windows/**
+  - macos/**
+  - linux/**
+
+linter:
+  rules:
+    prefer_single_quotes: true
+    file_names: true
+    directives_ordering: true
+    prefer_relative_imports: true
+    unnecessary_this: true
+    unnecessary_brace_in_string_interps: true
+    curly_braces_in_flow_control_structures: true
+    annotate_overrides: true
+
+    prefer_const_constructors: true
+    prefer_const_declarations: true
+    prefer_const_literals_to_create_immutables: true
+    avoid_unnecessary_containers: true
+    prefer_collection_literals: true
+
+    always_declare_return_types: true
+    avoid_dynamic_calls: true
+    avoid_type_to_string: true
+    unnecessary_null_checks: true
+    null_check_on_nullable_type_parameter: true
+    tighten_type_of_initializing_formals: true
+
+    sort_constructors_first: true
+    sort_unnamed_constructors_first: true
+    always_put_required_named_parameters_first: true
+    prefer_final_locals: true
+    prefer_final_fields: true
+    omit_local_variable_types: true
+
+    use_key_in_widget_constructors: true
+    use_full_hex_values_for_flutter_colors: true
+    avoid_redundant_argument_values: true
+    use_function_type_syntax_for_parameters: true
+    avoid_setters_without_getters: true
+
+    avoid_void_async: true
+    await_only_futures: true
+    unawaited_futures: true
+    discarded_futures: true
+    no_duplicate_case_values: true
+    only_throw_errors: true
+    depend_on_referenced_packages: true
+
+    camel_case_types: true
+    library_names: true
+    non_constant_identifier_names: true
+    constant_identifier_names: true

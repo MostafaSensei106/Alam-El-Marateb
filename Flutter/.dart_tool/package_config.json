@@ -1,0 +1,16 @@
+{
+  "configVersion": 2,
+  "packages": [
+    {
+      "name": "alam_el_marateb",
+      "rootUri": "../",
+      "packageUri": "lib/",
+      "languageVersion": "3.13"
+    }
+  ],
+  "generator": "pub",
+  "generatorVersion": "3.13.4",
+  "flutterRoot": "file:///home/ottafa/flutter",
+  "flutterVersion": "3.47.5",
+  "pubCache": "file:///home/ottafa/.pub-cache"
+}

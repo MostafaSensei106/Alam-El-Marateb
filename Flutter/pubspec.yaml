@@ -1,0 +1,11 @@
+name: alam_el_marateb
+description: A new Flutter project.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+environment:
+  sdk: ^3.13.4
+
+workspace:
+- apps/staff
+- apps/admin
+- apps/e_commerce

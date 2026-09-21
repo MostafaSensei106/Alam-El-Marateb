@@ -1,0 +1,14 @@
+{
+  "roots": [
+    "alam_el_marateb"
+  ],
+  "packages": [
+    {
+      "name": "alam_el_marateb",
+      "version": "0.0.0",
+      "dependencies": [],
+      "devDependencies": []
+    }
+  ],
+  "configVersion": 1
+}

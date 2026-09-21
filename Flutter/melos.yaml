@@ -1,0 +1,24 @@
+name: alam_el_marateb
+packages:
+- apps/**
+- packages/**
+
+scripts:
+  analyze:
+    run: dart analyze .
+    exec:
+      concurrency: 5
+
+  generate:
+    run: dart run build_runner build --delete-conflicting-outputs
+    exec:
+      concurrency: 1
+
+  format:
+    run: dart format .
+
+  fix:
+    run: dart fix --apply
+
+  test:
+    run: flutter test
