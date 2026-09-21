@@ -2,18 +2,13 @@ import 'package:dio/dio.dart';
 import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:uuid/uuid.dart';
 
-import 'api_exception.dart';
 import 'interceptors/auth_interceptor.dart';
+import 'interceptors/connectivity_interceptor.dart';
 import 'interceptors/etag_interceptor.dart';
 import 'interceptors/idempotency_interceptor.dart';
 import 'interceptors/lang_interceptor.dart';
 import 'interceptors/logging_interceptor.dart';
 import 'network_info.dart';
-
-export 'interceptors/connectivity_interceptor.dart'
-    show DioConnectivityInterceptor;
-
-import 'interceptors/connectivity_interceptor.dart';
 
 /// Builds the shared Dio instance.
 ///
@@ -80,8 +75,7 @@ final class DioFactory {
         tokenProvider: tokenProvider,
         shouldRefresh: onRefreshToken,
         onSessionExpired: onSessionExpired,
-        isAuthEndpoint:
-            isAuthEndpoint ?? ((path) => path.contains('/auth/')),
+        isAuthEndpoint: isAuthEndpoint ?? ((path) => path.contains('/auth/')),
       ),
     );
     if (languageProvider != null) {
@@ -100,7 +94,7 @@ final class DioFactory {
 ///
 /// The backend echoes it back and includes it in `ApiResponse.traceId`.
 /// Send our ID when starting a trace; the server reuses it for log
-/// correlation. Falls back to reading [ApiException.traceId] from errors.
+/// correlation. Falls back to reading `ApiException.traceId` from errors.
 final class _TraceIdInterceptor extends Interceptor {
   _TraceIdInterceptor({Uuid? uuid}) : _uuid = uuid ?? const Uuid();
 

@@ -11,6 +11,7 @@ export 'src/api_executor.dart';
 export 'src/api_response.dart';
 export 'src/dio_client.dart';
 export 'src/interceptors/auth_interceptor.dart';
+export 'src/interceptors/connectivity_interceptor.dart';
 export 'src/interceptors/etag_interceptor.dart';
 export 'src/interceptors/idempotency_interceptor.dart';
 export 'src/interceptors/lang_interceptor.dart';

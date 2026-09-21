@@ -1,15 +1,9 @@
 import 'dart:io';
 
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_smart_retry/dio_smart_retry.dart';
 
-import 'network_info/interface_placeholder.dart'
-    if (dart.library.io) 'network_info.dart';
-
-export 'network_info.dart';
-
-export 'network_info.dart';
+import '../network_info.dart';
 
 /// Intercepts every request to:
 /// 1. Block immediately when no adapter is on (typed `connectionError`,
