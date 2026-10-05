@@ -4,7 +4,14 @@ description: Alam El Marateb core_storage package.
 publish_to: none
 environment:
   sdk: ^3.13.2
-dependencies: {}
+dependencies:
+  flutter_secure_storage: ^11.0.0
+  injectable: ^3.0.0
+  shared_preferences: ^2.5.5
+  core_utils:
+    path: ../utils
+  flutter:
+    sdk: flutter
 dev_dependencies:
   lints: ^6.0.0
   test: ^1.26.3

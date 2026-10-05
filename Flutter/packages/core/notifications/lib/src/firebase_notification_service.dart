@@ -4,15 +4,10 @@ import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
-import 'package:injectable/injectable.dart';
-
-import '../../../modules/notifications/logic/cubit/notification_cubit.dart';
-import '../../constants/pref_keys.dart';
 import 'package:core_utils/core_utils.dart';
-import '../../networking/api_service/api_service.dart';
-import '../../services/shared_prefs/base_pref_storage_service.dart';
-import '../permissions/base_permission_service.dart';
-import '../shared_prefs/storage_facade.dart';
+import 'package:core_utils/core_utils.dart';
+import 'package:core_utils/core_utils.dart';
+import 'package:core_storage/core_storage.dart';
 import 'base_local_notification_service.dart';
 import 'base_notification_service.dart';
 import 'notification_navigation_helper.dart';
@@ -22,21 +17,24 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   log('Handling a background message: ${message.messageId}');
 }
 
-@LazySingleton(as: BaseNotificationService)
 class FirebaseNotificationService implements BaseNotificationService {
   FirebaseNotificationService(
     this._permissionService,
     this._storageService,
     this._localNotificationService,
     this._navigationHelper,
-    this._messaging,
-  );
+    this._messaging, [
+    this._onForegroundMessage,
+    this._onSendToken,
+  ]);
 
   final BasePermissionService _permissionService;
   final StorageFacade _storageService;
   final BaseLocalNotificationService _localNotificationService;
   final NotificationNavigationHelper _navigationHelper;
   final FirebaseMessaging _messaging;
+  final Future<void> Function()? _onForegroundMessage;
+  final Future<void> Function(String fcmToken)? _onSendToken;
 
   @override
   Future<void> initialize() async {
@@ -66,10 +64,8 @@ class FirebaseNotificationService implements BaseNotificationService {
       log('Got a message in the foreground!');
       log('Message data: ${message.data}');
 
-      // If the app is open, refresh the notifications cubit to update the badge/list in real-time
-      if (getIt.isRegistered<NotificationCubit>()) {
-        unawaited(getIt<NotificationCubit>().loadNextPage(isRefresh: true));
-      }
+      // If the app is open, let it refresh badges/lists in real-time.
+      await _onForegroundMessage?.call();
 
       // Show local notification for Android (since iOS shows it automatically via setForegroundNotificationPresentationOptions)
       if (Platform.isAndroid) {
@@ -161,7 +157,7 @@ class FirebaseNotificationService implements BaseNotificationService {
 
   @override
   Future<void> setNotificationsEnabled(bool enabled) async {
-    await getIt<BasePrefStorageService>().setData<bool>(
+    await _storageService.setData<bool>(
       key: PrefKeys.notificationsEnabled,
       value: enabled,
     );
@@ -190,7 +186,7 @@ class FirebaseNotificationService implements BaseNotificationService {
 
   @override
   Future<bool> isNotificationsEnabled() async {
-    final enabled = await getIt<BasePrefStorageService>().getData<bool>(
+    final enabled = await _storageService.getData<bool>(
       key: PrefKeys.notificationsEnabled,
     );
     return enabled ?? true;
@@ -205,12 +201,12 @@ class FirebaseNotificationService implements BaseNotificationService {
     if (fcmToken == null || fcmToken.isEmpty) return;
 
     try {
-      final userToken = await getIt<BasePrefStorageService>().getData<String>(
+      final userToken = await _storageService.getData<String>(
         key: PrefKeys.userToken,
       );
       if (userToken != null && userToken.isNotEmpty) {
         log('Sending FCM token to backend...');
-        await getIt<ApiService>().updateFcmToken({'fcm_token': fcmToken});
+        await _onSendToken?.call(fcmToken);
         log('FCM token sent to backend successfully!');
       } else {
         log('User is not authenticated. Skip sending FCM token.');

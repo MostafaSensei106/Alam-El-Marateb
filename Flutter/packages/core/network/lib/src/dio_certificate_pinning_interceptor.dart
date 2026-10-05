@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:http_certificate_pinning/http_certificate_pinning.dart';
 
-import '../constants/security_configs.dart';
+import 'package:core_utils/core_utils.dart';
 
 /// Certificate pinning interceptor.
 ///

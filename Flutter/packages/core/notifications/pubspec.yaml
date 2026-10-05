@@ -4,7 +4,16 @@ description: Alam El Marateb core_notifications package.
 publish_to: none
 environment:
   sdk: ^3.13.2
-dependencies: {}
+dependencies:
+  firebase_messaging: ^16.3.0
+  flutter_local_notifications: ^22.0.1
+  injectable: ^3.0.0
+  core_storage:
+    path: ../storage
+  core_utils:
+    path: ../utils
+  flutter:
+    sdk: flutter
 dev_dependencies:
   lints: ^6.0.0
   test: ^1.26.3
