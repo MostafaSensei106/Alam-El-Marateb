@@ -14,4 +14,9 @@ object PurchasingRoutes {
     const val PURCHASE_ORDER_BY_ID = "$PREFIX/purchase-orders/{id}"
     const val RECEIVE_GOODS = "$PREFIX/purchase-orders/{id}/receive"
     const val SUPPLIER_PAYMENTS = "$PREFIX/supplier-payments"
+    const val SHIPMENTS = "$PREFIX/shipments"
+    const val SUPPLIER_INVOICES = "$PREFIX/supplier-invoices"
+    const val SUPPLIER_INVOICE_ALLOCATE = "$PREFIX/supplier-invoices/{id}/allocate"
+    const val SUPPLIER_INVOICE_PAY = "$PREFIX/supplier-invoices/{id}/pay"
+    const val SUPPLIER_STATEMENT = "$PREFIX/suppliers/{id}/statement"
 }

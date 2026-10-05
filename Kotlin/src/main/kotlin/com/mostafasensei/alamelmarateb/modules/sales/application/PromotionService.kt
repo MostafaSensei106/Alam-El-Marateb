@@ -7,6 +7,8 @@ import com.mostafasensei.alamelmarateb.core.exceptions.ErrorDetail
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.core.exceptions.UnprocessableException
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
+import com.mostafasensei.alamelmarateb.modules.product.domain.service.SalesChannels
+import com.mostafasensei.alamelmarateb.modules.product.domain.service.SellingPriceService
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.PromotionBundleItemRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.PromotionRepository
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.PromotionBundleItemJpaEntity
@@ -60,6 +62,7 @@ class PromotionService(
     private val promotionRepository: PromotionRepository,
     private val bundleItemRepository: PromotionBundleItemRepository,
     private val variantRepository: ProductVariantRepository,
+    private val sellingPriceService: SellingPriceService,
     private val cache: RedisCache,
 ) {
 
@@ -136,14 +139,19 @@ class PromotionService(
         return preview
     }
 
-    fun resolveLines(items: List<Pair<UUID, Int>>): List<PreviewLine> {
+    fun resolveLines(items: List<Pair<UUID, Int>>): List<PreviewLine> =
+        resolveLines(items, "pos")
+
+    /** Channel-aware: pos -> STAFF price, shop -> PLATFORM price. */
+    fun resolveLines(items: List<Pair<UUID, Int>>, orderChannel: String): List<PreviewLine> {
         if (items.isEmpty()) throw UnprocessableException("error.promo.cart_empty")
+        val priceChannel = SalesChannels.forOrder(orderChannel)
         return items.map { (variantId, qty) ->
             if (qty <= 0) throw BadRequestException("error.promo.qty_positive")
             val variant = variantRepository.findById(variantId)
                 ?: throw NotFoundException("error.promo.unknown_variant", listOf(variantId))
             val productId = variant.productId ?: throw UnprocessableException("error.promo.variant_no_product", listOf(variantId))
-            PreviewLine(productId, variantId, qty, variant.sellingPrice)
+            PreviewLine(productId, variantId, qty, sellingPriceService.current(variantId, priceChannel))
         }
     }
 

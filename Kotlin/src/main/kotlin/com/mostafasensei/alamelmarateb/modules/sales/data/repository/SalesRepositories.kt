@@ -10,6 +10,7 @@ import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.DeliveryZoneJ
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.DeliveryZoneTranslationJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentPlanJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InvoiceJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.OrderItemBatchJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.OrderItemJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.OrderJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.PromotionBundleItemJpaEntity
@@ -42,6 +43,11 @@ interface OrderRepository : JpaRepository<OrderJpaEntity, UUID> {
 
 @Repository
 interface OrderItemRepository : JpaRepository<OrderItemJpaEntity, UUID>
+
+@Repository
+interface OrderItemBatchRepository : JpaRepository<OrderItemBatchJpaEntity, UUID> {
+    fun findByOrderItemId(orderItemId: UUID): List<OrderItemBatchJpaEntity>
+}
 
 @Repository
 interface InvoiceRepository : JpaRepository<InvoiceJpaEntity, UUID> {

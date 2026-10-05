@@ -10,12 +10,15 @@ import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.core.exceptions.UnprocessableException
+import com.mostafasensei.alamelmarateb.modules.inventory.application.InventoryBatchService
 import com.mostafasensei.alamelmarateb.modules.inventory.application.StockService
+import com.mostafasensei.alamelmarateb.modules.inventory.application.BatchConsumption
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.WarehouseRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.InstallmentPlanRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.InvoiceRepository
+import com.mostafasensei.alamelmarateb.modules.sales.data.repository.OrderItemBatchRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.OrderItemRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.OrderRepository
 import com.mostafasensei.alamelmarateb.modules.sales.data.repository.ReservationPaymentRepository
@@ -25,6 +28,7 @@ import com.mostafasensei.alamelmarateb.modules.sales.data.repository.ReturnRepos
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InstallmentPlanJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.InvoiceJpaEntity
+import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.OrderItemBatchJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.OrderItemJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.OrderJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.domain.entity.ReservationJpaEntity
@@ -97,6 +101,8 @@ class OrderService(
     private val installmentPlanRepository: InstallmentPlanRepository,
     private val promotionService: PromotionService,
     private val stockService: StockService,
+    private val batchService: InventoryBatchService,
+    private val orderItemBatchRepository: OrderItemBatchRepository,
     private val warehouseRepository: WarehouseRepository,
     private val variantRepository: ProductVariantRepository,
     private val customSizeService: com.mostafasensei.alamelmarateb.modules.product.domain.service.CustomSizeService,
@@ -150,7 +156,7 @@ class OrderService(
             branchId = input.branchId, customerId = input.customerId, guestPhone = input.guestPhone,
             channel = input.channel, status = OrderStatus.draft.name, salesRepId = input.salesRepId,
         )
-        promotionService.resolveLines(input.items.map { it.variantId to it.qty }).forEach { line ->
+        promotionService.resolveLines(input.items.map { it.variantId to it.qty }, input.channel).forEach { line ->
             val gross = line.unitPrice.multiply(line.qty.toBigDecimal())
             order.lines.add(
                 OrderItemJpaEntity(
@@ -194,7 +200,7 @@ class OrderService(
         val order = load(orderId)
         val warehouseId = warehouseFor(input.branchId)
         val preview = promotionService.priceAndConsume(
-            promotionService.resolveLines(input.items.map { it.variantId to it.qty }),
+            promotionService.resolveLines(input.items.map { it.variantId to it.qty }, input.channel),
         )
         val fees = feesOf(input.deliveryZoneId, input.floorNumber, input.collectFromBranch)
         var grand = preview.total.add(fees.first).add(fees.second).scaled()
@@ -264,7 +270,7 @@ class OrderService(
                         variantId = variantId,
                         qty = line.qty,
                         net = line.net,
-                        costPrice = variantRepository.findById(variantId)?.costPrice ?: BigDecimal.ZERO,
+                        costPrice = fifoUnitCost(warehouseId, variantId, line.qty),
                     )
                 },
             ),
@@ -283,7 +289,7 @@ class OrderService(
                         variantId = variantId,
                         qty = line.qty,
                         net = line.net,
-                        costPrice = variantRepository.findById(variantId)?.costPrice ?: BigDecimal.ZERO,
+                        costPrice = fifoUnitCost(warehouseId, variantId, line.qty),
                     )
                 },
             ),
@@ -389,10 +395,19 @@ class OrderService(
         val warehouseId = warehouseFor(order.branchId!!)
         returns.forEach { ret ->
             order.lines.filter { !it.isCustom }.forEach { line ->
-                stockService.applyMove(
-                    warehouseId, line.variantId!!, line.qty, MoveType.RETURN,
-                    "RETURN", ret.id, "Return approved",
-                )
+                val slices = orderItemBatchRepository.findByOrderItemId(line.id!!)
+                if (slices.isEmpty()) {
+                    // Legacy order without batch trace: generic return move.
+                    stockService.applyMove(
+                        warehouseId, line.variantId!!, line.qty, MoveType.RETURN,
+                        "RETURN", ret.id, "Return approved",
+                    )
+                } else {
+                    // Put qty back onto the exact batches it came from.
+                    batchService.restock(
+                        slices.map { BatchConsumption(it.batchId!!, it.qty, it.unitCost) },
+                    )
+                }
             }
             ret.status = "approved"
             returnRepository.save(ret)
@@ -680,14 +695,40 @@ class OrderService(
     // ---- internals ----
 
     private fun deductReserved(order: Order) {
-        val warehouseId = warehouseFor(order.branchId!!)
-        order.lines.filter { !it.isCustom }.forEach { line ->
-            stockService.release(warehouseId, line.variantId, line.qty)
-            stockService.applyMove(
-                warehouseId, line.variantId, -line.qty,
-                MoveType.SALE,
-                "ORDER", order.id, "Sale ${order.trackingNumber}",
+        val entity = orderRepository.findById(order.id!!).orElseThrow()
+        val warehouseId = warehouseFor(entity.branchId!!)
+        entity.lines.filter { !it.isCustom }.forEach { line ->
+            stockService.release(warehouseId, line.variantId!!, line.qty)
+            // FIFO: oldest batches first; the seller never picks a batch.
+            val slices = batchService.consumeFifo(
+                warehouseId, line.variantId!!, line.qty,
+                "ORDER", entity.id, "Sale ${entity.trackingNumber}",
             )
+            var cogs = BigDecimal.ZERO
+            slices.forEach { s ->
+                orderItemBatchRepository.save(
+                    OrderItemBatchJpaEntity(
+                        orderItemId = line.id,
+                        batchId = s.batchId,
+                        qty = s.qty,
+                        unitCost = s.unitCost,
+                    ),
+                )
+                cogs = cogs.add(s.unitCost.multiply(s.qty.toBigDecimal()))
+            }
+            line.cogsTotal = cogs.scaled()
+        }
+        orderRepository.save(entity)
+    }
+
+    /** Expected FIFO unit cost for analytics preview (no stock mutation). */
+    private fun fifoUnitCost(warehouseId: UUID, variantId: UUID, qty: Int): BigDecimal {
+        if (qty <= 0) return BigDecimal.ZERO
+        return try {
+            batchService.peekCost(warehouseId, variantId, qty)
+                .divide(qty.toBigDecimal(), 2, RoundingMode.HALF_EVEN)
+        } catch (_: Exception) {
+            variantRepository.findById(variantId)?.costPrice ?: BigDecimal.ZERO
         }
     }
 

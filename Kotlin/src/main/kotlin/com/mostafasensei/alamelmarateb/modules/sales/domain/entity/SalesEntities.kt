@@ -177,6 +177,9 @@ class OrderItemJpaEntity(
     @Column(name = "is_custom", nullable = false)
     var isCustom: Boolean = false,
 
+    @Column(name = "cogs_total", nullable = false, precision = 12, scale = 2)
+    var cogsTotal: BigDecimal = BigDecimal.ZERO,
+
     @Column(name = "custom_spec", columnDefinition = "TEXT")
     var customSpec: String? = null,
 ) : EntityBase<UUID>()

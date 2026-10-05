@@ -176,7 +176,9 @@ class HrFlowTest {
         )
 
         // Commission = 5% of 16000 = 800; net = 10000 + 800.
-        val run = hrService.calculate(branchId, "2026-09")
+        // NOTE: payroll month must contain the orders above (created "now").
+        val month = java.time.YearMonth.now().toString()
+        val run = hrService.calculate(branchId, month)
         val line = run.lines.single()
         assertEquals(BigDecimal("800.00"), line.commissionAmount.setScale(2))
         assertEquals(BigDecimal("10800.00"), line.netAmount.setScale(2))

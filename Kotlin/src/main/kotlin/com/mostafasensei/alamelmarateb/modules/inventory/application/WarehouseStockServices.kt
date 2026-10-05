@@ -4,9 +4,11 @@ import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
+import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.InventoryBatchRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.StockLevelRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.StockMoveRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.WarehouseRepository
+import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.InventoryBatchJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockLevelJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockMoveJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.WarehouseJpaEntity
@@ -68,6 +70,7 @@ class StockService(
     private val stockLevelRepository: StockLevelRepository,
     private val stockMoveRepository: StockMoveRepository,
     private val warehouseRepository: WarehouseRepository,
+    private val batchRepository: InventoryBatchRepository,
     // One-directional link: inventory reads variants from catalog.
     private val variantRepository: ProductVariantRepository,
     private val auditLog: AuditLogService,
@@ -97,7 +100,25 @@ class StockService(
         requireVariant(variantId)
         if (qtyDelta == 0) throw BadRequestException("error.inventory.adjust_zero")
         if (note.isNullOrBlank()) throw BadRequestException("error.inventory.adjust_reason_required")
-        applyMove(warehouseId, variantId, qtyDelta, MoveType.ADJUST, null, null, note)
+        var batchId: UUID? = null
+        if (qtyDelta > 0) {
+            // Opening/correction stock enters as its own cost layer at variant cost.
+            val variant = variantRepository.findById(variantId)
+            val batch = batchRepository.save(
+                InventoryBatchJpaEntity(
+                    batchNo = "B-${java.time.Instant.now().toEpochMilli()}-${(1000..9999).random()}",
+                    variantId = variantId,
+                    warehouseId = warehouseId,
+                    receiptId = null,
+                    qtyReceived = qtyDelta,
+                    qtyRemaining = qtyDelta,
+                    unitCost = variant?.costPrice ?: java.math.BigDecimal.ZERO,
+                ),
+            )
+            batch.createdBy = by
+            batchId = batch.id
+        }
+        applyMove(warehouseId, variantId, qtyDelta, MoveType.ADJUST, null, null, note, batchId)
         auditLog.record("ADJUST", "stock_level", variantId, warehouse.branchId, by, "delta=$qtyDelta note=$note warehouse=$warehouseId")
         return levelOf(warehouseId, variantId)
     }
@@ -126,6 +147,7 @@ class StockService(
         refType: String?,
         refId: UUID?,
         note: String?,
+        batchId: UUID? = null,
     ) {
         if (qtySigned == 0) throw BadRequestException("error.inventory.move_zero")
         val level = levelEntity(warehouseId, variantId)
@@ -146,6 +168,7 @@ class StockService(
                 moveType = type.name,
                 refType = refType,
                 refId = refId,
+                batchId = batchId,
                 note = note,
             ),
         )

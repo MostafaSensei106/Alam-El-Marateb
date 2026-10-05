@@ -46,6 +46,9 @@ class StockMoveJpaEntity(
     @Column(name = "ref_id", columnDefinition = "UUID")
     var refId: UUID? = null,
 
+    @Column(name = "batch_id", columnDefinition = "UUID")
+    var batchId: UUID? = null,
+
     @Column(name = "note", columnDefinition = "TEXT")
     var note: String? = null,
 ) : EntityBase<UUID>()

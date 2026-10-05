@@ -19,4 +19,6 @@ object InventoryAdminRoutes {
     const val TRANSFER_APPROVE = "$PREFIX/transfers/{transferId}/approve"
     const val AUDITS = "$PREFIX/audits"
     const val AUDIT_RECONCILE = "$PREFIX/audits/{auditId}/reconcile"
+    const val BATCHES = "$PREFIX/batches"
+    const val BATCH_VALUATION = "$PREFIX/batches/valuation"
 }

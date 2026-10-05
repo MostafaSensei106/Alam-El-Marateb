@@ -7,6 +7,8 @@ import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.core.exceptions.UnprocessableException
 import com.mostafasensei.alamelmarateb.modules.inventory.application.StockService
 import com.mostafasensei.alamelmarateb.modules.inventory.application.WarehouseService
+import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.InventoryBatchRepository
+import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.InventoryBatchJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
 import com.mostafasensei.alamelmarateb.modules.purchasing.data.repository.GoodsReceiptRepository
@@ -82,6 +84,7 @@ class PurchasingService(
     private val orderRepository: PurchaseOrderRepository,
     private val receiptRepository: GoodsReceiptRepository,
     private val receiptItemRepository: ReceiptItemRepository,
+    private val batchRepository: InventoryBatchRepository,
     private val stockService: StockService,
     private val warehouseService: WarehouseService,
     private val variantRepository: ProductVariantRepository,
@@ -269,6 +272,19 @@ class PurchasingService(
             val (actual, _) = quantities
             if (actual > 0) {
                 val item = order.items.first { it.variantId == variantId }
+                // Immutable cost layer: this receipt line keeps its own unit cost.
+                val batch = batchRepository.save(
+                    InventoryBatchJpaEntity(
+                        batchNo = "B-${System.currentTimeMillis()}-${(1000..9999).random()}",
+                        variantId = variantId,
+                        warehouseId = warehouseId,
+                        receiptId = saved.id,
+                        qtyReceived = actual,
+                        qtyRemaining = actual,
+                        unitCost = item.unitCost.money(),
+                    ),
+                )
+                batch.createdBy = by
                 stockService.applyMove(
                     warehouseId = warehouseId,
                     variantId = variantId,
@@ -276,7 +292,8 @@ class PurchasingService(
                     type = MoveType.PURCHASE,
                     refType = "PO",
                     refId = poId,
-                    note = "Goods receipt for PO $poId",
+                    note = "Goods receipt for PO $poId batch ${batch.batchNo}",
+                    batchId = batch.id,
                 )
                 accrual = accrual.add(item.unitCost.multiply(actual.toBigDecimal()))
             }

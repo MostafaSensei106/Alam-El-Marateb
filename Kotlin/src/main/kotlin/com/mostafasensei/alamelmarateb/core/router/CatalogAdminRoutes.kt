@@ -40,4 +40,9 @@ object CatalogAdminRoutes {
     const val METER_PRICE_BY_ID = "$PREFIX/meter-prices/{id}"
     const val BRACKETS = "$PREFIX/operating-brackets"
     const val BRACKET_BY_ID = "$PREFIX/operating-brackets/{id}"
+
+    const val SELLING_PRICES = "$PREFIX/selling-prices"
+    const val PRICE_SHEETS = "$PREFIX/price-sheets"
+    const val PRICE_SHEET_BY_ID = "$PREFIX/price-sheets/{id}"
+    const val PRICE_SHEET_APPLY = "$PREFIX/price-sheets/{id}/apply"
 }

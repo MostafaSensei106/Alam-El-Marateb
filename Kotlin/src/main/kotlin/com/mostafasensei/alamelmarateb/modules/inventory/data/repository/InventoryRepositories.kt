@@ -1,6 +1,7 @@
 package com.mostafasensei.alamelmarateb.modules.inventory.data.repository
 
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.AuditCountJpaEntity
+import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.InventoryBatchJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockAuditJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockLevelJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockMoveJpaEntity
@@ -53,3 +54,9 @@ interface StockAuditRepository : JpaRepository<StockAuditJpaEntity, UUID> {
 
 @Repository
 interface AuditCountRepository : JpaRepository<AuditCountJpaEntity, UUID>
+
+@Repository
+interface InventoryBatchRepository : JpaRepository<InventoryBatchJpaEntity, UUID> {
+    fun findByWarehouseIdAndVariantIdOrderByReceivedAtAsc(warehouseId: UUID, variantId: UUID): List<InventoryBatchJpaEntity>
+    fun findByWarehouseIdOrderByReceivedAtAsc(warehouseId: UUID): List<InventoryBatchJpaEntity>
+}
