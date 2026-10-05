@@ -1,5 +1,6 @@
 package com.mostafasensei.alamelmarateb.modules.security.application
 
+import com.mostafasensei.alamelmarateb.core.security.AppRole
 import com.mostafasensei.alamelmarateb.modules.security.data.repository.SpringDataJpaRoleRepository
 import com.mostafasensei.alamelmarateb.modules.security.data.repository.SpringDataJpaUserRepository
 import com.mostafasensei.alamelmarateb.modules.security.domain.entity.BranchJpaEntity
@@ -30,12 +31,12 @@ class AdminSeeder(
     private val log = LoggerFactory.getLogger(javaClass)
 
     override fun run(vararg args: String) {
-        val hasAdmin = users.findAll().any { u -> u.roles.any { it.name == "ROLE_SUPER_ADMIN" } }
+        val hasAdmin = users.findAll().any { u -> u.roles.any { it.name == AppRole.SUPER_ADMIN.roleName } }
         if (hasAdmin) return
         val branch = branches.save(
             BranchJpaEntity(name = "Main Branch", code = "MAIN", phone = adminPhone, city = "Tanta", address = "Tanta"),
         )
-        val superAdmin = roles.findByName("ROLE_SUPER_ADMIN")
+        val superAdmin = roles.findByName(AppRole.SUPER_ADMIN.roleName)
             .orElseThrow { IllegalStateException("ROLE_SUPER_ADMIN seed missing — is V1 applied?") }
         users.save(
             UserJpaEntity(

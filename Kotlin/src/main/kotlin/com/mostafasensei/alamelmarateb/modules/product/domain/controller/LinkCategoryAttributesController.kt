@@ -15,7 +15,7 @@ import com.mostafasensei.alamelmarateb.core.router.CatalogAdminRoutes
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
+import com.mostafasensei.alamelmarateb.core.security.ManagerApi
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -29,7 +29,7 @@ import java.util.UUID
 
 @RestController
 @RequestMapping(CatalogAdminRoutes.CATEGORY_ATTRIBUTES)
-@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+@ManagerApi
 class LinkCategoryAttributesController(
     private val catalogService: ProductCatalogService,
 ) : BaseController() {

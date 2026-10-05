@@ -5,6 +5,7 @@ import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.core.security.JwtTokenProvider
+import com.mostafasensei.alamelmarateb.core.security.AppRole
 import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 import com.mostafasensei.alamelmarateb.modules.notifications.application.NotificationService
 import com.mostafasensei.alamelmarateb.modules.security.data.models.Role
@@ -60,7 +61,7 @@ class AuthService(
         if (!email.isNullOrBlank() && userRepository.existsByEmail(email)) {
             throw ConflictException("error.auth.email_exists")
         }
-        val customerRole = jpaRoles.findByName("ROLE_CUSTOMER")
+        val customerRole = jpaRoles.findByName(AppRole.CUSTOMER.roleName)
             .orElseThrow { IllegalStateException("ROLE_CUSTOMER seed missing") }
         val saved = jpaUsers.save(
             UserJpaEntity(

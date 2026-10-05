@@ -13,7 +13,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
+import com.mostafasensei.alamelmarateb.core.security.CustomerApi
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -28,7 +28,7 @@ import java.util.UUID
  */
 @Tag(name = "Delivery (customer)", description = "Live location + driver rating — CUSTOMER")
 @RestController
-@PreAuthorize("hasAnyRole('CUSTOMER', 'SUPER_ADMIN')")
+@CustomerApi
 class DeliveryCustomerController(
     private val deliveryService: DeliveryService,
     private val orderService: OrderService,

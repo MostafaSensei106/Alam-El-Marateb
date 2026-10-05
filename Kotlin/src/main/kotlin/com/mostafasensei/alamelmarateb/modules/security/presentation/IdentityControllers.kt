@@ -18,7 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
+import com.mostafasensei.alamelmarateb.core.security.SuperAdminApi
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -143,7 +143,7 @@ class AuthController(
 @Tag(name = "Identity (admin)", description = "Branches, staff, roles — SUPER_ADMIN")
 @RestController
 @RequestMapping(IdentityAdminRoutes.BASE)
-@PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+@SuperAdminApi
 class IdentityAdminController(
     private val identityService: IdentityService,
 ) : BaseController() {

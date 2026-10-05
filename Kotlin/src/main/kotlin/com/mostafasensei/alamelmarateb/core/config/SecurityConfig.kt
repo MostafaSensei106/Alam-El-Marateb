@@ -2,6 +2,7 @@ package com.mostafasensei.alamelmarateb.core.config
 
 import com.mostafasensei.alamelmarateb.core.router.api.ApiVersion
 import com.mostafasensei.alamelmarateb.core.security.ApiAccessDeniedHandler
+import com.mostafasensei.alamelmarateb.core.security.AppRole
 import com.mostafasensei.alamelmarateb.core.security.JwtAuthenticationEntryPoint
 import com.mostafasensei.alamelmarateb.core.security.JwtAuthenticationFilter
 import org.springframework.context.annotation.Bean
@@ -68,25 +69,25 @@ class SecurityConfig (
                     .requestMatchers("/actuator/health/**", "/actuator/info").permitAll()
 
                     // Customers: shop + self-service portal
-                    .requestMatchers("$v1/shop/**").hasAnyRole("CUSTOMER", "SUPER_ADMIN")
-                    .requestMatchers("$v1/portal/**").hasAnyRole("CUSTOMER", "SUPER_ADMIN")
+                    .requestMatchers("$v1/shop/**").hasAnyRole(*AppRole.names(AppRole.CUSTOMER, AppRole.SUPER_ADMIN))
+                    .requestMatchers("$v1/portal/**").hasAnyRole(*AppRole.names(AppRole.CUSTOMER, AppRole.SUPER_ADMIN))
 
                     // Staff operations
-                    .requestMatchers("$v1/sales/promotions/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
-                    .requestMatchers("$v1/sales/**").hasAnyRole("CASHIER", "BRANCH_MANAGER", "SUPER_ADMIN")
-                    .requestMatchers("$v1/warehouse/**").hasAnyRole("WAREHOUSE_KEEPER", "BRANCH_MANAGER", "SUPER_ADMIN")
-                    .requestMatchers("$v1/delivery/**").hasAnyRole("DELIVERY_DRIVER", "SUPER_ADMIN")
+                    .requestMatchers("$v1/sales/promotions/**").hasAnyRole(*AppRole.names(AppRole.BRANCH_MANAGER, AppRole.SUPER_ADMIN))
+                    .requestMatchers("$v1/sales/**").hasAnyRole(*AppRole.names(AppRole.CASHIER, AppRole.BRANCH_MANAGER, AppRole.SUPER_ADMIN))
+                    .requestMatchers("$v1/warehouse/**").hasAnyRole(*AppRole.names(AppRole.WAREHOUSE_KEEPER, AppRole.BRANCH_MANAGER, AppRole.SUPER_ADMIN))
+                    .requestMatchers("$v1/delivery/**").hasAnyRole(*AppRole.names(AppRole.DELIVERY_DRIVER, AppRole.SUPER_ADMIN))
                     .requestMatchers("$v1/me/**").authenticated()
 
                     // Backoffice
-                    .requestMatchers("$v1/accounting/**").hasAnyRole("ACCOUNTANT", "SUPER_ADMIN")
-                    .requestMatchers("$v1/catalog/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
-                    .requestMatchers("$v1/inventory/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
-                    .requestMatchers("$v1/purchasing/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
-                    .requestMatchers("$v1/crm/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
-                    .requestMatchers("$v1/hr/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
-                    .requestMatchers("$v1/analytics/**").hasAnyRole("BRANCH_MANAGER", "SUPER_ADMIN")
-                    .requestMatchers("$v1/identity/**").hasAnyRole("SUPER_ADMIN")
+                    .requestMatchers("$v1/accounting/**").hasAnyRole(*AppRole.names(AppRole.ACCOUNTANT, AppRole.SUPER_ADMIN))
+                    .requestMatchers("$v1/catalog/**").hasAnyRole(*AppRole.names(AppRole.BRANCH_MANAGER, AppRole.SUPER_ADMIN))
+                    .requestMatchers("$v1/inventory/**").hasAnyRole(*AppRole.names(AppRole.BRANCH_MANAGER, AppRole.SUPER_ADMIN))
+                    .requestMatchers("$v1/purchasing/**").hasAnyRole(*AppRole.names(AppRole.BRANCH_MANAGER, AppRole.SUPER_ADMIN))
+                    .requestMatchers("$v1/crm/**").hasAnyRole(*AppRole.names(AppRole.BRANCH_MANAGER, AppRole.SUPER_ADMIN))
+                    .requestMatchers("$v1/hr/**").hasAnyRole(*AppRole.names(AppRole.BRANCH_MANAGER, AppRole.SUPER_ADMIN))
+                    .requestMatchers("$v1/analytics/**").hasAnyRole(*AppRole.names(AppRole.BRANCH_MANAGER, AppRole.SUPER_ADMIN))
+                    .requestMatchers("$v1/identity/**").hasAnyRole(*AppRole.names(AppRole.SUPER_ADMIN))
 
                     .anyRequest().authenticated()
             }

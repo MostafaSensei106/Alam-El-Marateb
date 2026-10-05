@@ -25,8 +25,9 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import com.mostafasensei.alamelmarateb.core.security.ManagerApi
+import com.mostafasensei.alamelmarateb.core.security.CustomerApi
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -43,7 +44,7 @@ import java.util.UUID
 @Tag(name = "CRM (management)", description = "Warranties, claims — BRANCH_MANAGER")
 @RestController
 @RequestMapping(CrmAdminRoutes.BASE)
-@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+@ManagerApi
 class CrmAdminController(
     private val warrantyService: WarrantyService,
 ) : BaseController() {
@@ -99,7 +100,7 @@ class CrmAdminController(
 @Tag(name = "Portal (customer)", description = "Profile, addresses, favorites, warranties, claims — CUSTOMER")
 @RestController
 @RequestMapping(PortalRoutes.BASE)
-@PreAuthorize("hasAnyRole('CUSTOMER', 'SUPER_ADMIN')")
+@CustomerApi
 class PortalController(
     private val crmService: CrmService,
     private val warrantyService: WarrantyService,

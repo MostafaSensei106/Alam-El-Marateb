@@ -50,8 +50,8 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import com.mostafasensei.alamelmarateb.core.security.ManagerApi
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -68,7 +68,7 @@ import java.util.UUID
 @Tag(name = "Q&A (management)", description = "Answer product questions — BRANCH_MANAGER")
 @RestController
 @RequestMapping(CatalogAdminRoutes.PRODUCTS + "/qa")
-@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+@ManagerApi
 class AnswerQuestionController(
     private val qaService: QaService,
 ) : BaseController() {

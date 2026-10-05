@@ -25,8 +25,9 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import com.mostafasensei.alamelmarateb.core.security.SuperAdminApi
+import com.mostafasensei.alamelmarateb.core.security.DriverApi
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -43,7 +44,7 @@ import java.util.UUID
  */
 @Tag(name = "Delivery (driver)", description = "My trips, stops, proof of delivery — DELIVERY_DRIVER")
 @RestController
-@PreAuthorize("hasAnyRole('DELIVERY_DRIVER', 'SUPER_ADMIN')")
+@DriverApi
 class DeliveryDriverController(
     private val deliveryService: DeliveryService,
 ) : BaseController() {
@@ -109,13 +110,13 @@ class DeliveryManagerController(
 ) : BaseController() {
 
     @Operation(summary = "List fleet vehicles")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @SuperAdminApi
     @GetMapping(IdentityAdminRoutes.VEHICLES)
     fun vehicles(): ResponseEntity<ApiResponse<List<VehicleView>>> =
         ok(deliveryService.vehicles())
 
     @Operation(summary = "Register vehicle (plate is uppercased)")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @SuperAdminApi
     @PostMapping(IdentityAdminRoutes.VEHICLES)
     fun createVehicle(
         @Valid @RequestBody request: VehicleRequest,
@@ -129,13 +130,13 @@ class DeliveryManagerController(
         )
 
     @Operation(summary = "Get vehicle")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @SuperAdminApi
     @GetMapping(IdentityAdminRoutes.VEHICLE_BY_ID)
     fun vehicle(@PathVariable id: UUID): ResponseEntity<ApiResponse<VehicleView>> =
         ok(deliveryService.vehicle(id))
 
     @Operation(summary = "Update vehicle")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @SuperAdminApi
     @PatchMapping(IdentityAdminRoutes.VEHICLE_BY_ID)
     fun patchUpdateVehicle(
         @PathVariable id: UUID,
@@ -158,7 +159,7 @@ class DeliveryManagerController(
         )
 
     @Operation(summary = "Remove vehicle")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @SuperAdminApi
     @DeleteMapping(IdentityAdminRoutes.VEHICLE_BY_ID)
     fun deleteVehicle(
         @PathVariable id: UUID,
@@ -169,7 +170,7 @@ class DeliveryManagerController(
     }
 
     @Operation(summary = "Create trip with stops (seq 1..n, status draft)")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @SuperAdminApi
     @PostMapping(DeliveryRoutes.TRIPS)
     fun createTrip(
         @Valid @RequestBody request: CreateTripRequest,
@@ -183,7 +184,7 @@ class DeliveryManagerController(
         )
 
     @Operation(summary = "Dispatch trip (draft -> in_transit)")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @SuperAdminApi
     @PostMapping(DeliveryRoutes.TRIP_DISPATCH)
     fun dispatch(
         @PathVariable tripId: UUID,
@@ -192,7 +193,7 @@ class DeliveryManagerController(
         ok(deliveryService.dispatch(tripId, principal.fullName))
 
     @Operation(summary = "Cancel draft trip (draft -> cancelled)")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @SuperAdminApi
     @PostMapping(DeliveryRoutes.TRIP_CANCEL)
     fun cancel(
         @PathVariable tripId: UUID,
@@ -201,7 +202,7 @@ class DeliveryManagerController(
         ok(deliveryService.cancelTrip(tripId, principal.fullName))
 
     @Operation(summary = "Complete trip when all stops are terminal (-> done)")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @SuperAdminApi
     @PostMapping(DeliveryRoutes.TRIP_COMPLETE)
     fun complete(
         @PathVariable tripId: UUID,
@@ -210,7 +211,7 @@ class DeliveryManagerController(
         ok(deliveryService.completeTrip(tripId, principal.fullName))
 
     @Operation(summary = "Pin stop coordinates")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @SuperAdminApi
     @PostMapping(DeliveryRoutes.PIN_STOP)
     fun pin(
         @PathVariable stopId: UUID,
@@ -220,7 +221,7 @@ class DeliveryManagerController(
         ok(deliveryService.pinStop(stopId, request.lat, request.lng, principal.fullName))
 
     @Operation(summary = "Optimize stop order (nearest-neighbor, draft only)")
-    @PreAuthorize("hasAnyRole('SUPER_ADMIN')")
+    @SuperAdminApi
     @PostMapping(DeliveryRoutes.OPTIMIZE_TRIP)
     fun optimize(
         @PathVariable tripId: UUID,

@@ -12,8 +12,8 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import jakarta.validation.constraints.Positive
 import org.springframework.http.ResponseEntity
+import com.mostafasensei.alamelmarateb.core.security.CustomerApi
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
@@ -35,7 +35,7 @@ data class LoyaltyQuoteResponse(val points: Int, val discount: BigDecimal)
 @Tag(name = "Loyalty (customer)", description = "Points balance, ledger, quote — CUSTOMER")
 @RestController
 @RequestMapping(PortalRoutes.LOYALTY)
-@PreAuthorize("hasAnyRole('CUSTOMER', 'SUPER_ADMIN')")
+@CustomerApi
 class LoyaltyController(
     private val loyaltyService: LoyaltyService,
 ) : BaseController() {

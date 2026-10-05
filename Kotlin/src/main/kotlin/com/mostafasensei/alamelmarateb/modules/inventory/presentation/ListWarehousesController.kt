@@ -28,7 +28,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
+import com.mostafasensei.alamelmarateb.core.security.ManagerApi
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -44,7 +44,7 @@ import java.util.UUID
 @Tag(name = "Inventory (management)", description = "Warehouses, stocks, transfers, audits — BRANCH_MANAGER")
 @RestController
 @RequestMapping(InventoryAdminRoutes.BASE)
-@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+@ManagerApi
 class ListWarehousesController(
     private val warehouseService: WarehouseService,
     private val stockService: StockService,

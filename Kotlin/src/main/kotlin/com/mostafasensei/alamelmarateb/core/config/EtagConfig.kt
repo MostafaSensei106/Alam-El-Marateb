@@ -11,8 +11,6 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpMethod
 import org.springframework.web.filter.OncePerRequestFilter
 import org.springframework.web.util.ContentCachingResponseWrapper
-import tools.jackson.databind.ObjectMapper
-import tools.jackson.databind.node.ObjectNode
 import java.security.MessageDigest
 
 /**
@@ -29,10 +27,9 @@ import java.security.MessageDigest
  * per-user or constantly-changing payloads where hashing costs more than
  * any 304 could ever save, and a stale 304 would be a bug magnet.
  *
- * Why a custom filter instead of Spring's ShallowEtagHeaderFilter: every
- * ApiResponse body carries a random traceId and a fresh timestamp, so a
- * whole-body hash never repeats and 304 would never fire. This filter hashes
- * the STABLE part only (top-level traceId and timestamp excluded) — 304
+ * Why a custom filter instead of Spring's ShallowEtagHeaderFilter: the body
+ * is now fully deterministic (ApiResponse carries only success/message/data),
+ * so a whole-body hash repeats exactly when the data is unchanged and 304
  * fires exactly when the data is unchanged. Frontend flow: cache body +
  * ETag, send If-None-Match next time, 304 means reuse.
  *
@@ -40,9 +37,7 @@ import java.security.MessageDigest
  * Best-effort: any failure serves the body as-is.
  */
 @Configuration
-class EtagConfig(
-    private val objectMapper: ObjectMapper,
-) {
+class EtagConfig {
 
     companion object {
         /** Endpoints worth an ETag. Everything else skips hashing entirely. */
@@ -58,7 +53,7 @@ class EtagConfig(
 
     @Bean
     fun etagFilter(): FilterRegistrationBean<StableEtagFilter> {
-        val registration = FilterRegistrationBean(StableEtagFilter(objectMapper))
+        val registration = FilterRegistrationBean(StableEtagFilter())
         registration.urlPatterns = ETAG_PATHS
         registration.order = Ordered.HIGHEST_PRECEDENCE + 3
         return registration
@@ -73,9 +68,7 @@ class EtagConfig(
     }
 }
 
-class StableEtagFilter(
-    private val objectMapper: ObjectMapper,
-) : OncePerRequestFilter() {
+class StableEtagFilter : OncePerRequestFilter() {
 
     override fun doFilterInternal(
         request: HttpServletRequest,
@@ -111,12 +104,8 @@ class StableEtagFilter(
         if (status != HttpServletResponse.SC_OK || body.isEmpty()) return null
         if (contentType == null || !contentType.contains("application/json")) return null
         return try {
-            val node = objectMapper.readTree(body)
-            if (node is ObjectNode) {
-                node.remove(listOf("traceId", "timestamp"))
-            }
-            val canonical = objectMapper.writeValueAsBytes(node)
-            val digest = MessageDigest.getInstance("MD5").digest(canonical)
+            // Body is deterministic (no per-request fields), hash it as-is.
+            val digest = MessageDigest.getInstance("MD5").digest(body)
             "\"" + digest.joinToString("") { "%02x".format(it) } + "\""
         } catch (_: Exception) {
             null

@@ -28,7 +28,7 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
+import com.mostafasensei.alamelmarateb.core.security.KeeperApi
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -44,7 +44,7 @@ import java.util.UUID
 @Tag(name = "Warehouse (operations)", description = "Lookup, adjustments, receipts, counts — WAREHOUSE_KEEPER")
 @RestController
 @RequestMapping(WarehouseOpsRoutes.BASE)
-@PreAuthorize("hasAnyRole('WAREHOUSE_KEEPER', 'BRANCH_MANAGER', 'SUPER_ADMIN')")
+@KeeperApi
 class ConfirmTransferReceiptController(
     private val stockService: StockService,
     private val transferService: TransferService,

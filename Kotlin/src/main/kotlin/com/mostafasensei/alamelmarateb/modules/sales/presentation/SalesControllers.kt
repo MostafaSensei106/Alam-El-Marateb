@@ -44,8 +44,11 @@ import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import com.mostafasensei.alamelmarateb.core.security.ShopApi
+import com.mostafasensei.alamelmarateb.core.security.ManagerApi
+import com.mostafasensei.alamelmarateb.core.security.CustomerApi
+import com.mostafasensei.alamelmarateb.core.security.CashierApi
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -73,7 +76,7 @@ private fun PlaceOrderRequest.toInput(channel: String, by: String?) = PlaceOrder
 @Tag(name = "Promotions (management)", description = "Discounts, bundles, gifts — BRANCH_MANAGER")
 @RestController
 @RequestMapping(PromotionRoutes.BASE)
-@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+@ManagerApi
 class PromotionController(
     private val promotionService: PromotionService,
 ) : BaseController() {
@@ -100,7 +103,7 @@ class PromotionController(
 @Tag(name = "Sales POS", description = "In-store selling, drafts, returns, shifts — CASHIER")
 @RestController
 @RequestMapping(SalesPosRoutes.BASE)
-@PreAuthorize("hasAnyRole('CASHIER', 'BRANCH_MANAGER', 'SUPER_ADMIN')")
+@CashierApi
 class PosOrderController(
     private val orderService: OrderService,
 ) : BaseController() {
@@ -222,7 +225,7 @@ class PosOrderController(
 @Tag(name = "Reservations", description = "Book now, pay in parts, receive on a set day — CASHIER")
 @RestController
 @RequestMapping(SalesPosRoutes.BASE)
-@PreAuthorize("hasAnyRole('CASHIER', 'BRANCH_MANAGER', 'SUPER_ADMIN')")
+@CashierApi
 class ReservationController(
     private val orderService: OrderService,
 ) : BaseController() {
@@ -264,14 +267,14 @@ class ReservationController(
 @Tag(name = "Sales orders", description = "Order lookup, payment confirmation, returns approval")
 @RestController
 @RequestMapping(SalesPosRoutes.ORDER_LIST)
-@PreAuthorize("hasAnyRole('CASHIER', 'BRANCH_MANAGER', 'SUPER_ADMIN')")
+@CashierApi
 class SalesOrderController(
     private val orderService: OrderService,
 ) : BaseController() {
 
     @Operation(summary = "Confirm manual payment (transfer/wallet)")
     @PostMapping("/{orderId}/confirm-payment")
-    @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+    @ManagerApi
     fun confirmPayment(
         @PathVariable orderId: UUID,
         @AuthenticationPrincipal principal: UserPrincipal,
@@ -280,7 +283,7 @@ class SalesOrderController(
 
     @Operation(summary = "Approve return (stock back)")
     @PostMapping("/{orderId}/approve-return")
-    @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+    @ManagerApi
     fun approveReturn(
         @PathVariable orderId: UUID,
         @AuthenticationPrincipal principal: UserPrincipal,
@@ -311,7 +314,7 @@ class SalesOrderController(
 @Tag(name = "Sales shifts", description = "Drawer open/drop/close + receipts — CASHIER")
 @RestController
 @RequestMapping(SalesPosRoutes.BASE)
-@PreAuthorize("hasAnyRole('CASHIER', 'BRANCH_MANAGER', 'SUPER_ADMIN')")
+@CashierApi
 class PosShiftController(
     private val shiftService: ShiftService,
 ) : BaseController() {
@@ -380,7 +383,7 @@ class PosShiftController(
 @Tag(name = "Shop (customer)", description = "Cart, checkout, tracking — CUSTOMER")
 @RestController
 @RequestMapping(ShopRoutes.CART_BASE)
-@PreAuthorize("hasAnyRole('CUSTOMER', 'SUPER_ADMIN')")
+@CustomerApi
 class ShopCartController(
     private val cartService: CartService,
 ) : BaseController() {
@@ -431,7 +434,7 @@ class ShopCartController(
 @Tag(name = "Shop checkout", description = "Estimate, preview, place")
 @RestController
 @RequestMapping(ShopRoutes.CHECKOUT_BASE)
-@PreAuthorize("hasAnyRole('CUSTOMER', 'CASHIER', 'BRANCH_MANAGER', 'SUPER_ADMIN')")
+@ShopApi
 class ShopCheckoutController(
     private val orderService: OrderService,
     private val promotionService: PromotionService,
@@ -477,7 +480,7 @@ class ShopCheckoutController(
 @Tag(name = "Shop orders", description = "My orders — CUSTOMER")
 @RestController
 @RequestMapping(ShopRoutes.MY_ORDERS)
-@PreAuthorize("hasAnyRole('CUSTOMER', 'SUPER_ADMIN')")
+@CustomerApi
 class ShopOrderController(
     private val orderService: OrderService,
 ) : BaseController() {

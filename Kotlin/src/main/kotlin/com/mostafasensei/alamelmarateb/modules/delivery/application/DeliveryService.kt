@@ -5,6 +5,7 @@ import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
+import com.mostafasensei.alamelmarateb.core.security.AppRole
 import com.mostafasensei.alamelmarateb.modules.delivery.data.repository.DeliveryTripRepository
 import com.mostafasensei.alamelmarateb.modules.delivery.data.repository.DriverRatingRepository
 import com.mostafasensei.alamelmarateb.modules.delivery.data.repository.TripLocationRepository
@@ -285,7 +286,7 @@ class DeliveryService(
     }
 
     private fun verifyDriver(trip: DeliveryTripJpaEntity, principal: UserPrincipal) {
-        val isSuper = principal.authorities.any { it.authority == "ROLE_SUPER_ADMIN" }
+        val isSuper = principal.authorities.any { it.authority == AppRole.SUPER_ADMIN.roleName }
         if (!isSuper && trip.driverId != principal.id) {
             throw AccessDeniedException("Access denied: trip belongs to another driver")
         }

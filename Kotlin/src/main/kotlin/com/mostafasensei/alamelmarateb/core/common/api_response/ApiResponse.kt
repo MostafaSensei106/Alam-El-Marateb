@@ -1,18 +1,18 @@
 package com.mostafasensei.alamelmarateb.core.common.api_response
 
 import com.fasterxml.jackson.annotation.JsonInclude
-import org.slf4j.MDC
-import kotlin.time.Clock
-import kotlin.time.Instant
 
+/**
+ * Global response contract: {success, message, data?, errors?} — nothing else.
+ * No timestamps, no trace ids in the body: clients cache and diff payloads
+ * byte-for-byte. Correlation travels in the `X-Trace-Id` response header.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class ApiResponse<T>(
     val success: Boolean,
     val message: String,
     val data: T? = null,
     val errors : List<String>? = null,
-    val traceId: String? = MDC.get("traceId"),
-    val timestamp: Instant = Clock.System.now()
 ) {
     companion object {
         fun <T> success(data: T, message: String): ApiResponse<T> = ApiResponse(success = true, message = message, data = data)

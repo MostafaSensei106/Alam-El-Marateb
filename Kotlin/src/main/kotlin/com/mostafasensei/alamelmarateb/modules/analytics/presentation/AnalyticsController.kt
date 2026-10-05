@@ -24,7 +24,8 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
+import com.mostafasensei.alamelmarateb.core.security.ManagerApi
+import com.mostafasensei.alamelmarateb.core.security.CashierApi
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -44,7 +45,7 @@ import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 @Tag(name = "Analytics (dashboard)", description = "Executive overview, velocity, audit trail — BRANCH_MANAGER")
 @RestController
 @RequestMapping(AnalyticsRoutes.BASE)
-@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+@ManagerApi
 class AnalyticsController(
     private val analyticsService: AnalyticsService,
 ) : BaseController() {
@@ -74,7 +75,7 @@ class AnalyticsController(
 @Tag(name = "Analytics revenue", description = "Revenue, RFM, branches, geo — BRANCH_MANAGER")
 @RestController
 @RequestMapping(AnalyticsRoutes.BASE)
-@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+@ManagerApi
 class RevenueController(
     private val revenueService: RevenueService,
     private val inquiryService: InquiryService,
@@ -182,7 +183,7 @@ class IngestController(
 
     @Operation(summary = "Log showroom question (staff)")
     @PostMapping("/inquiries")
-    @PreAuthorize("hasAnyRole('CASHIER', 'BRANCH_MANAGER', 'SUPER_ADMIN')")
+    @CashierApi
     fun logInquiry(
         @Valid @RequestBody request: InquiryLogRequest,
         @AuthenticationPrincipal principal: UserPrincipal,

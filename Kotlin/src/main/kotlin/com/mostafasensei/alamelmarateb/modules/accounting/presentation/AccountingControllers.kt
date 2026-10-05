@@ -33,7 +33,7 @@ import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.format.annotation.DateTimeFormat
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
+import com.mostafasensei.alamelmarateb.core.security.AccountantApi
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -48,12 +48,11 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.LocalDate
 import java.util.UUID
 
-private const val ACCOUNTANT_ACCESS = "hasAnyRole('ACCOUNTANT','SUPER_ADMIN')"
 
 @Tag(name = "Accounting — chart", description = "Chart of accounts — ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.CHART_OF_ACCOUNTS)
-@PreAuthorize(ACCOUNTANT_ACCESS)
+@AccountantApi
 class ChartOfAccountsController(
     private val accountingService: AccountingService,
 ) : BaseController() {
@@ -107,7 +106,7 @@ class ChartOfAccountsController(
 @Tag(name = "Accounting — journals", description = "Journal entries — ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.JOURNAL_ENTRIES)
-@PreAuthorize(ACCOUNTANT_ACCESS)
+@AccountantApi
 class JournalEntriesController(
     private val accountingService: AccountingService,
 ) : BaseController() {
@@ -140,7 +139,7 @@ class JournalEntriesController(
 @Tag(name = "Accounting — ledger", description = "General ledger — ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.GENERAL_LEDGER)
-@PreAuthorize(ACCOUNTANT_ACCESS)
+@AccountantApi
 class GeneralLedgerController(
     private val accountingService: AccountingService,
 ) : BaseController() {
@@ -158,7 +157,7 @@ class GeneralLedgerController(
 @Tag(name = "Accounting — treasuries", description = "Treasuries — ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.TREASURIES)
-@PreAuthorize(ACCOUNTANT_ACCESS)
+@AccountantApi
 class TreasuriesController(
     private val accountingService: AccountingService,
 ) : BaseController() {
@@ -204,7 +203,7 @@ class TreasuriesController(
 @Tag(name = "Accounting — transfers", description = "Treasury transfers — ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.TREASURY_TRANSFERS)
-@PreAuthorize(ACCOUNTANT_ACCESS)
+@AccountantApi
 class TreasuryTransfersController(
     private val accountingService: AccountingService,
 ) : BaseController() {
@@ -221,7 +220,7 @@ class TreasuryTransfersController(
 @Tag(name = "Accounting — expenses", description = "Expenses — ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.EXPENSES)
-@PreAuthorize(ACCOUNTANT_ACCESS)
+@AccountantApi
 class ExpensesController(
     private val accountingService: AccountingService,
 ) : BaseController() {
@@ -272,7 +271,7 @@ class ExpensesController(
 @Tag(name = "Accounting — checks", description = "Checks — ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.CHECKS)
-@PreAuthorize(ACCOUNTANT_ACCESS)
+@AccountantApi
 class ChecksController(
     private val accountingService: AccountingService,
 ) : BaseController() {
@@ -326,7 +325,7 @@ class ChecksController(
 @Tag(name = "Accounting — tax report", description = "VAT report (prices VAT-inclusive) — ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.TAX_REPORT)
-@PreAuthorize(ACCOUNTANT_ACCESS)
+@AccountantApi
 class TaxReportController(
     private val accountingService: AccountingService,
 ) : BaseController() {
@@ -343,7 +342,7 @@ class TaxReportController(
 @Tag(name = "Accounting — profit & loss", description = "Profit/loss report — ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.PROFIT_AND_LOSS)
-@PreAuthorize(ACCOUNTANT_ACCESS)
+@AccountantApi
 class ProfitLossController(
     private val accountingService: AccountingService,
 ) : BaseController() {
@@ -360,7 +359,7 @@ class ProfitLossController(
 @Tag(name = "Accounting — balance sheet", description = "Balance sheet report — ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.BALANCE_SHEET)
-@PreAuthorize(ACCOUNTANT_ACCESS)
+@AccountantApi
 class BalanceSheetController(
     private val accountingService: AccountingService,
 ) : BaseController() {

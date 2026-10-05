@@ -50,8 +50,8 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import com.mostafasensei.alamelmarateb.core.security.ManagerApi
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -74,7 +74,7 @@ class DeleteProductImageController(
 
     @Operation(summary = "Delete product image")
     @DeleteMapping(CatalogAdminRoutes.IMAGE_BY_ID)
-    @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+    @ManagerApi
     fun delete(@PathVariable imageId: UUID): ResponseEntity<ApiResponse<Nothing>> {
         imageService.delete(imageId)
         return deleted(com.mostafasensei.alamelmarateb.core.i18n.MessageService.t("success.deleted"))

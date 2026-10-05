@@ -50,8 +50,8 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
+import com.mostafasensei.alamelmarateb.core.security.CustomerApi
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -68,7 +68,7 @@ import java.util.UUID
 @Tag(name = "Reviews (customer)", description = "Submit + my reviews — CUSTOMER")
 @RestController
 @RequestMapping(PortalRoutes.REVIEWS)
-@PreAuthorize("hasAnyRole('CUSTOMER', 'SUPER_ADMIN')")
+@CustomerApi
 class HelpfulReviewController(
     private val reviewService: ReviewService,
     private val qaService: QaService,

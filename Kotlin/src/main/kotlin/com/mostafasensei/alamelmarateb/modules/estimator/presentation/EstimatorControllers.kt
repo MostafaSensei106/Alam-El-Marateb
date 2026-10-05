@@ -20,7 +20,8 @@ import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
+import com.mostafasensei.alamelmarateb.core.security.ManagerApi
+import com.mostafasensei.alamelmarateb.core.security.CustomerApi
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
@@ -71,7 +72,7 @@ class EstimatorController(
 @Tag(name = "Spin (management)", description = "Campaigns + prizes — BRANCH_MANAGER")
 @RestController
 @RequestMapping(EstimatorRoutes.BASE)
-@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
+@ManagerApi
 class SpinManagerController(
     private val spinService: SpinService,
 ) : BaseController() {
@@ -123,7 +124,7 @@ class SpinManagerController(
 @Tag(name = "Spin (customer)", description = "Spin the wheel — CUSTOMER")
 @RestController
 @RequestMapping(EstimatorRoutes.BASE)
-@PreAuthorize("hasAnyRole('CUSTOMER', 'SUPER_ADMIN')")
+@CustomerApi
 class SpinCustomerController(
     private val spinService: SpinService,
 ) : BaseController() {

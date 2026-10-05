@@ -21,7 +21,7 @@ import org.springframework.context.annotation.Configuration
  * All endpoints except auth + public storefront require the JWT bearer below.
  *
  * The [globalErrorCodes] customizer documents the api-status.md contract on
- * every operation (400/401/403/404/405/409/422/429 + traceId envelope) so the
+ * every operation (400/401/403/404/405/409/422/429 envelope) so the
  * UI itself teaches edge cases; controllers only add operation-specific text.
  */
 @Configuration
@@ -39,7 +39,7 @@ class OpenApiConfig {
                         "Modular monolith backend: catalog, sales, inventory, purchasing, " +
                             "crm, hr, accounting, delivery, analytics, identity. " +
                             "Full planning in docs/. " +
-                            "Global contract: every response is ApiResponse{success,message,data,errors,traceId,timestamp}; " +
+                            "Global contract: every response is ApiResponse{success,message,data,errors}; " +
                             "send X-Lang: ar|en for language, Idempotency-Key for place-order/complete-sale/receive, " +
                             "and expect X-Trace-Id + Idempotent-Replay / Retry-After / Allow headers where documented.",
                     )

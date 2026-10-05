@@ -94,6 +94,14 @@ spring:
 
 # JWT Custom Properties
 app:
+  # First-party client gate (ClientKeyFilter): X-Api-Client + X-Api-Key.
+  # Comma-separated key allowlist, one per platform. Rotate via env.
+  clients:
+    enabled: ${CLIENT_GATE_ENABLED:true}
+    keys: ${CLIENT_KEYS:dev-local-key}
+  # CORS allowlist for browser frontends.
+  cors:
+    origins: ${APP_ORIGINS:http://localhost:3000,http://localhost:8080}
   jwt:
     secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
     expiration-ms: 86400000 # 24 Hours
