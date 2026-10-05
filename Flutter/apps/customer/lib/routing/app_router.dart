@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../features/auth/screens/login_screen.dart';
+import '../features/auth/screens/register_screen.dart';
+import '../features/cart/screens/cart_screen.dart';
+import '../features/cart/screens/orders_screen.dart';
+import '../features/catalog/screens/catalog_screen.dart';
+import '../features/catalog/screens/product_details_screen.dart';
+import '../features/portal/screens/account_screen.dart';
 import '../session/auth_state.dart';
 
-/// App routes. Feature modules register their own sub-routes here
-/// as they land (auth first) — the shell stays thin.
+/// Customer routes with bottom-nav shell.
 class CustomerRouter {
   CustomerRouter({required this._authState});
 
@@ -12,6 +18,7 @@ class CustomerRouter {
 
   static const String splash = '/splash';
   static const String login = '/login';
+  static const String register = '/register';
   static const String home = '/home';
 
   late final GoRouter router = GoRouter(
@@ -21,59 +28,116 @@ class CustomerRouter {
       if (!_authState.isReady) {
         return splash;
       }
-      final loggingIn = state.matchedLocation == login;
+      final public = state.matchedLocation == login ||
+          state.matchedLocation == register;
       if (!_authState.isLoggedIn) {
-        return loggingIn ? null : login;
+        return public ? null : login;
       }
-      if (loggingIn || state.matchedLocation == splash) {
+      if (public || state.matchedLocation == splash) {
         return home;
       }
       return null;
     },
     routes: <RouteBase>[
-      GoRoute(path: splash, builder: (context, state) => const SplashPage()),
       GoRoute(
-        path: login,
-        builder: (context, state) => const LoginPlaceholderPage(),
+        path: splash,
+        builder: (context, state) => const SplashPage(),
       ),
       GoRoute(
-        path: home,
-        builder: (context, state) => const CustomerHomePlaceholderPage(),
+        path: login,
+        builder: (context, state) => const LoginScreen(),
+      ),
+      GoRoute(
+        path: register,
+        builder: (context, state) => const RegisterScreen(),
+      ),
+      StatefulShellRoute.indexedStack(
+        builder: (context, state, shell) => CustomerShell(shell: shell),
+        branches: <StatefulShellBranch>[
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: home,
+                builder: (context, state) => const CatalogScreen(),
+                routes: <RouteBase>[
+                  GoRoute(
+                    path: 'product/:slug',
+                    builder: (context, state) => ProductDetailsScreen(
+                      slug: state.pathParameters['slug'] ?? '',
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: '/cart',
+                builder: (context, state) => const CartScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: '/orders',
+                builder: (context, state) => const OrdersScreen(),
+              ),
+            ],
+          ),
+          StatefulShellBranch(
+            routes: <RouteBase>[
+              GoRoute(
+                path: '/account',
+                builder: (context, state) => const AccountScreen(),
+              ),
+            ],
+          ),
+        ],
       ),
     ],
   );
 }
 
-/// Placeholder until design_system + modules/auth UI land.
 class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: CircularProgressIndicator()));
-  }
-}
-
-/// Placeholder: replaced by modules/auth login page in Slice 2.
-class LoginPlaceholderPage extends StatelessWidget {
-  const LoginPlaceholderPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(child: Text('Customer login — modules/auth UI lands here')),
+      body: Center(child: CircularProgressIndicator()),
     );
   }
 }
 
-/// Placeholder: staff shell + role_modules_registry plug in here.
-class CustomerHomePlaceholderPage extends StatelessWidget {
-  const CustomerHomePlaceholderPage({super.key});
+class CustomerShell extends StatelessWidget {
+  const CustomerShell({required this.shell, super.key});
+
+  final StatefulNavigationShell shell;
+
+  void _go(int index) => shell.goBranch(index, initialLocation: true);
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: Text('Customer home — role modules plug in here')),
+    return Scaffold(
+      body: shell,
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: shell.currentIndex,
+        onTap: _go,
+        items: const [
+          BottomNavigationBarItem(icon: Icon(Icons.store), label: 'Shop'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.shopping_cart),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.receipt),
+            label: 'Orders',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
+        ],
+      ),
     );
   }
 }
