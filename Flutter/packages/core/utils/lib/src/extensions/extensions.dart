@@ -6,7 +6,8 @@ import '../di/di.dart';
 import '../services/l10n/l10n_service.dart';
 import '../services/theme/theme_service.dart';
 import '../services/toast/base_toast_service.dart';
-import '../widgets/feedback/dialog/dialog_component.dart';
+import 'package:design_system/src/widgets/feedback/dialog/dialog_component.dart';
+
 
 export 'date_time_extension.dart';
 

@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 
-import '../../../../core/extensions/extensions.dart';
+import 'package:core_utils/src/extensions/extensions.dart';
+
 import '../../../ds_config.dart';
 
 class OtpFieldComponent extends StatelessWidget {

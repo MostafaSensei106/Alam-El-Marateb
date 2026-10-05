@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../utils/network/logic/cubit/network_cubit.dart';
-import '../../utils/network/logic/cubit/network_state.dart';
+import 'package:core_utils/src/utils/network/logic/cubit/network_cubit.dart';
+
+import 'package:core_utils/src/utils/network/logic/cubit/network_state.dart';
+
 
 /// A widget that builds its child based on the current network state.
 /// Useful for full-screen offline states.

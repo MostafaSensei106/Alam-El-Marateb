@@ -484,6 +484,13 @@
       ]
     },
     {
+      "name": "iconsax_flutter",
+      "version": "1.0.1",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
       "name": "flutter",
       "version": "0.0.0",
       "dependencies": [
@@ -2471,13 +2478,6 @@
         "collection",
         "meta",
         "pub_semver"
-      ]
-    },
-    {
-      "name": "iconsax_flutter",
-      "version": "1.0.1",
-      "dependencies": [
-        "flutter"
       ]
     }
   ],

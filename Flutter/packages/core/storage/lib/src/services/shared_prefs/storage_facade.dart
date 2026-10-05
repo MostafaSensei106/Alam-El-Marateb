@@ -1,6 +1,7 @@
 import 'package:injectable/injectable.dart';
 
-import '../../constants/pref_keys.dart';
+import 'package:core_utils/src/constants/pref_keys.dart';
+
 import 'base_pref_storage_service.dart';
 import 'secure_storage_service.dart';
 import 'shared_prefs_service.dart';

@@ -1,6 +1,7 @@
 import 'package:core_utils/core_utils.dart';
 
-import '../../constants/pref_keys.dart';
+import 'package:core_utils/src/constants/pref_keys.dart';
+
 import '../shared_prefs/base_pref_storage_service.dart';
 import 'session_auth_notifier.dart';
 
