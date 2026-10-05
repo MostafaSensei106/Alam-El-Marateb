@@ -58,10 +58,10 @@ class ApiFailure extends Failures {
     this.originalError,
     this.stackTrace,
   }) : super(
-          apiErrorModel.errors.isNotEmpty
-              ? apiErrorModel.errors.first
-              : apiErrorModel.message,
-        );
+         apiErrorModel.errors.isNotEmpty
+             ? apiErrorModel.errors.first
+             : apiErrorModel.message,
+       );
 
   final ApiErrorModel apiErrorModel;
   final ErrorType errorType;

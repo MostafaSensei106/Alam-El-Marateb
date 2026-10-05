@@ -1,9 +1,9 @@
+import 'package:core_utils/core_utils.dart';
+import 'package:core_utils/core_utils.dart';
 import 'package:flutter/material.dart';
-import '../../../ds_config.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
-import 'package:core_utils/core_utils.dart';
-import 'package:core_utils/core_utils.dart';
+import '../../../ds_config.dart';
 
 final class SearchBarComponent extends StatelessWidget {
   const SearchBarComponent({

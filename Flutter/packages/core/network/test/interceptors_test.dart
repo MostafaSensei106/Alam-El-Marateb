@@ -15,8 +15,7 @@ class _ScriptAdapter implements HttpClientAdapter {
     RequestOptions options,
     Stream<List<int>>? requestStream,
     Future<void>? cancelFuture,
-  ) async =>
-      _respond(options);
+  ) async => _respond(options);
 
   @override
   void close({bool force = false}) {}
@@ -32,10 +31,10 @@ ResponseBody _json(int status, Map<String, dynamic> body) =>
     );
 
 NetworkConfig _config() => const NetworkConfig(
-      baseUrl: 'http://localhost:8080',
-      clientId: 'postman',
-      clientKey: 'postman-dev-key',
-    );
+  baseUrl: 'http://localhost:8080',
+  clientId: 'postman',
+  clientKey: 'postman-dev-key',
+);
 
 void main() {
   group('ClientKeyInterceptor', () {
@@ -43,15 +42,10 @@ void main() {
       late RequestOptions seen;
       final dio = Dio(BaseOptions(baseUrl: 'http://localhost:8080'));
       dio.interceptors.add(ClientKeyInterceptor(_config()));
-      dio.httpClientAdapter = _ScriptAdapter(
-        (options) {
-          seen = options;
-          return _json(200, <String, dynamic>{
-            'success': true,
-            'message': 'ok',
-          });
-        },
-      );
+      dio.httpClientAdapter = _ScriptAdapter((options) {
+        seen = options;
+        return _json(200, <String, dynamic>{'success': true, 'message': 'ok'});
+      });
       await dio.get<dynamic>('/x');
       expect(seen.headers['X-Api-Client'], 'postman');
       expect(seen.headers['X-Api-Key'], 'postman-dev-key');
@@ -63,13 +57,10 @@ void main() {
       late RequestOptions seen;
       final dio = Dio(BaseOptions(baseUrl: 'http://localhost:8080'));
       dio.interceptors.add(LocaleInterceptor(languageProvider: () => 'en'));
-      final adapter = _ScriptAdapter(
-        (options) {
-          seen = options;
-          return _json(
-              200, <String, dynamic>{'success': true, 'message': 'ok'});
-        },
-      );
+      final adapter = _ScriptAdapter((options) {
+        seen = options;
+        return _json(200, <String, dynamic>{'success': true, 'message': 'ok'});
+      });
       dio.httpClientAdapter = adapter;
       await dio.get<dynamic>('/x');
       expect(seen.headers['X-Lang'], 'en');
@@ -90,13 +81,10 @@ void main() {
           retryClient: () => dio,
         ),
       );
-      final adapter = _ScriptAdapter(
-        (options) {
-          seen = options;
-          return _json(
-              200, <String, dynamic>{'success': true, 'message': 'ok'});
-        },
-      );
+      final adapter = _ScriptAdapter((options) {
+        seen = options;
+        return _json(200, <String, dynamic>{'success': true, 'message': 'ok'});
+      });
       dio.httpClientAdapter = adapter;
       await dio.get<dynamic>('/x');
       expect(seen.headers['Authorization'], 'Bearer abc');
@@ -115,13 +103,10 @@ void main() {
           retryClient: () => dio,
         ),
       );
-      final adapter = _ScriptAdapter(
-        (options) {
-          seen = options;
-          return _json(
-              200, <String, dynamic>{'success': true, 'message': 'ok'});
-        },
-      );
+      final adapter = _ScriptAdapter((options) {
+        seen = options;
+        return _json(200, <String, dynamic>{'success': true, 'message': 'ok'});
+      });
       dio.httpClientAdapter = adapter;
       await dio.get<dynamic>(
         '/auth/login',
@@ -141,10 +126,7 @@ void main() {
           storage: storage,
           onRefresh: (_) async {
             refreshCalls++;
-            await storage.saveTokens(
-              accessToken: 'new',
-              refreshToken: 'ref2',
-            );
+            await storage.saveTokens(accessToken: 'new', refreshToken: 'ref2');
             return 'new';
           },
           onSessionExpired: () async {
@@ -154,23 +136,21 @@ void main() {
         ),
       );
       var n = 0;
-      dio.httpClientAdapter = _ScriptAdapter(
-        (_) {
-          n++;
-          if (n == 1) {
-            return _json(401, <String, dynamic>{
-              'success': false,
-              'message': 'expired',
-              'errors': ['TOKEN_EXPIRED'],
-            });
-          }
-          return _json(200, <String, dynamic>{
-            'success': true,
-            'message': 'ok',
-            'data': 'retried',
+      dio.httpClientAdapter = _ScriptAdapter((_) {
+        n++;
+        if (n == 1) {
+          return _json(401, <String, dynamic>{
+            'success': false,
+            'message': 'expired',
+            'errors': ['TOKEN_EXPIRED'],
           });
-        },
-      );
+        }
+        return _json(200, <String, dynamic>{
+          'success': true,
+          'message': 'ok',
+          'data': 'retried',
+        });
+      });
       final res = await dio.get<dynamic>('/protected');
       expect(res.statusCode, 200);
       expect(refreshCalls, 1);

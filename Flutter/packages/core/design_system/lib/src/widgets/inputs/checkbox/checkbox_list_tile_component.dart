@@ -3,9 +3,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../../../ds_config.dart';
 import 'package:flutter/services.dart';
 
+import '../../../ds_config.dart';
 
 final class CheckboxListTileComponent extends StatelessWidget {
   const CheckboxListTileComponent({

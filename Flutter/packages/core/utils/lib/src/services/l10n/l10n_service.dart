@@ -5,6 +5,6 @@ import '../../../l10n/app_localizations.dart';
 
 @lazySingleton
 class L10nService {
-  AppLocalizations get(BuildContext context) => AppLocalizations.of(context)!;
+  AppLocalizations get(BuildContext context) => AppLocalizations.of(context);
   List<Locale> get supportedLocales => AppLocalizations.supportedLocales;
 }

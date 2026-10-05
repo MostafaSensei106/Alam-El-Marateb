@@ -1,9 +1,9 @@
+import 'package:core_utils/core_utils.dart';
 import 'package:flutter/material.dart';
-import '../../ds_config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
-import 'package:core_utils/core_utils.dart';
+import '../../ds_config.dart';
 
 class ErrorStateWidget extends StatelessWidget {
   const ErrorStateWidget({

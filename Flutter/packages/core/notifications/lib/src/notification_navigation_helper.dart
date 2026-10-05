@@ -8,9 +8,9 @@ import 'package:flutter/widgets.dart';
 /// own GoRouter (push notifications route), keeping this helper portable.
 class NotificationNavigationHelper {
   NotificationNavigationHelper({
-    required Future<bool> Function() onNavigate,
+    required this._onNavigate,
     this.maxRetries = 100,
-  }) : _onNavigate = onNavigate;
+  });
 
   final Future<bool> Function() _onNavigate;
   final int maxRetries;

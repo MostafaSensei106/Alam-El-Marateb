@@ -1,4 +1,5 @@
 import 'package:core_network/core_network.dart';
+
 import '../result/result.dart';
 
 abstract interface class BaseUseCase<T, Params> {

@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import '../../../ds_config.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
 import 'package:go_router/go_router.dart';
 
+import '../../../ds_config.dart';
 import '../../buttons/icon_button/icon_button_component.dart';
 
 /// An app bar designed for side pages, with an optional back button and actions.

@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:core_network/core_network.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../constants/types/type_def.dart';
 import '../../di/di.dart';
-import 'package:core_network/core_network.dart';
 import '../cache/cache_manager.dart';
 import '../network/logic/cubit/network_cubit.dart';
 import '../network/logic/cubit/network_state.dart';

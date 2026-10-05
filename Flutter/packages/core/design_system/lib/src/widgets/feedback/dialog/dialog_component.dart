@@ -1,10 +1,9 @@
 import 'dart:async';
 
+import 'package:core_utils/core_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
-
-import 'package:core_utils/core_utils.dart';
 
 final class DialogComponent extends StatelessWidget {
   const DialogComponent({

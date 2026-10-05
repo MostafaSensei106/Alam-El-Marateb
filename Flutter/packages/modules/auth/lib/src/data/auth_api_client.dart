@@ -13,7 +13,7 @@ import 'models/token_pair.dart';
 /// the Dart workspace — then delete this file and restore the redirecting
 /// factory in [AuthApi].
 class AuthApiClient implements AuthApi {
-  AuthApiClient(this._dio, {String? baseUrl}) : _baseUrl = baseUrl;
+  AuthApiClient(this._dio, {this._baseUrl});
 
   final Dio _dio;
   final String? _baseUrl;
@@ -63,10 +63,9 @@ class AuthApiClient implements AuthApi {
     String path,
     Map<String, Object>? extra,
     Map<String, dynamic> data,
-  ) =>
-      Options(method: method, extra: extra)
-          .compose(_dio.options, path, data: data)
-          .copyWith(baseUrl: _combine(_dio.options.baseUrl, _baseUrl));
+  ) => Options(method: method, extra: extra)
+      .compose(_dio.options, path, data: data)
+      .copyWith(baseUrl: _combine(_dio.options.baseUrl, _baseUrl));
 
   String _combine(String dioBase, String? base) {
     if (base == null || base.trim().isEmpty) {

@@ -23,9 +23,7 @@ abstract class BaseAuthRepository {
 /// Retrofit-backed repository. Persists tokens on every successful
 /// issue/rotation so interceptors pick them up immediately.
 class AuthRepository implements BaseAuthRepository {
-  AuthRepository({required AuthApi api, required TokenStorage storage})
-      : _api = api,
-        _storage = storage;
+  AuthRepository({required this._api, required this._storage});
 
   final AuthApi _api;
   final TokenStorage _storage;

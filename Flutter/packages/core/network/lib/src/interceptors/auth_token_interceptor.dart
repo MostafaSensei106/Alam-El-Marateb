@@ -16,14 +16,11 @@ typedef RefreshTokens = Future<String?> Function(String refreshToken);
 /// - extra['authRequired'] == false skips auth (login/refresh/register).
 class AuthTokenInterceptor extends Interceptor {
   AuthTokenInterceptor({
-    required TokenStorage storage,
-    required RefreshTokens onRefresh,
-    required Future<void> Function() onSessionExpired,
-    required Dio Function() retryClient,
-  })  : _storage = storage,
-        _onRefresh = onRefresh,
-        _onSessionExpired = onSessionExpired,
-        _retryClient = retryClient;
+    required this._storage,
+    required this._onRefresh,
+    required this._onSessionExpired,
+    required this._retryClient,
+  });
 
   final TokenStorage _storage;
   final RefreshTokens _onRefresh;

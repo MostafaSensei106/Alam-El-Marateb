@@ -29,9 +29,7 @@ abstract class AuthApi {
 
   @POST('/api/v1/auth/refresh')
   @Extra(<String, Object>{'authRequired': false})
-  Future<ApiResponse<TokenPair>> refresh(
-    @Body() RefreshRequestBody body,
-  );
+  Future<ApiResponse<TokenPair>> refresh(@Body() RefreshRequestBody body);
 
   @GET('/api/v1/auth/me')
   Future<ApiResponse<AuthUser>> me();

@@ -1,10 +1,10 @@
 import 'dart:ui' as ui;
 
+import 'package:core_storage/core_storage.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../constants/pref_keys.dart';
 import '../../../services/l10n/l10n_service.dart';
-import '../../../services/shared_prefs/base_pref_storage_service.dart';
 import 'base_localization_repository.dart';
 
 @LazySingleton(as: BaseLocalizationRepository)

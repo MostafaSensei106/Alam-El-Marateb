@@ -11,7 +11,8 @@ class CustomerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final router = CustomerRouter(authState: GetIt.instance<AuthState>()).router;
+    final router = CustomerRouter(authState: GetIt.instance<AuthState>())
+        .router;
     return MaterialApp.router(
       title: AppConfig.appName,
       debugShowCheckedModeBanner: false,

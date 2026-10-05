@@ -1,7 +1,8 @@
-import '../../constants/pref_keys.dart';
 import 'package:core_utils/core_utils.dart';
-import 'session_auth_notifier.dart';
+
+import '../../constants/pref_keys.dart';
 import '../shared_prefs/base_pref_storage_service.dart';
+import 'session_auth_notifier.dart';
 
 abstract interface class BaseUserSessionService {
   Future<void> saveUserSession({required String token, bool rememberMe = true});

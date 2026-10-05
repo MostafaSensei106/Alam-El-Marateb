@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../ds_config.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
+import '../../../ds_config.dart';
 
 final class SvgComponent extends StatelessWidget {
   const SvgComponent({

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../ds_config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
+import '../../../ds_config.dart';
 
 /// Bone-based loading placeholders.
 ///
@@ -347,9 +347,7 @@ final class BannerSkeleton extends StatelessWidget {
               padding: EdgeInsets.all(DsConfig.padding.r),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surfaceContainer,
-                borderRadius: BorderRadius.circular(
-                  DsConfig.outBorderRadius.r,
-                ),
+                borderRadius: BorderRadius.circular(DsConfig.outBorderRadius.r),
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

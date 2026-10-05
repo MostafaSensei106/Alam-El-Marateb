@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../ds_config.dart';
 
+import '../../../ds_config.dart';
 
 final class CardComponent extends StatelessWidget {
   const CardComponent({

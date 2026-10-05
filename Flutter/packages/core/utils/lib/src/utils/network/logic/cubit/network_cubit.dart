@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:core_network/core_network.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:core_network/core_network.dart';
 import 'network_state.dart';
 
 @lazySingleton

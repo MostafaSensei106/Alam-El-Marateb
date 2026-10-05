@@ -6,9 +6,8 @@ enum AppFlavor { dev, staging, prod }
 class AppConfig {
   const AppConfig._();
 
-  static AppFlavor get flavor => _parseFlavor(
-    const String.fromEnvironment('FLAVOR', defaultValue: 'dev'),
-  );
+  static AppFlavor get flavor =>
+      _parseFlavor(const String.fromEnvironment('FLAVOR', defaultValue: 'dev'));
 
   static AppFlavor _parseFlavor(String value) => AppFlavor.values.firstWhere(
     (flavor) => flavor.name == value,

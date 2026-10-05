@@ -135,6 +135,7 @@
       "version": "0.0.0",
       "dependencies": [
         "connectivity_plus",
+        "core_utils",
         "dio",
         "dio_cache_interceptor",
         "flutter",
@@ -175,6 +176,8 @@
       "dependencies": [
         "connectivity_plus",
         "core_network",
+        "core_storage",
+        "dio",
         "flutter",
         "flutter_bloc",
         "flutter_localizations",
@@ -183,6 +186,7 @@
         "gal",
         "get_it",
         "hydrated_bloc",
+        "iconsax_flutter",
         "infinite_scroll_pagination",
         "injectable",
         "intl",
@@ -251,6 +255,7 @@
         "flutter_screenutil",
         "flutter_svg",
         "go_router",
+        "iconsax_flutter",
         "pinput",
         "skeletonizer",
         "toastification"
@@ -2466,6 +2471,13 @@
         "collection",
         "meta",
         "pub_semver"
+      ]
+    },
+    {
+      "name": "iconsax_flutter",
+      "version": "1.0.1",
+      "dependencies": [
+        "flutter"
       ]
     }
   ],

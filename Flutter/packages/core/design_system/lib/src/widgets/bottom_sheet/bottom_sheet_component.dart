@@ -1,11 +1,8 @@
+import 'package:core_utils/core_utils.dart';
 import 'package:flutter/material.dart';
-
-import '../../ds_config.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:core_utils/core_utils.dart';
-import 'package:core_utils/core_utils.dart';
+import '../../ds_config.dart';
 
 extension BottomSheetExtension on BuildContext {
   // ignore: unused_element

@@ -10,8 +10,7 @@ class _FakeApi implements AuthApi {
   final DioException? failure;
 
   @override
-  Future<ApiResponse<TokenPair>> login(LoginRequestBody body) async =>
-      _token();
+  Future<ApiResponse<TokenPair>> login(LoginRequestBody body) async => _token();
 
   @override
   Future<ApiResponse<TokenPair>> register(RegisterRequestBody body) async =>

@@ -2,12 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:core_storage/core_storage.dart';
+import 'package:core_utils/core_utils.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/widgets.dart';
-import 'package:core_utils/core_utils.dart';
-import 'package:core_utils/core_utils.dart';
-import 'package:core_utils/core_utils.dart';
-import 'package:core_storage/core_storage.dart';
+
 import 'base_local_notification_service.dart';
 import 'base_notification_service.dart';
 import 'notification_navigation_helper.dart';

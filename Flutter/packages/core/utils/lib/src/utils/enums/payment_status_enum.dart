@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../../core/extensions/extensions.dart';
+import '../../extensions/extensions.dart';
 
 enum PaymentStatusEnum { paid, unpaid, partial }
 

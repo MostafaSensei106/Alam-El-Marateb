@@ -6,7 +6,7 @@ import '../session/auth_state.dart';
 /// App routes. Feature modules register their own sub-routes here
 /// as they land (auth first) — the shell stays thin.
 class StaffRouter {
-  StaffRouter({required AuthState authState}) : _authState = authState;
+  StaffRouter({required this._authState});
 
   final AuthState _authState;
 
@@ -31,10 +31,7 @@ class StaffRouter {
       return null;
     },
     routes: <RouteBase>[
-      GoRoute(
-        path: splash,
-        builder: (context, state) => const SplashPage(),
-      ),
+      GoRoute(path: splash, builder: (context, state) => const SplashPage()),
       GoRoute(
         path: login,
         builder: (context, state) => const LoginPlaceholderPage(),
@@ -53,9 +50,7 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
-    );
+    return const Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }
 

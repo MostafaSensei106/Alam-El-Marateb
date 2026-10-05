@@ -30,6 +30,9 @@ dependencies:
     path: ../network
   flutter:
     sdk: flutter
+  core_storage: any
+  dio: any
+  iconsax_flutter: any
 dev_dependencies:
   lints: ^6.0.0
   test: ^1.26.3
