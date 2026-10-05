@@ -21,6 +21,3 @@ workspace:
 - packages/modules/delivery
 - packages/modules/orders
 - packages/modules/crm
-
-dependency_overrides:
-  intl: ^0.20.3
