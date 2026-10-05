@@ -217,7 +217,7 @@ void main() {
   });
 }
 
-class _FakeNetworkInfo implements NetworkInfo {
+class _FakeNetworkInfo implements BaseNetworkInfo {
   @override
   Future<bool> get isConnected async => true;
 }

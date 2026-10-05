@@ -14,9 +14,24 @@ import 'base_file_manager_facade.dart';
 
 @Injectable(as: BaseFileManagerFacade)
 final class FileManagerFacade implements BaseFileManagerFacade {
-  const FileManagerFacade(this._attachmentHandler);
+  const FileManagerFacade(
+    this._attachmentHandler, {
+    this.onInfo,
+    this.onError,
+  });
 
   final BaseAttachmentHandlerService _attachmentHandler;
+
+  /// UI feedback hooks (dialogs live in design_system — this package
+  /// must not depend on widgets, so hosts inject the presentation).
+  final Future<void> Function({
+    required String title,
+    required String body,
+  })? onInfo;
+  final Future<void> Function({
+    required String title,
+    required String error,
+  })? onError;
 
   @override
   Future<void> downloadAndSaveFile({
@@ -53,11 +68,9 @@ final class FileManagerFacade implements BaseFileManagerFacade {
         }
         await Gal.putImage(tempPath, album: FileConstants.albumName);
         if (context.mounted) {
-          unawaited(
-            context.dialog.showInfo(
-              title: l10n.downloadFile,
-              body: l10n.fileSavedToDcim(fileName),
-            ),
+          await onInfo?.call(
+            title: l10n.downloadFile,
+            body: l10n.fileSavedToDcim(fileName),
           );
         }
         finalPath = tempPath;
@@ -101,20 +114,16 @@ final class FileManagerFacade implements BaseFileManagerFacade {
         if (!destFile.existsSync()) {
           await File(tempPath).copy(destFile.path);
           if (context.mounted) {
-            unawaited(
-              context.dialog.showInfo(
-                title: l10n.downloadFile,
-                body: l10n.fileSavedToDocuments(fileName),
-              ),
+            await onInfo?.call(
+              title: l10n.downloadFile,
+              body: l10n.fileSavedToDocuments(fileName),
             );
           }
         } else {
           if (context.mounted) {
-            unawaited(
-              context.dialog.showInfo(
-                title: l10n.downloadFile,
-                body: l10n.fileAlreadySaved,
-              ),
+            await onInfo?.call(
+              title: l10n.downloadFile,
+              body: l10n.fileAlreadySaved,
             );
           }
         }
@@ -125,10 +134,7 @@ final class FileManagerFacade implements BaseFileManagerFacade {
       await OpenFilex.open(finalPath);
     } catch (e) {
       if (context.mounted) {
-        await context.dialog.showError(
-          title: l10n.error,
-          error: '${l10n.error}: $e',
-        );
+        await onError?.call(title: l10n.error, error: '${l10n.error}: $e');
       }
     }
   }

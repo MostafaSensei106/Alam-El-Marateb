@@ -6,7 +6,8 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:core_utils/src/constants/notification_constants.dart';
+import 'package:core_utils/core_utils.dart';
+
 
 import 'base_local_notification_service.dart';
 import 'notification_navigation_helper.dart';

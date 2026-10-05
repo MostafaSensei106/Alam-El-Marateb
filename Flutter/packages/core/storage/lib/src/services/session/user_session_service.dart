@@ -1,6 +1,7 @@
 import 'package:core_utils/core_utils.dart';
 
-import 'package:core_utils/src/constants/pref_keys.dart';
+import 'package:core_utils/core_utils.dart';
+
 
 import '../shared_prefs/base_pref_storage_service.dart';
 import 'session_auth_notifier.dart';
@@ -53,8 +54,6 @@ final class UserSessionService implements BaseUserSessionService {
 
   @override
   Future<void> clearUserSession() async {
-    await resetUserSession();
-
     await Future.wait([
       _prefStorageService.removeData(key: PrefKeys.userToken),
       _prefStorageService.removeData(key: PrefKeys.isRememberMe),

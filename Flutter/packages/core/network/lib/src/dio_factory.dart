@@ -22,7 +22,7 @@ class DioFactory {
     required TokenStorage tokenStorage,
     required RefreshTokens onRefresh,
     required Future<void> Function() onSessionExpired,
-    required NetworkInfo networkInfo,
+    required BaseNetworkInfo networkInfo,
     required String Function() languageProvider,
   }) {
     final dio = Dio(

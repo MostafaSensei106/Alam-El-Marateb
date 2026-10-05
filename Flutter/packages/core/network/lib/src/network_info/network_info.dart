@@ -3,7 +3,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'interface/base_network_info.dart';
 
 /// Production probe backed by connectivity_plus.
-class ConnectivityNetworkInfo implements NetworkInfo {
+class ConnectivityNetworkInfo implements BaseNetworkInfo {
   ConnectivityNetworkInfo([Connectivity? connectivity])
     : _connectivity = connectivity ?? Connectivity();
 
