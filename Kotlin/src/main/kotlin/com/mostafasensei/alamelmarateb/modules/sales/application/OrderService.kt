@@ -69,11 +69,11 @@ data class PlaceOrderInput(
 data class PlacedOrder(val order: Order, val replayed: Boolean)
 
 data class ScannedVariantView(
-    val variantId: UUID?,
-    val productId: UUID?,
-    val sku: String?,
+    val variantId: UUID,
+    val productId: UUID,
+    val sku: String,
     val barcode: String?,
-    val dimensions: String?,
+    val dimensions: String,
     val sellingPrice: BigDecimal,
     val isActive: Boolean,
 )

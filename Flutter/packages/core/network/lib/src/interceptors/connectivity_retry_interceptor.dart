@@ -6,7 +6,7 @@ import '../network_info/interface/base_network_info.dart';
 /// connection errors only (never 4xx/5xx — those are terminal).
 class ConnectivityRetryInterceptor extends Interceptor {
   ConnectivityRetryInterceptor({required NetworkInfo networkInfo})
-    : _networkInfo = networkInfo;
+      : _networkInfo = networkInfo;
 
   final NetworkInfo _networkInfo;
 
@@ -18,8 +18,7 @@ class ConnectivityRetryInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     final alreadyRetried = err.requestOptions.extra[retriedKey] == true;
-    final isConnectionFailure =
-        err.type == DioExceptionType.connectionError ||
+    final isConnectionFailure = err.type == DioExceptionType.connectionError ||
         err.type == DioExceptionType.connectionTimeout;
     if (!alreadyRetried && isConnectionFailure) {
       if (await _networkInfo.isConnected) {

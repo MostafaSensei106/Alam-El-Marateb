@@ -5,7 +5,7 @@ import '../headers.dart';
 /// Sends the current locale on every request (`X-Lang: ar|en`).
 class LocaleInterceptor extends Interceptor {
   LocaleInterceptor({required String Function() languageProvider})
-    : _languageProvider = languageProvider;
+      : _languageProvider = languageProvider;
 
   final String Function() _languageProvider;
 

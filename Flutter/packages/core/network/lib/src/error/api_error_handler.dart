@@ -69,8 +69,8 @@ abstract final class ApiErrorHandler {
     return switch (statusCode) {
       401 => const AuthFailure('Session expired. Please log in again.'),
       403 => const AuthFailure(
-        'You are not allowed to perform this action.',
-      ),
+          'You are not allowed to perform this action.',
+        ),
       final int code when code >= 500 =>
         const ServerFailure('Server error. Please try again later.'),
       _ => const UnknownFailure('An unexpected error occurred.'),

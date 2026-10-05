@@ -32,10 +32,10 @@ ResponseBody _json(int status, Map<String, dynamic> body) =>
     );
 
 NetworkConfig _config() => const NetworkConfig(
-  baseUrl: 'http://localhost:8080',
-  clientId: 'postman',
-  clientKey: 'postman-dev-key',
-);
+      baseUrl: 'http://localhost:8080',
+      clientId: 'postman',
+      clientKey: 'postman-dev-key',
+    );
 
 void main() {
   group('ClientKeyInterceptor', () {
@@ -47,9 +47,9 @@ void main() {
         (options) {
           seen = options;
           return _json(200, <String, dynamic>{
-              'success': true,
-              'message': 'ok',
-            });
+            'success': true,
+            'message': 'ok',
+          });
         },
       );
       await dio.get<dynamic>('/x');
@@ -66,7 +66,8 @@ void main() {
       final adapter = _ScriptAdapter(
         (options) {
           seen = options;
-          return _json(200, <String, dynamic>{'success': true, 'message': 'ok'});
+          return _json(
+              200, <String, dynamic>{'success': true, 'message': 'ok'});
         },
       );
       dio.httpClientAdapter = adapter;
@@ -92,7 +93,8 @@ void main() {
       final adapter = _ScriptAdapter(
         (options) {
           seen = options;
-          return _json(200, <String, dynamic>{'success': true, 'message': 'ok'});
+          return _json(
+              200, <String, dynamic>{'success': true, 'message': 'ok'});
         },
       );
       dio.httpClientAdapter = adapter;
@@ -116,7 +118,8 @@ void main() {
       final adapter = _ScriptAdapter(
         (options) {
           seen = options;
-          return _json(200, <String, dynamic>{'success': true, 'message': 'ok'});
+          return _json(
+              200, <String, dynamic>{'success': true, 'message': 'ok'});
         },
       );
       dio.httpClientAdapter = adapter;
@@ -156,16 +159,16 @@ void main() {
           n++;
           if (n == 1) {
             return _json(401, <String, dynamic>{
-                'success': false,
-                'message': 'expired',
-                'errors': ['TOKEN_EXPIRED'],
-              });
+              'success': false,
+              'message': 'expired',
+              'errors': ['TOKEN_EXPIRED'],
+            });
           }
           return _json(200, <String, dynamic>{
-              'success': true,
-              'message': 'ok',
-              'data': 'retried',
-            });
+            'success': true,
+            'message': 'ok',
+            'data': 'retried',
+          });
         },
       );
       final res = await dio.get<dynamic>('/protected');

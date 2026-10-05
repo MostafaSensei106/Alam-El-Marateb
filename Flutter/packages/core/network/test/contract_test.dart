@@ -3,12 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:test/test.dart';
 
 DioException _dioException(DioExceptionType type) => DioException(
-  requestOptions: RequestOptions(path: '/x'),
-  type: type,
-);
+      requestOptions: RequestOptions(path: '/x'),
+      type: type,
+    );
 
-DioException _dioError(int status, Map<String, dynamic>? body) =>
-    DioException(
+DioException _dioError(int status, Map<String, dynamic>? body) => DioException(
       requestOptions: RequestOptions(path: '/x'),
       type: DioExceptionType.badResponse,
       response: Response<dynamic>(
@@ -46,7 +45,8 @@ void main() {
     });
 
     test('tolerates missing fields', () {
-      final res = ApiResponse<String>.fromJson(<String, dynamic>{}, (json) => '');
+      final res =
+          ApiResponse<String>.fromJson(<String, dynamic>{}, (json) => '');
       expect(res.success, isFalse);
       expect(res.message, isEmpty);
       expect(res.errors, isEmpty);

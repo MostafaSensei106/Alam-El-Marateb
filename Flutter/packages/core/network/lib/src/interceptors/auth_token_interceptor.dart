@@ -20,10 +20,10 @@ class AuthTokenInterceptor extends Interceptor {
     required RefreshTokens onRefresh,
     required Future<void> Function() onSessionExpired,
     required Dio Function() retryClient,
-  }) : _storage = storage,
-       _onRefresh = onRefresh,
-       _onSessionExpired = onSessionExpired,
-       _retryClient = retryClient;
+  })  : _storage = storage,
+        _onRefresh = onRefresh,
+        _onSessionExpired = onSessionExpired,
+        _retryClient = retryClient;
 
   final TokenStorage _storage;
   final RefreshTokens _onRefresh;
