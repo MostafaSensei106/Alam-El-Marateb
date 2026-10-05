@@ -4,7 +4,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../../networking/network_info/interface/base_network_info.dart';
+import 'package:core_network/core_network.dart';
 import 'network_state.dart';
 
 @lazySingleton

@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 import 'package:flutter/services.dart';
 
-import '../../../constants/app_config.dart';
 
 final class FilledButtonComponent extends StatelessWidget {
   const FilledButtonComponent({
@@ -60,7 +60,7 @@ final class FilledButtonComponent extends StatelessWidget {
                 }
               : null,
           style: _getButtonStyle(context),
-          icon: Icon(icon, size: AppConfig.iconSize),
+          icon: Icon(icon, size: DsConfig.iconSize),
           label: Text(label),
         );
 
@@ -69,12 +69,12 @@ final class FilledButtonComponent extends StatelessWidget {
     foregroundColor: foregroundColor ?? Theme.of(context).colorScheme.onPrimary,
     minimumSize: Size(
       width ?? double.infinity,
-      height ?? AppConfig.buttonHeight,
+      height ?? DsConfig.buttonHeight,
     ),
     shape: RoundedRectangleBorder(
       borderRadius: useInBorderRadius
-          ? BorderRadius.circular(AppConfig.inBorderRadius)
-          : BorderRadius.circular(AppConfig.outBorderRadius),
+          ? BorderRadius.circular(DsConfig.inBorderRadius)
+          : BorderRadius.circular(DsConfig.outBorderRadius),
     ),
   );
 }

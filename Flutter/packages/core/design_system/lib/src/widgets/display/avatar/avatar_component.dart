@@ -1,8 +1,8 @@
 import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
-import '../../../constants/app_config.dart';
 
 final class AvatarComponent extends StatelessWidget {
   const AvatarComponent({
@@ -17,7 +17,7 @@ final class AvatarComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveRadius = radius ?? AppConfig.avatarRadius;
+    final effectiveRadius = radius ?? DsConfig.avatarRadius;
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,

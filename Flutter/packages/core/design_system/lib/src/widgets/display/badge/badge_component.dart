@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../extensions/extensions.dart';
+import 'package:core_utils/core_utils.dart';
 
 final class BadgeComponent extends StatelessWidget {
   const BadgeComponent({required this.child, required this.label, super.key});

@@ -1,8 +1,6 @@
-import 'package:injectable/injectable.dart';
-
 import '../../constants/pref_keys.dart';
-import '../../di/di.dart';
-import '../../router/app_auth_notifier.dart';
+import 'package:core_utils/core_utils.dart';
+import 'session_auth_notifier.dart';
 import '../shared_prefs/base_pref_storage_service.dart';
 
 abstract interface class BaseUserSessionService {
@@ -13,7 +11,6 @@ abstract interface class BaseUserSessionService {
   Future<bool> isAuthenticated();
 }
 
-@LazySingleton(as: BaseUserSessionService)
 final class UserSessionService implements BaseUserSessionService {
   const UserSessionService(this._prefStorageService);
 
@@ -49,7 +46,7 @@ final class UserSessionService implements BaseUserSessionService {
       ),
     ]);
 
-    AppAuthNotifier.instance.notifyAuthChanged(true);
+    SessionAuthNotifier.instance.notifyAuthChanged(true);
   }
 
   @override
@@ -61,6 +58,6 @@ final class UserSessionService implements BaseUserSessionService {
       _prefStorageService.removeData(key: PrefKeys.isRememberMe),
     ]);
 
-    AppAuthNotifier.instance.notifyAuthChanged(false);
+    SessionAuthNotifier.instance.notifyAuthChanged(false);
   }
 }

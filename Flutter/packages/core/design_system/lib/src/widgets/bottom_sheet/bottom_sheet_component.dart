@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+
+import '../../ds_config.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../constants/app_config.dart';
-import '../../di/di.dart';
-import '../../services/theme/theme_service.dart';
+import 'package:core_utils/core_utils.dart';
+import 'package:core_utils/core_utils.dart';
 
 extension BottomSheetExtension on BuildContext {
   // ignore: unused_element
@@ -21,13 +23,13 @@ extension BottomSheetExtension on BuildContext {
       backgroundColor: getIt<ThemeService>().get(this).surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(AppConfig.outBorderRadius.r),
+          top: Radius.circular(DsConfig.outBorderRadius.r),
         ),
       ),
       builder: (context) => SizedBox(
         width: double.infinity,
         child: Padding(
-          padding: EdgeInsets.all(AppConfig.paddingHalf.h),
+          padding: EdgeInsets.all(DsConfig.paddingHalf.h),
           child: child,
         ),
       ),

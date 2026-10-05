@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../modules/notifications/logic/cubit/notification_cubit.dart';
-import '../../di/di.dart';
+import 'package:core_utils/core_utils.dart';
 import '../../router/app_router.dart';
 
 @lazySingleton

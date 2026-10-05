@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 import 'package:flutter/services.dart';
 
-import '../../../constants/app_config.dart';
 
 enum IconButtonVariant { standard, filled, tonal, outlined }
 
@@ -71,7 +71,7 @@ final class IconButtonComponent extends StatelessWidget {
     switch (variant) {
       case IconButtonVariant.standard:
         return IconButton(
-          icon: Icon(icon, size: iconSize ?? AppConfig.iconSize),
+          icon: Icon(icon, size: iconSize ?? DsConfig.iconSize),
           onPressed: () {
             unawaited(HapticFeedback.vibrate());
             onPressed();
@@ -80,7 +80,7 @@ final class IconButtonComponent extends StatelessWidget {
         );
       case IconButtonVariant.filled:
         return IconButton.filled(
-          icon: Icon(icon, size: iconSize ?? AppConfig.iconSize),
+          icon: Icon(icon, size: iconSize ?? DsConfig.iconSize),
           onPressed: () {
             unawaited(HapticFeedback.vibrate());
             onPressed();
@@ -88,8 +88,8 @@ final class IconButtonComponent extends StatelessWidget {
           style: IconButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: useInBorderRadius
-                  ? BorderRadius.circular(AppConfig.inBorderRadius)
-                  : BorderRadius.circular(AppConfig.outBorderRadius),
+                  ? BorderRadius.circular(DsConfig.inBorderRadius)
+                  : BorderRadius.circular(DsConfig.outBorderRadius),
             ),
             backgroundColor:
                 backgroundColor ??
@@ -98,11 +98,11 @@ final class IconButtonComponent extends StatelessWidget {
                 foregroundColor ??
                 Theme.of(context).colorScheme.onPrimaryContainer,
           ),
-          padding: EdgeInsets.all(padding ?? AppConfig.paddingHalf),
+          padding: EdgeInsets.all(padding ?? DsConfig.paddingHalf),
         );
       case IconButtonVariant.tonal:
         return IconButton.filledTonal(
-          icon: Icon(icon, size: iconSize ?? AppConfig.iconSize),
+          icon: Icon(icon, size: iconSize ?? DsConfig.iconSize),
           onPressed: () {
             unawaited(HapticFeedback.vibrate());
             onPressed();
@@ -110,8 +110,8 @@ final class IconButtonComponent extends StatelessWidget {
           style: IconButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: useInBorderRadius
-                  ? BorderRadius.circular(AppConfig.inBorderRadius)
-                  : BorderRadius.circular(AppConfig.outBorderRadius),
+                  ? BorderRadius.circular(DsConfig.inBorderRadius)
+                  : BorderRadius.circular(DsConfig.outBorderRadius),
             ),
             backgroundColor:
                 backgroundColor ??
@@ -123,7 +123,7 @@ final class IconButtonComponent extends StatelessWidget {
         );
       case IconButtonVariant.outlined:
         return IconButton.outlined(
-          icon: Icon(icon, size: iconSize ?? AppConfig.iconSize),
+          icon: Icon(icon, size: iconSize ?? DsConfig.iconSize),
           onPressed: () {
             unawaited(HapticFeedback.vibrate());
             onPressed();
@@ -131,8 +131,8 @@ final class IconButtonComponent extends StatelessWidget {
           style: IconButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: useInBorderRadius
-                  ? BorderRadius.circular(AppConfig.inBorderRadius)
-                  : BorderRadius.circular(AppConfig.outBorderRadius),
+                  ? BorderRadius.circular(DsConfig.inBorderRadius)
+                  : BorderRadius.circular(DsConfig.outBorderRadius),
             ),
             side: BorderSide(
               color:

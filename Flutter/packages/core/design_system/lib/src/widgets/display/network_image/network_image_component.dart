@@ -1,7 +1,7 @@
 import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 
-import '../../../constants/app_config.dart';
 
 final class NetworkImageComponent extends StatelessWidget {
   const NetworkImageComponent({
@@ -30,7 +30,7 @@ final class NetworkImageComponent extends StatelessWidget {
 
     return ClipRRect(
       borderRadius: BorderRadius.circular(
-        borderRadius ?? AppConfig.inBorderRadius,
+        borderRadius ?? DsConfig.inBorderRadius,
       ),
       child: CachedNetworkImage(
         imageUrl: imageUrl,

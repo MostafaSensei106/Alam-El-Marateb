@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../core/extensions/extensions.dart';
-import '../../../constants/app_config.dart';
 
 class OtpFieldComponent extends StatelessWidget {
   const OtpFieldComponent({
@@ -20,12 +20,12 @@ class OtpFieldComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final defaultPinTheme = PinTheme(
-      width: AppConfig.otpFieldSize.w,
-      height: AppConfig.otpFieldSize.w,
+      width: DsConfig.otpFieldSize.w,
+      height: DsConfig.otpFieldSize.w,
       textStyle: context.textTheme.titleLarge,
       decoration: BoxDecoration(
         border: Border.all(color: context.colorScheme.outline),
-        borderRadius: BorderRadius.circular(AppConfig.outBorderRadius.r),
+        borderRadius: BorderRadius.circular(DsConfig.outBorderRadius.r),
       ),
     );
 
@@ -45,7 +45,7 @@ class OtpFieldComponent extends StatelessWidget {
       submittedPinTheme: submittedPinTheme,
       onCompleted: onCompleted,
       onChanged: onChanged,
-      separatorBuilder: (index) => SizedBox(width: AppConfig.paddingHalf.w),
+      separatorBuilder: (index) => SizedBox(width: DsConfig.paddingHalf.w),
     );
   }
 }

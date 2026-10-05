@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 import 'package:flutter/services.dart';
 
-import '../../../constants/app_config.dart';
 import 'list_tile_component.dart';
 
 final class ListTileIconComponent extends StatelessWidget {
@@ -63,12 +63,12 @@ final class ListTileIconComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final iconWidget = Container(
-      padding: const EdgeInsets.all(AppConfig.paddingHalf),
+      padding: const EdgeInsets.all(DsConfig.paddingHalf),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Icon(leading, size: AppConfig.iconSize, color: Colors.white),
+      child: Icon(leading, size: DsConfig.iconSize, color: Colors.white),
     );
 
     switch (groupType) {

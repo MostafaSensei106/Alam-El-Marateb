@@ -11,6 +11,18 @@ class ServerFailure extends Failures {
   const ServerFailure(super.message);
 }
 
+class CacheFailure extends Failures {
+  const CacheFailure(super.message);
+}
+
+class CooldownFailure extends Failures {
+  const CooldownFailure(super.message);
+}
+
+class LocalStorageFailure extends Failures {
+  const LocalStorageFailure(super.message);
+}
+
 class NetworkFailure extends Failures {
   const NetworkFailure(super.message);
 }

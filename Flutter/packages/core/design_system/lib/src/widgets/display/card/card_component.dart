@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 
-import '../../../constants/app_config.dart';
 
 final class CardComponent extends StatelessWidget {
   const CardComponent({
@@ -15,10 +15,10 @@ final class CardComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: padding ?? const EdgeInsets.all(AppConfig.padding),
+    padding: padding ?? const EdgeInsets.all(DsConfig.padding),
     decoration: BoxDecoration(
       color: color ?? Theme.of(context).colorScheme.surfaceContainer,
-      borderRadius: BorderRadius.circular(AppConfig.outBorderRadius),
+      borderRadius: BorderRadius.circular(DsConfig.outBorderRadius),
     ),
     child: child,
   );

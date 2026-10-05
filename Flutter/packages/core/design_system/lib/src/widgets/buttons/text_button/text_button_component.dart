@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 import 'package:flutter/services.dart';
 
-import '../../../constants/app_config.dart';
 
 final class TextButtonComponent extends StatelessWidget {
   const TextButtonComponent({
@@ -42,8 +42,8 @@ final class TextButtonComponent extends StatelessWidget {
       foregroundColor: foregroundColor,
       shape: RoundedRectangleBorder(
         borderRadius: useInBorderRadius
-            ? BorderRadius.circular(AppConfig.inBorderRadius)
-            : BorderRadius.circular(AppConfig.outBorderRadius),
+            ? BorderRadius.circular(DsConfig.inBorderRadius)
+            : BorderRadius.circular(DsConfig.outBorderRadius),
       ),
     );
 
@@ -67,7 +67,7 @@ final class TextButtonComponent extends StatelessWidget {
                   }
                 : null,
             style: style,
-            icon: Icon(icon, size: AppConfig.iconSize),
+            icon: Icon(icon, size: DsConfig.iconSize),
             label: Text(label),
           );
   }

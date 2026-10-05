@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
-import '../../../constants/app_config.dart';
 
 final class SvgComponent extends StatelessWidget {
   const SvgComponent({
@@ -52,7 +52,7 @@ final class SvgComponent extends StatelessWidget {
       children: [
         svgWidget,
         if (title != null) ...[
-          const SizedBox(height: AppConfig.margin),
+          const SizedBox(height: DsConfig.margin),
 
           Text(
             title!,

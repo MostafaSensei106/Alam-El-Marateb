@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 
-import '../../../constants/app_config.dart';
-import '../../../extensions/extensions.dart';
+import 'package:core_utils/core_utils.dart';
 
 enum ListTileGroupType { top, middle, bottom, single }
 
@@ -62,8 +62,8 @@ final class ListTileComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final borderRadius = useinBorderRadius
-        ? BorderRadius.circular(AppConfig.inBorderRadius)
-        : BorderRadius.circular(AppConfig.outBorderRadius);
+        ? BorderRadius.circular(DsConfig.inBorderRadius)
+        : BorderRadius.circular(DsConfig.outBorderRadius);
 
     BorderRadius effectiveRadius;
 
@@ -105,7 +105,7 @@ final class ListTileComponent extends StatelessWidget {
               onTap: onTap,
               horizontalTitleGap: 10,
               contentPadding: const EdgeInsets.symmetric(
-                horizontal: AppConfig.paddingHalf,
+                horizontal: DsConfig.paddingHalf,
               ),
             ),
           ),

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
-import '../../../constants/app_config.dart';
 
 /// Bone-based loading placeholders.
 ///
@@ -38,7 +38,7 @@ final class ProductCardSkeleton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: c.surfaceContainer,
-        borderRadius: BorderRadius.circular(AppConfig.outBorderRadius.r),
+        borderRadius: BorderRadius.circular(DsConfig.outBorderRadius.r),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,8 +46,8 @@ final class ProductCardSkeleton extends StatelessWidget {
           Expanded(
             child: Bone(
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(AppConfig.outBorderRadius.r),
-                topRight: Radius.circular(AppConfig.outBorderRadius.r),
+                topLeft: Radius.circular(DsConfig.outBorderRadius.r),
+                topRight: Radius.circular(DsConfig.outBorderRadius.r),
               ),
             ),
           ),
@@ -83,8 +83,8 @@ final class ProductsGridSkeleton extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(
-          horizontal: AppConfig.padding.w,
-          vertical: AppConfig.paddingHalf.h,
+          horizontal: DsConfig.padding.w,
+          vertical: DsConfig.paddingHalf.h,
         ),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -110,7 +110,7 @@ final class ChipRowSkeleton extends StatelessWidget {
       child: SizedBox(
         height: 42.h,
         child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: AppConfig.padding.w),
+          padding: EdgeInsets.symmetric(horizontal: DsConfig.padding.w),
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: itemCount,
@@ -133,10 +133,10 @@ final class InvoiceCardSkeleton extends StatelessWidget {
   Widget build(BuildContext context) {
     final c = Theme.of(context).colorScheme;
     return Container(
-      padding: EdgeInsets.all(AppConfig.padding.r),
+      padding: EdgeInsets.all(DsConfig.padding.r),
       decoration: BoxDecoration(
         color: c.surfaceContainer,
-        borderRadius: BorderRadius.circular(AppConfig.outBorderRadius.r),
+        borderRadius: BorderRadius.circular(DsConfig.outBorderRadius.r),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -234,19 +234,19 @@ final class DetailsPageSkeleton extends StatelessWidget {
             child: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
               padding: EdgeInsets.symmetric(
-                horizontal: AppConfig.padding.w,
-                vertical: AppConfig.paddingHalf.h,
+                horizontal: DsConfig.padding.w,
+                vertical: DsConfig.paddingHalf.h,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     width: double.infinity,
-                    padding: EdgeInsets.all(AppConfig.padding.r),
+                    padding: EdgeInsets.all(DsConfig.padding.r),
                     decoration: BoxDecoration(
                       color: c.surfaceContainer,
                       borderRadius: BorderRadius.circular(
-                        AppConfig.outBorderRadius.r,
+                        DsConfig.outBorderRadius.r,
                       ),
                     ),
                     child: const Column(
@@ -298,10 +298,10 @@ final class DetailsPageSkeleton extends StatelessWidget {
               top: false,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(
-                  AppConfig.padding.w,
-                  AppConfig.paddingHalf.h,
-                  AppConfig.padding.w,
-                  AppConfig.paddingHalf.h,
+                  DsConfig.padding.w,
+                  DsConfig.paddingHalf.h,
+                  DsConfig.padding.w,
+                  DsConfig.paddingHalf.h,
                 ),
                 child: Container(
                   width: double.infinity,
@@ -341,14 +341,14 @@ final class BannerSkeleton extends StatelessWidget {
               height: 150.h,
               width: double.infinity,
               margin: EdgeInsets.symmetric(
-                horizontal: AppConfig.padding.w,
+                horizontal: DsConfig.padding.w,
                 vertical: 4.h,
               ),
-              padding: EdgeInsets.all(AppConfig.padding.r),
+              padding: EdgeInsets.all(DsConfig.padding.r),
               decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.surfaceContainer,
                 borderRadius: BorderRadius.circular(
-                  AppConfig.outBorderRadius.r,
+                  DsConfig.outBorderRadius.r,
                 ),
               ),
               child: const Column(
@@ -384,14 +384,14 @@ final class TileListSkeleton extends StatelessWidget {
       child: ListView.separated(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        padding: const EdgeInsets.all(AppConfig.padding),
+        padding: const EdgeInsets.all(DsConfig.padding),
         itemCount: itemCount,
-        separatorBuilder: (_, _) => SizedBox(height: AppConfig.paddingHalf.h),
+        separatorBuilder: (_, _) => SizedBox(height: DsConfig.paddingHalf.h),
         itemBuilder: (_, _) => Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: c.surfaceContainer,
-            borderRadius: BorderRadius.circular(AppConfig.outBorderRadius),
+            borderRadius: BorderRadius.circular(DsConfig.outBorderRadius),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -438,16 +438,16 @@ final class SectorsPricesListSkeleton extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         padding: EdgeInsets.symmetric(
-          horizontal: AppConfig.padding.w,
-          vertical: AppConfig.padding.h,
+          horizontal: DsConfig.padding.w,
+          vertical: DsConfig.padding.h,
         ),
         itemCount: itemCount,
-        separatorBuilder: (_, _) => SizedBox(height: AppConfig.padding.h),
+        separatorBuilder: (_, _) => SizedBox(height: DsConfig.padding.h),
         itemBuilder: (_, _) => Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: c.surfaceContainer,
-            borderRadius: BorderRadius.circular(AppConfig.outBorderRadius.r),
+            borderRadius: BorderRadius.circular(DsConfig.outBorderRadius.r),
             border: Border.all(color: c.outlineVariant),
           ),
           child: Row(

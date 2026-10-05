@@ -3,9 +3,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 import 'package:flutter/services.dart';
 
-import '../../../constants/app_config.dart';
 
 final class CheckboxListTileComponent extends StatelessWidget {
   const CheckboxListTileComponent({
@@ -32,8 +32,8 @@ final class CheckboxListTileComponent extends StatelessWidget {
     },
     shape: RoundedRectangleBorder(
       borderRadius: useInBorderRadius
-          ? BorderRadiusGeometry.circular(AppConfig.inBorderRadius)
-          : BorderRadius.circular(AppConfig.outBorderRadius),
+          ? BorderRadiusGeometry.circular(DsConfig.inBorderRadius)
+          : BorderRadius.circular(DsConfig.outBorderRadius),
     ),
   );
 }

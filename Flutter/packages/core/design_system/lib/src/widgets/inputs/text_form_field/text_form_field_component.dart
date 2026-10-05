@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 import 'package:flutter/services.dart';
 
-import '../../../constants/app_config.dart';
-import '../../../extensions/extensions.dart';
+import 'package:core_utils/core_utils.dart';
 
 final class TextFormFieldComponent extends StatelessWidget {
   const TextFormFieldComponent({
@@ -102,14 +102,14 @@ final class TextFormFieldComponent extends StatelessWidget {
 
       border: OutlineInputBorder(
         borderRadius: useInBorderRadius
-            ? BorderRadius.circular(AppConfig.inBorderRadius)
-            : BorderRadius.circular(AppConfig.outBorderRadius),
+            ? BorderRadius.circular(DsConfig.inBorderRadius)
+            : BorderRadius.circular(DsConfig.outBorderRadius),
         borderSide: BorderSide(color: context.colorScheme.outline),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: useInBorderRadius
-            ? BorderRadius.circular(AppConfig.inBorderRadius)
-            : BorderRadius.circular(AppConfig.outBorderRadius),
+            ? BorderRadius.circular(DsConfig.inBorderRadius)
+            : BorderRadius.circular(DsConfig.outBorderRadius),
         borderSide: BorderSide(color: context.colorScheme.outlineVariant),
       ),
     ),

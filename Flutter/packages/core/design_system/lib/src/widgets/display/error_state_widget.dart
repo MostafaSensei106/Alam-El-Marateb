@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../ds_config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
-import '../../constants/app_config.dart';
-import '../../extensions/extensions.dart';
+import 'package:core_utils/core_utils.dart';
 
 class ErrorStateWidget extends StatelessWidget {
   const ErrorStateWidget({
@@ -24,7 +24,7 @@ class ErrorStateWidget extends StatelessWidget {
 
     return Center(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: AppConfig.padding),
+        padding: const EdgeInsets.symmetric(horizontal: DsConfig.padding),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

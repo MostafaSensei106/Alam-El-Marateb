@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import '../../../ds_config.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
-import '../../../constants/app_config.dart';
-import '../../../di/di.dart';
-import '../../../services/theme/theme_service.dart';
+import 'package:core_utils/core_utils.dart';
+import 'package:core_utils/core_utils.dart';
 
 final class SearchBarComponent extends StatelessWidget {
   const SearchBarComponent({
@@ -40,7 +40,7 @@ final class SearchBarComponent extends StatelessWidget {
       backgroundColor: WidgetStatePropertyAll(colorScheme.surfaceContainer),
       shape: WidgetStatePropertyAll(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppConfig.outBorderRadius),
+          borderRadius: BorderRadius.circular(DsConfig.outBorderRadius),
         ),
       ),
       keyboardType: TextInputType.name,

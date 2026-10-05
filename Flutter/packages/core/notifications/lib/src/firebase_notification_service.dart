@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../modules/notifications/logic/cubit/notification_cubit.dart';
 import '../../constants/pref_keys.dart';
-import '../../di/di.dart';
+import 'package:core_utils/core_utils.dart';
 import '../../networking/api_service/api_service.dart';
 import '../../services/shared_prefs/base_pref_storage_service.dart';
 import '../permissions/base_permission_service.dart';
