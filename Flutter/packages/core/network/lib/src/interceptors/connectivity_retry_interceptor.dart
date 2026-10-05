@@ -7,7 +7,7 @@ import '../network_info/interface/base_network_info.dart';
 class ConnectivityRetryInterceptor extends Interceptor {
   ConnectivityRetryInterceptor({required this._networkInfo});
 
-  final NetworkInfo _networkInfo;
+  final BaseNetworkInfo _networkInfo;
 
   static const String retriedKey = 'connectivityRetried';
 

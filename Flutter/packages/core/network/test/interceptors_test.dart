@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:core_network/core_network.dart';
 import 'package:dio/dio.dart';
 import 'package:test/test.dart';
@@ -220,4 +221,11 @@ void main() {
 class _FakeNetworkInfo implements BaseNetworkInfo {
   @override
   Future<bool> get isConnected async => true;
+
+  @override
+  Future<bool> get hasInternetAccess async => true;
+
+  @override
+  Stream<List<ConnectivityResult>> get connectivityChanged =>
+      const Stream.empty();
 }

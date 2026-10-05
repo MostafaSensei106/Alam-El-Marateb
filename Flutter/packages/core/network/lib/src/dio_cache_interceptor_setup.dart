@@ -18,7 +18,7 @@ import 'network_info/interface/base_network_info.dart';
 /// `hitCacheOnErrorCodes = []` and `hitCacheOnNetworkFailure = false`.
 /// A 401/403/500 online is a real server answer -> Failure, not Success(cache).
 Future<List<Interceptor>> createCacheInterceptors({
-  required BaseBaseNetworkInfo networkInfo,
+  required BaseNetworkInfo networkInfo,
 }) async {
   final appDocDir = await getApplicationDocumentsDirectory();
   final dioCacheDir = Directory('${appDocDir.path}/dio_cache');

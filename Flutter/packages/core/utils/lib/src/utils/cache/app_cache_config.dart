@@ -1,4 +1,3 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nested/nested.dart';
 
 /// App-composed prefetch registry for offline-first caching and
