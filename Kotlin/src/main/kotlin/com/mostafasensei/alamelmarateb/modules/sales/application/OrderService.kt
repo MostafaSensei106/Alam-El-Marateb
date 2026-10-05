@@ -464,9 +464,14 @@ class OrderService(
     fun scanVariant(barcode: String): ScannedVariantView {
         val variant = variantRepository.findByBarcode(barcode)
             ?: throw NotFoundException("error.order.no_variant_barcode", listOf(barcode))
+        // Persisted variants always carry ids — null here means corrupt data.
+        val variantId = variant.id
+            ?: throw UnprocessableException("error.order.unknown_variant", listOf(barcode))
+        val productId = variant.productId
+            ?: throw UnprocessableException("error.order.unknown_variant", listOf(barcode))
         return ScannedVariantView(
-            variantId = variant.id,
-            productId = variant.productId,
+            variantId = variantId,
+            productId = productId,
             sku = variant.sku,
             barcode = variant.barcode,
             dimensions = variant.dimensionsLabel,
