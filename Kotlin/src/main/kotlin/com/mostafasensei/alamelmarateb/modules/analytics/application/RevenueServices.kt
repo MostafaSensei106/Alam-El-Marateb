@@ -60,6 +60,13 @@ data class InquiryView(
     val at: String?,
 )
 
+data class TopAskedRowView(
+    val productId: UUID?,
+    val inquiries: Int,
+    val noStock: Int,
+    val price: Int,
+)
+
 @Service
 class RevenueService(
     private val jdbc: JdbcTemplate,
@@ -203,19 +210,19 @@ class InquiryService(
     }
 
     @Transactional(readOnly = true)
-    fun topAsked(from: LocalDate, limit: Int): List<Map<String, Any?>> {
+    fun topAsked(from: LocalDate, limit: Int): List<TopAskedRowView> {
         // Most-asked products never bought: inquiry signal for pricing/stock/marketing.
         return inquiryRepository.findAll()
             .filter { it.productId != null }
             .groupBy { it.productId }
             .map { (product, rows) ->
-                mapOf(
-                    "productId" to product,
-                    "inquiries" to rows.size,
-                    "noStock" to rows.count { r -> r.outcome == "no_stock" },
-                    "price" to rows.count { r -> r.outcome == "price" },
+                TopAskedRowView(
+                    productId = product,
+                    inquiries = rows.size,
+                    noStock = rows.count { r -> r.outcome == "no_stock" },
+                    price = rows.count { r -> r.outcome == "price" },
                 )
-            }.sortedByDescending { (it["inquiries"] as Int) }.take(limit.coerceIn(1, 50))
+            }.sortedByDescending { it.inquiries }.take(limit.coerceIn(1, 50))
     }
 
     private fun toView(e: InquiryJpaEntity) = InquiryView(

@@ -68,6 +68,16 @@ data class PlaceOrderInput(
 
 data class PlacedOrder(val order: Order, val replayed: Boolean)
 
+data class ScannedVariantView(
+    val variantId: UUID?,
+    val productId: UUID?,
+    val sku: String?,
+    val barcode: String?,
+    val dimensions: String?,
+    val sellingPrice: BigDecimal,
+    val isActive: Boolean,
+)
+
 data class ReservationPaymentView(
     val amount: BigDecimal,
     val method: String,
@@ -451,17 +461,17 @@ class OrderService(
 
     /** POS scan: barcode (or SKU fallback listing candidates is client-side via lookup). */
     @Transactional(readOnly = true)
-    fun scanVariant(barcode: String): Map<String, Any?> {
+    fun scanVariant(barcode: String): ScannedVariantView {
         val variant = variantRepository.findByBarcode(barcode)
             ?: throw NotFoundException("error.order.no_variant_barcode", listOf(barcode))
-        return mapOf(
-            "variantId" to variant.id,
-            "productId" to variant.productId,
-            "sku" to variant.sku,
-            "barcode" to variant.barcode,
-            "dimensions" to variant.dimensionsLabel,
-            "sellingPrice" to variant.sellingPrice,
-            "isActive" to variant.isActive,
+        return ScannedVariantView(
+            variantId = variant.id,
+            productId = variant.productId,
+            sku = variant.sku,
+            barcode = variant.barcode,
+            dimensions = variant.dimensionsLabel,
+            sellingPrice = variant.sellingPrice,
+            isActive = variant.isActive,
         )
     }
 

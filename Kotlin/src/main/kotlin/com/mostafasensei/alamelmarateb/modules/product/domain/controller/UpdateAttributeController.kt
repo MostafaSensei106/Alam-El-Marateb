@@ -34,23 +34,9 @@ import java.util.UUID
 @RestController
 @RequestMapping(CatalogAdminRoutes.ATTRIBUTES)
 @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
-class AttributeDefinitionController(
+class UpdateAttributeController(
     private val catalogService: ProductCatalogService,
 ) : BaseController() {
-
-    @GetMapping
-    fun getAll(): ResponseEntity<ApiResponse<List<ProductAttributeDefinitionResponse>>> =
-        ok(catalogService.getAllAttributeDefinitions().map { it.toResponse() })
-
-    @GetMapping("/{id}")
-    fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> =
-        ok((catalogService.getAttributeDefinition(id) ?: throw NotFoundException("error.catalog.attribute_not_found")).toResponse())
-
-    @PostMapping
-    fun create(@Valid @RequestBody request: AttributeDefinitionCreateRequest): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> {
-        val saved = catalogService.createAttributeDefinition(request.toDomain())
-        return created(saved.toResponse())
-    }
 
     @PutMapping("/{id}")
     fun update(
@@ -85,36 +71,4 @@ class AttributeDefinitionController(
     ): ResponseEntity<ApiResponse<ProductAttributeDefinitionResponse>> =
         update(id, request)
 
-    @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
-        catalogService.getAttributeDefinition(id) ?: throw NotFoundException("error.catalog.attribute_not_found")
-        catalogService.deleteAttributeDefinition(id)
-        return deleted(MessageService.t("success.deleted"))
-    }
-}
-
-@RestController
-@RequestMapping(CatalogAdminRoutes.ATTRIBUTE_OPTIONS)
-@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
-class AttributeOptionController(
-    private val catalogService: ProductCatalogService,
-) : BaseController() {
-
-    @PostMapping
-    fun addOption(
-        @PathVariable id: UUID,
-        @Valid @RequestBody request: AddOptionRequest,
-    ): ResponseEntity<ApiResponse<ProductAttributeOptionResponse>> {
-        catalogService.getAttributeDefinition(id) ?: throw NotFoundException("error.catalog.attribute_not_found")
-        return created(catalogService.addOptionToAttribute(id, request.toDomain()).toResponse())
-    }
-
-    @DeleteMapping("/{optionId}")
-    fun removeOption(
-        @PathVariable id: UUID,
-        @PathVariable optionId: UUID,
-    ): ResponseEntity<ApiResponse<Nothing>> {
-        catalogService.removeOptionFromAttribute(optionId)
-        return deleted(MessageService.t("success.deleted"))
-    }
 }

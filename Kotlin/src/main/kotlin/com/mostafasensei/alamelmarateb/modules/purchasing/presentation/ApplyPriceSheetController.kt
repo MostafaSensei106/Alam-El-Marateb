@@ -6,6 +6,7 @@ import com.mostafasensei.alamelmarateb.core.router.CatalogAdminRoutes
 import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 import com.mostafasensei.alamelmarateb.modules.purchasing.application.PriceSheetService
 import com.mostafasensei.alamelmarateb.modules.purchasing.presentation.dto.ApplySheetRequest
+import com.mostafasensei.alamelmarateb.modules.purchasing.presentation.dto.ApplySheetResultView
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
@@ -31,6 +32,6 @@ class ApplyPriceSheetController(
         @PathVariable id: UUID,
         @Valid @RequestBody request: ApplySheetRequest,
         @AuthenticationPrincipal principal: UserPrincipal,
-    ): ResponseEntity<ApiResponse<Map<String, Int>>> =
-        ok(mapOf("rows" to priceSheetService.applySheet(id, request.channels, principal.fullName)))
+    ): ResponseEntity<ApiResponse<ApplySheetResultView>> =
+        ok(ApplySheetResultView(priceSheetService.applySheet(id, request.channels, principal.fullName)))
 }

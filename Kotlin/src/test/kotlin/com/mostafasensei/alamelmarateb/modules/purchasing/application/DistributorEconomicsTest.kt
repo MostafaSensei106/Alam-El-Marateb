@@ -171,9 +171,9 @@ class DistributorEconomicsTest {
 
         // Valuation: cost 14*1600=22400, revenue 14*2500=35000, profit 12600.
         val valuation = batchService.valuation(warehouseId, variantId)
-        assertEquals(BigDecimal("22400.00"), valuation["inventoryCost"]!!.setScale(2))
-        assertEquals(BigDecimal("35000.00"), valuation["potentialRevenue"]!!.setScale(2))
-        assertEquals(BigDecimal("12600.00"), valuation["potentialProfit"]!!.setScale(2))
+        assertEquals(BigDecimal("22400.00"), valuation.inventoryCost.setScale(2))
+        assertEquals(BigDecimal("35000.00"), valuation.potentialRevenue.setScale(2))
+        assertEquals(BigDecimal("12600.00"), valuation.potentialProfit.setScale(2))
     }
 
     @Test
@@ -202,6 +202,6 @@ class DistributorEconomicsTest {
         assertEquals(BigDecimal("80000.00"), purchasingService.getSupplier(supplier.id).balance)
 
         val statement = financeService.statement(supplier.id)
-        assertEquals(BigDecimal("80000.00"), (statement["totalOwed"] as BigDecimal).setScale(2))
+        assertEquals(BigDecimal("80000.00"), statement.totalOwed.setScale(2))
     }
 }

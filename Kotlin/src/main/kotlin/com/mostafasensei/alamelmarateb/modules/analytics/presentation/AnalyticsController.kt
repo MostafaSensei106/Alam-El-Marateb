@@ -11,6 +11,7 @@ import com.mostafasensei.alamelmarateb.modules.analytics.application.DrilldownSe
 import com.mostafasensei.alamelmarateb.modules.analytics.application.GeoCell
 import com.mostafasensei.alamelmarateb.modules.analytics.application.InquiryService
 import com.mostafasensei.alamelmarateb.modules.analytics.application.InquiryView
+import com.mostafasensei.alamelmarateb.modules.analytics.application.TopAskedRowView
 import com.mostafasensei.alamelmarateb.modules.analytics.application.RevenueService
 import com.mostafasensei.alamelmarateb.modules.analytics.application.RevenueSummary
 import com.mostafasensei.alamelmarateb.modules.analytics.application.RfmRow
@@ -148,7 +149,7 @@ class RevenueController(
     fun topAsked(
         @RequestParam from: LocalDate,
         @RequestParam(defaultValue = "10") limit: Int,
-    ): ResponseEntity<ApiResponse<List<Map<String, Any?>>>> =
+    ): ResponseEntity<ApiResponse<List<TopAskedRowView>>> =
         ok(inquiryService.topAsked(from, limit))
 }
 

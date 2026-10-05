@@ -32,34 +32,14 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-/**
- * Management controller — staff only. Role enforced here, not via URL prefix.
- * Canonical path: /api/v1/catalog/products
- */
 @Tag(name = "Catalog (management)", description = "Products CRUD + from-preset — BRANCH_MANAGER")
 @RestController
 @RequestMapping(CatalogAdminRoutes.PRODUCTS)
 @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
-class ProductAdminController(
+class UpdateProductController(
     private val catalogService: ProductCatalogService,
     private val searchIndexer: CatalogSearchIndexer,
 ) : BaseController() {
-
-    @GetMapping
-    fun getAll(): ResponseEntity<ApiResponse<List<Product>>> =
-        ok(catalogService.getAllProducts())
-
-    @GetMapping("/{id}")
-    fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<Product>> =
-        ok(catalogService.getProduct(id) ?: throw NotFoundException("error.catalog.product_not_found"))
-
-    @PostMapping
-    fun create(@Valid @RequestBody request: ProductCreateRequest): ResponseEntity<ApiResponse<Product>> {
-        val product: Product = request.toDomain()
-        val errors = catalogService.validateProductAttributes(product)
-        if (errors.isNotEmpty()) throw BadRequestException("error.catalog.validation_failed", errorDetails = errors)
-        return created(catalogService.createProduct(product))
-    }
 
     @PutMapping("/{id}")
     fun update(
@@ -90,47 +70,4 @@ class ProductAdminController(
     ): ResponseEntity<ApiResponse<Product>> =
         update(id, request)
 
-    @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
-        catalogService.getProduct(id) ?: throw NotFoundException("error.catalog.product_not_found")
-        catalogService.deleteProduct(id)
-        return deleted(MessageService.t("success.deleted"))
-    }
-
-    @PostMapping("/from-preset/{presetId}")
-    fun createFromPreset(
-        @PathVariable presetId: UUID,
-        @Valid @RequestBody request: CreateProductFromPresetRequest,
-    ): ResponseEntity<ApiResponse<Product>> =
-        created(catalogService.createProductFromPreset(presetId, request.slug))
-
-    @Operation(summary = "Rebuild the search index (after enabling the backend)")
-    @PostMapping("/search/reindex")
-    fun reindex(): ResponseEntity<ApiResponse<Map<String, Int>>> {
-        val count = searchIndexer.rebuildAll()
-        if (count < 0) throw BadRequestException("error.search.backend_unavailable")
-        return ok(mapOf("indexed" to count))
-    }
-}
-
-/**
- * Public storefront controller — open read.
- * Canonical path: /api/v1/catalog/public/products
- */
-@RestController
-@RequestMapping(CatalogStoreRoutes.PRODUCTS)
-class EcommerceProductController(
-    private val catalogService: ProductCatalogService,
-) : BaseController() {
-
-    @GetMapping
-    fun getAllActive(): ResponseEntity<ApiResponse<List<ProductPublicResponse>>> =
-        ok(catalogService.getAllProducts().map { it.toPublic() })
-
-    @GetMapping("/{slug}")
-    fun getBySlug(@PathVariable slug: String): ResponseEntity<ApiResponse<ProductPublicResponse>> =
-        ok(
-            catalogService.getProductBySlug(slug)?.toPublic()
-                ?: throw NotFoundException("error.catalog.product_not_found"),
-        )
 }

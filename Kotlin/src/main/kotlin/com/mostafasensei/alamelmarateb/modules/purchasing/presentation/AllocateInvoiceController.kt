@@ -5,6 +5,7 @@ import com.mostafasensei.alamelmarateb.core.common.presentation.BaseController
 import com.mostafasensei.alamelmarateb.core.router.PurchasingRoutes
 import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 import com.mostafasensei.alamelmarateb.modules.purchasing.application.SupplierFinanceService
+import com.mostafasensei.alamelmarateb.modules.purchasing.presentation.dto.AllocationResultView
 import com.mostafasensei.alamelmarateb.modules.purchasing.presentation.dto.InvoiceAllocateRequest
 import io.swagger.v3.oas.annotations.Operation
 import io.swagger.v3.oas.annotations.tags.Tag
@@ -31,8 +32,8 @@ class AllocateInvoiceController(
         @PathVariable id: UUID,
         @Valid @RequestBody request: InvoiceAllocateRequest,
         @AuthenticationPrincipal principal: UserPrincipal,
-    ): ResponseEntity<ApiResponse<Map<String, String>>> {
+    ): ResponseEntity<ApiResponse<AllocationResultView>> {
         financeService.allocate(id, request.shipmentId, request.amount, principal.fullName)
-        return ok(mapOf("status" to "allocated"))
+        return ok(AllocationResultView("allocated"))
     }
 }

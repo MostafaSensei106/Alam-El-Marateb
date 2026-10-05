@@ -24,6 +24,10 @@ data class ApplySheetRequest(
     val channels: List<String> = emptyList(),
 )
 
+data class AllocationResultView(val status: String)
+
+data class ApplySheetResultView(val rows: Int)
+
 data class ShipmentRequest(
     @field:NotNull val supplierId: UUID,
     val shipmentNo: String? = null,

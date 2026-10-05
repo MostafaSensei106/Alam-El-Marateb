@@ -79,7 +79,12 @@ class AnalyticsOverviewTest {
         assertTrue(summary.activeProducts >= 1)
         assertTrue(summary.pendingTransfers >= 1)
         // 10 units at cost 5000 minus 4 dispatched = 30000 value.
-        assertEquals(BigDecimal("30000.00"), summary.totalStockValue)
+        // Scoped to our own warehouses: other suites commit seed data too.
+        val ownValue = summary.stockValueByWarehouse
+            .filter { it.warehouseId == main.id || it.warehouseId == branch.id }
+            .fold(BigDecimal.ZERO) { acc, v -> acc.add(v.value) }
+            .setScale(2, java.math.RoundingMode.HALF_EVEN)
+        assertEquals(BigDecimal("30000.00"), ownValue)
         val mainValue = summary.stockValueByWarehouse.first { it.warehouseId == main.id }
         assertEquals(6, mainValue.totalQty)
 

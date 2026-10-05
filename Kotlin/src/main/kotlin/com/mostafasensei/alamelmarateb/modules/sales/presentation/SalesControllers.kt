@@ -10,6 +10,7 @@ import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 import com.mostafasensei.alamelmarateb.modules.sales.application.CartService
 import com.mostafasensei.alamelmarateb.modules.sales.application.CartView
 import com.mostafasensei.alamelmarateb.modules.sales.application.ReservationView
+import com.mostafasensei.alamelmarateb.modules.sales.application.ScannedVariantView
 import com.mostafasensei.alamelmarateb.modules.sales.application.ShiftService
 import com.mostafasensei.alamelmarateb.modules.sales.application.ShiftView
 import com.mostafasensei.alamelmarateb.modules.sales.application.OrderItemInput
@@ -113,7 +114,7 @@ class PosOrderController(
 
     @Operation(summary = "Scan barcode/SKU (variant info for the ticket)")
     @GetMapping("/scan/{barcode}")
-    fun scan(@PathVariable barcode: String): ResponseEntity<ApiResponse<Map<String, Any?>>> =
+    fun scan(@PathVariable barcode: String): ResponseEntity<ApiResponse<ScannedVariantView>> =
         ok(orderService.scanVariant(barcode))
 
     @Operation(summary = "Save draft ticket (no stock hold)")

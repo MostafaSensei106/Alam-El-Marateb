@@ -30,48 +30,9 @@ import java.util.UUID
 @RestController
 @RequestMapping(CatalogAdminRoutes.PRESETS)
 @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
-class ProductPresetController(
+class DeletePresetController(
     private val catalogService: ProductCatalogService,
 ) : BaseController() {
-
-    @GetMapping
-    fun getAll(): ResponseEntity<ApiResponse<List<ProductPresetResponse>>> =
-        ok(catalogService.getAllPresets().map { it.toResponse() })
-
-    @GetMapping("/{id}")
-    fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<ProductPresetResponse>> =
-        ok((catalogService.getPreset(id) ?: throw NotFoundException("error.catalog.preset_not_found")).toResponse())
-
-    @PostMapping
-    fun create(@Valid @RequestBody request: ProductPresetCreateRequest): ResponseEntity<ApiResponse<ProductPresetResponse>> {
-        val saved = catalogService.createPreset(request.toDomain())
-        return created(saved.toResponse())
-    }
-
-    @PutMapping("/{id}")
-    fun update(
-        @PathVariable id: UUID,
-        @Valid @RequestBody request: ProductPresetUpdateRequest,
-    ): ResponseEntity<ApiResponse<ProductPresetResponse>> {
-        val existing = catalogService.getPreset(id) ?: throw NotFoundException("error.catalog.preset_not_found")
-        val updated = existing.copy(
-            name = request.name ?: existing.name,
-            brand = request.brand ?: existing.brand,
-            description = request.description ?: existing.description,
-            warrantyYears = request.warrantyYears ?: existing.warrantyYears,
-            isActive = request.isActive ?: existing.isActive,
-            attributes = request.attributes?.map { it.toDomain() } ?: existing.attributes,
-            variants = request.variants?.map { it.toDomain() } ?: existing.variants,
-        )
-        return ok(catalogService.updatePreset(id, updated).toResponse())
-    }
-
-    @PatchMapping("/{id}")
-    fun patchUpdate(
-        @PathVariable id: UUID,
-        @Valid @RequestBody request: ProductPresetUpdateRequest,
-    ): ResponseEntity<ApiResponse<ProductPresetResponse>> =
-        update(id, request)
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
@@ -79,4 +40,5 @@ class ProductPresetController(
         catalogService.deletePreset(id)
         return deleted(MessageService.t("success.deleted"))
     }
+
 }

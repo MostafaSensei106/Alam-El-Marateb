@@ -19,6 +19,15 @@ import java.util.UUID
 
 data class BatchConsumption(val batchId: UUID, val qty: Int, val unitCost: BigDecimal)
 
+data class BatchValuationView(
+    val inventoryCost: BigDecimal,
+    val inventoryNetCost: BigDecimal,
+    val landedAdded: BigDecimal,
+    val potentialRevenue: BigDecimal,
+    val potentialProfit: BigDecimal,
+    val potentialProfitNet: BigDecimal,
+)
+
 data class BatchView(
     val id: UUID?,
     val batchNo: String,
@@ -273,18 +282,18 @@ class InventoryBatchService(
     }
 
     @Transactional(readOnly = true)
-    fun valuation(warehouseId: UUID?, variantId: UUID?): Map<String, BigDecimal> {
+    fun valuation(warehouseId: UUID?, variantId: UUID?): BatchValuationView {
         val rows = listBatches(warehouseId, variantId)
         val cost = rows.fold(BigDecimal.ZERO) { acc, b -> acc.add(b.costValue) }.money()
         val net = rows.fold(BigDecimal.ZERO) { acc, b -> acc.add(b.netCostValue) }.money()
         val revenue = rows.fold(BigDecimal.ZERO) { acc, b -> acc.add(b.potentialRevenue ?: BigDecimal.ZERO) }.money()
-        return mapOf(
-            "inventoryCost" to cost,
-            "inventoryNetCost" to net,
-            "landedAdded" to cost.subtract(net).money(),
-            "potentialRevenue" to revenue,
-            "potentialProfit" to revenue.subtract(cost).money(),
-            "potentialProfitNet" to revenue.subtract(net).money(),
+        return BatchValuationView(
+            inventoryCost = cost,
+            inventoryNetCost = net,
+            landedAdded = cost.subtract(net).money(),
+            potentialRevenue = revenue,
+            potentialProfit = revenue.subtract(cost).money(),
+            potentialProfitNet = revenue.subtract(net).money(),
         )
     }
 

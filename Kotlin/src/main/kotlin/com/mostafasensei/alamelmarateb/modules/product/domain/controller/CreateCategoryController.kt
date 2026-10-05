@@ -31,17 +31,9 @@ import java.util.UUID
 @RestController
 @RequestMapping(CatalogAdminRoutes.CATEGORIES)
 @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
-class ProductCategoryController(
+class CreateCategoryController(
     private val catalogService: ProductCatalogService,
 ) : BaseController() {
-
-    @GetMapping
-    fun getAll(): ResponseEntity<ApiResponse<List<ProductCategoryResponse>>> =
-        ok(catalogService.getAllCategories().map { it.toResponse() })
-
-    @GetMapping("/{id}")
-    fun getById(@PathVariable id: UUID): ResponseEntity<ApiResponse<ProductCategoryResponse>> =
-        ok((catalogService.getCategory(id) ?: throw NotFoundException("error.catalog.category_not_found")).toResponse())
 
     @PostMapping
     fun create(@Valid @RequestBody request: CategoryCreateRequest): ResponseEntity<ApiResponse<ProductCategoryResponse>> {
@@ -56,49 +48,4 @@ class ProductCategoryController(
         return created(category.toResponse())
     }
 
-    @PutMapping("/{id}")
-    fun update(
-        @PathVariable id: UUID,
-        @Valid @RequestBody request: CategoryUpdateRequest,
-    ): ResponseEntity<ApiResponse<ProductCategoryResponse>> {
-        val existing = catalogService.getCategory(id) ?: throw NotFoundException("error.catalog.category_not_found")
-        val updated = existing.copy(
-            name = request.name ?: existing.name,
-            description = request.description ?: existing.description,
-            isActive = request.isActive ?: existing.isActive,
-            translations = request.translations ?: existing.translations,
-        )
-        return ok(catalogService.updateCategory(id, updated).toResponse())
-    }
-
-    @PatchMapping("/{id}")
-    fun patchUpdate(
-        @PathVariable id: UUID,
-        @Valid @RequestBody request: CategoryUpdateRequest,
-    ): ResponseEntity<ApiResponse<ProductCategoryResponse>> =
-        update(id, request)
-
-    @DeleteMapping("/{id}")
-    fun delete(@PathVariable id: UUID): ResponseEntity<ApiResponse<Nothing>> {
-        catalogService.getCategory(id) ?: throw NotFoundException("error.catalog.category_not_found")
-        catalogService.deleteCategory(id)
-        return deleted(MessageService.t("success.deleted"))
-    }
-}
-
-@RestController
-@RequestMapping(CatalogAdminRoutes.CATEGORY_ATTRIBUTES)
-@PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
-class CategoryAttributeController(
-    private val catalogService: ProductCatalogService,
-) : BaseController() {
-
-    @PutMapping
-    fun linkAttributes(
-        @PathVariable id: UUID,
-        @Valid @RequestBody requests: List<CategoryAttributeLinkRequest>,
-    ): ResponseEntity<ApiResponse<Nothing>> {
-        catalogService.getCategory(id) ?: throw NotFoundException("error.catalog.category_not_found")
-        return deleted(MessageService.t("success.updated"))
-    }
 }

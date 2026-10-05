@@ -41,6 +41,12 @@ data class InstallmentView(
 )
 data class InstallmentInput(val amount: BigDecimal, val dueDate: LocalDate)
 
+data class SupplierStatementView(
+    val invoices: List<InvoiceView>,
+    val overdue: List<InstallmentView>,
+    val totalOwed: BigDecimal,
+)
+
 /**
  * Shipment (what arrived) vs invoice (what we owe) vs installments (when to pay).
  * Payments attach to invoice/installment; one invoice may cover many shipments.
@@ -167,7 +173,7 @@ class SupplierFinanceService(
     }
 
     @Transactional(readOnly = true)
-    fun statement(supplierId: UUID): Map<String, Any> {
+    fun statement(supplierId: UUID): SupplierStatementView {
         requireSupplier(supplierId)
         val invoices = invoiceRepository.findBySupplierId(supplierId).map { toInvoiceView(it) }
         val overdue = invoices.flatMap { inv ->
@@ -176,7 +182,7 @@ class SupplierFinanceService(
             }.map { InstallmentView(it.id, it.invoiceId, it.amount, it.dueDate, "overdue", it.paidAmount) }
         }
         val totalOwed = invoices.fold(BigDecimal.ZERO) { acc, i -> acc.add(i.remaining) }.money()
-        return mapOf("invoices" to invoices, "overdue" to overdue, "totalOwed" to totalOwed)
+        return SupplierStatementView(invoices, overdue, totalOwed)
     }
 
     private fun requireSupplier(id: UUID) =

@@ -21,21 +21,10 @@ import org.springframework.web.bind.annotation.RestController
 import java.math.BigDecimal
 import java.util.UUID
 
-data class SellingPriceRequest(
-    @field:NotNull val variantId: UUID,
-    val channel: String? = null,
-    @field:NotNull val price: BigDecimal,
-)
-
-/**
- * Channel selling prices — current price per channel + full history.
- * Changing a price never touches old inventory batches.
- */
 @Tag(name = "Catalog (selling prices)", description = "Channel prices + history — BRANCH_MANAGER")
 @RestController
 @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
-class SellingPriceController(
-    private val sellingPriceService: SellingPriceService,
+class SetSellingPriceController(    private val sellingPriceService: SellingPriceService,
 ) : BaseController() {
 
     @Operation(summary = "Set channel price (PLATFORM/STAFF/DEALER)")
@@ -53,11 +42,4 @@ class SellingPriceController(
             ),
         )
 
-    @Operation(summary = "Price history for a variant")
-    @GetMapping(CatalogAdminRoutes.SELLING_PRICES)
-    fun history(
-        @RequestParam variantId: UUID,
-        @RequestParam(required = false) channel: String?,
-    ): ResponseEntity<ApiResponse<List<SellingPriceView>>> =
-        ok(sellingPriceService.history(variantId, channel))
 }
