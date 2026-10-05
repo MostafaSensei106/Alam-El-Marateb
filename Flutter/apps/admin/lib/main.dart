@@ -1,10 +1,5 @@
-import 'package:flutter/material.dart';
+import 'bootstrap.dart';
 
-void main() {
-  runApp(const MaterialApp(
-    title: 'Alam El Marateb',
-    home: Scaffold(
-      body: Center(child: Text('Alam El Marateb - Admin')),
-    ),
-  ));
-}
+/// Staff entry point. Flavors via --dart-define:
+/// FLAVOR, BASE_URL, CLIENT_ID, CLIENT_KEY.
+Future<void> main() => bootstrap();

@@ -7,13 +7,13 @@ part of 'token_pair.dart';
 // **************************************************************************
 
 TokenPair _$TokenPairFromJson(Map<String, dynamic> json) => TokenPair(
-      accessToken: json['accessToken'] as String,
-      refreshToken: json['refreshToken'] as String,
-      userId: json['userId'] as String,
-    );
+  accessToken: json['accessToken'] as String,
+  refreshToken: json['refreshToken'] as String,
+  userId: json['userId'] as String,
+);
 
 Map<String, dynamic> _$TokenPairToJson(TokenPair instance) => <String, dynamic>{
-      'accessToken': instance.accessToken,
-      'refreshToken': instance.refreshToken,
-      'userId': instance.userId,
-    };
+  'accessToken': instance.accessToken,
+  'refreshToken': instance.refreshToken,
+  'userId': instance.userId,
+};

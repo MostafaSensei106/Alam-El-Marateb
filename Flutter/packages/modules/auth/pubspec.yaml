@@ -3,7 +3,7 @@ name: auth
 description: Alam El Marateb auth feature module (login/session/roles).
 publish_to: none
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.8.0
 dependencies:
   core_network:
     path: ../../core/network

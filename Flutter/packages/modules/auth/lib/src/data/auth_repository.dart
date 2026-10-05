@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 
 import 'auth_api.dart';
 import 'models/login_request_body.dart';
+import 'models/refresh_request_body.dart';
 import 'models/register_request_body.dart';
 import 'models/token_pair.dart';
 
@@ -38,7 +39,7 @@ class AuthRepository implements BaseAuthRepository {
       final res = await _api.login(
         LoginRequestBody(phone: phone, password: password),
       );
-      return _saveOrThrow(res);
+      return await _saveOrThrow(res);
     } on DioException catch (e, st) {
       throw ApiErrorHandler.handle(e, stackTrace: st);
     }
@@ -60,7 +61,7 @@ class AuthRepository implements BaseAuthRepository {
           email: email,
         ),
       );
-      return _saveOrThrow(res);
+      return await _saveOrThrow(res);
     } on DioException catch (e, st) {
       throw ApiErrorHandler.handle(e, stackTrace: st);
     }
@@ -69,10 +70,10 @@ class AuthRepository implements BaseAuthRepository {
   @override
   Future<TokenPair> refresh(String refreshToken) async {
     try {
-      final res = await _api.refresh(<String, dynamic>{
-        'refreshToken': refreshToken,
-      });
-      return _saveOrThrow(res);
+      final res = await _api.refresh(
+        RefreshRequestBody(refreshToken: refreshToken),
+      );
+      return await _saveOrThrow(res);
     } on DioException catch (e, st) {
       throw ApiErrorHandler.handle(e, stackTrace: st);
     }

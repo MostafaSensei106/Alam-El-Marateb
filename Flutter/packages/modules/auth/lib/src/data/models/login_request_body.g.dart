@@ -7,7 +7,4 @@ part of 'login_request_body.dart';
 // **************************************************************************
 
 Map<String, dynamic> _$LoginRequestBodyToJson(LoginRequestBody instance) =>
-    <String, dynamic>{
-      'phone': instance.phone,
-      'password': instance.password,
-    };
+    <String, dynamic>{'phone': instance.phone, 'password': instance.password};

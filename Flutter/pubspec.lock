@@ -82,7 +82,7 @@ packages:
     source: hosted
     version: "4.1.6"
   build_runner:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: build_runner
       sha256: "894c243f6bc32015fec466ce30a6925bd537a77a426ee5bf481120477eb3de67"
@@ -454,7 +454,7 @@ packages:
     source: hosted
     version: "4.12.0"
   json_serializable:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: json_serializable
       sha256: e45aefa0324f08c683caafbb94b72837aa6193c61822799c916e45f4a263113d
@@ -678,7 +678,7 @@ packages:
     source: hosted
     version: "4.10.0"
   retrofit_generator:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: retrofit_generator
       sha256: "9d6eddb495edd114d546d875ef165f557dca0dbcbdf6787b9255a4a52d40f15b"

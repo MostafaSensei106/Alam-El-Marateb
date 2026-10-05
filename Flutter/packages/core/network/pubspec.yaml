@@ -3,7 +3,7 @@ name: core_network
 description: Alam El Marateb shared networking (Dio + contract-mapped errors).
 publish_to: none
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.8.0
 dependencies:
   connectivity_plus: ^7.0.0
   dio: ^5.9.2

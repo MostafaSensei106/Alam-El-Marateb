@@ -3,7 +3,7 @@ name: catalog
 description: Alam El Marateb catalog package.
 publish_to: none
 environment:
-  sdk: ^3.6.0
+  sdk: ^3.8.0
 dependencies: {}
 dev_dependencies:
   lints: ^6.0.0
