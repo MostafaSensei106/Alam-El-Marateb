@@ -3,7 +3,7 @@ name: pos
 description: Alam El Marateb pos package.
 publish_to: none
 environment:
-  sdk: ^3.8.0
+  sdk: ^3.13.2
 dependencies: {}
 dev_dependencies:
   lints: ^6.0.0

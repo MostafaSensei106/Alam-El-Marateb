@@ -69,9 +69,9 @@
     },
     {
       "name": "built_collection",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/built_collection-5.1.1",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/built_collection-5.1.2",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.11"
     },
     {
       "name": "built_value",
@@ -123,7 +123,7 @@
     },
     {
       "name": "connectivity_plus",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/connectivity_plus-7.3.1",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/connectivity_plus-7.3.2",
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -159,9 +159,9 @@
     },
     {
       "name": "cupertino_ui",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/cupertino_ui-1.1.0",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/cupertino_ui-1.1.1",
       "packageUri": "lib/",
-      "languageVersion": "3.12"
+      "languageVersion": "3.13"
     },
     {
       "name": "dart_style",
@@ -171,9 +171,9 @@
     },
     {
       "name": "dbus",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/dbus-0.7.15",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/dbus-0.8.0",
       "packageUri": "lib/",
-      "languageVersion": "2.17"
+      "languageVersion": "3.0"
     },
     {
       "name": "dio",
@@ -255,9 +255,9 @@
     },
     {
       "name": "frontend_server_client",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/frontend_server_client-4.0.0",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/frontend_server_client-4.1.0",
       "packageUri": "lib/",
-      "languageVersion": "3.0"
+      "languageVersion": "3.10"
     },
     {
       "name": "get_it",
@@ -273,7 +273,7 @@
     },
     {
       "name": "go_router",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/go_router-18.0.1",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/go_router-18.0.2",
       "packageUri": "lib/",
       "languageVersion": "3.12"
     },
@@ -405,9 +405,9 @@
     },
     {
       "name": "material_ui",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/material_ui-1.3.0",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/material_ui-1.5.0",
       "packageUri": "lib/",
-      "languageVersion": "3.12"
+      "languageVersion": "3.13"
     },
     {
       "name": "meta",
@@ -423,9 +423,9 @@
     },
     {
       "name": "nm",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/nm-0.5.0",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/nm-0.6.0",
       "packageUri": "lib/",
-      "languageVersion": "2.12"
+      "languageVersion": "3.0"
     },
     {
       "name": "node_preamble",
@@ -453,9 +453,9 @@
     },
     {
       "name": "petitparser",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/petitparser-7.0.2",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/petitparser-7.1.0",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "platform",
@@ -645,9 +645,9 @@
     },
     {
       "name": "url_launcher",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/url_launcher-6.3.2",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/url_launcher-6.3.3",
       "packageUri": "lib/",
-      "languageVersion": "3.6"
+      "languageVersion": "3.11"
     },
     {
       "name": "url_launcher_android",
@@ -735,9 +735,9 @@
     },
     {
       "name": "xml",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/xml-7.0.1",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/xml-7.1.0",
       "packageUri": "lib/",
-      "languageVersion": "3.11"
+      "languageVersion": "3.13"
     },
     {
       "name": "xxh3",
@@ -755,115 +755,115 @@
       "name": "alam_el_marateb",
       "rootUri": "../",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "staff",
       "rootUri": "../apps/staff",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "customer",
       "rootUri": "../apps/customer",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "admin",
       "rootUri": "../apps/admin",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "core_network",
       "rootUri": "../packages/core/network",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "core_storage",
       "rootUri": "../packages/core/storage",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "core_utils",
       "rootUri": "../packages/core/utils",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "core_auth",
       "rootUri": "../packages/core/auth",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "core_notifications",
       "rootUri": "../packages/core/notifications",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "core_files",
       "rootUri": "../packages/core/files",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "design_system",
       "rootUri": "../packages/core/design_system",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "api_services",
       "rootUri": "../packages/core/api",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "auth",
       "rootUri": "../packages/modules/auth",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "catalog",
       "rootUri": "../packages/modules/catalog",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "pos",
       "rootUri": "../packages/modules/pos",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "inventory",
       "rootUri": "../packages/modules/inventory",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "delivery",
       "rootUri": "../packages/modules/delivery",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "orders",
       "rootUri": "../packages/modules/orders",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     },
     {
       "name": "crm",
       "rootUri": "../packages/modules/crm",
       "packageUri": "lib/",
-      "languageVersion": "3.8"
+      "languageVersion": "3.13"
     }
   ],
   "generator": "pub",
