@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Alamelmarateb ERP — v1",
-    "description": "Alamelmarateb ERP v1 — Catalog, Inventory, Sales, CRM, Identity. Login first, paste tokens into variables. Swagger UI: {{baseUrl}}/swagger-ui.html | Contract: ApiResponse{success,message,data,errors,traceId,timestamp}; X-Lang ar|en; Idempotency-Key on place-order/complete-sale; X-Trace-Id echoed; 400 syntax vs 422 semantics vs 409 conflict; 404 unknown route; 405 wrong method + Allow; 429 + Retry-After. | Tokens auto-save: login/register/refresh store access+refresh into adminJwt/managerJwt/customerJwt/keeperJwt/cashierJwt (+*Refresh, refreshToken, userId) based on the account role. Just log in and call the rest.",
+    "description": "Alamelmarateb ERP v1 — Catalog, Inventory, Sales, CRM, Identity. Login first, paste tokens into variables. Swagger UI: {{baseUrl}}/swagger-ui.html | Contract: ApiResponse{success,message,data,errors} (X-Trace-Id header only); every /api call needs X-Api-Client + X-Api-Key headers (clientId/clientKey vars); X-Lang ar|en; Idempotency-Key on place-order/complete-sale; X-Trace-Id echoed; 400 syntax vs 422 semantics vs 409 conflict; 404 unknown route; 405 wrong method + Allow; 429 + Retry-After. | Tokens auto-save: login/register/refresh store access+refresh into adminJwt/managerJwt/customerJwt/keeperJwt/cashierJwt (+*Refresh, refreshToken, userId) based on the account role. Just log in and call the rest.",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -104,6 +104,42 @@
     {
       "key": "refreshToken",
       "value": ""
+    },
+    {
+      "key": "clientId",
+      "value": "postman"
+    },
+    {
+      "key": "clientKey",
+      "value": "postman-dev-key"
+    },
+    {
+      "key": "supplierId",
+      "value": ""
+    },
+    {
+      "key": "variantId",
+      "value": ""
+    },
+    {
+      "key": "branchId",
+      "value": ""
+    },
+    {
+      "key": "shipmentId",
+      "value": ""
+    },
+    {
+      "key": "sinvoiceId",
+      "value": ""
+    },
+    {
+      "key": "landedCostId",
+      "value": ""
+    },
+    {
+      "key": "priceSheetId",
+      "value": ""
     }
   ],
   "item": [
@@ -119,6 +155,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -157,6 +201,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -209,6 +261,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -261,6 +321,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           },
@@ -315,6 +383,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -332,6 +408,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -353,6 +437,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -374,6 +466,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -390,6 +490,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/auth/me"
@@ -428,6 +536,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/catalog/categories",
@@ -445,6 +561,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/catalog/products"
@@ -462,6 +586,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/catalog/products",
@@ -484,6 +616,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -501,6 +641,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -518,6 +666,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -539,6 +695,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -556,6 +720,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -573,7 +745,17 @@
           "name": "🛍️ Browse products",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/v1/catalog/public/products"
+            "url": "{{baseUrl}}/api/v1/catalog/public/products",
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         }
       ]
@@ -593,6 +775,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/inventory/warehouses",
@@ -610,6 +800,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/inventory/stocks?warehouseId={{warehouseA}}"
@@ -623,6 +821,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/inventory/stocks/low-alerts"
@@ -640,6 +846,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/inventory/transfers",
@@ -657,6 +871,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/inventory/transfers/{{transferId}}/dispatch"
@@ -670,6 +892,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/inventory/transfers/{{transferId}}/approve"
@@ -687,6 +917,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/inventory/audits",
@@ -704,6 +942,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/inventory/audits/{{auditId}}/reconcile"
@@ -722,6 +968,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{keeperJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/warehouse/stocks/lookup/SKU-XYZ?warehouseId={{warehouseB}}"
@@ -739,6 +993,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/warehouse/stocks/adjustment",
@@ -756,6 +1018,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{keeperJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/warehouse/transfers/pending?warehouseId={{warehouseB}}"
@@ -773,6 +1043,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/warehouse/transfers/{{transferId}}/confirm-receipt",
@@ -794,6 +1072,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/warehouse/audits/{{auditId}}/count",
@@ -816,6 +1102,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/analytics/summary"
@@ -829,6 +1123,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/analytics/product-velocity?warehouseId={{warehouseA}}"
@@ -842,6 +1144,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/analytics/audit-trail/transfer/{{transferId}}"
@@ -864,6 +1174,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/sales/pos/complete-sale",
@@ -885,6 +1203,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/sales/pos/orders/draft",
@@ -906,6 +1232,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/sales/promotions",
@@ -923,6 +1257,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/sales/orders/{{orderId}}/confirm-payment"
@@ -936,6 +1278,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/sales/orders/{{orderId}}/approve-return"
@@ -958,6 +1308,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/shop/cart/items?guestKey=g1",
@@ -979,6 +1337,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/shop/checkout/price-preview",
@@ -1000,6 +1366,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/shop/checkout/estimate-shipping",
@@ -1021,6 +1395,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/shop/checkout/place-order",
@@ -1038,6 +1420,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/shop/orders"
@@ -1051,6 +1441,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/shop/orders/track/TRK-XXXXXXXX"
@@ -1073,6 +1471,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/crm/warranties/register",
@@ -1090,6 +1496,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/crm/warranties/{{warrantyId}}"
@@ -1103,6 +1517,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/crm/warranties/{{warrantyId}}/claims"
@@ -1120,6 +1542,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/crm/claims/{{claimId}}/inspection",
@@ -1141,6 +1571,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/crm/claims/{{claimId}}/resolve",
@@ -1158,6 +1596,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/crm/claims/{{claimId}}/close"
@@ -1180,6 +1626,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/profile",
@@ -1197,6 +1651,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/addresses"
@@ -1214,6 +1676,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/addresses",
@@ -1231,6 +1701,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/favorites"
@@ -1248,6 +1726,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/favorites",
@@ -1265,6 +1751,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/warranties"
@@ -1282,6 +1776,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/warranties/claims",
@@ -1299,6 +1801,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/warranties/claims"
@@ -1317,6 +1827,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/identity/branches"
@@ -1334,6 +1852,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/identity/branches",
@@ -1351,6 +1877,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/identity/access/roles"
@@ -1364,6 +1898,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/identity/access/users"
@@ -1381,6 +1923,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/identity/access/users",
@@ -1402,6 +1952,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "url": "{{baseUrl}}/api/v1/identity/access/users/{{userId}}/roles",
@@ -1425,6 +1983,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -1438,6 +2004,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -1455,6 +2029,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1476,6 +2058,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1497,6 +2087,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1522,6 +2120,14 @@
               {
                 "key": "Idempotency-Key",
                 "value": "{{idempotencyKey}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1539,6 +2145,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -1548,7 +2162,16 @@
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/analytics/summary",
-            "header": []
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         },
         {
@@ -1568,6 +2191,14 @@
               {
                 "key": "Idempotency-Key",
                 "value": "{{idempotencyKey}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1589,6 +2220,14 @@
               {
                 "key": "X-Lang",
                 "value": "en"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -1606,6 +2245,14 @@
               {
                 "key": "X-Trace-Id",
                 "value": "demo-trace-001"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -1628,13 +2275,36 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\"name\": \"Foam Co\", \"phone\": \"01000000001\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    pm.test('success flag', function () { pm.expect(json.success).to.eql(true); });",
+                  "    if (json.data.id !== undefined && json.data.id !== null) pm.collectionVariables.set('supplierId', json.data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "📋 POs",
@@ -1649,6 +2319,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -1666,13 +2344,36 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
               "mode": "raw",
               "raw": "{\"supplierId\": \"SUPPLIER_ID\", \"branchId\": \"BRANCH_ID\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 10, \"unitCost\": 100}]}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    pm.test('success flag', function () { pm.expect(json.success).to.eql(true); });",
+                  "    if (json.data.id !== undefined && json.data.id !== null) pm.collectionVariables.set('orderId', json.data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "📤 Send PO",
@@ -1687,6 +2388,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1708,6 +2417,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1729,6 +2446,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1755,6 +2480,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1772,6 +2505,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -1789,6 +2530,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1810,6 +2559,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1836,6 +2593,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1857,6 +2622,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1878,6 +2651,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1899,6 +2680,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1920,6 +2709,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -1937,6 +2734,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -1955,6 +2760,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -1972,6 +2785,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -1989,6 +2810,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2006,6 +2835,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2023,6 +2860,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2045,6 +2890,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2058,7 +2911,16 @@
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/catalog/public/products/search?q=serta&minPrice=1000",
-            "header": []
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         },
         {
@@ -2066,7 +2928,16 @@
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/catalog/public/products/featured",
-            "header": []
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         },
         {
@@ -2074,7 +2945,16 @@
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/catalog/public/products/compare?ids=ID1&ids=ID2",
-            "header": []
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         },
         {
@@ -2090,6 +2970,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2111,6 +2999,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2124,7 +3020,16 @@
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/catalog/public/quiz",
-            "header": []
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         },
         {
@@ -2136,6 +3041,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2149,7 +3062,16 @@
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/catalog/public/brands",
-            "header": []
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         },
         {
@@ -2161,6 +3083,14 @@
               {
                 "key": "Authorization",
                 "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2183,6 +3113,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2204,6 +3142,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2225,6 +3171,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2246,6 +3200,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2263,6 +3225,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2280,6 +3250,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2297,6 +3275,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2310,6 +3296,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2331,6 +3325,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2357,6 +3359,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2374,6 +3384,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2391,6 +3409,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2412,6 +3438,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2438,6 +3472,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2455,6 +3497,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2481,6 +3531,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2502,6 +3560,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2519,6 +3585,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2540,6 +3614,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2557,6 +3639,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2578,6 +3668,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2596,6 +3694,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2617,6 +3723,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2638,6 +3752,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2659,6 +3781,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2680,6 +3810,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ],
             "body": {
@@ -2701,6 +3839,14 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
@@ -2718,11 +3864,606 @@
               {
                 "key": "Content-Type",
                 "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
               }
             ]
           }
         }
       ]
+    },
+    {
+      "name": "🏷️ Price sheets & channel prices",
+      "item": [
+        {
+          "name": "➕ Price sheet (official costs per period)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/price-sheets",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"supplierId\": \"{{supplierId}}\", \"sheetNo\": \"SHEET-2026-01\", \"validFrom\": \"2026-01-01\", \"validUntil\": null, \"lines\": [{\"variantId\": \"{{variantId}}\", \"listCost\": 1600, \"suggestedSelling\": 2500}]}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    pm.test('success flag', function () { pm.expect(json.success).to.eql(true); });",
+                  "    if (json.data.id !== undefined && json.data.id !== null) pm.collectionVariables.set('priceSheetId', json.data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "📄 Get price sheet",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/price-sheets/{{priceSheetId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📋 List sheets",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/price-sheets?supplierId={{supplierId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🚀 Apply sheet → channel prices",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/price-sheets/{{priceSheetId}}/apply",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"channels\": [\"STAFF\", \"PLATFORM\", \"DEALER\"]}"
+            }
+          }
+        },
+        {
+          "name": "💲 Set channel price",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/selling-prices",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"variantId\": \"{{variantId}}\", \"channel\": \"STAFF\", \"price\": 2500}"
+            }
+          }
+        },
+        {
+          "name": "🕘 Price history",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/selling-prices?variantId={{variantId}}&channel=STAFF",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "📦 Batches & valuation (FIFO layers)",
+      "item": [
+        {
+          "name": "📦 List batches (one row per receipt)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/inventory/batches?warehouseId={{warehouseA}}&variantId={{variantId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🧮 Valuation (cost vs potential revenue/profit)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/inventory/batches/valuation?warehouseId={{warehouseA}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🏭 Supplier finance (shipments → invoices → pay)",
+      "item": [
+        {
+          "name": "🚛 Create shipment (container arrival)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/shipments",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"supplierId\": \"{{supplierId}}\", \"shipmentNo\": \"CNT-2026-001\", \"arrivedAt\": \"2026-04-01\"}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    pm.test('success flag', function () { pm.expect(json.success).to.eql(true); });",
+                  "    if (json.data.id !== undefined && json.data.id !== null) pm.collectionVariables.set('shipmentId', json.data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "📥 Receive into shipment (creates cost layers)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/purchase-orders/{{orderId}}/receive",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"warehouseId\": \"{{warehouseA}}\", \"shipmentId\": \"{{shipmentId}}\", \"lines\": [{\"variantId\": \"{{variantId}}\", \"actualQty\": 20, \"damagedQty\": 0}]}"
+            }
+          }
+        },
+        {
+          "name": "🧾 Create invoice with installments",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/supplier-invoices",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"supplierId\": \"{{supplierId}}\", \"invoiceNo\": \"INV-2026-001\", \"total\": 100000, \"issuedAt\": \"2026-04-02\", \"installments\": [{\"amount\": 20000, \"dueDate\": \"2026-04-02\"}, {\"amount\": 30000, \"dueDate\": \"2026-05-01\"}, {\"amount\": 50000, \"dueDate\": \"2026-12-01\"}]}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    pm.test('success flag', function () { pm.expect(json.success).to.eql(true); });",
+                  "    if (json.data.id !== undefined && json.data.id !== null) pm.collectionVariables.set('sinvoiceId', json.data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "🔗 Allocate invoice → shipment",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/supplier-invoices/{{sinvoiceId}}/allocate",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"shipmentId\": \"{{shipmentId}}\", \"amount\": 100000}"
+            }
+          }
+        },
+        {
+          "name": "💸 Pay invoice (partial)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/supplier-invoices/{{sinvoiceId}}/pay",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"amount\": 20000, \"method\": \"CASH\"}"
+            }
+          }
+        },
+        {
+          "name": "📊 Supplier statement (invoices + overdue + owed)",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/purchasing/suppliers/{{supplierId}}/statement",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🚚 Landed cost (freight/customs → batches)",
+      "item": [
+        {
+          "name": "➕ Add landed cost (ESTIMATED, BY_VALUE default)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/shipments/{{shipmentId}}/landed-costs",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"kind\": \"FREIGHT\", \"amount\": 13400}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    pm.test('success flag', function () { pm.expect(json.success).to.eql(true); });",
+                  "    if (json.data.id !== undefined && json.data.id !== null) pm.collectionVariables.set('landedCostId', json.data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "➕ Add landed cost (BY_QTY)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/shipments/{{shipmentId}}/landed-costs",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"kind\": \"HANDLING\", \"amount\": 1200, \"allocationMethod\": \"BY_QTY\"}"
+            }
+          }
+        },
+        {
+          "name": "📋 List landed costs + allocations",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/purchasing/shipments/{{shipmentId}}/landed-costs",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "✅ Finalize (remaining adjusts, sold → variance)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/purchasing/landed-costs/{{landedCostId}}/finalize",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"finalAmount\": 15000}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "⛔ Client gate (edge cases)",
+      "item": [
+        {
+          "name": "401 — no client key",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/summary",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "(function () {",
+          "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+          "    if (!json || typeof json !== 'object') return;",
+          "    pm.test('contract: slim envelope only', function () {",
+          "        pm.expect(json).to.have.property('success');",
+          "        pm.expect(json).to.have.property('message');",
+          "        pm.expect(json).to.not.have.property('timestamp');",
+          "        pm.expect(json).to.not.have.property('traceId');",
+          "        Object.keys(json).forEach(function (k) {",
+          "            pm.expect(['success','message','data','errors']).to.include(k);",
+          "        });",
+          "    });",
+          "})();"
+        ]
+      }
     }
   ]
 }
