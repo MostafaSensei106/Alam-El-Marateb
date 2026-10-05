@@ -1,0 +1,14 @@
+resolution: workspace
+name: core_network
+description: Alam El Marateb shared networking (Dio + contract-mapped errors).
+publish_to: none
+environment:
+  sdk: ^3.6.0
+dependencies:
+  connectivity_plus: ^7.0.0
+  dio: ^5.9.2
+  meta: ^1.16.0
+  pretty_dio_logger: ^1.4.0
+dev_dependencies:
+  lints: ^5.1.1
+  test: ^1.26.3

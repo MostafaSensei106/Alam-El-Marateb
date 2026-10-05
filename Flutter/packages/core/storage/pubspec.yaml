@@ -1,0 +1,10 @@
+resolution: workspace
+name: core_storage
+description: Alam El Marateb core_storage package.
+publish_to: none
+environment:
+  sdk: ^3.6.0
+dependencies: {}
+dev_dependencies:
+  lints: ^5.1.1
+  test: ^1.26.3
