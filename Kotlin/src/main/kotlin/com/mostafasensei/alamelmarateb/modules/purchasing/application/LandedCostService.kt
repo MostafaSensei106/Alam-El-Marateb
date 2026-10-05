@@ -192,7 +192,9 @@ class LandedCostService(
     private fun view(id: UUID, withAllocations: Boolean): LandedCostView {
         val cost = load(id)
         val rows = allocationRepository.findByLandedCostId(id)
-        val allocated = rows.fold(BigDecimal.ZERO) { acc, a -> acc.add(a.allocatedAmount) }.money()
+        // Absorbed into stock only; variance rows (qty=0) live in varianceAmount.
+        val allocated = rows.filter { it.allocatedQty > 0 }
+            .fold(BigDecimal.ZERO) { acc, a -> acc.add(a.allocatedAmount) }.money()
         return LandedCostView(
             id = cost.id,
             shipmentId = cost.shipmentId,

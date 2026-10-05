@@ -86,6 +86,22 @@ class InventoryBatchService(
         refType: String?,
         refId: UUID?,
         note: String?,
+    ): List<BatchConsumption> =
+        consumeLayers(warehouseId, variantId, qty, MoveType.SALE, refType, refId, note)
+
+    /**
+     * Generic FIFO layer consumption (sales, transfers, ...). The seller —
+     * or the transfer clerk — never picks a batch; oldest layers go first.
+     */
+    @Transactional
+    fun consumeLayers(
+        warehouseId: UUID,
+        variantId: UUID,
+        qty: Int,
+        moveType: MoveType,
+        refType: String?,
+        refId: UUID?,
+        note: String?,
     ): List<BatchConsumption> {
         if (qty <= 0) throw BadRequestException("error.order.qty_positive")
         val layers = batchRepository
@@ -130,7 +146,7 @@ class InventoryBatchService(
                 warehouseId = warehouseId,
                 variantId = variantId,
                 qtySigned = -take,
-                type = MoveType.SALE,
+                type = moveType,
                 refType = refType,
                 refId = refId,
                 note = note,
@@ -140,6 +156,66 @@ class InventoryBatchService(
             rest -= take
         }
         return out
+    }
+
+    /** Mirror a source layer into another warehouse: same costs, no recalculation. */
+    @Transactional
+    fun createMirror(
+        variantId: UUID,
+        warehouseId: UUID,
+        qty: Int,
+        unitCost: BigDecimal,
+        landedUnitCost: BigDecimal,
+        by: String? = null,
+    ): InventoryBatchJpaEntity {
+        if (qty <= 0) throw BadRequestException("error.inventory.reserve_positive")
+        val batch = InventoryBatchJpaEntity(
+            batchNo = "B-${Instant.now().toEpochMilli()}-${(1000..9999).random()}",
+            variantId = variantId,
+            warehouseId = warehouseId,
+            receiptId = null,
+            qtyReceived = qty,
+            qtyRemaining = qty,
+            unitCost = unitCost.money(),
+            landedUnitCost = landedUnitCost.money(),
+        )
+        batch.createdBy = by
+        return batchRepository.save(batch)
+    }
+
+    /** Read-only layer lookup for mirroring and audits. */
+    @Transactional(readOnly = true)
+    fun layerOf(batchId: UUID): InventoryBatchJpaEntity =
+        batchRepository.findById(batchId)
+            .orElseThrow { NotFoundException("error.inventory.batch_not_found", listOf(batchId)) }
+
+    /** Write off qty from one exact layer (damage, expiry, ...). */
+    @Transactional
+    fun writeOff(
+        batchId: UUID,
+        qty: Int,
+        moveType: MoveType,
+        refType: String?,
+        refId: UUID?,
+        note: String?,
+    ) {
+        if (qty <= 0) throw BadRequestException("error.order.qty_positive")
+        val layer = layerOf(batchId)
+        if (layer.qtyRemaining < qty) {
+            throw ConflictException("error.inventory.stock_insufficient", listOf(layer.qtyRemaining, qty))
+        }
+        layer.qtyRemaining -= qty
+        batchRepository.save(layer)
+        stockService.applyMove(
+            warehouseId = layer.warehouseId!!,
+            variantId = layer.variantId!!,
+            qtySigned = -qty,
+            type = moveType,
+            refType = refType,
+            refId = refId,
+            note = note,
+            batchId = batchId,
+        )
     }
 
     /** Estimate FIFO cost without mutating (analytics preview at invoice time). */

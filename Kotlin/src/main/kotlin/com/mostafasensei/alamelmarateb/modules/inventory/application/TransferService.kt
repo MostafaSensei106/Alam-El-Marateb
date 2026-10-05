@@ -6,8 +6,12 @@ import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
 import com.mostafasensei.alamelmarateb.core.exceptions.UnprocessableException
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.StockTransferRepository
+import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.TransferBatchLinkRepository
+import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.TransferDispatchLayerRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.WarehouseRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockTransferJpaEntity
+import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.TransferBatchLinkJpaEntity
+import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.TransferDispatchLayerJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.TransferItemJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.model.Transfer
@@ -20,9 +24,20 @@ import java.util.UUID
 
 data class TransferItemRequest(val variantId: UUID, val qty: Int)
 
+data class TransferBatchLinkView(
+    val srcBatchId: UUID?,
+    val dstBatchId: UUID?,
+    val qty: Int,
+    val unitCost: java.math.BigDecimal,
+    val landedUnitCost: java.math.BigDecimal,
+)
+
 @Service
 class TransferService(
     private val transferRepository: StockTransferRepository,
+    private val dispatchLayerRepository: TransferDispatchLayerRepository,
+    private val linkRepository: TransferBatchLinkRepository,
+    private val batchService: InventoryBatchService,
     private val stockService: StockService,
     private val variantRepository: ProductVariantRepository,
     private val warehouseRepository: WarehouseRepository,
@@ -60,22 +75,38 @@ class TransferService(
             listOf(TransferStatus.in_transit.name, TransferStatus.partially_received.name),
         ).map { toDomain(it) }
 
-    /** Manager: move from draft to in_transit, deducting source stock. */
+    /**
+     * Manager: move from draft to in_transit. Consumes source FIFO layers
+     * (clerk never picks batches) and stages them for exact mirroring
+     * at receive. Zero profit, zero cost change — a location move only.
+     */
     @Transactional
     fun dispatch(id: UUID, by: String? = null): Transfer {
         val transfer = load(id)
         requireStatus(transfer, TransferStatus.draft, "error.transfer.dispatch_draft_only")
         val from = transfer.fromWarehouseId!!
         transfer.items.forEach { item ->
-            stockService.applyMove(
+            val slices = batchService.consumeLayers(
                 warehouseId = from,
                 variantId = item.variantId!!,
-                qtySigned = -item.sentQty,
-                type = MoveType.TRANSFER_OUT,
+                qty = item.sentQty,
+                moveType = MoveType.TRANSFER_OUT,
                 refType = "TRANSFER",
                 refId = transfer.id,
                 note = "Dispatch to ${transfer.toWarehouseId}",
             )
+            slices.forEach { slice ->
+                val src = batchService.layerOf(slice.batchId)
+                dispatchLayerRepository.save(
+                    TransferDispatchLayerJpaEntity(
+                        transferId = transfer.id,
+                        srcBatchId = slice.batchId,
+                        qty = slice.qty,
+                        unitCost = src.unitCost,
+                        landedUnitCost = src.landedUnitCost,
+                    ),
+                )
+            }
         }
         transfer.status = TransferStatus.in_transit.name
         val result = toDomain(transferRepository.save(transfer))
@@ -85,11 +116,13 @@ class TransferService(
     }
 
     /**
-     * Keeper: receive one batch (partial allowed). Damaged qty is recorded
-     * as pending — stock is deducted only at manager approve().
+     * Keeper: receive one batch (partial allowed). Mirrors the exact staged
+     * source layers into destination batches (same costs, no recalculation)
+     * and records immutable transfer_batch_links. Damaged qty physically
+     * arrives as pending — deducted back at manager approve().
      */
     @Transactional
-    fun receiveBatch(id: UUID, lines: List<TransferItemRequest>, damaged: Map<UUID, Int>): Transfer {
+    fun receiveBatch(id: UUID, lines: List<TransferItemRequest>, damaged: Map<UUID, Int>, by: String? = null): Transfer {
         val transfer = load(id)
         requireStatusIn(
             transfer,
@@ -106,15 +139,7 @@ class TransferService(
                 throw UnprocessableException("error.transfer.batch_exceeds", listOf(line.variantId))
             }
             item.receivedQty += line.qty
-            stockService.applyMove(
-                warehouseId = to,
-                variantId = line.variantId,
-                qtySigned = line.qty,
-                type = MoveType.TRANSFER_IN,
-                refType = "TRANSFER",
-                refId = transfer.id,
-                note = "Batch receipt",
-            )
+            mirrorStaged(transfer.id!!, to, line.variantId, line.qty, "Batch receipt", by)
         }
         damaged.forEach { (variantId, qty) ->
             val item = transfer.items.firstOrNull { it.variantId == variantId }
@@ -125,24 +150,66 @@ class TransferService(
             item.damagedQty += qty
             // Damaged goods physically arrive: enter stock as pending,
             // deducted back at manager approve() (DAMAGE move).
-            stockService.applyMove(
-                warehouseId = to,
-                variantId = variantId,
-                qtySigned = qty,
-                type = MoveType.TRANSFER_IN,
-                refType = "TRANSFER",
-                refId = transfer.id,
-                note = "Damaged on arrival — pending manager approval",
-            )
+            mirrorStaged(transfer.id!!, to, variantId, qty, "Damaged on arrival — pending manager approval", by)
         }
         val allReceived = transfer.items.all { it.receivedQty + it.damagedQty >= it.sentQty }
         transfer.status = if (allReceived) TransferStatus.received.name else TransferStatus.partially_received.name
         return toDomain(transferRepository.save(transfer))
     }
 
+    /** Mirror [qty] units of staged source layers into [to] warehouse batches. */
+    private fun mirrorStaged(
+        transferId: UUID,
+        to: UUID,
+        variantId: UUID,
+        qty: Int,
+        note: String,
+        by: String?,
+    ) {
+        var rest = qty
+        val staged = dispatchLayerRepository.findByTransferIdOrderByCreatedAtAsc(transferId)
+            .filter { batchService.layerOf(it.srcBatchId!!).variantId == variantId && it.mirroredQty < it.qty }
+        for (layer in staged) {
+            if (rest <= 0) break
+            val take = minOf(rest, layer.qty - layer.mirroredQty)
+            val dst = batchService.createMirror(
+                variantId = variantId,
+                warehouseId = to,
+                qty = take,
+                unitCost = layer.unitCost,
+                landedUnitCost = layer.landedUnitCost,
+                by = by,
+            )
+            stockService.applyMove(
+                warehouseId = to,
+                variantId = variantId,
+                qtySigned = take,
+                type = MoveType.TRANSFER_IN,
+                refType = "TRANSFER",
+                refId = transferId,
+                note = note,
+                batchId = dst.id,
+            )
+            linkRepository.save(
+                TransferBatchLinkJpaEntity(
+                    transferId = transferId,
+                    srcBatchId = layer.srcBatchId,
+                    dstBatchId = dst.id,
+                    qty = take,
+                    unitCost = layer.unitCost,
+                    landedUnitCost = layer.landedUnitCost,
+                ),
+            )
+            layer.mirroredQty += take
+            dispatchLayerRepository.save(layer)
+            rest -= take
+        }
+        if (rest > 0) throw UnprocessableException("error.transfer.mirror_shortage", listOf(variantId))
+    }
+
     /**
-     * Manager: final approval. Recorded damage becomes DAMAGE moves
-     * (this approval IS the damage authorization per business decision).
+     * Manager: final approval. Recorded damage is deducted from the mirrored
+     * destination batches (this approval IS the damage authorization).
      */
     @Transactional
     fun approve(id: UUID, by: String? = null): Transfer {
@@ -153,15 +220,22 @@ class TransferService(
             "error.transfer.approve_status",
         )
         transfer.items.filter { it.damagedQty > 0 }.forEach { item ->
-            stockService.applyMove(
-                warehouseId = transfer.toWarehouseId!!,
-                variantId = item.variantId!!,
-                qtySigned = -item.damagedQty,
-                type = MoveType.DAMAGE,
-                refType = "TRANSFER",
-                refId = transfer.id,
-                note = "Damaged on receipt — manager approved",
-            )
+            var rest = item.damagedQty
+            val dstBatchIds = linkRepository.findByTransferIdOrderByCreatedAtAsc(transfer.id!!)
+                .filter { batchService.layerOf(it.dstBatchId!!).variantId == item.variantId }
+                .mapNotNull { it.dstBatchId }
+            for (dstId in dstBatchIds) {
+                if (rest <= 0) break
+                val available = batchService.layerOf(dstId).qtyRemaining
+                if (available <= 0) continue
+                val take = minOf(rest, available)
+                batchService.writeOff(
+                    dstId, take, MoveType.DAMAGE, "TRANSFER", transfer.id,
+                    "Damaged on receipt — manager approved",
+                )
+                rest -= take
+            }
+            if (rest > 0) throw UnprocessableException("error.transfer.damage_shortage", listOf(item.variantId!!))
         }
         transfer.status = TransferStatus.confirmed.name
         val result = toDomain(transferRepository.save(transfer))
@@ -176,6 +250,14 @@ class TransferService(
         requireStatus(transfer, TransferStatus.draft, "error.transfer.cancel_draft_only")
         transfer.status = TransferStatus.cancelled.name
         return toDomain(transferRepository.save(transfer))
+    }
+
+    @Transactional(readOnly = true)
+    fun linksOf(transferId: UUID): List<TransferBatchLinkView> {
+        load(transferId)
+        return linkRepository.findByTransferIdOrderByCreatedAtAsc(transferId).map {
+            TransferBatchLinkView(it.srcBatchId, it.dstBatchId, it.qty, it.unitCost, it.landedUnitCost)
+        }
     }
 
     private fun load(id: UUID): StockTransferJpaEntity =

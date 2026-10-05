@@ -111,7 +111,7 @@ class DistributorEconomicsTest {
             supplier.id, branchId, listOf(PoItemInput(variantId, 20, BigDecimal("1000"))), "test",
         )
         purchasingService.sendOrder(po.id!!, "test")
-        purchasingService.receive(po.id, warehouseId, listOf(ReceiveLineInput(variantId, 20, 0)), "keeper")
+        purchasingService.receive(po.id, warehouseId, listOf(ReceiveLineInput(variantId, 20, 0)), by = "keeper")
 
         // Sheet #2 raises prices: cost 1600, selling 2500.
         val sheet2 = priceSheetService.createSheet(
@@ -148,7 +148,7 @@ class DistributorEconomicsTest {
             supplier.id, branchId, listOf(PoItemInput(variantId, 20, BigDecimal("1600"))), "test",
         )
         purchasingService.sendOrder(po2.id!!, "test")
-        purchasingService.receive(po2.id, warehouseId, listOf(ReceiveLineInput(variantId, 20, 0)), "keeper")
+        purchasingService.receive(po2.id, warehouseId, listOf(ReceiveLineInput(variantId, 20, 0)), by = "keeper")
 
         val placed2 = orderService.completeSale(
             PlaceOrderInput(

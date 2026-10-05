@@ -3,6 +3,8 @@ package com.mostafasensei.alamelmarateb.modules.inventory.data.repository
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.AuditCountJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.InventoryBatchJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockAuditJpaEntity
+import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.TransferBatchLinkJpaEntity
+import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.TransferDispatchLayerJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockLevelJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockMoveJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.StockTransferJpaEntity
@@ -68,4 +70,14 @@ interface InventoryBatchRepository : JpaRepository<InventoryBatchJpaEntity, UUID
             "ORDER BY b.receivedAt ASC",
     )
     fun findByShipmentId(@Param("shipmentId") shipmentId: UUID): List<InventoryBatchJpaEntity>
+}
+
+@Repository
+interface TransferDispatchLayerRepository : JpaRepository<TransferDispatchLayerJpaEntity, UUID> {
+    fun findByTransferIdOrderByCreatedAtAsc(transferId: UUID): List<TransferDispatchLayerJpaEntity>
+}
+
+@Repository
+interface TransferBatchLinkRepository : JpaRepository<TransferBatchLinkJpaEntity, UUID> {
+    fun findByTransferIdOrderByCreatedAtAsc(transferId: UUID): List<TransferBatchLinkJpaEntity>
 }

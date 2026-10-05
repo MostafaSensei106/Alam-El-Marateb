@@ -74,7 +74,7 @@ class PurchasingFlowTest {
         // Send then receive a partial batch: 6 good + 1 damaged.
         assertEquals("sent", purchasingService.sendOrder(order.id!!, "test").status)
         val first = purchasingService.receive(
-            order.id, warehouseId, listOf(ReceiveLineInput(variantId, 6, 1)), "keeper",
+            order.id, warehouseId, listOf(ReceiveLineInput(variantId, 6, 1)), by = "keeper",
         )
         assertEquals(6, first.items.single().actualQty)
         assertEquals("partial", purchasingService.getOrder(order.id).status)
@@ -82,7 +82,7 @@ class PurchasingFlowTest {
         assertEquals(BigDecimal("600.00"), purchasingService.getSupplier(supplier.id).balance)
 
         // Receive the rest: 3 good -> 9 actual + 1 damaged >= 10 ordered -> closed.
-        purchasingService.receive(order.id, warehouseId, listOf(ReceiveLineInput(variantId, 3, 0)), "keeper")
+        purchasingService.receive(order.id, warehouseId, listOf(ReceiveLineInput(variantId, 3, 0)), by = "keeper")
         assertEquals("closed", purchasingService.getOrder(order.id).status)
         assertEquals(9, stockService.levels(warehouseId).single().qty)
         assertEquals(BigDecimal("900.00"), purchasingService.getSupplier(supplier.id).balance)
