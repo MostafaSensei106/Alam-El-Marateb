@@ -32,6 +32,9 @@ class InventoryBatchJpaEntity(
     @Column(name = "unit_cost", nullable = false, precision = 12, scale = 2)
     var unitCost: BigDecimal = BigDecimal.ZERO,
 
+    @Column(name = "landed_unit_cost", nullable = false, precision = 12, scale = 2)
+    var landedUnitCost: BigDecimal = BigDecimal.ZERO,
+
     @Column(name = "received_at", nullable = false)
     var receivedAt: Instant = Instant.now(),
 ) : EntityBase<UUID>()

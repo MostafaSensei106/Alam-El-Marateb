@@ -113,6 +113,7 @@ class StockService(
                     qtyReceived = qtyDelta,
                     qtyRemaining = qtyDelta,
                     unitCost = variant?.costPrice ?: java.math.BigDecimal.ZERO,
+                    landedUnitCost = variant?.costPrice ?: java.math.BigDecimal.ZERO,
                 ),
             )
             batch.createdBy = by

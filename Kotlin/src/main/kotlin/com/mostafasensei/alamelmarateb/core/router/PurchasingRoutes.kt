@@ -19,4 +19,7 @@ object PurchasingRoutes {
     const val SUPPLIER_INVOICE_ALLOCATE = "$PREFIX/supplier-invoices/{id}/allocate"
     const val SUPPLIER_INVOICE_PAY = "$PREFIX/supplier-invoices/{id}/pay"
     const val SUPPLIER_STATEMENT = "$PREFIX/suppliers/{id}/statement"
+    const val LANDED_COSTS = "$PREFIX/shipments/{id}/landed-costs"
+    const val LANDED_COST_BY_ID = "$PREFIX/landed-costs/{id}"
+    const val LANDED_COST_FINALIZE = "$PREFIX/landed-costs/{id}/finalize"
 }

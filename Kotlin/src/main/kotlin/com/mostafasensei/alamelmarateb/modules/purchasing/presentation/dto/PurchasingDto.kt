@@ -44,6 +44,7 @@ data class ReceiveLineRequest(
 
 data class ReceiveGoodsRequest(
     @field:NotNull val warehouseId: UUID,
+    val shipmentId: UUID? = null,
     @field:Valid val lines: List<ReceiveLineRequest> = emptyList(),
 )
 

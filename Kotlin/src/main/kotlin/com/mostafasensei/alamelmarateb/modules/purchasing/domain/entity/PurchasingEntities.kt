@@ -80,6 +80,9 @@ class GoodsReceiptJpaEntity(
     @Column(name = "warehouse_id", nullable = false, columnDefinition = "UUID")
     var warehouseId: UUID? = null,
 
+    @Column(name = "shipment_id", columnDefinition = "UUID")
+    var shipmentId: UUID? = null,
+
     @Column(name = "received_at", nullable = false)
     var receivedAt: Instant = Instant.now(),
 

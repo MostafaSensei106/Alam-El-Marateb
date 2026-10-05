@@ -27,8 +27,10 @@ data class BatchView(
     val qtyReceived: Int,
     val qtyRemaining: Int,
     val unitCost: BigDecimal,
+    val landedUnitCost: BigDecimal,
     val receivedAt: Instant,
     val costValue: BigDecimal,
+    val netCostValue: BigDecimal,
     val currentSelling: BigDecimal?,
     val potentialRevenue: BigDecimal?,
     val potentialProfit: BigDecimal?,
@@ -69,6 +71,7 @@ class InventoryBatchService(
             qtyReceived = qty,
             qtyRemaining = qty,
             unitCost = unitCost.money(),
+            landedUnitCost = unitCost.money(),
         )
         batch.createdBy = by
         return batchRepository.save(batch)
@@ -111,6 +114,7 @@ class InventoryBatchService(
                         qtyReceived = shortfall,
                         qtyRemaining = shortfall,
                         unitCost = variant.costPrice.money(),
+                        landedUnitCost = variant.costPrice.money(),
                     ),
                 ),
             )
@@ -132,7 +136,7 @@ class InventoryBatchService(
                 note = note,
                 batchId = layer.id,
             )
-            out.add(BatchConsumption(layer.id!!, take, layer.unitCost))
+            out.add(BatchConsumption(layer.id!!, take, layer.landedUnitCost))
             rest -= take
         }
         return out
@@ -149,7 +153,7 @@ class InventoryBatchService(
             .forEach { layer ->
                 if (rest <= 0) return@forEach
                 val take = minOf(rest, layer.qtyRemaining)
-                total = total.add(layer.unitCost.multiply(take.toBigDecimal()))
+                total = total.add(layer.landedUnitCost.multiply(take.toBigDecimal()))
                 rest -= take
             }
         if (rest > 0) {
@@ -196,16 +200,21 @@ class InventoryBatchService(
     fun valuation(warehouseId: UUID?, variantId: UUID?): Map<String, BigDecimal> {
         val rows = listBatches(warehouseId, variantId)
         val cost = rows.fold(BigDecimal.ZERO) { acc, b -> acc.add(b.costValue) }.money()
+        val net = rows.fold(BigDecimal.ZERO) { acc, b -> acc.add(b.netCostValue) }.money()
         val revenue = rows.fold(BigDecimal.ZERO) { acc, b -> acc.add(b.potentialRevenue ?: BigDecimal.ZERO) }.money()
         return mapOf(
             "inventoryCost" to cost,
+            "inventoryNetCost" to net,
+            "landedAdded" to cost.subtract(net).money(),
             "potentialRevenue" to revenue,
             "potentialProfit" to revenue.subtract(cost).money(),
+            "potentialProfitNet" to revenue.subtract(net).money(),
         )
     }
 
     private fun toView(e: InventoryBatchJpaEntity): BatchView {
-        val costValue = e.unitCost.multiply(e.qtyRemaining.toBigDecimal()).money()
+        val costValue = e.landedUnitCost.multiply(e.qtyRemaining.toBigDecimal()).money()
+        val netCostValue = e.unitCost.multiply(e.qtyRemaining.toBigDecimal()).money()
         val now = Instant.now()
         val selling = e.variantId?.let { vid ->
             sellingPriceRepository.findByVariantIdAndChannelOrderByEffectiveFromDesc(vid, "STAFF")
@@ -221,8 +230,10 @@ class InventoryBatchService(
             qtyReceived = e.qtyReceived,
             qtyRemaining = e.qtyRemaining,
             unitCost = e.unitCost,
+            landedUnitCost = e.landedUnitCost,
             receivedAt = e.receivedAt,
             costValue = costValue,
+            netCostValue = netCostValue,
             currentSelling = selling,
             potentialRevenue = revenue,
             potentialProfit = revenue?.subtract(costValue)?.money(),

@@ -10,6 +10,7 @@ import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.TransferI
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.WarehouseJpaEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
 import org.springframework.stereotype.Repository
 import java.util.Optional
 import java.util.UUID
@@ -59,4 +60,12 @@ interface AuditCountRepository : JpaRepository<AuditCountJpaEntity, UUID>
 interface InventoryBatchRepository : JpaRepository<InventoryBatchJpaEntity, UUID> {
     fun findByWarehouseIdAndVariantIdOrderByReceivedAtAsc(warehouseId: UUID, variantId: UUID): List<InventoryBatchJpaEntity>
     fun findByWarehouseIdOrderByReceivedAtAsc(warehouseId: UUID): List<InventoryBatchJpaEntity>
+
+    /** All cost layers that arrived inside one shipment (any warehouse). */
+    @Query(
+        "SELECT b FROM InventoryBatchJpaEntity b WHERE b.receiptId IN " +
+            "(SELECT g.id FROM GoodsReceiptJpaEntity g WHERE g.shipmentId = :shipmentId) " +
+            "ORDER BY b.receivedAt ASC",
+    )
+    fun findByShipmentId(@Param("shipmentId") shipmentId: UUID): List<InventoryBatchJpaEntity>
 }

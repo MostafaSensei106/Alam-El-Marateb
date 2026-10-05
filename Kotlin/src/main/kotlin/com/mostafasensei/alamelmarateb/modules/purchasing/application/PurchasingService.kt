@@ -10,6 +10,7 @@ import com.mostafasensei.alamelmarateb.modules.inventory.application.WarehouseSe
 import com.mostafasensei.alamelmarateb.modules.inventory.data.repository.InventoryBatchRepository
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.entity.InventoryBatchJpaEntity
 import com.mostafasensei.alamelmarateb.modules.inventory.domain.model.MoveType
+import com.mostafasensei.alamelmarateb.modules.purchasing.data.repository.SupplierShipmentRepository
 import com.mostafasensei.alamelmarateb.modules.product.data.repository.ProductVariantRepository
 import com.mostafasensei.alamelmarateb.modules.purchasing.data.repository.GoodsReceiptRepository
 import com.mostafasensei.alamelmarateb.modules.purchasing.data.repository.PurchaseOrderRepository
@@ -85,6 +86,7 @@ class PurchasingService(
     private val receiptRepository: GoodsReceiptRepository,
     private val receiptItemRepository: ReceiptItemRepository,
     private val batchRepository: InventoryBatchRepository,
+    private val shipmentRepository: SupplierShipmentRepository,
     private val stockService: StockService,
     private val warehouseService: WarehouseService,
     private val variantRepository: ProductVariantRepository,
@@ -226,12 +228,27 @@ class PurchasingService(
      * receipt_items, posts PURCHASE stock moves for good qty, accrues
      * supplier.balance by actual*unit_cost, then moves PO to partial/closed.
      * Closed only when every item has received+damaged >= ordered.
+     * Optional [shipmentId] ties the receipt (and its cost layers) to a
+     * shipment for landed-cost allocation; it must belong to the PO supplier.
      */
     @Transactional
-    fun receive(poId: UUID, warehouseId: UUID, lines: List<ReceiveLineInput>, by: String? = null): ReceiptView {
+    fun receive(
+        poId: UUID,
+        warehouseId: UUID,
+        lines: List<ReceiveLineInput>,
+        shipmentId: UUID? = null,
+        by: String? = null,
+    ): ReceiptView {
         val order = loadOrder(poId)
         if (order.status != PoStatus.sent.name && order.status != PoStatus.partial.name) {
             throw ConflictException("error.purchasing.po_status", listOf(order.status))
+        }
+        if (shipmentId != null) {
+            val shipment = shipmentRepository.findById(shipmentId)
+                .orElseThrow { NotFoundException("error.landed.shipment_not_found", listOf(shipmentId)) }
+            if (shipment.supplierId != order.supplierId) {
+                throw BadRequestException("error.landed.shipment_mismatch")
+            }
         }
         try {
             warehouseService.get(warehouseId)
@@ -254,6 +271,7 @@ class PurchasingService(
             }
         }
         val receipt = GoodsReceiptJpaEntity(poId = poId, warehouseId = warehouseId, receivedBy = by)
+        receipt.shipmentId = shipmentId
         receipt.items = grouped.map { (variantId, quantities) ->
             val (actual, damaged) = quantities
             val item = order.items.first { it.variantId == variantId }
@@ -273,6 +291,7 @@ class PurchasingService(
             if (actual > 0) {
                 val item = order.items.first { it.variantId == variantId }
                 // Immutable cost layer: this receipt line keeps its own unit cost.
+                // Landed starts equal to net; shipment costs allocate on top later.
                 val batch = batchRepository.save(
                     InventoryBatchJpaEntity(
                         batchNo = "B-${System.currentTimeMillis()}-${(1000..9999).random()}",
@@ -282,6 +301,7 @@ class PurchasingService(
                         qtyReceived = actual,
                         qtyRemaining = actual,
                         unitCost = item.unitCost.money(),
+                        landedUnitCost = item.unitCost.money(),
                     ),
                 )
                 batch.createdBy = by
