@@ -4,25 +4,26 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
 import '../config/app_config.dart';
+import '../features/dashboard/api/dashboard_api.dart';
+import '../features/finance/api/finance_api.dart';
+import '../features/identity/api/identity_api.dart';
+import '../features/pricing/api/pricing_api.dart';
 import '../session/auth_state.dart';
 
-/// Composition root: shared networking + auth data layer.
-///
-/// Module rule: third-party/feature dependencies live in their own
-/// package — the app only wires them together. Secure [TokenStorage]
-/// replaces the in-memory one when core_storage lands (Slice 1).
+/// Admin composition root: networking + auth + management features.
 Future<void> setupInjection() async {
   final getIt = GetIt.instance;
   if (getIt.isRegistered<Dio>()) {
     return;
   }
 
-  const networkConfig = NetworkConfig(
-    baseUrl: AppConfig.baseUrl,
-    clientId: AppConfig.clientId,
-    clientKey: AppConfig.clientKey,
+  getIt.registerSingleton<NetworkConfig>(
+    const NetworkConfig(
+      baseUrl: AppConfig.baseUrl,
+      clientId: AppConfig.clientId,
+      clientKey: AppConfig.clientKey,
+    ),
   );
-  getIt.registerSingleton<NetworkConfig>(networkConfig);
 
   // TODO(core_storage): replace with secure persistent storage.
   final tokenStorage = InMemoryTokenStorage();
@@ -34,23 +35,19 @@ Future<void> setupInjection() async {
   );
   getIt.registerSingleton<AuthState>(authState);
 
-  // Bare client for token rotation (no auth interceptor → no loops).
-  Dio newRefreshClient() {
-    final dio = Dio(
-      BaseOptions(
-        baseUrl: AppConfig.baseUrl,
-        headers: <String, dynamic>{
-          ApiHeaders.apiClient: AppConfig.clientId,
-          ApiHeaders.apiKey: AppConfig.clientKey,
-        },
-      ),
-    );
-    return dio;
-  }
+  Dio newRefreshClient() => Dio(
+    BaseOptions(
+      baseUrl: AppConfig.baseUrl,
+      headers: <String, dynamic>{
+        ApiHeaders.apiClient: AppConfig.clientId,
+        ApiHeaders.apiKey: AppConfig.clientKey,
+      },
+    ),
+  );
 
   late final Dio dio;
   dio = DioFactory.create(
-    config: networkConfig,
+    config: getIt<NetworkConfig>(),
     tokenStorage: tokenStorage,
     onRefresh: (refreshToken) async {
       try {
@@ -91,4 +88,9 @@ Future<void> setupInjection() async {
   getIt.registerSingleton<BaseAuthRepository>(
     AuthRepository(api: getIt<AuthApi>(), storage: tokenStorage),
   );
+
+  getIt.registerSingleton<DashboardApi>(DashboardApi(dio));
+  getIt.registerSingleton<PricingApi>(PricingApi(dio));
+  getIt.registerSingleton<FinanceApi>(FinanceApi(dio));
+  getIt.registerSingleton<IdentityApi>(IdentityApi(dio));
 }

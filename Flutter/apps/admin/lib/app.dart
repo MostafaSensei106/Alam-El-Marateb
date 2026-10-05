@@ -11,7 +11,8 @@ class AdminApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final router = AdminRouter(authState: GetIt.instance<AuthState>()).router;
+    final router =
+        AdminRouter(authState: GetIt.instance<AuthState>()).router;
     return MaterialApp.router(
       title: AppConfig.appName,
       debugShowCheckedModeBanner: false,
