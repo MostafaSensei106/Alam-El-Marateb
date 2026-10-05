@@ -56,12 +56,14 @@ class ConfirmTransferReceiptController(
     fun receiveBatch(
         @PathVariable transferId: UUID,
         @Valid @RequestBody request: ReceiveBatchRequest,
+        @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<Transfer>> =
         ok(
             transferService.receiveBatch(
                 transferId,
                 request.lines.map { TransferItemRequest(it.variantId, it.qty) },
                 request.damaged,
+                principal.fullName,
             ),
         )
 

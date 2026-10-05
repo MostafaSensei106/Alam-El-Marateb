@@ -24,7 +24,8 @@ import java.util.UUID
 @Tag(name = "Catalog (selling prices)", description = "Channel prices + history — BRANCH_MANAGER")
 @RestController
 @PreAuthorize("hasAnyRole('BRANCH_MANAGER', 'SUPER_ADMIN')")
-class SetSellingPriceController(    private val sellingPriceService: SellingPriceService,
+class SetSellingPriceController(
+    private val sellingPriceService: SellingPriceService,
 ) : BaseController() {
 
     @Operation(summary = "Set channel price (PLATFORM/STAFF/DEALER)")
@@ -43,3 +44,9 @@ class SetSellingPriceController(    private val sellingPriceService: SellingPric
         )
 
 }
+
+data class SellingPriceRequest(
+    @field:NotNull val variantId: UUID,
+    val channel: String? = null,
+    @field:NotNull val price: BigDecimal,
+)
