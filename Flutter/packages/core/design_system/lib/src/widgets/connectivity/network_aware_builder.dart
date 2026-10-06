@@ -2,9 +2,6 @@ import 'package:core_utils/core_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
-
-
 /// A widget that builds its child based on the current network state.
 /// Useful for full-screen offline states.
 class NetworkAwareBuilder extends StatelessWidget {

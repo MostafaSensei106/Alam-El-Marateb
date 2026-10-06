@@ -56,7 +56,8 @@ class InventoryApi {
   Future<StockTransfer> createTransfer({
     required String fromWarehouseId,
     required String toWarehouseId,
-    required List<TransferLine> lines, String? note,
+    required List<TransferLine> lines,
+    String? note,
   }) => ApiExecutor.call(
     () => _dio.post<dynamic>(
       transfersPath,

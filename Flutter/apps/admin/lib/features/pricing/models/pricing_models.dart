@@ -36,7 +36,8 @@ class SheetLine {
 
 class PriceSheet {
   const PriceSheet({
-    required this.sheetNo, this.id,
+    required this.sheetNo,
+    this.id,
     this.supplierId,
     this.validFrom,
     this.validUntil,

@@ -111,7 +111,7 @@
     },
     {
       "key": "clientKey",
-      "value": "postman-dev-key"
+      "value": "dev-local-key"
     },
     {
       "key": "supplierId",
@@ -139,6 +139,102 @@
     },
     {
       "key": "priceSheetId",
+      "value": ""
+    },
+    {
+      "key": "driverJwt",
+      "value": ""
+    },
+    {
+      "key": "driverRefresh",
+      "value": ""
+    },
+    {
+      "key": "accountantJwt",
+      "value": ""
+    },
+    {
+      "key": "accountantRefresh",
+      "value": ""
+    },
+    {
+      "key": "providerRef",
+      "value": ""
+    },
+    {
+      "key": "shiftId",
+      "value": ""
+    },
+    {
+      "key": "reservationId",
+      "value": ""
+    },
+    {
+      "key": "leaveId",
+      "value": ""
+    },
+    {
+      "key": "payrollId",
+      "value": ""
+    },
+    {
+      "key": "reviewId",
+      "value": ""
+    },
+    {
+      "key": "tripId",
+      "value": ""
+    },
+    {
+      "key": "stopId",
+      "value": ""
+    },
+    {
+      "key": "vehicleId",
+      "value": ""
+    },
+    {
+      "key": "driverId",
+      "value": ""
+    },
+    {
+      "key": "treasuryA",
+      "value": ""
+    },
+    {
+      "key": "treasuryB",
+      "value": ""
+    },
+    {
+      "key": "campaignId",
+      "value": ""
+    },
+    {
+      "key": "presetId",
+      "value": ""
+    },
+    {
+      "key": "fakeSignature",
+      "value": ""
+    },
+    {
+      "key": "promotionId",
+      "value": ""
+    },
+    {
+      "key": "addressId",
+      "value": ""
+    },
+    {
+      "key": "employeeId",
+      "value": ""
+    },
+    {
+      "key": "journalId",
+      "value": ""
+    },
+    {
+      "key": "checkId",
       "value": ""
     }
   ],
@@ -551,7 +647,23 @@
               "mode": "raw",
               "raw": "{\"name\": \"Mattresses\", \"slug\": \"mattresses\", \"description\": \"All mattresses\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('categoryId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "📋 List products",
@@ -601,7 +713,23 @@
               "mode": "raw",
               "raw": "{\"categoryId\": \"{{categoryId}}\", \"name\": \"Serta 120\", \"slug\": \"serta-120\", \"brand\": \"Serta\", \"warrantyYears\": 10}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('productId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "➕ Create product (translations)",
@@ -630,7 +758,23 @@
               "mode": "raw",
               "raw": "{\"categoryId\": \"{{categoryId}}\", \"name\": \"مرتبة سيرتا\", \"slug\": \"serta-120\", \"brand\": \"سيرتا\", \"translations\": {\"en\": {\"name\": \"Serta Mattress\", \"description\": \"Pocket springs\"}}}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('productId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "🖼️ Upload image (multipart: file)",
@@ -735,6 +879,469 @@
               "raw": "{\"productId\": \"{{productId}}\", \"widthFrom\": 150, \"widthTo\": 160, \"pct\": 50}"
             }
           }
+        },
+        {
+          "name": "🔍 Get product",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/products/{{productId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "✏️ Update product",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/catalog/products/{{productId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Serta 120 updated\", \"isActive\": true}"
+            }
+          }
+        },
+        {
+          "name": "🗑️ Delete product",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/catalog/products/{{productId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📋 List categories",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/categories",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔍 Get category",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/categories/{{categoryId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "✏️ Update category",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/catalog/categories/{{categoryId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Mattresses updated\"}"
+            }
+          }
+        },
+        {
+          "name": "🔗 Bind category attributes",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/catalog/categories/{{categoryId}}/attributes",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"attributes\": []}"
+            }
+          }
+        },
+        {
+          "name": "📋 List attributes",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/attributes",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "➕ Create attribute",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/attributes",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"code\": \"FIRMNESS\", \"name\": \"Firmness\", \"attributeType\": \"SELECT\"}"
+            }
+          }
+        },
+        {
+          "name": "➕ Attribute option",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/attributes/{{attributeId}}/options",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"optionValue\": \"FIRM\", \"displayName\": \"Firm\"}"
+            }
+          }
+        },
+        {
+          "name": "📋 List presets",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/presets",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📋 Admin brands",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/brands",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "➕ Admin brand",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/brands",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Serta\"}"
+            }
+          }
+        },
+        {
+          "name": "🔍 Variant attributes",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/variants/{{variantId}}/attributes",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📊 Meter prices list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/products/{{productId}}/meter-prices",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🗑️ Delete image",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/catalog/images/{{imageId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔄 Search reindex",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/products/search/reindex",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📦 From preset",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/products/from-preset/{{presetId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"slug\": \"from-preset-120\"}"
+            }
+          }
+        },
+        {
+          "name": "💬 Answer Q&A",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/catalog/products/qa/{{questionId}}/answer",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"answer\": \"Yes, 10 years\"}"
+            }
+          }
         }
       ]
     },
@@ -746,6 +1353,142 @@
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/catalog/public/products",
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔎 Suggest",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/products/suggest?q=serta",
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔍 Product detail",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/products/{{slug}}",
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📐 Variants",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/products/{{productId}}/variants",
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🖼️ Images",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/products/{{slug}}/images",
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "⭐ Reviews",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/products/{{slug}}/reviews",
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "💬 Q&A",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/products/{{slug}}/qa",
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🫂 Bought together",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/products/{{slug}}/bought-together",
+            "header": [
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📂 Categories",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/public/categories",
             "header": [
               {
                 "key": "X-Api-Client",
@@ -790,7 +1533,23 @@
               "mode": "raw",
               "raw": "{\"name\": \"Cairo WH\", \"code\": \"CAI-01\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('warehouseA', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "📊 Stock overview",
@@ -859,9 +1618,25 @@
             "url": "{{baseUrl}}/api/v1/inventory/transfers",
             "body": {
               "mode": "raw",
-              "raw": "{\"fromWarehouseId\": \"{{warehouseA}}\", \"toWarehouseId\": \"{{warehouseB}}\", \"note\": \"Restock\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 6}]}"
+              "raw": "{\"fromWarehouseId\": \"{{warehouseA}}\", \"toWarehouseId\": \"{{warehouseB}}\", \"note\": \"Restock\", \"items\": [{\"variantId\": \"{{variantId}}\", \"qty\": 6}]}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('transferId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "🚚 Dispatch transfer",
@@ -932,7 +1707,23 @@
               "mode": "raw",
               "raw": "{\"warehouseId\": \"{{warehouseB}}\", \"note\": \"Cycle count\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('auditId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "⚖️ Reconcile audit",
@@ -953,6 +1744,127 @@
               }
             ],
             "url": "{{baseUrl}}/api/v1/inventory/audits/{{auditId}}/reconcile"
+          }
+        },
+        {
+          "name": "📋 List warehouses",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/inventory/warehouses",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔍 Get warehouse",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/inventory/warehouses/{{warehouseA}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "✏️ Update warehouse",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/v1/inventory/warehouses/{{warehouseA}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Cairo WH updated\"}"
+            }
+          }
+        },
+        {
+          "name": "🔍 Get transfer",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/inventory/transfers/{{transferId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🎚️ Set threshold",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/inventory/stocks/threshold",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"warehouseId\": \"{{warehouseA}}\", \"variantId\": \"{{variantId}}\", \"minQty\": 3}"
+            }
           }
         }
       ]
@@ -1006,7 +1918,7 @@
             "url": "{{baseUrl}}/api/v1/warehouse/stocks/adjustment",
             "body": {
               "mode": "raw",
-              "raw": "{\"warehouseId\": \"{{warehouseB}}\", \"variantId\": \"VARIANT_ID\", \"qtyDelta\": 10, \"note\": \"Opening balance\"}"
+              "raw": "{\"warehouseId\": \"{{warehouseB}}\", \"variantId\": \"{{variantId}}\", \"qtyDelta\": 10, \"note\": \"Opening balance\"}"
             }
           }
         },
@@ -1056,7 +1968,7 @@
             "url": "{{baseUrl}}/api/v1/warehouse/transfers/{{transferId}}/confirm-receipt",
             "body": {
               "mode": "raw",
-              "raw": "{\"lines\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 4}], \"damaged\": {\"VARIANT_ID\": 2}}"
+              "raw": "{\"lines\": [{\"variantId\": \"{{variantId}}\", \"qty\": 4}], \"damaged\": {\"{{variantId}}\": 2}}"
             }
           }
         },
@@ -1085,7 +1997,7 @@
             "url": "{{baseUrl}}/api/v1/warehouse/audits/{{auditId}}/count",
             "body": {
               "mode": "raw",
-              "raw": "{\"variantId\": \"VARIANT_ID\", \"countedQty\": 3}"
+              "raw": "{\"variantId\": \"{{variantId}}\", \"countedQty\": 3}"
             }
           }
         }
@@ -1156,6 +2068,132 @@
             ],
             "url": "{{baseUrl}}/api/v1/analytics/audit-trail/transfer/{{transferId}}"
           }
+        },
+        {
+          "name": "💰 Revenue + profit",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/revenue-profit?from=2026-09-01&to=2026-09-30",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🏆 Top variants",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/products/top?from=2026-09-01&to=2026-09-30",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🏢 Branch performance",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/performance/branches?from=2026-09-01&to=2026-09-30",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🗺️ Geo heatmap",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/geo-heatmap?from=2026-09-01&to=2026-09-30",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📝 Inquiries list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/inquiries",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔥 Top-asked",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/analytics/inquiries/top-asked?from=2026-09-01",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
         }
       ]
     },
@@ -1187,9 +2225,25 @@
             "url": "{{baseUrl}}/api/v1/sales/pos/complete-sale",
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"CASH\"}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"{{variantId}}\", \"qty\": 1}], \"paymentMethod\": \"CASH\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('orderId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "• Save draft",
@@ -1216,7 +2270,7 @@
             "url": "{{baseUrl}}/api/v1/sales/pos/orders/draft",
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"COD\"}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"{{variantId}}\", \"qty\": 1}], \"paymentMethod\": \"COD\"}"
             }
           }
         },
@@ -1290,6 +2344,177 @@
             ],
             "url": "{{baseUrl}}/api/v1/sales/orders/{{orderId}}/approve-return"
           }
+        },
+        {
+          "name": "🔎 Scan barcode",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/sales/pos/scan/SKU-XYZ",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🛒 POS place-order",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/pos/place-order",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"{{variantId}}\", \"qty\": 1}], \"paymentMethod\": \"COD\"}"
+            }
+          }
+        },
+        {
+          "name": "↩️ Return items",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/pos/orders/{{orderId}}/return",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"reason\": \"defect\", \"lines\": [{\"variantId\": \"{{variantId}}\", \"qty\": 1}]}"
+            }
+          }
+        },
+        {
+          "name": "✅ Complete draft",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/pos/orders/{{orderId}}/complete",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"paymentMethod\": \"CASH\"}"
+            }
+          }
+        },
+        {
+          "name": "❌ Cancel order",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/orders/{{orderId}}/cancel",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🏷️ Get promotion",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/sales/promotions/{{promotionId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "⏯️ Toggle promotion",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/sales/promotions/{{promotionId}}/toggle",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
         }
       ]
     },
@@ -1303,7 +2528,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -1321,7 +2546,7 @@
             "url": "{{baseUrl}}/api/v1/shop/cart/items?guestKey=g1",
             "body": {
               "mode": "raw",
-              "raw": "{\"variantId\": \"VARIANT_ID\", \"qty\": 1}"
+              "raw": "{\"variantId\": \"{{variantId}}\", \"qty\": 1}"
             }
           }
         },
@@ -1332,7 +2557,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -1350,7 +2575,7 @@
             "url": "{{baseUrl}}/api/v1/shop/checkout/price-preview",
             "body": {
               "mode": "raw",
-              "raw": "{\"lines\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}]}"
+              "raw": "{\"lines\": [{\"variantId\": \"{{variantId}}\", \"qty\": 1}]}"
             }
           }
         },
@@ -1361,7 +2586,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -1390,7 +2615,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -1408,9 +2633,37 @@
             "url": "{{baseUrl}}/api/v1/shop/checkout/place-order",
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"COD\"}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"{{variantId}}\", \"qty\": 1}], \"paymentMethod\": \"COD\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('orderId', data.id);",
+                  "})();"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var d = json && json.data; if (d && d.trackingNumber) pm.collectionVariables.set('trackingNumber', d.trackingNumber);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "📦 My orders",
@@ -1419,7 +2672,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "X-Api-Client",
@@ -1440,7 +2693,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "X-Api-Client",
@@ -1451,7 +2704,149 @@
                 "value": "{{clientKey}}"
               }
             ],
-            "url": "{{baseUrl}}/api/v1/shop/orders/track/TRK-XXXXXXXX"
+            "url": "{{baseUrl}}/api/v1/shop/orders/track/{{trackingNumber}}"
+          }
+        },
+        {
+          "name": "🛒 Get cart",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/shop/cart?guestKey=g1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "✏️ Set qty",
+          "request": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/api/v1/shop/cart/items?guestKey=g1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"variantId\": \"{{variantId}}\", \"qty\": 2}"
+            }
+          }
+        },
+        {
+          "name": "🧹 Clear cart",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/shop/cart/clear?guestKey=g1",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔀 Merge cart",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/shop/cart/merge",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"guestKey\": \"g1\"}"
+            }
+          }
+        },
+        {
+          "name": "🔍 Order by id",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/shop/orders/{{orderId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "💳 My payment intents",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/shop/checkout/payment-intents?orderId={{orderId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         }
       ]
@@ -1484,7 +2879,7 @@
             "url": "{{baseUrl}}/api/v1/crm/warranties/register",
             "body": {
               "mode": "raw",
-              "raw": "{\"invoiceId\": \"INVOICE_ID\"}"
+              "raw": "{\"invoiceId\": \"{{sinvoiceId}}\"}"
             }
           }
         },
@@ -1739,7 +3134,7 @@
             "url": "{{baseUrl}}/api/v1/portal/favorites",
             "body": {
               "mode": "raw",
-              "raw": "{\"productId\": \"PRODUCT_ID\"}"
+              "raw": "{\"productId\": \"{{productId}}\"}"
             }
           }
         },
@@ -1789,7 +3184,7 @@
             "url": "{{baseUrl}}/api/v1/portal/warranties/claims",
             "body": {
               "mode": "raw",
-              "raw": "{\"warrantyId\": \"WARRANTY_ID\", \"description\": \"Sagging middle\"}"
+              "raw": "{\"warrantyId\": \"{{warrantyId}}\", \"description\": \"Sagging middle\"}"
             }
           }
         },
@@ -1812,6 +3207,77 @@
               }
             ],
             "url": "{{baseUrl}}/api/v1/portal/warranties/claims"
+          }
+        },
+        {
+          "name": "📝 Register warranty",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/portal/warranties/register",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"serialNumber\": \"SN-0001\"}"
+            }
+          }
+        },
+        {
+          "name": "🗑️ Delete address",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/portal/addresses/{{addressId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "💔 Remove favorite",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/portal/favorites/{{productId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         }
       ]
@@ -1838,7 +3304,22 @@
               }
             ],
             "url": "{{baseUrl}}/api/v1/identity/branches"
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (data && data.length) pm.collectionVariables.set('branchId', data[0].id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "➕ Create branch",
@@ -1867,7 +3348,23 @@
               "mode": "raw",
               "raw": "{\"name\": \"Tanta Showroom\", \"code\": \"TAN-01\", \"city\": \"Tanta\", \"address\": \"Main St\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('branchId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "📋 List roles",
@@ -1938,7 +3435,23 @@
               "mode": "raw",
               "raw": "{\"fullName\": \"Ahmed Cashier\", \"phone\": \"01022222222\", \"password\": \"secret123\", \"roles\": [\"ROLE_CASHIER\"]}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('userId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "👔 Set roles",
@@ -1967,6 +3480,206 @@
               "mode": "raw",
               "raw": "{\"roles\": [\"ROLE_CASHIER\", \"ROLE_WAREHOUSE_KEEPER\"]}"
             }
+          }
+        },
+        {
+          "name": "🔍 Get branch",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/identity/branches/{{branchId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "⏻ Toggle branch",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/identity/branches/{{branchId}}/toggle",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "⏻ Toggle user",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/identity/access/users/{{userId}}/toggle",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🚚 Fleet vehicles",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/identity/fleet/vehicles",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🚚 Register vehicle",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/identity/fleet/vehicles",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"{{branchId}}\", \"plate\": \"ABC-1234\", \"kind\": \"VAN\", \"capacityKg\": 500}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('vehicleId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "🔍 Get vehicle",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/identity/fleet/vehicles/{{vehicleId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "✏️ Update vehicle",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/v1/identity/fleet/vehicles/{{vehicleId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"capacityKg\": 750}"
+            }
+          }
+        },
+        {
+          "name": "🗑️ Delete vehicle",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/identity/fleet/vehicles/{{vehicleId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         }
       ]
@@ -2024,7 +3737,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -2041,7 +3754,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"variantId\": \"VARIANT_ID\", \"qty\": -1}"
+              "raw": "{\"variantId\": \"{{variantId}}\", \"qty\": -1}"
             }
           }
         },
@@ -2053,7 +3766,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -2082,7 +3795,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -2099,7 +3812,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"INSTALLMENT\", \"downPayment\": 99999999, \"months\": 6}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"{{variantId}}\", \"qty\": 1}], \"paymentMethod\": \"INSTALLMENT\", \"downPayment\": 99999999, \"months\": 6}"
             }
           }
         },
@@ -2132,7 +3845,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 999999}], \"paymentMethod\": \"CASH\"}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"{{variantId}}\", \"qty\": 999999}], \"paymentMethod\": \"CASH\"}"
             }
           }
         },
@@ -2182,7 +3895,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{customerJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -2203,7 +3916,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"COD\"}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"items\": [{\"variantId\": \"{{variantId}}\", \"qty\": 1}], \"paymentMethod\": \"COD\"}"
             }
           }
         },
@@ -2356,7 +4069,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"supplierId\": \"SUPPLIER_ID\", \"branchId\": \"BRANCH_ID\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 10, \"unitCost\": 100}]}"
+              "raw": "{\"supplierId\": \"{{supplierId}}\", \"branchId\": \"{{branchId}}\", \"items\": [{\"variantId\": \"{{variantId}}\", \"qty\": 10, \"unitCost\": 100}]}"
             }
           },
           "event": [
@@ -2369,6 +4082,20 @@
                   "    var json; try { json = pm.response.json(); } catch (e) { return; }",
                   "    pm.test('success flag', function () { pm.expect(json.success).to.eql(true); });",
                   "    if (json.data.id !== undefined && json.data.id !== null) pm.collectionVariables.set('orderId', json.data.id);",
+                  "})();"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('orderId', data.id);",
                   "})();"
                 ]
               }
@@ -2429,7 +4156,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"warehouseId\": \"{{warehouseA}}\", \"lines\": [{\"variantId\": \"VARIANT_ID\", \"actualQty\": 6, \"damagedQty\": 1}]}"
+              "raw": "{\"warehouseId\": \"{{warehouseA}}\", \"lines\": [{\"variantId\": \"{{variantId}}\", \"actualQty\": 6, \"damagedQty\": 1}]}"
             }
           }
         },
@@ -2458,8 +4185,100 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"supplierId\": \"SUPPLIER_ID\", \"amount\": 200}"
+              "raw": "{\"supplierId\": \"{{supplierId}}\", \"amount\": 200}"
             }
+          }
+        },
+        {
+          "name": "📋 Suppliers",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/purchasing/suppliers",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔍 Get supplier",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/purchasing/suppliers/{{supplierId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "✏️ Update supplier",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/v1/purchasing/suppliers/{{supplierId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"phone\": \"01000000002\"}"
+            }
+          }
+        },
+        {
+          "name": "🔍 Get PO",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/purchasing/purchase-orders/{{orderId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         }
       ]
@@ -2492,7 +4311,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"driverId\": \"{{userId}}\", \"orderIds\": [\"{{orderId}}\"]}"
+              "raw": "{\"driverId\": \"{{driverId}}\", \"vehicleId\": \"{{vehicleId}}\", \"branchId\": \"{{branchId}}\", \"tripDate\": \"2026-10-07\", \"orderIds\": [\"{{orderId}}\"]}"
             }
           }
         },
@@ -2504,7 +4323,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{driverJwt}}"
               },
               {
                 "key": "X-Api-Client",
@@ -2525,7 +4344,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{driverJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -2542,7 +4361,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"proof\": \"photo-key-1\"}"
+              "raw": "{\"proofPhoto\": \"photo-key-1\"}"
             }
           }
         },
@@ -2554,7 +4373,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{driverJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -2571,8 +4390,121 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"reason\": \"closed\"}"
+              "raw": "{\"failReason\": \"closed\"}"
             }
+          }
+        },
+        {
+          "name": "🛑 Trip stops",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/delivery/trips/{{tripId}}/stops",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{driverJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔄 Stop status",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/delivery/stops/{{stopId}}/status",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{driverJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\": \"arrived\"}"
+            }
+          }
+        },
+        {
+          "name": "🚀 Dispatch trip",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/delivery/trips/{{tripId}}/dispatch",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "❌ Cancel trip",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/delivery/trips/{{tripId}}/cancel",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🏁 Complete trip",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/delivery/trips/{{tripId}}/complete",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{adminJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         }
       ]
@@ -2605,9 +4537,25 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"userId\": \"{{userId}}\", \"branchId\": \"BRANCH_ID\", \"jobTitle\": \"Sales\", \"baseSalary\": 10000}"
+              "raw": "{\"userId\": \"{{userId}}\", \"branchId\": \"{{branchId}}\", \"jobTitle\": \"Sales\", \"baseSalary\": 10000}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('employeeId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "📝 Leave request",
@@ -2636,13 +4584,29 @@
               "mode": "raw",
               "raw": "{\"type\": \"annual\", \"fromDate\": \"2026-10-01\", \"toDate\": \"2026-10-03\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('leaveId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "✅ Leave action",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/api/v1/hr/leaves/{{orderId}}/action",
+            "url": "{{baseUrl}}/api/v1/hr/leaves/{{leaveId}}/action",
             "header": [
               {
                 "key": "Authorization",
@@ -2663,7 +4627,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"approve\": true}"
+              "raw": "{\"action\": \"approve\"}"
             }
           }
         },
@@ -2692,15 +4656,31 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"month\": \"2026-09\"}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"month\": \"2026-09\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('payrollId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "✔️ Payroll approve",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/api/v1/hr/payroll/{{orderId}}/approve",
+            "url": "{{baseUrl}}/api/v1/hr/payroll/{{payrollId}}/approve",
             "header": [
               {
                 "key": "Authorization",
@@ -2745,6 +4725,261 @@
               }
             ]
           }
+        },
+        {
+          "name": "📋 Employees",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/hr/employees",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔍 Get employee",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/hr/employees/{{employeeId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📋 Leaves list",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/hr/leaves",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📝 Admin leave",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/hr/leaves",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"employeeId\": \"{{employeeId}}\", \"type\": \"annual\", \"fromDate\": \"2026-10-01\", \"toDate\": \"2026-10-03\"}"
+            }
+          }
+        },
+        {
+          "name": "📋 Commission rules",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/hr/commissions/rules",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "➕ Commission rule",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/hr/commissions/rules",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Mattress 5%\", \"kind\": \"PERCENT\", \"value\": 5}"
+            }
+          }
+        },
+        {
+          "name": "📋 Advances",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/hr/advances",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "➕ Advance",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/hr/advances",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"employeeId\": \"{{employeeId}}\", \"amount\": 1000}"
+            }
+          }
+        },
+        {
+          "name": "📋 Deductions",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/hr/deductions",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📄 Payroll export",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/hr/payroll/{{payrollId}}/export-excel",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "💰 My commissions",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/me/commissions",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
         }
       ]
     },
@@ -2759,7 +4994,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{accountantJwt}}"
               },
               {
                 "key": "X-Api-Client",
@@ -2780,7 +5015,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{accountantJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -2797,9 +5032,25 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"entryDate\": \"2026-09-20\", \"source\": \"MANUAL\", \"lines\": [{\"accountCode\": \"1010\", \"debit\": 1000}, {\"accountCode\": \"3010\", \"credit\": 1000}]}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"entryDate\": \"2026-09-20\", \"source\": \"MANUAL\", \"lines\": [{\"accountCode\": \"1010\", \"debit\": 1000}, {\"accountCode\": \"3010\", \"credit\": 1000}]}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('journalId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "📖 Ledger",
@@ -2809,7 +5060,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{accountantJwt}}"
               },
               {
                 "key": "X-Api-Client",
@@ -2830,7 +5081,7 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{accountantJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -2847,7 +5098,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"fromId\": \"TREASURY_A\", \"toId\": \"TREASURY_B\", \"amount\": 500}"
+              "raw": "{\"fromId\": \"{{treasuryA}}\", \"toId\": \"{{treasuryB}}\", \"amount\": 500}"
             }
           }
         },
@@ -2859,7 +5110,336 @@
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "➕ Account",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/accounting/chart-of-accounts",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"code\": \"1011\", \"nameAr\": \"خزينة فرعية\", \"type\": \"ASSET\"}"
+            }
+          }
+        },
+        {
+          "name": "🔍 Get account",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/accounting/chart-of-accounts/1010",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📝 Journals",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/accounting/journal-entries",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔍 Get journal",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/accounting/journal-entries/{{journalId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🏦 Treasuries",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/accounting/treasuries",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "➕ Treasury",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/accounting/treasuries",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"{{branchId}}\", \"name\": \"Main safe\", \"openingBalance\": 5000}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('treasuryA', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "💸 Expenses",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/accounting/expenses",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "➕ Expense",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/accounting/expenses",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"branchId\": \"{{branchId}}\", \"category\": \"Utilities\", \"amount\": 500}"
+            }
+          }
+        },
+        {
+          "name": "📑 Checks",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/accounting/checks",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "➕ Check",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/accounting/checks",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"direction\": \"out\", \"amount\": 1000, \"party\": \"Foam Co\"}"
+            }
+          }
+        },
+        {
+          "name": "🔄 Check status",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/accounting/checks/{{checkId}}/status",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"status\": \"CASHED\"}"
+            }
+          }
+        },
+        {
+          "name": "🧾 Tax report",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/accounting/reports/tax?from=2026-09-01&to=2026-09-30",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "⚖️ Balance sheet",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/accounting/reports/balance-sheet?at=2026-09-30",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accountantJwt}}"
               },
               {
                 "key": "X-Api-Client",
@@ -2984,13 +5564,29 @@
               "mode": "raw",
               "raw": "{\"productId\": \"{{productId}}\", \"rating\": 5, \"title\": \"Great\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('reviewId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "✅ Moderate review",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/api/v1/crm/reviews/{{orderId}}/moderate",
+            "url": "{{baseUrl}}/api/v1/crm/reviews/{{reviewId}}/moderate",
             "header": [
               {
                 "key": "Authorization",
@@ -3094,6 +5690,77 @@
               }
             ]
           }
+        },
+        {
+          "name": "❓ Ask Q&A",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/portal/reviews/qa",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"productId\": \"{{productId}}\", \"question\": \"Does it fit 160x200?\"}"
+            }
+          }
+        },
+        {
+          "name": "👍 Helpful vote",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/portal/reviews/{{reviewId}}/helpful",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "📝 My reviews",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/portal/reviews",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
         }
       ]
     },
@@ -3125,9 +5792,25 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"openingBalance\": 1000}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"openingBalance\": 1000}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('shiftId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "💧 Drop cash",
@@ -3154,7 +5837,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"shiftId\": \"SHIFT_ID\", \"amount\": 200}"
+              "raw": "{\"shiftId\": \"{{shiftId}}\", \"amount\": 200}"
             }
           }
         },
@@ -3183,7 +5866,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"shiftId\": \"SHIFT_ID\", \"actualCash\": 8800}"
+              "raw": "{\"shiftId\": \"{{shiftId}}\", \"actualCash\": 8800}"
             }
           }
         },
@@ -3340,6 +6023,27 @@
               "raw": "{\"note\": \"سأل عن مرتبة\", \"outcome\": \"price\"}"
             }
           }
+        },
+        {
+          "name": "🟢 Current shift",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/sales/pos/drawer/shift/current",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
         }
       ]
     },
@@ -3450,7 +6154,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"items\": [{\"variantId\": \"VARIANT_ID\", \"qty\": 1}], \"paymentMethod\": \"COD\", \"redeemPoints\": 100}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"items\": [{\"variantId\": \"{{variantId}}\", \"qty\": 1}], \"paymentMethod\": \"COD\", \"redeemPoints\": 100}"
             }
           }
         }
@@ -3486,7 +6190,23 @@
               "mode": "raw",
               "raw": "{\"orderId\": \"{{orderId}}\", \"gateway\": \"fake\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.providerRef) pm.collectionVariables.set('providerRef', data.providerRef);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "📨 Fake callback",
@@ -3505,13 +6225,32 @@
               {
                 "key": "X-Api-Key",
                 "value": "{{clientKey}}"
+              },
+              {
+                "key": "X-Fake-Signature",
+                "value": "{{fakeSignature}}",
+                "description": "HMAC-SHA256(provider_ref, FAKE_SECRET default dev-secret)"
               }
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"provider_ref\": \"fake_REF\", \"success\": true, \"amount\": 8000}"
+              "raw": "{\"provider_ref\": \"{{providerRef}}\", \"success\": true, \"amount\": 1500}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// fake-gateway signature: HMAC-SHA256(providerRef, 'dev-secret' unless FAKE_SECRET set)",
+                  "var ref = pm.collectionVariables.get('providerRef') || 'fake_REF';",
+                  "var sig = CryptoJS.HmacSHA256(ref, 'dev-secret').toString(CryptoJS.enc.Hex);",
+                  "pm.collectionVariables.set('fakeSignature', sig);"
+                ]
+              }
+            }
+          ]
         }
       ]
     },
@@ -3522,11 +6261,11 @@
           "name": "📌 Pin stop",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/api/v1/delivery/stops/STOP_ID/pin",
+            "url": "{{baseUrl}}/api/v1/delivery/stops/{{stopId}}/pin",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{adminJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -3551,11 +6290,11 @@
           "name": "🧭 Optimize trip",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/api/v1/delivery/trips/TRIP_ID/optimize",
+            "url": "{{baseUrl}}/api/v1/delivery/trips/{{tripId}}/optimize",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{adminJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -3576,11 +6315,11 @@
           "name": "📡 Push location",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/api/v1/delivery/trips/TRIP_ID/location",
+            "url": "{{baseUrl}}/api/v1/delivery/trips/{{tripId}}/location",
             "header": [
               {
                 "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
+                "value": "Bearer {{driverJwt}}"
               },
               {
                 "key": "Content-Type",
@@ -3605,7 +6344,7 @@
           "name": "👁️ Live location (customer)",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/v1/shop/orders/track/TRK-XXXX/location",
+            "url": "{{baseUrl}}/api/v1/shop/orders/track/{{trackingNumber}}/location",
             "header": [
               {
                 "key": "Authorization",
@@ -3679,6 +6418,31 @@
               }
             ]
           }
+        },
+        {
+          "name": "🌀 Estimator quote",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/estimator/quote",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"productId\": \"{{productId}}\", \"shape\": \"OVAL\", \"widthCm\": 160, \"lengthCm\": 200, \"heightCm\": 25, \"qty\": 1}"
+            }
+          }
         }
       ]
     },
@@ -3735,7 +6499,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"productId\": \"PRODUCT_ID\", \"shape\": \"rect\", \"widthCm\": 120, \"lengthCm\": 200, \"qty\": 1, \"paymentMethod\": \"TRANSFER\", \"downPayment\": 4000}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"productId\": \"{{productId}}\", \"shape\": \"rect\", \"widthCm\": 120, \"lengthCm\": 200, \"qty\": 1, \"paymentMethod\": \"TRANSFER\", \"downPayment\": 4000}"
             }
           }
         },
@@ -3793,15 +6557,31 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"BRANCH_ID\", \"guestPhone\": \"01000000001\", \"variantId\": \"VARIANT_ID\", \"qty\": 1, \"deposit\": 2000}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"variantId\": \"{{variantId}}\", \"qty\": 1, \"deposit\": 2000}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('reservationId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "💰 Pay reservation",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/api/v1/sales/pos/reservations/RES_ID/pay",
+            "url": "{{baseUrl}}/api/v1/sales/pos/reservations/{{reservationId}}/pay",
             "header": [
               {
                 "key": "Authorization",
@@ -3830,7 +6610,7 @@
           "name": "✅ Fulfill reservation",
           "request": {
             "method": "POST",
-            "url": "{{baseUrl}}/api/v1/sales/pos/reservations/RES_ID/fulfill",
+            "url": "{{baseUrl}}/api/v1/sales/pos/reservations/{{reservationId}}/fulfill",
             "header": [
               {
                 "key": "Authorization",
@@ -3855,7 +6635,7 @@
           "name": "🔍 Reservation details",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/v1/sales/pos/reservations/RES_ID",
+            "url": "{{baseUrl}}/api/v1/sales/pos/reservations/{{reservationId}}",
             "header": [
               {
                 "key": "Authorization",
@@ -4438,6 +7218,156 @@
                 "value": "Bearer {{managerJwt}}"
               }
             ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "🌀 Estimator & Spin",
+      "item": [
+        {
+          "name": "📋 Spin campaigns",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/estimator/spin/campaigns",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "➕ Spin campaign",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/estimator/spin/campaigns",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Eid wheel\", \"isActive\": true}"
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    var data = json && json.data;",
+                  "    if (!data) return;",
+                  "    if (data.id) pm.collectionVariables.set('campaignId', data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "⏯️ Toggle campaign",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/estimator/spin/campaigns/{{campaignId}}/toggle",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🎁 Add prize",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/estimator/spin/campaigns/{{campaignId}}/prizes",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"label\": \"10% off\", \"kind\": \"PERCENT\", \"value\": 10}"
+            }
+          }
+        },
+        {
+          "name": "🎰 Spin (customer)",
+          "request": {
+            "method": "POST",
+            "url": "{{baseUrl}}/api/v1/estimator/spin",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{customerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            }
           }
         }
       ]

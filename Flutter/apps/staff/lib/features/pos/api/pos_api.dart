@@ -25,7 +25,9 @@ class PosApi {
   );
 
   Future<CompletedOrder> completeSale({
-    required List<TicketLine> lines, required PaymentMethod paymentMethod, String? branchId,
+    required List<TicketLine> lines,
+    required PaymentMethod paymentMethod,
+    String? branchId,
     String? guestPhone,
     double paidAmount = 0,
   }) => ApiExecutor.call(

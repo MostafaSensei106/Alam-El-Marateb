@@ -5,9 +5,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:toastification/toastification.dart';
 
-
-
-
 class ConnectivityBanner extends HookWidget {
   const ConnectivityBanner({required this.child, super.key});
 

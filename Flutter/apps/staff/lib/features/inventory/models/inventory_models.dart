@@ -14,7 +14,9 @@ double _money(Object? value) => switch (value) {
 
 class Warehouse {
   const Warehouse({
-    required this.name, required this.code, this.id,
+    required this.name,
+    required this.code,
+    this.id,
     this.branchId,
     this.isActive = true,
   });
@@ -69,7 +71,10 @@ class TransferLine {
 
 class StockTransfer {
   const StockTransfer({
-    required this.fromWarehouseId, required this.toWarehouseId, required this.status, this.id,
+    required this.fromWarehouseId,
+    required this.toWarehouseId,
+    required this.status,
+    this.id,
     this.note,
     this.items = const <TransferItem>[],
   });
@@ -120,7 +125,8 @@ class TransferItem {
 /// One FIFO cost layer: GET /inventory/batches item.
 class InventoryBatch {
   const InventoryBatch({
-    required this.batchNo, this.id,
+    required this.batchNo,
+    this.id,
     this.variantId,
     this.warehouseId,
     this.qtyReceived = 0,

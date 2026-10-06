@@ -36,7 +36,8 @@ class PricingApi {
     required String supplierId,
     required String sheetNo,
     required String validFrom,
-    required List<SheetLineInput> lines, String? validUntil,
+    required List<SheetLineInput> lines,
+    String? validUntil,
   }) => ApiExecutor.call(
     () => _dio.post<dynamic>(
       sheetsPath,

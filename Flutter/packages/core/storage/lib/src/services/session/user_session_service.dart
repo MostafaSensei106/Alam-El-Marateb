@@ -1,7 +1,5 @@
 import 'package:core_utils/core_utils.dart';
 
-
-
 import '../shared_prefs/base_pref_storage_service.dart';
 import 'session_auth_notifier.dart';
 

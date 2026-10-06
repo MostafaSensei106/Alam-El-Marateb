@@ -19,7 +19,8 @@ class PreviewLine {
 
 class CartItem {
   const CartItem({
-    required this.variantId, this.id,
+    required this.variantId,
+    this.id,
     this.qty = 1,
     this.unitPrice = 0,
   });

@@ -13,7 +13,10 @@ int _int(Object? value) => switch (value) {
 /// GET /catalog/public/products[*] item.
 class StoreProduct {
   const StoreProduct({
-    required this.name, required this.slug, required this.brand, this.id,
+    required this.name,
+    required this.slug,
+    required this.brand,
+    this.id,
     this.description,
     this.warrantyYears,
     this.variants = const <ProductVariant>[],
@@ -48,7 +51,8 @@ class StoreProduct {
 /// Product variant (sellable dimension).
 class ProductVariant {
   const ProductVariant({
-    required this.sku, this.id,
+    required this.sku,
+    this.id,
     this.barcode,
     this.widthCm = 0,
     this.lengthCm = 0,

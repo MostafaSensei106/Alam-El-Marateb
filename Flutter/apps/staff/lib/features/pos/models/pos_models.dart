@@ -4,7 +4,8 @@ import '../../catalog/models/catalog_models.dart';
 /// POST /sales/pos/scan/{barcode} result.
 class ScannedItem {
   const ScannedItem({
-    required this.sku, this.variantId,
+    required this.sku,
+    this.variantId,
     this.productId,
     this.barcode,
     this.dimensions,
@@ -45,7 +46,9 @@ class TicketLine {
 /// POST /sales/pos/complete-sale result.
 class CompletedOrder {
   const CompletedOrder({
-    required this.status, required this.grandTotal, this.id,
+    required this.status,
+    required this.grandTotal,
+    this.id,
     this.trackingNumber,
   });
 

@@ -29,7 +29,9 @@ class CartApi {
   );
 
   Future<CartView> addItem({
-    required String variantId, required int qty, String? guestKey,
+    required String variantId,
+    required int qty,
+    String? guestKey,
   }) => ApiExecutor.call(
     () => _dio.post<dynamic>(
       cartItemsPath,
@@ -54,7 +56,9 @@ class CartApi {
   );
 
   Future<PlacedShopOrder> placeOrder({
-    required List<PreviewLine> items, required String paymentMethod, String? branchId,
+    required List<PreviewLine> items,
+    required String paymentMethod,
+    String? branchId,
     String? guestPhone,
     String? guestKey,
     int? redeemPoints,

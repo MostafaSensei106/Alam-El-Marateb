@@ -14,24 +14,16 @@ import 'base_file_manager_facade.dart';
 
 @Injectable(as: BaseFileManagerFacade)
 final class FileManagerFacade implements BaseFileManagerFacade {
-  const FileManagerFacade(
-    this._attachmentHandler, {
-    this.onInfo,
-    this.onError,
-  });
+  const FileManagerFacade(this._attachmentHandler, {this.onInfo, this.onError});
 
   final BaseAttachmentHandlerService _attachmentHandler;
 
   /// UI feedback hooks (dialogs live in design_system — this package
   /// must not depend on widgets, so hosts inject the presentation).
-  final Future<void> Function({
-    required String title,
-    required String body,
-  })? onInfo;
-  final Future<void> Function({
-    required String title,
-    required String error,
-  })? onError;
+  final Future<void> Function({required String title, required String body})?
+  onInfo;
+  final Future<void> Function({required String title, required String error})?
+  onError;
 
   @override
   Future<void> downloadAndSaveFile({
