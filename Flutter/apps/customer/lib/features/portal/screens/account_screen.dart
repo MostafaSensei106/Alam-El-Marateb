@@ -101,10 +101,7 @@ class _AccountScreenState extends State<AccountScreen> {
           const Divider(),
           const Text('Loyalty ledger'),
           for (final e in _ledger)
-            ListTile(
-              title: Text('${e.points}'),
-              subtitle: Text(e.reason),
-            ),
+            ListTile(title: Text('${e.points}'), subtitle: Text(e.reason)),
           if (_message != null) Text(_message!),
         ],
       ),

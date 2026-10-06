@@ -19,8 +19,7 @@ class PreviewLine {
 
 class CartItem {
   const CartItem({
-    this.id,
-    required this.variantId,
+    required this.variantId, this.id,
     this.qty = 1,
     this.unitPrice = 0,
   });
@@ -113,11 +112,7 @@ class ShopOrder {
 }
 
 class TrackingInfo {
-  const TrackingInfo({
-    this.trackingNumber,
-    this.status = '',
-    this.driverName,
-  });
+  const TrackingInfo({this.trackingNumber, this.status = '', this.driverName});
 
   factory TrackingInfo.fromJson(Map<String, dynamic> json) => TrackingInfo(
     trackingNumber: json['trackingNumber']?.toString(),

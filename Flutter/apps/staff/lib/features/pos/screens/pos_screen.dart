@@ -90,7 +90,8 @@ class _PosScreenState extends State<PosScreen> {
         paidAmount: _total,
       );
       setState(() {
-        _message = 'Sold ${order.trackingNumber ?? order.id} — ${order.grandTotal}';
+        _message =
+            'Sold ${order.trackingNumber ?? order.id} — ${order.grandTotal}';
         _ticket.clear();
       });
     } on Exception catch (e) {
@@ -139,12 +140,7 @@ class _PosScreenState extends State<PosScreen> {
             DropdownButton<PaymentMethod>(
               value: _method,
               items: PaymentMethod.values
-                  .map(
-                    (m) => DropdownMenuItem(
-                      value: m,
-                      child: Text(m.value),
-                    ),
-                  )
+                  .map((m) => DropdownMenuItem(value: m, child: Text(m.value)))
                   .toList(),
               onChanged: (m) => setState(() => _method = m ?? _method),
             ),
@@ -159,9 +155,7 @@ class _PosScreenState extends State<PosScreen> {
                       '${line.variant.dimensionsLabel} × ${line.qty}',
                     ),
                     trailing: Text('${line.lineTotal}'),
-                    onLongPress: () => setState(
-                      () => _ticket.removeAt(i),
-                    ),
+                    onLongPress: () => setState(() => _ticket.removeAt(i)),
                   );
                 },
               ),

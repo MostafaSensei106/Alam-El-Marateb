@@ -78,11 +78,8 @@ class _CatalogScreenState extends State<CatalogScreen> {
                     final p = items[i];
                     return ListTile(
                       title: Text(p.name),
-                      subtitle: Text(
-                        '${p.brand} • ${p.variants.length} sizes',
-                      ),
-                      onTap: () =>
-                          context.go('/home/product/${p.slug}'),
+                      subtitle: Text('${p.brand} • ${p.variants.length} sizes'),
+                      onTap: () => context.go('/home/product/${p.slug}'),
                     );
                   },
                 );

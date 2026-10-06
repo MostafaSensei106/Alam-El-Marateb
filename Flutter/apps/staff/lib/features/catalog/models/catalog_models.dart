@@ -13,10 +13,7 @@ int _int(Object? value) => switch (value) {
 /// GET /catalog/public/products[*] item.
 class StoreProduct {
   const StoreProduct({
-    this.id,
-    required this.name,
-    required this.slug,
-    required this.brand,
+    required this.name, required this.slug, required this.brand, this.id,
     this.description,
     this.warrantyYears,
     this.variants = const <ProductVariant>[],
@@ -51,8 +48,7 @@ class StoreProduct {
 /// Product variant (sellable dimension).
 class ProductVariant {
   const ProductVariant({
-    this.id,
-    required this.sku,
+    required this.sku, this.id,
     this.barcode,
     this.widthCm = 0,
     this.lengthCm = 0,
@@ -60,16 +56,15 @@ class ProductVariant {
     this.sellingPrice = 0,
   });
 
-  factory ProductVariant.fromJson(Map<String, dynamic> json) =>
-      ProductVariant(
-        id: json['id']?.toString(),
-        sku: json['sku']?.toString() ?? '',
-        barcode: json['barcode']?.toString(),
-        widthCm: _int(json['widthCm']),
-        lengthCm: _int(json['lengthCm']),
-        heightCm: _int(json['heightCm']),
-        sellingPrice: _money(json['sellingPrice']),
-      );
+  factory ProductVariant.fromJson(Map<String, dynamic> json) => ProductVariant(
+    id: json['id']?.toString(),
+    sku: json['sku']?.toString() ?? '',
+    barcode: json['barcode']?.toString(),
+    widthCm: _int(json['widthCm']),
+    lengthCm: _int(json['lengthCm']),
+    heightCm: _int(json['heightCm']),
+    sellingPrice: _money(json['sellingPrice']),
+  );
 
   final String? id;
   final String sku;

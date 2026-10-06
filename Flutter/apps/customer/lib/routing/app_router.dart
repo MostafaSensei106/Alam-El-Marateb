@@ -28,8 +28,8 @@ class CustomerRouter {
       if (!_authState.isReady) {
         return splash;
       }
-      final public = state.matchedLocation == login ||
-          state.matchedLocation == register;
+      final public =
+          state.matchedLocation == login || state.matchedLocation == register;
       if (!_authState.isLoggedIn) {
         return public ? null : login;
       }
@@ -39,14 +39,8 @@ class CustomerRouter {
       return null;
     },
     routes: <RouteBase>[
-      GoRoute(
-        path: splash,
-        builder: (context, state) => const SplashPage(),
-      ),
-      GoRoute(
-        path: login,
-        builder: (context, state) => const LoginScreen(),
-      ),
+      GoRoute(path: splash, builder: (context, state) => const SplashPage()),
+      GoRoute(path: login, builder: (context, state) => const LoginScreen()),
       GoRoute(
         path: register,
         builder: (context, state) => const RegisterScreen(),
@@ -105,9 +99,7 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
-    );
+    return const Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }
 
@@ -131,10 +123,7 @@ class CustomerShell extends StatelessWidget {
             icon: Icon(Icons.shopping_cart),
             label: 'Cart',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.receipt),
-            label: 'Orders',
-          ),
+          BottomNavigationBarItem(icon: Icon(Icons.receipt), label: 'Orders'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
         ],
       ),

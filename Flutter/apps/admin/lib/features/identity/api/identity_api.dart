@@ -29,12 +29,15 @@ class IdentityApi {
     required String password,
     List<String> roles = const <String>[],
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(usersPath, data: <String, dynamic>{
-      'fullName': fullName,
-      'phone': phone,
-      'password': password,
-      'roles': roles,
-    }),
+    () => _dio.post<dynamic>(
+      usersPath,
+      data: <String, dynamic>{
+        'fullName': fullName,
+        'phone': phone,
+        'password': password,
+        'roles': roles,
+      },
+    ),
     (json) => ManagedUser.fromJson(json as Map<String, dynamic>),
   );
 
@@ -42,9 +45,10 @@ class IdentityApi {
     required String userId,
     required List<String> roles,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(userRolesPath(userId), data: <String, dynamic>{
-      'roles': roles,
-    }),
+    () => _dio.post<dynamic>(
+      userRolesPath(userId),
+      data: <String, dynamic>{'roles': roles},
+    ),
     (_) {},
   );
 }

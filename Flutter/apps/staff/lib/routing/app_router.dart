@@ -48,14 +48,8 @@ class StaffRouter {
       return null;
     },
     routes: <RouteBase>[
-      GoRoute(
-        path: splash,
-        builder: (context, state) => const SplashPage(),
-      ),
-      GoRoute(
-        path: login,
-        builder: (context, state) => const LoginScreen(),
-      ),
+      GoRoute(path: splash, builder: (context, state) => const SplashPage()),
+      GoRoute(path: login, builder: (context, state) => const LoginScreen()),
       GoRoute(
         path: home,
         builder: (context, state) => const StaffHomeScreen(),
@@ -64,10 +58,7 @@ class StaffRouter {
             path: 'catalog',
             builder: (context, state) => const CatalogScreen(),
           ),
-          GoRoute(
-            path: 'pos',
-            builder: (context, state) => const PosScreen(),
-          ),
+          GoRoute(path: 'pos', builder: (context, state) => const PosScreen()),
           GoRoute(
             path: 'shifts',
             builder: (context, state) => const ShiftScreen(),
@@ -109,9 +100,7 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
-    );
+    return const Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }
 

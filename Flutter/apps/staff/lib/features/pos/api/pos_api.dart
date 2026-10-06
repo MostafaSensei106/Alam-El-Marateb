@@ -25,26 +25,24 @@ class PosApi {
   );
 
   Future<CompletedOrder> completeSale({
-    String? branchId,
+    required List<TicketLine> lines, required PaymentMethod paymentMethod, String? branchId,
     String? guestPhone,
-    required List<TicketLine> lines,
-    required PaymentMethod paymentMethod,
     double paidAmount = 0,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(completeSalePath, data: <String, dynamic>{
-      'branchId': ?branchId,
-      'guestPhone': ?guestPhone,
-      'items': lines
-          .map(
-            (l) => <String, dynamic>{
-              'variantId': l.variantId,
-              'qty': l.qty,
-            },
-          )
-          .toList(),
-      'paymentMethod': paymentMethod.value,
-      if (paidAmount > 0) 'paidAmount': paidAmount,
-    }),
+    () => _dio.post<dynamic>(
+      completeSalePath,
+      data: <String, dynamic>{
+        'branchId': ?branchId,
+        'guestPhone': ?guestPhone,
+        'items': lines
+            .map(
+              (l) => <String, dynamic>{'variantId': l.variantId, 'qty': l.qty},
+            )
+            .toList(),
+        'paymentMethod': paymentMethod.value,
+        if (paidAmount > 0) 'paidAmount': paidAmount,
+      },
+    ),
     (json) => CompletedOrder.fromJson(json as Map<String, dynamic>),
   );
 }

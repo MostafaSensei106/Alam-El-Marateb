@@ -29,11 +29,14 @@ class FinanceApi {
     required String shipmentNo,
     String? arrivedAt,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(shipmentsPath, data: <String, dynamic>{
-      'supplierId': supplierId,
-      'shipmentNo': shipmentNo,
-      'arrivedAt': ?arrivedAt,
-    }),
+    () => _dio.post<dynamic>(
+      shipmentsPath,
+      data: <String, dynamic>{
+        'supplierId': supplierId,
+        'shipmentNo': shipmentNo,
+        'arrivedAt': ?arrivedAt,
+      },
+    ),
     (json) => Shipment.fromJson(json as Map<String, dynamic>),
   );
 
@@ -44,20 +47,23 @@ class FinanceApi {
     String? issuedAt,
     List<InstallmentInput> installments = const <InstallmentInput>[],
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(invoicesPath, data: <String, dynamic>{
-      'supplierId': supplierId,
-      'invoiceNo': invoiceNo,
-      'total': total,
-      'issuedAt': ?issuedAt,
-      'installments': installments
-          .map(
-            (i) => <String, dynamic>{
-              'amount': i.amount,
-              'dueDate': i.dueDate,
-            },
-          )
-          .toList(),
-    }),
+    () => _dio.post<dynamic>(
+      invoicesPath,
+      data: <String, dynamic>{
+        'supplierId': supplierId,
+        'invoiceNo': invoiceNo,
+        'total': total,
+        'issuedAt': ?issuedAt,
+        'installments': installments
+            .map(
+              (i) => <String, dynamic>{
+                'amount': i.amount,
+                'dueDate': i.dueDate,
+              },
+            )
+            .toList(),
+      },
+    ),
     (json) => SupplierInvoice.fromJson(json as Map<String, dynamic>),
   );
 
@@ -66,10 +72,10 @@ class FinanceApi {
     required String shipmentId,
     required double amount,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(allocatePath(invoiceId), data: <String, dynamic>{
-      'shipmentId': shipmentId,
-      'amount': amount,
-    }),
+    () => _dio.post<dynamic>(
+      allocatePath(invoiceId),
+      data: <String, dynamic>{'shipmentId': shipmentId, 'amount': amount},
+    ),
     (_) {},
   );
 
@@ -79,11 +85,14 @@ class FinanceApi {
     String method = 'CASH',
     String? installmentId,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(payPath(invoiceId), data: <String, dynamic>{
-      'amount': amount,
-      'method': method,
-      'installmentId': ?installmentId,
-    }),
+    () => _dio.post<dynamic>(
+      payPath(invoiceId),
+      data: <String, dynamic>{
+        'amount': amount,
+        'method': method,
+        'installmentId': ?installmentId,
+      },
+    ),
     (json) => SupplierInvoice.fromJson(json as Map<String, dynamic>),
   );
 

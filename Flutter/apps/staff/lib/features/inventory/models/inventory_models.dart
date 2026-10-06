@@ -14,10 +14,8 @@ double _money(Object? value) => switch (value) {
 
 class Warehouse {
   const Warehouse({
-    this.id,
+    required this.name, required this.code, this.id,
     this.branchId,
-    required this.name,
-    required this.code,
     this.isActive = true,
   });
 
@@ -71,28 +69,24 @@ class TransferLine {
 
 class StockTransfer {
   const StockTransfer({
-    this.id,
-    required this.fromWarehouseId,
-    required this.toWarehouseId,
-    required this.status,
+    required this.fromWarehouseId, required this.toWarehouseId, required this.status, this.id,
     this.note,
     this.items = const <TransferItem>[],
   });
 
-  factory StockTransfer.fromJson(Map<String, dynamic> json) =>
-      StockTransfer(
-        id: json['id']?.toString(),
-        fromWarehouseId: json['fromWarehouseId']?.toString() ?? '',
-        toWarehouseId: json['toWarehouseId']?.toString() ?? '',
-        status: TransferStatus.fromValue(json['status']?.toString()),
-        note: json['note']?.toString(),
-        items: json['items'] is List
-            ? (json['items'] as List)
-                  .whereType<Map<String, dynamic>>()
-                  .map(TransferItem.fromJson)
-                  .toList()
-            : const <TransferItem>[],
-      );
+  factory StockTransfer.fromJson(Map<String, dynamic> json) => StockTransfer(
+    id: json['id']?.toString(),
+    fromWarehouseId: json['fromWarehouseId']?.toString() ?? '',
+    toWarehouseId: json['toWarehouseId']?.toString() ?? '',
+    status: TransferStatus.fromValue(json['status']?.toString()),
+    note: json['note']?.toString(),
+    items: json['items'] is List
+        ? (json['items'] as List)
+              .whereType<Map<String, dynamic>>()
+              .map(TransferItem.fromJson)
+              .toList()
+        : const <TransferItem>[],
+  );
 
   final String? id;
   final String fromWarehouseId;
@@ -126,8 +120,7 @@ class TransferItem {
 /// One FIFO cost layer: GET /inventory/batches item.
 class InventoryBatch {
   const InventoryBatch({
-    this.id,
-    required this.batchNo,
+    required this.batchNo, this.id,
     this.variantId,
     this.warehouseId,
     this.qtyReceived = 0,
@@ -139,26 +132,25 @@ class InventoryBatch {
     this.potentialProfit,
   });
 
-  factory InventoryBatch.fromJson(Map<String, dynamic> json) =>
-      InventoryBatch(
-        id: json['id']?.toString(),
-        batchNo: json['batchNo']?.toString() ?? '',
-        variantId: json['variantId']?.toString(),
-        warehouseId: json['warehouseId']?.toString(),
-        qtyReceived: _int(json['qtyReceived']),
-        qtyRemaining: _int(json['qtyRemaining']),
-        unitCost: _money(json['unitCost']),
-        landedUnitCost: _money(json['landedUnitCost']),
-        currentSelling: json['currentSelling'] == null
-            ? null
-            : _money(json['currentSelling']),
-        potentialRevenue: json['potentialRevenue'] == null
-            ? null
-            : _money(json['potentialRevenue']),
-        potentialProfit: json['potentialProfit'] == null
-            ? null
-            : _money(json['potentialProfit']),
-      );
+  factory InventoryBatch.fromJson(Map<String, dynamic> json) => InventoryBatch(
+    id: json['id']?.toString(),
+    batchNo: json['batchNo']?.toString() ?? '',
+    variantId: json['variantId']?.toString(),
+    warehouseId: json['warehouseId']?.toString(),
+    qtyReceived: _int(json['qtyReceived']),
+    qtyRemaining: _int(json['qtyRemaining']),
+    unitCost: _money(json['unitCost']),
+    landedUnitCost: _money(json['landedUnitCost']),
+    currentSelling: json['currentSelling'] == null
+        ? null
+        : _money(json['currentSelling']),
+    potentialRevenue: json['potentialRevenue'] == null
+        ? null
+        : _money(json['potentialRevenue']),
+    potentialProfit: json['potentialProfit'] == null
+        ? null
+        : _money(json['potentialProfit']),
+  );
 
   final String? id;
   final String batchNo;
@@ -184,15 +176,14 @@ class BatchValuation {
     this.potentialProfitNet = 0,
   });
 
-  factory BatchValuation.fromJson(Map<String, dynamic> json) =>
-      BatchValuation(
-        inventoryCost: _money(json['inventoryCost']),
-        inventoryNetCost: _money(json['inventoryNetCost']),
-        landedAdded: _money(json['landedAdded']),
-        potentialRevenue: _money(json['potentialRevenue']),
-        potentialProfit: _money(json['potentialProfit']),
-        potentialProfitNet: _money(json['potentialProfitNet']),
-      );
+  factory BatchValuation.fromJson(Map<String, dynamic> json) => BatchValuation(
+    inventoryCost: _money(json['inventoryCost']),
+    inventoryNetCost: _money(json['inventoryNetCost']),
+    landedAdded: _money(json['landedAdded']),
+    potentialRevenue: _money(json['potentialRevenue']),
+    potentialProfit: _money(json['potentialProfit']),
+    potentialProfitNet: _money(json['potentialProfitNet']),
+  );
 
   final double inventoryCost;
   final double inventoryNetCost;

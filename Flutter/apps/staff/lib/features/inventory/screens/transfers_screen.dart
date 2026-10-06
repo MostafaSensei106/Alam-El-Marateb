@@ -62,9 +62,7 @@ class _TransfersScreenState extends State<TransfersScreen> {
           children: [
             TextField(
               controller: _from,
-              decoration: const InputDecoration(
-                labelText: 'From warehouse ID',
-              ),
+              decoration: const InputDecoration(labelText: 'From warehouse ID'),
             ),
             TextField(
               controller: _to,
@@ -106,9 +104,8 @@ class _TransfersScreenState extends State<TransfersScreen> {
                 ElevatedButton(
                   onPressed: _busy
                       ? null
-                      : () => _run(
-                          () => _api.dispatch(_transferId.text.trim()),
-                        ),
+                      : () =>
+                            _run(() => _api.dispatch(_transferId.text.trim())),
                   child: const Text('Dispatch'),
                 ),
                 ElevatedButton(
@@ -130,9 +127,7 @@ class _TransfersScreenState extends State<TransfersScreen> {
                 ElevatedButton(
                   onPressed: _busy
                       ? null
-                      : () => _run(
-                          () => _api.approve(_transferId.text.trim()),
-                        ),
+                      : () => _run(() => _api.approve(_transferId.text.trim())),
                   child: const Text('Approve'),
                 ),
               ],

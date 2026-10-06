@@ -57,10 +57,7 @@ class _WarrantyScreenState extends State<WarrantyScreen> {
               decoration: const InputDecoration(labelText: 'Serial number'),
               onSubmitted: (_) => _lookup(),
             ),
-            ElevatedButton(
-              onPressed: _lookup,
-              child: const Text('Lookup'),
-            ),
+            ElevatedButton(onPressed: _lookup, child: const Text('Lookup')),
             if (_message != null) Text(_message!),
             if (warranty != null)
               Card(

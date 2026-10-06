@@ -12,8 +12,7 @@ class CartApi {
   static const String cartItemsPath = '/api/v1/shop/cart/items';
   static const String cartPath = '/api/v1/shop/cart';
   static const String previewPath = '/api/v1/shop/checkout/price-preview';
-  static const String estimatePath =
-      '/api/v1/shop/checkout/estimate-shipping';
+  static const String estimatePath = '/api/v1/shop/checkout/estimate-shipping';
   static const String placeOrderPath = '/api/v1/shop/checkout/place-order';
   static const String myOrdersPath = '/api/v1/shop/orders';
 
@@ -24,64 +23,51 @@ class CartApi {
   Future<CartView> cart({String? guestKey}) => ApiExecutor.call(
     () => _dio.get<dynamic>(
       cartPath,
-      queryParameters: <String, dynamic>{
-        'guestKey': ?guestKey,
-      },
+      queryParameters: <String, dynamic>{'guestKey': ?guestKey},
     ),
     (json) => CartView.fromJson(json as Map<String, dynamic>),
   );
 
   Future<CartView> addItem({
-    String? guestKey,
-    required String variantId,
-    required int qty,
+    required String variantId, required int qty, String? guestKey,
   }) => ApiExecutor.call(
     () => _dio.post<dynamic>(
       cartItemsPath,
-      queryParameters: <String, dynamic>{
-        'guestKey': ?guestKey,
-      },
+      queryParameters: <String, dynamic>{'guestKey': ?guestKey},
       data: <String, dynamic>{'variantId': variantId, 'qty': qty},
     ),
     (json) => CartView.fromJson(json as Map<String, dynamic>),
   );
 
   Future<PricePreview> preview(List<PreviewLine> lines) => ApiExecutor.call(
-    () => _dio.post<dynamic>(previewPath, data: <String, dynamic>{
-      'lines': lines
-          .map(
-            (l) => <String, dynamic>{
-              'variantId': l.variantId,
-              'qty': l.qty,
-            },
-          )
-          .toList(),
-    }),
+    () => _dio.post<dynamic>(
+      previewPath,
+      data: <String, dynamic>{
+        'lines': lines
+            .map(
+              (l) => <String, dynamic>{'variantId': l.variantId, 'qty': l.qty},
+            )
+            .toList(),
+      },
+    ),
     (json) => PricePreview.fromJson(json as Map<String, dynamic>),
   );
 
   Future<PlacedShopOrder> placeOrder({
-    String? branchId,
+    required List<PreviewLine> items, required String paymentMethod, String? branchId,
     String? guestPhone,
     String? guestKey,
-    required List<PreviewLine> items,
-    required String paymentMethod,
     int? redeemPoints,
   }) => ApiExecutor.call(
     () => _dio.post<dynamic>(
       placeOrderPath,
-      queryParameters: <String, dynamic>{
-        'guestKey': ?guestKey,
-      },
+      queryParameters: <String, dynamic>{'guestKey': ?guestKey},
       data: <String, dynamic>{
         'branchId': ?branchId,
         'guestPhone': ?guestPhone,
         'items': items
             .map(
-              (l) => <String, dynamic>{
-                'variantId': l.variantId,
-                'qty': l.qty,
-              },
+              (l) => <String, dynamic>{'variantId': l.variantId, 'qty': l.qty},
             )
             .toList(),
         'paymentMethod': paymentMethod,

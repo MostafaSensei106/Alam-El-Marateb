@@ -49,9 +49,9 @@ enum OrderStatus {
   const OrderStatus(this.value);
   final String value;
 
-  static OrderStatus fromValue(String? value) => OrderStatus.values
-      .where((s) => s.value == value)
-      .firstOrNull ?? OrderStatus.draft;
+  static OrderStatus fromValue(String? value) =>
+      OrderStatus.values.where((s) => s.value == value).firstOrNull ??
+      OrderStatus.draft;
 }
 
 enum TransferStatus {
@@ -65,9 +65,9 @@ enum TransferStatus {
   const TransferStatus(this.value);
   final String value;
 
-  static TransferStatus fromValue(String? value) => TransferStatus.values
-      .where((s) => s.value == value)
-      .firstOrNull ?? TransferStatus.draft;
+  static TransferStatus fromValue(String? value) =>
+      TransferStatus.values.where((s) => s.value == value).firstOrNull ??
+      TransferStatus.draft;
 }
 
 enum PriceChannel {

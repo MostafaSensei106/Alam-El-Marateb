@@ -4,9 +4,8 @@ import '../../catalog/models/catalog_models.dart';
 /// POST /sales/pos/scan/{barcode} result.
 class ScannedItem {
   const ScannedItem({
-    this.variantId,
+    required this.sku, this.variantId,
     this.productId,
-    required this.sku,
     this.barcode,
     this.dimensions,
     this.sellingPrice = 0,
@@ -46,19 +45,16 @@ class TicketLine {
 /// POST /sales/pos/complete-sale result.
 class CompletedOrder {
   const CompletedOrder({
-    this.id,
-    required this.status,
-    required this.grandTotal,
+    required this.status, required this.grandTotal, this.id,
     this.trackingNumber,
   });
 
-  factory CompletedOrder.fromJson(Map<String, dynamic> json) =>
-      CompletedOrder(
-        id: json['id']?.toString(),
-        status: OrderStatus.fromValue(json['status']?.toString()),
-        grandTotal: _money(json['grandTotal']),
-        trackingNumber: json['trackingNumber']?.toString(),
-      );
+  factory CompletedOrder.fromJson(Map<String, dynamic> json) => CompletedOrder(
+    id: json['id']?.toString(),
+    status: OrderStatus.fromValue(json['status']?.toString()),
+    grandTotal: _money(json['grandTotal']),
+    trackingNumber: json['trackingNumber']?.toString(),
+  );
 
   final String? id;
   final OrderStatus status;

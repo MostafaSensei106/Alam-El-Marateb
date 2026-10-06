@@ -41,8 +41,7 @@ class CustomerWarranty {
       CustomerWarranty(
         id: json['id']?.toString(),
         serialNumber:
-            json['serialNumber']?.toString() ??
-            json['serial']?.toString(),
+            json['serialNumber']?.toString() ?? json['serial']?.toString(),
         status: json['status']?.toString() ?? 'active',
         endDate: json['endDate']?.toString(),
       );
@@ -56,11 +55,10 @@ class CustomerWarranty {
 class LoyaltyBalance {
   const LoyaltyBalance({this.points = 0, this.tier});
 
-  factory LoyaltyBalance.fromJson(Map<String, dynamic> json) =>
-      LoyaltyBalance(
-        points: _int(json['points'] ?? json['balance']),
-        tier: json['tier']?.toString(),
-      );
+  factory LoyaltyBalance.fromJson(Map<String, dynamic> json) => LoyaltyBalance(
+    points: _int(json['points'] ?? json['balance']),
+    tier: json['tier']?.toString(),
+  );
 
   final int points;
   final String? tier;

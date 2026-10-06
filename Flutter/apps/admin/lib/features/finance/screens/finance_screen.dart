@@ -59,10 +59,11 @@ class _FinanceScreenState extends State<FinanceScreen> {
     try {
       await _api.addLandedCost(
         shipmentId: id,
-        kind: LandedKind.values
-            .where((k) => k.value == _kind.text.trim().toUpperCase())
-            .firstOrNull ??
-        LandedKind.freight,
+        kind:
+            LandedKind.values
+                .where((k) => k.value == _kind.text.trim().toUpperCase())
+                .firstOrNull ??
+            LandedKind.freight,
         amount: double.tryParse(_amount.text.trim()) ?? 0,
       );
       await _reloadLanded();
@@ -131,9 +132,7 @@ class _FinanceScreenState extends State<FinanceScreen> {
             Card(
               child: ListTile(
                 title: Text('Owed: ${statement.totalOwed}'),
-                subtitle: Text(
-                  '${statement.invoices.length} invoices',
-                ),
+                subtitle: Text('${statement.invoices.length} invoices'),
               ),
             ),
           const Divider(),

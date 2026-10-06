@@ -66,10 +66,7 @@ class _ShiftScreenState extends State<ShiftScreen> {
     }
     setState(() => _busy = true);
     try {
-      await GetIt.instance<ShiftApi>().drop(
-        shiftId: id,
-        amount: _parsedAmount,
-      );
+      await GetIt.instance<ShiftApi>().drop(shiftId: id, amount: _parsedAmount);
       setState(() => _message = 'Dropped $_parsedAmount');
     } on Exception catch (e) {
       setState(() => _message = e.toString());

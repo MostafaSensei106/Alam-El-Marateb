@@ -13,8 +13,7 @@ class CatalogApi {
   static const String productsPath = '/api/v1/catalog/public/products';
   static const String searchPath = '/api/v1/catalog/public/products/search';
   static const String suggestPath = '/api/v1/catalog/public/products/suggest';
-  static const String featuredPath =
-      '/api/v1/catalog/public/products/featured';
+  static const String featuredPath = '/api/v1/catalog/public/products/featured';
   static const String categoriesPath = '/api/v1/catalog/public/categories';
   static const String brandsPath = '/api/v1/catalog/public/brands';
 
@@ -28,18 +27,20 @@ class CatalogApi {
     String? brand,
     double? minPrice,
     double? maxPrice,
-  }) =>
-      ApiExecutor.call(
-        () => _dio.get<dynamic>(productsPath, queryParameters: <String, dynamic>{
-          'category': ?category,
-          'brand': ?brand,
-          'minPrice': ?minPrice,
-          'maxPrice': ?maxPrice,
-        }),
-        (json) => (json as List)
-            .map((e) => StoreProduct.fromJson(e as Map<String, dynamic>))
-            .toList(),
-      );
+  }) => ApiExecutor.call(
+    () => _dio.get<dynamic>(
+      productsPath,
+      queryParameters: <String, dynamic>{
+        'category': ?category,
+        'brand': ?brand,
+        'minPrice': ?minPrice,
+        'maxPrice': ?maxPrice,
+      },
+    ),
+    (json) => (json as List)
+        .map((e) => StoreProduct.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
 
   Future<List<StoreProduct>> search(String query) => ApiExecutor.call(
     () => _dio.get<dynamic>(

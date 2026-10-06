@@ -31,12 +31,15 @@ class PortalApi {
     required String addressText,
     bool isDefault = false,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(addressesPath, data: <String, dynamic>{
-      'phone': phone,
-      'governorate': governorate,
-      'addressText': addressText,
-      'isDefault': isDefault,
-    }),
+    () => _dio.post<dynamic>(
+      addressesPath,
+      data: <String, dynamic>{
+        'phone': phone,
+        'governorate': governorate,
+        'addressText': addressText,
+        'isDefault': isDefault,
+      },
+    ),
     (json) => ShipAddress.fromJson(json as Map<String, dynamic>),
   );
 
@@ -51,10 +54,13 @@ class PortalApi {
     required String warrantyId,
     required String description,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(claimsPath, data: <String, dynamic>{
-      'warrantyId': warrantyId,
-      'description': description,
-    }),
+    () => _dio.post<dynamic>(
+      claimsPath,
+      data: <String, dynamic>{
+        'warrantyId': warrantyId,
+        'description': description,
+      },
+    ),
     (_) {},
   );
 
@@ -75,11 +81,14 @@ class PortalApi {
     required int rating,
     String? title,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(reviewsPath, data: <String, dynamic>{
-      'productId': productId,
-      'rating': rating,
-      'title': ?title,
-    }),
+    () => _dio.post<dynamic>(
+      reviewsPath,
+      data: <String, dynamic>{
+        'productId': productId,
+        'rating': rating,
+        'title': ?title,
+      },
+    ),
     (_) {},
   );
 }

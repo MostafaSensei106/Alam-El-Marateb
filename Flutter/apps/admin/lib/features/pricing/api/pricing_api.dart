@@ -36,24 +36,26 @@ class PricingApi {
     required String supplierId,
     required String sheetNo,
     required String validFrom,
-    String? validUntil,
-    required List<SheetLineInput> lines,
+    required List<SheetLineInput> lines, String? validUntil,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(sheetsPath, data: <String, dynamic>{
-      'supplierId': supplierId,
-      'sheetNo': sheetNo,
-      'validFrom': validFrom,
-      'validUntil': ?validUntil,
-      'lines': lines
-          .map(
-            (l) => <String, dynamic>{
-              'variantId': l.variantId,
-              'listCost': l.listCost,
-              'suggestedSelling': l.suggestedSelling,
-            },
-          )
-          .toList(),
-    }),
+    () => _dio.post<dynamic>(
+      sheetsPath,
+      data: <String, dynamic>{
+        'supplierId': supplierId,
+        'sheetNo': sheetNo,
+        'validFrom': validFrom,
+        'validUntil': ?validUntil,
+        'lines': lines
+            .map(
+              (l) => <String, dynamic>{
+                'variantId': l.variantId,
+                'listCost': l.listCost,
+                'suggestedSelling': l.suggestedSelling,
+              },
+            )
+            .toList(),
+      },
+    ),
     (json) => PriceSheet.fromJson(json as Map<String, dynamic>),
   );
 
@@ -65,9 +67,12 @@ class PricingApi {
       PriceChannel.dealer,
     ],
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(applyPath(sheetId), data: <String, dynamic>{
-      'channels': channels.map((c) => c.value).toList(),
-    }),
+    () => _dio.post<dynamic>(
+      applyPath(sheetId),
+      data: <String, dynamic>{
+        'channels': channels.map((c) => c.value).toList(),
+      },
+    ),
     (json) => (json as Map<String, dynamic>)['rows'] as int? ?? 0,
   );
 
@@ -76,11 +81,14 @@ class PricingApi {
     required PriceChannel channel,
     required double price,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(sellingPricesPath, data: <String, dynamic>{
-      'variantId': variantId,
-      'channel': channel.value,
-      'price': price,
-    }),
+    () => _dio.post<dynamic>(
+      sellingPricesPath,
+      data: <String, dynamic>{
+        'variantId': variantId,
+        'channel': channel.value,
+        'price': price,
+      },
+    ),
     (_) {},
   );
 

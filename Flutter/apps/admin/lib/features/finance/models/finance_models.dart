@@ -5,7 +5,7 @@ double _money(Object? value) => switch (value) {
 };
 
 class Shipment {
-  const Shipment({this.id, this.supplierId, required this.shipmentNo});
+  const Shipment({required this.shipmentNo, this.id, this.supplierId});
 
   factory Shipment.fromJson(Map<String, dynamic> json) => Shipment(
     id: json['id']?.toString(),

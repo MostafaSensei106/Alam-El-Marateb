@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../../shared/enums.dart';
 import '../api/catalog_api.dart';
 import '../models/catalog_models.dart';
 
@@ -78,9 +77,7 @@ class _CatalogScreenState extends State<CatalogScreen> {
                     final p = items[i];
                     return ListTile(
                       title: Text(p.name),
-                      subtitle: Text(
-                        '${p.brand} • ${p.variants.length} sizes',
-                      ),
+                      subtitle: Text('${p.brand} • ${p.variants.length} sizes'),
                       onTap: () => _showVariants(p),
                     );
                   },

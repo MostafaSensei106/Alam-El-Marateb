@@ -111,9 +111,7 @@ class _TripsScreenState extends State<TripsScreen> {
                 final s = _stops[i];
                 return ListTile(
                   title: Text('Stop ${s.seq} — ${s.orderId ?? '-'}'),
-                  subtitle: Text(
-                    '${s.recipientName ?? ''} • ${s.status}',
-                  ),
+                  subtitle: Text('${s.recipientName ?? ''} • ${s.status}'),
                   trailing: Wrap(
                     children: [
                       IconButton(

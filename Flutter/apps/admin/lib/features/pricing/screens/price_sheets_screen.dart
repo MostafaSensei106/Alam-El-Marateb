@@ -63,15 +63,10 @@ class _PriceSheetsScreenState extends State<PriceSheetsScreen> {
                 Expanded(
                   child: TextField(
                     controller: _supplier,
-                    decoration: const InputDecoration(
-                      labelText: 'Supplier ID',
-                    ),
+                    decoration: const InputDecoration(labelText: 'Supplier ID'),
                   ),
                 ),
-                IconButton(
-                  icon: const Icon(Icons.refresh),
-                  onPressed: _load,
-                ),
+                IconButton(icon: const Icon(Icons.refresh), onPressed: _load),
               ],
             ),
             if (_message != null) Text(_message!),

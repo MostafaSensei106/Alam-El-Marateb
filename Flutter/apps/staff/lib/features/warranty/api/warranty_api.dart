@@ -21,9 +21,10 @@ class WarrantyApi {
   );
 
   Future<void> register({required String invoiceId}) => ApiExecutor.call(
-    () => _dio.post<dynamic>(registerPath, data: <String, dynamic>{
-      'invoiceId': invoiceId,
-    }),
+    () => _dio.post<dynamic>(
+      registerPath,
+      data: <String, dynamic>{'invoiceId': invoiceId},
+    ),
     (_) {},
   );
 

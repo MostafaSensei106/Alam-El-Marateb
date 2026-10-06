@@ -19,8 +19,7 @@ class DeliveryApi {
       '/api/v1/delivery/orders/$orderId/failed';
   static String locationPath(String tripId) =>
       '/api/v1/delivery/trips/$tripId/location';
-  static String pinPath(String stopId) =>
-      '/api/v1/delivery/stops/$stopId/pin';
+  static String pinPath(String stopId) => '/api/v1/delivery/stops/$stopId/pin';
 
   Future<List<DeliveryTrip>> myTrips() => ApiExecutor.call(
     () => _dio.get<dynamic>(myTripsPath),
@@ -36,23 +35,23 @@ class DeliveryApi {
         .toList(),
   );
 
-  Future<void> confirmDelivered({
-    required String orderId,
-    String? proof,
-  }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(confirmPath(orderId), data: <String, dynamic>{
-      'proof': ?proof,
-    }),
-    (_) {},
-  );
+  Future<void> confirmDelivered({required String orderId, String? proof}) =>
+      ApiExecutor.call(
+        () => _dio.post<dynamic>(
+          confirmPath(orderId),
+          data: <String, dynamic>{'proof': ?proof},
+        ),
+        (_) {},
+      );
 
   Future<void> reportFailed({
     required String orderId,
     required String reason,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(failedPath(orderId), data: <String, dynamic>{
-      'reason': reason,
-    }),
+    () => _dio.post<dynamic>(
+      failedPath(orderId),
+      data: <String, dynamic>{'reason': reason},
+    ),
     (_) {},
   );
 
@@ -61,10 +60,10 @@ class DeliveryApi {
     required double lat,
     required double lng,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(locationPath(tripId), data: <String, dynamic>{
-      'lat': lat,
-      'lng': lng,
-    }),
+    () => _dio.post<dynamic>(
+      locationPath(tripId),
+      data: <String, dynamic>{'lat': lat, 'lng': lng},
+    ),
     (_) {},
   );
 }

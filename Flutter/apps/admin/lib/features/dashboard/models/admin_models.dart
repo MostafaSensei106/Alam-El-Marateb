@@ -63,9 +63,7 @@ class VelocityRow {
 
 class ManagedUser {
   const ManagedUser({
-    this.id,
-    required this.fullName,
-    required this.phone,
+    required this.fullName, required this.phone, this.id,
     this.roles = const <String>[],
     this.isActive = true,
   });

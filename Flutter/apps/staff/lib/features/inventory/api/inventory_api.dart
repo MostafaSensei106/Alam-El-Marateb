@@ -1,7 +1,6 @@
 import 'package:core_network/core_network.dart';
 import 'package:dio/dio.dart';
 
-import '../../../shared/enums.dart';
 import '../models/inventory_models.dart';
 
 /// Staff inventory API layer: warehouses, stocks, batches, transfers, audits.
@@ -57,22 +56,21 @@ class InventoryApi {
   Future<StockTransfer> createTransfer({
     required String fromWarehouseId,
     required String toWarehouseId,
-    String? note,
-    required List<TransferLine> lines,
+    required List<TransferLine> lines, String? note,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(transfersPath, data: <String, dynamic>{
-      'fromWarehouseId': fromWarehouseId,
-      'toWarehouseId': toWarehouseId,
-      'note': ?note,
-      'items': lines
-          .map(
-            (l) => <String, dynamic>{
-              'variantId': l.variantId,
-              'qty': l.qty,
-            },
-          )
-          .toList(),
-    }),
+    () => _dio.post<dynamic>(
+      transfersPath,
+      data: <String, dynamic>{
+        'fromWarehouseId': fromWarehouseId,
+        'toWarehouseId': toWarehouseId,
+        'note': ?note,
+        'items': lines
+            .map(
+              (l) => <String, dynamic>{'variantId': l.variantId, 'qty': l.qty},
+            )
+            .toList(),
+      },
+    ),
     (json) => StockTransfer.fromJson(json as Map<String, dynamic>),
   );
 
@@ -96,10 +94,7 @@ class InventoryApi {
       data: <String, dynamic>{
         'lines': lines
             .map(
-              (l) => <String, dynamic>{
-                'variantId': l.variantId,
-                'qty': l.qty,
-              },
+              (l) => <String, dynamic>{'variantId': l.variantId, 'qty': l.qty},
             )
             .toList(),
         'damaged': damaged,
@@ -122,19 +117,23 @@ class InventoryApi {
     String? warehouseId,
     String? variantId,
   }) => ApiExecutor.call(
-    () => _dio.get<dynamic>(batchesPath, queryParameters: <String, dynamic>{
-      'warehouseId': ?warehouseId,
-      'variantId': ?variantId,
-    }),
+    () => _dio.get<dynamic>(
+      batchesPath,
+      queryParameters: <String, dynamic>{
+        'warehouseId': ?warehouseId,
+        'variantId': ?variantId,
+      },
+    ),
     (json) => (json as List)
         .map((e) => InventoryBatch.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 
   Future<BatchValuation> valuation({String? warehouseId}) => ApiExecutor.call(
-    () => _dio.get<dynamic>(valuationPath, queryParameters: <String, dynamic>{
-      'warehouseId': ?warehouseId,
-    }),
+    () => _dio.get<dynamic>(
+      valuationPath,
+      queryParameters: <String, dynamic>{'warehouseId': ?warehouseId},
+    ),
     (json) => BatchValuation.fromJson(json as Map<String, dynamic>),
   );
 
@@ -155,12 +154,15 @@ class InventoryApi {
     required int qtyDelta,
     required String note,
   }) => ApiExecutor.call(
-    () => _dio.post<dynamic>(adjustmentPath, data: <String, dynamic>{
-      'warehouseId': warehouseId,
-      'variantId': variantId,
-      'qtyDelta': qtyDelta,
-      'note': note,
-    }),
+    () => _dio.post<dynamic>(
+      adjustmentPath,
+      data: <String, dynamic>{
+        'warehouseId': warehouseId,
+        'variantId': variantId,
+        'qtyDelta': qtyDelta,
+        'note': note,
+      },
+    ),
     (json) => StockLevel.fromJson(json as Map<String, dynamic>),
   );
 }
