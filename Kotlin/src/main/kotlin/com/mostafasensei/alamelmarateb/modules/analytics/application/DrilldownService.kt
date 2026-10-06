@@ -50,7 +50,7 @@ class DrilldownService(
         }
         return jdbc.queryForList(
             "SELECT day, branch_id, variant_id, qty, revenue FROM sales_daily_facts " +
-                "WHERE day BETWEEN ? AND ? AND (? IS NULL OR branch_id = ?) ORDER BY day DESC LIMIT ?",
+                "WHERE day BETWEEN ? AND ? AND (CAST(? AS UUID) IS NULL OR branch_id = CAST(? AS UUID)) ORDER BY day DESC LIMIT ?",
             from, to, branchId, branchId, limit.coerceIn(1, 1000),
         ).map {
             DrilldownRow(

@@ -13,7 +13,7 @@ import jakarta.validation.Valid
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.NotNull
 import org.springframework.http.ResponseEntity
-import com.mostafasensei.alamelmarateb.core.security.ShopApi
+import com.mostafasensei.alamelmarateb.core.security.CustomerApi
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -33,7 +33,7 @@ data class PaymentIntentRequest(
 @Tag(name = "Shop payments", description = "Gateway intents — CUSTOMER")
 @RestController
 @RequestMapping(ShopRoutes.CHECKOUT_BASE)
-@ShopApi
+@CustomerApi
 class PaymentIntentController(
     private val paymentService: PaymentService,
 ) : BaseController() {

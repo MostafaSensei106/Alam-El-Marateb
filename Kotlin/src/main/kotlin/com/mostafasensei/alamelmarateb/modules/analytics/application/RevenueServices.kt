@@ -81,7 +81,7 @@ class RevenueService(
         if (to.isBefore(from)) throw BadRequestException("error.accounting.report_dates")
         val rows = jdbc.queryForList(
             "SELECT day, SUM(qty) qty, SUM(revenue) revenue, SUM(profit) profit FROM sales_daily_facts " +
-                "WHERE day BETWEEN ? AND ? AND (? IS NULL OR branch_id = ?) GROUP BY day ORDER BY day",
+                "WHERE day BETWEEN ? AND ? AND (CAST(? AS UUID) IS NULL OR branch_id = CAST(? AS UUID)) GROUP BY day ORDER BY day",
             from, to, branchId, branchId,
         )
         val points = rows.map {

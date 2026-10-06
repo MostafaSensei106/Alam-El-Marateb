@@ -145,6 +145,8 @@ class DeliveryManagerController(
     ): ResponseEntity<ApiResponse<VehicleView>> =
         updateVehicle(id, request, principal)
 
+    @Operation(summary = "Update vehicle")
+    @SuperAdminApi
     @PutMapping(IdentityAdminRoutes.VEHICLE_BY_ID)
     fun updateVehicle(
         @PathVariable id: UUID,

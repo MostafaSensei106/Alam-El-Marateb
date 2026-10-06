@@ -44,7 +44,6 @@ import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
 import jakarta.validation.Valid
 import org.springframework.http.ResponseEntity
-import com.mostafasensei.alamelmarateb.core.security.ShopApi
 import com.mostafasensei.alamelmarateb.core.security.ManagerApi
 import com.mostafasensei.alamelmarateb.core.security.CustomerApi
 import com.mostafasensei.alamelmarateb.core.security.CashierApi
@@ -434,7 +433,7 @@ class ShopCartController(
 @Tag(name = "Shop checkout", description = "Estimate, preview, place")
 @RestController
 @RequestMapping(ShopRoutes.CHECKOUT_BASE)
-@ShopApi
+@CustomerApi
 class ShopCheckoutController(
     private val orderService: OrderService,
     private val promotionService: PromotionService,
