@@ -147,7 +147,7 @@ class ProductCatalogService(
 
     @Transactional
     fun addOptionToAttribute(attributeId: UUID, option: ProductAttributeOption): ProductAttributeOption {
-        val saved = attributeOptionRepository.save(option)
+        val saved = attributeOptionRepository.save(option.copy(attributeId = attributeId))
         translations.saveOption(saved.id!!, option.translations.ifEmpty { null })
         return saved
     }

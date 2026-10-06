@@ -14,16 +14,15 @@ object AuthRoutes {
 /**
  * Identity administration routes — owning module: identity.
  * Audience: system administration (branches, users, roles, fleet).
- * Required roles: BRANCH_MANAGER, SUPER_ADMIN for branches/fleet;
- * access (users/roles) additionally narrowed via @PreAuthorize to SUPER_ADMIN.
+ * Required roles: SUPER_ADMIN for everything under /identity
+ * (SecurityConfig + @SuperAdminApi agree; managers use their own modules).
  */
 object IdentityAdminRoutes {
     private const val PREFIX = "/api/v1/identity"
 
     const val BASE = PREFIX
     const val BRANCHES = "$PREFIX/branches"
-    const val BRANCH_BY_ID = "$PREFIX/branches/{id}"
-    const val BRANCH_STATUS = "$PREFIX/branches/{id}/status"
+    const val BRANCH_TOGGLE = "$PREFIX/branches/{id}/toggle"
 
     const val USERS = "$PREFIX/access/users"
     const val ROLES = "$PREFIX/access/roles"

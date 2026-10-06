@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Alamelmarateb ERP — v1",
-    "description": "Alamelmarateb ERP v1 — Catalog, Inventory, Sales, CRM, Identity. Login first, paste tokens into variables. Swagger UI: {{baseUrl}}/swagger-ui.html | Contract: ApiResponse{success,message,data,errors} (X-Trace-Id header only); every /api call needs X-Api-Client + X-Api-Key headers (clientId/clientKey vars); X-Lang ar|en; Idempotency-Key on place-order/complete-sale; X-Trace-Id echoed; 400 syntax vs 422 semantics vs 409 conflict; 404 unknown route; 405 wrong method + Allow; 429 + Retry-After. | Tokens auto-save: login/register/refresh store access+refresh into adminJwt/managerJwt/customerJwt/keeperJwt/cashierJwt (+*Refresh, refreshToken, userId) based on the account role. Just log in and call the rest.",
+    "description": "Alamelmarateb ERP v1 — Catalog, Inventory, Sales, CRM, Identity. Login first, paste tokens into variables. Swagger UI: {{baseUrl}}/swagger-ui.html | Contract: ApiResponse{success,message,data,errors} (X-Trace-Id header only); every /api call needs X-Api-Client + X-Api-Key headers (clientId/clientKey vars; default key dev-local-key = CLIENT_KEYS); X-Lang ar|en; Idempotency-Key on place-order/complete-sale (replay -> 200 + Idempotent-Replay: true); X-Trace-Id echoed; beacon 202; 400 syntax vs 422 semantics vs 409 conflict; 404 unknown route; 405 wrong method + Allow; 429 + Retry-After. | Role matrix (URL + @PreAuthorize agree): shop/portal CUSTOMER; sales/pos CASHIER+MANAGER; promotions MANAGER; warehouse KEEPER+MANAGER; delivery trips DRIVER / dispatch SUPER_ADMIN; catalog/inventory/purchasing/crm/hr/analytics MANAGER; identity SUPER_ADMIN; accounting ACCOUNTANT (+SUPER_ADMIN everywhere). Track-order is authenticated (CUSTOMER), NOT public. | Tokens auto-save: login/register/refresh store access+refresh into adminJwt/managerJwt/customerJwt/keeperJwt/cashierJwt/driverJwt/accountantJwt (+*Refresh, refreshToken, userId) based on the account role. Setup order: login as admin -> List branches (saves branchId) -> Create warehouse (saves warehouseA) -> Create category/product (saves ids) -> adjust stock -> place order (saves orderId+trackingNumber). | Fake pay: create intent (saves providerRef) -> Fake callback auto-computes X-Fake-Signature = HMAC-SHA256(providerRef, dev-secret).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -235,6 +235,38 @@
     },
     {
       "key": "checkId",
+      "value": ""
+    },
+    {
+      "key": "attributeId",
+      "value": ""
+    },
+    {
+      "key": "slug",
+      "value": ""
+    },
+    {
+      "key": "questionId",
+      "value": ""
+    },
+    {
+      "key": "imageId",
+      "value": ""
+    },
+    {
+      "key": "invoiceId",
+      "value": ""
+    },
+    {
+      "key": "brandId",
+      "value": ""
+    },
+    {
+      "key": "bracketId",
+      "value": ""
+    },
+    {
+      "key": "meterPriceId",
       "value": ""
     }
   ],
@@ -1047,7 +1079,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"attributes\": []}"
+              "raw": "[{\"attributeId\": \"{{attributeId}}\", \"required\": true}]"
             }
           }
         },
@@ -1097,7 +1129,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"code\": \"FIRMNESS\", \"name\": \"Firmness\", \"attributeType\": \"SELECT\"}"
+              "raw": "{\"name\": \"Firmness\", \"key\": \"FIRMNESS\", \"type\": \"SELECT\"}"
             }
           }
         },
@@ -1126,7 +1158,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"optionValue\": \"FIRM\", \"displayName\": \"Firm\"}"
+              "raw": "{\"value\": \"FIRM\", \"label\": \"Firm\"}"
             }
           }
         },
@@ -1197,7 +1229,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"name\": \"Serta\"}"
+              "raw": "{\"name\": \"SertaT\", \"slug\": \"serta-t\"}"
             }
           }
         },
@@ -1341,6 +1373,190 @@
               "mode": "raw",
               "raw": "{\"answer\": \"Yes, 10 years\"}"
             }
+          }
+        },
+        {
+          "name": "🗑️ Delete category",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/catalog/categories/{{categoryId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🔍 Get attribute",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/api/v1/catalog/attributes/{{attributeId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🗑️ Delete attribute",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/catalog/attributes/{{attributeId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "✏️ Update brand",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/v1/catalog/brands/{{brandId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"name\": \"Serta updated\"}"
+            }
+          }
+        },
+        {
+          "name": "🗑️ Delete brand",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/catalog/brands/{{brandId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "✏️ Update bracket",
+          "request": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/api/v1/catalog/operating-brackets/{{bracketId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"pct\": 30}"
+            }
+          }
+        },
+        {
+          "name": "🗑️ Delete bracket",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/catalog/operating-brackets/{{bracketId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
+          }
+        },
+        {
+          "name": "🗑️ Delete meter price",
+          "request": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/api/v1/catalog/meter-prices/{{meterPriceId}}",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{managerJwt}}"
+              },
+              {
+                "key": "X-Api-Client",
+                "value": "{{clientId}}"
+              },
+              {
+                "key": "X-Api-Key",
+                "value": "{{clientKey}}"
+              }
+            ]
           }
         }
       ]
@@ -1677,7 +1893,8 @@
                 "value": "{{clientKey}}"
               }
             ],
-            "url": "{{baseUrl}}/api/v1/inventory/transfers/{{transferId}}/approve"
+            "url": "{{baseUrl}}/api/v1/inventory/transfers/{{transferId}}/approve",
+            "description": "Final approval AFTER keeper receipt (status received/partially_received). Deducts recorded damaged qty from destination batches."
           }
         },
         {
@@ -2475,27 +2692,6 @@
           }
         },
         {
-          "name": "🏷️ Get promotion",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/api/v1/sales/promotions/{{promotionId}}",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{managerJwt}}"
-              },
-              {
-                "key": "X-Api-Client",
-                "value": "{{clientId}}"
-              },
-              {
-                "key": "X-Api-Key",
-                "value": "{{clientKey}}"
-              }
-            ]
-          }
-        },
-        {
           "name": "⏯️ Toggle promotion",
           "request": {
             "method": "POST",
@@ -3234,8 +3430,9 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"serialNumber\": \"SN-0001\"}"
-            }
+              "raw": "{\"invoiceId\": \"{{invoiceId}}\"}"
+            },
+            "description": "invoiceId = invoice UUID of a delivered order (created at POS complete-sale / online fulfillment)."
           }
         },
         {
@@ -3480,27 +3677,6 @@
               "mode": "raw",
               "raw": "{\"roles\": [\"ROLE_CASHIER\", \"ROLE_WAREHOUSE_KEEPER\"]}"
             }
-          }
-        },
-        {
-          "name": "🔍 Get branch",
-          "request": {
-            "method": "GET",
-            "url": "{{baseUrl}}/api/v1/identity/branches/{{branchId}}",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{adminJwt}}"
-              },
-              {
-                "key": "X-Api-Client",
-                "value": "{{clientId}}"
-              },
-              {
-                "key": "X-Api-Key",
-                "value": "{{clientKey}}"
-              }
-            ]
           }
         },
         {
@@ -4440,7 +4616,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"status\": \"arrived\"}"
+              "raw": "{\"status\": \"delivered\", \"proofPhoto\": \"photo-key-1\"}"
             }
           }
         },
@@ -4864,7 +5040,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"name\": \"Mattress 5%\", \"kind\": \"PERCENT\", \"value\": 5}"
+              "raw": "{\"name\": \"Mattress 5%\", \"kind\": \"PERCENT_OF_SALES\", \"value\": 5}"
             }
           }
         },
@@ -5435,7 +5611,7 @@
           "name": "⚖️ Balance sheet",
           "request": {
             "method": "GET",
-            "url": "{{baseUrl}}/api/v1/accounting/reports/balance-sheet?at=2026-09-30",
+            "url": "{{baseUrl}}/api/v1/accounting/reports/balance-sheet?to=2026-09-30",
             "header": [
               {
                 "key": "Authorization",
@@ -5718,7 +5894,21 @@
               "mode": "raw",
               "raw": "{\"productId\": \"{{productId}}\", \"question\": \"Does it fit 160x200?\"}"
             }
-          }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "(function () {",
+                  "    var json; try { json = pm.response.json(); } catch (e) { return; }",
+                  "    if (json && json.data && json.data.id) pm.collectionVariables.set(\"questionId\", json.data.id);",
+                  "})();"
+                ]
+              }
+            }
+          ]
         },
         {
           "name": "👍 Helpful vote",
@@ -6499,8 +6689,9 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"productId\": \"{{productId}}\", \"shape\": \"rect\", \"widthCm\": 120, \"lengthCm\": 200, \"qty\": 1, \"paymentMethod\": \"TRANSFER\", \"downPayment\": 4000}"
-            }
+              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"productId\": \"{{productId}}\", \"shape\": \"oval\", \"widthCm\": 120, \"lengthCm\": 200, \"qty\": 1, \"paymentMethod\": \"TRANSFER\", \"downPayment\": 4000}"
+            },
+            "description": "Needs an OVAL meter price on the product first (Catalog mgmt > Set meter price). Down payment must be <= total."
           }
         },
         {
@@ -6557,7 +6748,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"variantId\": \"{{variantId}}\", \"qty\": 1, \"deposit\": 2000}"
+              "raw": "{\"branchId\": \"{{branchId}}\", \"guestPhone\": \"01000000001\", \"variantId\": \"{{variantId}}\", \"qty\": 1, \"deposit\": 500}"
             }
           },
           "event": [
@@ -6569,8 +6760,8 @@
                   "(function () {",
                   "    var json; try { json = pm.response.json(); } catch (e) { return; }",
                   "    var data = json && json.data;",
-                  "    if (!data) return;",
-                  "    if (data.id) pm.collectionVariables.set('reservationId', data.id);",
+                  "    if (typeof data === \"string\") pm.collectionVariables.set(\"reservationId\", data);",
+                  "    else if (data && data.id) pm.collectionVariables.set(\"reservationId\", data.id);",
                   "})();"
                 ]
               }
@@ -6602,7 +6793,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\"amount\": 6000, \"method\": \"TRANSFER\"}"
+              "raw": "{\"amount\": 500, \"method\": \"TRANSFER\"}"
             }
           }
         },

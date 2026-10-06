@@ -22,5 +22,6 @@ object DeliveryRoutes {
     const val PUSH_LOCATION = "$PREFIX/trips/{tripId}/location"
     const val PIN_STOP = "$PREFIX/stops/{stopId}/pin"
     const val OPTIMIZE_TRIP = "$PREFIX/trips/{tripId}/optimize"
-    const val RATE_DRIVER = "$PREFIX/orders/{orderId}/rate"
+    // NOTE: driver rating lives in the customer portal:
+    // POST /api/v1/portal/deliveries/{orderId}/rate (CUSTOMER).
 }

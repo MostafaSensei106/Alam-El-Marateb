@@ -11,10 +11,8 @@ object ShopRoutes {
 
     const val CART_BASE = CART
     const val CART_ITEMS = "$CART/items"
-    const val CART_ITEM_BY_ID = "$CART/items/{itemId}"
     const val CART_MERGE = "$CART/merge"
     const val CART_CLEAR = "$CART/clear"
-    const val CART_DRAFT = "$CART/draft"
 
     private const val CHECKOUT = "/api/v1/shop/checkout"
 

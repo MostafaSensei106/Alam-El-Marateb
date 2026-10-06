@@ -11,16 +11,12 @@ object AnalyticsRoutes {
 
     const val BASE = PREFIX
     const val SUMMARY = "$PREFIX/summary"
-    const val EXECUTIVE_SUMMARY = "$PREFIX/executive-summary"
     const val REVENUE = "$PREFIX/revenue"
     const val REVENUE_AND_PROFIT = "$PREFIX/revenue-profit"
     const val PRODUCTS = "$PREFIX/products"
     const val PRODUCT_VELOCITY = "$PREFIX/product-velocity"
-    const val SEASONS = "$PREFIX/seasons"
     const val GEO_HEATMAP = "$PREFIX/geo-heatmap"
-    const val CHASSIS_TRENDS = "$PREFIX/chassis-trends"
     const val BRANCH_PERFORMANCE = "$PREFIX/performance/branches"
-    const val SALES_REP_METRICS = "$PREFIX/performance/sales-reps"
 
     const val RFM = "$PREFIX/customers/rfm"
     const val TOP_VARIANTS = "$PREFIX/products/top"

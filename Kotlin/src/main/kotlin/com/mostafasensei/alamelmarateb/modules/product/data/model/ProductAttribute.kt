@@ -36,6 +36,7 @@ data class ProductAttributeValue(
 
 data class ProductAttributeOption(
     val id: UUID? = null,
+    val attributeId: UUID? = null,
     val value: String,
     val label: String,
     val sortOrder: Int = 0,

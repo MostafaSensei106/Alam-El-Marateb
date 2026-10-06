@@ -29,7 +29,7 @@
   <img src="https://img.shields.io/badge/PostgreSQL-16-blue.svg?style=flat&logo=postgresql" alt="PostgreSQL">
   <img src="https://img.shields.io/badge/Redis-7.x-red.svg?style=flat&logo=redis" alt="Redis">
   <img src="https://img.shields.io/badge/Meilisearch-1.13-pink.svg?style=flat&logo=meilisearch" alt="Meilisearch">
-  <img src="https://img.shields.io/badge/Flyway-34%20Migrations-red.svg" alt="Flyway">
+  <img src="https://img.shields.io/badge/Flyway-39%20Migrations-red.svg" alt="Flyway">
   <img src="https://img.shields.io/badge/OpenAPI-3.1.0-green.svg" alt="OpenAPI">
 </p>
 
@@ -150,7 +150,7 @@ flowchart TB
     ModularMonolith <--> EventBackbone
 
     subgraph StorageTier["💾 Persistence & Infrastructure Storage"]
-        PostgresPrimary[("🐘 PostgreSQL 16 Primary (RW)<br/>(34 Flyway Migrations, Foreign Key Integrity)")]
+        PostgresPrimary[("🐘 PostgreSQL 16 Primary (RW)<br/>(39 Flyway Migrations, Foreign Key Integrity)")]
         PostgresReplica[("🐘 PostgreSQL 16 Read Replica (RO)<br/>(Physical Streaming Replication, Opt-In :5433)")]
         MeiliSearch[("🔍 Meilisearch 1.13<br/>(Fuzzy Search, Facets & Instant Indexing)")]
         RedisStore[("⚡ Redis 7.x<br/>(L1 Entity Cache, Spring Session, GPS & Locks)")]
@@ -255,7 +255,7 @@ sequenceDiagram
 
 ## 🗄️ Database Architecture & Entity Relationships (ERD)
 
-The database layer is managed by **PostgreSQL 16** with **34 versioned Flyway migrations (`V1` to `V34`)**. It enforces strict relational integrity, immutable audit ledgers, zero-DDL catalog extensibility, time-range partitioning, and double-entry accounting invariants.
+The database layer is managed by **PostgreSQL 16** with **39 versioned Flyway migrations (`V1` to `V39`)**. It enforces strict relational integrity, immutable audit ledgers, zero-DDL catalog extensibility, time-range partitioning, and double-entry accounting invariants.
 
 ### Architectural Invariants in PostgreSQL:
 1. **Multi-Tenancy & Branch Scoping**: Showrooms and warehouses are partitioned via `branch_id` foreign keys with `DEFERRABLE INITIALLY IMMEDIATE` constraints.
@@ -900,12 +900,38 @@ docker compose --profile clickhouse up -d # Columnar OLAP telemetry & analytics 
 ```
 
 During startup:
-- **Flyway** verifies and executes all **34 SQL migrations** (`V1` through `V34`), automatically creating performance indexes, partitioning tables (`app_events`, `audit_logs`), and configuring outbox/dedup tables.
+- **Flyway** verifies and executes all **39 SQL migrations** (`V1` through `V39`), automatically creating performance indexes, partitioning tables (`app_events`, `audit_logs`), and configuring outbox/dedup tables.
 - **`RetentionService`** schedules daily partition rotation and archival at 03:00.
 - **`AdminSeeder`** initializes default branch `MAIN` and boots the initial Super Admin account:
   - **Phone**: `01000000000`
   - **Password**: `admin123`
 - The application exposes its HTTP endpoints on `http://localhost:8080`.
+
+### 4. Call the API (Postman or curl)
+
+Every `/api/**` request — login included — must carry the first-party client headers:
+
+| Header | Value | Source |
+| :--- | :--- | :--- |
+| `X-Api-Client` | `postman` | `clientId` variable |
+| `X-Api-Key` | `dev-local-key` | `clientKey` variable (must be listed in server `CLIENT_KEYS`) |
+
+Without them the API returns `401 {"errors":["CLIENT_REJECTED"]}` (public uploads and Swagger are exempt).
+Authenticated calls add `Authorization: Bearer <JWT>`. Role matrix (enforced at both URL and method level):
+
+| Area | Who |
+| :--- | :--- |
+| `/shop/**`, `/portal/**` | `CUSTOMER` (+ `SUPER_ADMIN`) |
+| `/sales/pos/**`, `/sales/orders/**` | `CASHIER`, `BRANCH_MANAGER` (+ confirm/approve-return: manager only) |
+| `/sales/promotions/**` | `BRANCH_MANAGER` |
+| `/warehouse/**` | `WAREHOUSE_KEEPER`, `BRANCH_MANAGER` |
+| `/delivery/my-trips`, stops, confirm | `DELIVERY_DRIVER` |
+| `/delivery/trips` dispatch/pin/optimize | `SUPER_ADMIN` |
+| `/catalog/**`, `/inventory/**`, `/purchasing/**`, `/crm/**`, `/hr/**`, `/analytics/**` | `BRANCH_MANAGER` |
+| `/identity/**` | `SUPER_ADMIN` |
+| `/accounting/**` | `ACCOUNTANT` |
+
+> The Postman collection auto-saves tokens per role (`adminJwt`, `managerJwt`, `customerJwt`, `keeperJwt`, `cashierJwt`, `driverJwt`, `accountantJwt`) on login/refresh. Suggested setup order: login as admin → List branches (saves `branchId`) → Create warehouse (saves `warehouseA`) → Create category/product (saves ids) → adjust stock → place order (saves `orderId` + `trackingNumber`).
 
 ### 4. Interactive Documentation
 
@@ -936,15 +962,18 @@ Audience: Public authentication & system administrator access management.
 | `POST` | `/api/v1/auth/reset-password` | **Public** | Reset password with single-use token; bumps `token_version` to revoke older tokens |
 | `POST` | `/api/v1/auth/change-password`| **Authenticated** | Change password; bumps `token_version` killing all other active sessions |
 | `GET` | `/api/v1/auth/me` | **Authenticated** | Retrieve authenticated user profile, roles, and branch context |
-| `GET` | `/api/v1/identity/branches` | `SUPER_ADMIN`, `BRANCH_MANAGER` | List all physical branch showrooms and facilities (ETag cached) |
+| `GET` | `/api/v1/identity/branches` | `SUPER_ADMIN` | List all physical branch showrooms and facilities (ETag cached) |
 | `POST` | `/api/v1/identity/branches` | `SUPER_ADMIN` | Create a new physical branch showroom |
-| `GET` | `/api/v1/identity/branches/{id}` | `SUPER_ADMIN`, `BRANCH_MANAGER` | Retrieve branch operational details |
-| `PUT` | `/api/v1/identity/branches/{id}/status` | `SUPER_ADMIN` | Toggle branch activation state |
+| `POST` | `/api/v1/identity/branches/{id}/toggle` | `SUPER_ADMIN` | Toggle branch activation state |
+| `POST` | `/api/v1/identity/access/users/{id}/toggle` | `SUPER_ADMIN` | Toggle staff user activation state |
 | `GET` | `/api/v1/identity/access/users` | `SUPER_ADMIN` | Search and list internal staff users |
 | `POST` | `/api/v1/identity/access/users` | `SUPER_ADMIN` | Create employee user account and assign system roles |
 | `GET` | `/api/v1/identity/access/roles` | `SUPER_ADMIN` | List all available RBAC roles (ETag cached) |
-| `GET` | `/api/v1/identity/fleet/vehicles` | `SUPER_ADMIN`, `BRANCH_MANAGER` | List delivery fleet vehicle registry |
-| `POST` | `/api/v1/identity/fleet/vehicles` | `SUPER_ADMIN`, `BRANCH_MANAGER` | Register new fleet vehicle (plate, type, capacity) |
+| `GET` | `/api/v1/identity/fleet/vehicles` | `SUPER_ADMIN` | List delivery fleet vehicle registry |
+| `POST` | `/api/v1/identity/fleet/vehicles` | `SUPER_ADMIN` | Register new fleet vehicle (plate, kind, capacity) |
+| `GET` | `/api/v1/identity/fleet/vehicles/{id}` | `SUPER_ADMIN` | Retrieve vehicle details |
+| `PATCH` / `PUT` | `/api/v1/identity/fleet/vehicles/{id}` | `SUPER_ADMIN` | Update vehicle (kind, capacity, status) |
+| `DELETE` | `/api/v1/identity/fleet/vehicles/{id}` | `SUPER_ADMIN` | Remove vehicle |
 
 ---
 
@@ -977,8 +1006,26 @@ Audience: Branch Managers and Catalog Specialists managing categories, dynamic E
 | `DELETE` | `/api/v1/catalog/images/{imageId}` | `BRANCH_MANAGER` | Delete product image |
 | `GET` | `/api/v1/catalog/products/{id}/meter-prices`| `BRANCH_MANAGER` | Retrieve square-meter pricing rules by geometric shape |
 | `POST` | `/api/v1/catalog/products/{id}/meter-prices`| `BRANCH_MANAGER` | Configure model square-meter price for Rectangular/Oval/Round |
+| `DELETE` | `/api/v1/catalog/meter-prices/{id}` | `BRANCH_MANAGER` | Delete a meter-price rule |
 | `GET` | `/api/v1/catalog/operating-brackets` | `BRANCH_MANAGER` | List width-based operating surcharge brackets |
 | `POST` | `/api/v1/catalog/operating-brackets` | `BRANCH_MANAGER` | Create width surcharge bracket (e.g. 90-100cm $\to$ 24%) |
+| `PATCH` / `PUT` | `/api/v1/catalog/operating-brackets/{id}` | `BRANCH_MANAGER` | Update a surcharge bracket |
+| `DELETE` | `/api/v1/catalog/operating-brackets/{id}` | `BRANCH_MANAGER` | Delete a surcharge bracket |
+| `GET` | `/api/v1/catalog/attributes` | `BRANCH_MANAGER` | List dynamic attribute definitions (`TEXT`, `NUMBER`, `BOOLEAN`, `SELECT`, `MULTI_SELECT`) |
+| `POST` | `/api/v1/catalog/attributes` | `BRANCH_MANAGER` | Create attribute definition (`{name, key, type}`) |
+| `POST` | `/api/v1/catalog/attributes/{id}/options` | `BRANCH_MANAGER` | Add selectable option (`{value, label}`) |
+| `GET` | `/api/v1/catalog/presets` | `BRANCH_MANAGER` | List product preset templates |
+| `POST` | `/api/v1/catalog/products/from-preset/{presetId}` | `BRANCH_MANAGER` | Clone a preset into a full product |
+| `GET` | `/api/v1/catalog/brands` | `BRANCH_MANAGER` | List registered brands (admin view) |
+| `POST` | `/api/v1/catalog/brands` | `BRANCH_MANAGER` | Register brand (`{name, slug}`) |
+| `GET` / `POST` | `/api/v1/catalog/variants/{variantId}/attributes` | `BRANCH_MANAGER` | Inspect / attach variant EAV attributes |
+| `POST` | `/api/v1/catalog/products/search/reindex` | `BRANCH_MANAGER` | Rebuild the Meilisearch index (400 when search backend is disabled) |
+| `POST` | `/api/v1/catalog/products/qa/{id}/answer` | `BRANCH_MANAGER` | Answer a customer Q&A question |
+| `GET` | `/api/v1/catalog/price-sheets` | `BRANCH_MANAGER` | List supplier price sheets |
+| `POST` | `/api/v1/catalog/price-sheets` | `BRANCH_MANAGER` | Create price sheet with cost lines per variant |
+| `GET` | `/api/v1/catalog/price-sheets/{id}` | `BRANCH_MANAGER` | Retrieve a price sheet |
+| `POST` | `/api/v1/catalog/price-sheets/{id}/apply` | `BRANCH_MANAGER` | Apply sheet costs to channel selling prices |
+| `GET` / `POST` | `/api/v1/catalog/selling-prices` | `BRANCH_MANAGER` | Inspect history / set channel price (`{variantId, channel, price}`) |
 
 ---
 
@@ -1014,7 +1061,9 @@ Audience: Showroom Cashiers, Sales Representatives, and Branch Managers.
 | :---: | :--- | :---: | :--- |
 | `GET` | `/api/v1/sales/pos/scan/{barcode}` | `CASHIER`, `SALES_REP` | Rapid barcode/SKU scanner lookup returning price and stock level |
 | `POST` | `/api/v1/sales/pos/orders/draft` | `CASHIER` | Create draft in-store order |
+| `POST` | `/api/v1/sales/pos/orders/{orderId}/complete` | `CASHIER` | Complete a draft (pricing + stock hold + invoice) |
 | `POST` | `/api/v1/sales/pos/complete-sale` | `CASHIER` | **Instant Checkout**: Execute payment, deduct stock, and generate invoice |
+| `POST` | `/api/v1/sales/pos/place-order` | `CASHIER` | Place order for later delivery/pickup (idempotent) |
 | `POST` | `/api/v1/sales/pos/custom-order` | `CASHIER`, `SALES_REP` | Place order for non-standard mattress dimensions with deposit |
 | `GET` | `/api/v1/sales/pos/orders/{id}/receipt` | `CASHIER` | Fetch printable thermal receipt data envelope |
 | `GET` | `/api/v1/sales/pos/orders/{id}/invoice-pdf`| `CASHIER` | Generate print-ready official tax invoice HTML |
@@ -1027,8 +1076,10 @@ Audience: Showroom Cashiers, Sales Representatives, and Branch Managers.
 | `GET` | `/api/v1/sales/pos/reservations/{id}` | `CASHIER` | View reservation status, remaining balance, and payment history |
 | `POST` | `/api/v1/sales/pos/reservations/{id}/pay` | `CASHIER` | Record intermediate deposit installment |
 | `POST` | `/api/v1/sales/pos/reservations/{id}/fulfill`| `CASHIER` | Convert fulfilled reservation into an active delivery order |
-| `GET` | `/api/v1/sales/orders` | `BRANCH_MANAGER` | Comprehensive sales orders search with payment and branch filters |
-| `GET` | `/api/v1/sales/orders/{orderId}` | `BRANCH_MANAGER` | Inspect order line items, discounts, customer profile, and lifecycle |
+| `POST` | `/api/v1/sales/pos/reservations/{id}/cancel` | `CASHIER` | Cancel a reservation |
+| `POST` | `/api/v1/sales/orders/{orderId}/confirm-payment` | `BRANCH_MANAGER` | Confirm a manual/bank-transfer payment |
+| `POST` | `/api/v1/sales/orders/{orderId}/approve-return` | `BRANCH_MANAGER` | Approve a return / refund (delivered orders only) |
+| `POST` | `/api/v1/sales/orders/{orderId}/cancel` | `CASHIER` | Cancel an order |
 | `POST` | `/api/v1/sales/orders/{orderId}/pay-balance`| `CASHIER` | Pay remaining balance on orders delivered with partial payment |
 
 ---
@@ -1041,27 +1092,31 @@ Audience: Branch Managers creating promotional campaigns and bundles.
 | :---: | :--- | :---: | :--- |
 | `GET` | `/api/v1/sales/promotions` | `BRANCH_MANAGER` | List all promotional rules, bundles, and discount campaigns |
 | `POST` | `/api/v1/sales/promotions` | `BRANCH_MANAGER` | Create discount rule (Percentage, Fixed Amount, Bundle, Gift) |
-| `GET` | `/api/v1/sales/promotions/{id}` | `BRANCH_MANAGER` | Inspect promotion conditions and usage metrics |
 | `POST` | `/api/v1/sales/promotions/{id}/toggle`| `BRANCH_MANAGER` | Instantly activate or pause promotional code |
 
 ---
 
 ### 6. 🛍️ Customer Storefront & E-Commerce Cart
 
-Audience: Retail Customers ordering online.
+Audience: Retail Customers ordering online (`CUSTOMER` or `SUPER_ADMIN` — staff must use the POS endpoints above, not these).
+*Note: every `/shop/**` call requires a Bearer token; even order tracking is authenticated (call `GET /shop/orders/track/{n}` with the customer token, not anonymously).*
 
 | Method | Endpoint | Allowed Roles | Description |
 | :---: | :--- | :---: | :--- |
 | `GET` | `/api/v1/shop/cart` | `CUSTOMER` | View current shopping cart items, applied bundles, and subtotals |
 | `POST` | `/api/v1/shop/cart/items` | `CUSTOMER` | Add variant or custom quoted mattress to cart |
-| `PUT` | `/api/v1/shop/cart/items/{itemId}` | `CUSTOMER` | Update item quantity |
-| `DELETE` | `/api/v1/shop/cart/items/{itemId}` | `CUSTOMER` | Remove item from cart |
+| `PUT` | `/api/v1/shop/cart/items` | `CUSTOMER` | Set item quantity (`{variantId, qty}` + `?guestKey=`) |
 | `POST` | `/api/v1/shop/cart/clear` | `CUSTOMER` | Empty cart |
+| `POST` | `/api/v1/shop/cart/merge` | `CUSTOMER` | Merge an anonymous guest cart into the customer cart |
 | `POST` | `/api/v1/shop/checkout/estimate-shipping`| `CUSTOMER`| Calculate delivery charge by governorate zone and floor carry-up |
+| `POST` | `/api/v1/shop/checkout/price-preview` | `CUSTOMER` | Non-binding invoice math preview (rate-limited 60/min) |
 | `POST` | `/api/v1/shop/checkout/place-order` | `CUSTOMER` | Place online order with idempotent key (COD, Card, or Installment) |
+| `POST` | `/api/v1/shop/checkout/payment-intent` | `CUSTOMER` | Create gateway payment intent (`fake` for dev); saves `providerRef` |
+| `GET` | `/api/v1/shop/checkout/payment-intents?orderId=` | `CUSTOMER` | List payment intents for an order |
 | `GET` | `/api/v1/shop/orders` | `CUSTOMER` | Customer's personal order history |
-| `GET` | `/api/v1/shop/orders/track/{trackingNumber}`| **Public** | Public shipment tracking status without login |
-| `GET` | `/api/v1/shop/orders/track/{trackingNumber}/location`| **Public** | Live GPS driver coordinates for out-for-delivery orders |
+| `GET` | `/api/v1/shop/orders/{orderId}` | `CUSTOMER` | Customer's single order details |
+| `GET` | `/api/v1/shop/orders/track/{trackingNumber}`| `CUSTOMER` | Shipment tracking status (authenticated, not public) |
+| `GET` | `/api/v1/shop/orders/track/{trackingNumber}/location`| `CUSTOMER` | Live GPS driver coordinates for out-for-delivery orders |
 
 ---
 
@@ -1072,10 +1127,17 @@ Audience: Branch Managers (supervision) and Warehouse Keepers (daily execution).
 | Method | Endpoint | Allowed Roles | Description |
 | :---: | :--- | :---: | :--- |
 | `GET` | `/api/v1/inventory/warehouses` | `BRANCH_MANAGER` | List branch warehouses and storage facilities |
-| `POST` | `/api/v1/inventory/warehouses` | `BRANCH_MANAGER` | Provision a new warehouse facility |
+| `POST` | `/api/v1/inventory/warehouses` | `BRANCH_MANAGER` | Provision a new warehouse facility (`{branchId, name, code}`) |
+| `GET` | `/api/v1/inventory/warehouses/{id}` | `BRANCH_MANAGER` | Retrieve warehouse details |
+| `PATCH` / `PUT` | `/api/v1/inventory/warehouses/{id}` | `BRANCH_MANAGER` | Update warehouse |
+| `PUT` | `/api/v1/inventory/stocks/threshold` | `BRANCH_MANAGER` | Set low-stock threshold (`{warehouseId, variantId, minQty}`) |
+| `GET` | `/api/v1/inventory/batches` | `BRANCH_MANAGER` | List FIFO cost batches per warehouse/variant |
+| `GET` | `/api/v1/inventory/batches/valuation` | `BRANCH_MANAGER` | Inventory cost vs potential revenue/profit |
 | `GET` | `/api/v1/inventory/stocks` | `BRANCH_MANAGER` | View multi-warehouse stock balances with reserved quantities |
 | `GET` | `/api/v1/inventory/stocks/low-alerts` | `BRANCH_MANAGER` | Automated trigger for variants below safety stock threshold |
 | `POST` | `/api/v1/inventory/transfers` | `BRANCH_MANAGER` | Initiate inter-warehouse stock transfer dispatch |
+| `GET` | `/api/v1/inventory/transfers/{id}` | `BRANCH_MANAGER` | Inspect a transfer and its lines |
+| `POST` | `/api/v1/inventory/transfers/{id}/dispatch` | `BRANCH_MANAGER` | Dispatch transfer (source stock hold) |
 | `POST` | `/api/v1/inventory/transfers/{id}/approve` | `BRANCH_MANAGER` | Authorize stock release from source warehouse |
 | `POST` | `/api/v1/inventory/audits` | `BRANCH_MANAGER` | Open new physical stock audit session |
 | `POST` | `/api/v1/inventory/audits/{id}/reconcile` | `BRANCH_MANAGER` | Finalize audit and post automatic reconciliation ledger entries |
@@ -1096,9 +1158,20 @@ Audience: Purchasing Managers and Branch Managers.
 | `GET` | `/api/v1/purchasing/suppliers` | `BRANCH_MANAGER` | List registered factory suppliers and current accounts payable |
 | `POST` | `/api/v1/purchasing/suppliers` | `BRANCH_MANAGER` | Register new raw material or mattress manufacturer |
 | `GET` | `/api/v1/purchasing/purchase-orders` | `BRANCH_MANAGER` | List purchase orders with status filter |
-| `POST` | `/api/v1/purchasing/purchase-orders` | `BRANCH_MANAGER` | Issue Purchase Order (PO) to supplier with unit costs |
-| `POST` | `/api/v1/purchasing/purchase-orders/{id}/receive`| `BRANCH_MANAGER`| Receive batch shipment $\to$ increments inventory ledger |
+| `POST` | `/api/v1/purchasing/purchase-orders` | `BRANCH_MANAGER` | Issue Purchase Order (PO) to supplier with unit costs (`{supplierId, items[{variantId, qty, unitCost}]}`) |
+| `GET` | `/api/v1/purchasing/purchase-orders/{id}` | `BRANCH_MANAGER` | Retrieve a purchase order |
+| `POST` | `/api/v1/purchasing/purchase-orders/{id}` | `BRANCH_MANAGER` | Transition a PO (`{action: "send" | "cancel"}`) |
+| `POST` | `/api/v1/purchasing/purchase-orders/{id}/receive`| `BRANCH_MANAGER`| Receive batch shipment $\to$ increments inventory ledger (`{warehouseId, shipmentId?, lines[{variantId, actualQty, damagedQty}]}`) |
 | `POST` | `/api/v1/purchasing/supplier-payments` | `BRANCH_MANAGER` | Record payment against supplier accounts payable balance |
+| `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/purchasing/suppliers/{id}` | `BRANCH_MANAGER` | Retrieve / update / deactivate a supplier |
+| `POST` | `/api/v1/purchasing/shipments` | `BRANCH_MANAGER` | Create a shipment (container arrival, `{supplierId, shipmentNo, arrivedAt}`) |
+| `POST` | `/api/v1/purchasing/supplier-invoices` | `BRANCH_MANAGER` | Create supplier invoice with installments |
+| `POST` | `/api/v1/purchasing/supplier-invoices/{id}/allocate` | `BRANCH_MANAGER` | Allocate invoice amount to a shipment |
+| `POST` | `/api/v1/purchasing/supplier-invoices/{id}/pay` | `BRANCH_MANAGER` | Pay invoice (partial supported, `{amount, method}`) |
+| `GET` | `/api/v1/purchasing/suppliers/{id}/statement` | `BRANCH_MANAGER` | Supplier statement (invoices + overdue + owed) |
+| `POST` | `/api/v1/purchasing/shipments/{id}/landed-costs` | `BRANCH_MANAGER` | Add landed cost (`{kind: FREIGHT…, amount, allocationMethod?: BY_VALUE | BY_QTY}`) |
+| `GET` | `/api/v1/purchasing/shipments/{id}/landed-costs` | `BRANCH_MANAGER` | List landed costs + per-batch allocations |
+| `POST` | `/api/v1/purchasing/landed-costs/{id}/finalize` | `BRANCH_MANAGER` | Finalize with actual amount (remaining adjusts, sold → variance) |
 
 ---
 
@@ -1108,18 +1181,23 @@ Audience: End Customers (Portal) and Branch Support Specialists (Admin).
 
 | Method | Endpoint | Allowed Roles | Description |
 | :---: | :--- | :---: | :--- |
-| `GET` | `/api/v1/crm/customers` | `BRANCH_MANAGER` | Search customer database with RFM segments and purchase history |
-| `GET` | `/api/v1/crm/warranties` | `BRANCH_MANAGER` | Search warranty registry by customer phone, serial, or order |
-| `GET` | `/api/v1/crm/warranties/{serialNumber}` | `BRANCH_MANAGER` | Inspect warranty validity, covered years, and previous claims |
-| `POST` | `/api/v1/crm/claims/{claimId}/inspection`| `BRANCH_MANAGER`| Schedule technician home inspection for defective mattress |
-| `POST` | `/api/v1/crm/claims/{claimId}/replace` | `BRANCH_MANAGER` | Approve warranty claim and authorize replacement order |
-| `POST` | `/api/v1/crm/claims/{claimId}/repair` | `BRANCH_MANAGER` | Authorize factory mattress repair |
+| `POST` | `/api/v1/crm/warranties/register` | `BRANCH_MANAGER` | Register warranty from an invoice (`{invoiceId}`) |
+| `GET` | `/api/v1/crm/warranties/{warrantyId}` | `BRANCH_MANAGER` | Inspect warranty validity, covered years, and previous claims |
+| `GET` | `/api/v1/crm/warranties/{warrantyId}/claims` | `BRANCH_MANAGER` | List claims filed against a warranty |
+| `POST` | `/api/v1/crm/claims/{claimId}/inspection`| `BRANCH_MANAGER`| Schedule technician home inspection (`{inspectionAt}`) |
+| `POST` | `/api/v1/crm/claims/{claimId}/resolve` | `BRANCH_MANAGER` | Resolve claim (`{resolution}`, e.g. `replace`) |
+| `POST` | `/api/v1/crm/claims/{claimId}/close` | `BRANCH_MANAGER` | Close a resolved claim |
 | `POST` | `/api/v1/crm/reviews/{id}/moderate` | `BRANCH_MANAGER` | Approve or reject customer product review |
 | `GET` | `/api/v1/portal/addresses` | `CUSTOMER` | List saved shipping addresses |
 | `POST` | `/api/v1/portal/addresses` | `CUSTOMER` | Save new shipping address with floor and landmark details |
-| `POST` | `/api/v1/portal/warranties/register` | `CUSTOMER` | Register serial number found on invoice / mattress label |
-| `GET` | `/api/v1/portal/warranties/verify/{serial}`| **Public** | Public warranty verification by serial number |
+| `DELETE` | `/api/v1/portal/addresses/{addressId}` | `CUSTOMER` | Delete a saved address |
+| `GET` | `/api/v1/portal/favorites` | `CUSTOMER` | List favorite products |
+| `POST` | `/api/v1/portal/favorites` | `CUSTOMER` | Add a favorite (`{productId}`) |
+| `DELETE` | `/api/v1/portal/favorites/{productId}` | `CUSTOMER` | Remove a favorite |
+| `GET` | `/api/v1/portal/warranties` | `CUSTOMER` | List my warranties |
+| `POST` | `/api/v1/portal/warranties/register` | `CUSTOMER` | Register a warranty serial number |
 | `POST` | `/api/v1/portal/warranties/claims` | `CUSTOMER` | Submit warranty claim with defect description & photos |
+| `GET` | `/api/v1/portal/warranties/claims` | `CUSTOMER` | List my warranty claims |
 | `POST` | `/api/v1/portal/reviews` | `CUSTOMER` | Submit verified purchase rating and photo review |
 | `GET` | `/api/v1/portal/loyalty` | `CUSTOMER` | View current loyalty rewards point balance |
 | `GET` | `/api/v1/portal/loyalty/ledger` | `CUSTOMER` | View history of earned and redeemed points |
@@ -1133,11 +1211,16 @@ Audience: Branch Managers (Management) and Staff Members (`/me` portal).
 | Method | Endpoint | Allowed Roles | Description |
 | :---: | :--- | :---: | :--- |
 | `GET` | `/api/v1/hr/employees` | `BRANCH_MANAGER` | List branch staff records with job titles and compensation |
-| `POST` | `/api/v1/hr/employees` | `BRANCH_MANAGER` | Onboard staff member (link user, salary, commission rule) |
+| `POST` | `/api/v1/hr/employees` | `BRANCH_MANAGER` | Onboard staff member (`{userId, branchId?, jobTitle?, baseSalary}`) |
+| `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/hr/employees/{id}` | `BRANCH_MANAGER` | Retrieve / update / remove an employee record |
 | `GET` | `/api/v1/hr/leaves` | `BRANCH_MANAGER` | View pending vacation and sick leave requests |
-| `POST` | `/api/v1/hr/leaves/{id}/action` | `BRANCH_MANAGER` | Approve or reject employee leave request |
-| `POST` | `/api/v1/hr/commissions/rules` | `BRANCH_MANAGER` | Define commission rule (Percentage or Fixed EGP per mattress) |
-| `POST` | `/api/v1/hr/advances` | `BRANCH_MANAGER` | Grant employee salary advance deduction |
+| `POST` | `/api/v1/hr/leaves` | `BRANCH_MANAGER` | Create a leave on behalf of an employee (`{employeeId, type, fromDate, toDate}`) |
+| `POST` | `/api/v1/hr/leaves/{id}/action` | `BRANCH_MANAGER` | Approve or reject (`{action: "approve" | "reject"}`) |
+| `GET` | `/api/v1/hr/commissions/rules` | `BRANCH_MANAGER` | List commission rules |
+| `POST` | `/api/v1/hr/commissions/rules` | `BRANCH_MANAGER` | Define commission rule (`kind`: `FIXED_MONTHLY` \| `PERCENT_OF_BASE` \| `PERCENT_OF_SALES`) |
+| `GET` | `/api/v1/hr/advances` | `BRANCH_MANAGER` | List salary advances |
+| `POST` | `/api/v1/hr/advances` | `BRANCH_MANAGER` | Grant employee salary advance (`{employeeId, amount}`) |
+| `GET` / `POST` | `/api/v1/hr/deductions` | `BRANCH_MANAGER` | List / create payroll deductions (`{employeeId, amount, reason?}`) |
 | `POST` | `/api/v1/hr/payroll/calculate` | `BRANCH_MANAGER` | Run monthly payroll (Base + Commissions - Advances) |
 | `POST` | `/api/v1/hr/payroll/{id}/approve` | `BRANCH_MANAGER` | Approve payroll run and lock payroll lines |
 | `GET` | `/api/v1/hr/payroll/{id}/export-excel` | `BRANCH_MANAGER` | Export bank transfer / cash disbursement sheet |
@@ -1154,37 +1237,45 @@ Audience: Certified Accountants and Branch Finance Officers.
 | Method | Endpoint | Allowed Roles | Description |
 | :---: | :--- | :---: | :--- |
 | `GET` | `/api/v1/accounting/chart-of-accounts` | `ACCOUNTANT` | View hierarchical Chart of Accounts (Assets, Liabilities...) |
-| `POST` | `/api/v1/accounting/chart-of-accounts` | `ACCOUNTANT` | Create sub-account / cost-center account code |
+| `POST` | `/api/v1/accounting/chart-of-accounts` | `ACCOUNTANT` | Create sub-account (`{code, nameAr, type: ASSET\|LIABILITY\|EQUITY\|REVENUE\|EXPENSE}`) |
+| `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/accounting/chart-of-accounts/{code}` | `ACCOUNTANT` | Retrieve / update / remove an account |
 | `GET` | `/api/v1/accounting/journal-entries` | `ACCOUNTANT` | Search double-entry journal vouchers |
-| `POST` | `/api/v1/accounting/journal-entries` | `ACCOUNTANT` | Post balanced journal voucher ($\sum \text{Debit} = \sum \text{Credit}$) |
+| `POST` | `/api/v1/accounting/journal-entries` | `ACCOUNTANT` | Post balanced journal voucher ($\sum \text{Debit} = \sum \text{Credit}$, else 400) |
+| `GET` | `/api/v1/accounting/journal-entries/{id}` | `ACCOUNTANT` | Retrieve a journal voucher |
 | `GET` | `/api/v1/accounting/general-ledger` | `ACCOUNTANT` | Extract General Ledger report for specific account code |
-| `GET` | `/api/v1/accounting/treasuries` | `ACCOUNTANT` | List showroom cash safes and bank balances |
-| `POST` | `/api/v1/accounting/treasuries/transfers`| `ACCOUNTANT`| Record fund transfer between branch safe and bank |
-| `GET` | `/api/v1/accounting/expenses` | `ACCOUNTANT` | List operational expense records with attached receipts |
-| `POST` | `/api/v1/accounting/expenses` | `ACCOUNTANT` | Register branch operating expense (utilities, hospitality) |
-| `GET` | `/api/v1/accounting/checks` | `ACCOUNTANT` | Portfolio of customer and supplier commercial checks |
-| `PUT` | `/api/v1/accounting/checks/{id}/status`| `ACCOUNTANT` | Update check status (`HELD`, `CASHED`, `BOUNCED`) |
-| `GET` | `/api/v1/accounting/reports/profit-loss`| `ACCOUNTANT` | Generate real-time Income Statement (P&L) |
-| `GET` | `/api/v1/accounting/reports/balance-sheet`| `ACCOUNTANT`| Generate Balance Sheet report |
-| `GET` | `/api/v1/accounting/reports/tax` | `ACCOUNTANT` | Generate sales and purchase VAT report |
+| `GET` / `POST` | `/api/v1/accounting/treasuries` | `ACCOUNTANT` | List / create showroom cash safes (`{branchId?, name, openingBalance?}`) |
+| `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/accounting/treasuries/{id}` | `ACCOUNTANT` | Retrieve / update / remove a treasury |
+| `POST` | `/api/v1/accounting/treasuries/transfers`| `ACCOUNTANT`| Record fund transfer between treasuries (`{fromId, toId, amount}` — UUIDs) |
+| `GET` / `POST` | `/api/v1/accounting/expenses` | `ACCOUNTANT` | List / register branch operating expenses (`{branchId?, category, amount}`) |
+| `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/accounting/expenses/{id}` | `ACCOUNTANT` | Retrieve / update / remove an expense |
+| `GET` / `POST` | `/api/v1/accounting/checks` | `ACCOUNTANT` | List / register commercial checks (`{direction: in\|out, amount, dueDate?, party?}`) |
+| `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/accounting/checks/{id}` | `ACCOUNTANT` | Retrieve / update / remove a check |
+| `POST` | `/api/v1/accounting/checks/{id}/status`| `ACCOUNTANT` | Update check status (`{status}`, e.g. `CASHED`) |
+| `GET` | `/api/v1/accounting/reports/profit-loss`| `ACCOUNTANT` | Generate real-time Income Statement (P&L, `?from=&to=`) |
+| `GET` | `/api/v1/accounting/reports/balance-sheet`| `ACCOUNTANT`| Generate Balance Sheet report (`?to=`) |
+| `GET` | `/api/v1/accounting/reports/tax` | `ACCOUNTANT` | Generate sales and purchase VAT report (`?from=&to=`) |
 
 ---
 
 ### 12. 🚚 Fleet Delivery & Driver Logistics
 
-Audience: Delivery Drivers (`ROLE_DELIVERY_DRIVER`) and Logistics Dispatchers.
+Audience: Delivery Drivers (`DELIVERY_DRIVER`) for trip execution, `SUPER_ADMIN` for dispatch/management.
 
 | Method | Endpoint | Allowed Roles | Description |
 | :---: | :--- | :---: | :--- |
 | `GET` | `/api/v1/delivery/my-trips` | `DELIVERY_DRIVER` | Fetch trips assigned to the authenticated driver |
 | `GET` | `/api/v1/delivery/trips/{tripId}/stops`| `DELIVERY_DRIVER` | View ordered customer stops with delivery notes and contact |
+| `POST` | `/api/v1/delivery/stops/{stopId}/status`| `DELIVERY_DRIVER` | Update stop (`delivered` + `proofPhoto`, or `failed` + `failReason`; pending only) |
 | `POST` | `/api/v1/delivery/trips/{tripId}/location`| `DELIVERY_DRIVER`| Stream current vehicle GPS coordinates (Latitude/Longitude) |
-| `POST` | `/api/v1/delivery/stops/{stopId}/pin` | `DELIVERY_DRIVER` | Save exact customer delivery coordinates on map |
-| `POST` | `/api/v1/delivery/orders/{orderId}` | `DELIVERY_DRIVER` | Confirm delivery with POD photo and recipient signature |
-| `POST` | `/api/v1/delivery/orders/{orderId}/failed`| `DELIVERY_DRIVER`| Record failed delivery attempt with specific reason |
-| `POST` | `/api/v1/delivery/trips` | `BRANCH_MANAGER` | Dispatch new multi-order delivery trip to vehicle and driver |
-| `POST` | `/api/v1/delivery/trips/{id}/optimize` | `BRANCH_MANAGER` | Auto-sequence stops for minimal road distance |
-| `POST` | `/api/v1/delivery/orders/{orderId}/rate`| `CUSTOMER` | Customer submits driver rating (1 to 5 stars) |
+| `POST` | `/api/v1/delivery/orders/{orderId}` | `DELIVERY_DRIVER` | Confirm delivery with POD photo (`{proofPhoto}`) |
+| `POST` | `/api/v1/delivery/orders/{orderId}/failed`| `DELIVERY_DRIVER`| Record failed delivery attempt (`{failReason}`) |
+| `POST` | `/api/v1/delivery/trips` | `SUPER_ADMIN` | Dispatch new delivery trip (`{driverId, vehicleId, tripDate, orderIds}`) |
+| `POST` | `/api/v1/delivery/trips/{id}/dispatch` | `SUPER_ADMIN` | Mark trip in-transit |
+| `POST` | `/api/v1/delivery/trips/{id}/cancel` | `SUPER_ADMIN` | Cancel a draft trip |
+| `POST` | `/api/v1/delivery/trips/{id}/complete` | `SUPER_ADMIN` | Complete a trip |
+| `POST` | `/api/v1/delivery/stops/{stopId}/pin` | `SUPER_ADMIN` | Save exact customer delivery coordinates on map |
+| `POST` | `/api/v1/delivery/trips/{id}/optimize` | `SUPER_ADMIN` | Auto-sequence stops for minimal road distance |
+| `POST` | `/api/v1/portal/deliveries/{orderId}/rate`| `CUSTOMER` | Customer submits driver rating (1 to 5 stars) |
 
 ---
 
@@ -1195,17 +1286,20 @@ Audience: Executive Management and Branch Managers.
 | Method | Endpoint | Allowed Roles | Description |
 | :---: | :--- | :---: | :--- |
 | `GET` | `/api/v1/analytics/summary` | `BRANCH_MANAGER` | Real-time executive dashboard: Daily Revenue, Orders, Margin |
-| `GET` | `/api/v1/analytics/executive-summary` | `SUPER_ADMIN` | Chain-wide aggregate KPIs across all branches |
-| `GET` | `/api/v1/analytics/revenue-profit` | `BRANCH_MANAGER` | Revenue vs Cost vs Net Profit trends over selected dates |
+| `GET` | `/api/v1/analytics/revenue` | `BRANCH_MANAGER` | Revenue + profit from daily facts (`branchId` optional) |
+| `GET` | `/api/v1/analytics/revenue-profit` | `BRANCH_MANAGER` | Revenue vs Cost vs Net Profit trends over selected dates (alias of revenue) |
 | `GET` | `/api/v1/analytics/product-velocity` | `BRANCH_MANAGER` | 30-day velocity, units sold, and estimated days-of-cover |
-| `GET` | `/api/v1/analytics/geo-heatmap` | `BRANCH_MANAGER` | Governorate and neighborhood delivery density heatmap |
-| `GET` | `/api/v1/analytics/chassis-trends` | `BRANCH_MANAGER` | Popularity breakdown by spring chassis type (Bonnell, Pocket) |
-| `GET` | `/api/v1/analytics/performance/branches`| `SUPER_ADMIN` | Side-by-side branch sales and profitability comparison |
-| `GET` | `/api/v1/analytics/performance/sales-reps`| `BRANCH_MANAGER`| Sales representative commissions and conversion ranking |
+| `GET` | `/api/v1/analytics/products/top` | `BRANCH_MANAGER` | Top variants by quantity sold |
+| `GET` | `/api/v1/analytics/performance/branches`| `BRANCH_MANAGER` | Branch revenue/profit/order comparison (chain-wide for `SUPER_ADMIN` via same endpoint) |
+| `GET` | `/api/v1/analytics/geo-heatmap` | `BRANCH_MANAGER` | Governorate delivery density heatmap |
+| `GET` | `/api/v1/analytics/sales-drilldown` | `BRANCH_MANAGER` | Day × branch × variant drilldown (`branchId` optional; ClickHouse when enabled) |
 | `GET` | `/api/v1/analytics/customers/rfm` | `BRANCH_MANAGER` | Recency, Frequency, Monetary customer segmentation grid |
-| `POST` | `/api/v1/analytics/inquiries` | `SALES_REP`, `CASHIER` | Log showroom walk-in lost sales inquiry (model, price feedback) |
+| `POST` | `/api/v1/analytics/inquiries` | **Public** (client key only) | Log showroom walk-in lost sales inquiry (model, price feedback) |
+| `POST` | `/api/v1/analytics/events` | **Public** (client key only) | Behavior beacon, always 202, explicit consent required |
+| `GET` | `/api/v1/analytics/inquiries` | `BRANCH_MANAGER` | List logged showroom inquiries |
 | `GET` | `/api/v1/analytics/inquiries/top-asked` | `BRANCH_MANAGER` | Report on most requested unstocked sizes or products |
-| `GET` | `/api/v1/analytics/audit-trail/{entity}/{id}`| `SUPER_ADMIN` | Inspect immutable JSON before/after audit log for any record |
+| `GET` | `/api/v1/analytics/notifications` | `BRANCH_MANAGER` | Pending notification queue |
+| `GET` | `/api/v1/analytics/audit-trail/{entity}/{id}`| `BRANCH_MANAGER` | Inspect immutable JSON before/after audit log for any record |
 
 ---
 
@@ -1216,9 +1310,26 @@ Audience: Storefront Visitors and In-Store Sales Reps.
 | Method | Endpoint | Allowed Roles | Description |
 | :---: | :--- | :---: | :--- |
 | `GET` | `/api/v1/estimator/catalog` | **Public** | Fetch models eligible for custom dimension manufacture |
-| `POST` | `/api/v1/estimator/quote` | **Public** | Generate interactive quote with width-bracket breakdown |
-| `POST` | `/api/v1/estimator/spin` | `CUSTOMER` | Spin interactive promotional wheel to win instant coupon |
-| `GET` | `/api/v1/estimator/spin/campaigns` | `BRANCH_MANAGER` | Manage active spin-and-win discount campaigns |
+| `POST` | `/api/v1/estimator/quote` | **Public** | Generate interactive quote (`{productId, shape, widthCm, lengthCm, heightCm?, qty?}`) |
+| `POST` | `/api/v1/estimator/spin` | `CUSTOMER` | Spin promotional wheel (`{campaignId?}`) → prize + promo code |
+| `GET` / `POST` | `/api/v1/estimator/spin/campaigns` | `BRANCH_MANAGER` | List / create spin campaigns (`{name, isActive}`) |
+| `POST` | `/api/v1/estimator/spin/campaigns/{id}/toggle` | `BRANCH_MANAGER` | Activate / pause a campaign |
+| `POST` | `/api/v1/estimator/spin/campaigns/{campaignId}/prizes` | `BRANCH_MANAGER` | Add a prize (`{label, kind, value?, weight?}`) |
+| `DELETE` | `/api/v1/estimator/spin/prizes/{id}` | `BRANCH_MANAGER` | Remove a prize |
+
+### 15. 🎁 Loyalty, Reviews & Payments
+
+| Method | Endpoint | Allowed Roles | Description |
+| :---: | :--- | :---: | :--- |
+| `GET` | `/api/v1/portal/loyalty` | `CUSTOMER` | Loyalty point balance |
+| `GET` | `/api/v1/portal/loyalty/ledger` | `CUSTOMER` | Points earn/redeem history |
+| `POST` | `/api/v1/portal/loyalty/quote` | `CUSTOMER` | Quote a redemption (`{points}`; 409 when balance is insufficient) |
+| `POST` | `/api/v1/portal/reviews` | `CUSTOMER` | Submit a product review (`{productId, rating 1-5, title?}`) |
+| `GET` | `/api/v1/portal/reviews` | `CUSTOMER` | My submitted reviews |
+| `POST` | `/api/v1/portal/reviews/qa` | `CUSTOMER` | Ask a product question (`{productId, question}`) |
+| `POST` | `/api/v1/portal/reviews/{id}/helpful` | `CUSTOMER` | Mark a review helpful |
+| `POST` | `/api/v1/crm/reviews/{id}/moderate` | `BRANCH_MANAGER` | Approve / reject a review (`{approve}`) |
+| `POST` | `/api/v1/shop/checkout/payment-callback/{gateway}` | **Public** (signature-verified) | Gateway webhook — `fake` requires `X-Fake-Signature: HMAC-SHA256(provider_ref, FAKE_SECRET)` (default secret `dev-secret`); 422 on bad signature, 409 when there is nothing to confirm |
 
 ---
 
@@ -1226,13 +1337,17 @@ Audience: Storefront Visitors and In-Store Sales Reps.
 
 ### 1. Super Admin Authentication
 
-Authenticate using the bootstrap phone and password to receive a Bearer JWT token:
+Authenticate using the bootstrap phone and password to receive a Bearer JWT token.
+Every `/api/**` call (login included) must also carry the first-party client headers
+(`X-Api-Client` + `X-Api-Key`, default dev key `dev-local-key`, configurable via `CLIENT_KEYS`):
 
 ```bash
 curl -X POST http://localhost:8080/api/v1/auth/login \
   -H "Content-Type: application/json" \
+  -H "X-Api-Client: postman" \
+  -H "X-Api-Key: dev-local-key" \
   -d '{
-    "phoneNumber": "01000000000",
+    "phone": "01000000000",
     "password": "admin123"
   }'
 ```
@@ -1241,20 +1356,17 @@ curl -X POST http://localhost:8080/api/v1/auth/login \
 ```json
 {
   "success": true,
-  "message": "تم تسجيل الدخول بنجاح",
+  "message": "تمت العملية بنجاح",
   "data": {
-    "accessToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTAwMDAwMDAwMCIs...",
-    "refreshToken": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIwMTAwMDAwMDAwMCIs...",
-    "tokenType": "Bearer",
-    "expiresIn": 86400,
-    "user": {
-      "fullName": "System Admin",
-      "phoneNumber": "01000000000",
-      "roles": ["ROLE_SUPER_ADMIN"]
-    }
+    "accessToken": "eyJhbGciOiJIUzUxMiJ9...",
+    "refreshToken": "eyJhbGciOiJIUzUxMiJ9...",
+    "userId": "7aa17e39-0877-45ff-8d0d-94abc0739646"
   }
 }
 ```
+
+> Use `GET /api/v1/auth/me` with the access token to resolve roles/branch.
+> Without the client headers the API returns `401 {"errors":["CLIENT_REJECTED"]}`.
 
 ---
 
@@ -1265,11 +1377,13 @@ Calculate an exact price quote for an oval mattress with non-standard dimensions
 ```bash
 curl -X POST http://localhost:8080/api/v1/catalog/public/products/royal-medical/custom-quote \
   -H "Content-Type: application/json" \
+  -H "X-Api-Client: postman" \
+  -H "X-Api-Key: dev-local-key" \
   -H "X-Lang: ar" \
   -d '{
     "shape": "OVAL",
-    "widthCm": 135.0,
-    "lengthCm": 195.0
+    "widthCm": 135,
+    "lengthCm": 195
   }'
 ```
 
@@ -1307,9 +1421,12 @@ $$\text{Grand Total} = 5,170.00 \times 1.13 = 5,842.10\text{ EGP}$$
 ```bash
 curl -X POST http://localhost:8080/api/v1/sales/pos/drawer/shift/open \
   -H "Authorization: Bearer <CASHIER_TOKEN>" \
+  -H "X-Api-Client: postman" \
+  -H "X-Api-Key: dev-local-key" \
   -H "Content-Type: application/json" \
   -d '{
-    "openingCash": 1000.00
+    "branchId": "<BRANCH_ID>",
+    "openingBalance": 1000.00
   }'
 ```
 
@@ -1317,17 +1434,18 @@ curl -X POST http://localhost:8080/api/v1/sales/pos/drawer/shift/open \
 ```bash
 curl -X POST http://localhost:8080/api/v1/sales/pos/complete-sale \
   -H "Authorization: Bearer <CASHIER_TOKEN>" \
+  -H "X-Api-Client: postman" \
+  -H "X-Api-Key: dev-local-key" \
   -H "Idempotency-Key: pos-txn-88392104" \
   -H "Content-Type: application/json" \
   -d '{
-    "customerPhone": "01012345678",
+    "branchId": "<BRANCH_ID>",
+    "guestPhone": "01012345678",
     "paymentMethod": "CASH",
-    "paidAmount": 4500.00,
     "items": [
       {
         "variantId": "7b88ec7b-0442-4f32-8438-e6b78082001c",
-        "quantity": 1,
-        "unitPrice": 4500.00
+        "qty": 1
       }
     ]
   }'
@@ -1337,9 +1455,12 @@ curl -X POST http://localhost:8080/api/v1/sales/pos/complete-sale \
 ```bash
 curl -X POST http://localhost:8080/api/v1/sales/pos/drawer/shift/close \
   -H "Authorization: Bearer <CASHIER_TOKEN>" \
+  -H "X-Api-Client: postman" \
+  -H "X-Api-Key: dev-local-key" \
   -H "Content-Type: application/json" \
   -d '{
-    "actualCashCount": 5500.00
+    "shiftId": "<SHIFT_ID>",
+    "actualCash": 5500.00
   }'
 ```
 
@@ -1371,8 +1492,11 @@ Certified accountants post an audited financial transaction verifying debits equ
 ```bash
 curl -X POST http://localhost:8080/api/v1/accounting/journal-entries \
   -H "Authorization: Bearer <ACCOUNTANT_TOKEN>" \
+  -H "X-Api-Client: postman" \
+  -H "X-Api-Key: dev-local-key" \
   -H "Content-Type: application/json" \
   -d '{
+    "branchId": "<BRANCH_ID>",
     "entryDate": "2026-09-20",
     "memo": "إثبات سداد إيجار المعرض الرئيسي نقدياً",
     "source": "MANUAL",
@@ -1585,6 +1709,21 @@ docker run -d \
 - **Symptom**: `io.jsonwebtoken.security.WeakKeyException: Key size must be at least 256 bits`.
 - **Cause**: `JWT_SECRET` string in `.env` is shorter than 32 characters.
 - **Resolution**: Provide a 256-bit secret key (32+ ASCII characters) in `JWT_SECRET`.
+
+### 4. `401 {"errors":["CLIENT_REJECTED"]}` on Every Call
+- **Symptom**: Even login returns `Client rejected`.
+- **Cause**: Missing or wrong `X-Api-Client` / `X-Api-Key` headers. The server allowlist defaults to `dev-local-key` (`CLIENT_KEYS` env); the old Postman default `postman-dev-key` is rejected.
+- **Resolution**: Send `X-Api-Client: postman` + `X-Api-Key: dev-local-key` (or set `CLIENT_KEYS` to include your key and restart).
+
+### 5. `403` on a documented endpoint
+- **Symptom**: `لا تملك الصلاحية` despite a valid token.
+- **Cause**: Wrong role for the area — e.g. branch managers cannot touch `/identity/**` (super-admin only), cashiers cannot use `/shop/**` (customers only), managers cannot open `/delivery/my-trips` (drivers only), and order tracking is authenticated (not public).
+- **Resolution**: Log in with an account that carries the required role (see the role matrix in Quick Start §4); the Postman collection auto-saves one token per role.
+
+### 6. `409` / `422` on writes
+- **Symptom**: `409` (e.g. branch has no warehouse, insufficient loyalty points, order not deliverable) or `422` (empty cart, bad signature, product without meter price).
+- **Cause**: Business-rule rejection, not a bug — read `errors[]`.
+- **Resolution**: Satisfy the precondition first (create a warehouse for the branch, add stock, configure a meter price, fund loyalty points).
 
 ---
 

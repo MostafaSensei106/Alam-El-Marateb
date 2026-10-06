@@ -9,17 +9,14 @@ object CrmAdminRoutes {
     private const val PREFIX = "/api/v1/crm"
 
     const val BASE = PREFIX
-    const val CUSTOMERS = "$PREFIX/customers"
-    const val CUSTOMER_BY_ID = "$PREFIX/customers/{id}"
 
-    const val WARRANTIES = "$PREFIX/warranties"
-    const val WARRANTY_BY_SERIAL = "$PREFIX/warranties/{serialNumber}"
+    const val WARRANTY_REGISTER = "$PREFIX/warranties/register"
+    const val WARRANTY_BY_ID = "$PREFIX/warranties/{warrantyId}"
+    const val WARRANTY_CLAIMS = "$PREFIX/warranties/{warrantyId}/claims"
 
-    const val CLAIMS = "$PREFIX/claims"
-    const val CLAIM_BY_ID = "$PREFIX/claims/{claimId}"
     const val SCHEDULE_INSPECTION = "$PREFIX/claims/{claimId}/inspection"
-    const val RESOLVE_REPLACE = "$PREFIX/claims/{claimId}/replace"
-    const val RESOLVE_REPAIR = "$PREFIX/claims/{claimId}/repair"
+    const val RESOLVE_CLAIM = "$PREFIX/claims/{claimId}/resolve"
+    const val CLOSE_CLAIM = "$PREFIX/claims/{claimId}/close"
 
     const val REVIEW_MODERATE = "$PREFIX/reviews/{id}/moderate"
 }
