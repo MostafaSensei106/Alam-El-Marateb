@@ -3,7 +3,7 @@ import 'package:services/src/shared_prefs/pref_storage_service_base.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 @lazySingleton
-class SecureStorageService implements PrefStorageServiceBase {
+final class SecureStorageService implements PrefStorageServiceBase {
   const SecureStorageService(this._secureStorage);
 
   final FlutterSecureStorage _secureStorage;
