@@ -1,6 +1,5 @@
 library;
 
-export 'src/types/type_def.dart';
 export 'src/api_headers.dart';
 export 'src/api_routes.dart';
 export 'src/app_notification_settings.dart';

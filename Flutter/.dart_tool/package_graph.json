@@ -105,9 +105,7 @@
     {
       "name": "constants",
       "version": "1.0.0",
-      "dependencies": [
-        "result"
-      ],
+      "dependencies": [],
       "devDependencies": [
         "lints",
         "test"
@@ -117,6 +115,7 @@
       "name": "result",
       "version": "1.0.0",
       "dependencies": [
+        "failure_kit",
         "freezed_annotation"
       ],
       "devDependencies": [
@@ -318,6 +317,13 @@
         "meta",
         "pub_semver",
         "source_gen"
+      ]
+    },
+    {
+      "name": "failure_kit",
+      "version": "1.1.1",
+      "dependencies": [
+        "meta"
       ]
     },
     {
