@@ -33,28 +33,10 @@ extension ResultExtension<T, E> on Result<T, E> {
     Failure(:final error) => error,
   };
 
-  R fold<R>({
-    required R Function(T data) onSuccess,
-    required R Function(E error) onFailure,
-  }) => switch (this) {
-    Success(:final data) => onSuccess(data),
-    Failure(:final error) => onFailure(error),
-  };
-
   T getOrElse(T Function(E error) fallback) => switch (this) {
     Success(:final data) => data,
     Failure(:final error) => fallback(error),
   };
-
-  Result<T, E> onSuccess(void Function(T data) action) {
-    if (this case Success(:final data)) action(data);
-    return this;
-  }
-
-  Result<T, E> onFailure(void Function(E error) action) {
-    if (this case Failure(:final error)) action(error);
-    return this;
-  }
 
   Result<T, NewError> mapError<NewError>(NewError Function(E error) mapper) =>
       switch (this) {
