@@ -10,6 +10,8 @@ workspace:
 - packages/core/constants
 - packages/core/result
 - packages/core/network
+- packages/core/services
+- packages/core/utils
 - packages/modules/catalog
 - packages/modules/pos
 - packages/modules/inventory
