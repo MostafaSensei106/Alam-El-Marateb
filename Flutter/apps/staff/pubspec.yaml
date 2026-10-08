@@ -12,18 +12,11 @@ dependencies:
   get_it: ^9.2.1
   injectable: ^3.0.0
   url_launcher: ^6.3.1
-  core_network: {path: ../../packages/core/network}
-  core_storage: {path: ../../packages/core/storage}
-  core_utils: {path: ../../packages/core/utils}
-  core_auth: {path: ../../packages/core/auth}
-  core_notifications: {path: ../../packages/core/notifications}
-  core_files: {path: ../../packages/core/files}
-  design_system: {path: ../../packages/core/design_system}
-  api_services: {path: ../../packages/core/api}
-  pos: {path: ../../packages/modules/pos}
-  inventory: {path: ../../packages/modules/inventory}
-  delivery: {path: ../../packages/modules/delivery}
-  auth: {path: ../../packages/modules/auth}
+  constants: ^1.0.0
+  result: ^1.0.0
+  pos: ^1.0.0
+  inventory: ^1.0.0
+  delivery: ^1.0.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

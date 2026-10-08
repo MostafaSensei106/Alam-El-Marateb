@@ -1,10 +1,13 @@
 resolution: workspace
 name: crm
 description: Alam El Marateb crm package.
+version: 1.0.0
 publish_to: none
 environment:
   sdk: ^3.13.2
-dependencies: {}
+dependencies:
+  constants: ^1.0.0
+  result: ^1.0.0
 dev_dependencies:
   lints: ^6.0.0
   test: ^1.26.3

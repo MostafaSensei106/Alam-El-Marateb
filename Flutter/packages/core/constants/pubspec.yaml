@@ -1,11 +1,14 @@
+resolution: workspace
 name: constants
-description: A starting point for Dart libraries or applications.
+description: Alam El Marateb core constants.
 version: 1.0.0
+publish_to: none
 
 environment:
-  sdk: ^3.13.5
+  sdk: ^3.13.2
 
 dependencies:
+  result: ^1.0.0
 
 dev_dependencies:
   lints: ^6.0.0

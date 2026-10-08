@@ -6,15 +6,8 @@ workspace:
 - apps/staff
 - apps/customer
 - apps/admin
-- packages/core/network
-- packages/core/storage
-- packages/core/utils
-- packages/core/auth
-- packages/core/notifications
-- packages/core/files
-- packages/core/design_system
-- packages/core/api
-- packages/modules/auth
+- packages/core/constants
+- packages/core/result
 - packages/modules/catalog
 - packages/modules/pos
 - packages/modules/inventory
