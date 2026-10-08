@@ -207,7 +207,7 @@
     },
     {
       "name": "cupertino_ui",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/cupertino_ui-1.1.1",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/cupertino_ui-1.1.2",
       "packageUri": "lib/",
       "languageVersion": "3.13"
     },
@@ -525,7 +525,7 @@
     },
     {
       "name": "hive_ce",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/hive_ce-2.20.1",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/hive_ce-2.20.2",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
@@ -645,7 +645,7 @@
     },
     {
       "name": "jni_flutter",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/jni_flutter-1.0.3",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/jni_flutter-1.0.4+1",
       "packageUri": "lib/",
       "languageVersion": "3.3"
     },
@@ -717,7 +717,7 @@
     },
     {
       "name": "material_ui",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/material_ui-1.5.0",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/material_ui-1.6.0",
       "packageUri": "lib/",
       "languageVersion": "3.13"
     },
@@ -993,9 +993,9 @@
     },
     {
       "name": "shared_preferences",
-      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/shared_preferences-2.5.5",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/shared_preferences-2.5.6",
       "packageUri": "lib/",
-      "languageVersion": "3.9"
+      "languageVersion": "3.11"
     },
     {
       "name": "shared_preferences_android",
