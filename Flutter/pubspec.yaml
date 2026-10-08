@@ -2,12 +2,14 @@ name: alam_el_marateb
 publish_to: none
 environment:
   sdk: ^3.13.2
+
 workspace:
 - apps/staff
 - apps/customer
 - apps/admin
 - packages/core/constants
 - packages/core/result
+- packages/core/network
 - packages/modules/catalog
 - packages/modules/pos
 - packages/modules/inventory

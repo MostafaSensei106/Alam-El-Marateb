@@ -1,5 +1,5 @@
 resolution: workspace
-name: constants
+name: alam_el_marateb_constants
 description: Alam El Marateb core constants.
 version: 1.0.0
 publish_to: none

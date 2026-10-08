@@ -1,4 +1,4 @@
-import 'package:result/result.dart';
+import '../result.dart';
 
 typedef ApiResult<T> = Result<T, Failures>;
 

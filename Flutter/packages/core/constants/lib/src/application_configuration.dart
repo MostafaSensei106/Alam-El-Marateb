@@ -136,6 +136,21 @@ final class ApplicationDuration {
 
   /// Toast display duration of 4 seconds.
   static const Duration toastDisplayDuration = Duration(seconds: 4);
+
+  /// Maximum allowed stale duration for extra-short cache entries.
+  static const Duration maxCacheStaleExtraShort = Duration(hours: 12);
+
+  /// Maximum allowed stale duration for short cache entries.
+  static const Duration maxCacheStaleShort = Duration(days: 3);
+
+  /// Maximum allowed stale duration for regular cache entries.
+  static const Duration maxCacheStale = Duration(days: 7);
+
+  /// Maximum allowed stale duration for long cache entries.
+  static const Duration maxCacheStaleLong = Duration(days: 15);
+
+  /// Maximum allowed stale duration for extra-long cache entries.
+  static const Duration maxCacheStaleExtraLong = Duration(days: 25);
 }
 
 /// Animation duration constants for application transitions and effects.
