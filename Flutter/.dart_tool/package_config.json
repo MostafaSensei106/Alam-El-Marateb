@@ -38,6 +38,24 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "bloc_signals",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/bloc_signals-1.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "bloc_signals_flutter",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/bloc_signals_flutter-1.3.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "bloc_signals_hydrate",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/bloc_signals_hydrate-1.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/boolean_selector-2.1.2",
       "packageUri": "lib/",
@@ -168,6 +186,12 @@
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/dio_web_adapter-2.2.2",
       "packageUri": "lib/",
       "languageVersion": "3.3"
+    },
+    {
+      "name": "equatable",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/equatable-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "fake_async",
@@ -350,6 +374,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "iconsax_flutter",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/iconsax_flutter-1.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "injectable",
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/injectable-3.0.0",
       "packageUri": "lib/",
@@ -524,6 +554,48 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "pausable_timer",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/pausable_timer-3.1.0+3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "permission_handler",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/permission_handler-13.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "permission_handler_android",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/permission_handler_android-14.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "permission_handler_apple",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/permission_handler_apple-9.6.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "permission_handler_html",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/permission_handler_html-0.1.4+1",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "permission_handler_platform_interface",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/permission_handler_platform_interface-4.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
+      "name": "permission_handler_windows",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/permission_handler_windows-0.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.6"
+    },
+    {
       "name": "platform",
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/platform-3.2.0",
       "packageUri": "lib/",
@@ -540,6 +612,12 @@
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/pool-1.5.3",
       "packageUri": "lib/",
       "languageVersion": "3.4"
+    },
+    {
+      "name": "preact_signals",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/preact_signals-7.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
     },
     {
       "name": "protobuf",
@@ -650,6 +728,18 @@
       "languageVersion": "3.5"
     },
     {
+      "name": "signals_core",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/signals_core-7.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "signals_flutter",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/signals_flutter-7.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
       "name": "sky_engine",
       "rootUri": "file:///home/ottafa/flutter/bin/cache/pkg/sky_engine",
       "packageUri": "lib/",
@@ -732,6 +822,12 @@
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/test_core-0.6.18",
       "packageUri": "lib/",
       "languageVersion": "3.10"
+    },
+    {
+      "name": "toastification",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/toastification-3.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "typed_data",
@@ -856,6 +952,12 @@
     {
       "name": "services",
       "rootUri": "../packages/core/services",
+      "packageUri": "lib/",
+      "languageVersion": "3.13"
+    },
+    {
+      "name": "utils",
+      "rootUri": "../packages/core/utils",
       "packageUri": "lib/",
       "languageVersion": "3.13"
     },
