@@ -51,7 +51,9 @@ Future<void> _defaultForegroundHandler(
   }
 }
 
-@LazySingleton(as: BaseNotificationService)
+/// NOTE: intentionally NOT `@injectable` — the optional callbacks
+/// ([syncTokenToBackend], [onForegroundMessage], [onNotificationTap]) are
+/// app-provided. Registered manually in `configureCoreDependencies()`.
 class FirebaseNotificationService implements BaseNotificationService {
   FirebaseNotificationService(
     this._permissionService,

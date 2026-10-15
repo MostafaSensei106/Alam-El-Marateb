@@ -1,6 +1,7 @@
 import 'package:alam_el_marateb_result/result.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 
 import 'package:auth/src/domain/entities/user.dart';
 import 'package:auth/src/domain/usecases/login_usecase.dart';
@@ -12,6 +13,7 @@ part 'auth_cubit.freezed.dart';
 /// Shared auth cubit — provided per login/logout screen, same class in all
 /// three apps. Emits typed states; error strings come from [AuthState.message]
 /// (the screen resolves validator `messageId`s via its own l10n).
+@injectable
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit(this._login, this._logout) : super(const AuthState.initial());
 

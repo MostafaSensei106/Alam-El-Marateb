@@ -1,4 +1,5 @@
 import 'package:alam_el_marateb_result/result.dart';
+import 'package:injectable/injectable.dart';
 
 import 'package:auth/src/domain/entities/user.dart';
 import 'package:auth/src/domain/repositories/auth_repository.dart';
@@ -10,6 +11,7 @@ final class LoginParams {
   final String password;
 }
 
+@lazySingleton
 final class LoginUseCase implements BaseUseCase<User, LoginParams> {
   const LoginUseCase(this._repository);
 

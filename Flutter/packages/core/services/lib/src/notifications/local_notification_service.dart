@@ -14,7 +14,8 @@ import 'package:alam_el_marateb_services/src/notifications/base_local_notificati
 /// the old monolith hardcoded a router + domain cubit here.
 typedef LocalNotificationTapHandler = FutureOr<void> Function(String? payload);
 
-@LazySingleton(as: BaseLocalNotificationService)
+/// NOTE: intentionally NOT `@injectable` — [onNotificationTap] is
+/// app-provided. Registered manually in `configureCoreDependencies()`.
 class LocalNotificationService implements BaseLocalNotificationService {
   LocalNotificationService({this.onNotificationTap});
 

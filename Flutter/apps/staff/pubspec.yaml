@@ -19,6 +19,7 @@ dependencies:
   alam_el_marateb_ui: ^1.0.0
   alam_el_marateb_utils: ^1.0.0
 dev_dependencies:
+  go_router_builder: ^4.3.0
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
