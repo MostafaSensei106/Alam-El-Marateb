@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:alam_el_marateb_constants/constants.dart';
 import 'package:alam_el_marateb_di/di.dart';
 import 'package:alam_el_marateb_network/network.dart';
@@ -56,7 +58,7 @@ class _HomePage extends StatelessWidget {
       (LocalizationCubit cubit) => cubit.state.langCode,
     );
     return Scaffold(
-      appBar: AppBarComponent(title: 'Alam El Marateb User'),
+      appBar: const AppBarComponent(title: 'Alam El Marateb User'),
       body: Padding(
         padding: const EdgeInsets.all(ApplicationPadding.padding),
         child: Column(
@@ -68,10 +70,12 @@ class _HomePage extends StatelessWidget {
               label: 'Toggle theme (shared cubit)',
               onPressed: () {
                 final theme = context.read<ThemeCubit>();
-                theme.changeTheme(
-                  theme.state.themeMode == ThemeMode.dark
-                      ? ThemeMode.light
-                      : ThemeMode.dark,
+                unawaited(
+                  theme.changeTheme(
+                    theme.state.themeMode == ThemeMode.dark
+                        ? ThemeMode.light
+                        : ThemeMode.dark,
+                  ),
                 );
               },
             ),
