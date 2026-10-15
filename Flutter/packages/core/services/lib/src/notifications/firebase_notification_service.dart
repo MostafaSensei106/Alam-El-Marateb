@@ -117,8 +117,8 @@ class FirebaseNotificationService implements BaseNotificationService {
     });
 
     // 7. Listen to token refresh
-    // ignore: deprecated_member_use_from_same_package /* FCM v17 FID migration needs backend change (see file doc) */
-    _messaging.onTokenRefresh
+    // ignore: deprecated_member_use
+    _messaging.onRegistered
         .listen((fcmToken) async {
           log('FCM Token refreshed.');
           await _storage.setData<String>(
@@ -159,7 +159,6 @@ class FirebaseNotificationService implements BaseNotificationService {
           return null;
         }
       }
-      // ignore: deprecated_member_use_from_same_package
       final token = await _messaging.getToken();
       if (token != null) {
         await _storage.setData<String>(
@@ -175,7 +174,7 @@ class FirebaseNotificationService implements BaseNotificationService {
   }
 
   @override
-  // ignore: deprecated_member_use_from_same_package
+  // ignore: deprecated_member_use
   Stream<String> get onTokenRefresh => _messaging.onTokenRefresh;
 
   @override
@@ -196,7 +195,7 @@ class FirebaseNotificationService implements BaseNotificationService {
             return;
           }
         }
-        // ignore: deprecated_member_use_from_same_package
+        // ignore: deprecated_member_use
         await _messaging.deleteToken();
         await _storage.removeData(key: PrefKeys.firebaseMessagingToken);
       } catch (e) {
