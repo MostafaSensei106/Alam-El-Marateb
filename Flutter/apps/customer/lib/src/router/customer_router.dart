@@ -12,7 +12,7 @@ part 'customer_router.g.dart';
 /// Run `dart run build_runner build` inside `apps/customer` after changing
 /// routes. Page transitions stay native per platform via [NativeRouteData].
 @TypedGoRoute<LoginRoute>(path: '/login')
-class LoginRoute extends NativeRouteData {
+class LoginRoute extends NativeRouteData with $LoginRoute {
   const LoginRoute();
 
   @override
@@ -22,7 +22,7 @@ class LoginRoute extends NativeRouteData {
 }
 
 @TypedGoRoute<HomeRoute>(path: '/home')
-class HomeRoute extends NativeRouteData {
+class HomeRoute extends NativeRouteData with $HomeRoute {
   const HomeRoute();
 
   @override

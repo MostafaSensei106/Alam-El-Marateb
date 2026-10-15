@@ -44,3 +44,8 @@ export 'src/file_opener/url_file_opener_service.dart';
 export 'src/theme/theme_service.dart';
 export 'src/toast/toast_service_base.dart';
 export 'src/toast/toastification_service.dart';
+
+// ── Dependency injection ──────────────────────────────────────────────────
+export 'src/di/service_module.dart';
+export 'src/di/services_config.dart';
+export 'src/di/manual_services.dart';

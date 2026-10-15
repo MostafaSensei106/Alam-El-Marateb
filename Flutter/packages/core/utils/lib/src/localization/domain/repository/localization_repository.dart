@@ -8,15 +8,14 @@ import 'package:alam_el_marateb_utils/src/localization/data/interface/localizati
 
 @LazySingleton(as: LocalizationRepositoryBase)
 final class LocalizationRepository implements LocalizationRepositoryBase {
-  LocalizationRepository(
-    this._storage, {
-    this.supportedLanguageCodes = const ['ar', 'en'],
-    this.fallbackLanguageCode = 'ar',
-  });
+  LocalizationRepository(this._storage);
 
   final PrefStorageServiceBase _storage;
-  final List<String> supportedLanguageCodes;
-  final String fallbackLanguageCode;
+
+  /// Locales the app supports (override per app by replacing this
+  /// registration with a configured instance before dependents resolve).
+  final List<String> supportedLanguageCodes = const ['ar', 'en'];
+  final String fallbackLanguageCode = 'ar';
 
   @override
   Future<void> cacheLanguageCode({required String languageCode}) async {

@@ -42,12 +42,12 @@ Future<void> registerAuthModule({
         allowedRoles: allowedRoles,
         onAuthChanged: onAuthChanged ?? notify,
       ),
-    )
-    ..registerLazySingleton<LoginUseCase>(() => LoginUseCase(getIt()))
-    ..registerLazySingleton<LogoutUseCase>(() => LogoutUseCase(getIt()))
-    ..registerFactory<AuthCubit>(() => AuthCubit(getIt(), getIt()));
-}
+    );
 
+  // Everything statically resolvable (use-cases, cubit) is codegen'd —
+  // manual registration stays ONLY for runtime values (Dio, roles, hook).
+  initAuth(getIt);
+}
 /// Builds the app's shared [Dio] client with the standard interceptor stack:
 ///
 /// client-key → locale → token → retry. The client gate runs first because

@@ -23,17 +23,17 @@ part 'localization_cubit.freezed.dart';
 /// - Switching language refreshes every registered cache (new headers).
 @lazySingleton
 class LocalizationCubit extends Cubit<LocalizationState> {
-  LocalizationCubit(
-    this._repository, {
-    this.supportedLanguageCodes = const ['ar', 'en'],
-    this.fallbackLanguageCode = 'ar',
-  }) : super(const LocalizationState(langCode: 'ar')) {
+  LocalizationCubit(this._repository)
+    : super(const LocalizationState(langCode: 'ar')) {
     unawaited(_init());
   }
 
   final LocalizationRepositoryBase _repository;
-  final List<String> supportedLanguageCodes;
-  final String fallbackLanguageCode;
+
+  /// See [LocalizationRepositoryBase.supportedLanguageCodes].
+  List<String> get supportedLanguageCodes =>
+      _repository.supportedLanguageCodes;
+  String get fallbackLanguageCode => _repository.fallbackLanguageCode;
 
   Future<void> _init() async {
     final cached = await _repository.getLanguageCode();
