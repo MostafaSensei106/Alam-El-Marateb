@@ -1,5 +1,5 @@
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:alam_el_marateb_network/network.dart';
 
@@ -17,7 +17,7 @@ class NetworkAwareBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<NetworkCubit, NetworkState>(
+    return BlocSignalBuilder<NetworkCubit, NetworkState>(
       builder: (context, state) {
         return state.maybeWhen(
           disconnected: () => offlineBuilder(context),

@@ -1,5 +1,6 @@
 import 'package:alam_el_marateb_result/result.dart';
 import 'package:auth/auth.dart';
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _FakeAuthRepository implements AuthRepository {
@@ -74,7 +75,10 @@ void main() {
       await Future<void>.delayed(Duration.zero);
       await sub.cancel();
 
+      // NOTE: signal streams replay the current value first (unlike
+      // bloc's Cubit stream), so `_Initial` leads.
       expect(states.map((s) => s.runtimeType.toString()), [
+        '_Initial',
         '_Submitting',
         '_Authenticated',
       ]);
@@ -95,7 +99,7 @@ void main() {
       await Future<void>.delayed(Duration.zero);
       await sub.cancel();
 
-      expect(states.length, 2);
+      expect(states.length, 3);
       final failed = states.last;
       expect(
         failed.maybeWhen(failed: (m) => m, orElse: () => ''),
@@ -110,7 +114,7 @@ void main() {
       await cubit.signOut();
       expect(repo.logoutCalls, 1);
       expect(
-        cubit.state.maybeWhen(unauthenticated: () => true, orElse: () => false),
+        cubit.stateValue.maybeWhen(unauthenticated: () => true, orElse: () => false),
         isTrue,
       );
       await cubit.close();

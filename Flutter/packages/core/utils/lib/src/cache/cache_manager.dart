@@ -23,7 +23,6 @@ abstract class SmartCachePaginationInterface {
 class CacheManager {
   final Set<CubitSignal> _activeCubits = {};
 
-  /// Registers an active Cubit into the cache manager in O(1) time.
   void register(CubitSignal cubit) {
     _activeCubits.add(cubit);
   }

@@ -48,7 +48,7 @@ void main() {
       expect(getIt.isRegistered<LocalizationCubit>(), isTrue);
 
       // Cubits resolve with their repositories wired
-      expect(getIt<ThemeCubit>().state.themeMode, isNotNull);
+      expect(getIt<ThemeCubit>().stateValue.themeMode, isNotNull);
     });
   });
 }

@@ -2,7 +2,7 @@ import 'package:alam_el_marateb_network/network.dart';
 import 'package:alam_el_marateb_result/result.dart';
 import 'package:alam_el_marateb_utils/utils.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _FakeNetworkInfo implements BaseNetworkInfo {
@@ -17,9 +17,10 @@ class _FakeNetworkInfo implements BaseNetworkInfo {
   Future<bool> get hasInternetAccess async => true;
 }
 
-class _FakeCubit extends Cubit<PaginationState<int>> with PaginationMixin<int> {
+class _FakeCubit extends CubitSignal<PaginationState<int>>
+    with PaginationMixin<int> {
   _FakeCubit({required this.pages, this.failOnPage})
-    : super(const PaginationState());
+    : super(initialState: const PaginationState());
 
   final Map<int, List<int>> pages;
   final int? failOnPage;
@@ -33,9 +34,10 @@ class _FakeCubit extends Cubit<PaginationState<int>> with PaginationMixin<int> {
   }
 }
 
-class _FakeSmartCubit extends Cubit<PaginationState<int>>
+class _FakeSmartCubit extends CubitSignal<PaginationState<int>>
     with SmartCachePaginationMixin<int> {
-  _FakeSmartCubit({required this.pages}) : super(const PaginationState()) {
+  _FakeSmartCubit({required this.pages})
+    : super(initialState: const PaginationState()) {
     _networkCubit = NetworkCubit(_FakeNetworkInfo());
   }
 
@@ -68,19 +70,19 @@ void main() {
       );
 
       await cubit.loadNextPage();
-      expect(cubit.state.items, [1, 2]);
-      expect(cubit.state.currentPage, 2);
+      expect(cubit.stateValue.items, [1, 2]);
+      expect(cubit.stateValue.currentPage, 2);
 
       await cubit.loadNextPage();
-      expect(cubit.state.items, [1, 2, 3]);
-      expect(cubit.state.currentPage, 3);
+      expect(cubit.stateValue.items, [1, 2, 3]);
+      expect(cubit.stateValue.currentPage, 3);
 
       await cubit.loadNextPage();
-      expect(cubit.state.hasReachedMax, isTrue);
+      expect(cubit.stateValue.hasReachedMax, isTrue);
 
       // No-op once max reached
       await cubit.loadNextPage();
-      expect(cubit.state.items, [1, 2, 3]);
+      expect(cubit.stateValue.items, [1, 2, 3]);
       await cubit.close();
     });
 
@@ -93,8 +95,8 @@ void main() {
 
       await cubit.loadNextPage();
       await cubit.loadNextPage(isRefresh: true);
-      expect(cubit.state.items, [1, 2]);
-      expect(cubit.state.currentPage, 2);
+      expect(cubit.stateValue.items, [1, 2]);
+      expect(cubit.stateValue.currentPage, 2);
       await cubit.close();
     });
 
@@ -102,8 +104,8 @@ void main() {
       final cubit = _FakeCubit(pages: const {}, failOnPage: 1);
 
       await cubit.loadNextPage();
-      expect(cubit.state.errorMessage, 'fetch failed');
-      expect(cubit.state.items, isEmpty);
+      expect(cubit.stateValue.errorMessage, 'fetch failed');
+      expect(cubit.stateValue.items, isEmpty);
       await cubit.close();
     });
 
@@ -116,8 +118,8 @@ void main() {
 
       await cubit.loadNextPage();
       cubit.clearPaginationCache();
-      expect(cubit.state.items, isEmpty);
-      expect(cubit.state.currentPage, 1);
+      expect(cubit.stateValue.items, isEmpty);
+      expect(cubit.stateValue.currentPage, 1);
       await cubit.close();
     });
 
@@ -128,7 +130,7 @@ void main() {
         },
       );
       await cubit.loadNextPage();
-      final paging = cubit.state.toPagingState();
+      final paging = cubit.stateValue.toPagingState();
       expect(paging.pages?.single, [1, 2]);
       expect(paging.hasNextPage, isTrue);
       await cubit.close();
@@ -149,7 +151,7 @@ void main() {
       manager.register(cubit);
 
       await manager.refreshAllCache();
-      expect(cubit.state.items, [7]);
+      expect(cubit.stateValue.items, [7]);
 
       manager.unregister(cubit);
       await cubit.close();

@@ -45,9 +45,9 @@
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
         "auth",
+        "bloc_signals_flutter",
         "dio",
         "flutter",
-        "flutter_bloc",
         "flutter_screenutil",
         "go_router"
       ],
@@ -69,9 +69,9 @@
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
         "auth",
+        "bloc_signals_flutter",
         "dio",
         "flutter",
-        "flutter_bloc",
         "flutter_screenutil",
         "go_router"
       ],
@@ -272,9 +272,9 @@
       "dependencies": [
         "alam_el_marateb_constants",
         "alam_el_marateb_network",
+        "bloc_signals_flutter",
         "cached_network_image_ce",
         "flutter",
-        "flutter_bloc",
         "flutter_hooks",
         "flutter_screenutil",
         "flutter_svg",
@@ -314,9 +314,9 @@
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
         "alam_el_marateb_validators",
+        "bloc_signals_flutter",
         "dio",
         "flutter",
-        "flutter_bloc",
         "freezed_annotation",
         "retrofit"
       ],
@@ -372,9 +372,9 @@
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
         "alam_el_marateb_validators",
+        "bloc_signals_flutter",
         "dio",
         "flutter",
-        "flutter_bloc",
         "freezed_annotation",
         "retrofit"
       ],
@@ -398,9 +398,9 @@
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
         "alam_el_marateb_validators",
+        "bloc_signals_flutter",
         "dio",
         "flutter",
-        "flutter_bloc",
         "freezed_annotation",
         "retrofit"
       ],
@@ -424,9 +424,9 @@
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
         "alam_el_marateb_validators",
+        "bloc_signals_flutter",
         "dio",
         "flutter",
-        "flutter_bloc",
         "freezed_annotation",
         "retrofit"
       ],
@@ -450,9 +450,9 @@
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
         "alam_el_marateb_validators",
+        "bloc_signals_flutter",
         "dio",
         "flutter",
-        "flutter_bloc",
         "freezed_annotation",
         "retrofit"
       ],
@@ -476,9 +476,9 @@
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
         "alam_el_marateb_validators",
+        "bloc_signals_flutter",
         "dio",
         "flutter",
-        "flutter_bloc",
         "freezed_annotation",
         "retrofit"
       ],
@@ -649,12 +649,12 @@
       ]
     },
     {
-      "name": "flutter_bloc",
-      "version": "9.1.1",
+      "name": "bloc_signals_flutter",
+      "version": "1.5.0",
       "dependencies": [
-        "bloc",
+        "bloc_signals",
         "flutter",
-        "provider"
+        "signals_flutter"
       ]
     },
     {
@@ -722,15 +722,6 @@
       "dependencies": [
         "get_it",
         "meta"
-      ]
-    },
-    {
-      "name": "bloc_signals_flutter",
-      "version": "1.5.0",
-      "dependencies": [
-        "bloc_signals",
-        "flutter",
-        "signals_flutter"
       ]
     },
     {
@@ -1589,19 +1580,11 @@
       ]
     },
     {
-      "name": "provider",
-      "version": "6.1.5+1",
+      "name": "signals_flutter",
+      "version": "7.1.0",
       "dependencies": [
-        "collection",
         "flutter",
-        "nested"
-      ]
-    },
-    {
-      "name": "bloc",
-      "version": "9.2.1",
-      "dependencies": [
-        "meta"
+        "signals_core"
       ]
     },
     {
@@ -1666,14 +1649,6 @@
         "watcher",
         "xxh3",
         "yaml"
-      ]
-    },
-    {
-      "name": "signals_flutter",
-      "version": "7.1.0",
-      "dependencies": [
-        "flutter",
-        "signals_core"
       ]
     },
     {

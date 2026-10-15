@@ -50,10 +50,10 @@ void main() {
       final cubit = ThemeCubit(ThemeRepository(_MemoryStorage()));
       // Allow async _init to complete
       await Future<void>.delayed(Duration.zero);
-      expect(cubit.state.themeMode, ThemeMode.system);
+      expect(cubit.stateValue.themeMode, ThemeMode.system);
 
       await cubit.changeTheme(ThemeMode.dark);
-      expect(cubit.state.themeMode, ThemeMode.dark);
+      expect(cubit.stateValue.themeMode, ThemeMode.dark);
       await cubit.close();
     });
   });
@@ -74,10 +74,10 @@ void main() {
 
       final cubit = LocalizationCubit(repo);
       await Future<void>.delayed(Duration.zero);
-      expect(cubit.state.langCode, 'en');
+      expect(cubit.stateValue.langCode, 'en');
 
       await cubit.changeLanguage('ar');
-      expect(cubit.state.langCode, 'ar');
+      expect(cubit.stateValue.langCode, 'ar');
       expect(await repo.getLanguageCode(), 'ar');
       await cubit.close();
     });
@@ -85,9 +85,9 @@ void main() {
     test('changeLanguage is a no-op for the same code', () async {
       final cubit = LocalizationCubit(LocalizationRepository(_MemoryStorage()));
       await Future<void>.delayed(Duration.zero);
-      final before = cubit.state;
+      final before = cubit.stateValue;
       await cubit.changeLanguage(before.langCode);
-      expect(cubit.state, before);
+      expect(cubit.stateValue, before);
       await cubit.close();
     });
   });

@@ -17,7 +17,7 @@ import 'src/router/admin_router.dart';
 /// the router table and the home page only.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = const AppBlocObserver();
+  BlocSignalObserver.observer = const AppBlocObserver();
   await configureCoreDependencies();
   final dio = await buildAuthenticatedDio(clientName: 'admin-app');
   registerAttachmentService(dio);
@@ -34,25 +34,30 @@ class AdminApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       minTextAdapt: true,
-      builder: (_, _) => MultiBlocProvider(
-        providers: [
-          BlocProvider.value(value: getIt<ThemeCubit>()),
-          BlocProvider.value(value: getIt<LocalizationCubit>()),
-          BlocProvider.value(value: getIt<NetworkCubit>()),
-          BlocProvider(create: (_) => getIt<AuthCubit>()),
-        ],
-        child: BlocBuilder<ThemeCubit, ThemeState>(
-          builder: (context, themeState) {
-            return MaterialApp.router(
-              title: 'Alam El Marateb Admin',
-              theme: AppTheme.light,
-              darkTheme: AppTheme.dark,
-              themeMode: themeState.themeMode,
-              builder: (context, child) =>
-                  ConnectivityBanner(child: child ?? const SizedBox.shrink()),
-              routerConfig: buildAdminRouter(),
-            );
-          },
+      builder: (_, _) => BlocSignalProvider.value(
+        value: getIt<ThemeCubit>(),
+        child: BlocSignalProvider.value(
+          value: getIt<LocalizationCubit>(),
+          child: BlocSignalProvider.value(
+            value: getIt<NetworkCubit>(),
+            child: BlocSignalProvider(
+              create: (_) => getIt<AuthCubit>(),
+              child: BlocSignalBuilder<ThemeCubit, ThemeState>(
+                builder: (context, themeState) {
+                  return MaterialApp.router(
+                    title: 'Alam El Marateb Admin',
+                    theme: AppTheme.light,
+                    darkTheme: AppTheme.dark,
+                    themeMode: themeState.themeMode,
+                    builder: (context, child) => ConnectivityBanner(
+                      child: child ?? const SizedBox.shrink(),
+                    ),
+                    routerConfig: buildAdminRouter(),
+                  );
+                },
+              ),
+            ),
+          ),
         ),
       ),
     );

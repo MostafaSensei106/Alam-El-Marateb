@@ -71,7 +71,7 @@ Future<Dio> buildAuthenticatedDio({
   if (!hasStack) {
     dio.interceptors.addAll([
       DioClientKeyInterceptor(clientName: clientName, clientKey: clientKey),
-      DioLocaleInterceptor(() => getIt<LocalizationCubit>().state.langCode),
+      DioLocaleInterceptor(() => getIt<LocalizationCubit>().stateValue.langCode),
       DioTokenInterceptor(
         getToken: () => getIt<UserSessionServiceBase>().getToken(),
         loginPath: '/auth/login',
