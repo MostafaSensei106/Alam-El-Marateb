@@ -7,6 +7,13 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_bloc: ^9.1.1
+  flutter_screenutil: ^5.9.3
+  alam_el_marateb_constants: ^1.0.0
+  alam_el_marateb_di: ^1.0.0
+  alam_el_marateb_network: ^1.0.0
+  alam_el_marateb_ui: ^1.0.0
+  alam_el_marateb_utils: ^1.0.0
 
 dev_dependencies:
   flutter_test:

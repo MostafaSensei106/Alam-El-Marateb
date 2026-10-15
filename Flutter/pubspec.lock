@@ -69,26 +69,26 @@ packages:
     dependency: transitive
     description:
       name: bloc_signals
-      sha256: "88a289519c70639b4df8b3ff34c4ea5f000d1c4ced53b999020c209e0957de11"
+      sha256: "3802dbaaf22c3f36263ef8e584ce06bd8fd24348233426ce24dd817ea1ccb59d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.0"
+    version: "1.7.0"
   bloc_signals_flutter:
     dependency: transitive
     description:
       name: bloc_signals_flutter
-      sha256: "85d4fba56f338d922f12cf4eaebfe49ba38d94ca771ceafe62cab0ad20d17cc3"
+      sha256: f0d7b553bf56b93499bbb80f9bc4683c21c8dbc31177556f081fe1bc03e0637d
       url: "https://pub.dev"
     source: hosted
-    version: "1.3.3"
+    version: "1.5.0"
   bloc_signals_hydrate:
     dependency: transitive
     description:
       name: bloc_signals_hydrate
-      sha256: c7a59e5602fecbaebd1e55d42c0385f46dd09d90455aa25d078a58a45afa293d
+      sha256: "57ca6c947b930cd55bb0e821eaf66ab7e7e0eaa4d7777fe7c45e1803dd7d94e2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.1.0"
   boolean_selector:
     dependency: transitive
     description:
@@ -117,10 +117,10 @@ packages:
     dependency: transitive
     description:
       name: build_daemon
-      sha256: e1d40ef3f7934986d5da2271b1ba07794921ce263e44d622fb6c406d76589e33
+      sha256: "39ab65f7c60c19af64b9ef96e6a5d3ab48355f7dddfd98a9079d55a8cb6628fc"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.6"
+    version: "4.1.7"
   build_runner:
     dependency: "direct dev"
     description:
@@ -193,6 +193,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.2.0"
+  cli_util:
+    dependency: transitive
+    description:
+      name: cli_util
+      sha256: "89b8801ba49f8b593fbf2d3e59efd0f566c46cd4ba6837ae2610c72b52a0f899"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.6.0"
   clock:
     dependency: transitive
     description:
@@ -213,10 +221,10 @@ packages:
     dependency: transitive
     description:
       name: code_builder
-      sha256: aa5932e94c6c39c2f9ec4e5e06dfdd11a9430a61f6c41b6ba75b28ce0c481baf
+      sha256: "811709c1badd02fc054039a13f66e0db1961865f9a314175f68c3eaeebec786f"
       url: "https://pub.dev"
     source: hosted
-    version: "4.12.0"
+    version: "4.13.0"
   collection:
     dependency: transitive
     description:
@@ -253,10 +261,10 @@ packages:
     dependency: transitive
     description:
       name: coverage
-      sha256: "956a3de0725ca232ad353565a8290d3357592bf4250f6f298a185e2d949c5d3d"
+      sha256: ff89e37c19355194e279d26dafe8e4bece46c9ea63a30be4dc68214f5bc290d3
       url: "https://pub.dev"
     source: hosted
-    version: "1.15.1"
+    version: "1.16.0"
   cross_file:
     dependency: transitive
     description:
@@ -689,10 +697,10 @@ packages:
     dependency: transitive
     description:
       name: hive_ce
-      sha256: "85d43209e2b4903a95d65d054407ea9ad4989d17b4d47e71732070d41b427c87"
+      sha256: "8b6eea82b06a7e2bb298a6a279139c45838b82491a66f3972bf609d48681392a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.20.2"
+    version: "2.22.0"
   hooks:
     dependency: transitive
     description:
@@ -745,10 +753,10 @@ packages:
     dependency: transitive
     description:
       name: http_certificate_pinning
-      sha256: "12b4848113d50c570af93e94bed64004caba14dde87719310d1e4556686c0afa"
+      sha256: a7803cdca6cb5e676dc621e92dc95bd8b3d0ae84a8b0520e5e0b52693a95da1e
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.3"
+    version: "3.0.2"
   http_multi_server:
     dependency: transitive
     description:
@@ -1241,10 +1249,10 @@ packages:
     dependency: "direct dev"
     description:
       name: retrofit_generator
-      sha256: "9d6eddb495edd114d546d875ef165f557dca0dbcbdf6787b9255a4a52d40f15b"
+      sha256: "4524b2074e42304f8183a81ad4169783d1d0363d18a2029aa9250b4ac596c664"
       url: "https://pub.dev"
     source: hosted
-    version: "10.2.11"
+    version: "10.2.12"
   share_plus:
     dependency: transitive
     description:
