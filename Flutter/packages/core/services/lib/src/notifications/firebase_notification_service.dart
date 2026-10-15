@@ -16,10 +16,10 @@ Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   log('Handling a background message: ${message.messageId}');
 }
 
-/// Syncs the FCM token with the backend (authenticated endpoint).
+/// Syncs the registration ID with the backend (authenticated endpoint).
 /// Implemented by the app — the old monolith called its domain `ApiService`
-/// directly. Receives the fresh token; no-op when signed out.
-typedef FcmTokenSync = Future<void> Function(String fcmToken);
+/// directly. Receives the fresh ID; no-op when signed out.
+typedef FcmTokenSync = Future<void> Function(String registrationId);
 
 /// Handles a foreground FCM message (e.g. refresh the app's notifications
 /// list). The default behavior shows a local notification on Android.
@@ -116,22 +116,22 @@ class FirebaseNotificationService implements BaseNotificationService {
       }
     });
 
-    // 7. Listen to token refresh
-    // ignore: deprecated_member_use
+    // 7. Listen to (re-)registrations: every event carries the current
+    // Installation ID (FID) — the backend's direct-send target.
     _messaging.onRegistered
-        .listen((fcmToken) async {
-          log('FCM Token refreshed.');
+        .listen((registrationId) async {
+          log('FCM registered.');
           await _storage.setData<String>(
             key: PrefKeys.firebaseMessagingToken,
-            value: fcmToken,
+            value: registrationId,
           );
           unawaited(sendTokenToBackend());
         })
         .onError((Object err) {
-          log('Error on token refresh: $err');
+          log('Error on registration: $err');
         });
 
-    // Sync token with the backend if already logged in
+    // Sync registration with the backend if already logged in
     unawaited(sendTokenToBackend());
   }
 
@@ -141,7 +141,7 @@ class FirebaseNotificationService implements BaseNotificationService {
   }
 
   @override
-  Future<String?> getToken() async {
+  Future<String?> getRegistrationId() async {
     try {
       if (Platform.isIOS) {
         var apnsToken = await _messaging.getAPNSToken();
@@ -155,27 +155,34 @@ class FirebaseNotificationService implements BaseNotificationService {
           retries++;
         }
         if (apnsToken == null) {
-          log('APNS token is not available. Skipping FCM token retrieval.');
+          log('APNS token is not available. Skipping registration.');
           return null;
         }
       }
-      final token = await _messaging.getToken();
-      if (token != null) {
-        await _storage.setData<String>(
-          key: PrefKeys.firebaseMessagingToken,
-          value: token,
-        );
-      }
-      return token;
+      // Subscribe BEFORE registering: registration may complete
+      // synchronously with a cached ID and broadcast streams don't replay.
+      final idFuture = _messaging.onRegistered.first.timeout(
+        const Duration(seconds: 15),
+        onTimeout: () => throw TimeoutException('FCM registration timed out'),
+      );
+      await _messaging.register();
+      final registrationId = await idFuture;
+      await _storage.setData<String>(
+        key: PrefKeys.firebaseMessagingToken,
+        value: registrationId,
+      );
+      return registrationId;
+    } on TimeoutException {
+      log('FCM registration timed out.');
+      return null;
     } catch (e) {
-      log('Error getting FCM token: $e');
+      log('Error getting FCM registration ID: $e');
       return null;
     }
   }
 
   @override
-  // ignore: deprecated_member_use
-  Stream<String> get onTokenRefresh => _messaging.onTokenRefresh;
+  Stream<String> get onRegistered => _messaging.onRegistered;
 
   @override
   Future<void> setNotificationsEnabled(bool enabled) async {
@@ -189,21 +196,20 @@ class FirebaseNotificationService implements BaseNotificationService {
         if (Platform.isIOS) {
           final apnsToken = await _messaging.getAPNSToken();
           if (apnsToken == null) {
-            log('APNS token not ready/available. Skipping deleteToken.');
+            log('APNS token not ready/available. Skipping unregister.');
             await _storage.removeData(key: PrefKeys.firebaseMessagingToken);
             await _permissionService.openAppSettings();
             return;
           }
         }
-        // ignore: deprecated_member_use
-        await _messaging.deleteToken();
+        await _messaging.unregister();
         await _storage.removeData(key: PrefKeys.firebaseMessagingToken);
       } catch (e) {
-        log('Error deleting FCM token: $e');
+        log('Error unregistering from FCM: $e');
       }
     } else {
       await initialize();
-      await getToken();
+      await getRegistrationId();
     }
   }
 
@@ -220,13 +226,13 @@ class FirebaseNotificationService implements BaseNotificationService {
     final enabled = await isNotificationsEnabled();
     if (!enabled) return;
 
-    final fcmToken = await getToken();
-    if (fcmToken == null || fcmToken.isEmpty) return;
+    final registrationId = await getRegistrationId();
+    if (registrationId == null || registrationId.isEmpty) return;
 
     try {
-      await syncTokenToBackend?.call(fcmToken);
+      await syncTokenToBackend?.call(registrationId);
     } catch (e) {
-      log('Error sending FCM token to backend: $e');
+      log('Error sending FCM registration ID to backend: $e');
     }
   }
 }

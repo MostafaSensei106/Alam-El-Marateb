@@ -1,14 +1,21 @@
 import 'dart:async';
 
+/// Push-notification port (FCM v17 registration model).
+///
+/// Identity is the Firebase Installation ID (FID): [register] the app, read
+/// the FID from [onRegistered], send it to the backend as the direct-send
+/// target. There is no token-refresh stream anymore — re-registration emits
+/// a fresh [onRegistered] event.
 abstract class BaseNotificationService {
   /// Initializes the notification service (permissions, listeners, etc.)
   Future<void> initialize();
 
-  /// Gets the current FCM token
-  Future<String?> getToken();
+  /// Registers with FCM and returns the Installation ID (FID), or `null`
+  /// when registration can't complete (e.g. APNS unavailable on iOS).
+  Future<String?> getRegistrationId();
 
-  /// Stream of token updates
-  Stream<String> get onTokenRefresh;
+  /// Stream of registration IDs (fires on every registration).
+  Stream<String> get onRegistered;
 
   /// Sets whether push notifications are enabled
   Future<void> setNotificationsEnabled(bool enabled);
@@ -16,6 +23,7 @@ abstract class BaseNotificationService {
   /// Gets whether push notifications are enabled
   Future<bool> isNotificationsEnabled();
 
-  /// Sends the current FCM token to the backend server if the user is authenticated.
+  /// Sends the current registration ID to the backend server if the user
+  /// is authenticated.
   Future<void> sendTokenToBackend();
 }
