@@ -9,6 +9,7 @@ import 'package:dio/dio.dart';
 
 import 'package:auth/src/data/datasources/auth_api_service.dart';
 import 'package:auth/src/data/repositories/auth_repository_impl.dart';
+import 'package:auth/src/di/auth_config.dart';
 import 'package:auth/src/domain/entities/user.dart';
 import 'package:auth/src/domain/repositories/auth_repository.dart';
 import 'package:auth/src/domain/usecases/login_usecase.dart';

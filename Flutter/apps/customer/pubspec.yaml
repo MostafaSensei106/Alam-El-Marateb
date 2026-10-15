@@ -12,6 +12,7 @@ dependencies:
   alam_el_marateb_constants: ^1.0.0
   alam_el_marateb_di: ^1.0.0
   alam_el_marateb_router: ^1.0.0
+  alam_el_marateb_services: ^1.0.0
   auth: ^1.0.0
   dio: ^5.11.1
   go_router: ^18.0.0

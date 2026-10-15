@@ -9,7 +9,6 @@ import 'utils_config.config.dart';
 /// after changing any `@injectable` annotation.
 @InjectableInit(
   initializerName: 'initUtils',
-  preferInjectable: true,
   asExtension: true,
 )
 void initUtils(GetIt getIt) => getIt.initUtils();

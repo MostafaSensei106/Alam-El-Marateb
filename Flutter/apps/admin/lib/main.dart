@@ -1,5 +1,6 @@
 import 'package:alam_el_marateb_di/di.dart';
 import 'package:alam_el_marateb_network/network.dart';
+import 'package:alam_el_marateb_services/services.dart';
 import 'package:alam_el_marateb_ui/ui.dart';
 import 'package:alam_el_marateb_utils/utils.dart';
 import 'package:auth/auth.dart';
@@ -18,6 +19,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureCoreDependencies();
   final dio = await buildAuthenticatedDio(clientName: 'admin-app');
+  registerAttachmentService(dio);
   await registerAuthModule(dio: dio, allowedRoles: AppRoles.adminApp);
   await primeAuthState();
   runApp(const AdminApp());

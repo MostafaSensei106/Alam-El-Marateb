@@ -36,21 +36,13 @@ extension GetItInjectableX on _i174.GetIt {
     final gh = _i526.GetItHelper(this, environment, environmentFilter);
     gh.lazySingleton<_i196.CacheManager>(() => _i196.CacheManager());
     gh.lazySingleton<_i230.LocalizationRepositoryBase>(
-      () => _i920.LocalizationRepository(
-        gh<_i42.PrefStorageServiceBase>(),
-        supportedLanguageCodes: gh<List<String>>(),
-        fallbackLanguageCode: gh<String>(),
-      ),
-    );
-    gh.lazySingleton<_i487.LocalizationCubit>(
-      () => _i487.LocalizationCubit(
-        gh<_i230.LocalizationRepositoryBase>(),
-        supportedLanguageCodes: gh<List<String>>(),
-        fallbackLanguageCode: gh<String>(),
-      ),
+      () => _i920.LocalizationRepository(gh<_i42.PrefStorageServiceBase>()),
     );
     gh.lazySingleton<_i811.BaseThemeRepository>(
       () => _i514.ThemeRepository(gh<_i42.PrefStorageServiceBase>()),
+    );
+    gh.lazySingleton<_i487.LocalizationCubit>(
+      () => _i487.LocalizationCubit(gh<_i230.LocalizationRepositoryBase>()),
     );
     gh.lazySingleton<_i572.ThemeCubit>(
       () => _i572.ThemeCubit(gh<_i811.BaseThemeRepository>()),
