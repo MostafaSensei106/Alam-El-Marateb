@@ -40,11 +40,15 @@
         "alam_el_marateb_constants",
         "alam_el_marateb_di",
         "alam_el_marateb_network",
+        "alam_el_marateb_router",
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
+        "auth",
+        "dio",
         "flutter",
         "flutter_bloc",
-        "flutter_screenutil"
+        "flutter_screenutil",
+        "go_router"
       ],
       "devDependencies": [
         "flutter_lints",
@@ -58,11 +62,15 @@
         "alam_el_marateb_constants",
         "alam_el_marateb_di",
         "alam_el_marateb_network",
+        "alam_el_marateb_router",
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
+        "auth",
+        "dio",
         "flutter",
         "flutter_bloc",
-        "flutter_screenutil"
+        "flutter_screenutil",
+        "go_router"
       ],
       "devDependencies": [
         "build_runner",
@@ -79,11 +87,15 @@
         "alam_el_marateb_constants",
         "alam_el_marateb_di",
         "alam_el_marateb_network",
+        "alam_el_marateb_router",
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
+        "auth",
+        "dio",
         "flutter",
         "flutter_bloc",
-        "flutter_screenutil"
+        "flutter_screenutil",
+        "go_router"
       ],
       "devDependencies": [
         "flutter_lints",
@@ -283,10 +295,24 @@
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
-        "alam_el_marateb_result"
+        "alam_el_marateb_di",
+        "alam_el_marateb_network",
+        "alam_el_marateb_result",
+        "alam_el_marateb_ui",
+        "alam_el_marateb_utils",
+        "alam_el_marateb_validators",
+        "dio",
+        "flutter",
+        "flutter_bloc",
+        "freezed_annotation",
+        "retrofit"
       ],
       "devDependencies": [
+        "build_runner",
+        "flutter_test",
+        "freezed",
         "lints",
+        "retrofit_generator",
         "test"
       ]
     },
@@ -325,10 +351,24 @@
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
-        "alam_el_marateb_result"
+        "alam_el_marateb_di",
+        "alam_el_marateb_network",
+        "alam_el_marateb_result",
+        "alam_el_marateb_ui",
+        "alam_el_marateb_utils",
+        "alam_el_marateb_validators",
+        "dio",
+        "flutter",
+        "flutter_bloc",
+        "freezed_annotation",
+        "retrofit"
       ],
       "devDependencies": [
+        "build_runner",
+        "flutter_test",
+        "freezed",
         "lints",
+        "retrofit_generator",
         "test"
       ]
     },
@@ -337,10 +377,24 @@
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
-        "alam_el_marateb_result"
+        "alam_el_marateb_di",
+        "alam_el_marateb_network",
+        "alam_el_marateb_result",
+        "alam_el_marateb_ui",
+        "alam_el_marateb_utils",
+        "alam_el_marateb_validators",
+        "dio",
+        "flutter",
+        "flutter_bloc",
+        "freezed_annotation",
+        "retrofit"
       ],
       "devDependencies": [
+        "build_runner",
+        "flutter_test",
+        "freezed",
         "lints",
+        "retrofit_generator",
         "test"
       ]
     },
@@ -349,10 +403,24 @@
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
-        "alam_el_marateb_result"
+        "alam_el_marateb_di",
+        "alam_el_marateb_network",
+        "alam_el_marateb_result",
+        "alam_el_marateb_ui",
+        "alam_el_marateb_utils",
+        "alam_el_marateb_validators",
+        "dio",
+        "flutter",
+        "flutter_bloc",
+        "freezed_annotation",
+        "retrofit"
       ],
       "devDependencies": [
+        "build_runner",
+        "flutter_test",
+        "freezed",
         "lints",
+        "retrofit_generator",
         "test"
       ]
     },
@@ -361,10 +429,24 @@
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
-        "alam_el_marateb_result"
+        "alam_el_marateb_di",
+        "alam_el_marateb_network",
+        "alam_el_marateb_result",
+        "alam_el_marateb_ui",
+        "alam_el_marateb_utils",
+        "alam_el_marateb_validators",
+        "dio",
+        "flutter",
+        "flutter_bloc",
+        "freezed_annotation",
+        "retrofit"
       ],
       "devDependencies": [
+        "build_runner",
+        "flutter_test",
+        "freezed",
         "lints",
+        "retrofit_generator",
         "test"
       ]
     },
@@ -373,10 +455,24 @@
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
-        "alam_el_marateb_result"
+        "alam_el_marateb_di",
+        "alam_el_marateb_network",
+        "alam_el_marateb_result",
+        "alam_el_marateb_ui",
+        "alam_el_marateb_utils",
+        "alam_el_marateb_validators",
+        "dio",
+        "flutter",
+        "flutter_bloc",
+        "freezed_annotation",
+        "retrofit"
       ],
       "devDependencies": [
+        "build_runner",
+        "flutter_test",
+        "freezed",
         "lints",
+        "retrofit_generator",
         "test"
       ]
     },
@@ -521,25 +617,10 @@
       ]
     },
     {
-      "name": "flutter_screenutil",
-      "version": "5.9.3",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
       "name": "retrofit",
       "version": "4.10.0",
       "dependencies": [
         "dio",
-        "meta"
-      ]
-    },
-    {
-      "name": "injectable",
-      "version": "3.0.0",
-      "dependencies": [
-        "get_it",
         "meta"
       ]
     },
@@ -584,6 +665,21 @@
         "meta",
         "sky_engine",
         "vector_math"
+      ]
+    },
+    {
+      "name": "flutter_screenutil",
+      "version": "5.9.3",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
+      "name": "injectable",
+      "version": "3.0.0",
+      "dependencies": [
+        "get_it",
+        "meta"
       ]
     },
     {

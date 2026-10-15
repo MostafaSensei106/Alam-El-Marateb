@@ -41,6 +41,7 @@ void main() {
       final states = <AuthState>[];
       final sub = cubit.stream.listen(states.add);
       await cubit.signIn(identifier: '01012345678', password: 'secret123');
+      await Future<void>.delayed(Duration.zero);
       await sub.cancel();
 
       expect(states.map((s) => s.runtimeType.toString()), [
@@ -63,6 +64,7 @@ void main() {
       final states = <AuthState>[];
       final sub = cubit.stream.listen(states.add);
       await cubit.signIn(identifier: 'x', password: 'y');
+      await Future<void>.delayed(Duration.zero);
       await sub.cancel();
 
       expect(states.length, 2);

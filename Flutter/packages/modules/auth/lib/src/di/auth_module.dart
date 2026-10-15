@@ -1,6 +1,9 @@
 import 'package:alam_el_marateb_constants/constants.dart';
 import 'package:alam_el_marateb_di/di.dart';
+import 'package:alam_el_marateb_network/network.dart';
 import 'package:alam_el_marateb_router/router.dart';
+import 'package:alam_el_marateb_services/services.dart';
+import 'package:alam_el_marateb_utils/utils.dart';
 import 'package:dio/dio.dart';
 
 import 'package:auth/src/data/datasources/auth_api_service.dart';
@@ -34,4 +37,45 @@ Future<void> registerAuthModule({
     ..registerLazySingleton<LoginUseCase>(() => LoginUseCase(getIt()))
     ..registerLazySingleton<LogoutUseCase>(() => LogoutUseCase(getIt()))
     ..registerFactory<AuthCubit>(() => AuthCubit(getIt(), getIt()));
+}
+
+/// Builds the app's shared [Dio] client with the standard interceptor stack:
+///
+/// locale → token → retry. The 401 handler clears the local session and
+/// broadcasts auth=false (the app router lands on /login); pass a custom
+/// [onUnauthorized] to also show a session-expired dialog.
+///
+/// Idempotent per process — repeated calls (hot restart) reuse the client
+/// without stacking duplicate interceptors.
+Future<Dio> buildAuthenticatedDio({
+  UnauthorizedHandler? onUnauthorized,
+}) async {
+  final dio = await DioFactory.getDio();
+  final hasStack = dio.interceptors.any((i) => i is DioTokenInterceptor);
+  if (!hasStack) {
+    dio.interceptors.addAll([
+      DioLocaleInterceptor(
+        () => getIt<LocalizationCubit>().state.langCode,
+      ),
+      DioTokenInterceptor(
+        getToken: () => getIt<UserSessionServiceBase>().getToken(),
+        loginPath: '/auth/login',
+        onUnauthorized:
+            onUnauthorized ??
+            (_) async {
+              await getIt<UserSessionServiceBase>().clearUserSession();
+              AppAuthNotifier.instance.notifyAuthChanged(false);
+            },
+      ),
+      DioRetryInterceptor(dio: dio),
+    ]);
+  }
+  return dio;
+}
+
+/// Primes [AppAuthNotifier] from the persisted session BEFORE the router
+/// builds, so the first redirect lands on the right route with no flicker.
+Future<void> primeAuthState() async {
+  final authenticated = await getIt<AuthRepository>().isAuthenticated();
+  AppAuthNotifier.instance.notifyAuthChanged(authenticated);
 }

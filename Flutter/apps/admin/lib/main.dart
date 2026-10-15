@@ -1,19 +1,25 @@
-import 'dart:async';
-
-import 'package:alam_el_marateb_constants/constants.dart';
 import 'package:alam_el_marateb_di/di.dart';
 import 'package:alam_el_marateb_network/network.dart';
 import 'package:alam_el_marateb_ui/ui.dart';
 import 'package:alam_el_marateb_utils/utils.dart';
+import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-/// TITLE: Alam El Marateb Admin
-/// BOOT: shared core boot (configure once, fix once).
+import 'src/router/admin_router';
+
+/// Alam El Marateb Admin entrypoint.
+///
+/// Boot order: core DI → authenticated Dio → auth module → prime auth
+/// state → router. Every step is shared code; app-specific pieces are
+/// the router table and the home page only.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureCoreDependencies();
+  final dio = await buildAuthenticatedDio();
+  await registerAuthModule(dio: dio);
+  await primeAuthState();
   runApp(const AdminApp());
 }
 
@@ -30,56 +36,20 @@ class AdminApp extends StatelessWidget {
           BlocProvider.value(value: getIt<ThemeCubit>()),
           BlocProvider.value(value: getIt<LocalizationCubit>()),
           BlocProvider.value(value: getIt<NetworkCubit>()),
+          BlocProvider(create: (_) => getIt<AuthCubit>()),
         ],
         child: BlocBuilder<ThemeCubit, ThemeState>(
           builder: (context, themeState) {
-            return MaterialApp(
+            return MaterialApp.router(
               title: 'Alam El Marateb Admin',
               theme: AppTheme.light,
               darkTheme: AppTheme.dark,
               themeMode: themeState.themeMode,
               builder: (context, child) =>
                   ConnectivityBanner(child: child ?? const SizedBox.shrink()),
-              home: const _HomePage(),
+              routerConfig: buildAdminRouter(),
             );
           },
-        ),
-      ),
-    );
-  }
-}
-
-class _HomePage extends StatelessWidget {
-  const _HomePage();
-
-  @override
-  Widget build(BuildContext context) {
-    final langCode = context.select(
-      (LocalizationCubit cubit) => cubit.state.langCode,
-    );
-    return Scaffold(
-      appBar: const AppBarComponent(title: 'Alam El Marateb Admin'),
-      body: Padding(
-        padding: const EdgeInsets.all(ApplicationPadding.padding),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Shared core OK · lang: $langCode'),
-            SizedBox(height: 16.h),
-            FilledButtonComponent(
-              label: 'Toggle theme (shared cubit)',
-              onPressed: () {
-                final theme = context.read<ThemeCubit>();
-                unawaited(
-                  theme.changeTheme(
-                    theme.state.themeMode == ThemeMode.dark
-                        ? ThemeMode.light
-                        : ThemeMode.dark,
-                  ),
-                );
-              },
-            ),
-          ],
         ),
       ),
     );
