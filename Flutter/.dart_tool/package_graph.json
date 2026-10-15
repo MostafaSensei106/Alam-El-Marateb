@@ -348,6 +348,7 @@
         "flutter",
         "flutter_screenutil",
         "freezed_annotation",
+        "get_it",
         "injectable",
         "retrofit"
       ],
@@ -716,6 +717,15 @@
       ]
     },
     {
+      "name": "get_it",
+      "version": "9.3.0",
+      "dependencies": [
+        "async",
+        "collection",
+        "meta"
+      ]
+    },
+    {
       "name": "go_router",
       "version": "18.1.0",
       "dependencies": [
@@ -869,15 +879,6 @@
         "meta",
         "nm",
         "web"
-      ]
-    },
-    {
-      "name": "get_it",
-      "version": "9.3.0",
-      "dependencies": [
-        "async",
-        "collection",
-        "meta"
       ]
     },
     {
