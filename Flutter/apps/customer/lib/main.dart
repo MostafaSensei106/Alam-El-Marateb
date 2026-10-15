@@ -17,7 +17,7 @@ import 'src/router/customer_router.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureCoreDependencies();
-  final dio = await buildAuthenticatedDio();
+  final dio = await buildAuthenticatedDio(clientName: 'customer-app');
   await registerAuthModule(dio: dio, allowedRoles: AppRoles.customerApp);
   await primeAuthState();
   runApp(const CustomerApp());

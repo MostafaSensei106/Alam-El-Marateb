@@ -2,6 +2,7 @@ library;
 
 export 'src/dio/dio_factory.dart';
 export 'src/dio/interceptors/dio_cache_interceptor_setup.dart';
+export 'src/dio/interceptors/dio_client_key_interceptor.dart';
 export 'src/dio/interceptors/dio_locale_interceptor.dart';
 export 'src/dio/interceptors/dio_token_interceptor.dart';
 export 'src/dio/interceptors/dio_retry_interceptor.dart';

@@ -17,7 +17,7 @@ import 'src/router/staff_router.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureCoreDependencies();
-  final dio = await buildAuthenticatedDio();
+  final dio = await buildAuthenticatedDio(clientName: 'staff-app');
   await registerAuthModule(dio: dio, allowedRoles: AppRoles.staffApp);
   await primeAuthState();
   runApp(const StaffApp());

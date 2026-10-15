@@ -17,7 +17,7 @@ import 'src/router/admin_router.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureCoreDependencies();
-  final dio = await buildAuthenticatedDio();
+  final dio = await buildAuthenticatedDio(clientName: 'admin-app');
   await registerAuthModule(dio: dio, allowedRoles: AppRoles.adminApp);
   await primeAuthState();
   runApp(const AdminApp());

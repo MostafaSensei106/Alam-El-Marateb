@@ -16,7 +16,9 @@ final class ApiFailure extends Failure {
     this.stackTrace,
     super.statusCode,
   }) : super(
-         apiErrorModel.errors?.firstOrNull ?? apiErrorModel.message,
+         // Prefer the backend's human message (already localized server-side);
+         // machine codes stay available via [apiErrorModel.errors].
+         apiErrorModel.message,
        );
 
   final ApiErrorModel apiErrorModel;

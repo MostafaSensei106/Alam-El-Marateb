@@ -1,6 +1,7 @@
 library;
 
 export 'src/di/auth_module.dart';
+export 'src/data/datasources/auth_api_service.dart';
 export 'src/data/models/login_request.dart';
 export 'src/data/models/user_model.dart';
 export 'src/domain/entities/app_roles.dart';

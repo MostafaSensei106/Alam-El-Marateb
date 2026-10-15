@@ -50,19 +50,28 @@ Future<void> registerAuthModule({
 
 /// Builds the app's shared [Dio] client with the standard interceptor stack:
 ///
-/// locale → token → retry. The 401 handler clears the local session and
-/// broadcasts auth=false (the app router lands on /login); pass a custom
-/// [onUnauthorized] to also show a session-expired dialog.
+/// client-key → locale → token → retry. The client gate runs first because
+/// the backend rejects keyless calls (even login) before anything else.
+/// The 401 handler clears the local session and broadcasts auth=false
+/// (the app router lands on /login); pass a custom [onUnauthorized] to
+/// also show a session-expired dialog.
+///
+/// [clientName] identifies the calling app to the backend (`customer-app`,
+/// `staff-app`, `admin-app`). [clientKey] must match the backend's
+/// `app.clients.keys` — default is the local-dev key.
 ///
 /// Idempotent per process — repeated calls (hot restart) reuse the client
 /// without stacking duplicate interceptors.
 Future<Dio> buildAuthenticatedDio({
+  String clientName = 'alamelmarateb-app',
+  String clientKey = 'dev-local-key',
   UnauthorizedHandler? onUnauthorized,
 }) async {
   final dio = await DioFactory.getDio();
   final hasStack = dio.interceptors.any((i) => i is DioTokenInterceptor);
   if (!hasStack) {
     dio.interceptors.addAll([
+      DioClientKeyInterceptor(clientName: clientName, clientKey: clientKey),
       DioLocaleInterceptor(
         () => getIt<LocalizationCubit>().state.langCode,
       ),
