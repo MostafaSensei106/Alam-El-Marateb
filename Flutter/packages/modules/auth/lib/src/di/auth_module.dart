@@ -12,9 +12,6 @@ import 'package:auth/src/data/repositories/auth_repository_impl.dart';
 import 'package:auth/src/di/auth_config.dart';
 import 'package:auth/src/domain/entities/user.dart';
 import 'package:auth/src/domain/repositories/auth_repository.dart';
-import 'package:auth/src/domain/usecases/login_usecase.dart';
-import 'package:auth/src/domain/usecases/logout_usecase.dart';
-import 'package:auth/src/presentation/cubit/auth_cubit.dart';
 
 /// Registers the auth graph into the shared [getIt].
 ///

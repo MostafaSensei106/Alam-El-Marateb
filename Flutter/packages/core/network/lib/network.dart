@@ -1,5 +1,7 @@
 library;
 
+export 'src/di/network_config.dart';
+export 'src/di/network_module.dart';
 export 'src/dio/dio_factory.dart';
 export 'src/dio/interceptors/dio_cache_interceptor_setup.dart';
 export 'src/dio/interceptors/dio_client_key_interceptor.dart';

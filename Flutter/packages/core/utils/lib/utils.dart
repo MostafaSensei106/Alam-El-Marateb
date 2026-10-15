@@ -1,5 +1,6 @@
 library;
 
+export 'src/di/utils_config.dart';
 export 'src/error/failures.dart';
 export 'src/bloc/bloc_observer.dart';
 export 'src/bloc/connectivity_aware_cubit.dart';

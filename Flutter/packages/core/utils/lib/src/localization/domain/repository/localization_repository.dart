@@ -14,7 +14,9 @@ final class LocalizationRepository implements LocalizationRepositoryBase {
 
   /// Locales the app supports (override per app by replacing this
   /// registration with a configured instance before dependents resolve).
+  @override
   final List<String> supportedLanguageCodes = const ['ar', 'en'];
+  @override
   final String fallbackLanguageCode = 'ar';
 
   @override

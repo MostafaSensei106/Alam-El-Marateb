@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:alam_el_marateb_constants/constants.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:injectable/injectable.dart';
 
 import 'package:alam_el_marateb_services/src/notifications/base_local_notification_service.dart';
 
