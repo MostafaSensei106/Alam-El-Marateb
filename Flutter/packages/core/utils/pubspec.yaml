@@ -15,6 +15,7 @@ dependencies:
   bloc_signals_hydrate: ^1.0.3
   alam_el_marateb_constants: ^1.0.0
   alam_el_marateb_network: ^1.0.0
+  alam_el_marateb_result: ^1.0.0
   alam_el_marateb_services: ^1.0.0
 
 dev_dependencies:

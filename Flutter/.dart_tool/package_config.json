@@ -206,6 +206,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "dio_smart_retry",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/dio_smart_retry-7.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "dio_web_adapter",
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/dio_web_adapter-2.2.2",
       "packageUri": "lib/",
@@ -308,6 +314,12 @@
       "languageVersion": "3.11"
     },
     {
+      "name": "formz",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/formz-0.8.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.12"
+    },
+    {
       "name": "freezed",
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/freezed-4.0.1",
       "packageUri": "lib/",
@@ -368,6 +380,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "http",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/http-1.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "http2",
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/http2-2.3.1",
       "packageUri": "lib/",
@@ -384,6 +402,12 @@
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/http_cache_hive_store-5.1.1",
       "packageUri": "lib/",
       "languageVersion": "3.8"
+    },
+    {
+      "name": "http_certificate_pinning",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/http_certificate_pinning-2.1.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "http_multi_server",
@@ -1018,6 +1042,12 @@
     {
       "name": "alam_el_marateb_di",
       "rootUri": "../packages/core/di",
+      "packageUri": "lib/",
+      "languageVersion": "3.13"
+    },
+    {
+      "name": "alam_el_marateb_validators",
+      "rootUri": "../packages/core/validators",
       "packageUri": "lib/",
       "languageVersion": "3.13"
     },

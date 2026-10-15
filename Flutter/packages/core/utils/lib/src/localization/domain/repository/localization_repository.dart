@@ -9,10 +9,10 @@ import 'package:alam_el_marateb_utils/src/localization/data/interface/localizati
 @LazySingleton(as: LocalizationRepositoryBase)
 final class LocalizationRepository implements LocalizationRepositoryBase {
   LocalizationRepository({
-    required PrefStorageServiceBase storage,
+    required this._storage,
     this.supportedLanguageCodes = const ['ar', 'en'],
     this.fallbackLanguageCode = 'ar',
-  }) : _storage = storage;
+  });
 
   final PrefStorageServiceBase _storage;
   final List<String> supportedLanguageCodes;

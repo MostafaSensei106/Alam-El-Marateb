@@ -1,6 +1,5 @@
-import 'package:alam_el_marateb_utils/utils.dart';
-
-import '../result.dart';
+import 'package:alam_el_marateb_result/src/failure/failures.dart';
+import 'package:alam_el_marateb_result/src/result.dart';
 
 typedef ApiResult<T> = Result<T, Failure>;
 

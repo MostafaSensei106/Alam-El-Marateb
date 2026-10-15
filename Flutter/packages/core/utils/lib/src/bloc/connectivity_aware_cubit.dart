@@ -13,7 +13,7 @@ mixin ConnectivityAwareCubit<State> on CubitSignal<State> {
     _networkSubscription = networkCubit.stream.listen((state) {
       state.whenOrNull(
         connected: () {
-          if (isNetworkFailureState(this.state)) {
+          if (isNetworkFailureState(stateValue)) {
             retryRequest();
           }
         },
@@ -44,7 +44,7 @@ mixin ConnectivityAwareCubit<State> on CubitSignal<State> {
     _networkSubscription = networkCubit.stream.listen((state) {
       state.whenOrNull(
         connected: () {
-          if (isNetworkFailureState(this.state)) {
+          if (isNetworkFailureState(stateValue)) {
             retryRequest();
           }
         },

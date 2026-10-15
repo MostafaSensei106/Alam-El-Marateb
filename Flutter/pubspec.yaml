@@ -14,6 +14,7 @@ workspace:
 - packages/core/extensions
 - packages/core/utils
 - packages/core/di
+- packages/core/validators
 - packages/modules/catalog
 - packages/modules/pos
 - packages/modules/inventory
