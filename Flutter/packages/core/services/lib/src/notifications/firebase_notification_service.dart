@@ -23,15 +23,16 @@ typedef FcmTokenSync = Future<void> Function(String fcmToken);
 
 /// Handles a foreground FCM message (e.g. refresh the app's notifications
 /// list). The default behavior shows a local notification on Android.
-typedef ForegroundMessageHandler =
-    Future<void> Function(
-      RemoteMessage message,
-      BaseLocalNotificationService localNotifications,
-    );
+typedef ForegroundMessageHandler = Future<void> Function(
+  RemoteMessage message,
+  BaseLocalNotificationService localNotifications,
+);
 
 /// Called when the user taps a push notification (app opened/resumed).
 /// Implemented by the app (usually navigates to its notifications page).
-typedef PushNotificationTapHandler = Future<void> Function(RemoteMessage message);
+typedef PushNotificationTapHandler = Future<void> Function(
+  RemoteMessage message,
+);
 
 Future<void> _defaultForegroundHandler(
   RemoteMessage message,

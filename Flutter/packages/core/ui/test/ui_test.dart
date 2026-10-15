@@ -14,9 +14,7 @@ Widget _wrap(Widget child) {
 void main() {
   group('ErrorStateWidget', () {
     testWidgets('renders message and default title', (tester) async {
-      await tester.pumpWidget(
-        _wrap(const ErrorStateWidget(message: 'Boom')),
-      );
+      await tester.pumpWidget(_wrap(const ErrorStateWidget(message: 'Boom')));
       expect(find.text('Boom'), findsOneWidget);
       expect(find.text('Error'), findsOneWidget);
     });
@@ -35,10 +33,7 @@ void main() {
       var pressed = 0;
       await tester.pumpWidget(
         _wrap(
-          RetryableErrorStateWidget(
-            message: 'Nope',
-            onRetry: () => pressed++,
-          ),
+          RetryableErrorStateWidget(message: 'Nope', onRetry: () => pressed++),
         ),
       );
       expect(find.text('Retry'), findsOneWidget);

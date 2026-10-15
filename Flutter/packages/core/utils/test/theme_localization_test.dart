@@ -13,8 +13,7 @@ class _MemoryStorage implements PrefStorageServiceBase {
   }
 
   @override
-  Future<T?> getData<T>({required String key}) async =>
-      map[key] as T?;
+  Future<T?> getData<T>({required String key}) async => map[key] as T?;
 
   @override
   Future<bool> removeData({required String key}) async =>
@@ -84,9 +83,7 @@ void main() {
     });
 
     test('changeLanguage is a no-op for the same code', () async {
-      final cubit = LocalizationCubit(
-        LocalizationRepository(_MemoryStorage()),
-      );
+      final cubit = LocalizationCubit(LocalizationRepository(_MemoryStorage()));
       await Future<void>.delayed(Duration.zero);
       final before = cubit.state;
       await cubit.changeLanguage(before.langCode);
@@ -99,10 +96,7 @@ void main() {
     test('exposes light and dark themes', () {
       expect(AppTheme.light.useMaterial3, isTrue);
       expect(AppTheme.dark.useMaterial3, isTrue);
-      expect(
-        AppTheme.light.textTheme.bodyLarge?.fontFamily,
-        'Hadidi',
-      );
+      expect(AppTheme.light.textTheme.bodyLarge?.fontFamily, 'Hadidi');
     });
   });
 }

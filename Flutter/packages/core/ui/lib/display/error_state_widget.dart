@@ -23,7 +23,9 @@ class ErrorStateWidget extends StatelessWidget {
 
     return Center(
       child: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: ApplicationPadding.padding),
+        padding: const EdgeInsets.symmetric(
+          horizontal: ApplicationPadding.padding,
+        ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

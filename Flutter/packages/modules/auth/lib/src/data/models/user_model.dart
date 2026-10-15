@@ -48,9 +48,7 @@ final class UserModel {
       phoneNumber: '${root['phoneNumber'] ?? ''}',
       email: root['email'] as String?,
       branchId: root['branchId'] as String?,
-      roles: [
-        for (final r in (root['roles'] as List? ?? const [])) '$r',
-      ],
+      roles: [for (final r in (root['roles'] as List? ?? const [])) '$r'],
       isActive: (root['isActive'] as bool?) ?? true,
     );
   }

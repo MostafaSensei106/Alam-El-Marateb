@@ -132,29 +132,20 @@ void main() {
     test('copySensitive then auto-clear wipes only own content', () async {
       final audit = _FakeAudit();
       final backend = _FakeClipboard();
-      final guard = ClipboardGuardService.testing(
-        audit,
-        clipboard: backend,
-      );
+      final guard = ClipboardGuardService.testing(audit, clipboard: backend);
 
       await guard.copySensitive('secret');
       expect(backend.text, 'secret');
 
       await guard.clear(auto: true);
       expect(backend.text, '');
-      expect(
-        audit.events.whereType<ClipboardCleared>().single.auto,
-        isTrue,
-      );
+      expect(audit.events.whereType<ClipboardCleared>().single.auto, isTrue);
     });
 
     test('auto-clear never wipes user content copied after us', () async {
       final audit = _FakeAudit();
       final backend = _FakeClipboard();
-      final guard = ClipboardGuardService.testing(
-        audit,
-        clipboard: backend,
-      );
+      final guard = ClipboardGuardService.testing(audit, clipboard: backend);
 
       await guard.copySensitive('secret');
       backend.text = 'user typed this';
@@ -166,9 +157,7 @@ void main() {
   group('SessionMemoryGuard', () {
     test('wipes on background states only', () async {
       var calls = 0;
-      final guard = SessionMemoryGuard(
-        onBackgrounded: () async => calls++,
-      );
+      final guard = SessionMemoryGuard(onBackgrounded: () async => calls++);
       await guard.didChangeAppLifecycleState(AppLifecycleState.resumed);
       expect(calls, 0);
       await guard.didChangeAppLifecycleState(AppLifecycleState.paused);

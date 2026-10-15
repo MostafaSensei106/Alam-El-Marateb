@@ -113,8 +113,7 @@ final class AuthRepositoryImpl implements AuthRepository {
 
   Result<User, Failure> _acceptUser(Map<String, dynamic> json) {
     final model = UserModel.fromJson(json);
-    if (allowedRoles.isNotEmpty &&
-        !model.roles.any(allowedRoles.contains)) {
+    if (allowedRoles.isNotEmpty && !model.roles.any(allowedRoles.contains)) {
       // Wrong app for this account: never persist, never notify.
       _session.clearUserSession();
       return const Result.failure(
@@ -174,8 +173,6 @@ final class AuthRepositoryImpl implements AuthRepository {
   Map<String, dynamic> _asMap(dynamic raw) {
     if (raw is Map<String, dynamic>) return raw;
     if (raw is Map) return Map<String, dynamic>.from(raw);
-    throw const BadResponseParsingFailure(
-      'Response was not a JSON object.',
-    );
+    throw const BadResponseParsingFailure('Response was not a JSON object.');
   }
 }

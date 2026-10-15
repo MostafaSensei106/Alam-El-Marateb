@@ -2,7 +2,9 @@ import 'package:formz/formz.dart';
 
 import '../base/validation_pipeline.dart';
 
-final _emailRegExp = RegExp(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
+final _emailRegExp = RegExp(
+  r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+);
 final _arabicRegExp = RegExp(
   r'[\u0600-\u06FF\u0750-\u077F\u08A0-\u08FF\uFB50-\uFDFF\uFE70-\uFEFF]',
 );
@@ -45,10 +47,8 @@ extension EmailValidationErrorX on EmailValidationError {
     EmailValidationError.invalid => 'error_email_not_invalid_format',
     EmailValidationError.invalidCharacters =>
       'error_email_contains_invalid_characters',
-    EmailValidationError.missingAtSign =>
-      'error_email_must_contain_at_symbol',
-    EmailValidationError.notInLowerCase =>
-      'error_email_must_be_in_lowercase',
+    EmailValidationError.missingAtSign => 'error_email_must_contain_at_symbol',
+    EmailValidationError.notInLowerCase => 'error_email_must_be_in_lowercase',
     EmailValidationError.arabicNotAllowed => 'error_arabic_not_allowed',
     EmailValidationError.emojiNotAllowed => 'error_email_emoji_not_allowed',
   };
@@ -61,7 +61,8 @@ extension EmailValidationErrorX on EmailValidationError {
       'Email contains invalid characters.',
     EmailValidationError.missingAtSign => 'Email must contain @.',
     EmailValidationError.notInLowerCase => 'Email must be lowercase.',
-    EmailValidationError.arabicNotAllowed => 'Arabic characters are not allowed.',
+    EmailValidationError.arabicNotAllowed =>
+      'Arabic characters are not allowed.',
     EmailValidationError.emojiNotAllowed => 'Emoji is not allowed.',
   };
 }

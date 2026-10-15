@@ -19,8 +19,7 @@ class _FakeAuthRepository implements AuthRepository {
     required String password,
   }) async {
     final result =
-        loginResult ??
-        const Result.failure(error: UnknownFailure('unstubbed'));
+        loginResult ?? const Result.failure(error: UnknownFailure('unstubbed'));
     if (result is Success<User, Failure>) {
       authenticated = true;
       _currentUser = result.data;
@@ -111,10 +110,7 @@ void main() {
       await cubit.signOut();
       expect(repo.logoutCalls, 1);
       expect(
-        cubit.state.maybeWhen(
-          unauthenticated: () => true,
-          orElse: () => false,
-        ),
+        cubit.state.maybeWhen(unauthenticated: () => true, orElse: () => false),
         isTrue,
       );
       await cubit.close();
@@ -124,11 +120,7 @@ void main() {
   group('TokenPair', () {
     test('parses access/refresh tokens from data envelope', () {
       final pair = TokenPair.fromJson({
-        'data': {
-          'accessToken': 'a.b.c',
-          'refreshToken': 'r',
-          'userId': 'u-1',
-        },
+        'data': {'accessToken': 'a.b.c', 'refreshToken': 'r', 'userId': 'u-1'},
       });
       expect(pair.accessToken, 'a.b.c');
       expect(pair.refreshToken, 'r');

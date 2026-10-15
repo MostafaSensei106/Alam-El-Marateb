@@ -45,8 +45,8 @@ class LocalNotificationService implements BaseLocalNotificationService {
       const channel = AndroidNotificationChannel(
         ApplicationNotificationSettings.highImportanceChannelId,
         ApplicationNotificationSettings.highImportanceChannelName,
-        description: ApplicationNotificationSettings
-            .highImportanceChannelDescription,
+        description:
+            ApplicationNotificationSettings.highImportanceChannelDescription,
         importance: Importance.max,
       );
       await _localNotificationsPlugin
@@ -83,8 +83,8 @@ class LocalNotificationService implements BaseLocalNotificationService {
         android: AndroidNotificationDetails(
           ApplicationNotificationSettings.highImportanceChannelId,
           ApplicationNotificationSettings.highImportanceChannelName,
-          channelDescription: ApplicationNotificationSettings
-              .highImportanceChannelDescription,
+          channelDescription:
+              ApplicationNotificationSettings.highImportanceChannelDescription,
           importance: Importance.max,
           priority: Priority.high,
           icon: ApplicationNotificationSettings.androidIcon,
@@ -96,8 +96,6 @@ class LocalNotificationService implements BaseLocalNotificationService {
 
   void _handleLocalNotificationInteraction(String? payload) {
     log('Local notification clicked!');
-    unawaited(
-      Future.sync(() => onNotificationTap?.call(payload)),
-    );
+    unawaited(Future.sync(() => onNotificationTap?.call(payload)));
   }
 }

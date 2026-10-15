@@ -3,7 +3,6 @@ import 'package:alam_el_marateb_network/network.dart';
 import 'package:alam_el_marateb_services/services.dart';
 import 'package:alam_el_marateb_utils/utils.dart';
 import 'package:auth/auth.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,10 +46,7 @@ void main() {
     expect(getIt<BaseSecureVaultService>(), isA<SecureVaultService>());
     expect(getIt<BaseClipboardGuardService>(), isA<ClipboardGuardService>());
     expect(getIt<PermissionServiceBase>(), isA<PermissionHandlerService>());
-    expect(
-      getIt<BaseUrlLauncherServices>(),
-      isA<UrlLauncherService>(),
-    );
+    expect(getIt<BaseUrlLauncherServices>(), isA<UrlLauncherService>());
     expect(getIt<BaseFileOpenerService>(), isA<UrlFileOpenerService>());
     expect(getIt<BaseShareService>(), isA<SharePlusService>());
     expect(getIt<ThemeService>(), isA<ThemeService>());
@@ -77,10 +73,7 @@ void main() {
     // ── utils (codegen) ──
     expect(getIt<BaseThemeRepository>(), isA<ThemeRepository>());
     expect(getIt<ThemeCubit>(), isA<ThemeCubit>());
-    expect(
-      getIt<LocalizationRepositoryBase>(),
-      isA<LocalizationRepository>(),
-    );
+    expect(getIt<LocalizationRepositoryBase>(), isA<LocalizationRepository>());
     expect(getIt<LocalizationCubit>(), isA<LocalizationCubit>());
     expect(getIt<CacheManager>(), isA<CacheManager>());
 
@@ -92,10 +85,7 @@ void main() {
     expect(getIt<AuthCubit>(), isA<AuthCubit>());
 
     // ── Dio stack assembled once ──
-    expect(
-      dio.interceptors.whereType<DioClientKeyInterceptor>().length,
-      1,
-    );
+    expect(dio.interceptors.whereType<DioClientKeyInterceptor>().length, 1);
     expect(dio.interceptors.whereType<DioTokenInterceptor>().length, 1);
 
     // ── session round-trip through the real graph ──

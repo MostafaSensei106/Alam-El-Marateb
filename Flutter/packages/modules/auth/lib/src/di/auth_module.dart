@@ -46,6 +46,7 @@ Future<void> registerAuthModule({
   // manual registration stays ONLY for runtime values (Dio, roles, hook).
   initAuth(getIt);
 }
+
 /// Builds the app's shared [Dio] client with the standard interceptor stack:
 ///
 /// client-key → locale → token → retry. The client gate runs first because
@@ -70,9 +71,7 @@ Future<Dio> buildAuthenticatedDio({
   if (!hasStack) {
     dio.interceptors.addAll([
       DioClientKeyInterceptor(clientName: clientName, clientKey: clientKey),
-      DioLocaleInterceptor(
-        () => getIt<LocalizationCubit>().state.langCode,
-      ),
+      DioLocaleInterceptor(() => getIt<LocalizationCubit>().state.langCode),
       DioTokenInterceptor(
         getToken: () => getIt<UserSessionServiceBase>().getToken(),
         loginPath: '/auth/login',
@@ -102,7 +101,5 @@ Future<void> primeAuthState() async {
     return;
   }
   final current = await repository.getCurrentUser();
-  AppAuthNotifier.instance.notifyAuthChanged(
-    current is Success<User, Failure>,
-  );
+  AppAuthNotifier.instance.notifyAuthChanged(current is Success<User, Failure>);
 }

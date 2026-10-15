@@ -31,8 +31,7 @@ class LocalizationCubit extends Cubit<LocalizationState> {
   final LocalizationRepositoryBase _repository;
 
   /// See [LocalizationRepositoryBase.supportedLanguageCodes].
-  List<String> get supportedLanguageCodes =>
-      _repository.supportedLanguageCodes;
+  List<String> get supportedLanguageCodes => _repository.supportedLanguageCodes;
   String get fallbackLanguageCode => _repository.fallbackLanguageCode;
 
   Future<void> _init() async {

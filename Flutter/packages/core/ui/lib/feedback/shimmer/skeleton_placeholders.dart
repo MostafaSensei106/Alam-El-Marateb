@@ -38,7 +38,9 @@ final class ProductCardSkeleton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: c.surfaceContainer,
-        borderRadius: BorderRadius.circular(ApplicationRadius.outerBorderRadius.r),
+        borderRadius: BorderRadius.circular(
+          ApplicationRadius.outerBorderRadius.r,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +49,9 @@ final class ProductCardSkeleton extends StatelessWidget {
             child: Bone(
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(ApplicationRadius.outerBorderRadius.r),
-                topRight: Radius.circular(ApplicationRadius.outerBorderRadius.r),
+                topRight: Radius.circular(
+                  ApplicationRadius.outerBorderRadius.r,
+                ),
               ),
             ),
           ),
@@ -110,7 +114,9 @@ final class ChipRowSkeleton extends StatelessWidget {
       child: SizedBox(
         height: 42.h,
         child: ListView.separated(
-          padding: EdgeInsets.symmetric(horizontal: ApplicationPadding.padding.w),
+          padding: EdgeInsets.symmetric(
+            horizontal: ApplicationPadding.padding.w,
+          ),
           scrollDirection: Axis.horizontal,
           physics: const NeverScrollableScrollPhysics(),
           itemCount: itemCount,
@@ -136,7 +142,9 @@ final class InvoiceCardSkeleton extends StatelessWidget {
       padding: EdgeInsets.all(ApplicationPadding.padding.r),
       decoration: BoxDecoration(
         color: c.surfaceContainer,
-        borderRadius: BorderRadius.circular(ApplicationRadius.outerBorderRadius.r),
+        borderRadius: BorderRadius.circular(
+          ApplicationRadius.outerBorderRadius.r,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -386,12 +394,15 @@ final class TileListSkeleton extends StatelessWidget {
         shrinkWrap: true,
         padding: const EdgeInsets.all(ApplicationPadding.padding),
         itemCount: itemCount,
-        separatorBuilder: (_, _) => SizedBox(height: ApplicationPadding.paddingHalf.h),
+        separatorBuilder: (_, _) =>
+            SizedBox(height: ApplicationPadding.paddingHalf.h),
         itemBuilder: (_, _) => Container(
           padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: c.surfaceContainer,
-            borderRadius: BorderRadius.circular(ApplicationRadius.outerBorderRadius),
+            borderRadius: BorderRadius.circular(
+              ApplicationRadius.outerBorderRadius,
+            ),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -442,12 +453,15 @@ final class SectorsPricesListSkeleton extends StatelessWidget {
           vertical: ApplicationPadding.padding.h,
         ),
         itemCount: itemCount,
-        separatorBuilder: (_, _) => SizedBox(height: ApplicationPadding.padding.h),
+        separatorBuilder: (_, _) =>
+            SizedBox(height: ApplicationPadding.padding.h),
         itemBuilder: (_, _) => Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
             color: c.surfaceContainer,
-            borderRadius: BorderRadius.circular(ApplicationRadius.outerBorderRadius.r),
+            borderRadius: BorderRadius.circular(
+              ApplicationRadius.outerBorderRadius.r,
+            ),
             border: Border.all(color: c.outlineVariant),
           ),
           child: Row(

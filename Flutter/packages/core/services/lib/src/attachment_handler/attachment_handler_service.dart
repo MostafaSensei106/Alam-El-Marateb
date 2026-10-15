@@ -14,8 +14,7 @@ import 'package:alam_el_marateb_services/src/attachment_handler/base_attachment_
 ///
 /// NOTE: intentionally NOT `@injectable` — [Dio] comes from the app's
 /// configured client. Registered manually via `registerAttachmentService()`.
-final class AttachmentHandlerService
-    implements BaseAttachmentHandlerService {
+final class AttachmentHandlerService implements BaseAttachmentHandlerService {
   const AttachmentHandlerService(this._dio, {required this.baseUrl});
 
   final Dio _dio;

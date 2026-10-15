@@ -84,7 +84,10 @@ final class TextFormFieldComponent extends StatelessWidget {
       prefixIcon: prefixIcon != null
           ? IconButton(
               onPressed: onPrefixIconPressed,
-              icon: Icon(prefixIcon, color: Theme.of(context).colorScheme.primary),
+              icon: Icon(
+                prefixIcon,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             )
           : null,
       suffixIcon: onSuffixIconPressed != null
@@ -109,7 +112,9 @@ final class TextFormFieldComponent extends StatelessWidget {
         borderRadius: useInBorderRadius
             ? BorderRadius.circular(ApplicationRadius.innerBorderRadius)
             : BorderRadius.circular(ApplicationRadius.outerBorderRadius),
-        borderSide: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+        borderSide: BorderSide(
+          color: Theme.of(context).colorScheme.outlineVariant,
+        ),
       ),
     ),
   );

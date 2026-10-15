@@ -16,9 +16,8 @@ class LoginRoute extends NativeRouteData with $LoginRoute {
   const LoginRoute();
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => LoginPage(
-    onAuthenticated: () => const HomeRoute().go(context),
-  );
+  Widget build(BuildContext context, GoRouterState state) =>
+      LoginPage(onAuthenticated: () => const HomeRoute().go(context));
 }
 
 @TypedGoRoute<HomeRoute>(path: '/home')

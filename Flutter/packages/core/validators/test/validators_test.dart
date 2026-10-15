@@ -8,10 +8,7 @@ void main() {
     });
 
     test('accepts valid email', () {
-      expect(
-        const EmailValidator.dirty('user@example.com').isValid,
-        isTrue,
-      );
+      expect(const EmailValidator.dirty('user@example.com').isValid, isTrue);
     });
 
     test('rejects empty', () {
@@ -31,10 +28,7 @@ void main() {
     });
 
     test('exposes stable message ids', () {
-      expect(
-        EmailValidationError.empty.messageId,
-        'error_email_cant_be_empty',
-      );
+      expect(EmailValidationError.empty.messageId, 'error_email_cant_be_empty');
       expect(EmailValidationError.empty.defaultMessage, isNotEmpty);
     });
   });
@@ -77,10 +71,7 @@ void main() {
 
   group('PhoneNumberValidator', () {
     test('accepts valid phone', () {
-      expect(
-        const PhoneNumberValidator.dirty('01012345678').isValid,
-        isTrue,
-      );
+      expect(const PhoneNumberValidator.dirty('01012345678').isValid, isTrue);
     });
 
     test('rejects empty', () {
@@ -142,17 +133,11 @@ void main() {
         const LoginPhoneValidator.dirty('').error,
         LoginPhoneValidationError.empty,
       );
-      expect(
-        const LoginPhoneValidator.dirty('01012345678').isValid,
-        isTrue,
-      );
+      expect(const LoginPhoneValidator.dirty('01012345678').isValid, isTrue);
     });
 
     test('login password requires value', () {
-      expect(
-        const LoginPasswordValidator.dirty('secret').isValid,
-        isTrue,
-      );
+      expect(const LoginPasswordValidator.dirty('secret').isValid, isTrue);
     });
   });
 

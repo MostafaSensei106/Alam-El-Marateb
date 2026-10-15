@@ -25,12 +25,17 @@ class OtpFieldComponent extends StatelessWidget {
       textStyle: Theme.of(context).textTheme.titleLarge,
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).colorScheme.outline),
-        borderRadius: BorderRadius.circular(ApplicationRadius.outerBorderRadius.r),
+        borderRadius: BorderRadius.circular(
+          ApplicationRadius.outerBorderRadius.r,
+        ),
       ),
     );
 
     final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-      border: Border.all(color: Theme.of(context).colorScheme.primary, width: 2),
+      border: Border.all(
+        color: Theme.of(context).colorScheme.primary,
+        width: 2,
+      ),
     );
 
     final submittedPinTheme = defaultPinTheme.copyDecorationWith(
@@ -45,7 +50,8 @@ class OtpFieldComponent extends StatelessWidget {
       submittedPinTheme: submittedPinTheme,
       onCompleted: onCompleted,
       onChanged: onChanged,
-      separatorBuilder: (index) => SizedBox(width: ApplicationPadding.paddingHalf.w),
+      separatorBuilder: (index) =>
+          SizedBox(width: ApplicationPadding.paddingHalf.w),
     );
   }
 }

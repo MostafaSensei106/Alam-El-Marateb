@@ -15,7 +15,5 @@ Interceptor createCertificatePinningInterceptor({
   void Function(int pinCount)? onEnabled,
 }) {
   onEnabled?.call(shaFingerprints.length);
-  return CertificatePinningInterceptor(
-    allowedSHAFingerprints: shaFingerprints,
-  );
+  return CertificatePinningInterceptor(allowedSHAFingerprints: shaFingerprints);
 }

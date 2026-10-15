@@ -28,10 +28,7 @@ void main() {
         policy.redactError(Exception('invalid password xyz')),
         'Redacted security error',
       );
-      expect(
-        policy.redactError(Exception('plain failure')),
-        isA<Exception>(),
-      );
+      expect(policy.redactError(Exception('plain failure')), isA<Exception>());
     });
 
     test('redacts bearer tokens in text', () {
@@ -43,10 +40,7 @@ void main() {
 
   group('SecurityFailure', () {
     test('vault factories carry messages', () {
-      expect(
-        const VaultFailure.invalidPayload().message,
-        contains('payload'),
-      );
+      expect(const VaultFailure.invalidPayload().message, contains('payload'));
       expect(
         const VaultFailure.keyUnavailable().message,
         contains('unavailable'),
@@ -58,9 +52,7 @@ void main() {
     });
 
     test('biometric outcome carries failure', () {
-      const outcome = BiometricDeniedOutcome(
-        BiometricFailure.denied(),
-      );
+      const outcome = BiometricDeniedOutcome(BiometricFailure.denied());
       expect(outcome.failure.message, isNotEmpty);
       expect(const BiometricGrantedOutcome(), isA<BiometricOutcome>());
     });

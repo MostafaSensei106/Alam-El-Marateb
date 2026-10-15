@@ -45,8 +45,7 @@ extension NameValidatorErrorX on NameValidatorError {
   String get messageId => switch (this) {
     NameValidatorError.empty => 'error_name_cant_be_empty',
     NameValidatorError.invalid => 'error_name_invalid',
-    NameValidatorError.tooShort =>
-      'error_name_too_short_at_least_3_characters',
+    NameValidatorError.tooShort => 'error_name_too_short_at_least_3_characters',
     NameValidatorError.tooLong => 'error_name_too_long_maximum_20_characters',
     NameValidatorError.invalidSpecialChars =>
       'error_name_invalid_special_characters',

@@ -53,9 +53,8 @@ final class DialogComponent extends StatelessWidget {
             },
             child: Text(
               cancelText,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium
+                  ?.copyWith(color: Theme.of(context).colorScheme.primary),
             ),
           ),
           CupertinoDialogAction(
@@ -67,9 +66,8 @@ final class DialogComponent extends StatelessWidget {
             },
             child: Text(
               confirmText,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.error,
-              ),
+              style: Theme.of(context).textTheme.bodyMedium
+                  ?.copyWith(color: Theme.of(context).colorScheme.error),
             ),
           ),
         ],
@@ -77,7 +75,10 @@ final class DialogComponent extends StatelessWidget {
     );
   }
 
-  static void showLoading(BuildContext context, {String loadingText = 'Please wait…'}) {
+  static void showLoading(
+    BuildContext context, {
+    String loadingText = 'Please wait…',
+  }) {
     unawaited(
       showCupertinoDialog(
         context: context,
@@ -117,10 +118,7 @@ final class DialogComponent extends StatelessWidget {
               await HapticFeedback.vibrate();
               if (context.mounted) Navigator.pop(context);
             },
-            child: Text(
-              okText,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            child: Text(okText, style: Theme.of(context).textTheme.bodyMedium),
           ),
         ],
       ),
@@ -145,10 +143,7 @@ final class DialogComponent extends StatelessWidget {
               await HapticFeedback.vibrate();
               if (context.mounted) Navigator.pop(context);
             },
-            child: Text(
-              okText,
-              style: Theme.of(context).textTheme.bodyMedium,
-            ),
+            child: Text(okText, style: Theme.of(context).textTheme.bodyMedium),
           ),
         ],
       ),

@@ -34,12 +34,7 @@ Future<void> configureCoreDependencies() async {
   }
   if (!getIt.isRegistered<BaseNotificationService>()) {
     getIt.registerLazySingleton<BaseNotificationService>(
-      () => FirebaseNotificationService(
-        getIt(),
-        getIt(),
-        getIt(),
-        getIt(),
-      ),
+      () => FirebaseNotificationService(getIt(), getIt(), getIt(), getIt()),
     );
   }
 }

@@ -80,7 +80,9 @@
         "flutter_lints",
         "flutter_test",
         "go_router_builder",
-        "injectable_generator"
+        "injectable_generator",
+        "package_info_plus",
+        "shared_preferences"
       ]
     },
     {

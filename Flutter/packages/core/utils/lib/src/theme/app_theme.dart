@@ -66,7 +66,9 @@ final class AppTheme {
 
     dialogTheme: DialogThemeData(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(ApplicationRadius.outerBorderRadius),
+        borderRadius: BorderRadius.circular(
+          ApplicationRadius.outerBorderRadius,
+        ),
       ),
     ),
 
@@ -149,7 +151,9 @@ final class AppTheme {
 
     dialogTheme: DialogThemeData(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(ApplicationRadius.outerBorderRadius),
+        borderRadius: BorderRadius.circular(
+          ApplicationRadius.outerBorderRadius,
+        ),
       ),
     ),
 

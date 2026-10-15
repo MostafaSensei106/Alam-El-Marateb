@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:alam_el_marateb_constants/constants.dart';
+
 import 'list_tile_component.dart';
 
 final class ListTileIconComponent extends StatelessWidget {
@@ -68,7 +69,11 @@ final class ListTileIconComponent extends StatelessWidget {
         color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Icon(leading, size: ApplicationIconsSize.iconSize, color: Colors.white),
+      child: Icon(
+        leading,
+        size: ApplicationIconsSize.iconSize,
+        color: Colors.white,
+      ),
     );
 
     switch (groupType) {

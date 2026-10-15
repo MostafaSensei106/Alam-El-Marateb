@@ -38,7 +38,9 @@ final class SearchBarComponent extends StatelessWidget {
       backgroundColor: WidgetStatePropertyAll(colorScheme.surfaceContainer),
       shape: WidgetStatePropertyAll(
         RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(ApplicationRadius.outerBorderRadius),
+          borderRadius: BorderRadius.circular(
+            ApplicationRadius.outerBorderRadius,
+          ),
         ),
       ),
       keyboardType: TextInputType.name,

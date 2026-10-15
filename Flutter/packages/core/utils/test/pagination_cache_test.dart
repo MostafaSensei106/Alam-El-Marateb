@@ -17,8 +17,7 @@ class _FakeNetworkInfo implements BaseNetworkInfo {
   Future<bool> get hasInternetAccess async => true;
 }
 
-class _FakeCubit extends Cubit<PaginationState<int>>
-    with PaginationMixin<int> {
+class _FakeCubit extends Cubit<PaginationState<int>> with PaginationMixin<int> {
   _FakeCubit({required this.pages, this.failOnPage})
     : super(const PaginationState());
 

@@ -50,7 +50,10 @@ final class DropdownButtonFormFieldComponent<T> extends StatelessWidget {
       errorText: errorText,
       filled: true,
       fillColor: Theme.of(context).colorScheme.surfaceContainer,
-      prefixIcon: Icon(prefixIcon, color: Theme.of(context).colorScheme.primary),
+      prefixIcon: Icon(
+        prefixIcon,
+        color: Theme.of(context).colorScheme.primary,
+      ),
       hintText: hintText,
       border: OutlineInputBorder(
         borderRadius: useInBorderRadius
@@ -62,7 +65,9 @@ final class DropdownButtonFormFieldComponent<T> extends StatelessWidget {
         borderRadius: useInBorderRadius
             ? BorderRadius.circular(ApplicationRadius.innerBorderRadius)
             : BorderRadius.circular(ApplicationRadius.outerBorderRadius),
-        borderSide: BorderSide(color: Theme.of(context).colorScheme.outlineVariant),
+        borderSide: BorderSide(
+          color: Theme.of(context).colorScheme.outlineVariant,
+        ),
       ),
     ),
   );

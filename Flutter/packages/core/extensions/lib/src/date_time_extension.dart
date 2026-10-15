@@ -7,7 +7,10 @@ extension AppDateTimeExtension on DateTime {
   /// Pass it from the app layer (e.g. `LocalizationCubit.state.langCode`)
   /// so this package never depends on DI or localization state.
   /// [includeDayOfWeek] if true, adds the day of the week.
-  String toAppFormat({required String langCode, bool includeDayOfWeek = false}) {
+  String toAppFormat({
+    required String langCode,
+    bool includeDayOfWeek = false,
+  }) {
     final isAr = langCode == 'ar';
 
     final formatString = includeDayOfWeek
@@ -36,7 +39,10 @@ extension AppDateTimeExtension on DateTime {
 
 extension AppDateStringExtension on String {
   /// Formats the date string with a unified format for the app.
-  String toAppFormat({required String langCode, bool includeDayOfWeek = false}) {
+  String toAppFormat({
+    required String langCode,
+    bool includeDayOfWeek = false,
+  }) {
     try {
       final date = DateTime.parse(this).toLocal();
       return date.toAppFormat(

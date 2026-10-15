@@ -23,8 +23,7 @@ final class ConfirmPasswordValidator
   }
 }
 
-extension ConfirmPasswordValidationErrorX
-    on ConfirmPasswordValidationError {
+extension ConfirmPasswordValidationErrorX on ConfirmPasswordValidationError {
   /// Stable l10n key — the app resolves it to the localized string.
   String get messageId => switch (this) {
     ConfirmPasswordValidationError.empty => 'error_password_cant_be_empty',

@@ -1,8 +1,11 @@
 import 'dart:convert';
 
-import 'package:alam_el_marateb_services/src/shared_prefs/pref_storage_service_base.dart';
+import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:alam_el_marateb_services/src/shared_prefs/pref_storage_service_base.dart';
+
+@lazySingleton
 final class SharedPrefsService implements PrefStorageServiceBase {
   const SharedPrefsService(this._prefs);
   final SharedPreferences _prefs;

@@ -22,9 +22,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> signIn({required String phone, required String password}) async {
     emit(const AuthState.submitting());
-    final result = await _login(
-      LoginParams(phone: phone, password: password),
-    );
+    final result = await _login(LoginParams(phone: phone, password: password));
     if (isClosed) return;
     switch (result) {
       case Success(:final data):

@@ -10,8 +10,5 @@ import 'auth_config.config.dart';
 ///
 /// Run `dart run build_runner build` inside `packages/modules/auth`
 /// after changing any `@injectable` annotation.
-@InjectableInit(
-  initializerName: 'initAuth',
-  asExtension: true,
-)
+@InjectableInit(initializerName: 'initAuth', asExtension: true)
 void initAuth(GetIt getIt) => getIt.initAuth();
