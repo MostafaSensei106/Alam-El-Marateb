@@ -12,6 +12,7 @@
     "alam_el_marateb_ui",
     "alam_el_marateb_utils",
     "alam_el_marateb_validators",
+    "auth",
     "catalog",
     "crm",
     "customer",
@@ -290,6 +291,34 @@
       ]
     },
     {
+      "name": "auth",
+      "version": "1.0.0",
+      "dependencies": [
+        "alam_el_marateb_constants",
+        "alam_el_marateb_di",
+        "alam_el_marateb_network",
+        "alam_el_marateb_result",
+        "alam_el_marateb_services",
+        "alam_el_marateb_ui",
+        "alam_el_marateb_utils",
+        "alam_el_marateb_validators",
+        "dio",
+        "flutter",
+        "flutter_bloc",
+        "freezed_annotation",
+        "injectable",
+        "retrofit"
+      ],
+      "devDependencies": [
+        "build_runner",
+        "flutter_test",
+        "freezed",
+        "lints",
+        "retrofit_generator",
+        "test"
+      ]
+    },
+    {
       "name": "pos",
       "version": "1.0.0",
       "dependencies": [
@@ -455,6 +484,23 @@
       "dependencies": []
     },
     {
+      "name": "freezed",
+      "version": "4.0.1",
+      "dependencies": [
+        "analyzer",
+        "analyzer_buffer",
+        "build",
+        "build_config",
+        "collection",
+        "dart_style",
+        "freezed_annotation",
+        "json_annotation",
+        "meta",
+        "pub_semver",
+        "source_gen"
+      ]
+    },
+    {
       "name": "flutter_test",
       "version": "0.0.0",
       "dependencies": [
@@ -473,16 +519,50 @@
       ]
     },
     {
-      "name": "go_router",
-      "version": "18.1.0",
+      "name": "retrofit",
+      "version": "4.10.0",
+      "dependencies": [
+        "dio",
+        "meta"
+      ]
+    },
+    {
+      "name": "injectable",
+      "version": "3.0.0",
+      "dependencies": [
+        "get_it",
+        "meta"
+      ]
+    },
+    {
+      "name": "freezed_annotation",
+      "version": "3.1.0",
       "dependencies": [
         "collection",
-        "cupertino_ui",
-        "flutter",
-        "flutter_web_plugins",
-        "logging",
-        "material_ui",
+        "json_annotation",
         "meta"
+      ]
+    },
+    {
+      "name": "flutter_bloc",
+      "version": "9.1.1",
+      "dependencies": [
+        "bloc",
+        "flutter",
+        "provider"
+      ]
+    },
+    {
+      "name": "dio",
+      "version": "5.11.1",
+      "dependencies": [
+        "async",
+        "collection",
+        "dio_web_adapter",
+        "http_parser",
+        "meta",
+        "mime",
+        "path"
       ]
     },
     {
@@ -495,6 +575,19 @@
         "meta",
         "sky_engine",
         "vector_math"
+      ]
+    },
+    {
+      "name": "go_router",
+      "version": "18.1.0",
+      "dependencies": [
+        "collection",
+        "cupertino_ui",
+        "flutter",
+        "flutter_web_plugins",
+        "logging",
+        "material_ui",
+        "meta"
       ]
     },
     {
@@ -565,15 +658,6 @@
       "version": "0.21.3+1",
       "dependencies": [
         "flutter"
-      ]
-    },
-    {
-      "name": "flutter_bloc",
-      "version": "9.1.1",
-      "dependencies": [
-        "bloc",
-        "flutter",
-        "provider"
       ]
     },
     {
@@ -657,37 +741,12 @@
       ]
     },
     {
-      "name": "injectable",
-      "version": "3.0.0",
-      "dependencies": [
-        "get_it",
-        "meta"
-      ]
-    },
-    {
       "name": "get_it",
       "version": "9.3.0",
       "dependencies": [
         "async",
         "collection",
         "meta"
-      ]
-    },
-    {
-      "name": "freezed",
-      "version": "4.0.1",
-      "dependencies": [
-        "analyzer",
-        "analyzer_buffer",
-        "build",
-        "build_config",
-        "collection",
-        "dart_style",
-        "freezed_annotation",
-        "json_annotation",
-        "meta",
-        "pub_semver",
-        "source_gen"
       ]
     },
     {
@@ -711,15 +770,6 @@
         "bloc_signals",
         "meta",
         "signals_core"
-      ]
-    },
-    {
-      "name": "freezed_annotation",
-      "version": "3.1.0",
-      "dependencies": [
-        "collection",
-        "json_annotation",
-        "meta"
       ]
     },
     {
@@ -820,19 +870,6 @@
         "firebase_crashlytics_platform_interface",
         "flutter",
         "stack_trace"
-      ]
-    },
-    {
-      "name": "dio",
-      "version": "5.11.1",
-      "dependencies": [
-        "async",
-        "collection",
-        "dio_web_adapter",
-        "http_parser",
-        "meta",
-        "mime",
-        "path"
       ]
     },
     {
@@ -1060,14 +1097,6 @@
         "source_span",
         "watcher",
         "yaml"
-      ]
-    },
-    {
-      "name": "retrofit",
-      "version": "4.10.0",
-      "dependencies": [
-        "dio",
-        "meta"
       ]
     },
     {
@@ -1405,6 +1434,17 @@
       ]
     },
     {
+      "name": "analyzer_buffer",
+      "version": "0.3.4",
+      "dependencies": [
+        "analyzer",
+        "collection",
+        "meta",
+        "path",
+        "source_gen"
+      ]
+    },
+    {
       "name": "leak_tracker_flutter_testing",
       "version": "3.0.10",
       "dependencies": [
@@ -1432,6 +1472,52 @@
         "clock",
         "collection"
       ]
+    },
+    {
+      "name": "provider",
+      "version": "6.1.5+1",
+      "dependencies": [
+        "collection",
+        "flutter",
+        "nested"
+      ]
+    },
+    {
+      "name": "dio_web_adapter",
+      "version": "2.2.2",
+      "dependencies": [
+        "dio",
+        "http_parser",
+        "meta",
+        "web"
+      ]
+    },
+    {
+      "name": "http_parser",
+      "version": "4.1.2",
+      "dependencies": [
+        "collection",
+        "source_span",
+        "string_scanner",
+        "typed_data"
+      ]
+    },
+    {
+      "name": "sky_engine",
+      "version": "0.0.0",
+      "dependencies": []
+    },
+    {
+      "name": "material_color_utilities",
+      "version": "0.13.0",
+      "dependencies": [
+        "collection"
+      ]
+    },
+    {
+      "name": "characters",
+      "version": "1.4.1",
+      "dependencies": []
     },
     {
       "name": "material_ui",
@@ -1462,23 +1548,6 @@
         "flutter_localizations",
         "intl"
       ]
-    },
-    {
-      "name": "sky_engine",
-      "version": "0.0.0",
-      "dependencies": []
-    },
-    {
-      "name": "material_color_utilities",
-      "version": "0.13.0",
-      "dependencies": [
-        "collection"
-      ]
-    },
-    {
-      "name": "characters",
-      "version": "1.4.1",
-      "dependencies": []
     },
     {
       "name": "pausable_timer",
@@ -1551,15 +1620,6 @@
         "http_parser",
         "meta",
         "web"
-      ]
-    },
-    {
-      "name": "provider",
-      "version": "6.1.5+1",
-      "dependencies": [
-        "collection",
-        "flutter",
-        "nested"
       ]
     },
     {
@@ -1754,17 +1814,6 @@
         "flutter",
         "meta",
         "plugin_platform_interface"
-      ]
-    },
-    {
-      "name": "analyzer_buffer",
-      "version": "0.3.4",
-      "dependencies": [
-        "analyzer",
-        "collection",
-        "meta",
-        "path",
-        "source_gen"
       ]
     },
     {
@@ -2033,26 +2082,6 @@
         "flutter",
         "meta",
         "plugin_platform_interface"
-      ]
-    },
-    {
-      "name": "dio_web_adapter",
-      "version": "2.2.2",
-      "dependencies": [
-        "dio",
-        "http_parser",
-        "meta",
-        "web"
-      ]
-    },
-    {
-      "name": "http_parser",
-      "version": "4.1.2",
-      "dependencies": [
-        "collection",
-        "source_span",
-        "string_scanner",
-        "typed_data"
       ]
     },
     {

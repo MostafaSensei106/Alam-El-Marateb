@@ -1388,6 +1388,12 @@
       "languageVersion": "3.13"
     },
     {
+      "name": "auth",
+      "rootUri": "../packages/modules/auth",
+      "packageUri": "lib/",
+      "languageVersion": "3.13"
+    },
+    {
       "name": "pos",
       "rootUri": "../packages/modules/pos",
       "packageUri": "lib/",
