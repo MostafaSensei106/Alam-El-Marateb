@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'package:alam_el_marateb_constants/constants.dart';
-import '../../../extensions/extensions.dart';
 
 enum ListTileGroupType { top, middle, bottom, single }
 
