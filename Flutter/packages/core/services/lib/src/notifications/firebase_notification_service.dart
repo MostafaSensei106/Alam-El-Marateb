@@ -53,30 +53,23 @@ Future<void> _defaultForegroundHandler(
 
 @LazySingleton(as: BaseNotificationService)
 class FirebaseNotificationService implements BaseNotificationService {
-  FirebaseNotificationService({
-    required PermissionServiceBase permissionService,
-    required PrefStorageServiceBase storage,
-    required BaseLocalNotificationService localNotificationService,
-    required FirebaseMessaging messaging,
-    FcmTokenSync? syncTokenToBackend,
-    ForegroundMessageHandler? onForegroundMessage,
-    PushNotificationTapHandler? onNotificationTap,
-  }) : _permissionService = permissionService,
-       _storage = storage,
-       _localNotificationService = localNotificationService,
-       _messaging = messaging,
-       _syncTokenToBackend = syncTokenToBackend,
-       _onForegroundMessage =
-           onForegroundMessage ?? _defaultForegroundHandler,
-       _onNotificationTap = onNotificationTap;
+  FirebaseNotificationService(
+    this._permissionService,
+    this._storage,
+    this._localNotificationService,
+    this._messaging, {
+    this.syncTokenToBackend,
+    this.onForegroundMessage = _defaultForegroundHandler,
+    this.onNotificationTap,
+  });
 
   final PermissionServiceBase _permissionService;
   final PrefStorageServiceBase _storage;
   final BaseLocalNotificationService _localNotificationService;
   final FirebaseMessaging _messaging;
-  final FcmTokenSync? _syncTokenToBackend;
-  final ForegroundMessageHandler _onForegroundMessage;
-  final PushNotificationTapHandler? _onNotificationTap;
+  final FcmTokenSync? syncTokenToBackend;
+  final ForegroundMessageHandler onForegroundMessage;
+  final PushNotificationTapHandler? onNotificationTap;
 
   @override
   Future<void> initialize() async {
@@ -103,7 +96,7 @@ class FirebaseNotificationService implements BaseNotificationService {
 
     // 4. Listen to foreground messages
     FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      await _onForegroundMessage(message, _localNotificationService);
+      await onForegroundMessage(message, _localNotificationService);
     });
 
     // 5. Handle interaction when app is in background but not terminated
@@ -141,7 +134,7 @@ class FirebaseNotificationService implements BaseNotificationService {
 
   Future<void> _handleNotificationInteraction(RemoteMessage message) async {
     log('Handling interaction for message: ${message.messageId}');
-    await _onNotificationTap?.call(message);
+    await onNotificationTap?.call(message);
   }
 
   @override
@@ -226,7 +219,7 @@ class FirebaseNotificationService implements BaseNotificationService {
     if (fcmToken == null || fcmToken.isEmpty) return;
 
     try {
-      await _syncTokenToBackend?.call(fcmToken);
+      await syncTokenToBackend?.call(fcmToken);
     } catch (e) {
       log('Error sending FCM token to backend: $e');
     }

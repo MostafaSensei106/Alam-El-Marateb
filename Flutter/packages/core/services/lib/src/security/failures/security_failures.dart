@@ -33,15 +33,19 @@ final class BiometricFailure extends SecurityFailure {
 }
 
 /// Outcome of a biometric gate check — explicit, no boolean traps.
+///
+/// Named `*Outcome` to avoid clashing with the audit [SecurityEvent]s
+/// (`BiometricGranted` / `BiometricDenied` in `security_event.dart`),
+/// which feed analytics dashboards and must keep stable names.
 sealed class BiometricOutcome {
   const BiometricOutcome();
 }
 
-final class BiometricGranted extends BiometricOutcome {
-  const BiometricGranted();
+final class BiometricGrantedOutcome extends BiometricOutcome {
+  const BiometricGrantedOutcome();
 }
 
-final class BiometricDenied extends BiometricOutcome {
-  const BiometricDenied(this.failure);
+final class BiometricDeniedOutcome extends BiometricOutcome {
+  const BiometricDeniedOutcome(this.failure);
   final BiometricFailure failure;
 }

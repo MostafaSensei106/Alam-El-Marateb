@@ -16,10 +16,9 @@ typedef LocalNotificationTapHandler = FutureOr<void> Function(String? payload);
 
 @LazySingleton(as: BaseLocalNotificationService)
 class LocalNotificationService implements BaseLocalNotificationService {
-  LocalNotificationService({LocalNotificationTapHandler? onNotificationTap})
-    : _onNotificationTap = onNotificationTap;
+  LocalNotificationService({this.onNotificationTap});
 
-  final LocalNotificationTapHandler? _onNotificationTap;
+  final LocalNotificationTapHandler? onNotificationTap;
   final FlutterLocalNotificationsPlugin _localNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
@@ -98,7 +97,7 @@ class LocalNotificationService implements BaseLocalNotificationService {
   void _handleLocalNotificationInteraction(String? payload) {
     log('Local notification clicked!');
     unawaited(
-      Future.sync(() => _onNotificationTap?.call(payload)),
+      Future.sync(() => onNotificationTap?.call(payload)),
     );
   }
 }
