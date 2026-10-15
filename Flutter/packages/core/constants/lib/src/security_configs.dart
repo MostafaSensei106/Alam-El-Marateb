@@ -62,4 +62,38 @@ final class SecurityConfigs {
   /// authentication token. Consumers must enforce the requirement; this
   /// constant alone does not authenticate a request.
   static const String requireToken = 'requireToken';
+
+  /// Backup pin slot: add the next cert's fingerprint here before rotation.
+  static const List<String> backupSHAFingerprints = <String>[];
+
+  /// All pins (primary + backup) used when pinning is enabled.
+  static List<String> get allSHAFingerprints => [
+    ...allowedSHAFingerprints,
+    ...backupSHAFingerprints,
+  ];
+
+  // ── Secure vault (AES-256-GCM + Argon2id) ──────────────────────────
+
+  /// Prefix for vault entries stored in secure storage.
+  static const String vaultKeyPrefix = 'vault_';
+
+  /// Salt key for Argon2id key derivation.
+  static const String vaultSaltKey = 'vault_argon2_salt';
+
+  /// OWASP-aligned Argon2id parameters (memory in KiB).
+  static const int argon2Parallelism = 2;
+  static const int argon2MemoryKiB = 19456;
+  static const int argon2Iterations = 2;
+  static const int argon2HashLength = 32;
+
+  // ── Clipboard ──────────────────────────────────────────────────────
+
+  /// Auto-clear delay for sensitive clipboard content.
+  static const Duration clipboardClearDelay = Duration(seconds: 30);
+
+  // ── Biometric gate ─────────────────────────────────────────────────
+
+  /// Reason shown in the system biometric prompt.
+  static const String biometricReason =
+      'Authenticate to view or change sensitive data';
 }
