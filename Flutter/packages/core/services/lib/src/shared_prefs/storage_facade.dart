@@ -6,10 +6,7 @@ import 'package:alam_el_marateb_services/src/shared_prefs/shared_prefs_service.d
 
 @LazySingleton(as: PrefStorageServiceBase)
 final class StorageFacade implements PrefStorageServiceBase {
-  const StorageFacade({
-    required this._sharedPrefsService,
-    required this._secureStorageService,
-  });
+  const StorageFacade(this._sharedPrefsService, this._secureStorageService);
 
   final SharedPrefsService _sharedPrefsService;
   final SecureStorageService _secureStorageService;

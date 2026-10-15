@@ -40,10 +40,7 @@ Future<void> configureCoreDependencies() async {
       () => SecureStorageService(secureStorage),
     )
     ..registerLazySingleton<PrefStorageServiceBase>(
-      () => StorageFacade(
-        sharedPrefsService: getIt(),
-        secureStorageService: getIt(),
-      ),
+      () => StorageFacade(getIt(), getIt()),
     )
     ..registerLazySingleton<UserSessionServiceBase>(
       () => UserSessionService(getIt()),
