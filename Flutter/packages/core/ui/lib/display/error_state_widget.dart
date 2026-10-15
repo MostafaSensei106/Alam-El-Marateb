@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import 'package:alam_el_marateb_constants/constants.dart';
-import '../../extensions/extensions.dart';
 
 class ErrorStateWidget extends StatelessWidget {
   const ErrorStateWidget({
@@ -33,7 +32,8 @@ class ErrorStateWidget extends StatelessWidget {
               SizedBox(height: 16.h),
             ],
             Text(
-              title ?? context.localeKeys.error,
+              // English fallback — the app passes the localized title.
+              title ?? 'Error',
               textAlign: TextAlign.center,
               style: theme.textTheme.titleLarge?.copyWith(),
             ),

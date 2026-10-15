@@ -1,11 +1,14 @@
 import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../extensions/extensions.dart';
-
+/// Cupertino-styled dialogs shared by every app.
+///
+/// Button labels fall back to English — the app passes localized strings
+/// (`cancelText`, `confirmText`, `okText`, `loadingText`). Navigation uses
+/// plain `Navigator` so this package never depends on the app's router.
 final class DialogComponent extends StatelessWidget {
   const DialogComponent({
     required this.title,
@@ -34,6 +37,8 @@ final class DialogComponent extends StatelessWidget {
     required String title,
     required String body,
     required VoidCallback onConfirm,
+    String cancelText = 'Cancel',
+    String confirmText = 'Confirm',
   }) {
     return showCupertinoDialog<T>(
       context: context,
@@ -44,10 +49,10 @@ final class DialogComponent extends StatelessWidget {
           CupertinoDialogAction(
             onPressed: () async {
               await HapticFeedback.vibrate();
-              if (context.mounted) context.pop();
+              if (context.mounted) Navigator.of(context).pop();
             },
             child: Text(
-              context.localeKeys.cancel,
+              cancelText,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Theme.of(context).colorScheme.primary,
               ),
@@ -57,11 +62,11 @@ final class DialogComponent extends StatelessWidget {
             isDestructiveAction: true,
             onPressed: () async {
               await HapticFeedback.vibrate();
-              if (context.mounted) context.pop();
+              if (context.mounted) Navigator.of(context).pop();
               onConfirm();
             },
             child: Text(
-              context.localeKeys.confirm,
+              confirmText,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Theme.of(context).colorScheme.error,
               ),
@@ -72,7 +77,7 @@ final class DialogComponent extends StatelessWidget {
     );
   }
 
-  static void showLoading(BuildContext context) {
+  static void showLoading(BuildContext context, {String loadingText = 'Please wait…'}) {
     unawaited(
       showCupertinoDialog(
         context: context,
@@ -80,7 +85,7 @@ final class DialogComponent extends StatelessWidget {
           canPop: false,
           child: DialogComponent(
             title: Text(
-              context.localeKeys.pleaseWait,
+              loadingText,
               style: Theme.of(context).textTheme.titleMedium,
             ),
             content: const Padding(
@@ -98,6 +103,7 @@ final class DialogComponent extends StatelessWidget {
     required BuildContext context,
     required String title,
     required String error,
+    String okText = 'OK',
   }) {
     return showCupertinoDialog(
       context: context,
@@ -112,7 +118,7 @@ final class DialogComponent extends StatelessWidget {
               if (context.mounted) Navigator.pop(context);
             },
             child: Text(
-              context.localeKeys.ok,
+              okText,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
@@ -125,6 +131,7 @@ final class DialogComponent extends StatelessWidget {
     required BuildContext context,
     required String title,
     required String body,
+    String okText = 'OK',
   }) {
     return showCupertinoDialog(
       context: context,
@@ -139,7 +146,7 @@ final class DialogComponent extends StatelessWidget {
               if (context.mounted) Navigator.pop(context);
             },
             child: Text(
-              context.localeKeys.ok,
+              okText,
               style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),

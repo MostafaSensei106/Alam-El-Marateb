@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:alam_el_marateb_constants/constants.dart';
-import '../../di/di.dart';
-import 'package:alam_el_marateb_services/services.dart';
 
 extension BottomSheetExtension on BuildContext {
   // ignore: unused_element
@@ -18,7 +16,7 @@ extension BottomSheetExtension on BuildContext {
       showDragHandle: true,
       isDismissible: isDismissible,
       enableDrag: enableDrag,
-      backgroundColor: getIt<ThemeService>().get(this).surface,
+      backgroundColor: Theme.of(this).colorScheme.surface,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(ApplicationRadius.outerBorderRadius.r),

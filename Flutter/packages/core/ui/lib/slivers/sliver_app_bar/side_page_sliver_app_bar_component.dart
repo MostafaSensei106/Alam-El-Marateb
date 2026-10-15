@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:go_router/go_router.dart';
 
 import 'package:alam_el_marateb_constants/constants.dart';
 import '../../buttons/icon_button/icon_button_component.dart';
@@ -42,7 +41,7 @@ final class SidePageSliverAppBarComponent extends StatelessWidget {
   /// Navigates back to the previous screen with haptic feedback.
   void leave(BuildContext context) {
     unawaited(HapticFeedback.vibrate());
-    context.pop();
+    Navigator.of(context).pop();
   }
 
   /// Checks if the current locale is Arabic.

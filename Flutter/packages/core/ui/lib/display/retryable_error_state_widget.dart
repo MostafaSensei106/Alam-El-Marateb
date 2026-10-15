@@ -3,13 +3,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import 'package:alam_el_marateb_constants/constants.dart';
-import '../../extensions/extensions.dart';
 import '../buttons/text_button/text_button_component.dart';
 
 /// Unified error-state presentation used by every API-backed screen.
 ///
 /// Compact and centered: a small tinted medallion, a [title], the human
 /// [message], and a retry button wired to the screen's explicit reload.
+///
+/// [title] and [retryButtonText] fall back to English — the app passes
+/// localized strings.
 class RetryableErrorStateWidget extends StatelessWidget {
   const RetryableErrorStateWidget({
     required this.message,
@@ -53,7 +55,7 @@ class RetryableErrorStateWidget extends StatelessWidget {
               SizedBox(height: 12.h),
             ],
             Text(
-              title ?? context.localeKeys.error,
+              title ?? 'Error',
               textAlign: TextAlign.center,
               style: theme.textTheme.titleMedium?.copyWith(
                 fontWeight: FontWeight.w600,
@@ -75,7 +77,7 @@ class RetryableErrorStateWidget extends StatelessWidget {
             TextButtonComponent.icon(
               onPressed: onRetry,
               icon: Iconsax.refresh_copy,
-              label: retryButtonText ?? context.localeKeys.retry,
+              label: retryButtonText ?? 'Retry',
             ),
           ],
         ),

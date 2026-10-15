@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 
 import 'package:alam_el_marateb_constants/constants.dart';
-import '../../../di/di.dart';
-import 'package:alam_el_marateb_services/services.dart';
 
 final class SearchBarComponent extends StatelessWidget {
   const SearchBarComponent({
@@ -24,7 +22,7 @@ final class SearchBarComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = getIt<ThemeService>().get(context);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return SearchBar(
       controller: controller,

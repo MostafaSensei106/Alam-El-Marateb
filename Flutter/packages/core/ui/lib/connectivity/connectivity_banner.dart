@@ -1,16 +1,24 @@
+import 'package:alam_el_marateb_network/network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:toastification/toastification.dart';
 
-import '../../extensions/extensions.dart';
-import 'package:alam_el_marateb_network/network.dart';
-
+/// Shows error/success toasts on connectivity transitions.
+///
+/// Texts fall back to English — the app passes localized strings.
 class ConnectivityBanner extends HookWidget {
-  const ConnectivityBanner({required this.child, super.key});
+  const ConnectivityBanner({
+    required this.child,
+    this.offlineText = 'No internet connection',
+    this.restoredText = 'Internet connection restored',
+    super.key,
+  });
 
   final Widget child;
+  final String offlineText;
+  final String restoredText;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +35,7 @@ class ConnectivityBanner extends HookWidget {
               context: context,
               type: ToastificationType.error,
               style: ToastificationStyle.fillColored,
-              title: Text(context.localeKeys.noInternetConnection),
+              title: Text(offlineText),
               icon: const Icon(Iconsax.wifi_square_copy),
               alignment: Alignment.topCenter,
               showProgressBar: false,
@@ -47,7 +55,7 @@ class ConnectivityBanner extends HookWidget {
                 context: context,
                 type: ToastificationType.success,
                 style: ToastificationStyle.fillColored,
-                title: Text(context.localeKeys.internetConnectionRestored),
+                title: Text(restoredText),
                 icon: const Icon(Iconsax.wifi_copy),
                 alignment: Alignment.topCenter,
                 autoCloseDuration: const Duration(seconds: 3),

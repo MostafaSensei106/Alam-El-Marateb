@@ -5,7 +5,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../animation/wave_background.dart';
 import '../../buttons/icon_button/icon_button_component.dart';
@@ -42,7 +41,7 @@ final class SidePageSliverAppBarWithWavesComponent extends HookWidget {
 
   void leave(BuildContext context) {
     unawaited(HapticFeedback.vibrate());
-    context.pop();
+    Navigator.of(context).pop();
   }
 
   @override
