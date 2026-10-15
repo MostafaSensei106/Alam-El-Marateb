@@ -97,9 +97,9 @@
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
         "auth",
+        "bloc_signals_flutter",
         "dio",
         "flutter",
-        "flutter_bloc",
         "flutter_screenutil",
         "go_router"
       ],
@@ -138,7 +138,7 @@
       "dependencies": [
         "alam_el_marateb_constants",
         "alam_el_marateb_result",
-        "bloc",
+        "bloc_signals",
         "connectivity_plus",
         "dio",
         "dio_cache_interceptor",
@@ -1072,10 +1072,12 @@
       ]
     },
     {
-      "name": "bloc",
-      "version": "9.2.1",
+      "name": "bloc_signals",
+      "version": "1.7.0",
       "dependencies": [
-        "meta"
+        "meta",
+        "preact_signals",
+        "signals_core"
       ]
     },
     {
@@ -1597,6 +1599,13 @@
       ]
     },
     {
+      "name": "bloc",
+      "version": "9.2.1",
+      "dependencies": [
+        "meta"
+      ]
+    },
+    {
       "name": "dio_web_adapter",
       "version": "2.2.2",
       "dependencies": [
@@ -1966,15 +1975,6 @@
       ]
     },
     {
-      "name": "bloc_signals",
-      "version": "1.7.0",
-      "dependencies": [
-        "meta",
-        "preact_signals",
-        "signals_core"
-      ]
-    },
-    {
       "name": "signals_flutter",
       "version": "7.1.0",
       "dependencies": [
@@ -2284,6 +2284,13 @@
       "dependencies": []
     },
     {
+      "name": "preact_signals",
+      "version": "7.0.0",
+      "dependencies": [
+        "meta"
+      ]
+    },
+    {
       "name": "checked_yaml",
       "version": "2.0.4",
       "dependencies": [
@@ -2466,13 +2473,6 @@
         "ffi",
         "meta",
         "xml"
-      ]
-    },
-    {
-      "name": "preact_signals",
-      "version": "7.0.0",
-      "dependencies": [
-        "meta"
       ]
     },
     {

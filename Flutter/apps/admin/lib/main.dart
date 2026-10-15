@@ -4,8 +4,8 @@ import 'package:alam_el_marateb_services/services.dart';
 import 'package:alam_el_marateb_ui/ui.dart';
 import 'package:alam_el_marateb_utils/utils.dart';
 import 'package:auth/auth.dart';
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'src/router/admin_router.dart';
@@ -17,6 +17,7 @@ import 'src/router/admin_router.dart';
 /// the router table and the home page only.
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = const AppBlocObserver();
   await configureCoreDependencies();
   final dio = await buildAuthenticatedDio(clientName: 'admin-app');
   registerAttachmentService(dio);

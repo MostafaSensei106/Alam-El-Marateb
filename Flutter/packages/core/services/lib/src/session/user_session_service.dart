@@ -1,13 +1,13 @@
 import 'package:alam_el_marateb_constants/constants.dart';
 import 'package:injectable/injectable.dart';
 import 'package:alam_el_marateb_services/src/session/user_session_service_base.dart';
-import 'package:alam_el_marateb_services/src/shared_prefs/storage_facade.dart';
+import 'package:alam_el_marateb_services/src/shared_prefs/pref_storage_service_base.dart';
 
 @LazySingleton(as: UserSessionServiceBase)
 final class UserSessionService implements UserSessionServiceBase {
   UserSessionService(this._storageFacade);
 
-  final StorageFacade _storageFacade;
+  final PrefStorageServiceBase _storageFacade;
 
   // In-Memory cache for session-only persistence when rememberMe is false
   String? _inMemoryToken;
@@ -51,7 +51,7 @@ final class UserSessionService implements UserSessionServiceBase {
   }) async {
     _inMemoryToken = token;
     if (rememberMe) {
-      await Future.wait([
+      await Future.wait<bool>([
         _storageFacade.setData<bool>(
           key: PrefKeys.isRememberMeEnabled,
           value: rememberMe,

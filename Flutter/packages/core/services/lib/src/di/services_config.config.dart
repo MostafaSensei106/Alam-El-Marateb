@@ -127,9 +127,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i415.SharedPrefsService>(
       () => _i415.SharedPrefsService(gh<_i460.SharedPreferences>()),
     );
-    gh.lazySingleton<_i134.UserSessionServiceBase>(
-      () => _i868.UserSessionService(gh<_i656.StorageFacade>()),
-    );
     gh.lazySingleton<_i906.BaseAppInfoService>(
       () => _i30.AppInfoService(gh<_i329.BasePackageInfoAdapter>()),
     );
@@ -138,6 +135,9 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i415.SharedPrefsService>(),
         gh<_i932.SecureStorageService>(),
       ),
+    );
+    gh.lazySingleton<_i134.UserSessionServiceBase>(
+      () => _i868.UserSessionService(gh<_i638.PrefStorageServiceBase>()),
     );
     return this;
   }

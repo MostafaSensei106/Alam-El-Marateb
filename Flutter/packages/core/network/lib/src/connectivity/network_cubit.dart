@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
+import 'package:bloc_signals/bloc_signals.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
 
@@ -8,8 +8,9 @@ import 'package:alam_el_marateb_network/src/connectivity/base_network_info.dart'
 import 'package:alam_el_marateb_network/src/connectivity/network_state.dart';
 
 @lazySingleton
-class NetworkCubit extends Cubit<NetworkState> {
-  NetworkCubit(this.networkInfo) : super(const NetworkState.initial()) {
+class NetworkCubit extends CubitSignal<NetworkState> {
+  NetworkCubit(this.networkInfo)
+    : super(initialState: const NetworkState.initial()) {
     _subscription = networkInfo.connectivityChanged.listen(
       _onConnectivityEvent,
     );
@@ -25,12 +26,12 @@ class NetworkCubit extends Cubit<NetworkState> {
 
   /// Returns true if connected OR initial (optimistic online until verified offline).
   bool get isOnline =>
-      state.maybeWhen(disconnected: () => false, orElse: () => true);
+      stateValue.maybeWhen(disconnected: () => false, orElse: () => true);
 
   Future<void> _checkInitialConnectivity() async {
     try {
       final isConnected = await networkInfo.isConnected;
-      if (!isClosed && state == const NetworkState.initial()) {
+      if (!isClosed && stateValue == const NetworkState.initial()) {
         _emitIfChanged(isConnected);
       }
     } catch (_) {
@@ -48,7 +49,7 @@ class NetworkCubit extends Cubit<NetworkState> {
     final isConnected =
         results.isNotEmpty && results.first != ConnectivityResult.none;
 
-    if (state == const NetworkState.initial()) {
+    if (stateValue == const NetworkState.initial()) {
       _debounceTimer?.cancel();
       _emitIfChanged(isConnected);
       return;
@@ -67,7 +68,7 @@ class NetworkCubit extends Cubit<NetworkState> {
         ? const NetworkState.connected()
         : const NetworkState.disconnected();
 
-    if (state == newState) return;
+    if (stateValue == newState) return;
     emit(newState);
   }
 
