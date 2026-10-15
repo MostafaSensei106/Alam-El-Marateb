@@ -124,6 +124,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i932.SecureStorageService>(
       () => _i932.SecureStorageService(gh<_i558.FlutterSecureStorage>()),
     );
+    gh.lazySingleton<_i415.SharedPrefsService>(
+      () => _i415.SharedPrefsService(gh<_i460.SharedPreferences>()),
+    );
     gh.lazySingleton<_i134.UserSessionServiceBase>(
       () => _i868.UserSessionService(gh<_i656.StorageFacade>()),
     );

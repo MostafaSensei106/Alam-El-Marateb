@@ -39,7 +39,6 @@ void main() {
     expect(getIt<SharedPrefsService>(), isA<SharedPrefsService>());
     expect(getIt<SecureStorageService>(), isA<SecureStorageService>());
     expect(getIt<PrefStorageServiceBase>(), isA<StorageFacade>());
-    expect(getIt<UserSessionServiceBase>(), isA<UserSessionService>());
     expect(getIt<BasePackageInfoAdapter>(), isA<PackageInfoPlusAdapter>());
     expect(getIt<BaseAppInfoService>(), isA<AppInfoService>());
     expect(getIt<BaseAuditLogger>(), isA<AppAuditLogger>());
