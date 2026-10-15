@@ -2,6 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'api_error_model.g.dart';
 
+/// Mirrors the backend's global envelope `ApiResponse{success,message,data,errors}`
+/// where `errors` is a flat `List<String>` (validation / domain failures).
 @JsonSerializable()
 class ApiErrorModel {
   const ApiErrorModel({
@@ -18,5 +20,5 @@ class ApiErrorModel {
   final bool? success;
   @JsonKey(defaultValue: 'An unexpected error occurred.')
   final String message;
-  final Map<String, List<String>>? errors;
+  final List<String>? errors;
 }

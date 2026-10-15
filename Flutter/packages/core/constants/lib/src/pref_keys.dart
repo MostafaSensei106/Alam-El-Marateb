@@ -47,6 +47,11 @@ final class PrefKeys {
   /// This value is typically used for authorizing requests to protected APIs.
   static const String userToken = 'user_token';
 
+  /// Stores the refresh token used to mint new access tokens.
+  ///
+  /// Kept in secure storage (see the storage facade's secure-key set).
+  static const String refreshToken = 'refresh_token';
+
   /// Stores the Firebase Cloud Messaging device token used for push notifications.
   static const String firebaseMessagingToken = 'firebase_messaging_token';
 

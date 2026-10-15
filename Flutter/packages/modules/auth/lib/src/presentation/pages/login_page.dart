@@ -46,7 +46,7 @@ final class _LoginPageState extends State<LoginPage> {
     });
     if (!phoneInput.isValid || !passwordInput.isValid) return;
     context.read<AuthCubit>().signIn(
-      identifier: phoneInput.value,
+      phone: phoneInput.value,
       password: passwordInput.value,
     );
   }

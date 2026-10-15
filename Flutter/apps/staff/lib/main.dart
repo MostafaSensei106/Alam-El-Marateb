@@ -18,7 +18,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureCoreDependencies();
   final dio = await buildAuthenticatedDio();
-  await registerAuthModule(dio: dio);
+  await registerAuthModule(dio: dio, allowedRoles: AppRoles.staffApp);
   await primeAuthState();
   runApp(const StaffApp());
 }

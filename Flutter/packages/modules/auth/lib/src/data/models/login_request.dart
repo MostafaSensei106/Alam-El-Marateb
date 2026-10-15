@@ -1,12 +1,9 @@
-/// Login request body (serializes to the backend's expected shape).
+/// Login request body — matches the backend `LoginRequest{phone, password}`.
 final class LoginRequest {
-  const LoginRequest({required this.identifier, required this.password});
+  const LoginRequest({required this.phone, required this.password});
 
-  final String identifier;
+  final String phone;
   final String password;
 
-  Map<String, dynamic> toJson() => {
-    'identifier': identifier,
-    'password': password,
-  };
+  Map<String, dynamic> toJson() => {'phone': phone, 'password': password};
 }

@@ -4,9 +4,9 @@ import 'package:auth/src/domain/entities/user.dart';
 import 'package:auth/src/domain/repositories/auth_repository.dart';
 
 final class LoginParams {
-  const LoginParams({required this.identifier, required this.password});
+  const LoginParams({required this.phone, required this.password});
 
-  final String identifier;
+  final String phone;
   final String password;
 }
 
@@ -17,9 +17,6 @@ final class LoginUseCase implements BaseUseCase<User, LoginParams> {
 
   @override
   Future<Result<User, Failure>> call(LoginParams params) {
-    return _repository.login(
-      identifier: params.identifier,
-      password: params.password,
-    );
+    return _repository.login(phone: params.phone, password: params.password);
   }
 }

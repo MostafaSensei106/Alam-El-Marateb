@@ -1,46 +1,73 @@
 import 'package:auth/src/domain/entities/user.dart';
 
-/// Backend user payload.
-///
-/// Written with a manual `fromJson` (instead of codegen) to tolerate the
-/// two common shapes: a bare user object, or `{data: {...}}` envelopes, and
-/// `token` vs `access_token` naming. Tighten once the backend contract is
-/// frozen.
+/// Backend `TokenPair` from `/auth/login` and `/auth/refresh`.
+final class TokenPair {
+  const TokenPair({
+    required this.accessToken,
+    required this.refreshToken,
+    required this.userId,
+  });
+
+  factory TokenPair.fromJson(Map<String, dynamic> json) {
+    final root = json['data'] is Map<String, dynamic>
+        ? json['data'] as Map<String, dynamic>
+        : json;
+    return TokenPair(
+      accessToken: '${root['accessToken'] ?? ''}',
+      refreshToken: '${root['refreshToken'] ?? ''}',
+      userId: '${root['userId'] ?? ''}',
+    );
+  }
+
+  final String accessToken;
+  final String refreshToken;
+  final String userId;
+
+  bool get isComplete => accessToken.isNotEmpty && userId.isNotEmpty;
+}
+
+/// Backend `AuthUserView` from `GET /auth/me`.
 final class UserModel {
   const UserModel({
     required this.id,
-    required this.name,
-    required this.token,
+    required this.fullName,
+    required this.phoneNumber,
+    required this.roles,
     this.email,
-    this.phone,
+    this.branchId,
+    this.isActive = true,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     final root = json['data'] is Map<String, dynamic>
         ? json['data'] as Map<String, dynamic>
         : json;
-    final userJson = root['user'] is Map<String, dynamic>
-        ? root['user'] as Map<String, dynamic>
-        : root;
     return UserModel(
-      id: '${userJson['id'] ?? ''}',
-      name: '${userJson['name'] ?? ''}',
-      email: userJson['email'] as String?,
-      phone: userJson['phone'] as String?,
-      token:
-          (root['token'] ?? root['access_token'] ?? userJson['token']) as String?,
+      id: '${root['id'] ?? ''}',
+      fullName: '${root['fullName'] ?? ''}',
+      phoneNumber: '${root['phoneNumber'] ?? ''}',
+      email: root['email'] as String?,
+      branchId: root['branchId'] as String?,
+      roles: [
+        for (final r in (root['roles'] as List? ?? const [])) '$r',
+      ],
+      isActive: (root['isActive'] as bool?) ?? true,
     );
   }
 
   final String id;
-  final String name;
+  final String fullName;
+  final String phoneNumber;
   final String? email;
-  final String? phone;
+  final String? branchId;
+  final List<String> roles;
+  final bool isActive;
 
-  /// Null when the backend nests the token elsewhere — the repository
-  /// surfaces a parsing failure in that case.
-  final String? token;
-
-  User toEntity() =>
-      User(id: id, name: name, email: email, phone: phone);
+  User toEntity() => User(
+    id: id,
+    name: fullName,
+    email: email,
+    phone: phoneNumber,
+    roles: roles,
+  );
 }

@@ -6,7 +6,11 @@ abstract interface class UserSessionServiceBase {
   Future<void> saveUserSession({
     required String token,
     required bool rememberMe,
+    String? refreshToken,
   });
+
+  /// Retrieves the persisted refresh token (`null` when absent).
+  Future<String?> getRefreshToken();
 
   /// Synchronously or asynchronously retrieves the cached access token.
   /// Returns `null` if the user is unauthenticated or session expired.

@@ -166,7 +166,7 @@ abstract class APIErrorHandler {
   // ── model factories ─────────────────────────────────────────────────────────
 
   static ApiErrorModel _buildModel(String message) =>
-      ApiErrorModel(success: false, message: message, errors: const {});
+      ApiErrorModel(success: false, message: message, errors: const []);
 
   static ApiErrorModel _noInternetModel() =>
       _buildModel(HttpMessages.noInternet);

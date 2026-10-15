@@ -47,6 +47,7 @@ final class UserSessionService implements UserSessionServiceBase {
   Future<void> saveUserSession({
     required String token,
     required bool rememberMe,
+    String? refreshToken,
   }) async {
     _inMemoryToken = token;
     if (rememberMe) {
@@ -56,8 +57,18 @@ final class UserSessionService implements UserSessionServiceBase {
           value: rememberMe,
         ),
         _storageFacade.setData<String>(key: PrefKeys.userToken, value: token),
+        if (refreshToken != null)
+          _storageFacade.setData<String>(
+            key: PrefKeys.refreshToken,
+            value: refreshToken,
+          ),
       ]);
     }
+  }
+
+  @override
+  Future<String?> getRefreshToken() async {
+    return _storageFacade.getData<String>(key: PrefKeys.refreshToken);
   }
 
   @override
@@ -65,6 +76,7 @@ final class UserSessionService implements UserSessionServiceBase {
     _inMemoryToken = null;
     final results = await Future.wait([
       _storageFacade.removeData(key: PrefKeys.userToken),
+      _storageFacade.removeData(key: PrefKeys.refreshToken),
       _storageFacade.removeData(key: PrefKeys.isRememberMeEnabled),
     ]);
 

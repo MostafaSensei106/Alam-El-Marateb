@@ -13,6 +13,7 @@ final class StorageFacade implements PrefStorageServiceBase {
 
   static const _secureKeys = {
     PrefKeys.userToken,
+    PrefKeys.refreshToken,
     PrefKeys.firebaseMessagingToken,
   };
 

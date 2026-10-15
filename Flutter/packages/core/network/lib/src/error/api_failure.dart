@@ -16,8 +16,7 @@ final class ApiFailure extends Failure {
     this.stackTrace,
     super.statusCode,
   }) : super(
-         apiErrorModel.errors?.values.firstOrNull?.firstOrNull ??
-             apiErrorModel.message,
+         apiErrorModel.errors?.firstOrNull ?? apiErrorModel.message,
        );
 
   final ApiErrorModel apiErrorModel;

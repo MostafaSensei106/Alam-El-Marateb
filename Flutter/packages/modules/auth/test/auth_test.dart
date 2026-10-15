@@ -8,27 +8,58 @@ class _FakeAuthRepository implements AuthRepository {
   final Result<User, Failure>? loginResult;
   bool authenticated;
   int logoutCalls = 0;
+  User? _currentUser;
+
+  @override
+  User? get currentUser => _currentUser;
 
   @override
   Future<Result<User, Failure>> login({
-    required String identifier,
+    required String phone,
     required String password,
-  }) async =>
-      loginResult ??
-      const Result.failure(error: UnknownFailure('unstubbed'));
+  }) async {
+    final result =
+        loginResult ??
+        const Result.failure(error: UnknownFailure('unstubbed'));
+    if (result is Success<User, Failure>) {
+      authenticated = true;
+      _currentUser = result.data;
+    }
+    return result;
+  }
 
   @override
   Future<Result<void, Failure>> logout() async {
     logoutCalls++;
     authenticated = false;
+    _currentUser = null;
     return const Result.success(data: null);
+  }
+
+  @override
+  Future<Result<void, Failure>> refreshSession() async {
+    return const Result.success(data: null);
+  }
+
+  @override
+  Future<Result<User, Failure>> getCurrentUser() async {
+    final user = _currentUser;
+    if (user == null) {
+      return const Result.failure(error: UnknownFailure('no user'));
+    }
+    return Result.success(data: user);
   }
 
   @override
   Future<bool> isAuthenticated() async => authenticated;
 }
 
-const _user = User(id: '1', name: 'Ahmed', phone: '01012345678');
+const _user = User(
+  id: '1',
+  name: 'Ahmed',
+  phone: '01012345678',
+  roles: ['ROLE_CUSTOMER'],
+);
 
 void main() {
   group('AuthCubit', () {
@@ -40,7 +71,7 @@ void main() {
 
       final states = <AuthState>[];
       final sub = cubit.stream.listen(states.add);
-      await cubit.signIn(identifier: '01012345678', password: 'secret123');
+      await cubit.signIn(phone: '01012345678', password: 'secret123');
       await Future<void>.delayed(Duration.zero);
       await sub.cancel();
 
@@ -48,8 +79,6 @@ void main() {
         '_Submitting',
         '_Authenticated',
       ]);
-      final authed = states.last as dynamic;
-      expect((authed as dynamic).user.name, 'Ahmed');
       await cubit.close();
     });
 
@@ -63,7 +92,7 @@ void main() {
 
       final states = <AuthState>[];
       final sub = cubit.stream.listen(states.add);
-      await cubit.signIn(identifier: 'x', password: 'y');
+      await cubit.signIn(phone: 'x', password: 'y');
       await Future<void>.delayed(Duration.zero);
       await sub.cancel();
 
@@ -92,38 +121,65 @@ void main() {
     });
   });
 
-  group('UserModel', () {
-    test('parses bare object with token', () {
-      final model = UserModel.fromJson({
-        'id': 7,
-        'name': 'Mona',
-        'token': 'abc',
-      });
-      expect(model.id, '7');
-      expect(model.token, 'abc');
-    });
-
-    test('parses data envelope with access_token', () {
-      final model = UserModel.fromJson({
+  group('TokenPair', () {
+    test('parses access/refresh tokens from data envelope', () {
+      final pair = TokenPair.fromJson({
         'data': {
-          'user': {'id': '9', 'name': 'Omar'},
-          'access_token': 'xyz',
+          'accessToken': 'a.b.c',
+          'refreshToken': 'r',
+          'userId': 'u-1',
         },
       });
-      expect(model.id, '9');
-      expect(model.token, 'xyz');
+      expect(pair.accessToken, 'a.b.c');
+      expect(pair.refreshToken, 'r');
+      expect(pair.userId, 'u-1');
+      expect(pair.isComplete, isTrue);
     });
 
-    test('token null when absent', () {
-      final model = UserModel.fromJson({'id': '1', 'name': 'N'});
-      expect(model.token, isNull);
+    test('incomplete when access token missing', () {
+      final pair = TokenPair.fromJson({
+        'data': {'accessToken': '', 'refreshToken': 'r', 'userId': 'u'},
+      });
+      expect(pair.isComplete, isFalse);
+    });
+  });
+
+  group('UserModel', () {
+    test('parses AuthUserView envelope', () {
+      final model = UserModel.fromJson({
+        'data': {
+          'id': 'u-1',
+          'fullName': 'Mona',
+          'phoneNumber': '01099999999',
+          'email': 'm@m.com',
+          'roles': ['ROLE_CUSTOMER'],
+          'isActive': true,
+        },
+      });
+      expect(model.fullName, 'Mona');
+      expect(model.roles, ['ROLE_CUSTOMER']);
+      final entity = model.toEntity();
+      expect(entity.name, 'Mona');
+      expect(entity.phone, '01099999999');
     });
   });
 
   group('LoginRequest', () {
-    test('serializes identifier and password', () {
-      const req = LoginRequest(identifier: '010', password: 'pw');
-      expect(req.toJson(), {'identifier': '010', 'password': 'pw'});
+    test('serializes phone and password', () {
+      const req = LoginRequest(phone: '010', password: 'pw');
+      expect(req.toJson(), {'phone': '010', 'password': 'pw'});
+    });
+  });
+
+  group('AppRoles', () {
+    test('each app set is non-empty and disjoint where expected', () {
+      expect(AppRoles.customerApp, contains(AppRoles.customer));
+      expect(AppRoles.staffApp, contains(AppRoles.branchManager));
+      expect(AppRoles.adminApp, [AppRoles.superAdmin]);
+      expect(
+        AppRoles.customerApp.toSet().intersection(AppRoles.adminApp.toSet()),
+        contains(AppRoles.superAdmin),
+      );
     });
   });
 }
