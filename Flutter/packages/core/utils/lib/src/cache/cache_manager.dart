@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:injectable/injectable.dart';
 
 abstract class SmartCacheCubitInterface {
@@ -21,15 +21,15 @@ abstract class SmartCachePaginationInterface {
 /// [OfflineCacheProvider]; this manager only tracks whatever registers.
 @lazySingleton
 class CacheManager {
-  final Set<Cubit> _activeCubits = {};
+  final Set<CubitSignal> _activeCubits = {};
 
   /// Registers an active Cubit into the cache manager in O(1) time.
-  void register(Cubit cubit) {
+  void register(CubitSignal cubit) {
     _activeCubits.add(cubit);
   }
 
   /// Unregisters a Cubit upon disposal in O(1) time.
-  void unregister(Cubit cubit) {
+  void unregister(CubitSignal cubit) {
     _activeCubits.remove(cubit);
   }
 
@@ -38,7 +38,7 @@ class CacheManager {
     if (_activeCubits.isEmpty) return;
 
     // Snapshot current registered set to prevent concurrent mutation during iteration.
-    final activeSet = Set<Cubit>.of(_activeCubits);
+    final activeSet = Set<CubitSignal>.of(_activeCubits);
     final futures = <Future<void>>[];
 
     for (final cubit in activeSet) {

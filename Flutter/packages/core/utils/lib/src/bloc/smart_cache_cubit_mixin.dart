@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:alam_el_marateb_di/di.dart';
 import 'package:alam_el_marateb_network/network.dart';
 import 'package:alam_el_marateb_result/result.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 
 import 'package:alam_el_marateb_utils/src/cache/cache_manager.dart';
 
 /// A mixin for Cubits to achieve SOLID, offline-first smart caching.
 /// Handles background fetching, offline modes, and auto-retry on reconnection.
-mixin SmartCacheCubitMixin<State, Data> on Cubit<State>
+mixin SmartCacheCubitMixin<State, Data> on CubitSignal<State>
     implements SmartCacheCubitInterface {
   NetworkCubit get networkCubit;
 
@@ -22,21 +22,21 @@ mixin SmartCacheCubitMixin<State, Data> on Cubit<State>
     }
   }
 
-  /// Retrieves the cached data from the current state if available.
-  Data? getCachedData(State state);
+  /// Retrieves the cached data from the current stateValue if available.
+  Data? getCachedData(State stateValue);
 
-  /// Builds the loading state.
+  /// Builds the loading stateValue.
   State buildLoadingState();
 
-  /// Builds the success state.
+  /// Builds the success stateValue.
   State buildSuccessState(Data data);
 
-  /// Builds the failure state with the typed [Failure] object.
+  /// Builds the failure stateValue with the typed [Failure] object.
   /// The UI localises the message (e.g. via a `FailureLocalizer` in the app).
   State buildFailureState(Failure error);
 
-  /// Checks if the current state represents a network failure.
-  bool isNetworkFailureState(State state);
+  /// Checks if the current stateValue represents a network failure.
+  bool isNetworkFailureState(State stateValue);
 
   /// Executes the remote network request.
   Future<ApiResult<Data>> executeRequest();
@@ -61,7 +61,7 @@ mixin SmartCacheCubitMixin<State, Data> on Cubit<State>
     _networkSubscription = networkCubit.stream.listen((networkState) {
       networkState.whenOrNull(
         connected: () {
-          if (isNetworkFailureState(state)) {
+          if (isNetworkFailureState(stateValue)) {
             unawaited(fetchData(isRefresh: true));
           }
         },
@@ -75,7 +75,7 @@ mixin SmartCacheCubitMixin<State, Data> on Cubit<State>
   /// The smart entry point for fetching data.
   @override
   Future<void> fetchData({bool isRefresh = false}) async {
-    final cached = getCachedData(state);
+    final cached = getCachedData(stateValue);
 
     // 1. Handling offline scenario
     if (!isOnline) {

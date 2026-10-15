@@ -216,7 +216,6 @@
         "bloc_signals_flutter",
         "bloc_signals_hydrate",
         "flutter",
-        "flutter_bloc",
         "freezed_annotation",
         "get_it",
         "infinite_scroll_pagination",

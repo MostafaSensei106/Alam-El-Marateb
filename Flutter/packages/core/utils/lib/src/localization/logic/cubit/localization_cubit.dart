@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui' as ui;
 
 import 'package:alam_el_marateb_di/di.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -22,9 +22,9 @@ part 'localization_cubit.freezed.dart';
 ///   just passes its codes (e.g. `['ar', 'en']`).
 /// - Switching language refreshes every registered cache (new headers).
 @lazySingleton
-class LocalizationCubit extends Cubit<LocalizationState> {
+class LocalizationCubit extends CubitSignal<LocalizationState> {
   LocalizationCubit(this._repository)
-    : super(const LocalizationState(langCode: 'ar')) {
+    : super(initialState: const LocalizationState(langCode: 'ar')) {
     unawaited(_init());
   }
 
@@ -51,7 +51,7 @@ class LocalizationCubit extends Cubit<LocalizationState> {
   }
 
   Future<void> changeLanguage(String langCode) async {
-    if (state.langCode == langCode) return;
+    if (stateValue.langCode == langCode) return;
     emit(LocalizationState(langCode: langCode));
     await _repository.cacheLanguageCode(languageCode: langCode);
     // Refresh all active caches with the new language headers

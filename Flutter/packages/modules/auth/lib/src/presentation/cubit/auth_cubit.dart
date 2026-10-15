@@ -1,5 +1,5 @@
 import 'package:alam_el_marateb_result/result.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -14,8 +14,9 @@ part 'auth_cubit.freezed.dart';
 /// three apps. Emits typed states; error strings come from [AuthState.message]
 /// (the screen resolves validator `messageId`s via its own l10n).
 @injectable
-class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(this._login, this._logout) : super(const AuthState.initial());
+class AuthCubit extends CubitSignal<AuthState> {
+  AuthCubit(this._login, this._logout)
+    : super(initialState: const AuthState.initial());
 
   final LoginUseCase _login;
   final LogoutUseCase _logout;

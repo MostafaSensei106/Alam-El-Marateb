@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nested/nested.dart';
 
 /// A generic wrapper widget that provides a list of BlocProviders to the tree.
@@ -9,15 +8,21 @@ import 'package:nested/nested.dart';
 /// to prefetch to an external configuration, keeping the UI layer completely
 /// decoupled from specific state management implementations.
 ///
-/// Each app builds its own provider list (eager `lazy: false` providers for
-/// smart parallel background prefetching) and injects it here — typically at
-/// the root of the authenticated shell so no unauthorized API requests fire.
+/// Each app builds its own provider list (eager providers for smart
+/// parallel background prefetching) with [SingleChildBuilder]s and injects
+/// it here — typically at the root of the authenticated shell so no
+/// unauthorized API requests fire.
 ///
 /// Example:
 /// ```dart
 /// OfflineCacheProvider(
 ///   providers: [
-///     BlocProvider(create: (_) => getIt<ProfileCubit>()..load()),
+///     SingleChildBuilder(
+///       builder: (context, child) => BlocSignalProvider.value(
+///         value: getIt<ProfileCubit>(),
+///         child: child!,
+///       ),
+///     ),
 ///   ],
 ///   child: const MainPage(),
 /// )
@@ -34,6 +39,6 @@ final class OfflineCacheProvider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: providers, child: child);
+    return Nested(children: providers, child: child);
   }
 }

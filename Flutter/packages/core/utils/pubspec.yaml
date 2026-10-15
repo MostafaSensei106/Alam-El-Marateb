@@ -11,7 +11,6 @@ dependencies:
     sdk: flutter
 
   bloc_signals_flutter: ^1.5.0
-  flutter_bloc: ^9.1.1
   freezed_annotation: ^3.1.0
   infinite_scroll_pagination: ^5.1.0
   get_it: ^9.2.0
