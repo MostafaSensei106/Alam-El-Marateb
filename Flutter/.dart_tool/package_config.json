@@ -392,6 +392,12 @@
       "languageVersion": "3.12"
     },
     {
+      "name": "intl",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/intl-0.20.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.9"
+    },
+    {
       "name": "io",
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/io-1.1.0",
       "packageUri": "lib/",
@@ -956,6 +962,12 @@
       "languageVersion": "3.13"
     },
     {
+      "name": "alem_el_marateb_extensions",
+      "rootUri": "../packages/core/extensions",
+      "packageUri": "lib/",
+      "languageVersion": "3.13"
+    },
+    {
       "name": "utils",
       "rootUri": "../packages/core/utils",
       "packageUri": "lib/",
@@ -1001,6 +1013,6 @@
   "generator": "pub",
   "generatorVersion": "3.13.5",
   "flutterRoot": "file:///home/ottafa/flutter",
-  "flutterVersion": "3.47.6",
+  "flutterVersion": "3.47.7",
   "pubCache": "file:///home/ottafa/.pub-cache"
 }
