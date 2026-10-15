@@ -13,10 +13,7 @@ part 'auth_cubit.freezed.dart';
 /// three apps. Emits typed states; error strings come from [AuthState.message]
 /// (the screen resolves validator `messageId`s via its own l10n).
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit({required LoginUseCase login, required LogoutUseCase logout})
-    : _login = login,
-      _logout = logout,
-      super(const AuthState.initial());
+  AuthCubit(this._login, this._logout) : super(const AuthState.initial());
 
   final LoginUseCase _login;
   final LogoutUseCase _logout;

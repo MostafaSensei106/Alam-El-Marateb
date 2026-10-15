@@ -17,7 +17,7 @@ abstract class AuthApiService {
 
   @POST('/auth/login')
   @Extra({SecurityConfigs.requireToken: false})
-  Future<Map<String, dynamic>> login(@Body() Map<String, dynamic> body);
+  Future<dynamic> login(@Body() Map<String, dynamic> body);
 
   @POST('/auth/logout')
   Future<void> logout();

@@ -12,13 +12,7 @@ import 'package:auth/src/domain/repositories/auth_repository.dart';
 /// router auth-state broadcast. Apps and cubits never touch storage or
 /// the auth notifier directly for auth flows.
 final class AuthRepositoryImpl implements AuthRepository {
-  AuthRepositoryImpl({
-    required AuthApiService api,
-    required UserSessionServiceBase session,
-    required Future<void> Function(bool isAuthenticated) onAuthChanged,
-  }) : _api = api,
-       _session = session,
-       _onAuthChanged = onAuthChanged;
+  AuthRepositoryImpl(this._api, this._session, this._onAuthChanged);
 
   final AuthApiService _api;
   final UserSessionServiceBase _session;
@@ -30,9 +24,16 @@ final class AuthRepositoryImpl implements AuthRepository {
     required String password,
   }) async {
     final result = await ApiExecutor.execute(
-      action: () => _api.login(
-        LoginRequest(identifier: identifier, password: password).toJson(),
-      ),
+      action: () async {
+        final raw = await _api.login(
+          LoginRequest(identifier: identifier, password: password).toJson(),
+        );
+        if (raw is Map<String, dynamic>) return raw;
+        if (raw is Map) return Map<String, dynamic>.from(raw);
+        throw const BadResponseParsingFailure(
+          'Login response was not a JSON object.',
+        );
+      },
     );
     if (result is FailureResult<Map<String, dynamic>, Failure>) {
       return Result.failure(error: result.error);

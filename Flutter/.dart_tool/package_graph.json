@@ -298,6 +298,7 @@
         "alam_el_marateb_di",
         "alam_el_marateb_network",
         "alam_el_marateb_result",
+        "alam_el_marateb_router",
         "alam_el_marateb_services",
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
@@ -305,6 +306,7 @@
         "dio",
         "flutter",
         "flutter_bloc",
+        "flutter_screenutil",
         "freezed_annotation",
         "injectable",
         "retrofit"
@@ -519,6 +521,13 @@
       ]
     },
     {
+      "name": "flutter_screenutil",
+      "version": "5.9.3",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
       "name": "retrofit",
       "version": "4.10.0",
       "dependencies": [
@@ -644,13 +653,6 @@
         "vector_graphics",
         "vector_graphics_codec",
         "vector_graphics_compiler"
-      ]
-    },
-    {
-      "name": "flutter_screenutil",
-      "version": "5.9.3",
-      "dependencies": [
-        "flutter"
       ]
     },
     {
