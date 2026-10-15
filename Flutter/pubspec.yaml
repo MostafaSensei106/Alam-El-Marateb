@@ -11,6 +11,7 @@ workspace:
 - packages/core/result
 - packages/core/network
 - packages/core/services
+- packages/core/extensions
 - packages/core/utils
 - packages/modules/catalog
 - packages/modules/pos
