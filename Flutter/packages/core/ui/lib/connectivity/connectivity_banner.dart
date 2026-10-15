@@ -1,6 +1,6 @@
 import 'package:alam_el_marateb_network/network.dart';
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:toastification/toastification.dart';
@@ -25,7 +25,7 @@ class ConnectivityBanner extends HookWidget {
     final isDisconnected = useState(false);
     final toastItem = useRef<ToastificationItem?>(null);
 
-    return BlocListener<NetworkCubit, NetworkState>(
+    return BlocSignalListener<NetworkCubit, NetworkState>(
       listenWhen: (previous, current) => previous != current,
       listener: (context, state) {
         state.whenOrNull(
