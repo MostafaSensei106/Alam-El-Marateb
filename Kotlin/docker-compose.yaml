@@ -1,10 +1,84 @@
 services:
+  # ------------------------------------------------------------------
+  # Edge: Nginx terminates TLS + HTTP/2 (TCP/ALPN) + HTTP/3 (QUIC/UDP)
+  # and proxies to `app` over plain HTTP/1.1 keepalive.
+  # Clients auto-negotiate: H3 -> H2 -> HTTP/1.1 (no client config).
+  # ------------------------------------------------------------------
+  nginx:
+    image: nginx:1.29-alpine
+    container_name: shop-nginx
+    depends_on:
+      app:
+        condition: service_healthy
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443/tcp"
+      - "${HTTPS_PORT:-443}:443/udp"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/ssl:/etc/nginx/ssl:ro
+    networks:
+      - frontend
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://app:8080/actuator/health | grep -q UP"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    restart: unless-stopped
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${IMAGE_NAME:-alamelmarateb/backend}:${TAG:-latest}
+    container_name: shop-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - "PORT=8080"
+      - "DB_URL=jdbc:postgresql://postgres:5432/${DB_NAME:-mydatabase}"
+      - "DB_USER=${DB_USER:-root}"
+      - "DB_PASSWORD=${DB_PASSWORD:-root}"
+      - "REDIS_HOST=redis"
+      - "REDIS_PORT=6379"
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080" # direct backend access (debug); public traffic goes via Nginx
+    networks:
+      - frontend
+      - backend
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/actuator/health | grep -q UP"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    restart: unless-stopped
+
   postgres:
     image: postgres:16-alpine
+    # Secrets via env (${VAR:-dev-default}). Dev defaults are LOCAL-ONLY:
+    # production MUST override them in .env (see .env.example).
     environment:
-      - "POSTGRES_DB=mydatabase"
-      - "POSTGRES_PASSWORD=root"
-      - "POSTGRES_USER=root"
+      - "POSTGRES_DB=${DB_NAME:-mydatabase}"
+      - "POSTGRES_PASSWORD=${DB_PASSWORD:-root}"
+      - "POSTGRES_USER=${DB_USER:-root}"
     ports:
       - "5432:5432"
     # WAL sender settings for the opt-in streaming replica (Phase 4).
@@ -23,9 +97,12 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./docker/postgres-initdb:/docker-entrypoint-initdb.d:ro
+    networks:
+      - backend
+    restart: unless-stopped
 
   # Streaming read replica (Phase 4). Opt-in: docker compose --profile replica up -d.
-  # App side: REPLICA_URL=jdbc:postgresql://localhost:5433/mydatabase.
+  # App side: REPLICA_URL=jdbc:postgresql://postgres-replica:5432/mydatabase.
   # Async replication: pure-read @Transactional(readOnly=true) methods route here;
   # writes and read-your-write flows stay on primary by design.
   postgres-replica:
@@ -39,13 +116,16 @@ services:
       - "5433:5432"
     environment:
       - "PRIMARY_HOST=postgres"
-      - "POSTGRES_USER=root"
-      - "POSTGRES_PASSWORD=root"
+      - "POSTGRES_USER=${DB_USER:-root}"
+      - "POSTGRES_PASSWORD=${DB_PASSWORD:-root}"
       - "PGDATA=/var/lib/postgresql/data/pgdata"
     entrypoint: ["/opt/replica-entrypoint.sh"]
     volumes:
       - replica_data:/var/lib/postgresql/data
       - ./docker/postgres-replica/replica-entrypoint.sh:/opt/replica-entrypoint.sh:ro
+    networks:
+      - backend
+    restart: unless-stopped
 
 
   redis:
@@ -55,6 +135,14 @@ services:
       - "6379:6379"
     volumes:
       - redis_data:/data
+    networks:
+      - backend
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
 
   # Event transport (future): domain events in core/events keep the same
   # names/shapes when moved to these topics. Opt-in only:
@@ -74,6 +162,8 @@ services:
       - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
     volumes:
       - kafka_data:/var/lib/kafka/data
+    networks:
+      - backend
 
   # S3-compatible object storage (future): image backend swap target.
   # Opt-in only: docker compose --profile minio up -d (console :9001).
@@ -85,11 +175,13 @@ services:
       - "9000:9000"
       - "9001:9001"
     environment:
-      - "MINIO_ROOT_USER=minioadmin"
-      - "MINIO_ROOT_PASSWORD=minioadmin123"
+      - "MINIO_ROOT_USER=${MINIO_ROOT_USER:-minioadmin}"
+      - "MINIO_ROOT_PASSWORD=${MINIO_ROOT_PASSWORD:-minioadmin123}"
     command: server /data --console-address ":9001"
     volumes:
       - minio_data:/data
+    networks:
+      - backend
 
   # Heavy analytics (ClickHouse). Opt-in: docker compose --profile clickhouse up -d (HTTP :8123).
   # App side: CLICKHOUSE_ENABLED=true (+CLICKHOUSE_URL/USER/PASSWORD).
@@ -101,12 +193,14 @@ services:
       - "8123:8123"
       - "9009:9000"
     environment:
-      - "CLICKHOUSE_DB=alamelmarateb"
-      - "CLICKHOUSE_USER=analytics"
-      - "CLICKHOUSE_PASSWORD=analytics123"
+      - "CLICKHOUSE_DB=${CLICKHOUSE_DB:-alamelmarateb}"
+      - "CLICKHOUSE_USER=${CLICKHOUSE_USER:-analytics}"
+      - "CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD:-analytics123}"
     volumes:
       - clickhouse_data:/var/lib/clickhouse
       - ./docker/clickhouse/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - backend
 
   # Catalog search (Meilisearch, Phase 3). Opt-in: docker compose --profile search up -d (:7700).
   # App side (Phase 3): SEARCH_BACKEND=meilisearch (+MEILI_HOST/MEILI_KEY).
@@ -120,6 +214,15 @@ services:
       - "MEILI_MASTER_KEY=${MEILI_KEY:-dev-master-key}"
     volumes:
       - meili_data:/meili_data
+    networks:
+      - backend
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+    internal: true
 
 volumes:
   pgdata:

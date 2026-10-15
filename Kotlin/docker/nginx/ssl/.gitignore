@@ -1,0 +1,3 @@
+# Guard: private keys must never be committed, even via `git add .`.
+*
+!.gitignore

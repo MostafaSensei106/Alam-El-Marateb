@@ -38,3 +38,16 @@ out/
 
 ### Kotlin ###
 .kotlin
+
+# Local secrets — NEVER commit (see .env.example for the template)
+.env
+!.env.example
+
+# TLS private keys (self-signed dev certs; prod mounts real certs at deploy)
+docker/nginx/ssl/*.pem
+docker/nginx/ssl/*.key
+*.p12
+*.jks
+
+# Runtime uploads / local state
+data/

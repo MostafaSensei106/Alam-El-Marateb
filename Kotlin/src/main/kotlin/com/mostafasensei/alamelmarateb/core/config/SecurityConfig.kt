@@ -5,6 +5,7 @@ import com.mostafasensei.alamelmarateb.core.security.ApiAccessDeniedHandler
 import com.mostafasensei.alamelmarateb.core.security.AppRole
 import com.mostafasensei.alamelmarateb.core.security.JwtAuthenticationEntryPoint
 import com.mostafasensei.alamelmarateb.core.security.JwtAuthenticationFilter
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpMethod
@@ -30,7 +31,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 class SecurityConfig (
     private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
     private val jwtAuthenticationFilter: JwtAuthenticationFilter,
-    private val apiAccessDeniedHandler: ApiAccessDeniedHandler
+    private val apiAccessDeniedHandler: ApiAccessDeniedHandler,
+    @Value("\${app.docs.enabled:true}") private val docsEnabled: Boolean,
 ){
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
@@ -64,8 +66,12 @@ class SecurityConfig (
                     .requestMatchers(HttpMethod.POST, "$v1/shop/checkout/payment-callback/**").permitAll()
                     .requestMatchers("$v1/estimator/**").permitAll()
 
-                    .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                    .requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
+                    // API docs: public in dev (DOCS_ENABLED=true), login-required
+                    // in prod. Disabled paths fall through to anyRequest() below.
+                    if (docsEnabled) {
+                        auth.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                    }
+                    auth.requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                     .requestMatchers("/actuator/health/**", "/actuator/info").permitAll()
 
                     // Customers: shop + self-service portal

@@ -1,6 +1,16 @@
 server:
   port: ${PORT:8080}
   shutdown: graceful
+  # Edge architecture: Nginx terminates TLS + HTTP/2 + HTTP/3 (QUIC) at the
+  # edge and proxies to this backend over plain HTTP/1.1 keepalive.
+  # http2.enabled=true only enables H2C internally (no TLS/QUIC cost in Java);
+  # public H2/H3 negotiation (ALPN + Alt-Svc) happens in docker/nginx/nginx.conf.
+  http2:
+    enabled: true
+  forward-headers-strategy: native
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
 
 spring:
   application:
@@ -94,6 +104,11 @@ spring:
 
 # JWT Custom Properties
 app:
+  # API docs (Swagger UI): public in dev (DOCS_ENABLED=true),
+  # login-required in prod (DOCS_ENABLED=false). Enforced in BOTH
+  # SecurityConfig and ClientKeyFilter (defense in depth).
+  docs:
+    enabled: ${DOCS_ENABLED:true}
   # First-party client gate (ClientKeyFilter): X-Api-Client + X-Api-Key.
   # Comma-separated key allowlist, one per platform. Rotate via env.
   clients:

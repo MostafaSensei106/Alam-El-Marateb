@@ -20,8 +20,9 @@ import java.security.MessageDigest
  * Runs before the whole security chain and rejects unknown clients with
  * 401 CLIENT_REJECTED (same ApiResponse envelope, no body timestamps).
  *
- * Exempt (no key needed): Swagger/OpenAPI, actuator health/info, public
- * uploads (plain <img> tags cannot send headers), CORS preflights.
+ * Exempt (no key needed): actuator health/info, public uploads (plain <img>
+ * tags cannot send headers), CORS preflights, and — dev only — Swagger/OpenAPI
+ * (gated by app.docs.enabled, mirrored in SecurityConfig).
  * Everything else under the /api/ routes requires a key — login included.
  */
 @Component
@@ -30,6 +31,7 @@ class ClientKeyFilter(
     private val objectMapper: ObjectMapper,
     @Value("\${app.clients.enabled:true}") private val enabled: Boolean,
     @Value("\${app.clients.keys:dev-local-key}") keys: String,
+    @Value("\${app.docs.enabled:true}") private val docsEnabled: Boolean,
 ) : OncePerRequestFilter() {
 
     private val validKeys: Set<String> =
@@ -39,12 +41,17 @@ class ClientKeyFilter(
         const val CLIENT_HEADER = "X-Api-Client"
         const val KEY_HEADER = "X-Api-Key"
 
-        private val EXEMPT_PREFIXES = listOf(
+        private val ALWAYS_EXEMPT_PREFIXES = listOf(
+            "/actuator/health",
+            "/actuator/info",
+        )
+
+        // Only exempt when app.docs.enabled=true (dev). In prod these fall
+        // through to the client-key check + SecurityConfig (login required).
+        private val DOCS_PREFIXES = listOf(
             "/v3/api-docs",
             "/swagger-ui",
             "/swagger-ui.html",
-            "/actuator/health",
-            "/actuator/info",
         )
     }
 
@@ -69,7 +76,8 @@ class ClientKeyFilter(
     private fun isExempt(request: HttpServletRequest): Boolean {
         if (request.method == HttpMethod.OPTIONS.name()) return true
         val uri = request.requestURI
-        if (EXEMPT_PREFIXES.any { uri.startsWith(it) }) return true
+        if (ALWAYS_EXEMPT_PREFIXES.any { uri.startsWith(it) }) return true
+        if (docsEnabled && DOCS_PREFIXES.any { uri.startsWith(it) }) return true
         // Public images: browsers fetch <img> without custom headers.
         if (uri.startsWith("/uploads") && request.method == HttpMethod.GET.name()) return true
         return false

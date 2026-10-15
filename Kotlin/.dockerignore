@@ -1,0 +1,18 @@
+# Build context: keep it small for fast layer caching.
+.git
+.gradle
+build
+out
+.idea
+*.iml
+.kotlin
+.DS_Store
+Dockerfile
+docker-compose*.yml
+docker-compose*.yaml
+Makefile
+.env
+data
+*.md
+docs
+load-all.ts
