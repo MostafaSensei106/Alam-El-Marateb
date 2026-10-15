@@ -1,7 +1,7 @@
 import 'package:alam_el_marateb_result/result.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:auth/src/domain/repositories/auth_repository.dart';
+import 'package:alam_el_marateb_auth/src/domain/repositories/auth_repository.dart';
 
 @lazySingleton
 final class LogoutUseCase implements BaseUseCase<void, NoParams> {

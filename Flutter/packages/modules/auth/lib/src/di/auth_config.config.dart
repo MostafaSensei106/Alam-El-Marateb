@@ -10,10 +10,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 
-import 'package:auth/src/domain/repositories/auth_repository.dart' as _i126;
-import 'package:auth/src/domain/usecases/login_usecase.dart' as _i25;
-import 'package:auth/src/domain/usecases/logout_usecase.dart' as _i545;
-import 'package:auth/src/presentation/cubit/auth_cubit.dart' as _i1032;
+import 'package:alam_el_marateb_auth/src/domain/repositories/auth_repository.dart' as _i126;
+import 'package:alam_el_marateb_auth/src/domain/usecases/login_usecase.dart' as _i25;
+import 'package:alam_el_marateb_auth/src/domain/usecases/logout_usecase.dart' as _i545;
+import 'package:alam_el_marateb_auth/src/presentation/cubit/auth_cubit.dart' as _i1032;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 

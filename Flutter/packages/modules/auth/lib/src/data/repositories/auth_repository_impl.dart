@@ -1,12 +1,7 @@
+import 'package:alam_el_marateb_auth/alam_el_marateb_auth.dart';
 import 'package:alam_el_marateb_network/network.dart';
 import 'package:alam_el_marateb_result/result.dart';
 import 'package:alam_el_marateb_services/services.dart';
-
-import 'package:auth/src/data/datasources/auth_api_service.dart';
-import 'package:auth/src/data/models/login_request.dart';
-import 'package:auth/src/data/models/user_model.dart';
-import 'package:auth/src/domain/entities/user.dart';
-import 'package:auth/src/domain/repositories/auth_repository.dart';
 
 /// Single place where login side-effects happen: token persistence +
 /// router auth-state broadcast. Apps and cubits never touch storage or

@@ -1,4 +1,4 @@
-import 'package:auth/src/domain/entities/user.dart';
+import 'package:alam_el_marateb_auth/alam_el_marateb_auth.dart';
 
 /// Backend `TokenPair` from `/auth/login` and `/auth/refresh`.
 final class TokenPair {

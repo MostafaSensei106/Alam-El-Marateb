@@ -1,5 +1,5 @@
 resolution: workspace
-name: crm
+name: alam_el_marateb_crm
 description: Alam El Marateb crm module.
 version: 1.0.0
 publish_to: none

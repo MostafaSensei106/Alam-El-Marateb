@@ -7,11 +7,11 @@ import 'package:alam_el_marateb_services/services.dart';
 import 'package:alam_el_marateb_utils/utils.dart';
 import 'package:dio/dio.dart';
 
-import 'package:auth/src/data/datasources/auth_api_service.dart';
-import 'package:auth/src/data/repositories/auth_repository_impl.dart';
-import 'package:auth/src/di/auth_config.dart';
-import 'package:auth/src/domain/entities/user.dart';
-import 'package:auth/src/domain/repositories/auth_repository.dart';
+import 'package:alam_el_marateb_auth/src/data/datasources/auth_api_service.dart';
+import 'package:alam_el_marateb_auth/src/data/repositories/auth_repository_impl.dart';
+import 'package:alam_el_marateb_auth/src/di/auth_config.dart';
+import 'package:alam_el_marateb_auth/src/domain/entities/user.dart';
+import 'package:alam_el_marateb_auth/src/domain/repositories/auth_repository.dart';
 
 /// Registers the auth graph into the shared [getIt].
 ///

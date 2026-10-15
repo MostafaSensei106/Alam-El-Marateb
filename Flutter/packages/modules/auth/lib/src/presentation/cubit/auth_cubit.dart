@@ -3,9 +3,9 @@ import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:auth/src/domain/entities/user.dart';
-import 'package:auth/src/domain/usecases/login_usecase.dart';
-import 'package:auth/src/domain/usecases/logout_usecase.dart';
+import 'package:alam_el_marateb_auth/src/domain/entities/user.dart';
+import 'package:alam_el_marateb_auth/src/domain/usecases/login_usecase.dart';
+import 'package:alam_el_marateb_auth/src/domain/usecases/logout_usecase.dart';
 
 part 'auth_state.dart';
 part 'auth_cubit.freezed.dart';

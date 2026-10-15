@@ -1,8 +1,8 @@
+import 'package:alam_el_marateb_auth/alam_el_marateb_auth.dart';
 import 'package:alam_el_marateb_di/di.dart';
 import 'package:alam_el_marateb_network/network.dart';
 import 'package:alam_el_marateb_services/services.dart';
 import 'package:alam_el_marateb_utils/utils.dart';
-import 'package:auth/auth.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';

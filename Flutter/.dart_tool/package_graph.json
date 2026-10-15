@@ -3,23 +3,23 @@
     "admin",
     "alam_el_marateb",
     "alam_el_marateb_auth",
+    "alam_el_marateb_catalog",
     "alam_el_marateb_constants",
+    "alam_el_marateb_crm",
+    "alam_el_marateb_delivery",
     "alam_el_marateb_di",
     "alam_el_marateb_extensions",
+    "alam_el_marateb_inventory",
     "alam_el_marateb_network",
+    "alam_el_marateb_orders",
+    "alam_el_marateb_pos",
     "alam_el_marateb_result",
     "alam_el_marateb_router",
     "alam_el_marateb_services",
     "alam_el_marateb_ui",
     "alam_el_marateb_utils",
     "alam_el_marateb_validators",
-    "catalog",
-    "crm",
     "customer",
-    "delivery",
-    "inventory",
-    "orders",
-    "pos",
     "staff"
   ],
   "packages": [
@@ -169,6 +169,7 @@
         "alam_el_marateb_constants",
         "cryptography",
         "dio",
+        "firebase_core",
         "firebase_crashlytics",
         "firebase_messaging",
         "flutter",
@@ -304,7 +305,7 @@
       ]
     },
     {
-      "name": "catalog",
+      "name": "alam_el_marateb_catalog",
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
@@ -347,7 +348,6 @@
         "flutter",
         "flutter_screenutil",
         "freezed_annotation",
-        "get_it",
         "injectable",
         "retrofit"
       ],
@@ -362,7 +362,7 @@
       ]
     },
     {
-      "name": "pos",
+      "name": "alam_el_marateb_pos",
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
@@ -388,7 +388,7 @@
       ]
     },
     {
-      "name": "inventory",
+      "name": "alam_el_marateb_inventory",
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
@@ -414,7 +414,7 @@
       ]
     },
     {
-      "name": "delivery",
+      "name": "alam_el_marateb_delivery",
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
@@ -440,7 +440,7 @@
       ]
     },
     {
-      "name": "orders",
+      "name": "alam_el_marateb_orders",
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
@@ -466,7 +466,7 @@
       ]
     },
     {
-      "name": "crm",
+      "name": "alam_el_marateb_crm",
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
@@ -701,15 +701,6 @@
       ]
     },
     {
-      "name": "get_it",
-      "version": "9.3.0",
-      "dependencies": [
-        "async",
-        "collection",
-        "meta"
-      ]
-    },
-    {
       "name": "flutter_screenutil",
       "version": "5.9.3",
       "dependencies": [
@@ -881,6 +872,15 @@
       ]
     },
     {
+      "name": "get_it",
+      "version": "9.3.0",
+      "dependencies": [
+        "async",
+        "collection",
+        "meta"
+      ]
+    },
+    {
       "name": "nested",
       "version": "1.0.0",
       "dependencies": [
@@ -973,7 +973,7 @@
     },
     {
       "name": "firebase_messaging",
-      "version": "16.7.0",
+      "version": "17.0.0",
       "dependencies": [
         "firebase_core",
         "firebase_core_platform_interface",
@@ -985,13 +985,23 @@
     },
     {
       "name": "firebase_crashlytics",
-      "version": "5.4.0",
+      "version": "6.0.0",
       "dependencies": [
         "firebase_core",
         "firebase_core_platform_interface",
         "firebase_crashlytics_platform_interface",
         "flutter",
         "stack_trace"
+      ]
+    },
+    {
+      "name": "firebase_core",
+      "version": "5.0.0",
+      "dependencies": [
+        "firebase_core_platform_interface",
+        "firebase_core_web",
+        "flutter",
+        "meta"
       ]
     },
     {
@@ -2143,7 +2153,7 @@
     },
     {
       "name": "firebase_messaging_web",
-      "version": "4.2.5",
+      "version": "4.3.0",
       "dependencies": [
         "_flutterfire_internals",
         "firebase_core",
@@ -2157,7 +2167,7 @@
     },
     {
       "name": "firebase_messaging_platform_interface",
-      "version": "4.10.0",
+      "version": "4.11.0",
       "dependencies": [
         "_flutterfire_internals",
         "firebase_core",
@@ -2177,18 +2187,8 @@
       ]
     },
     {
-      "name": "firebase_core",
-      "version": "4.15.0",
-      "dependencies": [
-        "firebase_core_platform_interface",
-        "firebase_core_web",
-        "flutter",
-        "meta"
-      ]
-    },
-    {
       "name": "firebase_crashlytics_platform_interface",
-      "version": "3.9.0",
+      "version": "3.9.1",
       "dependencies": [
         "_flutterfire_internals",
         "collection",
@@ -2197,6 +2197,15 @@
         "flutter",
         "meta",
         "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "firebase_core_web",
+      "version": "4.0.0",
+      "dependencies": [
+        "firebase_core_platform_interface",
+        "meta",
+        "web"
       ]
     },
     {
@@ -2500,17 +2509,8 @@
       ]
     },
     {
-      "name": "firebase_core_web",
-      "version": "3.12.0",
-      "dependencies": [
-        "firebase_core_platform_interface",
-        "meta",
-        "web"
-      ]
-    },
-    {
       "name": "_flutterfire_internals",
-      "version": "1.3.77",
+      "version": "1.3.78",
       "dependencies": [
         "collection",
         "firebase_core",

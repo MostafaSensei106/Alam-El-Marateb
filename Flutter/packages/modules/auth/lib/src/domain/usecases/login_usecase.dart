@@ -1,8 +1,8 @@
 import 'package:alam_el_marateb_result/result.dart';
 import 'package:injectable/injectable.dart';
 
-import 'package:auth/src/domain/entities/user.dart';
-import 'package:auth/src/domain/repositories/auth_repository.dart';
+import 'package:alam_el_marateb_auth/src/domain/entities/user.dart';
+import 'package:alam_el_marateb_auth/src/domain/repositories/auth_repository.dart';
 
 final class LoginParams {
   const LoginParams({required this.phone, required this.password});

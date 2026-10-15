@@ -5,7 +5,7 @@ import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'package:auth/src/presentation/cubit/auth_cubit.dart';
+import 'package:alam_el_marateb_auth/src/presentation/cubit/auth_cubit.dart';
 
 /// Shared login screen used by all three apps.
 ///

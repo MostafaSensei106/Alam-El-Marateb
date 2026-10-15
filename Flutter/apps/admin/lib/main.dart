@@ -1,4 +1,4 @@
-import 'package:alam_el_marateb_auth/auth.dart';
+import 'package:alam_el_marateb_auth/alam_el_marateb_auth.dart';
 import 'package:alam_el_marateb_di/di.dart';
 import 'package:alam_el_marateb_network/network.dart';
 import 'package:alam_el_marateb_services/services.dart';

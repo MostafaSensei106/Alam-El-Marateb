@@ -10,11 +10,11 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  get_it: ^9.2.0
+  get_it: ^9.3.0
   injectable: ^3.0.0
   connectivity_plus: ^7.0.0
   flutter_secure_storage: ^11.2.0
-  package_info_plus: ^10.0.0
+  package_info_plus: ^10.2.2
   shared_preferences: ^2.5.6
   alam_el_marateb_network: ^1.0.0
   alam_el_marateb_services: ^1.0.0

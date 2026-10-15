@@ -1,5 +1,5 @@
 resolution: workspace
-name: inventory
+name: alam_el_marateb_inventory
 description: Alam El Marateb inventory module.
 version: 1.0.0
 publish_to: none

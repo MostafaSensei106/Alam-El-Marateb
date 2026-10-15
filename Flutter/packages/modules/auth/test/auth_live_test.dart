@@ -1,5 +1,5 @@
 import 'package:alam_el_marateb_network/network.dart';
-import 'package:auth/auth.dart';
+import 'package:alam_el_marateb_auth/alam_el_marateb_auth.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 

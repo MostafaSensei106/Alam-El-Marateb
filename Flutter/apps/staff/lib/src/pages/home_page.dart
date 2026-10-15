@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:alam_el_marateb_auth/alam_el_marateb_auth.dart';
 import 'package:alam_el_marateb_constants/constants.dart';
 import 'package:alam_el_marateb_ui/ui.dart';
 import 'package:alam_el_marateb_utils/utils.dart';
-import 'package:auth/auth.dart';
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
