@@ -1,5 +1,5 @@
 resolution: workspace
-name: auth
+name: alam_el_marateb_auth
 description: Alam El Marateb shared authentication module.
 version: 1.0.0
 publish_to: none

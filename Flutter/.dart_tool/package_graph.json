@@ -2,6 +2,7 @@
   "roots": [
     "admin",
     "alam_el_marateb",
+    "alam_el_marateb_auth",
     "alam_el_marateb_constants",
     "alam_el_marateb_di",
     "alam_el_marateb_extensions",
@@ -12,7 +13,6 @@
     "alam_el_marateb_ui",
     "alam_el_marateb_utils",
     "alam_el_marateb_validators",
-    "auth",
     "catalog",
     "crm",
     "customer",
@@ -37,6 +37,7 @@
       "name": "staff",
       "version": "0.0.0",
       "dependencies": [
+        "alam_el_marateb_auth",
         "alam_el_marateb_constants",
         "alam_el_marateb_di",
         "alam_el_marateb_network",
@@ -44,7 +45,6 @@
         "alam_el_marateb_services",
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
-        "auth",
         "bloc_signals_flutter",
         "dio",
         "flutter",
@@ -61,6 +61,7 @@
       "name": "customer",
       "version": "0.0.0",
       "dependencies": [
+        "alam_el_marateb_auth",
         "alam_el_marateb_constants",
         "alam_el_marateb_di",
         "alam_el_marateb_network",
@@ -68,7 +69,6 @@
         "alam_el_marateb_services",
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
-        "auth",
         "bloc_signals_flutter",
         "dio",
         "flutter",
@@ -89,6 +89,7 @@
       "name": "admin",
       "version": "0.0.0",
       "dependencies": [
+        "alam_el_marateb_auth",
         "alam_el_marateb_constants",
         "alam_el_marateb_di",
         "alam_el_marateb_network",
@@ -96,7 +97,6 @@
         "alam_el_marateb_services",
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
-        "auth",
         "bloc_signals_flutter",
         "dio",
         "flutter",
@@ -330,7 +330,7 @@
       ]
     },
     {
-      "name": "auth",
+      "name": "alam_el_marateb_auth",
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
