@@ -1,5 +1,5 @@
+import 'package:alam_el_marateb_auth/auth.dart';
 import 'package:alam_el_marateb_router/router.dart';
-import 'package:auth/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 

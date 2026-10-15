@@ -114,7 +114,10 @@ void main() {
       await cubit.signOut();
       expect(repo.logoutCalls, 1);
       expect(
-        cubit.stateValue.maybeWhen(unauthenticated: () => true, orElse: () => false),
+        cubit.stateValue.maybeWhen(
+          unauthenticated: () => true,
+          orElse: () => false,
+        ),
         isTrue,
       );
       await cubit.close();

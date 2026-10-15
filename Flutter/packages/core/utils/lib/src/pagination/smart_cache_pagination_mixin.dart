@@ -49,7 +49,9 @@ mixin SmartCachePaginationMixin<T> on CubitSignal<PaginationState<T>>
   Future<void> loadNextPage({bool isRefresh = false}) async {
     // 1. Immediate synchronous re-entrancy guard
     if (_isFetching) return;
-    if (stateValue.isLoadingMore || (stateValue.hasReachedMax && !isRefresh)) return;
+    if (stateValue.isLoadingMore || (stateValue.hasReachedMax && !isRefresh)) {
+      return;
+    }
 
     _isFetching = true;
 
