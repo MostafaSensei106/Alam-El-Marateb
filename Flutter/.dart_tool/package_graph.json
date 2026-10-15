@@ -36,6 +36,7 @@
       "name": "staff",
       "version": "0.0.0",
       "dependencies": [
+        "alam_el_marateb_constants",
         "alam_el_marateb_di",
         "alam_el_marateb_network",
         "alam_el_marateb_ui",
@@ -53,6 +54,7 @@
       "name": "customer",
       "version": "0.0.0",
       "dependencies": [
+        "alam_el_marateb_constants",
         "alam_el_marateb_di",
         "alam_el_marateb_network",
         "alam_el_marateb_ui",
@@ -73,6 +75,7 @@
       "name": "admin",
       "version": "0.0.0",
       "dependencies": [
+        "alam_el_marateb_constants",
         "alam_el_marateb_di",
         "alam_el_marateb_network",
         "alam_el_marateb_ui",
@@ -365,21 +368,54 @@
       ]
     },
     {
-      "name": "flutter_test",
-      "version": "0.0.0",
+      "name": "retrofit_generator",
+      "version": "10.2.12",
       "dependencies": [
-        "clock",
+        "analyzer",
+        "build",
+        "built_collection",
+        "code_builder",
+        "dart_style",
+        "dio",
+        "protobuf",
+        "retrofit",
+        "source_gen"
+      ]
+    },
+    {
+      "name": "build_runner",
+      "version": "2.16.1",
+      "dependencies": [
+        "analyzer",
+        "args",
+        "async",
+        "build",
+        "build_config",
+        "build_daemon",
+        "built_collection",
+        "built_value",
         "collection",
-        "fake_async",
-        "flutter",
-        "leak_tracker_flutter_testing",
-        "matcher",
+        "convert",
+        "crypto",
+        "dart_style",
+        "glob",
+        "graphs",
+        "http_multi_server",
+        "io",
+        "json_annotation",
+        "logging",
         "meta",
+        "mime",
+        "package_config",
         "path",
-        "stack_trace",
-        "stream_channel",
-        "test_api",
-        "vector_math"
+        "pool",
+        "pub_semver",
+        "shelf",
+        "shelf_web_socket",
+        "stream_transform",
+        "watcher",
+        "web_socket_channel",
+        "yaml"
       ]
     },
     {
@@ -411,6 +447,42 @@
         "web_socket_channel",
         "webkit_inspection_protocol",
         "yaml"
+      ]
+    },
+    {
+      "name": "lints",
+      "version": "6.1.0",
+      "dependencies": []
+    },
+    {
+      "name": "flutter_test",
+      "version": "0.0.0",
+      "dependencies": [
+        "clock",
+        "collection",
+        "fake_async",
+        "flutter",
+        "leak_tracker_flutter_testing",
+        "matcher",
+        "meta",
+        "path",
+        "stack_trace",
+        "stream_channel",
+        "test_api",
+        "vector_math"
+      ]
+    },
+    {
+      "name": "go_router",
+      "version": "18.1.0",
+      "dependencies": [
+        "collection",
+        "cupertino_ui",
+        "flutter",
+        "flutter_web_plugins",
+        "logging",
+        "material_ui",
+        "meta"
       ]
     },
     {
@@ -453,6 +525,17 @@
       ]
     },
     {
+      "name": "infinite_scroll_pagination",
+      "version": "5.1.1",
+      "dependencies": [
+        "collection",
+        "flutter",
+        "flutter_staggered_grid_view",
+        "meta",
+        "sliver_tools"
+      ]
+    },
+    {
       "name": "iconsax_flutter",
       "version": "1.0.1",
       "dependencies": [
@@ -460,8 +543,26 @@
       ]
     },
     {
+      "name": "flutter_svg",
+      "version": "2.3.0",
+      "dependencies": [
+        "flutter",
+        "http",
+        "vector_graphics",
+        "vector_graphics_codec",
+        "vector_graphics_compiler"
+      ]
+    },
+    {
       "name": "flutter_screenutil",
       "version": "5.9.3",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
+      "name": "flutter_hooks",
+      "version": "0.21.3+1",
       "dependencies": [
         "flutter"
       ]
@@ -473,6 +574,31 @@
         "bloc",
         "flutter",
         "provider"
+      ]
+    },
+    {
+      "name": "cached_network_image_ce",
+      "version": "4.13.1",
+      "dependencies": [
+        "cached_network_image_platform_interface_ce",
+        "cached_network_image_web_ce",
+        "clock",
+        "crypto",
+        "file",
+        "flutter",
+        "hive_ce",
+        "http",
+        "meta",
+        "octo_image",
+        "path",
+        "path_provider"
+      ]
+    },
+    {
+      "name": "formz",
+      "version": "0.8.1",
+      "dependencies": [
+        "meta"
       ]
     },
     {
@@ -489,6 +615,22 @@
       ]
     },
     {
+      "name": "package_info_plus",
+      "version": "10.2.2",
+      "dependencies": [
+        "clock",
+        "ffi",
+        "flutter",
+        "flutter_web_plugins",
+        "http",
+        "meta",
+        "package_info_plus_platform_interface",
+        "path",
+        "web",
+        "win32"
+      ]
+    },
+    {
       "name": "flutter_secure_storage",
       "version": "11.2.0",
       "dependencies": [
@@ -502,10 +644,32 @@
       ]
     },
     {
+      "name": "connectivity_plus",
+      "version": "7.3.2",
+      "dependencies": [
+        "collection",
+        "connectivity_plus_platform_interface",
+        "flutter",
+        "flutter_web_plugins",
+        "meta",
+        "nm",
+        "web"
+      ]
+    },
+    {
       "name": "injectable",
       "version": "3.0.0",
       "dependencies": [
         "get_it",
+        "meta"
+      ]
+    },
+    {
+      "name": "get_it",
+      "version": "9.3.0",
+      "dependencies": [
+        "async",
+        "collection",
         "meta"
       ]
     },
@@ -541,12 +705,30 @@
       ]
     },
     {
+      "name": "bloc_signals_hydrate",
+      "version": "1.1.0",
+      "dependencies": [
+        "bloc_signals",
+        "meta",
+        "signals_core"
+      ]
+    },
+    {
       "name": "freezed_annotation",
       "version": "3.1.0",
       "dependencies": [
         "collection",
         "json_annotation",
         "meta"
+      ]
+    },
+    {
+      "name": "bloc_signals_flutter",
+      "version": "1.5.0",
+      "dependencies": [
+        "bloc_signals",
+        "flutter",
+        "signals_flutter"
       ]
     },
     {
@@ -559,6 +741,40 @@
       ]
     },
     {
+      "name": "url_launcher",
+      "version": "6.3.3",
+      "dependencies": [
+        "flutter",
+        "url_launcher_android",
+        "url_launcher_ios",
+        "url_launcher_linux",
+        "url_launcher_macos",
+        "url_launcher_platform_interface",
+        "url_launcher_web",
+        "url_launcher_windows"
+      ]
+    },
+    {
+      "name": "share_plus",
+      "version": "13.3.1",
+      "dependencies": [
+        "cross_file",
+        "ffi",
+        "file",
+        "flutter",
+        "flutter_web_plugins",
+        "meta",
+        "mime",
+        "share_plus_platform_interface",
+        "url_launcher_linux",
+        "url_launcher_platform_interface",
+        "url_launcher_web",
+        "url_launcher_windows",
+        "web",
+        "win32"
+      ]
+    },
+    {
       "name": "path_provider",
       "version": "2.1.6",
       "dependencies": [
@@ -568,6 +784,42 @@
         "path_provider_linux",
         "path_provider_platform_interface",
         "path_provider_windows"
+      ]
+    },
+    {
+      "name": "flutter_local_notifications",
+      "version": "22.3.2",
+      "dependencies": [
+        "clock",
+        "flutter",
+        "flutter_local_notifications_linux",
+        "flutter_local_notifications_platform_interface",
+        "flutter_local_notifications_web",
+        "flutter_local_notifications_windows",
+        "timezone"
+      ]
+    },
+    {
+      "name": "firebase_messaging",
+      "version": "16.7.0",
+      "dependencies": [
+        "firebase_core",
+        "firebase_core_platform_interface",
+        "firebase_messaging_platform_interface",
+        "firebase_messaging_web",
+        "flutter",
+        "meta"
+      ]
+    },
+    {
+      "name": "firebase_crashlytics",
+      "version": "5.4.0",
+      "dependencies": [
+        "firebase_core",
+        "firebase_core_platform_interface",
+        "firebase_crashlytics_platform_interface",
+        "flutter",
+        "stack_trace"
       ]
     },
     {
@@ -651,319 +903,10 @@
       ]
     },
     {
-      "name": "flutter_lints",
-      "version": "6.0.0",
-      "dependencies": [
-        "lints"
-      ]
-    },
-    {
-      "name": "path",
-      "version": "1.9.1",
-      "dependencies": []
-    },
-    {
-      "name": "collection",
-      "version": "1.19.1",
-      "dependencies": []
-    },
-    {
-      "name": "stream_channel",
-      "version": "2.1.4",
-      "dependencies": [
-        "async"
-      ]
-    },
-    {
-      "name": "file",
-      "version": "7.0.1",
-      "dependencies": [
-        "meta",
-        "path"
-      ]
-    },
-    {
-      "name": "test_api",
-      "version": "0.7.12",
-      "dependencies": [
-        "async",
-        "boolean_selector",
-        "collection",
-        "meta",
-        "source_span",
-        "stack_trace",
-        "stream_channel",
-        "string_scanner",
-        "term_glyph"
-      ]
-    },
-    {
-      "name": "matcher",
-      "version": "0.12.20",
-      "dependencies": [
-        "async",
-        "meta",
-        "stack_trace",
-        "term_glyph",
-        "test_api"
-      ]
-    },
-    {
-      "name": "leak_tracker_flutter_testing",
-      "version": "3.0.10",
-      "dependencies": [
-        "flutter",
-        "leak_tracker",
-        "leak_tracker_testing",
-        "matcher",
-        "meta"
-      ]
-    },
-    {
-      "name": "fake_async",
-      "version": "1.3.3",
-      "dependencies": [
-        "clock",
-        "collection"
-      ]
-    },
-    {
-      "name": "test_core",
-      "version": "0.6.18",
-      "dependencies": [
-        "analyzer",
-        "args",
-        "async",
-        "boolean_selector",
-        "collection",
-        "coverage",
-        "frontend_server_client",
-        "glob",
-        "io",
-        "meta",
-        "package_config",
-        "path",
-        "pool",
-        "source_map_stack_trace",
-        "source_maps",
-        "source_span",
-        "stack_trace",
-        "stream_channel",
-        "test_api",
-        "vm_service",
-        "yaml"
-      ]
-    },
-    {
-      "name": "cli_config",
-      "version": "0.2.0",
-      "dependencies": [
-        "args",
-        "yaml"
-      ]
-    },
-    {
-      "name": "sky_engine",
-      "version": "0.0.0",
-      "dependencies": []
-    },
-    {
-      "name": "material_color_utilities",
-      "version": "0.13.0",
-      "dependencies": [
-        "collection"
-      ]
-    },
-    {
-      "name": "characters",
-      "version": "1.4.1",
-      "dependencies": []
-    },
-    {
-      "name": "pausable_timer",
-      "version": "3.1.0+3",
-      "dependencies": [
-        "clock"
-      ]
-    },
-    {
-      "name": "flutter_localizations",
-      "version": "0.0.0",
-      "dependencies": [
-        "flutter",
-        "intl",
-        "path"
-      ]
-    },
-    {
-      "name": "flutter_web_plugins",
-      "version": "0.0.0",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
-      "name": "plugin_platform_interface",
-      "version": "2.1.8",
+      "name": "bloc",
+      "version": "9.2.1",
       "dependencies": [
         "meta"
-      ]
-    },
-    {
-      "name": "ffi",
-      "version": "2.2.0",
-      "dependencies": []
-    },
-    {
-      "name": "flutter_secure_storage_windows",
-      "version": "4.2.2",
-      "dependencies": [
-        "ffi",
-        "flutter",
-        "flutter_secure_storage_platform_interface",
-        "path",
-        "path_provider",
-        "path_provider_platform_interface",
-        "win32"
-      ]
-    },
-    {
-      "name": "flutter_secure_storage_web",
-      "version": "2.1.1",
-      "dependencies": [
-        "flutter",
-        "flutter_secure_storage_platform_interface",
-        "flutter_web_plugins",
-        "web"
-      ]
-    },
-    {
-      "name": "web",
-      "version": "1.1.1",
-      "dependencies": []
-    },
-    {
-      "name": "permission_handler_windows",
-      "version": "0.2.2",
-      "dependencies": [
-        "flutter",
-        "permission_handler_platform_interface"
-      ]
-    },
-    {
-      "name": "permission_handler_android",
-      "version": "14.1.0",
-      "dependencies": [
-        "flutter",
-        "permission_handler_platform_interface"
-      ]
-    },
-    {
-      "name": "http_cache_core",
-      "version": "1.1.4",
-      "dependencies": [
-        "collection",
-        "string_scanner",
-        "uuid"
-      ]
-    },
-    {
-      "name": "http",
-      "version": "1.6.0",
-      "dependencies": [
-        "async",
-        "http_parser",
-        "meta",
-        "web"
-      ]
-    },
-    {
-      "name": "retrofit_generator",
-      "version": "10.2.12",
-      "dependencies": [
-        "analyzer",
-        "build",
-        "built_collection",
-        "code_builder",
-        "dart_style",
-        "dio",
-        "protobuf",
-        "retrofit",
-        "source_gen"
-      ]
-    },
-    {
-      "name": "retrofit",
-      "version": "4.10.0",
-      "dependencies": [
-        "dio",
-        "meta"
-      ]
-    },
-    {
-      "name": "lints",
-      "version": "6.1.0",
-      "dependencies": []
-    },
-    {
-      "name": "infinite_scroll_pagination",
-      "version": "5.1.1",
-      "dependencies": [
-        "collection",
-        "flutter",
-        "flutter_staggered_grid_view",
-        "meta",
-        "sliver_tools"
-      ]
-    },
-    {
-      "name": "sliver_tools",
-      "version": "0.2.12",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
-      "name": "flutter_staggered_grid_view",
-      "version": "0.7.0",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
-      "name": "flutter_hooks",
-      "version": "0.21.3+1",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
-      "name": "formz",
-      "version": "0.8.1",
-      "dependencies": [
-        "meta"
-      ]
-    },
-    {
-      "name": "url_launcher",
-      "version": "6.3.3",
-      "dependencies": [
-        "flutter",
-        "url_launcher_android",
-        "url_launcher_ios",
-        "url_launcher_linux",
-        "url_launcher_macos",
-        "url_launcher_platform_interface",
-        "url_launcher_web",
-        "url_launcher_windows"
-      ]
-    },
-    {
-      "name": "url_launcher_platform_interface",
-      "version": "2.3.2",
-      "dependencies": [
-        "flutter",
-        "plugin_platform_interface"
       ]
     },
     {
@@ -972,580 +915,10 @@
       "dependencies": []
     },
     {
-      "name": "pub_semver",
-      "version": "2.2.1",
+      "name": "flutter_lints",
+      "version": "6.0.0",
       "dependencies": [
-        "collection"
-      ]
-    },
-    {
-      "name": "built_collection",
-      "version": "5.1.2",
-      "dependencies": []
-    },
-    {
-      "name": "yaml",
-      "version": "3.1.4",
-      "dependencies": [
-        "collection",
-        "source_span",
-        "string_scanner"
-      ]
-    },
-    {
-      "name": "mime",
-      "version": "2.1.0",
-      "dependencies": []
-    },
-    {
-      "name": "glob",
-      "version": "2.2.0",
-      "dependencies": [
-        "async",
-        "collection",
-        "file",
-        "path",
-        "string_scanner"
-      ]
-    },
-    {
-      "name": "stack_trace",
-      "version": "1.12.2",
-      "dependencies": [
-        "path"
-      ]
-    },
-    {
-      "name": "clock",
-      "version": "1.1.3",
-      "dependencies": []
-    },
-    {
-      "name": "leak_tracker_testing",
-      "version": "3.0.2",
-      "dependencies": [
-        "leak_tracker",
-        "matcher",
-        "meta"
-      ]
-    },
-    {
-      "name": "leak_tracker",
-      "version": "11.0.2",
-      "dependencies": [
-        "clock",
-        "collection",
-        "meta",
-        "path",
-        "vm_service"
-      ]
-    },
-    {
-      "name": "analyzer_buffer",
-      "version": "0.3.4",
-      "dependencies": [
-        "analyzer",
-        "collection",
-        "meta",
-        "path",
-        "source_gen"
-      ]
-    },
-    {
-      "name": "fixnum",
-      "version": "1.1.1",
-      "dependencies": []
-    },
-    {
-      "name": "shared_preferences_windows",
-      "version": "2.4.1",
-      "dependencies": [
-        "file",
-        "flutter",
-        "path",
-        "path_provider_platform_interface",
-        "path_provider_windows",
-        "shared_preferences_platform_interface"
-      ]
-    },
-    {
-      "name": "shared_preferences_linux",
-      "version": "2.4.1",
-      "dependencies": [
-        "file",
-        "flutter",
-        "path",
-        "path_provider_linux",
-        "path_provider_platform_interface",
-        "shared_preferences_platform_interface"
-      ]
-    },
-    {
-      "name": "path_provider_platform_interface",
-      "version": "2.1.3",
-      "dependencies": [
-        "flutter",
-        "platform",
-        "plugin_platform_interface"
-      ]
-    },
-    {
-      "name": "flutter_secure_storage_platform_interface",
-      "version": "2.1.1",
-      "dependencies": [
-        "flutter",
-        "plugin_platform_interface"
-      ]
-    },
-    {
-      "name": "ffi_leak_tracker",
-      "version": "0.1.2",
-      "dependencies": [
-        "ffi"
-      ]
-    },
-    {
-      "name": "permission_handler_platform_interface",
-      "version": "4.4.1",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "plugin_platform_interface"
-      ]
-    },
-    {
-      "name": "permission_handler_html",
-      "version": "0.1.4+1",
-      "dependencies": [
-        "flutter",
-        "flutter_web_plugins",
-        "permission_handler_platform_interface",
-        "web"
-      ]
-    },
-    {
-      "name": "protobuf",
-      "version": "6.1.0",
-      "dependencies": [
-        "collection",
-        "fixnum",
-        "meta"
-      ]
-    },
-    {
-      "name": "url_launcher_windows",
-      "version": "3.1.6",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "url_launcher_platform_interface"
-      ]
-    },
-    {
-      "name": "url_launcher_web",
-      "version": "2.4.3",
-      "dependencies": [
-        "flutter",
-        "flutter_web_plugins",
-        "url_launcher_platform_interface",
-        "web"
-      ]
-    },
-    {
-      "name": "url_launcher_linux",
-      "version": "3.2.3",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "url_launcher_platform_interface"
-      ]
-    },
-    {
-      "name": "flutter_svg",
-      "version": "2.3.0",
-      "dependencies": [
-        "flutter",
-        "http",
-        "vector_graphics",
-        "vector_graphics_codec",
-        "vector_graphics_compiler"
-      ]
-    },
-    {
-      "name": "get_it",
-      "version": "9.3.0",
-      "dependencies": [
-        "async",
-        "collection",
-        "meta"
-      ]
-    },
-    {
-      "name": "bloc_signals_hydrate",
-      "version": "1.1.0",
-      "dependencies": [
-        "bloc_signals",
-        "meta",
-        "signals_core"
-      ]
-    },
-    {
-      "name": "signals_core",
-      "version": "7.0.0",
-      "dependencies": [
-        "meta",
-        "preact_signals"
-      ]
-    },
-    {
-      "name": "preact_signals",
-      "version": "7.0.0",
-      "dependencies": [
-        "meta"
-      ]
-    },
-    {
-      "name": "bloc_signals_flutter",
-      "version": "1.5.0",
-      "dependencies": [
-        "bloc_signals",
-        "flutter",
-        "signals_flutter"
-      ]
-    },
-    {
-      "name": "bloc_signals",
-      "version": "1.7.0",
-      "dependencies": [
-        "meta",
-        "preact_signals",
-        "signals_core"
-      ]
-    },
-    {
-      "name": "signals_flutter",
-      "version": "7.1.0",
-      "dependencies": [
-        "flutter",
-        "signals_core"
-      ]
-    },
-    {
-      "name": "bloc",
-      "version": "9.2.1",
-      "dependencies": [
-        "meta"
-      ]
-    },
-    {
-      "name": "args",
-      "version": "2.7.0",
-      "dependencies": []
-    },
-    {
-      "name": "term_glyph",
-      "version": "1.2.2",
-      "dependencies": []
-    },
-    {
-      "name": "boolean_selector",
-      "version": "2.1.2",
-      "dependencies": [
-        "source_span",
-        "string_scanner"
-      ]
-    },
-    {
-      "name": "shelf_packages_handler",
-      "version": "3.0.2",
-      "dependencies": [
-        "path",
-        "shelf",
-        "shelf_static"
-      ]
-    },
-    {
-      "name": "node_preamble",
-      "version": "2.0.2",
-      "dependencies": []
-    },
-    {
-      "name": "coverage",
-      "version": "1.16.0",
-      "dependencies": [
-        "args",
-        "cli_config",
-        "cli_util",
-        "glob",
-        "logging",
-        "meta",
-        "package_config",
-        "path",
-        "source_maps",
-        "stack_trace",
-        "vm_service",
-        "yaml"
-      ]
-    },
-    {
-      "name": "cli_util",
-      "version": "0.6.0",
-      "dependencies": [
-        "ffi",
-        "meta",
-        "path"
-      ]
-    },
-    {
-      "name": "source_map_stack_trace",
-      "version": "2.1.2",
-      "dependencies": [
-        "path",
-        "source_maps",
-        "stack_trace"
-      ]
-    },
-    {
-      "name": "frontend_server_client",
-      "version": "4.1.0",
-      "dependencies": [
-        "async",
-        "package_config",
-        "path"
-      ]
-    },
-    {
-      "name": "package_config",
-      "version": "2.2.0",
-      "dependencies": [
-        "path"
-      ]
-    },
-    {
-      "name": "http_parser",
-      "version": "4.1.2",
-      "dependencies": [
-        "collection",
-        "source_span",
-        "string_scanner",
-        "typed_data"
-      ]
-    },
-    {
-      "name": "shared_preferences_platform_interface",
-      "version": "2.4.2",
-      "dependencies": [
-        "flutter",
-        "plugin_platform_interface"
-      ]
-    },
-    {
-      "name": "path_provider_windows",
-      "version": "2.3.0",
-      "dependencies": [
-        "ffi",
-        "flutter",
-        "path",
-        "path_provider_platform_interface"
-      ]
-    },
-    {
-      "name": "path_provider_linux",
-      "version": "2.2.2",
-      "dependencies": [
-        "ffi",
-        "flutter",
-        "path",
-        "path_provider_platform_interface",
-        "xdg_directories"
-      ]
-    },
-    {
-      "name": "code_builder",
-      "version": "4.13.0",
-      "dependencies": [
-        "built_collection",
-        "built_value",
-        "collection",
-        "matcher",
-        "meta"
-      ]
-    },
-    {
-      "name": "vector_graphics_codec",
-      "version": "1.1.13",
-      "dependencies": []
-    },
-    {
-      "name": "go_router",
-      "version": "18.1.0",
-      "dependencies": [
-        "collection",
-        "cupertino_ui",
-        "flutter",
-        "flutter_web_plugins",
-        "logging",
-        "material_ui",
-        "meta"
-      ]
-    },
-    {
-      "name": "source_helper",
-      "version": "1.3.13",
-      "dependencies": [
-        "analyzer",
-        "source_gen"
-      ]
-    },
-    {
-      "name": "build_config",
-      "version": "1.3.3",
-      "dependencies": [
-        "checked_yaml",
-        "json_annotation",
-        "path",
-        "pubspec_parse"
-      ]
-    },
-    {
-      "name": "async",
-      "version": "2.13.1",
-      "dependencies": [
-        "collection",
-        "meta"
-      ]
-    },
-    {
-      "name": "analyzer",
-      "version": "13.3.0",
-      "dependencies": [
-        "_fe_analyzer_shared",
-        "collection",
-        "convert",
-        "crypto",
-        "glob",
-        "meta",
-        "package_config",
-        "path",
-        "pub_semver",
-        "source_span",
-        "watcher",
-        "yaml"
-      ]
-    },
-    {
-      "name": "_fe_analyzer_shared",
-      "version": "103.0.0",
-      "dependencies": [
-        "meta"
-      ]
-    },
-    {
-      "name": "pool",
-      "version": "1.5.3",
-      "dependencies": [
-        "async",
-        "stack_trace"
-      ]
-    },
-    {
-      "name": "graphs",
-      "version": "2.3.2",
-      "dependencies": [
-        "collection"
-      ]
-    },
-    {
-      "name": "checked_yaml",
-      "version": "2.0.4",
-      "dependencies": [
-        "json_annotation",
-        "source_span",
-        "yaml"
-      ]
-    },
-    {
-      "name": "string_scanner",
-      "version": "1.4.1",
-      "dependencies": [
-        "source_span"
-      ]
-    },
-    {
-      "name": "typed_data",
-      "version": "1.4.0",
-      "dependencies": [
-        "collection"
-      ]
-    },
-    {
-      "name": "vector_math",
-      "version": "2.4.3",
-      "dependencies": []
-    },
-    {
-      "name": "shared_preferences_web",
-      "version": "2.4.3",
-      "dependencies": [
-        "flutter",
-        "flutter_web_plugins",
-        "shared_preferences_platform_interface",
-        "web"
-      ]
-    },
-    {
-      "name": "flutter_secure_storage_linux",
-      "version": "3.0.3",
-      "dependencies": [
-        "flutter",
-        "flutter_secure_storage_platform_interface"
-      ]
-    },
-    {
-      "name": "flutter_secure_storage_darwin",
-      "version": "0.4.3",
-      "dependencies": [
-        "flutter",
-        "plugin_platform_interface"
-      ]
-    },
-    {
-      "name": "http2",
-      "version": "2.3.1",
-      "dependencies": []
-    },
-    {
-      "name": "vector_graphics",
-      "version": "1.2.3",
-      "dependencies": [
-        "flutter",
-        "http",
-        "vector_graphics_codec"
-      ]
-    },
-    {
-      "name": "package_info_plus",
-      "version": "10.2.2",
-      "dependencies": [
-        "clock",
-        "ffi",
-        "flutter",
-        "flutter_web_plugins",
-        "http",
-        "meta",
-        "package_info_plus_platform_interface",
-        "path",
-        "web",
-        "win32"
-      ]
-    },
-    {
-      "name": "package_info_plus_platform_interface",
-      "version": "4.1.0",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "plugin_platform_interface"
+        "lints"
       ]
     },
     {
@@ -1582,179 +955,11 @@
       ]
     },
     {
-      "name": "watcher",
-      "version": "1.2.1",
+      "name": "source_helper",
+      "version": "1.3.13",
       "dependencies": [
-        "async",
-        "path"
-      ]
-    },
-    {
-      "name": "source_span",
-      "version": "1.10.2",
-      "dependencies": [
-        "collection",
-        "path",
-        "term_glyph"
-      ]
-    },
-    {
-      "name": "recase",
-      "version": "4.1.0",
-      "dependencies": []
-    },
-    {
-      "name": "lean_builder",
-      "version": "1.2.2",
-      "dependencies": [
-        "_fe_analyzer_shared",
         "analyzer",
-        "ansicolor",
-        "args",
-        "collection",
-        "dart_style",
-        "frontend_server_client",
-        "glob",
-        "hotreloader",
-        "meta",
-        "path",
-        "source_span",
-        "stack_trace",
-        "watcher",
-        "xxh3",
-        "yaml"
-      ]
-    },
-    {
-      "name": "xxh3",
-      "version": "1.2.0",
-      "dependencies": []
-    },
-    {
-      "name": "hotreloader",
-      "version": "4.4.0",
-      "dependencies": [
-        "logging",
-        "path",
-        "stream_transform",
-        "vm_service",
-        "watcher"
-      ]
-    },
-    {
-      "name": "ansicolor",
-      "version": "2.0.3",
-      "dependencies": []
-    },
-    {
-      "name": "stream_transform",
-      "version": "2.1.2",
-      "dependencies": []
-    },
-    {
-      "name": "http_multi_server",
-      "version": "3.2.2",
-      "dependencies": [
-        "async"
-      ]
-    },
-    {
-      "name": "crypto",
-      "version": "3.0.7",
-      "dependencies": [
-        "typed_data"
-      ]
-    },
-    {
-      "name": "webkit_inspection_protocol",
-      "version": "1.2.1",
-      "dependencies": [
-        "logging"
-      ]
-    },
-    {
-      "name": "shelf_static",
-      "version": "1.1.3",
-      "dependencies": [
-        "convert",
-        "http_parser",
-        "mime",
-        "path",
-        "shelf"
-      ]
-    },
-    {
-      "name": "source_maps",
-      "version": "0.10.14",
-      "dependencies": [
-        "source_span"
-      ]
-    },
-    {
-      "name": "uuid",
-      "version": "4.6.0",
-      "dependencies": [
-        "crypto",
-        "fixnum"
-      ]
-    },
-    {
-      "name": "win32",
-      "version": "6.4.0",
-      "dependencies": [
-        "ffi",
-        "ffi_leak_tracker",
-        "meta"
-      ]
-    },
-    {
-      "name": "permission_handler_apple",
-      "version": "9.6.2",
-      "dependencies": [
-        "flutter",
-        "permission_handler_platform_interface",
-        "yaml"
-      ]
-    },
-    {
-      "name": "share_plus",
-      "version": "13.3.1",
-      "dependencies": [
-        "cross_file",
-        "ffi",
-        "file",
-        "flutter",
-        "flutter_web_plugins",
-        "meta",
-        "mime",
-        "share_plus_platform_interface",
-        "url_launcher_linux",
-        "url_launcher_platform_interface",
-        "url_launcher_web",
-        "url_launcher_windows",
-        "web",
-        "win32"
-      ]
-    },
-    {
-      "name": "share_plus_platform_interface",
-      "version": "7.2.0",
-      "dependencies": [
-        "cross_file",
-        "flutter",
-        "meta",
-        "mime",
-        "path_provider",
-        "plugin_platform_interface",
-        "uuid"
-      ]
-    },
-    {
-      "name": "cross_file",
-      "version": "0.3.5+5",
-      "dependencies": [
-        "meta",
-        "web"
+        "source_gen"
       ]
     },
     {
@@ -1773,6 +978,29 @@
       ]
     },
     {
+      "name": "pubspec_parse",
+      "version": "1.6.0",
+      "dependencies": [
+        "checked_yaml",
+        "collection",
+        "json_annotation",
+        "pub_semver",
+        "yaml"
+      ]
+    },
+    {
+      "name": "pub_semver",
+      "version": "2.2.1",
+      "dependencies": [
+        "collection"
+      ]
+    },
+    {
+      "name": "path",
+      "version": "1.9.1",
+      "dependencies": []
+    },
+    {
       "name": "dart_style",
       "version": "3.1.13",
       "dependencies": [
@@ -1787,182 +1015,13 @@
       ]
     },
     {
-      "name": "io",
-      "version": "1.1.0",
+      "name": "build_config",
+      "version": "1.3.3",
       "dependencies": [
-        "meta",
+        "checked_yaml",
+        "json_annotation",
         "path",
-        "string_scanner"
-      ]
-    },
-    {
-      "name": "convert",
-      "version": "3.1.2",
-      "dependencies": [
-        "typed_data"
-      ]
-    },
-    {
-      "name": "equatable",
-      "version": "2.1.0",
-      "dependencies": [
-        "collection",
-        "meta"
-      ]
-    },
-    {
-      "name": "cupertino_ui",
-      "version": "1.1.3",
-      "dependencies": [
-        "collection",
-        "flutter",
-        "flutter_localizations",
-        "intl"
-      ]
-    },
-    {
-      "name": "flutter_local_notifications",
-      "version": "22.3.2",
-      "dependencies": [
-        "clock",
-        "flutter",
-        "flutter_local_notifications_linux",
-        "flutter_local_notifications_platform_interface",
-        "flutter_local_notifications_web",
-        "flutter_local_notifications_windows",
-        "timezone"
-      ]
-    },
-    {
-      "name": "flutter_local_notifications_windows",
-      "version": "3.1.1",
-      "dependencies": [
-        "ffi",
-        "flutter",
-        "flutter_local_notifications_platform_interface",
-        "meta",
-        "timezone",
-        "xml"
-      ]
-    },
-    {
-      "name": "flutter_local_notifications_web",
-      "version": "1.0.0",
-      "dependencies": [
-        "collection",
-        "flutter",
-        "flutter_local_notifications_platform_interface",
-        "timezone",
-        "web"
-      ]
-    },
-    {
-      "name": "flutter_local_notifications_platform_interface",
-      "version": "12.2.0",
-      "dependencies": [
-        "plugin_platform_interface",
-        "timezone"
-      ]
-    },
-    {
-      "name": "flutter_local_notifications_linux",
-      "version": "8.0.2",
-      "dependencies": [
-        "dbus",
-        "ffi",
-        "flutter",
-        "flutter_local_notifications_platform_interface",
-        "path",
-        "xdg_directories"
-      ]
-    },
-    {
-      "name": "timezone",
-      "version": "0.11.2",
-      "dependencies": [
-        "http",
-        "path"
-      ]
-    },
-    {
-      "name": "xml",
-      "version": "7.0.1",
-      "dependencies": [
-        "collection",
-        "meta",
-        "petitparser"
-      ]
-    },
-    {
-      "name": "petitparser",
-      "version": "7.1.0",
-      "dependencies": [
-        "collection",
-        "meta"
-      ]
-    },
-    {
-      "name": "vector_graphics_compiler",
-      "version": "1.3.1",
-      "dependencies": [
-        "args",
-        "meta",
-        "path",
-        "path_parsing",
-        "vector_graphics_codec",
-        "xml"
-      ]
-    },
-    {
-      "name": "path_parsing",
-      "version": "1.1.0",
-      "dependencies": [
-        "meta",
-        "vector_math"
-      ]
-    },
-    {
-      "name": "logging",
-      "version": "1.3.0",
-      "dependencies": []
-    },
-    {
-      "name": "connectivity_plus",
-      "version": "7.3.2",
-      "dependencies": [
-        "collection",
-        "connectivity_plus_platform_interface",
-        "flutter",
-        "flutter_web_plugins",
-        "meta",
-        "nm",
-        "web"
-      ]
-    },
-    {
-      "name": "dbus",
-      "version": "0.8.0",
-      "dependencies": [
-        "args",
-        "ffi",
-        "meta",
-        "xml"
-      ]
-    },
-    {
-      "name": "nm",
-      "version": "0.6.0",
-      "dependencies": [
-        "dbus"
-      ]
-    },
-    {
-      "name": "connectivity_plus_platform_interface",
-      "version": "2.1.0",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "plugin_platform_interface"
+        "pubspec_parse"
       ]
     },
     {
@@ -1978,118 +1037,71 @@
       ]
     },
     {
-      "name": "shelf_web_socket",
-      "version": "3.0.0",
+      "name": "async",
+      "version": "2.13.1",
       "dependencies": [
-        "shelf",
-        "stream_channel",
-        "web_socket_channel"
+        "collection",
+        "meta"
       ]
     },
     {
-      "name": "shared_preferences_foundation",
-      "version": "2.5.7",
+      "name": "analyzer",
+      "version": "13.3.0",
       "dependencies": [
-        "flutter",
-        "meta",
-        "shared_preferences_platform_interface"
-      ]
-    },
-    {
-      "name": "path_provider_foundation",
-      "version": "2.6.0",
-      "dependencies": [
-        "ffi",
-        "flutter",
-        "objective_c",
-        "path_provider_platform_interface"
-      ]
-    },
-    {
-      "name": "url_launcher_macos",
-      "version": "3.2.6",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "url_launcher_platform_interface"
-      ]
-    },
-    {
-      "name": "build_runner",
-      "version": "2.16.1",
-      "dependencies": [
-        "analyzer",
-        "args",
-        "async",
-        "build",
-        "build_config",
-        "build_daemon",
-        "built_collection",
-        "built_value",
+        "_fe_analyzer_shared",
         "collection",
         "convert",
         "crypto",
-        "dart_style",
         "glob",
-        "graphs",
-        "http_multi_server",
-        "io",
-        "json_annotation",
-        "logging",
         "meta",
-        "mime",
         "package_config",
         "path",
-        "pool",
         "pub_semver",
-        "shelf",
-        "shelf_web_socket",
-        "stream_transform",
+        "source_span",
         "watcher",
-        "web_socket_channel",
         "yaml"
       ]
     },
     {
-      "name": "material_ui",
-      "version": "1.7.0",
-      "dependencies": [
-        "collection",
-        "cupertino_ui",
-        "flutter",
-        "flutter_localizations",
-        "intl",
-        "material_color_utilities",
-        "vector_math"
-      ]
-    },
-    {
-      "name": "xdg_directories",
-      "version": "1.1.0",
-      "dependencies": [
-        "meta",
-        "path"
-      ]
-    },
-    {
-      "name": "dio_web_adapter",
-      "version": "2.2.2",
+      "name": "retrofit",
+      "version": "4.10.0",
       "dependencies": [
         "dio",
-        "http_parser",
-        "meta",
-        "web"
+        "meta"
       ]
     },
     {
-      "name": "pubspec_parse",
-      "version": "1.6.0",
+      "name": "protobuf",
+      "version": "6.1.0",
       "dependencies": [
-        "checked_yaml",
         "collection",
-        "json_annotation",
-        "pub_semver",
-        "yaml"
+        "fixnum",
+        "meta"
+      ]
+    },
+    {
+      "name": "code_builder",
+      "version": "4.13.0",
+      "dependencies": [
+        "built_collection",
+        "built_value",
+        "collection",
+        "matcher",
+        "meta"
+      ]
+    },
+    {
+      "name": "built_collection",
+      "version": "5.1.2",
+      "dependencies": []
+    },
+    {
+      "name": "yaml",
+      "version": "3.1.4",
+      "dependencies": [
+        "collection",
+        "source_span",
+        "string_scanner"
       ]
     },
     {
@@ -2104,17 +1116,25 @@
       ]
     },
     {
-      "name": "web_socket",
-      "version": "1.0.1",
+      "name": "watcher",
+      "version": "1.2.1",
       "dependencies": [
-        "web"
+        "async",
+        "path"
       ]
     },
     {
-      "name": "platform",
-      "version": "3.2.0",
+      "name": "stream_transform",
+      "version": "2.1.2",
+      "dependencies": []
+    },
+    {
+      "name": "shelf_web_socket",
+      "version": "3.0.0",
       "dependencies": [
-        "meta"
+        "shelf",
+        "stream_channel",
+        "web_socket_channel"
       ]
     },
     {
@@ -2130,46 +1150,91 @@
       ]
     },
     {
-      "name": "objective_c",
-      "version": "9.6.2",
+      "name": "pool",
+      "version": "1.5.3",
       "dependencies": [
-        "code_assets",
-        "collection",
-        "ffi",
-        "hooks",
-        "logging",
-        "meta",
-        "pub_semver"
+        "async",
+        "stack_trace"
       ]
     },
     {
-      "name": "hooks",
+      "name": "package_config",
       "version": "2.2.0",
       "dependencies": [
-        "collection",
-        "crypto",
-        "logging",
-        "pub_semver",
-        "record_use",
-        "yaml"
+        "path"
       ]
     },
     {
-      "name": "code_assets",
+      "name": "mime",
       "version": "2.1.0",
+      "dependencies": []
+    },
+    {
+      "name": "logging",
+      "version": "1.3.0",
+      "dependencies": []
+    },
+    {
+      "name": "io",
+      "version": "1.1.0",
       "dependencies": [
-        "collection",
-        "hooks",
-        "logging"
+        "meta",
+        "path",
+        "string_scanner"
       ]
     },
     {
-      "name": "record_use",
-      "version": "1.1.1",
+      "name": "http_multi_server",
+      "version": "3.2.2",
       "dependencies": [
+        "async"
+      ]
+    },
+    {
+      "name": "graphs",
+      "version": "2.3.2",
+      "dependencies": [
+        "collection"
+      ]
+    },
+    {
+      "name": "glob",
+      "version": "2.2.0",
+      "dependencies": [
+        "async",
         "collection",
-        "meta",
-        "pub_semver"
+        "file",
+        "path",
+        "string_scanner"
+      ]
+    },
+    {
+      "name": "crypto",
+      "version": "3.0.7",
+      "dependencies": [
+        "typed_data"
+      ]
+    },
+    {
+      "name": "convert",
+      "version": "3.1.2",
+      "dependencies": [
+        "typed_data"
+      ]
+    },
+    {
+      "name": "collection",
+      "version": "1.19.1",
+      "dependencies": []
+    },
+    {
+      "name": "built_value",
+      "version": "8.13.0",
+      "dependencies": [
+        "built_collection",
+        "collection",
+        "fixnum",
+        "meta"
       ]
     },
     {
@@ -2194,22 +1259,298 @@
       ]
     },
     {
-      "name": "url_launcher_ios",
-      "version": "6.4.2",
+      "name": "args",
+      "version": "2.7.0",
+      "dependencies": []
+    },
+    {
+      "name": "webkit_inspection_protocol",
+      "version": "1.2.1",
       "dependencies": [
-        "flutter",
-        "meta",
-        "url_launcher_platform_interface"
+        "logging"
       ]
     },
     {
-      "name": "built_value",
-      "version": "8.13.0",
+      "name": "typed_data",
+      "version": "1.4.0",
       "dependencies": [
-        "built_collection",
+        "collection"
+      ]
+    },
+    {
+      "name": "test_core",
+      "version": "0.6.18",
+      "dependencies": [
+        "analyzer",
+        "args",
+        "async",
+        "boolean_selector",
         "collection",
-        "fixnum",
+        "coverage",
+        "frontend_server_client",
+        "glob",
+        "io",
+        "meta",
+        "package_config",
+        "path",
+        "pool",
+        "source_map_stack_trace",
+        "source_maps",
+        "source_span",
+        "stack_trace",
+        "stream_channel",
+        "test_api",
+        "vm_service",
+        "yaml"
+      ]
+    },
+    {
+      "name": "test_api",
+      "version": "0.7.12",
+      "dependencies": [
+        "async",
+        "boolean_selector",
+        "collection",
+        "meta",
+        "source_span",
+        "stack_trace",
+        "stream_channel",
+        "string_scanner",
+        "term_glyph"
+      ]
+    },
+    {
+      "name": "stream_channel",
+      "version": "2.1.4",
+      "dependencies": [
+        "async"
+      ]
+    },
+    {
+      "name": "stack_trace",
+      "version": "1.12.2",
+      "dependencies": [
+        "path"
+      ]
+    },
+    {
+      "name": "source_span",
+      "version": "1.10.2",
+      "dependencies": [
+        "collection",
+        "path",
+        "term_glyph"
+      ]
+    },
+    {
+      "name": "shelf_static",
+      "version": "1.1.3",
+      "dependencies": [
+        "convert",
+        "http_parser",
+        "mime",
+        "path",
+        "shelf"
+      ]
+    },
+    {
+      "name": "shelf_packages_handler",
+      "version": "3.0.2",
+      "dependencies": [
+        "path",
+        "shelf",
+        "shelf_static"
+      ]
+    },
+    {
+      "name": "node_preamble",
+      "version": "2.0.2",
+      "dependencies": []
+    },
+    {
+      "name": "matcher",
+      "version": "0.12.20",
+      "dependencies": [
+        "async",
+        "meta",
+        "stack_trace",
+        "term_glyph",
+        "test_api"
+      ]
+    },
+    {
+      "name": "coverage",
+      "version": "1.16.0",
+      "dependencies": [
+        "args",
+        "cli_config",
+        "cli_util",
+        "glob",
+        "logging",
+        "meta",
+        "package_config",
+        "path",
+        "source_maps",
+        "stack_trace",
+        "vm_service",
+        "yaml"
+      ]
+    },
+    {
+      "name": "boolean_selector",
+      "version": "2.1.2",
+      "dependencies": [
+        "source_span",
+        "string_scanner"
+      ]
+    },
+    {
+      "name": "leak_tracker_flutter_testing",
+      "version": "3.0.10",
+      "dependencies": [
+        "flutter",
+        "leak_tracker",
+        "leak_tracker_testing",
+        "matcher",
         "meta"
+      ]
+    },
+    {
+      "name": "vector_math",
+      "version": "2.4.3",
+      "dependencies": []
+    },
+    {
+      "name": "clock",
+      "version": "1.1.3",
+      "dependencies": []
+    },
+    {
+      "name": "fake_async",
+      "version": "1.3.3",
+      "dependencies": [
+        "clock",
+        "collection"
+      ]
+    },
+    {
+      "name": "material_ui",
+      "version": "1.7.0",
+      "dependencies": [
+        "collection",
+        "cupertino_ui",
+        "flutter",
+        "flutter_localizations",
+        "intl",
+        "material_color_utilities",
+        "vector_math"
+      ]
+    },
+    {
+      "name": "flutter_web_plugins",
+      "version": "0.0.0",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
+      "name": "cupertino_ui",
+      "version": "1.1.3",
+      "dependencies": [
+        "collection",
+        "flutter",
+        "flutter_localizations",
+        "intl"
+      ]
+    },
+    {
+      "name": "sky_engine",
+      "version": "0.0.0",
+      "dependencies": []
+    },
+    {
+      "name": "material_color_utilities",
+      "version": "0.13.0",
+      "dependencies": [
+        "collection"
+      ]
+    },
+    {
+      "name": "characters",
+      "version": "1.4.1",
+      "dependencies": []
+    },
+    {
+      "name": "pausable_timer",
+      "version": "3.1.0+3",
+      "dependencies": [
+        "clock"
+      ]
+    },
+    {
+      "name": "uuid",
+      "version": "4.6.0",
+      "dependencies": [
+        "crypto",
+        "fixnum"
+      ]
+    },
+    {
+      "name": "equatable",
+      "version": "2.1.0",
+      "dependencies": [
+        "collection",
+        "meta"
+      ]
+    },
+    {
+      "name": "sliver_tools",
+      "version": "0.2.12",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
+      "name": "flutter_staggered_grid_view",
+      "version": "0.7.0",
+      "dependencies": [
+        "flutter"
+      ]
+    },
+    {
+      "name": "vector_graphics_compiler",
+      "version": "1.3.1",
+      "dependencies": [
+        "args",
+        "meta",
+        "path",
+        "path_parsing",
+        "vector_graphics_codec",
+        "xml"
+      ]
+    },
+    {
+      "name": "vector_graphics_codec",
+      "version": "1.1.13",
+      "dependencies": []
+    },
+    {
+      "name": "vector_graphics",
+      "version": "1.2.3",
+      "dependencies": [
+        "flutter",
+        "http",
+        "vector_graphics_codec"
+      ]
+    },
+    {
+      "name": "http",
+      "version": "1.6.0",
+      "dependencies": [
+        "async",
+        "http_parser",
+        "meta",
+        "web"
       ]
     },
     {
@@ -2222,15 +1563,418 @@
       ]
     },
     {
-      "name": "firebase_messaging",
-      "version": "16.7.0",
+      "name": "octo_image",
+      "version": "2.1.2",
       "dependencies": [
-        "firebase_core",
-        "firebase_core_platform_interface",
-        "firebase_messaging_platform_interface",
-        "firebase_messaging_web",
+        "flutter"
+      ]
+    },
+    {
+      "name": "hive_ce",
+      "version": "2.22.0",
+      "dependencies": [
+        "crypto",
+        "isolate_channel",
+        "json_annotation",
+        "meta",
+        "web"
+      ]
+    },
+    {
+      "name": "file",
+      "version": "7.0.1",
+      "dependencies": [
+        "meta",
+        "path"
+      ]
+    },
+    {
+      "name": "cached_network_image_web_ce",
+      "version": "2.1.2",
+      "dependencies": [
+        "cached_network_image_platform_interface_ce",
         "flutter",
+        "web"
+      ]
+    },
+    {
+      "name": "cached_network_image_platform_interface_ce",
+      "version": "5.2.0",
+      "dependencies": [
+        "file",
+        "flutter"
+      ]
+    },
+    {
+      "name": "shared_preferences_windows",
+      "version": "2.4.1",
+      "dependencies": [
+        "file",
+        "flutter",
+        "path",
+        "path_provider_platform_interface",
+        "path_provider_windows",
+        "shared_preferences_platform_interface"
+      ]
+    },
+    {
+      "name": "shared_preferences_web",
+      "version": "2.4.3",
+      "dependencies": [
+        "flutter",
+        "flutter_web_plugins",
+        "shared_preferences_platform_interface",
+        "web"
+      ]
+    },
+    {
+      "name": "shared_preferences_platform_interface",
+      "version": "2.4.2",
+      "dependencies": [
+        "flutter",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "shared_preferences_linux",
+      "version": "2.4.1",
+      "dependencies": [
+        "file",
+        "flutter",
+        "path",
+        "path_provider_linux",
+        "path_provider_platform_interface",
+        "shared_preferences_platform_interface"
+      ]
+    },
+    {
+      "name": "shared_preferences_foundation",
+      "version": "2.5.7",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "shared_preferences_platform_interface"
+      ]
+    },
+    {
+      "name": "shared_preferences_android",
+      "version": "2.4.28",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "shared_preferences_platform_interface"
+      ]
+    },
+    {
+      "name": "win32",
+      "version": "6.4.0",
+      "dependencies": [
+        "ffi",
+        "ffi_leak_tracker",
         "meta"
+      ]
+    },
+    {
+      "name": "web",
+      "version": "1.1.1",
+      "dependencies": []
+    },
+    {
+      "name": "package_info_plus_platform_interface",
+      "version": "4.1.0",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "ffi",
+      "version": "2.2.0",
+      "dependencies": []
+    },
+    {
+      "name": "flutter_secure_storage_windows",
+      "version": "4.2.2",
+      "dependencies": [
+        "ffi",
+        "flutter",
+        "flutter_secure_storage_platform_interface",
+        "path",
+        "path_provider",
+        "path_provider_platform_interface",
+        "win32"
+      ]
+    },
+    {
+      "name": "flutter_secure_storage_web",
+      "version": "2.1.1",
+      "dependencies": [
+        "flutter",
+        "flutter_secure_storage_platform_interface",
+        "flutter_web_plugins",
+        "web"
+      ]
+    },
+    {
+      "name": "flutter_secure_storage_platform_interface",
+      "version": "2.1.1",
+      "dependencies": [
+        "flutter",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "flutter_secure_storage_linux",
+      "version": "3.0.3",
+      "dependencies": [
+        "flutter",
+        "flutter_secure_storage_platform_interface"
+      ]
+    },
+    {
+      "name": "flutter_secure_storage_darwin",
+      "version": "0.4.3",
+      "dependencies": [
+        "flutter",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "nm",
+      "version": "0.6.0",
+      "dependencies": [
+        "dbus"
+      ]
+    },
+    {
+      "name": "connectivity_plus_platform_interface",
+      "version": "2.1.0",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "analyzer_buffer",
+      "version": "0.3.4",
+      "dependencies": [
+        "analyzer",
+        "collection",
+        "meta",
+        "path",
+        "source_gen"
+      ]
+    },
+    {
+      "name": "signals_core",
+      "version": "7.0.0",
+      "dependencies": [
+        "meta",
+        "preact_signals"
+      ]
+    },
+    {
+      "name": "bloc_signals",
+      "version": "1.7.0",
+      "dependencies": [
+        "meta",
+        "preact_signals",
+        "signals_core"
+      ]
+    },
+    {
+      "name": "signals_flutter",
+      "version": "7.1.0",
+      "dependencies": [
+        "flutter",
+        "signals_core"
+      ]
+    },
+    {
+      "name": "url_launcher_windows",
+      "version": "3.1.6",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "url_launcher_platform_interface"
+      ]
+    },
+    {
+      "name": "url_launcher_web",
+      "version": "2.4.3",
+      "dependencies": [
+        "flutter",
+        "flutter_web_plugins",
+        "url_launcher_platform_interface",
+        "web"
+      ]
+    },
+    {
+      "name": "url_launcher_platform_interface",
+      "version": "2.3.2",
+      "dependencies": [
+        "flutter",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "url_launcher_macos",
+      "version": "3.2.6",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "url_launcher_platform_interface"
+      ]
+    },
+    {
+      "name": "url_launcher_linux",
+      "version": "3.2.3",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "url_launcher_platform_interface"
+      ]
+    },
+    {
+      "name": "url_launcher_ios",
+      "version": "6.4.2",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "url_launcher_platform_interface"
+      ]
+    },
+    {
+      "name": "url_launcher_android",
+      "version": "6.3.33",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "url_launcher_platform_interface"
+      ]
+    },
+    {
+      "name": "share_plus_platform_interface",
+      "version": "7.2.0",
+      "dependencies": [
+        "cross_file",
+        "flutter",
+        "meta",
+        "mime",
+        "path_provider",
+        "plugin_platform_interface",
+        "uuid"
+      ]
+    },
+    {
+      "name": "cross_file",
+      "version": "0.3.5+5",
+      "dependencies": [
+        "meta",
+        "web"
+      ]
+    },
+    {
+      "name": "path_provider_windows",
+      "version": "2.3.0",
+      "dependencies": [
+        "ffi",
+        "flutter",
+        "path",
+        "path_provider_platform_interface"
+      ]
+    },
+    {
+      "name": "path_provider_platform_interface",
+      "version": "2.1.3",
+      "dependencies": [
+        "flutter",
+        "platform",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "path_provider_linux",
+      "version": "2.2.2",
+      "dependencies": [
+        "ffi",
+        "flutter",
+        "path",
+        "path_provider_platform_interface",
+        "xdg_directories"
+      ]
+    },
+    {
+      "name": "path_provider_foundation",
+      "version": "2.6.0",
+      "dependencies": [
+        "ffi",
+        "flutter",
+        "objective_c",
+        "path_provider_platform_interface"
+      ]
+    },
+    {
+      "name": "path_provider_android",
+      "version": "2.3.1",
+      "dependencies": [
+        "flutter",
+        "jni",
+        "jni_flutter",
+        "path_provider_platform_interface"
+      ]
+    },
+    {
+      "name": "timezone",
+      "version": "0.11.2",
+      "dependencies": [
+        "http",
+        "path"
+      ]
+    },
+    {
+      "name": "flutter_local_notifications_platform_interface",
+      "version": "12.2.0",
+      "dependencies": [
+        "plugin_platform_interface",
+        "timezone"
+      ]
+    },
+    {
+      "name": "flutter_local_notifications_web",
+      "version": "1.0.0",
+      "dependencies": [
+        "collection",
+        "flutter",
+        "flutter_local_notifications_platform_interface",
+        "timezone",
+        "web"
+      ]
+    },
+    {
+      "name": "flutter_local_notifications_windows",
+      "version": "3.1.1",
+      "dependencies": [
+        "ffi",
+        "flutter",
+        "flutter_local_notifications_platform_interface",
+        "meta",
+        "timezone",
+        "xml"
+      ]
+    },
+    {
+      "name": "flutter_local_notifications_linux",
+      "version": "8.0.2",
+      "dependencies": [
+        "dbus",
+        "ffi",
+        "flutter",
+        "flutter_local_notifications_platform_interface",
+        "path",
+        "xdg_directories"
       ]
     },
     {
@@ -2269,17 +2013,6 @@
       ]
     },
     {
-      "name": "_flutterfire_internals",
-      "version": "1.3.77",
-      "dependencies": [
-        "collection",
-        "firebase_core",
-        "firebase_core_platform_interface",
-        "flutter",
-        "meta"
-      ]
-    },
-    {
       "name": "firebase_core",
       "version": "4.15.0",
       "dependencies": [
@@ -2287,26 +2020,6 @@
         "firebase_core_web",
         "flutter",
         "meta"
-      ]
-    },
-    {
-      "name": "firebase_core_web",
-      "version": "3.12.0",
-      "dependencies": [
-        "firebase_core_platform_interface",
-        "meta",
-        "web"
-      ]
-    },
-    {
-      "name": "firebase_crashlytics",
-      "version": "5.4.0",
-      "dependencies": [
-        "firebase_core",
-        "firebase_core_platform_interface",
-        "firebase_crashlytics_platform_interface",
-        "flutter",
-        "stack_trace"
       ]
     },
     {
@@ -2323,18 +2036,307 @@
       ]
     },
     {
+      "name": "dio_web_adapter",
+      "version": "2.2.2",
+      "dependencies": [
+        "dio",
+        "http_parser",
+        "meta",
+        "web"
+      ]
+    },
+    {
+      "name": "http_parser",
+      "version": "4.1.2",
+      "dependencies": [
+        "collection",
+        "source_span",
+        "string_scanner",
+        "typed_data"
+      ]
+    },
+    {
+      "name": "permission_handler_platform_interface",
+      "version": "4.4.1",
+      "dependencies": [
+        "flutter",
+        "meta",
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "permission_handler_windows",
+      "version": "0.2.2",
+      "dependencies": [
+        "flutter",
+        "permission_handler_platform_interface"
+      ]
+    },
+    {
+      "name": "permission_handler_html",
+      "version": "0.1.4+1",
+      "dependencies": [
+        "flutter",
+        "flutter_web_plugins",
+        "permission_handler_platform_interface",
+        "web"
+      ]
+    },
+    {
+      "name": "permission_handler_apple",
+      "version": "9.6.2",
+      "dependencies": [
+        "flutter",
+        "permission_handler_platform_interface",
+        "yaml"
+      ]
+    },
+    {
+      "name": "permission_handler_android",
+      "version": "14.1.0",
+      "dependencies": [
+        "flutter",
+        "permission_handler_platform_interface"
+      ]
+    },
+    {
+      "name": "http_cache_core",
+      "version": "1.1.4",
+      "dependencies": [
+        "collection",
+        "string_scanner",
+        "uuid"
+      ]
+    },
+    {
+      "name": "http2",
+      "version": "2.3.1",
+      "dependencies": []
+    },
+    {
+      "name": "recase",
+      "version": "4.1.0",
+      "dependencies": []
+    },
+    {
+      "name": "lean_builder",
+      "version": "1.2.2",
+      "dependencies": [
+        "_fe_analyzer_shared",
+        "analyzer",
+        "ansicolor",
+        "args",
+        "collection",
+        "dart_style",
+        "frontend_server_client",
+        "glob",
+        "hotreloader",
+        "meta",
+        "path",
+        "source_span",
+        "stack_trace",
+        "watcher",
+        "xxh3",
+        "yaml"
+      ]
+    },
+    {
+      "name": "checked_yaml",
+      "version": "2.0.4",
+      "dependencies": [
+        "json_annotation",
+        "source_span",
+        "yaml"
+      ]
+    },
+    {
+      "name": "_fe_analyzer_shared",
+      "version": "103.0.0",
+      "dependencies": [
+        "meta"
+      ]
+    },
+    {
+      "name": "fixnum",
+      "version": "1.1.1",
+      "dependencies": []
+    },
+    {
+      "name": "string_scanner",
+      "version": "1.4.1",
+      "dependencies": [
+        "source_span"
+      ]
+    },
+    {
+      "name": "web_socket",
+      "version": "1.0.1",
+      "dependencies": [
+        "web"
+      ]
+    },
+    {
       "name": "vm_service",
       "version": "15.3.0",
       "dependencies": []
     },
     {
-      "name": "path_provider_android",
-      "version": "2.3.1",
+      "name": "source_maps",
+      "version": "0.10.14",
+      "dependencies": [
+        "source_span"
+      ]
+    },
+    {
+      "name": "source_map_stack_trace",
+      "version": "2.1.2",
+      "dependencies": [
+        "path",
+        "source_maps",
+        "stack_trace"
+      ]
+    },
+    {
+      "name": "frontend_server_client",
+      "version": "4.1.0",
+      "dependencies": [
+        "async",
+        "package_config",
+        "path"
+      ]
+    },
+    {
+      "name": "term_glyph",
+      "version": "1.2.2",
+      "dependencies": []
+    },
+    {
+      "name": "cli_util",
+      "version": "0.6.0",
+      "dependencies": [
+        "ffi",
+        "meta",
+        "path"
+      ]
+    },
+    {
+      "name": "cli_config",
+      "version": "0.2.0",
+      "dependencies": [
+        "args",
+        "yaml"
+      ]
+    },
+    {
+      "name": "leak_tracker_testing",
+      "version": "3.0.2",
+      "dependencies": [
+        "leak_tracker",
+        "matcher",
+        "meta"
+      ]
+    },
+    {
+      "name": "leak_tracker",
+      "version": "11.0.2",
+      "dependencies": [
+        "clock",
+        "collection",
+        "meta",
+        "path",
+        "vm_service"
+      ]
+    },
+    {
+      "name": "flutter_localizations",
+      "version": "0.0.0",
       "dependencies": [
         "flutter",
-        "jni",
-        "jni_flutter",
-        "path_provider_platform_interface"
+        "intl",
+        "path"
+      ]
+    },
+    {
+      "name": "xml",
+      "version": "7.0.1",
+      "dependencies": [
+        "collection",
+        "meta",
+        "petitparser"
+      ]
+    },
+    {
+      "name": "path_parsing",
+      "version": "1.1.0",
+      "dependencies": [
+        "meta",
+        "vector_math"
+      ]
+    },
+    {
+      "name": "isolate_channel",
+      "version": "0.6.1",
+      "dependencies": [
+        "meta"
+      ]
+    },
+    {
+      "name": "plugin_platform_interface",
+      "version": "2.1.8",
+      "dependencies": [
+        "meta"
+      ]
+    },
+    {
+      "name": "ffi_leak_tracker",
+      "version": "0.1.2",
+      "dependencies": [
+        "ffi"
+      ]
+    },
+    {
+      "name": "dbus",
+      "version": "0.8.0",
+      "dependencies": [
+        "args",
+        "ffi",
+        "meta",
+        "xml"
+      ]
+    },
+    {
+      "name": "preact_signals",
+      "version": "7.0.0",
+      "dependencies": [
+        "meta"
+      ]
+    },
+    {
+      "name": "platform",
+      "version": "3.2.0",
+      "dependencies": [
+        "meta"
+      ]
+    },
+    {
+      "name": "xdg_directories",
+      "version": "1.1.0",
+      "dependencies": [
+        "meta",
+        "path"
+      ]
+    },
+    {
+      "name": "objective_c",
+      "version": "9.6.2",
+      "dependencies": [
+        "code_assets",
+        "collection",
+        "ffi",
+        "hooks",
+        "logging",
+        "meta",
+        "pub_semver"
       ]
     },
     {
@@ -2360,6 +2362,76 @@
       ]
     },
     {
+      "name": "firebase_core_web",
+      "version": "3.12.0",
+      "dependencies": [
+        "firebase_core_platform_interface",
+        "meta",
+        "web"
+      ]
+    },
+    {
+      "name": "_flutterfire_internals",
+      "version": "1.3.77",
+      "dependencies": [
+        "collection",
+        "firebase_core",
+        "firebase_core_platform_interface",
+        "flutter",
+        "meta"
+      ]
+    },
+    {
+      "name": "hotreloader",
+      "version": "4.4.0",
+      "dependencies": [
+        "logging",
+        "path",
+        "stream_transform",
+        "vm_service",
+        "watcher"
+      ]
+    },
+    {
+      "name": "ansicolor",
+      "version": "2.0.3",
+      "dependencies": []
+    },
+    {
+      "name": "xxh3",
+      "version": "1.2.0",
+      "dependencies": []
+    },
+    {
+      "name": "petitparser",
+      "version": "7.1.0",
+      "dependencies": [
+        "collection",
+        "meta"
+      ]
+    },
+    {
+      "name": "hooks",
+      "version": "2.2.0",
+      "dependencies": [
+        "collection",
+        "crypto",
+        "logging",
+        "pub_semver",
+        "record_use",
+        "yaml"
+      ]
+    },
+    {
+      "name": "code_assets",
+      "version": "2.1.0",
+      "dependencies": [
+        "collection",
+        "hooks",
+        "logging"
+      ]
+    },
+    {
       "name": "jni_util",
       "version": "1.0.0",
       "dependencies": [
@@ -2367,81 +2439,12 @@
       ]
     },
     {
-      "name": "cached_network_image_ce",
-      "version": "4.13.1",
+      "name": "record_use",
+      "version": "1.1.1",
       "dependencies": [
-        "cached_network_image_platform_interface_ce",
-        "cached_network_image_web_ce",
-        "clock",
-        "crypto",
-        "file",
-        "flutter",
-        "hive_ce",
-        "http",
+        "collection",
         "meta",
-        "octo_image",
-        "path",
-        "path_provider"
-      ]
-    },
-    {
-      "name": "cached_network_image_platform_interface_ce",
-      "version": "5.2.0",
-      "dependencies": [
-        "file",
-        "flutter"
-      ]
-    },
-    {
-      "name": "octo_image",
-      "version": "2.1.2",
-      "dependencies": [
-        "flutter"
-      ]
-    },
-    {
-      "name": "cached_network_image_web_ce",
-      "version": "2.1.2",
-      "dependencies": [
-        "cached_network_image_platform_interface_ce",
-        "flutter",
-        "web"
-      ]
-    },
-    {
-      "name": "hive_ce",
-      "version": "2.22.0",
-      "dependencies": [
-        "crypto",
-        "isolate_channel",
-        "json_annotation",
-        "meta",
-        "web"
-      ]
-    },
-    {
-      "name": "isolate_channel",
-      "version": "0.6.1",
-      "dependencies": [
-        "meta"
-      ]
-    },
-    {
-      "name": "shared_preferences_android",
-      "version": "2.4.28",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "shared_preferences_platform_interface"
-      ]
-    },
-    {
-      "name": "url_launcher_android",
-      "version": "6.3.33",
-      "dependencies": [
-        "flutter",
-        "meta",
-        "url_launcher_platform_interface"
+        "pub_semver"
       ]
     }
   ],
