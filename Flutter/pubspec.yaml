@@ -13,6 +13,7 @@ workspace:
 - packages/core/services
 - packages/core/extensions
 - packages/core/utils
+- packages/core/di
 - packages/modules/catalog
 - packages/modules/pos
 - packages/modules/inventory

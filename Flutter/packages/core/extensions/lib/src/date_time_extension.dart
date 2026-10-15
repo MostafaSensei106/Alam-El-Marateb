@@ -1,14 +1,13 @@
 import 'package:intl/intl.dart';
 
-import '../di/di.dart';
-import '../utils/localization/logic/cubit/localization_cubit.dart';
-
 extension AppDateTimeExtension on DateTime {
   /// Formats the date with a unified format for the app.
   /// Example: 20 يوليو 01:33 am
-  /// [includeDayOfWeek] if true, adds the day of the week, e.g., الخميس 20 يوليو 01:33 am
-  String toAppFormat({bool includeDayOfWeek = false}) {
-    final langCode = getIt<LocalizationCubit>().state.langCode;
+  /// [langCode] is the active locale (e.g. `ar`, `en`).
+  /// Pass it from the app layer (e.g. `LocalizationCubit.state.langCode`)
+  /// so this package never depends on DI or localization state.
+  /// [includeDayOfWeek] if true, adds the day of the week.
+  String toAppFormat({required String langCode, bool includeDayOfWeek = false}) {
     final isAr = langCode == 'ar';
 
     final formatString = includeDayOfWeek
@@ -16,7 +15,7 @@ extension AppDateTimeExtension on DateTime {
         : 'dd MMMM hh:mm a';
     var formatted = DateFormat(formatString, langCode).format(toLocal());
 
-    // Only apply numerals fix and am/pm substitution for Arabic
+    // Only apply numerals fix for Arabic
     if (isAr) {
       formatted = formatted
           .replaceAll('٠', '0')
@@ -37,11 +36,13 @@ extension AppDateTimeExtension on DateTime {
 
 extension AppDateStringExtension on String {
   /// Formats the date string with a unified format for the app.
-  /// Example: 20 يوليو 01:33 am
-  String toAppFormat({bool includeDayOfWeek = false}) {
+  String toAppFormat({required String langCode, bool includeDayOfWeek = false}) {
     try {
       final date = DateTime.parse(this).toLocal();
-      return date.toAppFormat(includeDayOfWeek: includeDayOfWeek);
+      return date.toAppFormat(
+        langCode: langCode,
+        includeDayOfWeek: includeDayOfWeek,
+      );
     } catch (e) {
       return this;
     }

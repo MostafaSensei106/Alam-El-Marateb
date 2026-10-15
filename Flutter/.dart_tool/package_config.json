@@ -38,6 +38,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "bloc",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/bloc-9.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.14"
+    },
+    {
       "name": "bloc_signals",
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/bloc_signals-1.5.0",
       "packageUri": "lib/",
@@ -140,6 +146,18 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "connectivity_plus",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/connectivity_plus-7.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "connectivity_plus_platform_interface",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/connectivity_plus_platform_interface-2.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "convert",
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/convert-3.1.2",
       "packageUri": "lib/",
@@ -162,6 +180,12 @@
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/dart_style-3.1.13",
       "packageUri": "lib/",
       "languageVersion": "3.11"
+    },
+    {
+      "name": "dbus",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/dbus-0.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
     },
     {
       "name": "dio",
@@ -500,6 +524,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "nm",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/nm-0.6.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "node_preamble",
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/node_preamble-2.0.2",
       "packageUri": "lib/",
@@ -600,6 +630,12 @@
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/permission_handler_windows-0.2.2",
       "packageUri": "lib/",
       "languageVersion": "3.6"
+    },
+    {
+      "name": "petitparser",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/petitparser-7.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.13"
     },
     {
       "name": "platform",
@@ -902,6 +938,12 @@
       "languageVersion": "3.3"
     },
     {
+      "name": "xml",
+      "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/xml-7.1.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.13"
+    },
+    {
       "name": "xxh3",
       "rootUri": "file:///home/ottafa/.pub-cache/hosted/pub.dev/xxh3-1.2.0",
       "packageUri": "lib/",
@@ -956,20 +998,26 @@
       "languageVersion": "3.13"
     },
     {
-      "name": "services",
+      "name": "alam_el_marateb_services",
       "rootUri": "../packages/core/services",
       "packageUri": "lib/",
       "languageVersion": "3.13"
     },
     {
-      "name": "alem_el_marateb_extensions",
+      "name": "alam_el_marateb_extensions",
       "rootUri": "../packages/core/extensions",
       "packageUri": "lib/",
       "languageVersion": "3.13"
     },
     {
-      "name": "utils",
+      "name": "alam_el_marateb_utils",
       "rootUri": "../packages/core/utils",
+      "packageUri": "lib/",
+      "languageVersion": "3.13"
+    },
+    {
+      "name": "alam_el_marateb_di",
+      "rootUri": "../packages/core/di",
       "packageUri": "lib/",
       "languageVersion": "3.13"
     },

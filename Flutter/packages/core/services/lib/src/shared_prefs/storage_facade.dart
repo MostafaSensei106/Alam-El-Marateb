@@ -1,8 +1,8 @@
 import 'package:alam_el_marateb_constants/constants.dart';
 import 'package:injectable/injectable.dart';
-import 'package:services/src/shared_prefs/pref_storage_service_base.dart';
-import 'package:services/src/shared_prefs/secure_storage_service.dart';
-import 'package:services/src/shared_prefs/shared_prefs_service.dart';
+import 'package:alam_el_marateb_services/src/shared_prefs/pref_storage_service_base.dart';
+import 'package:alam_el_marateb_services/src/shared_prefs/secure_storage_service.dart';
+import 'package:alam_el_marateb_services/src/shared_prefs/shared_prefs_service.dart';
 
 @LazySingleton(as: PrefStorageServiceBase)
 final class StorageFacade implements PrefStorageServiceBase {

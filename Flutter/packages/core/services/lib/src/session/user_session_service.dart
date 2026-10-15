@@ -1,7 +1,7 @@
 import 'package:alam_el_marateb_constants/constants.dart';
 import 'package:injectable/injectable.dart';
-import 'package:services/src/session/user_session_service_base.dart';
-import 'package:services/src/shared_prefs/storage_facade.dart';
+import 'package:alam_el_marateb_services/src/session/user_session_service_base.dart';
+import 'package:alam_el_marateb_services/src/shared_prefs/storage_facade.dart';
 
 @LazySingleton(as: UserSessionServiceBase)
 final class UserSessionService implements UserSessionServiceBase {

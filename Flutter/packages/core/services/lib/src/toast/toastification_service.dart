@@ -2,8 +2,8 @@ import 'package:alam_el_marateb_constants/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:injectable/injectable.dart';
-import 'package:services/src/theme/theme_service.dart';
-import 'package:services/src/toast/toast_service_base.dart';
+import 'package:alam_el_marateb_services/src/theme/theme_service.dart';
+import 'package:alam_el_marateb_services/src/toast/toast_service_base.dart';
 import 'package:toastification/toastification.dart';
 
 @LazySingleton(as: ToastServiceBase)

@@ -3,9 +3,12 @@
     "admin",
     "alam_el_marateb",
     "alam_el_marateb_constants",
+    "alam_el_marateb_di",
+    "alam_el_marateb_extensions",
     "alam_el_marateb_network",
     "alam_el_marateb_result",
-    "alem_el_marateb_extensions",
+    "alam_el_marateb_services",
+    "alam_el_marateb_utils",
     "catalog",
     "crm",
     "customer",
@@ -13,9 +16,7 @@
     "inventory",
     "orders",
     "pos",
-    "services",
-    "staff",
-    "utils"
+    "staff"
   ],
   "packages": [
     {
@@ -77,6 +78,7 @@
       "name": "alam_el_marateb_result",
       "version": "1.0.0",
       "dependencies": [
+        "alam_el_marateb_utils",
         "freezed_annotation"
       ],
       "devDependencies": [
@@ -91,22 +93,27 @@
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
+        "bloc",
+        "connectivity_plus",
         "dio",
         "dio_cache_interceptor",
         "dio_http2_adapter",
+        "freezed_annotation",
         "http_cache_hive_store",
+        "injectable",
         "json_annotation",
         "path_provider"
       ],
       "devDependencies": [
         "build_runner",
+        "freezed",
         "json_serializable",
         "lints",
         "test"
       ]
     },
     {
-      "name": "services",
+      "name": "alam_el_marateb_services",
       "version": "1.0.0",
       "dependencies": [
         "alam_el_marateb_constants",
@@ -124,7 +131,7 @@
       ]
     },
     {
-      "name": "alem_el_marateb_extensions",
+      "name": "alam_el_marateb_extensions",
       "version": "1.0.0",
       "dependencies": [
         "intl"
@@ -135,12 +142,27 @@
       ]
     },
     {
-      "name": "utils",
+      "name": "alam_el_marateb_utils",
       "version": "1.0.0",
       "dependencies": [
+        "alam_el_marateb_constants",
+        "alam_el_marateb_network",
+        "alam_el_marateb_services",
         "bloc_signals_flutter",
         "bloc_signals_hydrate",
         "flutter",
+        "injectable"
+      ],
+      "devDependencies": [
+        "lints",
+        "test"
+      ]
+    },
+    {
+      "name": "alam_el_marateb_di",
+      "version": "1.0.0",
+      "dependencies": [
+        "get_it",
         "injectable"
       ],
       "devDependencies": [
@@ -326,20 +348,29 @@
       "dependencies": []
     },
     {
+      "name": "injectable",
+      "version": "3.0.0",
+      "dependencies": [
+        "get_it",
+        "meta"
+      ]
+    },
+    {
+      "name": "get_it",
+      "version": "9.3.0",
+      "dependencies": [
+        "async",
+        "collection",
+        "meta"
+      ]
+    },
+    {
       "name": "bloc_signals_hydrate",
       "version": "1.0.3",
       "dependencies": [
         "bloc_signals",
         "meta",
         "signals_core"
-      ]
-    },
-    {
-      "name": "injectable",
-      "version": "3.0.0",
-      "dependencies": [
-        "get_it",
-        "meta"
       ]
     },
     {
@@ -430,6 +461,23 @@
       ]
     },
     {
+      "name": "freezed",
+      "version": "4.0.1",
+      "dependencies": [
+        "analyzer",
+        "analyzer_buffer",
+        "build",
+        "build_config",
+        "collection",
+        "dart_style",
+        "freezed_annotation",
+        "json_annotation",
+        "meta",
+        "pub_semver",
+        "source_gen"
+      ]
+    },
+    {
       "name": "http_cache_hive_store",
       "version": "5.1.1",
       "dependencies": [
@@ -487,28 +535,31 @@
       ]
     },
     {
-      "name": "freezed",
-      "version": "4.0.1",
-      "dependencies": [
-        "analyzer",
-        "analyzer_buffer",
-        "build",
-        "build_config",
-        "collection",
-        "dart_style",
-        "freezed_annotation",
-        "json_annotation",
-        "meta",
-        "pub_semver",
-        "source_gen"
-      ]
-    },
-    {
       "name": "freezed_annotation",
       "version": "3.1.0",
       "dependencies": [
         "collection",
         "json_annotation",
+        "meta"
+      ]
+    },
+    {
+      "name": "connectivity_plus",
+      "version": "7.3.2",
+      "dependencies": [
+        "collection",
+        "connectivity_plus_platform_interface",
+        "flutter",
+        "flutter_web_plugins",
+        "meta",
+        "nm",
+        "web"
+      ]
+    },
+    {
+      "name": "bloc",
+      "version": "9.2.1",
+      "dependencies": [
         "meta"
       ]
     },
@@ -1042,15 +1093,6 @@
       ]
     },
     {
-      "name": "get_it",
-      "version": "9.3.0",
-      "dependencies": [
-        "async",
-        "collection",
-        "meta"
-      ]
-    },
-    {
       "name": "signals_flutter",
       "version": "7.1.0",
       "dependencies": [
@@ -1260,6 +1302,17 @@
       ]
     },
     {
+      "name": "analyzer_buffer",
+      "version": "0.3.4",
+      "dependencies": [
+        "analyzer",
+        "collection",
+        "meta",
+        "path",
+        "source_gen"
+      ]
+    },
+    {
       "name": "hive_ce",
       "version": "2.20.2",
       "dependencies": [
@@ -1355,14 +1408,31 @@
       ]
     },
     {
-      "name": "analyzer_buffer",
-      "version": "0.3.4",
+      "name": "nm",
+      "version": "0.6.0",
       "dependencies": [
-        "analyzer",
-        "collection",
+        "dbus"
+      ]
+    },
+    {
+      "name": "web",
+      "version": "1.1.1",
+      "dependencies": []
+    },
+    {
+      "name": "connectivity_plus_platform_interface",
+      "version": "2.1.0",
+      "dependencies": [
+        "flutter",
         "meta",
-        "path",
-        "source_gen"
+        "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "flutter_web_plugins",
+      "version": "0.0.0",
+      "dependencies": [
+        "flutter"
       ]
     },
     {
@@ -1447,11 +1517,6 @@
       ]
     },
     {
-      "name": "web",
-      "version": "1.1.1",
-      "dependencies": []
-    },
-    {
       "name": "file",
       "version": "7.0.1",
       "dependencies": [
@@ -1514,13 +1579,6 @@
       "version": "2.1.8",
       "dependencies": [
         "meta"
-      ]
-    },
-    {
-      "name": "flutter_web_plugins",
-      "version": "0.0.0",
-      "dependencies": [
-        "flutter"
       ]
     },
     {
@@ -1592,6 +1650,16 @@
         "package_config",
         "path",
         "plugin_platform_interface"
+      ]
+    },
+    {
+      "name": "dbus",
+      "version": "0.8.0",
+      "dependencies": [
+        "args",
+        "ffi",
+        "meta",
+        "xml"
       ]
     },
     {
@@ -1671,12 +1739,30 @@
       ]
     },
     {
+      "name": "xml",
+      "version": "7.1.0",
+      "dependencies": [
+        "args",
+        "collection",
+        "meta",
+        "petitparser"
+      ]
+    },
+    {
       "name": "record_use",
       "version": "1.1.1",
       "dependencies": [
         "collection",
         "meta",
         "pub_semver"
+      ]
+    },
+    {
+      "name": "petitparser",
+      "version": "7.1.0",
+      "dependencies": [
+        "collection",
+        "meta"
       ]
     }
   ],

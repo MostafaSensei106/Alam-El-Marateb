@@ -1,16 +1,14 @@
-import 'package:di/di.dart';
+import 'package:alam_el_marateb_di/di.dart';
 import 'package:test/test.dart';
 
 void main() {
-  group('A group of tests', () {
-    final awesome = Awesome();
-
-    setUp(() {
-      // Additional setup goes here.
+  group('Core DI', () {
+    test('getIt is a singleton', () {
+      expect(identical(getIt, getIt), isTrue);
     });
 
-    test('First Test', () {
-      expect(awesome.isAwesome, isTrue);
+    test('configureCoreDependencies completes', () async {
+      await expectLater(configureCoreDependencies(), completes);
     });
   });
 }

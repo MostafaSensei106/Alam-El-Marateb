@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:services/src/shared_prefs/pref_storage_service_base.dart';
+import 'package:alam_el_marateb_services/src/shared_prefs/pref_storage_service_base.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final class SharedPrefsService implements PrefStorageServiceBase {

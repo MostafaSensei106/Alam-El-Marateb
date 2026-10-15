@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:permission_handler/permission_handler.dart' as ph;
-import 'package:services/src/permissions/permission_service_base.dart';
+import 'package:alam_el_marateb_services/src/permissions/permission_service_base.dart';
 
 @LazySingleton(as: PermissionServiceBase)
 class PermissionHandlerService implements PermissionServiceBase {

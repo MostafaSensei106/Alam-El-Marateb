@@ -1,10 +1,10 @@
 import 'dart:async';
 
+import 'package:alam_el_marateb_network/network.dart';
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 
 /// A mixin for Cubits that need to automatically retry their failed network requests
 /// when connectivity is restored.
-
 mixin ConnectivityAwareCubit<State> on CubitSignal<State> {
   StreamSubscription<NetworkState>? _networkSubscription;
 
@@ -34,7 +34,7 @@ mixin ConnectivityAwareCubit<State> on CubitSignal<State> {
     return super.close();
   }
 
-  /// Call this in the Cubit's constructor to stop listening to network changes.
+  /// Call this to stop listening to network changes.
   Future<void> stopWatchingConnectivity() async {
     await _networkSubscription?.cancel();
   }
