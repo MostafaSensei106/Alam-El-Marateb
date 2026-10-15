@@ -342,9 +342,9 @@
         "alam_el_marateb_ui",
         "alam_el_marateb_utils",
         "alam_el_marateb_validators",
+        "bloc_signals_flutter",
         "dio",
         "flutter",
-        "flutter_bloc",
         "flutter_screenutil",
         "freezed_annotation",
         "get_it",
@@ -725,6 +725,15 @@
       ]
     },
     {
+      "name": "bloc_signals_flutter",
+      "version": "1.5.0",
+      "dependencies": [
+        "bloc_signals",
+        "flutter",
+        "signals_flutter"
+      ]
+    },
+    {
       "name": "go_router",
       "version": "18.1.0",
       "dependencies": [
@@ -901,15 +910,6 @@
         "bloc_signals",
         "meta",
         "signals_core"
-      ]
-    },
-    {
-      "name": "bloc_signals_flutter",
-      "version": "1.5.0",
-      "dependencies": [
-        "bloc_signals",
-        "flutter",
-        "signals_flutter"
       ]
     },
     {
@@ -1669,6 +1669,14 @@
       ]
     },
     {
+      "name": "signals_flutter",
+      "version": "7.1.0",
+      "dependencies": [
+        "flutter",
+        "signals_core"
+      ]
+    },
+    {
       "name": "material_ui",
       "version": "1.7.0",
       "dependencies": [
@@ -1971,14 +1979,6 @@
       "dependencies": [
         "meta",
         "preact_signals"
-      ]
-    },
-    {
-      "name": "signals_flutter",
-      "version": "7.1.0",
-      "dependencies": [
-        "flutter",
-        "signals_core"
       ]
     },
     {

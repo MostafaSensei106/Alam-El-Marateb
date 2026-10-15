@@ -1,8 +1,8 @@
 import 'package:alam_el_marateb_constants/constants.dart';
 import 'package:alam_el_marateb_ui/ui.dart';
 import 'package:alam_el_marateb_validators/validators.dart';
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:auth/src/presentation/cubit/auth_cubit.dart';
@@ -55,7 +55,7 @@ final class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarComponent(title: 'Sign in'),
-      body: BlocConsumer<AuthCubit, AuthState>(
+      body: BlocSignalConsumer<AuthCubit, AuthState>(
         listenWhen: (previous, current) => previous != current,
         listener: (context, state) {
           state.maybeWhen(
