@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:hydrated_bloc/hydrated_bloc.dart';
-
 /// Fail-closed boot plan for HydratedBloc storage.
 ///
 /// There is deliberately NO plaintext fallback: if encryption cannot be
