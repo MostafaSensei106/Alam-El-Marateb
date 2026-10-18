@@ -3,7 +3,8 @@ name: staff
 description: Alam El Marateb Staff app.
 publish_to: none
 environment:
-  sdk: ^3.13.2
+  sdk: ^3.13.5
+
 dependencies:
   flutter:
     sdk: flutter
