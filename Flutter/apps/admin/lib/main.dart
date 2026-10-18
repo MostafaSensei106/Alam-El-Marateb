@@ -8,7 +8,7 @@ import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'src/router/admin_router.dart';
+import 'core/router/admin_router.dart';
 
 /// Alam El Marateb Admin entrypoint.
 ///

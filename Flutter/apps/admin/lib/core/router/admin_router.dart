@@ -3,7 +3,7 @@ import 'package:alam_el_marateb_router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../pages/home_page.dart';
+import '../../modules/home_page.dart';
 
 part 'admin_router.g.dart';
 

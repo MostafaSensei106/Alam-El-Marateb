@@ -1156,7 +1156,7 @@
     },
     {
       "name": "dart_style",
-      "version": "3.1.13",
+      "version": "3.1.14",
       "dependencies": [
         "analyzer",
         "args",
@@ -1285,7 +1285,7 @@
     },
     {
       "name": "shelf",
-      "version": "1.4.2",
+      "version": "1.4.3",
       "dependencies": [
         "async",
         "collection",
@@ -1490,7 +1490,7 @@
     },
     {
       "name": "shelf_static",
-      "version": "1.1.3",
+      "version": "1.2.0",
       "dependencies": [
         "convert",
         "http_parser",
@@ -1731,7 +1731,7 @@
     },
     {
       "name": "vector_graphics_compiler",
-      "version": "1.3.1",
+      "version": "1.3.2",
       "dependencies": [
         "args",
         "meta",
@@ -1852,18 +1852,21 @@
     },
     {
       "name": "shared_preferences_foundation",
-      "version": "2.5.7",
+      "version": "2.6.0",
       "dependencies": [
+        "ffi",
         "flutter",
         "meta",
+        "objective_c",
         "shared_preferences_platform_interface"
       ]
     },
     {
       "name": "shared_preferences_android",
-      "version": "2.4.28",
+      "version": "2.5.0",
       "dependencies": [
         "flutter",
+        "jni",
         "meta",
         "shared_preferences_platform_interface"
       ]
@@ -2311,7 +2314,7 @@
     },
     {
       "name": "vm_service",
-      "version": "15.3.0",
+      "version": "15.4.0",
       "dependencies": []
     },
     {
@@ -2443,6 +2446,33 @@
       ]
     },
     {
+      "name": "objective_c",
+      "version": "9.6.2",
+      "dependencies": [
+        "code_assets",
+        "collection",
+        "ffi",
+        "hooks",
+        "logging",
+        "meta",
+        "pub_semver"
+      ]
+    },
+    {
+      "name": "jni",
+      "version": "1.1.0",
+      "dependencies": [
+        "args",
+        "collection",
+        "ffi",
+        "jni_util",
+        "meta",
+        "package_config",
+        "path",
+        "plugin_platform_interface"
+      ]
+    },
+    {
       "name": "ffi_leak_tracker",
       "version": "0.1.2",
       "dependencies": [
@@ -2475,38 +2505,11 @@
       ]
     },
     {
-      "name": "objective_c",
-      "version": "9.6.2",
-      "dependencies": [
-        "code_assets",
-        "collection",
-        "ffi",
-        "hooks",
-        "logging",
-        "meta",
-        "pub_semver"
-      ]
-    },
-    {
       "name": "jni_flutter",
       "version": "1.0.4+1",
       "dependencies": [
         "flutter",
         "jni"
-      ]
-    },
-    {
-      "name": "jni",
-      "version": "1.1.0",
-      "dependencies": [
-        "args",
-        "collection",
-        "ffi",
-        "jni_util",
-        "meta",
-        "package_config",
-        "path",
-        "plugin_platform_interface"
       ]
     },
     {
