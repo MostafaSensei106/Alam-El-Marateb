@@ -1,5 +1,5 @@
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 final class AdminApp extends StatelessWidget {
   final String startLocation;
