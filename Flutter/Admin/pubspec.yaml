@@ -13,13 +13,76 @@ dependencies:
   material_ui: ^1.7.0
   m3e_loading_indicator: ^1.0.0
   bloc_signals_flutter: ^1.5.0
+  bloc_signals_hydrate: ^1.1.0
+  package_info_plus: ^10.2.2
+  cached_network_image_ce: ^4.13.1
+  lucide_icons_flutter: ^4.0.0
+  smooth_page_indicator: ^3.0.0
+  toastification: ^3.2.0
+  freezed_annotation: ^3.1.0
+  get_it: ^9.3.0
+  dio: ^5.11.1
+  retrofit: ^4.10.0
+  flutter_hooks: ^0.21.3+1
+  url_launcher: ^6.3.3
+  path_provider: ^2.1.6
+  shared_preferences: ^2.5.6
+  share_plus: ^13.3.1
+  pretty_dio_logger: ^1.4.0
+  dio_smart_retry: ^7.0.1
+  country_flags: ^4.1.2
+  formz: ^0.8.1
+  flutter_secure_storage: ^11.2.0
+  cryptography: ^2.7.0
+  http_certificate_pinning: ^3.0.2
+  connectivity_plus: ^7.3.2
+  injectable: ^3.0.0
+  money2: ^6.3.0
+  permission_handler: ^13.0.2
+  nested: ^1.0.0
+  rxdart: ^0.28.0
+  dio_http2_adapter: ^2.9.0
+  dio_cache_interceptor: ^4.0.7
+  http_cache_hive_store: ^5.1.1
 
+  flutter_localizations:
+    sdk: flutter
+  intl: ^0.20.3
+
+  json_annotation: any
+  go_router: any
+  iconsax_flutter: any
+  gal: any
+  open_filex: any
+  firebase_crashlytics: any
+  hydrated_bloc: any
+  firebase_core: any
+  flutter_bloc: any
+  infinite_scroll_pagination: any
+  flutter_screenutil: any
+  pinput: any
+  flutter_svg: any
+  skeletonizer: any
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   flutter_lints: ^6.0.0
+  build_runner: ^2.13.1
+  injectable_generator: ^3.0.2
+  freezed: ^4.0.1
+  json_serializable: ^6.13.1
+  flutter_launcher_icons: ^0.14.4
+  flutter_native_splash: ^2.4.8
+  intl_utils: ^2.8.14
+  retrofit_generator: ^10.2.5
+  mocktail: ^1.0.5
+  bloc_test: ^10.0.0
+  dartproptest: ^0.2.1
+  kaisel_lint: ^0.5.0
+
 flutter:
+  generate: true
   uses-material-design: true
   # To add assets to your application, add an assets section, like this:
   # assets:
