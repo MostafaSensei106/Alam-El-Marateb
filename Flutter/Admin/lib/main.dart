@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:alam_el_marateb_admin/admin_app.dart';
+import 'package:material_ui/material_ui.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const AdminApp(startLocation: ''));
 }
