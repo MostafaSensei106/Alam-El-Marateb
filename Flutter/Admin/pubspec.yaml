@@ -67,7 +67,7 @@ dev_dependencies:
   mocktail: ^1.0.5
   bloc_test: ^10.0.0
   dartproptest: ^0.2.1
-  kaisel_lint: ^0.5.0
+  kaisel_lint: ^0.5.1
 
 flutter:
   generate: true
