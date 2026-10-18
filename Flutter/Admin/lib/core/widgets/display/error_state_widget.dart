@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../constants/app_config.dart';
 import '../../extensions/extensions.dart';
@@ -9,7 +8,7 @@ class ErrorStateWidget extends StatelessWidget {
   const ErrorStateWidget({
     required this.message,
     this.title,
-    this.icon = Iconsax.warning_2_copy,
+    this.icon = LucideIcons.alertTriangle,
     super.key,
   });
 
@@ -29,15 +28,15 @@ class ErrorStateWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (icon != null) ...[
-              Icon(icon, size: 60.sp, color: color.error),
-              SizedBox(height: 16.h),
+              Icon(icon, size: 60, color: color.error),
+              SizedBox(height: 16),
             ],
             Text(
               title ?? context.localeKeys.error,
               textAlign: TextAlign.center,
               style: theme.textTheme.titleLarge?.copyWith(),
             ),
-            SizedBox(height: 8.h),
+            SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,

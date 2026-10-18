@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../extensions/extensions.dart';
 
@@ -12,7 +11,7 @@ class EmptyStateWidget extends StatelessWidget {
   const EmptyStateWidget({
     required this.title,
     this.subtitle,
-    this.icon = Iconsax.box_search_copy,
+    this.icon = LucideIcons.search,
     this.action,
     super.key,
   });
@@ -33,15 +32,15 @@ class EmptyStateWidget extends StatelessWidget {
         children: [
           if (icon != null) ...[
             Container(
-              width: 72.r,
-              height: 72.r,
+              width: 72,
+              height: 72,
               decoration: BoxDecoration(
                 color: color.primaryContainer.withValues(alpha: 0.4),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, size: 30.sp, color: color.primary),
+              child: Icon(icon, size: 30, color: color.primary),
             ),
-            SizedBox(height: 12.h),
+            SizedBox(height: 12),
           ],
           Text(
             title,
@@ -49,7 +48,7 @@ class EmptyStateWidget extends StatelessWidget {
             style: theme.textTheme.titleMedium?.copyWith(),
           ),
           if (subtitle != null) ...[
-            SizedBox(height: 4.h),
+            SizedBox(height: 4),
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 300),
               child: Text(
@@ -62,7 +61,7 @@ class EmptyStateWidget extends StatelessWidget {
               ),
             ),
           ],
-          if (action != null) ...[SizedBox(height: 16.h), action!],
+          if (action != null) ...[SizedBox(height: 16), action!],
         ],
       ),
     );

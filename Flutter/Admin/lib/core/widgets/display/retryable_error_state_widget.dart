@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
+;
 
 import '../../constants/app_config.dart';
 import '../../extensions/extensions.dart';
@@ -15,7 +15,7 @@ class RetryableErrorStateWidget extends StatelessWidget {
     required this.message,
     required this.onRetry,
     this.title,
-    this.icon = Iconsax.warning_2_copy,
+    this.icon = LucideIcons.messageCircleWarning,
     this.retryButtonText,
     super.key,
   });
@@ -42,15 +42,15 @@ class RetryableErrorStateWidget extends StatelessWidget {
           children: [
             if (icon != null) ...[
               Container(
-                width: 72.r,
-                height: 72.r,
+                width: 72,
+                height: 72,
                 decoration: BoxDecoration(
                   color: color.errorContainer.withValues(alpha: 0.45),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(icon, size: 30.sp, color: color.error),
+                child: Icon(icon, size: 30, color: color.error),
               ),
-              SizedBox(height: 12.h),
+              SizedBox(height: 12),
             ],
             Text(
               title ?? context.localeKeys.error,
@@ -59,7 +59,7 @@ class RetryableErrorStateWidget extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 4.h),
+            SizedBox(height: 4),
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 300),
               child: Text(
@@ -71,11 +71,11 @@ class RetryableErrorStateWidget extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16.h),
+            SizedBox(height: 16),
             TextButtonComponent.icon(
               onPressed: onRetry,
-              icon: Iconsax.refresh_copy,
-              label: retryButtonText ?? context.localeKeys.retry,
+              icon: LucideIcons.refreshCcw,
+              label: retryButtonText ?? context.localeKeysetry,
             ),
           ],
         ),

@@ -1,7 +1,6 @@
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../extensions/extensions.dart';
@@ -18,7 +17,7 @@ class ConnectivityBanner extends HookWidget {
     final isDisconnected = useState(false);
     final toastItem = useRef<ToastificationItem?>(null);
 
-    return BlocListener<NetworkCubit, NetworkState>(
+    return BlocSignalListener<NetworkCubit, NetworkState>(
       listenWhen: (previous, current) => previous != current,
       listener: (context, state) {
         state.whenOrNull(
@@ -29,7 +28,7 @@ class ConnectivityBanner extends HookWidget {
               type: ToastificationType.error,
               style: ToastificationStyle.fillColored,
               title: Text(context.localeKeys.noInternetConnection),
-              icon: const Icon(Iconsax.wifi_square_copy),
+              icon: Icon(LucideIcons.wifi_square_copy),
               alignment: Alignment.topCenter,
               showProgressBar: false,
             );
@@ -49,7 +48,7 @@ class ConnectivityBanner extends HookWidget {
                 type: ToastificationType.success,
                 style: ToastificationStyle.fillColored,
                 title: Text(context.localeKeys.internetConnectionRestored),
-                icon: const Icon(Iconsax.wifi_copy),
+                icon: const Icon(LucideIcons.wifi_copy),
                 alignment: Alignment.topCenter,
                 autoCloseDuration: const Duration(seconds: 3),
               );
