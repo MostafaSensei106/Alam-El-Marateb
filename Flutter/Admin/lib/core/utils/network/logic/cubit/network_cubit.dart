@@ -1,15 +1,16 @@
 import 'dart:async';
 
+import 'package:bloc_signals/bloc_signals.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../networking/network_info/interface/base_network_info.dart';
 import 'network_state.dart';
 
 @lazySingleton
-class NetworkCubit extends Cubit<NetworkState> {
-  NetworkCubit(this.networkInfo) : super(const NetworkState.initial()) {
+class NetworkCubit extends CubitSignal<NetworkState> {
+  NetworkCubit(this.networkInfo)
+    : super(initialState: const NetworkState.initial()) {
     _subscription = networkInfo.connectivityChanged.listen(
       _onConnectivityEvent,
     );
@@ -25,12 +26,12 @@ class NetworkCubit extends Cubit<NetworkState> {
 
   /// Returns true if connected OR initial (optimistic online/syncing until verified offline).
   bool get isOnline =>
-      state.maybeWhen(disconnected: () => false, orElse: () => true);
+      state.value.maybeWhen(disconnected: () => false, orElse: () => true);
 
   Future<void> _checkInitialConnectivity() async {
     try {
       final isConnected = await networkInfo.isConnected;
-      if (!isClosed && state == const NetworkState.initial()) {
+      if (!isClosed && state.value == const NetworkState.initial()) {
         _emitIfChanged(isConnected);
       }
     } catch (_) {
@@ -50,7 +51,7 @@ class NetworkCubit extends Cubit<NetworkState> {
         results.isNotEmpty && results.first != ConnectivityResult.none;
 
     // Bypass debounce on initial stream event if state is still initial
-    if (state == const NetworkState.initial()) {
+    if (state.value == const NetworkState.initial()) {
       _debounceTimer?.cancel();
       _emitIfChanged(isConnected);
       return;

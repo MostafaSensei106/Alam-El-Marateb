@@ -13,6 +13,7 @@ dependencies:
   material_ui: ^1.7.0
   m3e_loading_indicator: ^1.0.0
   bloc_signals_flutter: ^1.5.0
+  bloc_signals: ^1.7.0
   bloc_signals_hydrate: ^1.1.0
   package_info_plus: ^10.2.2
   cached_network_image_ce: ^4.13.1
@@ -44,25 +45,12 @@ dependencies:
   dio_http2_adapter: ^2.9.0
   dio_cache_interceptor: ^4.0.7
   http_cache_hive_store: ^5.1.1
+  kaisel: ^1.1.0
 
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.3
 
-  json_annotation: any
-  go_router: any
-  iconsax_flutter: any
-  gal: any
-  open_filex: any
-  firebase_crashlytics: any
-  hydrated_bloc: any
-  firebase_core: any
-  flutter_bloc: any
-  infinite_scroll_pagination: any
-  flutter_screenutil: any
-  pinput: any
-  flutter_svg: any
-  skeletonizer: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc_signals/bloc_signals.dart';
 
 import '../cubit/network_cubit.dart';
 import '../cubit/network_state.dart';
@@ -10,7 +10,7 @@ import '../cubit/network_state.dart';
 /// Implements an Observer pattern subscribing to [NetworkCubit].
 /// Provides initial state resolution, lifecycle hooks ([onOnline], [onOffline]),
 /// synchronous status queries ([isOnline]), and operation guards ([checkNetworkAndBlockIfOffline]).
-mixin NetworkAwareMixin<State> on Cubit<State> {
+mixin NetworkAwareMixin<State> on CubitSignal<State> {
   NetworkCubit? _networkCubit;
   StreamSubscription<NetworkState>? _networkSubscription;
 
@@ -72,7 +72,7 @@ mixin NetworkAwareMixin<State> on Cubit<State> {
   /// Returns `true` if online. If offline, returns `false`.
   bool checkNetworkAndBlockIfOffline() {
     return _networkCubit == null ||
-        _networkCubit!.state.maybeWhen(
+        _networkCubit!.state.value.maybeWhen(
           connected: () => true,
           orElse: () => false,
         );

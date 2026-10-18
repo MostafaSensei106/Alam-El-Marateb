@@ -1,28 +1,22 @@
+// Auth Routes
 part of '../app_router.dart';
 
-@TypedGoRoute<LoginRoute>(path: AppRouter.login)
-final class LoginRoute extends NativeRouteData with $LoginRoute {
-  const LoginRoute();
+final class LoginRoute extends AppRoute {
+  const LoginRoute({this.redirectTarget});
 
+  final AppRoute? redirectTarget;
   @override
-  Widget build(BuildContext context, GoRouterState state) => const LoginPage();
+  List<Object?> get props => [redirectTarget];
 }
 
-@TypedGoRoute<RegisterRoute>(path: AppRouter.register)
-final class RegisterRoute extends NativeRouteData with $RegisterRoute {
+final class RegisterRoute extends AppRoute {
   const RegisterRoute();
-
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const RegisterPage();
+  List<Object?> get props => [];
 }
 
-@TypedGoRoute<ForgetPasswordRoute>(path: AppRouter.forgotPassword)
-final class ForgetPasswordRoute extends NativeRouteData
-    with $ForgetPasswordRoute {
-  const ForgetPasswordRoute();
-
+final class ResetPasswordRoute extends AppRoute {
+  const ResetPasswordRoute();
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const ForgetPasswordPage();
+  List<Object?> get props => [];
 }

@@ -1,10 +1,10 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:bloc_signals/bloc_signals.dart';
 
 import '../../constants/types/type_def.dart';
 import '../result/result.dart';
 import 'base_pagination_state.dart';
 
-mixin PaginationMixin<T> on Cubit<PaginationState<T>> {
+mixin PaginationMixin<T> on CubitSignal<PaginationState<T>> {
   Future<ApiResult<List<T>>> fetchPageData(int page);
 
   bool _isFetching = false;
@@ -12,7 +12,10 @@ mixin PaginationMixin<T> on Cubit<PaginationState<T>> {
   Future<void> loadNextPage({bool isRefresh = false}) async {
     // Immediate synchronous re-entrancy guard
     if (_isFetching) return;
-    if (state.isLoadingMore || (state.hasReachedMax && !isRefresh)) return;
+    if (state.value.isLoadingMore ||
+        (state.value.hasReachedMax && !isRefresh)) {
+      return;
+    }
 
     _isFetching = true;
 
@@ -20,7 +23,7 @@ mixin PaginationMixin<T> on Cubit<PaginationState<T>> {
 
     if (isRefresh) {
       emit(
-        state.copyWith(
+        state.value.copyWith(
           isInitialLoading: true,
           items: [],
           currentPage: 1,
@@ -28,15 +31,15 @@ mixin PaginationMixin<T> on Cubit<PaginationState<T>> {
         ),
       );
     } else {
-      if (state.currentPage == 1 && state.items.isEmpty) {
-        emit(state.copyWith(isInitialLoading: true));
+      if (state.value.currentPage == 1 && state.value.items.isEmpty) {
+        emit(state.value.copyWith(isInitialLoading: true));
       } else {
-        emit(state.copyWith(isLoadingMore: true));
+        emit(state.value.copyWith(isLoadingMore: true));
       }
     }
 
     try {
-      final result = await fetchPageData(state.currentPage);
+      final result = await fetchPageData(state.value.currentPage);
 
       result.when(
         success: (newItems) {
@@ -44,12 +47,12 @@ mixin PaginationMixin<T> on Cubit<PaginationState<T>> {
           final reachedMax = newItems.isEmpty;
           final updatedItems = isRefresh
               ? newItems
-              : (List<T>.of(state.items)..addAll(newItems));
+              : (List<T>.of(state.value.items)..addAll(newItems));
 
           emit(
-            state.copyWith(
+            state.value.copyWith(
               items: updatedItems,
-              currentPage: state.currentPage + 1,
+              currentPage: state.value.currentPage + 1,
               hasReachedMax: reachedMax,
               isLoadingMore: false,
               isInitialLoading: false,
@@ -59,11 +62,11 @@ mixin PaginationMixin<T> on Cubit<PaginationState<T>> {
         },
         failure: (e) {
           if (isClosed) return;
-          if (isRefresh && previousState.items.isNotEmpty) {
-            emit(previousState.copyWith(errorMessage: e.message));
+          if (isRefresh && previousState.value.items.isNotEmpty) {
+            emit(previousState.value.copyWith(errorMessage: e.message));
           } else {
             emit(
-              state.copyWith(
+              state.value.copyWith(
                 isLoadingMore: false,
                 isInitialLoading: false,
                 errorMessage: e.message,
@@ -79,7 +82,7 @@ mixin PaginationMixin<T> on Cubit<PaginationState<T>> {
 
   void clearPaginationCache() {
     emit(
-      state.copyWith(
+      state.value.copyWith(
         items: [],
         currentPage: 1,
         hasReachedMax: false,

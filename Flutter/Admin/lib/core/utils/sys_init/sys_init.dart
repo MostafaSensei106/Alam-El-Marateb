@@ -5,16 +5,14 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:bloc_signals/bloc_signals.dart';
+import 'package:bloc_signals_hydrate/bloc_signals_hydrate.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../../firebase_options.dart';
 import '../../constants/pref_keys.dart';
 import '../../di/di.dart' as di;
 import '../../services/notifications/base_notification_service.dart';
@@ -33,8 +31,11 @@ final class SysInit {
   /// Performs only the initialization required before the first frame.
   static Future<void> initializeCriticalServices() async {
     WidgetsFlutterBinding.ensureInitialized();
-    Bloc.observer = const AppBlocObserver();
+    BlocSignalObserver.observer = const AppBlocObserver();
 
+    // Initialize only services required for the app's first frame and core
+    // state. Notifications and other non-essential services are deferred to
+    // [initializeDeferredServices] so they do not delay the initial UI.
     // Resolve the app directory once and derive every storage path from it,
     // so DI / Dio / cache construction below performs zero I/O of its own.
     final appDocPath = (await getApplicationDocumentsDirectory()).path;
@@ -57,67 +58,69 @@ final class SysInit {
     // throws instead of reporting.
     if (kReleaseMode) {
       FlutterError.onError = (FlutterErrorDetails errorDetails) {
-        if (Firebase.apps.isNotEmpty) {
-          FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-        } else {
-          FlutterError.presentError(errorDetails);
-        }
+        // if (Firebase.apps.isNotEmpty) {
+        //   FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+        // } else {
+        FlutterError.presentError(errorDetails);
+        // }
       };
 
       PlatformDispatcher.instance.onError = (error, stack) {
-        if (Firebase.apps.isNotEmpty) {
-          FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-        }
+        // if (Firebase.apps.isNotEmpty) {
+        //   FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        // }
         return true;
       };
     }
   }
 
   /// Defers non-critical startup work until after the app is already visible.
+  /// Firebase/Crashlytics and notifications are initialized here rather than
+  /// as part of critical startup.
   static Future<void> initializeDeferredServices() async {
     try {
-      if (Firebase.apps.isEmpty) {
-        await Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        );
-      }
+      // if (Firebase.apps.isEmpty) {
+      //   await Firebase.initializeApp(
+      //     options: DefaultFirebaseOptions.currentPlatform,
+      //   );
+      // }
 
-      await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
-        kReleaseMode,
-      );
+      // await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(
+      //   kReleaseMode,
+      // );
 
-      await FirebaseCrashlytics.instance.setCustomKey(
-        'environment',
-        kReleaseMode ? 'production' : 'development',
-      );
+      // await FirebaseCrashlytics.instance.setCustomKey(
+      //   'environment',
+      //   kReleaseMode ? 'production' : 'development',
+      // );
 
-      await FirebaseCrashlytics.instance.setCustomKey(
-        'build_type',
-        kReleaseMode ? 'release' : 'debug',
-      );
+      // await FirebaseCrashlytics.instance.setCustomKey(
+      //   'build_type',
+      //   kReleaseMode ? 'release' : 'debug',
+      // );
 
-      final storageIssue = _pendingStorageIssue;
-      _pendingStorageIssue = null;
-      if (storageIssue != null) {
-        await FirebaseCrashlytics.instance.setCustomKey(
-          'hydrated_boot',
-          storageIssue,
-        );
-      }
+      // final storageIssue = _pendingStorageIssue;
+      // _pendingStorageIssue = null;
+      // if (storageIssue != null) {
+      //   await FirebaseCrashlytics.instance.setCustomKey(
+      //     'hydrated_boot',
+      //     storageIssue,
+      //   );
+      // }
 
       await di.getIt<BaseNotificationService>().initialize();
     } catch (error, stackTrace) {
       // Startup must never crash the app, but a silent swallow hides real
       // init failures — report when Crashlytics is available.
-      if (kReleaseMode && Firebase.apps.isNotEmpty) {
-        unawaited(
-          FirebaseCrashlytics.instance.recordError(
-            error,
-            stackTrace,
-            reason: 'Deferred startup initialization failed',
-          ),
-        );
-      }
+      // if (kReleaseMode && Firebase.apps.isNotEmpty) {
+      //   unawaited(
+      //     FirebaseCrashlytics.instance.recordError(
+      //       error,
+      //       stackTrace,
+      //       reason: 'Deferred startup initialization failed',
+      //     ),
+      //   );
+      // }
     }
   }
 
