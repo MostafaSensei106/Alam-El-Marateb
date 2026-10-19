@@ -1,6 +1,5 @@
 import 'dart:developer' as dev;
 
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
@@ -28,11 +27,11 @@ final class AppAuditLogger implements BaseAuditLogger {
         ? 'audit:${event.name}'
         : 'audit:${event.name} $safeFields';
     try {
-      if (kDebugMode) {
-        dev.log(message, name: 'SECURITY');
-      } else {
-        await FirebaseCrashlytics.instance.log(message);
-      }
+      dev.log(
+        message,
+        name: 'SECURITY',
+        level: kDebugMode ? 800 : 1000,
+      );
     } catch (_) {
       // Logging must never throw.
     }
@@ -51,15 +50,13 @@ final class AppAuditLogger implements BaseAuditLogger {
         ? 'audit-error:$context'
         : 'audit-error:$context $safeFields';
     try {
-      if (kDebugMode) {
-        dev.log(message, name: 'SECURITY', error: safeError);
-      } else {
-        await FirebaseCrashlytics.instance.recordError(
-          safeError,
-          stackTrace,
-          reason: context,
-        );
-      }
+      dev.log(
+        message,
+        name: 'SECURITY',
+        level: 1000,
+        error: safeError,
+        stackTrace: stackTrace,
+      );
     } catch (_) {
       // Logging must never throw.
     }

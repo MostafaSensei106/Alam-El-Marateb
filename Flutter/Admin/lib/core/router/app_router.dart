@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:kaisel/kaisel.dart';
 
-import 'app_auth_notifier.dart';
 import 'observers/app_navigator_observer.dart';
 import 'routes/redirect.dart';
 

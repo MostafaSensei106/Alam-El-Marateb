@@ -82,7 +82,6 @@ final class SysInit {
       );
       return storage;
     } catch (_) {
-      _pendingStorageIssue = HydratedBootDecision.persistenceDisabled.name;
       return const DisabledStorage();
     }
   }
