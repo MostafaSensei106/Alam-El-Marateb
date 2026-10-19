@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import '../networking/network_timeouts.dart';
 import 'app_metadata.dart';
 import 'design_system/tokens/tokens.dart';
 

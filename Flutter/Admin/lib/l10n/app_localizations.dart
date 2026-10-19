@@ -99,6 +99,331 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Home'**
   String get home;
+
+  /// No description provided for @ok.
+  ///
+  /// In en, this message translates to:
+  /// **'OK'**
+  String get ok;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @confirm.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm'**
+  String get confirm;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// No description provided for @pleaseWait.
+  ///
+  /// In en, this message translates to:
+  /// **'Please wait...'**
+  String get pleaseWait;
+
+  /// No description provided for @error.
+  ///
+  /// In en, this message translates to:
+  /// **'Error'**
+  String get error;
+
+  /// No description provided for @success.
+  ///
+  /// In en, this message translates to:
+  /// **'Success'**
+  String get success;
+
+  /// No description provided for @info.
+  ///
+  /// In en, this message translates to:
+  /// **'Info'**
+  String get info;
+
+  /// No description provided for @warning.
+  ///
+  /// In en, this message translates to:
+  /// **'Warning'**
+  String get warning;
+
+  /// No description provided for @downloadFile.
+  ///
+  /// In en, this message translates to:
+  /// **'Download file'**
+  String get downloadFile;
+
+  /// No description provided for @fileAlreadySaved.
+  ///
+  /// In en, this message translates to:
+  /// **'File is already saved.'**
+  String get fileAlreadySaved;
+
+  /// No description provided for @fileSavedToDcim.
+  ///
+  /// In en, this message translates to:
+  /// **'File saved to gallery as {fileName}.'**
+  String fileSavedToDcim(String fileName);
+
+  /// No description provided for @fileSavedToDocuments.
+  ///
+  /// In en, this message translates to:
+  /// **'File saved to documents as {fileName}.'**
+  String fileSavedToDocuments(String fileName);
+
+  /// No description provided for @noInternetConnection.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection'**
+  String get noInternetConnection;
+
+  /// No description provided for @internetConnectionRestored.
+  ///
+  /// In en, this message translates to:
+  /// **'Internet connection restored'**
+  String get internetConnectionRestored;
+
+  /// No description provided for @sessionExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Session expired'**
+  String get sessionExpired;
+
+  /// No description provided for @sessionExpiredDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your session has expired. Please sign in again.'**
+  String get sessionExpiredDescription;
+
+  /// No description provided for @paid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get paid;
+
+  /// No description provided for @unpaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get unpaid;
+
+  /// No description provided for @partial.
+  ///
+  /// In en, this message translates to:
+  /// **'Partially paid'**
+  String get partial;
+
+  /// No description provided for @httpNoInternet.
+  ///
+  /// In en, this message translates to:
+  /// **'No internet connection. Please check your network.'**
+  String get httpNoInternet;
+
+  /// No description provided for @httpRequestCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'The request was cancelled.'**
+  String get httpRequestCancelled;
+
+  /// No description provided for @httpBadCertificate.
+  ///
+  /// In en, this message translates to:
+  /// **'The server certificate could not be verified.'**
+  String get httpBadCertificate;
+
+  /// No description provided for @httpGatewayTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'The server took too long to respond.'**
+  String get httpGatewayTimeout;
+
+  /// No description provided for @httpInternalServerError.
+  ///
+  /// In en, this message translates to:
+  /// **'An internal server error occurred.'**
+  String get httpInternalServerError;
+
+  /// No description provided for @httpUnknownError.
+  ///
+  /// In en, this message translates to:
+  /// **'An unknown error occurred.'**
+  String get httpUnknownError;
+
+  /// No description provided for @error_name_cant_be_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Name can\'t be empty'**
+  String get error_name_cant_be_empty;
+
+  /// No description provided for @error_name_invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Name is invalid'**
+  String get error_name_invalid;
+
+  /// No description provided for @error_name_too_short_at_least_3_characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at least 3 characters'**
+  String get error_name_too_short_at_least_3_characters;
+
+  /// No description provided for @error_name_too_long_maximum_20_characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Name must be at most 20 characters'**
+  String get error_name_too_long_maximum_20_characters;
+
+  /// No description provided for @error_name_invalid_special_characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Name contains invalid special characters'**
+  String get error_name_invalid_special_characters;
+
+  /// No description provided for @error_name_emoji_not_allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Emojis are not allowed in the name'**
+  String get error_name_emoji_not_allowed;
+
+  /// No description provided for @error_email_cant_be_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Email can\'t be empty'**
+  String get error_email_cant_be_empty;
+
+  /// No description provided for @error_email_not_invalid_format.
+  ///
+  /// In en, this message translates to:
+  /// **'Email format is invalid'**
+  String get error_email_not_invalid_format;
+
+  /// No description provided for @error_email_contains_invalid_characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Email contains invalid characters'**
+  String get error_email_contains_invalid_characters;
+
+  /// No description provided for @error_email_must_contain_at_symbol.
+  ///
+  /// In en, this message translates to:
+  /// **'Email must contain an @ symbol'**
+  String get error_email_must_contain_at_symbol;
+
+  /// No description provided for @error_email_must_be_in_lowercase.
+  ///
+  /// In en, this message translates to:
+  /// **'Email must be in lowercase'**
+  String get error_email_must_be_in_lowercase;
+
+  /// No description provided for @error_email_emoji_not_allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Emojis are not allowed in the email'**
+  String get error_email_emoji_not_allowed;
+
+  /// No description provided for @error_arabic_not_allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic characters are not allowed'**
+  String get error_arabic_not_allowed;
+
+  /// No description provided for @error_password_cant_be_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Password can\'t be empty'**
+  String get error_password_cant_be_empty;
+
+  /// No description provided for @error_password_must_be_at_least_8_characters_long.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 8 characters long'**
+  String get error_password_must_be_at_least_8_characters_long;
+
+  /// No description provided for @error_password_must_contain_uppercase_lowercase_number_and_special_character.
+  ///
+  /// In en, this message translates to:
+  /// **'Password must contain uppercase, lowercase, number and special character'**
+  String
+  get error_password_must_contain_uppercase_lowercase_number_and_special_character;
+
+  /// No description provided for @error_phone_number_cant_be_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number can\'t be empty'**
+  String get error_phone_number_cant_be_empty;
+
+  /// No description provided for @error_phone_number_invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is invalid'**
+  String get error_phone_number_invalid;
+
+  /// No description provided for @error_phone_number_min_length.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone number is too short'**
+  String get error_phone_number_min_length;
+
+  /// No description provided for @error_address_line_cant_be_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Address line can\'t be empty'**
+  String get error_address_line_cant_be_empty;
+
+  /// No description provided for @error_address_line_too_long.
+  ///
+  /// In en, this message translates to:
+  /// **'Address line is too long'**
+  String get error_address_line_too_long;
+
+  /// No description provided for @error_address_invalid_special_characters.
+  ///
+  /// In en, this message translates to:
+  /// **'Address contains invalid special characters'**
+  String get error_address_invalid_special_characters;
+
+  /// No description provided for @error_address_emoji_not_allowed.
+  ///
+  /// In en, this message translates to:
+  /// **'Emojis are not allowed in the address'**
+  String get error_address_emoji_not_allowed;
+
+  /// No description provided for @error_address_label_cant_be_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Address label can\'t be empty'**
+  String get error_address_label_cant_be_empty;
+
+  /// No description provided for @error_address_label_too_long.
+  ///
+  /// In en, this message translates to:
+  /// **'Address label is too long'**
+  String get error_address_label_too_long;
+
+  /// No description provided for @error_city_cant_be_empty.
+  ///
+  /// In en, this message translates to:
+  /// **'City can\'t be empty'**
+  String get error_city_cant_be_empty;
+
+  /// No description provided for @error_city_too_long.
+  ///
+  /// In en, this message translates to:
+  /// **'City name is too long'**
+  String get error_city_too_long;
+
+  /// No description provided for @error_city_invalid_special_characters.
+  ///
+  /// In en, this message translates to:
+  /// **'City contains invalid special characters'**
+  String get error_city_invalid_special_characters;
 }
 
 class _AppLocalizationsDelegate

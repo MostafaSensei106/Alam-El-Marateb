@@ -74,7 +74,7 @@ class RetryableErrorStateWidget extends StatelessWidget {
             TextButtonComponent.icon(
               onPressed: onRetry,
               icon: LucideIcons.refreshCcw,
-              label: retryButtonText ?? context.localeKeysetry,
+              label: retryButtonText ?? context.localeKeys.retry,
             ),
           ],
         ),

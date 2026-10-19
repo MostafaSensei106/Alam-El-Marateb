@@ -13,7 +13,7 @@ final class DioLocaleInterceptor extends Interceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
-    final lang = _cubit.state.langCode;
+    final lang = _cubit.state.value.langCode;
     options.headers[ApiHeader.locale] = lang;
     options.headers[ApiHeader.acceptLanguage] = lang;
     handler.next(options);

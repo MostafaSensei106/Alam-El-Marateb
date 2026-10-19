@@ -8,7 +8,7 @@ extension AppDateTimeExtension on DateTime {
   /// Example: 20 يوليو 01:33 am
   /// [includeDayOfWeek] if true, adds the day of the week, e.g., الخميس 20 يوليو 01:33 am
   String toAppFormat({bool includeDayOfWeek = false}) {
-    final langCode = getIt<LocalizationCubit>().state.langCode;
+    final langCode = getIt<LocalizationCubit>().state.value.langCode;
     final isAr = langCode == 'ar';
 
     final formatString = includeDayOfWeek
