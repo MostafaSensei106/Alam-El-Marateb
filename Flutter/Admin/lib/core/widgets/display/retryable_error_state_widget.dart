@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
-;
 
 import '../../constants/app_config.dart';
 import '../../extensions/extensions.dart';
@@ -50,7 +49,7 @@ class RetryableErrorStateWidget extends StatelessWidget {
                 ),
                 child: Icon(icon, size: 30, color: color.error),
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
             ],
             Text(
               title ?? context.localeKeys.error,
@@ -59,7 +58,7 @@ class RetryableErrorStateWidget extends StatelessWidget {
                 fontWeight: FontWeight.w600,
               ),
             ),
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 300),
               child: Text(
@@ -71,7 +70,7 @@ class RetryableErrorStateWidget extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             TextButtonComponent.icon(
               onPressed: onRetry,
               icon: LucideIcons.refreshCcw,

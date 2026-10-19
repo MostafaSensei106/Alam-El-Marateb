@@ -50,6 +50,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.3
+  json_serializable: ^6.14.1
 
 dev_dependencies:
   flutter_test:

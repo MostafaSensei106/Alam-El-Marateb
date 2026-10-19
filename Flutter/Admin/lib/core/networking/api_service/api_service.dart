@@ -2,8 +2,6 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../constants/api_routes.dart';
-import '../../constants/security_configs.dart';
-import '../../utils/models/logout_model/logout_response_body.dart';
 
 part 'api_service.g.dart';
 

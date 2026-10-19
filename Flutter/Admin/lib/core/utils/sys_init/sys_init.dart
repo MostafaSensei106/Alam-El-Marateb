@@ -109,7 +109,7 @@ final class SysInit {
       // }
 
       await di.getIt<BaseNotificationService>().initialize();
-    } catch (error, stackTrace) {
+    } catch (error) {
       // Startup must never crash the app, but a silent swallow hides real
       // init failures — report when Crashlytics is available.
       // if (kReleaseMode && Firebase.apps.isNotEmpty) {

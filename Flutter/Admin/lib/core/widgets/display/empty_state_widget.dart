@@ -40,7 +40,7 @@ class EmptyStateWidget extends StatelessWidget {
               ),
               child: Icon(icon, size: 30, color: color.primary),
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
           ],
           Text(
             title,
@@ -48,7 +48,7 @@ class EmptyStateWidget extends StatelessWidget {
             style: theme.textTheme.titleMedium?.copyWith(),
           ),
           if (subtitle != null) ...[
-            SizedBox(height: 4),
+            const SizedBox(height: 4),
             ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 300),
               child: Text(
@@ -61,7 +61,7 @@ class EmptyStateWidget extends StatelessWidget {
               ),
             ),
           ],
-          if (action != null) ...[SizedBox(height: 16), action!],
+          if (action != null) ...[const SizedBox(height: 16), action!],
         ],
       ),
     );

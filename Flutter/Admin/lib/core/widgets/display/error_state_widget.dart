@@ -29,14 +29,14 @@ class ErrorStateWidget extends StatelessWidget {
           children: [
             if (icon != null) ...[
               Icon(icon, size: 60, color: color.error),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
             ],
             Text(
               title ?? context.localeKeys.error,
               textAlign: TextAlign.center,
               style: theme.textTheme.titleLarge?.copyWith(),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
               message,
               textAlign: TextAlign.center,
