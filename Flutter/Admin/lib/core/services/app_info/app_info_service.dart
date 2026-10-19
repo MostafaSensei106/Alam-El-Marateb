@@ -29,8 +29,7 @@ final class AppInfoService implements BaseAppInfoService {
       version: i.version,
       buildNumber: i.buildNumber,
       operatingSystemName: kIsWeb ? 'web' : Platform.operatingSystem,
-      operatingSystemVersion:
-          kIsWeb ? '' : Platform.operatingSystemVersion,
+      operatingSystemVersion: kIsWeb ? '' : Platform.operatingSystemVersion,
       dartChanal: dartChannelStr,
       dartVersion: dartVersionFull.split(' ').first,
       flutterChanal: FlutterVersion.channel,

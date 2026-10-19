@@ -27,11 +27,7 @@ final class AppAuditLogger implements BaseAuditLogger {
         ? 'audit:${event.name}'
         : 'audit:${event.name} $safeFields';
     try {
-      dev.log(
-        message,
-        name: 'SECURITY',
-        level: kDebugMode ? 800 : 1000,
-      );
+      dev.log(message, name: 'SECURITY', level: kDebugMode ? 800 : 1000);
     } catch (_) {
       // Logging must never throw.
     }

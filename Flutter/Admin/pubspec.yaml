@@ -46,6 +46,7 @@ dependencies:
   dio_cache_interceptor: ^4.0.7
   http_cache_hive_store: ^5.1.1
   kaisel: ^1.1.0
+  flutter_animate: ^4.5.2
   pinput: ^7.0.0
   gal: ^2.3.3
   open_filex: ^5.0.0
@@ -76,9 +77,8 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
+  assets:
+  - assets/images/
 
   fonts:
   - family: Rubik

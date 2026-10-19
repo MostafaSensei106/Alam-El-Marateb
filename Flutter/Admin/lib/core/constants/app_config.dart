@@ -37,7 +37,7 @@ final class AppConfig {
   static const double sectionGap = AppSpacing.xLarge;
 
   // Icon Sizes
-  static const double iconSize = 27.0;
+  static const double iconSize = 25.0;
   static const double iconSizeHalf = iconSize / 2;
   static const double iconSizeQuarter = iconSize / 4;
   static const double iconSizeThird = iconSize / 3;

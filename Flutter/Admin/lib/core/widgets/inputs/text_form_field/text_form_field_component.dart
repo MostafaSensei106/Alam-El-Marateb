@@ -104,13 +104,13 @@ final class TextFormFieldComponent extends StatelessWidget {
         borderRadius: useInBorderRadius
             ? BorderRadius.circular(AppConfig.inBorderRadius)
             : BorderRadius.circular(AppConfig.outBorderRadius),
-        borderSide: BorderSide(color: context.colorScheme.outline),
+        borderSide: BorderSide(color: context.colorScheme.outlineVariant),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: useInBorderRadius
             ? BorderRadius.circular(AppConfig.inBorderRadius)
             : BorderRadius.circular(AppConfig.outBorderRadius),
-        borderSide: BorderSide(color: context.colorScheme.outlineVariant),
+        borderSide: BorderSide.none,
       ),
     ),
   );

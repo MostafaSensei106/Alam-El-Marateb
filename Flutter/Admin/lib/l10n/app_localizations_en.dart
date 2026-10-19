@@ -13,6 +13,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home => 'Home';
 
   @override
+  String get login => 'Login';
+
+  @override
+  String get register => 'Register';
+
+  @override
+  String get welcome => 'Welcome';
+
+  @override
+  String get welcomeBack => 'Welcome Back';
+
+  @override
+  String get password => 'Password';
+
+  @override
+  String get forgetPassword => 'Forget password?';
+
+  @override
+  String get email => 'E-Mail';
+
+  @override
+  String get alm_el_marateb => 'Alm-El-Marateb';
+
+  @override
+  String get emailAddress => 'Email Address';
+
+  @override
+  String get phone => 'Phone';
+
+  @override
+  String get phoneNumber => 'Phone Number';
+
+  @override
+  String get changeLanguage => 'Change Language';
+
+  @override
+  String get enterYourCredentialsToAccessYourAccount =>
+      'Enter your credentials to access your account.';
+
+  @override
   String get ok => 'OK';
 
   @override

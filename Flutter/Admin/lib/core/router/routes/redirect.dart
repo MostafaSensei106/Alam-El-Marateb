@@ -39,7 +39,7 @@ Future<AppRoute> getStartRoute() async {
 
   if (!hasSeenOnboarding) {
     AppAuthNotifier.instance.notifyAuthChanged(false);
-    return const OnboardingRoute();
+    return const LoginRoute();
   }
 
   final sessionService = getIt<BaseUserSessionService>();
@@ -61,9 +61,7 @@ List<AppRoute> authGuard(List<AppRoute> current, List<AppRoute> proposed) {
   final isAuthenticated = AppAuthNotifier.instance.isAuthenticated;
 
   // System & Override Routes (Never block these)
-  if (target is ForceUpdateRoute ||
-      target is MaintenanceModeRoute ||
-      target is OnboardingRoute) {
+  if (target is ForceUpdateRoute || target is MaintenanceModeRoute) {
     return proposed;
   }
 

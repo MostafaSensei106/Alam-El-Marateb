@@ -45,10 +45,7 @@ void main() {
     });
 
     test('collapses lines containing other secret markers', () {
-      expect(
-        policy.redactText('password=hunter2'),
-        'Redacted security error',
-      );
+      expect(policy.redactText('password=hunter2'), 'Redacted security error');
     });
   });
 }

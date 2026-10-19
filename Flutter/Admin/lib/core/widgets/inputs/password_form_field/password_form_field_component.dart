@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import '../../../extensions/extensions.dart';
 import '../text_form_field/text_form_field_component.dart';
 
 final class PasswordFieldComponent extends HookWidget {
@@ -41,6 +42,7 @@ final class PasswordFieldComponent extends HookWidget {
       suffixIcon: IconButton(
         icon: Icon(
           obscureText.value ? LucideIcons.eye : LucideIcons.eyeOff,
+          color: context.colorScheme.secondary,
         ),
         onPressed: () => obscureText.value = !obscureText.value,
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kaisel/kaisel.dart';
 
+import '../../modules/login/page/login_page.dart';
 import 'observers/app_navigator_observer.dart';
 import 'routes/redirect.dart';
 
@@ -9,12 +10,6 @@ part 'routes/main_routes.dart';
 
 sealed class AppRoute extends KaiselRoute {
   const AppRoute();
-}
-
-final class OnboardingRoute extends AppRoute {
-  const OnboardingRoute();
-  @override
-  List<Object?> get props => [];
 }
 
 final class ForceUpdateRoute extends AppRoute {
@@ -228,7 +223,7 @@ final class AboutHadidiWinRoute extends AppRoute {
 final class AppRouter {
   static final navigatorKey = GlobalKey<NavigatorState>();
 
-  static AppRoute _initialRoute = const OnboardingRoute();
+  static AppRoute _initialRoute = const LoginRoute();
 
   static void setInitialRoute(AppRoute route) {
     _initialRoute = route;
@@ -243,7 +238,7 @@ final class AppRouter {
     guards: [authGuard],
 
     builder: (context, route) => switch (route) {
-      OnboardingRoute() => const _RoutePlaceholder(label: 'Onboarding'),
+      LoginRoute() => const LoginPage(),
       ForceUpdateRoute(:final updateUrl) => _RoutePlaceholder(
         label: 'Force update${updateUrl == null ? '' : ': $updateUrl'}',
       ),

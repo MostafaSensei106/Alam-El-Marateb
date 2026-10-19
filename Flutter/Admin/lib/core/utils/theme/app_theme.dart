@@ -5,9 +5,11 @@ import '../../constants/app_config.dart';
 final class AppTheme {
   static ThemeData light = ThemeData(
     useMaterial3: true,
+    brightness: .light,
 
     fontFamily: 'Rubik',
 
+    // colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreenAccent),
     appBarTheme: const AppBarTheme(
       elevation: 0,
       scrolledUnderElevation: 0,
@@ -32,9 +34,11 @@ final class AppTheme {
 
   static ThemeData dark = ThemeData(
     useMaterial3: true,
+    //  brightness: .dark,
 
     fontFamily: 'Rubik',
 
+    // colorScheme: ColorScheme.fromSeed(seedColor: Colors.lightGreenAccent),
     appBarTheme: const AppBarTheme(
       elevation: 0,
       scrolledUnderElevation: 0,

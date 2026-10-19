@@ -44,8 +44,7 @@ class OtpFieldComponent extends StatelessWidget {
       submittedPinTheme: submittedPinTheme,
       onCompleted: onCompleted,
       onChanged: onChanged,
-      separatorBuilder: (index) =>
-          const SizedBox(width: AppConfig.paddingHalf),
+      separatorBuilder: (index) => const SizedBox(width: AppConfig.paddingHalf),
     );
   }
 }
