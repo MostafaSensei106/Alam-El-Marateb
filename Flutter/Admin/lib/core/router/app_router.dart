@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kaisel/kaisel.dart';
 
 import '../../modules/login/page/login_page.dart';
+import '../../modules/main/main_page.dart';
 import 'observers/app_navigator_observer.dart';
 import 'routes/redirect.dart';
 
@@ -239,6 +240,7 @@ final class AppRouter {
 
     builder: (context, route) => switch (route) {
       LoginRoute() => const LoginPage(),
+      MainRoute() => const MainPage(),
       ForceUpdateRoute(:final updateUrl) => _RoutePlaceholder(
         label: 'Force update${updateUrl == null ? '' : ': $updateUrl'}',
       ),

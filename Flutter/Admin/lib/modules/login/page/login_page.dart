@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../core/constants/app_config.dart';
 import '../../../core/constants/assets_images.dart';
 import '../../../core/extensions/extensions.dart';
+import '../../../core/router/app_router.dart';
 import '../../../core/widgets/buttons/filled_button/filled_button_component.dart';
 import '../../../core/widgets/buttons/text_button/text_button_component.dart';
 import '../../../core/widgets/design_system/tokens/tokens.dart';
@@ -27,8 +29,8 @@ class LoginPage extends StatelessWidget {
             if (isWide)
               const Row(
                 children: [
-                  Expanded(child: _LoginImagePanel()),
                   Expanded(child: _LoginFormPanel()),
+                  Expanded(child: _LoginImagePanel()),
                 ],
               )
             else
@@ -45,7 +47,6 @@ class LoginPage extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(AppSpacing.small),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButtonComponent.icon(
                       label: context.localeKeys.changeLanguage,
@@ -142,7 +143,8 @@ class _LoginFormPanel extends StatelessWidget {
         icon: LucideIcons.logIn,
         label: context.localeKeys.login,
         height: 53,
-        onPressed: () {},
+        onPressed: () =>
+            context.router<AppRoute>().replaceTop(const MainRoute()),
       ),
     ];
 

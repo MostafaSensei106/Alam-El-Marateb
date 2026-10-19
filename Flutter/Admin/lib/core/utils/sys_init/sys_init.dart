@@ -56,7 +56,7 @@ final class SysInit {
 
     await di.configureDependencies(cacheStoragePath: cacheStoragePath);
 
-    await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    //  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     // Install fatal handlers early so crashes during deferred startup are
     // captured.
