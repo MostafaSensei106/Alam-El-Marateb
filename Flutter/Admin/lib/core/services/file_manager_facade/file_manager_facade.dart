@@ -68,7 +68,7 @@ final class FileManagerFacade implements BaseFileManagerFacade {
 
       var finalPath = tempPath;
 
-      // 2. Platform-specific saving
+      // 3. Platform-specific saving
       if (isImage) {
         // Save images directly to Gallery on all platforms (Android & iOS)
         final hasAccess = await Gal.hasAccess();
@@ -145,7 +145,7 @@ final class FileManagerFacade implements BaseFileManagerFacade {
         finalPath = destFile.path;
       }
 
-      // 3. Open the file automatically using external app
+      // 4. Open the file automatically using external app
       await OpenFilex.open(finalPath);
     } catch (e) {
       if (context.mounted) {
