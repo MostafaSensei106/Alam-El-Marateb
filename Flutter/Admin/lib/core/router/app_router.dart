@@ -244,13 +244,25 @@ final class AppRouter {
     guards: [authGuard],
 
     builder: (context, route) => switch (route) {
-      OnboardingRoute() => const OnboardingPage(),
-      ForceUpdateRoute(:final updateUrl) => ForceUpdatePage(
-        updateUrl: updateUrl,
+      OnboardingRoute() => const _RoutePlaceholder(label: 'Onboarding'),
+      ForceUpdateRoute(:final updateUrl) => _RoutePlaceholder(
+        label: 'Force update${updateUrl == null ? '' : ': $updateUrl'}',
       ),
-      MaintenanceModeRoute() => const MaintenanceModePage(),
+      MaintenanceModeRoute() => const _RoutePlaceholder(label: 'Maintenance'),
 
-      _ => const Placeholder(),
+      _ => const _RoutePlaceholder(label: 'Home'),
     },
   );
+}
+
+/// Temporary stand-in until the routed screens are implemented under
+/// `lib/modules`.
+final class _RoutePlaceholder extends StatelessWidget {
+  const _RoutePlaceholder({required this.label});
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) =>
+      Scaffold(body: Center(child: Text(label)));
 }
