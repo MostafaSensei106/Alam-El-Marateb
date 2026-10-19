@@ -1,21 +1,16 @@
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'core/router/app_router.dart';
+
 final class AdminApp extends StatelessWidget {
-  const AdminApp({required this.startLocation, super.key});
-  final String startLocation;
+  const AdminApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    AppRouter.setInitialLocation(startLocation);
-
     return MultiBlocSignalProvider(
       providers: const [],
-      child: Builder(
-        builder: (context) {
-          return MaterialApp.router();
-        },
-      ),
+      child: MaterialApp.router(routerConfig: AppRouter.config),
     );
   }
 }

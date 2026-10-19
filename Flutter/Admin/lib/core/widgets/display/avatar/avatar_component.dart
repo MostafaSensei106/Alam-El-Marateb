@@ -1,5 +1,6 @@
 import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../constants/app_config.dart';
 
@@ -36,7 +37,7 @@ final class AvatarComponent extends StatelessWidget {
         onBackgroundImageError: (exception, stackTrace) =>
             fallbackIcon != null ? Icon(fallbackIcon) : null,
         child: imageUrl.isEmpty
-            ? Icon(fallbackIcon ?? LucideIcons.user_copy, size: effectiveRadius)
+            ? Icon(fallbackIcon ?? LucideIcons.user, size: effectiveRadius)
             : null,
       ),
     );

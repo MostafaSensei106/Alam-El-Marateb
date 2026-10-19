@@ -23,7 +23,7 @@ final class SysInit {
   /// Non-sensitive boot diagnostics, reported to the crash sink once it is
   /// up (see [initializeDeferredServices]). Never contains secrets — only
   /// [HydratedBootDecision] names.
-  static String? _pendingStorageIssue;
+  // static String? _pendingStorageIssue;
 
   /// Performs only the initialization required before the first frame.
   static Future<void> initializeCriticalServices() async {
