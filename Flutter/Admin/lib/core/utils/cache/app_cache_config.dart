@@ -1,4 +1,4 @@
-import 'package:nested/nested.dart';
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 
 /// Centralized configuration for all modules that require offline-first caching
 /// and background prefetching.
@@ -8,5 +8,6 @@ import 'package:nested/nested.dart';
 /// added here without modifying the UI layer.
 final class AppCacheConfig {
   const AppCacheConfig._();
-  static List<SingleChildWidget> get prefetchProviders => [];
+
+  static List<BlocSignalProviderSingleChildWidget> get prefetchProviders => [];
 }
