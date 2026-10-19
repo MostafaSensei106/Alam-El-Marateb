@@ -144,7 +144,7 @@ class _LoginFormPanel extends StatelessWidget {
         label: context.localeKeys.login,
         height: 53,
         onPressed: () =>
-            context.router<AppRoute>().replaceTop(const MainRoute()),
+            context.router<AppRoute>().replaceTop(const MainRouteEntry()),
       ),
     ];
 
