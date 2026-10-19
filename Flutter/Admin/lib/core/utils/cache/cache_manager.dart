@@ -19,13 +19,13 @@ class CacheManager {
   final Set<CubitSignal> _activeCubitSignals = {};
 
   /// Registers an active CubitSignal into the cache manager in O(1) time.
-  void register(CubitSignal CubitSignal) {
-    _activeCubitSignals.add(CubitSignal);
+  void register(CubitSignal cbitSignal) {
+    _activeCubitSignals.add(cbitSignal);
   }
 
   /// Unregisters a CubitSignal upon disposal in O(1) time.
-  void unregister(CubitSignal CubitSignal) {
-    _activeCubitSignals.remove(CubitSignal);
+  void unregister(CubitSignal cubitSignal) {
+    _activeCubitSignals.remove(cubitSignal);
   }
 
   /// Refreshes cache concurrently across all registered active CubitSignals.
@@ -36,8 +36,8 @@ class CacheManager {
     final activeSet = Set<CubitSignal>.of(_activeCubitSignals);
     final futures = <Future<void>>[];
 
-    for (final CubitSignal in activeSet) {
-      if (CubitSignal.isClosed) continue;
+    for (final cubitSignal in activeSet) {
+      if (cubitSignal.isClosed) continue;
 
       if (CubitSignal is SmartCacheCubitSignalInterface) {
         futures.add(

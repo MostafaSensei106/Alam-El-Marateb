@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 
 import '../networking/dio_cache_interceptor_setup.dart';
+import 'di.config.dart';
 
 final GetIt getIt = GetIt.instance;
 
@@ -19,11 +20,10 @@ Future<void> configureDependencies({String? cacheStoragePath}) async {
 }
 
 Future<void> resetUserSession() async {
-  // Clear hydrated bloc states for session-specific cubits from disk
+  // Clear hydrated bloc states for session-specific cubits from disk.
   try {
-    final storage = HydratedBlocSignal.storage;
-    await Future.wait([]);
+    await HydratedStorage.storage?.clear();
   } catch (_) {
-    // Catch when storage is not initialized (e.g. in unit tests)
+    // Catch when storage is not initialized (e.g. in unit tests).
   }
 }
