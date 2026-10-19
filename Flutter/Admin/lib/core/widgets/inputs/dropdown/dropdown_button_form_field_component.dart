@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../constants/app_config.dart';
 import '../../../extensions/extensions.dart';
@@ -33,7 +33,7 @@ final class DropdownButtonFormFieldComponent<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => DropdownButtonFormField<T>(
-    icon: const Icon(Iconsax.arrow_bottom_copy),
+    icon: const Icon(LucideIcons.chevronDown),
     initialValue: initialValue,
     items: items,
     onChanged: onChanged,

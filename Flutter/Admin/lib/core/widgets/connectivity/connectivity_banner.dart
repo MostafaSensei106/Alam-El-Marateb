@@ -1,6 +1,7 @@
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:toastification/toastification.dart';
 
 import '../../extensions/extensions.dart';
@@ -28,7 +29,7 @@ class ConnectivityBanner extends HookWidget {
               type: ToastificationType.error,
               style: ToastificationStyle.fillColored,
               title: Text(context.localeKeys.noInternetConnection),
-              icon: Icon(LucideIcons.wifi_square_copy),
+              icon: const Icon(LucideIcons.wifiOff),
               alignment: Alignment.topCenter,
               showProgressBar: false,
             );
@@ -48,7 +49,7 @@ class ConnectivityBanner extends HookWidget {
                 type: ToastificationType.success,
                 style: ToastificationStyle.fillColored,
                 title: Text(context.localeKeys.internetConnectionRestored),
-                icon: const Icon(LucideIcons.wifi_copy),
+                icon: const Icon(LucideIcons.wifi),
                 alignment: Alignment.topCenter,
                 autoCloseDuration: const Duration(seconds: 3),
               );

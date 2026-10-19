@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:injectable/injectable.dart';
 import 'package:toastification/toastification.dart';
 
@@ -22,7 +22,7 @@ class ToastificationService implements BaseToastService {
       context: context,
       config: _ToastConfig(
         type: ToastificationType.error,
-        icon: Iconsax.cloud_cross_copy,
+        icon: LucideIcons.cloudOff,
         title: Text(l10n.error),
         description: Text(message),
         borderRadius: BorderRadius.circular(AppConfig.padding),
@@ -38,7 +38,7 @@ class ToastificationService implements BaseToastService {
       config: _ToastConfig(
         type: ToastificationType.info,
         title: Text(l10n.info),
-        icon: Iconsax.information_copy,
+        icon: LucideIcons.info,
         description: Text(message),
       ),
     );
@@ -64,7 +64,7 @@ class ToastificationService implements BaseToastService {
       context: context,
       config: _ToastConfig(
         type: ToastificationType.success,
-        icon: Iconsax.tick_circle_copy,
+        icon: LucideIcons.circleCheck,
         title: Text(l10n.success),
         description: Text(message),
       ),
@@ -80,7 +80,7 @@ class ToastificationService implements BaseToastService {
       config: _ToastConfig(
         type: ToastificationType.warning,
         title: Text(l10n.warning),
-        icon: Iconsax.warning_2_copy,
+        icon: LucideIcons.triangleAlert,
         description: Text(message),
       ),
     );

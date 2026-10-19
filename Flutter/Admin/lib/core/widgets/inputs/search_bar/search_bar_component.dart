@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../constants/app_config.dart';
 import '../../../di/di.dart';
@@ -28,7 +28,7 @@ final class SearchBarComponent extends StatelessWidget {
 
     return SearchBar(
       controller: controller,
-      leading: const Icon(Iconsax.search_normal_1_copy),
+      leading: const Icon(LucideIcons.search),
       onTapOutside: (event) => FocusScope.of(context).unfocus(),
       onTap: onTap,
       enabled: isEnabled,

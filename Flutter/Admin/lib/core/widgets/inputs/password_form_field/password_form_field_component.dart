@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:iconsax_flutter/iconsax_flutter.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../text_form_field/text_form_field_component.dart';
 
@@ -32,7 +32,7 @@ final class PasswordFieldComponent extends HookWidget {
     return TextFormFieldComponent(
       label: label,
       controller: controller,
-      prefixIcon: Iconsax.lock_1_copy,
+      prefixIcon: LucideIcons.lock,
       obscureText: obscureText.value,
       isEnable: isEnable,
       errorText: errorText,
@@ -40,7 +40,7 @@ final class PasswordFieldComponent extends HookWidget {
 
       suffixIcon: IconButton(
         icon: Icon(
-          obscureText.value ? Iconsax.eye_copy : Iconsax.eye_slash_copy,
+          obscureText.value ? LucideIcons.eye : LucideIcons.eyeOff,
         ),
         onPressed: () => obscureText.value = !obscureText.value,
       ),
