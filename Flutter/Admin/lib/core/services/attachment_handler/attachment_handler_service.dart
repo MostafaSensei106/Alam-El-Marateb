@@ -142,7 +142,6 @@ final class AttachmentHandlerService implements BaseAttachmentHandlerService {
       );
       if (dirs != null && dirs.isNotEmpty) return dirs.first;
     }
-    // Fallback to the app's documents directory.
     return getApplicationDocumentsDirectory();
   }
 }

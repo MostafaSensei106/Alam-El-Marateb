@@ -841,10 +841,10 @@ packages:
     dependency: "direct dev"
     description:
       name: json_serializable
-      sha256: e45aefa0324f08c683caafbb94b72837aa6193c61822799c916e45f4a263113d
+      sha256: eb8d06bc95d35ccd26507b493d02321875671e1a7e41c6b4a6ccc76409b541f8
       url: "https://pub.dev"
     source: hosted
-    version: "6.14.1"
+    version: "6.15.0"
   kaisel:
     dependency: "direct main"
     description:

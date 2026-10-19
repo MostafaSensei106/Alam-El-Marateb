@@ -6,7 +6,8 @@ final class AppTheme {
   static ThemeData light = ThemeData(
     useMaterial3: true,
 
-    // fontFamily: 'Hadidi',
+    fontFamily: 'Rubik',
+
     appBarTheme: const AppBarTheme(
       elevation: 0,
       scrolledUnderElevation: 0,
@@ -32,7 +33,8 @@ final class AppTheme {
   static ThemeData dark = ThemeData(
     useMaterial3: true,
 
-    // fontFamily: 'Hadidi',
+    fontFamily: 'Rubik',
+
     appBarTheme: const AppBarTheme(
       elevation: 0,
       scrolledUnderElevation: 0,
