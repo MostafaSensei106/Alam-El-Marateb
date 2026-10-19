@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
+import '../../../extensions/extensions.dart';
 import '../../animation/wave_background.dart';
 import '../../buttons/icon_button/icon_button_component.dart';
 

@@ -108,7 +108,7 @@ final class DialogComponent extends StatelessWidget {
             isDefaultAction: true,
             onPressed: () async {
               await HapticFeedback.vibrate();
-              if (context.mounted) Navigator.pop(context);
+              if (context.mounted) context.pop();
             },
             child: Text(
               context.localeKeys.ok,
@@ -135,7 +135,7 @@ final class DialogComponent extends StatelessWidget {
             isDefaultAction: true,
             onPressed: () async {
               await HapticFeedback.vibrate();
-              if (context.mounted) Navigator.pop(context);
+              if (context.mounted) context.pop();
             },
             child: Text(
               context.localeKeys.ok,

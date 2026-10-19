@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../constants/app_config.dart';
+import '../../../extensions/extensions.dart';
 import '../../buttons/icon_button/icon_button_component.dart';
 
 final class SidePageSliverAppBarComponent extends StatelessWidget {
