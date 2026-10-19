@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gal/gal.dart';
 import 'package:injectable/injectable.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../constants/file_constants.dart';
 import '../../extensions/extensions.dart';
@@ -41,6 +43,28 @@ final class FileManagerFacade implements BaseFileManagerFacade {
         url: url,
         fileName: rawFileName,
       );
+
+      // 2. Web has no filesystem, gallery, or external viewer. The
+      // attachment handler returned the resolved remote URL, so hand it to
+      // the browser and let it open or download the file.
+      if (kIsWeb) {
+        final opened = await launchUrl(
+          Uri.parse(tempPath),
+          webOnlyWindowName: '_blank',
+        );
+        if (!opened) {
+          throw Exception('Could not open the file in a new browser tab.');
+        }
+        if (context.mounted) {
+          unawaited(
+            context.dialog.showInfo(
+              title: l10n.downloadFile,
+              body: l10n.fileOpenedInBrowser(fileName),
+            ),
+          );
+        }
+        return;
+      }
 
       var finalPath = tempPath;
 

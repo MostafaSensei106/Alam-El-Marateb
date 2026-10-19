@@ -11,6 +11,9 @@ abstract interface class BaseAttachmentHandlerService {
   /// Downloads the remote file at [url] to the device and returns the
   /// local path on success.
   ///
+  /// On the web platform local paths do not exist, so the resolved remote
+  /// URL is returned instead and the browser handles the download.
+  ///
   /// [onProgress] reports download progress as a 0‥1 fraction.
   Future<String> downloadFile({
     required String url,

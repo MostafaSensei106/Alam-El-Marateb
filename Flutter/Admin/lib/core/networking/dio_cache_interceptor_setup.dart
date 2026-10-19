@@ -22,9 +22,14 @@ abstract class CacheConfig {
   /// Synchronous interceptor factory: no I/O, no connectivity checks,
   /// no business-logic coupling. The [storagePath] is resolved once at
   /// startup (see `SysInit.initializeCriticalServices`), so the Hive box is
+  /// opened with a pre-resolved path and never probes the filesystem here.
+  ///
+  /// On web there is no filesystem, so [storagePath] is empty; a null
+  /// directory tells [HiveCacheStore] to use IndexedDB instead.
   static DioCacheInterceptor createInterceptor({required String storagePath}) {
+    final resolvedPath = storagePath.isEmpty ? null : storagePath;
     final cacheOptions = CacheOptions(
-      store: HiveCacheStore(storagePath),
+      store: HiveCacheStore(resolvedPath),
       // Online default: always hit network, persist every successful GET.
       // Offline/network failure falls back to cache via
       // [CacheOptions.hitCacheOnNetworkFailure].

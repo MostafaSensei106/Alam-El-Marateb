@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -43,6 +44,10 @@ final class AttachmentHandlerService implements BaseAttachmentHandlerService {
 
     final sanitizedName = _sanitizeFileName(fileName);
     _validateFileExtension(sanitizedName);
+
+    // Web has no writable filesystem. Return the resolved remote URL so the
+    // caller can hand it to the browser (open/download) instead of disk.
+    if (kIsWeb) return fullUrl;
 
     final dir = await _downloadDirectory();
     final savePath = '${dir.path}/$sanitizedName';
@@ -134,7 +139,15 @@ final class AttachmentHandlerService implements BaseAttachmentHandlerService {
   }
 
   /// Returns the best available user‑accessible download directory.
+  ///
+  /// Not reachable on web (see [downloadFile]'s early return); the guard
+  /// keeps a clear failure if this ever gets called from a web code path.
   Future<Directory> _downloadDirectory() async {
+    if (kIsWeb) {
+      throw UnsupportedError(
+        'Local file downloads are not supported on the web platform.',
+      );
+    }
     // On Android, prefer the external downloads directory.
     if (Platform.isAndroid) {
       final dirs = await getExternalStorageDirectories(

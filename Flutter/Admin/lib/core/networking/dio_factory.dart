@@ -29,7 +29,12 @@ class DioFactory {
     if (dio == null) {
       dio = Dio();
       dio!.transformer = BackgroundTransformer();
-      dio!.httpClientAdapter = Http2Adapter(ConnectionManager());
+      // HTTP/2 is a dart:io-only transport. On web the default Dio adapter
+      // (BrowserHttpClientAdapter) must be left in place.
+      if (!kIsWeb) {
+        dio!.httpClientAdapter = Http2Adapter(ConnectionManager());
+      }
+
       dio!
         ..options.headers[ApiHeader.accept] = ApiHeader.applicationJson
         ..options.headers[ApiHeader.contentType] = ApiHeader.applicationJson
@@ -61,7 +66,8 @@ class DioFactory {
       CacheConfig.createInterceptor(storagePath: cacheStoragePath),
     );
 
-    if (SecurityConfigs.enableCertificatePinning &&
+    if (!kIsWeb &&
+        SecurityConfigs.enableCertificatePinning &&
         (Platform.isAndroid || Platform.isIOS)) {
       dio?.interceptors.add(createCertificatePinningInterceptor());
     }

@@ -35,16 +35,26 @@ final class SysInit {
     // [initializeDeferredServices] so they do not delay the initial UI.
     // Resolve the app directory once and derive every storage path from it,
     // so DI / Dio / cache construction below performs zero I/O of its own.
-    final appDocPath = (await getApplicationDocumentsDirectory()).path;
+    //
+    // Web has no filesystem: `path_provider` throws there. The Hive HTTP
+    // cache store accepts a null directory on web and transparently falls
+    // back to IndexedDB, so we pass an empty path through DI instead.
+    final appDocPath = kIsWeb
+        ? null
+        : (await getApplicationDocumentsDirectory()).path;
 
     HydratedStorage.storage = await _buildHydratedStorage();
 
-    final dioCacheDir = Directory('$appDocPath/dio_cache');
-    if (!await dioCacheDir.exists()) {
-      await dioCacheDir.create(recursive: true);
+    var cacheStoragePath = '';
+    if (appDocPath != null) {
+      final dioCacheDir = Directory('$appDocPath/dio_cache');
+      if (!await dioCacheDir.exists()) {
+        await dioCacheDir.create(recursive: true);
+      }
+      cacheStoragePath = dioCacheDir.path;
     }
 
-    await di.configureDependencies(cacheStoragePath: dioCacheDir.path);
+    await di.configureDependencies(cacheStoragePath: cacheStoragePath);
 
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
