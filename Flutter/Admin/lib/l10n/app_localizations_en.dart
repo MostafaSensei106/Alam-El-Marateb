@@ -56,6 +56,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String fileOpenedInBrowser(String fileName) {
+    return 'File opened in a new browser tab: $fileName.';
+  }
+
+  @override
   String get noInternetConnection => 'No internet connection';
 
   @override

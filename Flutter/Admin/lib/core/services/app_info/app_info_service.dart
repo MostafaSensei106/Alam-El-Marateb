@@ -16,7 +16,8 @@ final class AppInfoService implements BaseAppInfoService {
   @override
   AppInfoModel getAppDetails() {
     final i = _appInfo.packageInfo;
-    final dartVersionFull = Platform.version;
+    // `dart:io`'s `Platform` is not available in the browser.
+    final dartVersionFull = kIsWeb ? '' : Platform.version;
     String? dartChannelStr;
     if (dartVersionFull.contains('(') && dartVersionFull.contains(')')) {
       dartChannelStr = dartVersionFull.split('(')[1].split(')')[0];
@@ -27,8 +28,9 @@ final class AppInfoService implements BaseAppInfoService {
       packageName: i.packageName,
       version: i.version,
       buildNumber: i.buildNumber,
-      operatingSystemName: Platform.operatingSystem,
-      operatingSystemVersion: Platform.operatingSystemVersion,
+      operatingSystemName: kIsWeb ? 'web' : Platform.operatingSystem,
+      operatingSystemVersion:
+          kIsWeb ? '' : Platform.operatingSystemVersion,
       dartChanal: dartChannelStr,
       dartVersion: dartVersionFull.split(' ').first,
       flutterChanal: FlutterVersion.channel,

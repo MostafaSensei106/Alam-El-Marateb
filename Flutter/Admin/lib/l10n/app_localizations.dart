@@ -178,6 +178,12 @@ abstract class AppLocalizations {
   /// **'File saved to documents as {fileName}.'**
   String fileSavedToDocuments(String fileName);
 
+  /// No description provided for @fileOpenedInBrowser.
+  ///
+  /// In en, this message translates to:
+  /// **'File opened in a new browser tab: {fileName}.'**
+  String fileOpenedInBrowser(String fileName);
+
   /// No description provided for @noInternetConnection.
   ///
   /// In en, this message translates to:

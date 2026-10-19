@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import 'interface/base_network_info.dart';
@@ -43,7 +44,15 @@ class NetworkInfo implements BaseNetworkInfo {
       return _lastCheckResult;
     }
 
-    // 3. Perform a real DNS lookup.
+    // 3. Browsers cannot perform DNS lookups; trust the connectivity plugin
+    // signal instead (the browser will fail requests on its own otherwise).
+    if (kIsWeb) {
+      _lastCheckResult = true;
+      _lastCheckTime = now;
+      return _lastCheckResult;
+    }
+
+    // 4. Perform a real DNS lookup.
     try {
       final result = await InternetAddress.lookup('google.com')
           .timeout(const Duration(seconds: 3));

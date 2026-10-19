@@ -28,6 +28,14 @@
       }
     }
   },
+  "fileOpenedInBrowser": "File opened in a new browser tab: {fileName}.",
+  "@fileOpenedInBrowser": {
+    "placeholders": {
+      "fileName": {
+        "type": "String"
+      }
+    }
+  },
   "noInternetConnection": "No internet connection",
   "internetConnectionRestored": "Internet connection restored",
   "sessionExpired": "Session expired",
