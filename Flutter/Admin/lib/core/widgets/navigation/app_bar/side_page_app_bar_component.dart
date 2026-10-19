@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
-import 'package:go_router/go_router.dart';
 
 import '../../../constants/app_config.dart';
 import '../../buttons/icon_button/icon_button_component.dart';

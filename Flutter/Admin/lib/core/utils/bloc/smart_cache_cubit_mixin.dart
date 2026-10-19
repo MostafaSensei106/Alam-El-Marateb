@@ -13,7 +13,7 @@ import '../result/result.dart';
 /// A mixin for Cubits to achieve SOLID, offline-first smart caching.
 /// Handles background fetching, offline modes, and auto-retry on reconnection.
 mixin SmartCacheCubitMixin<State, Data> on CubitSignal<State>
-    implements SmartCacheCubitInterface {
+    implements SmartCacheCubitSignalInterface {
   NetworkCubit get networkCubit;
 
   /// Returns whether device is online with fallback for unstubbed unit test mocks.
@@ -64,7 +64,7 @@ mixin SmartCacheCubitMixin<State, Data> on CubitSignal<State>
     _networkSubscription = networkCubit.stream.listen((networkState) {
       networkState.whenOrNull(
         connected: () {
-          if (isNetworkFailureState(state)) {
+          if (isNetworkFailureState(stateValue)) {
             unawaited(fetchData(isRefresh: true));
           }
         },
@@ -78,7 +78,7 @@ mixin SmartCacheCubitMixin<State, Data> on CubitSignal<State>
   /// The smart entry point for fetching data.
   @override
   Future<void> fetchData({bool isRefresh = false}) async {
-    final cached = getCachedData(state);
+    final cached = getCachedData(stateValue);
 
     // 1. Handling offline scenario
     if (!isOnline) {

@@ -72,7 +72,7 @@ class NetworkCubit extends CubitSignal<NetworkState> {
         : const NetworkState.disconnected();
 
     // Don't emit if state hasn't actually changed.
-    if (state == newState) return;
+    if (state.value == newState) return;
     emit(newState);
   }
 
