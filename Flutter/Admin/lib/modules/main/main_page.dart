@@ -1,261 +1,495 @@
 import 'dart:async';
 
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaisel/kaisel.dart';
 
 import '../../core/extensions/extensions.dart';
 import '../../core/router/app_router.dart';
-import '../../core/utils/cache/app_cache_config.dart';
-import '../../core/utils/cache/offline_cache_provider.dart';
+import '../../core/utils/localization/logic/cubit/localization_cubit.dart';
+import '../../core/utils/theme/logic/cubit/theme_cubit.dart';
+import '../../l10n/app_localizations.dart';
 
 class MainPage extends StatelessWidget {
   const MainPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    return KaiselBranchedShell.specs(
+      branches: [
+        KaiselBranchSpec<DashboardRoute>(
+          initial: const DashboardRoot(),
+          builder: (context, route) => switch (route) {
+            DashboardRoot() => _AdminSectionPage(
+              title: context.localeKeys.dashboardTitle,
+              description: context.localeKeys.dashboardDescription,
+              features: [
+                context.localeKeys.dashboardFeature1,
+                context.localeKeys.dashboardFeature2,
+                context.localeKeys.dashboardFeature3,
+                context.localeKeys.dashboardFeature4,
+                context.localeKeys.dashboardFeature5,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<IdentityRoute>(
+          initial: const IdentityRoot(),
+          builder: (context, route) => switch (route) {
+            IdentityRoot() => _AdminSectionPage(
+              title: context.localeKeys.identityTitle,
+              description: context.localeKeys.identityDescription,
+              features: [
+                context.localeKeys.identityFeature1,
+                context.localeKeys.identityFeature2,
+                context.localeKeys.identityFeature3,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<CatalogRoute>(
+          initial: const CatalogRoot(),
+          builder: (context, route) => switch (route) {
+            CatalogRoot() => _AdminSectionPage(
+              title: context.localeKeys.catalogTitle,
+              description: context.localeKeys.catalogDescription,
+              features: [
+                context.localeKeys.catalogFeature1,
+                context.localeKeys.catalogFeature2,
+                context.localeKeys.catalogFeature3,
+                context.localeKeys.catalogFeature4,
+                context.localeKeys.catalogFeature5,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<InventoryRoute>(
+          initial: const InventoryRoot(),
+          builder: (context, route) => switch (route) {
+            InventoryRoot() => _AdminSectionPage(
+              title: context.localeKeys.inventoryTitle,
+              description: context.localeKeys.inventoryDescription,
+              features: [
+                context.localeKeys.inventoryFeature1,
+                context.localeKeys.inventoryFeature2,
+                context.localeKeys.inventoryFeature3,
+                context.localeKeys.inventoryFeature4,
+                context.localeKeys.inventoryFeature5,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<SalesRoute>(
+          initial: const SalesRoot(),
+          builder: (context, route) => switch (route) {
+            SalesRoot() => _AdminSectionPage(
+              title: context.localeKeys.salesTitle,
+              description: context.localeKeys.salesDescription,
+              features: [
+                context.localeKeys.salesFeature1,
+                context.localeKeys.salesFeature2,
+                context.localeKeys.salesFeature3,
+                context.localeKeys.salesFeature4,
+                context.localeKeys.salesFeature5,
+                context.localeKeys.salesFeature6,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<PurchasingRoute>(
+          initial: const PurchasingRoot(),
+          builder: (context, route) => switch (route) {
+            PurchasingRoot() => _AdminSectionPage(
+              title: context.localeKeys.purchasingTitle,
+              description: context.localeKeys.purchasingDescription,
+              features: [
+                context.localeKeys.purchasingFeature1,
+                context.localeKeys.purchasingFeature2,
+                context.localeKeys.purchasingFeature3,
+                context.localeKeys.purchasingFeature4,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<CrmRoute>(
+          initial: const CrmRoot(),
+          builder: (context, route) => switch (route) {
+            CrmRoot() => _AdminSectionPage(
+              title: context.localeKeys.crmTitle,
+              description: context.localeKeys.crmDescription,
+              features: [
+                context.localeKeys.crmFeature1,
+                context.localeKeys.crmFeature2,
+                context.localeKeys.crmFeature3,
+                context.localeKeys.crmFeature4,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<DeliveryRoute>(
+          initial: const DeliveryRoot(),
+          builder: (context, route) => switch (route) {
+            DeliveryRoot() => _AdminSectionPage(
+              title: context.localeKeys.deliveryTitle,
+              description: context.localeKeys.deliveryDescription,
+              features: [
+                context.localeKeys.deliveryFeature1,
+                context.localeKeys.deliveryFeature2,
+                context.localeKeys.deliveryFeature3,
+                context.localeKeys.deliveryFeature4,
+                context.localeKeys.deliveryFeature5,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<HrRoute>(
+          initial: const HrRoot(),
+          builder: (context, route) => switch (route) {
+            HrRoot() => _AdminSectionPage(
+              title: context.localeKeys.hrTitle,
+              description: context.localeKeys.hrDescription,
+              features: [
+                context.localeKeys.hrFeature1,
+                context.localeKeys.hrFeature2,
+                context.localeKeys.hrFeature3,
+                context.localeKeys.hrFeature4,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<AccountingRoute>(
+          initial: const AccountingRoot(),
+          builder: (context, route) => switch (route) {
+            AccountingRoot() => _AdminSectionPage(
+              title: context.localeKeys.accountingTitle,
+              description: context.localeKeys.accountingDescription,
+              features: [
+                context.localeKeys.accountingFeature1,
+                context.localeKeys.accountingFeature2,
+                context.localeKeys.accountingFeature3,
+                context.localeKeys.accountingFeature4,
+                context.localeKeys.accountingFeature5,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<MarketingRoute>(
+          initial: const MarketingRoot(),
+          builder: (context, route) => switch (route) {
+            MarketingRoot() => _AdminSectionPage(
+              title: context.localeKeys.marketingTitle,
+              description: context.localeKeys.marketingDescription,
+              features: [
+                context.localeKeys.marketingFeature1,
+                context.localeKeys.marketingFeature2,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<AdminProfileRoute>(
+          initial: const AdminProfileRoot(),
+          builder: (context, route) => switch (route) {
+            AdminProfileRoot() => _AdminSectionPage(
+              title: context.localeKeys.profileTitle,
+              description: context.localeKeys.profileDescription,
+              features: [
+                context.localeKeys.profileFeature1,
+                context.localeKeys.profileFeature2,
+                context.localeKeys.profileFeature3,
+                context.localeKeys.profileFeature4,
+              ],
+            ),
+          },
+        ),
+        KaiselBranchSpec<AdminSettingsRoute>(
+          initial: const AdminSettingsRoot(),
+          builder: (context, route) => switch (route) {
+            AdminSettingsRoot() => _AdminSectionPage(
+              title: context.localeKeys.settingsTitle,
+              description: context.localeKeys.settingsDescription,
+              features: [
+                context.localeKeys.settingsFeature1,
+                context.localeKeys.settingsFeature2,
+                context.localeKeys.settingsFeature3,
+              ],
+            ),
+          },
+        ),
+      ],
+      chromeBuilder: (context, active, branchContent, switchBranch) {
+        return Scaffold(
+          body: SafeArea(
+            child: Row(
+              children: [
+                _AdminNavigationRail(
+                  selectedIndex: active,
+                  onDestinationSelected: (index) {
+                    unawaited(HapticFeedback.lightImpact());
+                    switchBranch(index);
+                  },
+                ),
+                VerticalDivider(
+                  width: 1,
+                  color: context.colorScheme.outlineVariant,
+                ),
+                Expanded(child: branchContent),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
 
-    return OfflineCacheProvider(
-      providers: AppCacheConfig.prefetchProviders,
-      child: KaiselBranchedShell.specs(
-        branches: [
-          KaiselBranchSpec<DashboardRoute>(
-            initial: const DashboardRoot(),
-            builder: (context, route) => switch (route) {
-              DashboardRoot() => const _AdminSectionPage(
-                title: 'Analytics & Dashboard',
-                description: 'مؤشرات الأداء والتحليلات الإدارية',
-                features: [
-                  'ملخص المبيعات والإيرادات والأرباح',
-                  'مقارنة أداء الفروع',
-                  'الخريطة الحرارية للمبيعات والطلبات',
-                  'المنتجات الأكثر مبيعًا وسرعة حركتها',
-                  'تحليل العملاء RFM',
-                ],
+/// Adaptive navigation rail used as the admin shell's primary navigation.
+///
+/// On wide windows the rail expands and shows full labels next to the icons.
+/// On narrower windows it collapses to an icon rail with labels underneath.
+/// Users can still override the automatic behaviour with the leading toggle.
+class _AdminNavigationRail extends StatefulWidget {
+  const _AdminNavigationRail({
+    required this.selectedIndex,
+    required this.onDestinationSelected,
+  });
+
+  final int selectedIndex;
+  final ValueChanged<int> onDestinationSelected;
+
+  @override
+  State<_AdminNavigationRail> createState() => _AdminNavigationRailState();
+}
+
+class _AdminNavigationRailState extends State<_AdminNavigationRail> {
+  /// `null` follows the breakpoint, a value keeps the user's choice.
+  bool? _extendedOverride;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final extended =
+        _extendedOverride ?? MediaQuery.sizeOf(context).width >= 1200;
+
+    return NavigationRail(
+      extended: extended,
+      labelType: extended
+          ? NavigationRailLabelType.none
+          : NavigationRailLabelType.all,
+      selectedIndex: widget.selectedIndex,
+      onDestinationSelected: widget.onDestinationSelected,
+      scrollable: true,
+      leadingAtTop: true,
+      trailingAtBottom: true,
+      groupAlignment: -1,
+      minWidth: 100,
+      minExtendedWidth: 256,
+      backgroundColor: theme.colorScheme.surface,
+      indicatorColor: theme.colorScheme.secondaryContainer,
+      indicatorShape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+      ),
+      selectedLabelTextStyle: theme.textTheme.labelMedium?.copyWith(
+        fontWeight: FontWeight.w700,
+        color: theme.colorScheme.onSurface,
+      ),
+      unselectedLabelTextStyle: theme.textTheme.labelMedium?.copyWith(
+        color: theme.colorScheme.onSurfaceVariant,
+      ),
+      leading: _RailHeader(
+        extended: extended,
+        onToggleExtended: () {
+          setState(() => _extendedOverride = !extended);
+        },
+      ),
+      trailing: const _RailFooter(),
+      destinations: [
+        for (final destination in _destinations(context.localeKeys))
+          NavigationRailDestination(
+            icon: Icon(destination.icon),
+            selectedIcon: Icon(destination.selectedIcon),
+            label: Text(
+              destination.label,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center,
+            ),
+          ),
+      ],
+    );
+  }
+}
+
+class _RailHeader extends StatelessWidget {
+  const _RailHeader({
+    required this.extended,
+    required this.onToggleExtended,
+  });
+
+  final bool extended;
+  final VoidCallback onToggleExtended;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+    final brandMark = DecoratedBox(
+      decoration: BoxDecoration(
+        color: colorScheme.primaryContainer,
+        borderRadius: BorderRadius.circular(14),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(9),
+        child: Icon(
+          Icons.storefront_rounded,
+          size: 22,
+          color: colorScheme.onPrimaryContainer,
+        ),
+      ),
+    );
+    final toggle = IconButton(
+      onPressed: onToggleExtended,
+      tooltip: extended
+          ? context.localeKeys.collapseNavigation
+          : context.localeKeys.expandNavigation,
+      icon: Icon(
+        extended ? Icons.menu_open_rounded : Icons.menu_rounded,
+      ),
+      visualDensity: VisualDensity.compact,
+    );
+
+    if (!extended) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            brandMark,
+            const SizedBox(height: 4),
+            toggle,
+          ],
+        ),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(16, 12, 8, 12),
+      child: Row(
+        children: [
+          brandMark,
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              context.localeKeys.alm_el_marateb,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.titleSmall?.copyWith(
+                fontWeight: FontWeight.w700,
               ),
+            ),
+          ),
+          toggle,
+        ],
+      ),
+    );
+  }
+}
+
+class _RailFooter extends StatelessWidget {
+  const _RailFooter();
+
+  @override
+  Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isArabic = context.isArabic;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 0, 8, 12),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          _RailAction(
+            icon: isDark
+                ? Icons.light_mode_outlined
+                : Icons.dark_mode_outlined,
+            label: context.localeKeys.toggleTheme,
+            onTap: () {
+              unawaited(
+                context.read<ThemeCubit>().changeTheme(
+                  isDark ? ThemeMode.light : ThemeMode.dark,
+                ),
+              );
             },
           ),
-          KaiselBranchSpec<IdentityRoute>(
-            initial: const IdentityRoot(),
-            builder: (context, route) => switch (route) {
-              IdentityRoot() => const _AdminSectionPage(
-                title: 'Identity & Access',
-                description: 'الفروع والمستخدمون والصلاحيات',
-                features: [
-                  'إدارة الفروع والمعارض',
-                  'المستخدمون والأدوار والصلاحيات',
-                  'أسطول السيارات وسعات التحميل',
-                ],
-              ),
-            },
-          ),
-          KaiselBranchSpec<CatalogRoute>(
-            initial: const CatalogRoot(),
-            builder: (context, route) => switch (route) {
-              CatalogRoot() => const _AdminSectionPage(
-                title: 'Catalog Management',
-                description: 'المنتجات والكتالوج والتسعير',
-                features: [
-                  'المنتجات والصور والترجمات والمواصفات',
-                  'التصنيفات والعلامات التجارية',
-                  'الخصائص والسمات والخيارات',
-                  'قوائم الأسعار وأسعار قنوات البيع',
-                  'تسعير المتر المربع والأشكال الخاصة',
-                ],
-              ),
-            },
-          ),
-          KaiselBranchSpec<InventoryRoute>(
-            initial: const InventoryRoot(),
-            builder: (context, route) => switch (route) {
-              InventoryRoot() => const _AdminSectionPage(
-                title: 'Inventory & Warehouse',
-                description: 'المخازن وحركة المخزون والتكلفة',
-                features: [
-                  'إدارة المخازن',
-                  'أرصدة المخزون وتنبيهات النواقص',
-                  'التحويلات بين المخازن',
-                  'الجرد والتسويات المخزنية',
-                  'الدفعات وتقييم المخزون FIFO',
-                ],
-              ),
-            },
-          ),
-          KaiselBranchSpec<SalesRoute>(
-            initial: const SalesRoot(),
-            builder: (context, route) => switch (route) {
-              SalesRoot() => const _AdminSectionPage(
-                title: 'Sales & POS',
-                description: 'المبيعات ونقطة البيع والطلبات',
-                features: [
-                  'نقطة البيع والباركود والخصومات',
-                  'طرق الدفع: نقدي وبطاقة وآجل',
-                  'فتح الورديات وتسليم النقدية وإغلاقها',
-                  'الطلبات والمرتجعات والإلغاءات',
-                  'الطلبات الخاصة والحجوزات والعربون',
-                  'العروض الترويجية والكوبونات',
-                ],
-              ),
-            },
-          ),
-          KaiselBranchSpec<PurchasingRoute>(
-            initial: const PurchasingRoot(),
-            builder: (context, route) => switch (route) {
-              PurchasingRoot() => const _AdminSectionPage(
-                title: 'Purchasing',
-                description: 'الموردون وأوامر الشراء والتكاليف',
-                features: [
-                  'الموردون وكشوف الحسابات',
-                  'أوامر الشراء واستلام البضاعة',
-                  'الشحنات والجمارك والتكاليف الإضافية',
-                  'فواتير الموردين والأقساط والمدفوعات',
-                ],
-              ),
-            },
-          ),
-          KaiselBranchSpec<CrmRoute>(
-            initial: const CrmRoot(),
-            builder: (context, route) => switch (route) {
-              CrmRoot() => const _AdminSectionPage(
-                title: 'Customer Relations',
-                description: 'العملاء والضمان والشكاوى',
-                features: [
-                  'سجل الضمانات',
-                  'مطالبات العملاء والمعاينات والإصلاح',
-                  'مراجعة تقييمات العملاء',
-                  'الاستفسارات وأسئلة المنتجات',
-                ],
-              ),
-            },
-          ),
-          KaiselBranchSpec<DeliveryRoute>(
-            initial: const DeliveryRoot(),
-            builder: (context, route) => switch (route) {
-              DeliveryRoot() => const _AdminSectionPage(
-                title: 'Delivery',
-                description: 'الرحلات والسائقون وتتبع التوصيل',
-                features: [
-                  'إنشاء رحلات الشحن وتجميع الطلبات',
-                  'تعيين السائق والسيارة',
-                  'تحسين خطوط السير',
-                  'التتبع المباشر ونقاط التوقف',
-                  'إثبات التسليم بالصور أو التوقيع',
-                ],
-              ),
-            },
-          ),
-          KaiselBranchSpec<HrRoute>(
-            initial: const HrRoot(),
-            builder: (context, route) => switch (route) {
-              HrRoot() => const _AdminSectionPage(
-                title: 'Human Resources',
-                description: 'الموظفون والإجازات والرواتب',
-                features: [
-                  'سجل الموظفين والبيانات الوظيفية',
-                  'طلبات الإجازات',
-                  'مسيرات الرواتب والتصدير إلى Excel',
-                  'العمولات والسلف والخصومات',
-                ],
-              ),
-            },
-          ),
-          KaiselBranchSpec<AccountingRoute>(
-            initial: const AccountingRoot(),
-            builder: (context, route) => switch (route) {
-              AccountingRoot() => const _AdminSectionPage(
-                title: 'Accounting & Finance',
-                description: 'الحسابات والخزائن والتقارير المالية',
-                features: [
-                  'شجرة الحسابات',
-                  'قيود اليومية ودفتر الأستاذ',
-                  'الخزائن والبنوك والتحويلات المالية',
-                  'المصروفات والشيكات',
-                  'قائمة الدخل والميزانية والتقارير الضريبية',
-                ],
-              ),
-            },
-          ),
-          KaiselBranchSpec<MarketingRoute>(
-            initial: const MarketingRoot(),
-            builder: (context, route) => switch (route) {
-              MarketingRoot() => const _AdminSectionPage(
-                title: 'Marketing',
-                description: 'الحملات الترويجية',
-                features: ['حملات عجلة الحظ', 'إدارة الجوائز وتفعيل الحملات'],
-              ),
-            },
-          ),
-          KaiselBranchSpec<AdminProfileRoute>(
-            initial: const AdminProfileRoot(),
-            builder: (context, route) => switch (route) {
-              AdminProfileRoot() => const _AdminSectionPage(
-                title: 'Admin Profile',
-                description: 'الملف الشخصي للمدير',
-                features: [
-                  'بيانات الحساب الشخصي',
-                  'تعديل الاسم وبيانات التواصل',
-                  'تغيير كلمة المرور',
-                  'مراجعة دور المستخدم وصلاحياته',
-                ],
-              ),
-            },
-          ),
-          KaiselBranchSpec<AdminSettingsRoute>(
-            initial: const AdminSettingsRoot(),
-            builder: (context, route) => switch (route) {
-              AdminSettingsRoot() => const _AdminSectionPage(
-                title: 'Settings',
-                description: 'إعدادات النظام والتطبيق',
-                features: [
-                  'اللغة والمظهر',
-                  'إعدادات الإشعارات',
-                  'إعدادات النظام العامة',
-                ],
-              ),
+          _RailAction(
+            icon: Icons.translate_rounded,
+            label: isArabic
+                ? context.localeKeys.english
+                : context.localeKeys.arabic,
+            tooltip: context.localeKeys.changeLanguage,
+            onTap: () {
+              unawaited(
+                context.read<LocalizationCubit>().changeLanguage(
+                  isArabic ? 'en' : 'ar',
+                ),
+              );
             },
           ),
         ],
-        chromeBuilder: (context, active, branchContent, switchBranch) {
-          return Scaffold(
-            body: SafeArea(
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 88,
-                    child: SingleChildScrollView(
-                      child: NavigationRail(
-                        selectedIndex: active,
-                        labelType: NavigationRailLabelType.all,
-                        groupAlignment: -1,
-                        backgroundColor: theme.colorScheme.surface,
-                        indicatorColor: theme.colorScheme.secondaryContainer,
-                        onDestinationSelected: (index) {
-                          unawaited(HapticFeedback.lightImpact());
-                          switchBranch(index);
-                        },
-                        destinations: _destinations
-                            .map(
-                              (item) => NavigationRailDestination(
-                                icon: Icon(item.icon),
-                                selectedIcon: Icon(item.selectedIcon),
-                                label: Text(item.label),
-                              ),
-                            )
-                            .toList(growable: false),
-                      ),
-                    ),
-                  ),
-                  VerticalDivider(
-                    width: 1,
-                    color: context.colorScheme.outlineVariant,
-                  ),
-                  Expanded(child: branchContent),
-                ],
+      ),
+    );
+  }
+}
+
+class _RailAction extends StatelessWidget {
+  const _RailAction({
+    required this.icon,
+    required this.label,
+    required this.onTap,
+    this.tooltip,
+  });
+
+  final IconData icon;
+  final String label;
+  final VoidCallback onTap;
+  final String? tooltip;
+
+  @override
+  Widget build(BuildContext context) {
+    final extended = context
+        .findAncestorWidgetOfExactType<NavigationRail>()
+        ?.extended;
+
+    if (extended != true) {
+      return IconButton(
+        onPressed: onTap,
+        tooltip: tooltip ?? label,
+        icon: Icon(icon),
+      );
+    }
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(12),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+          child: Row(
+            children: [
+              Icon(icon, size: 20),
+              const SizedBox(width: 12),
+              Expanded(
+                child: Text(
+                  label,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: context.textTheme.labelLarge,
+                ),
               ),
-            ),
-          );
-        },
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -273,69 +507,69 @@ class _RailDestination {
   final IconData selectedIcon;
 }
 
-const _destinations = <_RailDestination>[
+List<_RailDestination> _destinations(AppLocalizations l10n) => [
   _RailDestination(
-    label: 'Dashboard',
+    label: l10n.navDashboard,
     icon: Icons.dashboard_outlined,
     selectedIcon: Icons.dashboard,
   ),
   _RailDestination(
-    label: 'Identity',
+    label: l10n.navIdentity,
     icon: Icons.admin_panel_settings_outlined,
     selectedIcon: Icons.admin_panel_settings,
   ),
   _RailDestination(
-    label: 'Catalog',
+    label: l10n.navCatalog,
     icon: Icons.inventory_2_outlined,
     selectedIcon: Icons.inventory_2,
   ),
   _RailDestination(
-    label: 'Inventory',
+    label: l10n.navInventory,
     icon: Icons.warehouse_outlined,
     selectedIcon: Icons.warehouse,
   ),
   _RailDestination(
-    label: 'Sales',
+    label: l10n.navSales,
     icon: Icons.point_of_sale_outlined,
     selectedIcon: Icons.point_of_sale,
   ),
   _RailDestination(
-    label: 'Purchasing',
+    label: l10n.navPurchasing,
     icon: Icons.shopping_bag_outlined,
     selectedIcon: Icons.shopping_bag,
   ),
   _RailDestination(
-    label: 'CRM',
+    label: l10n.navCrm,
     icon: Icons.support_agent_outlined,
     selectedIcon: Icons.support_agent,
   ),
   _RailDestination(
-    label: 'Delivery',
+    label: l10n.navDelivery,
     icon: Icons.local_shipping_outlined,
     selectedIcon: Icons.local_shipping,
   ),
   _RailDestination(
-    label: 'HR',
+    label: l10n.navHr,
     icon: Icons.groups_outlined,
     selectedIcon: Icons.groups,
   ),
   _RailDestination(
-    label: 'Accounting',
+    label: l10n.navAccounting,
     icon: Icons.account_balance_outlined,
     selectedIcon: Icons.account_balance,
   ),
   _RailDestination(
-    label: 'Marketing',
+    label: l10n.navMarketing,
     icon: Icons.campaign_outlined,
     selectedIcon: Icons.campaign,
   ),
   _RailDestination(
-    label: 'Profile',
+    label: l10n.navProfile,
     icon: Icons.account_circle_outlined,
     selectedIcon: Icons.account_circle,
   ),
   _RailDestination(
-    label: 'Settings',
+    label: l10n.navSettings,
     icon: Icons.settings_outlined,
     selectedIcon: Icons.settings,
   ),
@@ -355,30 +589,100 @@ class _AdminSectionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
 
     return ListView(
       padding: const EdgeInsets.all(24),
       children: [
-        Text(
-          title,
-          style: theme.textTheme.headlineMedium?.copyWith(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 8),
-        Text(
-          description,
-          style: theme.textTheme.bodyLarge?.copyWith(
-            color: theme.colorScheme.onSurfaceVariant,
-          ),
-        ),
-        const SizedBox(height: 24),
-        ...features.map(
-          (feature) => Card(
-            child: ListTile(
-              leading: const Icon(Icons.arrow_forward_ios, size: 16),
-              title: Text(feature),
-              subtitle: const Text('سيتم إضافة الشاشة لاحقًا'),
+        Center(
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 960),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Text(
+                  title,
+                  style: theme.textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(
+                  description,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    color: colorScheme.onSurfaceVariant,
+                  ),
+                ),
+                const SizedBox(height: 24),
+                DecoratedBox(
+                  decoration: BoxDecoration(
+                    color: colorScheme.secondaryContainer,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.construction_rounded,
+                          size: 18,
+                          color: colorScheme.onSecondaryContainer,
+                        ),
+                        const SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            context.localeKeys.screenComingSoon,
+                            style: theme.textTheme.bodyMedium?.copyWith(
+                              color: colorScheme.onSecondaryContainer,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 24),
+                LayoutBuilder(
+                  builder: (context, constraints) {
+                    final columns = constraints.maxWidth >= 720 ? 2 : 1;
+                    final cardWidth =
+                        (constraints.maxWidth - (columns - 1) * 12) / columns;
+
+                    return Wrap(
+                      spacing: 12,
+                      runSpacing: 12,
+                      children: [
+                        for (final feature in features)
+                          SizedBox(
+                            width: cardWidth,
+                            child: Card(
+                              margin: EdgeInsets.zero,
+                              elevation: 0,
+                              color: colorScheme.surfaceContainerLow,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                                side: BorderSide(
+                                  color: colorScheme.outlineVariant,
+                                ),
+                              ),
+                              child: ListTile(
+                                leading: Icon(
+                                  Icons.arrow_forward_rounded,
+                                  size: 18,
+                                  color: colorScheme.primary,
+                                ),
+                                title: Text(feature),
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ),
