@@ -58,6 +58,7 @@ dependencies:
   syncfusion_flutter_datagrid: ^35.1.41
   syncfusion_flutter_gauges: ^35.1.41
   syncfusion_flutter_calendar: ^35.1.41
+  syncfusion_localizations: ^35.1.41
 
 dev_dependencies:
   flutter_test:

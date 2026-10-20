@@ -1,6 +1,7 @@
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 import 'package:toastification/toastification.dart';
 
 import 'core/constants/app_metadata.dart';
@@ -42,7 +43,10 @@ final class AdminApp extends StatelessWidget {
                 locale: Locale(locale),
                 scrollBehavior: const CupertinoScrollBehavior(),
                 restorationScopeId: 'app',
-                localizationsDelegates: AppLocalizations.localizationsDelegates,
+                localizationsDelegates: const [
+                  ...AppLocalizations.localizationsDelegates,
+                  SfGlobalLocalizations.delegate,
+                ],
                 supportedLocales: AppLocalizations.supportedLocales,
                 routerConfig: AppRouter.config,
               );

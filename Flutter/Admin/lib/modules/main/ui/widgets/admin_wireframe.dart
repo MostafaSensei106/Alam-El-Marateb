@@ -4,7 +4,10 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 import '../../../../core/extensions/context_extensions.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
 import '../../navigation/admin_module.dart';
+import 'admin_charts.dart';
+import 'admin_data_grid.dart';
 import 'admin_page_frame.dart';
+import 'admin_schedule_calendar.dart';
 
 /// Ghosted layout sketch for a planned screen.
 ///
@@ -194,11 +197,10 @@ final class _GhostChip extends StatelessWidget {
 }
 
 final class _GhostBox extends StatelessWidget {
-  const _GhostBox({this.height = 14, this.child, this.filled = false});
+  const _GhostBox({this.height = 14, this.child});
 
   final double height;
   final Widget? child;
-  final bool filled;
 
   @override
   Widget build(BuildContext context) {
@@ -208,7 +210,7 @@ final class _GhostBox extends StatelessWidget {
       height: height,
       alignment: child == null ? null : Alignment.centerLeft,
       decoration: BoxDecoration(
-        color: colorScheme.onSurface.withValues(alpha: filled ? 0.09 : 0.045),
+        color: colorScheme.onSurface.withValues(alpha: 0.045),
         borderRadius: BorderRadius.circular(AppRadii.medium),
         border: Border.all(
           color: colorScheme.outlineVariant.withValues(alpha: 0.65),
@@ -280,104 +282,58 @@ final class _TableWireframe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final l10n = context.localeKeys;
+    final colorScheme = Theme.of(context).colorScheme;
 
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final columns = constraints.maxWidth >= 640 ? 4 : 3;
+    final records = [
+      (
+        reference: '#2041',
+        name: l10n.sampleCustomer1,
+        status: l10n.dashboardStatusPaid,
+        color: const Color(0xFF1B8A5A),
+        total: '1,250',
+      ),
+      (
+        reference: '#2040',
+        name: l10n.sampleCustomer2,
+        status: l10n.dashboardStatusShipping,
+        color: colorScheme.primary,
+        total: '740',
+      ),
+      (
+        reference: '#2039',
+        name: l10n.sampleCustomer3,
+        status: l10n.dashboardStatusPending,
+        color: const Color(0xFFB26A00),
+        total: '2,180',
+      ),
+      (
+        reference: '#2038',
+        name: l10n.sampleCustomer4,
+        status: l10n.dashboardStatusPaid,
+        color: const Color(0xFF1B8A5A),
+        total: '980',
+      ),
+    ];
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              children: [
-                for (var index = 0; index < columns; index++)
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: AppSpacing.small,
-                        vertical: AppSpacing.small,
-                      ),
-                      child: _GhostLine(
-                        widthFactor: index == 0 ? 0.55 : 0.4,
-                        height: 7,
-                      ),
-                    ),
-                  ),
-                SizedBox(
-                  width: 44,
-                  child: Text(
-                    l10n.wireframeActions,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                      color: colorScheme.onSurfaceVariant,
-                      fontSize: 10,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            for (var row = 0; row < 5; row++) ...[
-              Divider(
-                height: 1,
-                color: colorScheme.outlineVariant.withValues(alpha: 0.5),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: AppSpacing.small),
-                child: Row(
-                  children: [
-                    for (var column = 0; column < columns; column++)
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.small,
-                          ),
-                          child: column == 0
-                              ? Row(
-                                  children: [
-                                    _GhostDot(size: 22, active: row == 0),
-                                    const SizedBox(width: AppSpacing.small),
-                                    const Expanded(
-                                      child: _GhostLine(widthFactor: 0.85),
-                                    ),
-                                  ],
-                                )
-                              : _GhostLine(
-                                  widthFactor: switch ((row + column) % 3) {
-                                    0 => 0.65,
-                                    1 => 0.45,
-                                    _ => 0.8,
-                                  },
-                                ),
-                        ),
-                      ),
-                    const SizedBox(
-                      width: 44,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          _GhostDot(size: 14),
-                          SizedBox(width: 4),
-                          _GhostDot(size: 14),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-            const SizedBox(height: AppSpacing.medium),
-            const Row(
-              children: [
-                _GhostChip(icon: LucideIcons.chevronLeft),
-                SizedBox(width: AppSpacing.small),
-                _GhostLine(widthFactor: 0.12),
-              ],
-            ),
-          ],
-        );
-      },
+    return AdminRecordsGrid(
+      height: 46 * records.length + 42,
+      headers: [
+        l10n.wireframeTableRef,
+        l10n.wireframeTableName,
+        l10n.wireframeTableStatus,
+        l10n.wireframeTableValue,
+      ],
+      records: [
+        for (final record in records)
+          AdminRecord(
+            reference: record.reference,
+            title: record.name,
+            status: record.status,
+            statusColor: record.color,
+            value: '${record.total} ${l10n.currencyEgp}',
+          ),
+      ],
     );
   }
 }
@@ -468,8 +424,24 @@ final class _StatsWireframe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
     final l10n = context.localeKeys;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    final tiles = <(String, String)>[
+      (l10n.wireframeStatsSales, '128,540 ${l10n.currencyEgp}'),
+      (l10n.wireframeStatsOrders, '1,284'),
+      (l10n.wireframeStatsGrowth, '+12.4%'),
+    ];
+    final points = <AdminChartPoint>[
+      AdminChartPoint(label: l10n.weekdaySat, value: 86),
+      AdminChartPoint(label: l10n.weekdaySun, value: 94),
+      AdminChartPoint(label: l10n.weekdayMon, value: 78),
+      AdminChartPoint(label: l10n.weekdayTue, value: 112),
+      AdminChartPoint(label: l10n.weekdayWed, value: 104),
+      AdminChartPoint(label: l10n.weekdayThu, value: 128),
+      AdminChartPoint(label: l10n.weekdayFri, value: 121),
+    ];
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -485,91 +457,55 @@ final class _StatsWireframe extends StatelessWidget {
               spacing: gap,
               runSpacing: gap,
               children: [
-                for (var tile = 0; tile < 3; tile++)
+                for (final tile in tiles)
                   SizedBox(
                     width: tileWidth,
-                    child: _GhostBox(
-                      height: 86,
-                      filled: tile == 0,
-                      child: Padding(
-                        padding: const EdgeInsets.all(AppSpacing.medium),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const _GhostLine(widthFactor: 0.45, height: 7),
-                            _GhostLine(
-                              widthFactor: tile == 0 ? 0.65 : 0.5,
-                              height: 14,
-                            ),
-                          ],
+                    child: Container(
+                      padding: const EdgeInsets.all(AppSpacing.medium),
+                      decoration: BoxDecoration(
+                        color: colorScheme.primary.withValues(alpha: 0.05),
+                        borderRadius: BorderRadius.circular(AppRadii.medium),
+                        border: Border.all(
+                          color: colorScheme.outlineVariant.withValues(
+                            alpha: 0.5,
+                          ),
                         ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            tile.$1,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: textTheme.labelSmall?.copyWith(
+                              color: colorScheme.onSurfaceVariant,
+                            ),
+                          ),
+                          const SizedBox(height: AppSpacing.xSmall),
+                          Text(
+                            tile.$2,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: textTheme.titleMedium?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
               ],
             ),
             const SizedBox(height: AppSpacing.large),
-            Container(
-              height: 170,
-              padding: const EdgeInsets.all(AppSpacing.medium),
-              decoration: BoxDecoration(
-                color: colorScheme.onSurface.withValues(alpha: 0.03),
-                borderRadius: BorderRadius.circular(AppRadii.medium),
-                border: Border.all(
-                  color: colorScheme.outlineVariant.withValues(alpha: 0.6),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    l10n.wireframeChartArea,
-                    style: Theme.of(context).textTheme.labelSmall
-                        ?.copyWith(color: colorScheme.onSurfaceVariant),
-                  ),
-                  const SizedBox(height: AppSpacing.small),
-                  Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        for (final factor in const [
-                          0.35,
-                          0.55,
-                          0.45,
-                          0.75,
-                          0.6,
-                          0.9,
-                          0.7,
-                          1.0,
-                        ])
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 3,
-                              ),
-                              child: FractionallySizedBox(
-                                heightFactor: factor,
-                                alignment: Alignment.bottomCenter,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: colorScheme.primary.withValues(
-                                      alpha: 0.22,
-                                    ),
-                                    borderRadius: const BorderRadius.vertical(
-                                      top: Radius.circular(4),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                ],
+            Text(
+              l10n.wireframeStatsChartTitle,
+              style: textTheme.labelSmall?.copyWith(
+                color: colorScheme.onSurfaceVariant,
               ),
             ),
+            const SizedBox(height: AppSpacing.small),
+            AdminAreaChart(points: points, height: 170),
           ],
         );
       },
@@ -582,68 +518,42 @@ final class _CalendarWireframe extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.localeKeys;
     final colorScheme = Theme.of(context).colorScheme;
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
 
     return LayoutBuilder(
       builder: (context, constraints) {
-        final cellHeight = constraints.maxWidth < 480 ? 34.0 : 48.0;
+        final height = constraints.maxWidth < 420 ? 360.0 : 420.0;
 
-        return Column(
-          children: [
-            Row(
-              children: [
-                for (var day = 0; day < 7; day++)
-                  const Expanded(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: AppSpacing.small),
-                      child: Center(
-                        child: _GhostLine(widthFactor: 0.5, height: 6),
-                      ),
-                    ),
-                  ),
-              ],
+        return AdminScheduleCalendar(
+          height: height,
+          events: [
+            AdminCalendarEvent(
+              subject: l10n.wireframeEventDelivery,
+              start: today.add(const Duration(days: 1, hours: 10)),
+              end: today.add(const Duration(days: 1, hours: 11)),
+              color: colorScheme.primary,
             ),
-            for (var week = 0; week < 5; week++) ...[
-              const SizedBox(height: AppSpacing.xSmall),
-              Row(
-                children: [
-                  for (var day = 0; day < 7; day++)
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(2),
-                        child: Container(
-                          height: cellHeight,
-                          padding: const EdgeInsets.all(AppSpacing.xSmall),
-                          decoration: BoxDecoration(
-                            color: (week == 1 && day == 3)
-                                ? colorScheme.primary.withValues(alpha: 0.16)
-                                : colorScheme.onSurface.withValues(alpha: 0.04),
-                            borderRadius: BorderRadius.circular(6),
-                            border: Border.all(
-                              color: (week == 1 && day == 3)
-                                  ? colorScheme.primary.withValues(alpha: 0.4)
-                                  : colorScheme.outlineVariant.withValues(
-                                      alpha: 0.5,
-                                    ),
-                            ),
-                          ),
-                          child: (week + day) % 4 == 0
-                              ? Container(
-                                  height: 5,
-                                  decoration: BoxDecoration(
-                                    color: colorScheme.primary.withValues(
-                                      alpha: 0.35,
-                                    ),
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                )
-                              : null,
-                        ),
-                      ),
-                    ),
-                ],
-              ),
-            ],
+            AdminCalendarEvent(
+              subject: l10n.wireframeEventVisit,
+              start: today.add(const Duration(days: 4, hours: 13)),
+              end: today.add(const Duration(days: 4, hours: 14)),
+              color: colorScheme.tertiary,
+            ),
+            AdminCalendarEvent(
+              subject: l10n.wireframeEventAudit,
+              start: today.add(const Duration(days: 7, hours: 9)),
+              end: today.add(const Duration(days: 7, hours: 10)),
+              color: const Color(0xFFB26A00),
+            ),
+            AdminCalendarEvent(
+              subject: l10n.wireframeEventMeeting,
+              start: today.add(const Duration(days: 11, hours: 12)),
+              end: today.add(const Duration(days: 11, hours: 13)),
+              color: const Color(0xFF1B8A5A),
+            ),
           ],
         );
       },

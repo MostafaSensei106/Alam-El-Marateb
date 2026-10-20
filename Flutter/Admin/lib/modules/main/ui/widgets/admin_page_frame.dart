@@ -87,22 +87,43 @@ final class AdminPageHeader extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      title,
-                      style: textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
-                        height: 1.2,
-                      ),
+              LayoutBuilder(
+                builder: (context, constraints) {
+                  final titleText = Text(
+                    title,
+                    style: textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w700,
+                      height: 1.2,
                     ),
-                  ),
-                  if (badge != null) ...[
-                    const SizedBox(width: AppSpacing.small),
-                    AdminStatusPill(label: badge!, tone: AdminPillTone.primary),
-                  ],
-                ],
+                  );
+                  if (badge == null) return titleText;
+
+                  final pill = AdminStatusPill(
+                    label: badge!,
+                    tone: AdminPillTone.primary,
+                  );
+
+                  // The pill keeps its intrinsic width, so on a narrow header
+                  // it would squeeze the title to zero and overflow the row.
+                  if (constraints.maxWidth < 480) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        titleText,
+                        const SizedBox(height: AppSpacing.xSmall),
+                        pill,
+                      ],
+                    );
+                  }
+
+                  return Row(
+                    children: [
+                      Flexible(child: titleText),
+                      const SizedBox(width: AppSpacing.small),
+                      pill,
+                    ],
+                  );
+                },
               ),
               const SizedBox(height: AppSpacing.xSmall),
               Text(
@@ -207,7 +228,7 @@ final class AdminSectionHeading extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Row(
+    final heading = Row(
       children: [
         if (icon != null) ...[
           Icon(icon, size: AppIconSizes.small, color: colorScheme.primary),
@@ -235,11 +256,38 @@ final class AdminSectionHeading extends StatelessWidget {
             ],
           ),
         ),
-        if (trailing != null) ...[
-          const SizedBox(width: AppSpacing.small),
-          trailing!,
-        ],
       ],
+    );
+
+    if (trailing == null) return heading;
+
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // On compact cards a trailing pill cannot share the row with the
+        // title: the pill would keep its intrinsic width, squeeze the title
+        // to zero and push the row past the card edge. Stack it instead.
+        if (constraints.maxWidth < 560) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              heading,
+              const SizedBox(height: AppSpacing.small),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: trailing,
+              ),
+            ],
+          );
+        }
+
+        return Row(
+          children: [
+            Expanded(child: heading),
+            const SizedBox(width: AppSpacing.medium),
+            trailing!,
+          ],
+        );
+      },
     );
   }
 }
@@ -280,19 +328,30 @@ final class AdminStatusPill extends StatelessWidget {
         borderRadius: BorderRadius.circular(AppRadii.pill),
         border: Border.all(color: color.withValues(alpha: 0.28)),
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if (icon != null) ...[
-            Icon(icon, size: 13, color: color),
-            const SizedBox(width: AppSpacing.xSmall),
-          ],
-          Text(
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final text = Text(
             label,
+            maxLines: 1,
+            softWrap: false,
+            overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.labelSmall
                 ?.copyWith(color: color, fontWeight: FontWeight.w700),
-          ),
-        ],
+          );
+
+          return Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (icon != null) ...[
+                Icon(icon, size: 13, color: color),
+                const SizedBox(width: AppSpacing.xSmall),
+              ],
+              // Rows inside shrink-wrapped cells can hand down an unbounded
+              // width, where `Flexible` would be illegal.
+              if (constraints.hasBoundedWidth) Flexible(child: text) else text,
+            ],
+          );
+        },
       ),
     );
   }

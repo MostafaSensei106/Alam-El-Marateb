@@ -1886,6 +1886,156 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Karim Nabil'**
   String get sampleCustomer4;
+
+  /// No description provided for @dashboardChannelSplit.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales by channel'**
+  String get dashboardChannelSplit;
+
+  /// No description provided for @dashboardChannelStore.
+  ///
+  /// In en, this message translates to:
+  /// **'Store'**
+  String get dashboardChannelStore;
+
+  /// No description provided for @dashboardChannelOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get dashboardChannelOnline;
+
+  /// No description provided for @dashboardChannelWholesale.
+  ///
+  /// In en, this message translates to:
+  /// **'Wholesale'**
+  String get dashboardChannelWholesale;
+
+  /// No description provided for @dashboardMonthlyTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly target'**
+  String get dashboardMonthlyTarget;
+
+  /// No description provided for @dashboardTargetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'74% of the monthly target achieved'**
+  String get dashboardTargetHint;
+
+  /// No description provided for @wireframeTableRef.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get wireframeTableRef;
+
+  /// No description provided for @wireframeTableName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get wireframeTableName;
+
+  /// No description provided for @wireframeTableStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get wireframeTableStatus;
+
+  /// No description provided for @wireframeTableValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get wireframeTableValue;
+
+  /// No description provided for @wireframeStatsSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get wireframeStatsSales;
+
+  /// No description provided for @wireframeStatsOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get wireframeStatsOrders;
+
+  /// No description provided for @wireframeStatsGrowth.
+  ///
+  /// In en, this message translates to:
+  /// **'Growth'**
+  String get wireframeStatsGrowth;
+
+  /// No description provided for @wireframeStatsChartTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Performance over time'**
+  String get wireframeStatsChartTitle;
+
+  /// No description provided for @wireframeEventDelivery.
+  ///
+  /// In en, this message translates to:
+  /// **'Order delivery'**
+  String get wireframeEventDelivery;
+
+  /// No description provided for @wireframeEventVisit.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer visit'**
+  String get wireframeEventVisit;
+
+  /// No description provided for @wireframeEventAudit.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock audit'**
+  String get wireframeEventAudit;
+
+  /// No description provided for @wireframeEventMeeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Team meeting'**
+  String get wireframeEventMeeting;
+
+  /// No description provided for @weekdaySat.
+  ///
+  /// In en, this message translates to:
+  /// **'Sat'**
+  String get weekdaySat;
+
+  /// No description provided for @weekdaySun.
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get weekdaySun;
+
+  /// No description provided for @weekdayMon.
+  ///
+  /// In en, this message translates to:
+  /// **'Mon'**
+  String get weekdayMon;
+
+  /// No description provided for @weekdayTue.
+  ///
+  /// In en, this message translates to:
+  /// **'Tue'**
+  String get weekdayTue;
+
+  /// No description provided for @weekdayWed.
+  ///
+  /// In en, this message translates to:
+  /// **'Wed'**
+  String get weekdayWed;
+
+  /// No description provided for @weekdayThu.
+  ///
+  /// In en, this message translates to:
+  /// **'Thu'**
+  String get weekdayThu;
+
+  /// No description provided for @weekdayFri.
+  ///
+  /// In en, this message translates to:
+  /// **'Fri'**
+  String get weekdayFri;
 }
 
 class _AppLocalizationsDelegate

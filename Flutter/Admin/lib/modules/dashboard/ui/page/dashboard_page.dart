@@ -3,6 +3,8 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
+import '../../../main/ui/widgets/admin_charts.dart';
+import '../../../main/ui/widgets/admin_data_grid.dart';
 import '../../../main/ui/widgets/admin_page_frame.dart';
 
 /// Landing dashboard with the store's headline numbers, revenue trend and
@@ -76,6 +78,29 @@ final class DashboardPage extends StatelessWidget {
                 chart,
                 const SizedBox(height: AppSpacing.large),
                 actions,
+              ],
+            );
+          },
+        ),
+        const SizedBox(height: AppSpacing.large),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            if (constraints.maxWidth >= 720) {
+              return const Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(child: _ChannelSplitCard()),
+                  SizedBox(width: AppSpacing.large),
+                  Expanded(child: _MonthlyTargetCard()),
+                ],
+              );
+            }
+            return const Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                _ChannelSplitCard(),
+                SizedBox(height: AppSpacing.large),
+                _MonthlyTargetCard(),
               ],
             );
           },
@@ -227,6 +252,16 @@ final class _RevenueCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
+    final points = <AdminChartPoint>[
+      AdminChartPoint(label: l10n.weekdaySat, value: 86),
+      AdminChartPoint(label: l10n.weekdaySun, value: 94),
+      AdminChartPoint(label: l10n.weekdayMon, value: 78),
+      AdminChartPoint(label: l10n.weekdayTue, value: 112),
+      AdminChartPoint(label: l10n.weekdayWed, value: 104),
+      AdminChartPoint(label: l10n.weekdayThu, value: 128),
+      AdminChartPoint(label: l10n.weekdayFri, value: 121),
+    ];
+
     return AdminSurfaceCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -241,20 +276,17 @@ final class _RevenueCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.large),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.end,
+          Wrap(
+            spacing: AppSpacing.medium,
+            runSpacing: AppSpacing.xSmall,
+            crossAxisAlignment: WrapCrossAlignment.end,
             children: [
-              Flexible(
-                child: Text(
-                  '128,540 $currency',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: textTheme.headlineSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+              Text(
+                '128,540 $currency',
+                style: textTheme.headlineSmall?.copyWith(
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-              const SizedBox(width: AppSpacing.medium),
               Text(
                 '${l10n.dashboardAverageOrder} · 1,150 $currency',
                 style: textTheme.bodySmall?.copyWith(
@@ -264,106 +296,89 @@ final class _RevenueCard extends StatelessWidget {
             ],
           ),
           const SizedBox(height: AppSpacing.large),
-          SizedBox(
-            height: 190,
-            width: double.infinity,
-            child: CustomPaint(
-              painter: _RevenueChartPainter(
-                lineColor: colorScheme.primary,
-                fillColor: colorScheme.primary.withValues(alpha: 0.18),
-                gridColor: colorScheme.outlineVariant.withValues(alpha: 0.6),
-              ),
-            ),
-          ),
+          AdminAreaChart(points: points, height: 190),
         ],
       ),
     );
   }
 }
 
-/// Smooth area chart drawn from a fixed sample series.
-final class _RevenueChartPainter extends CustomPainter {
-  const _RevenueChartPainter({
-    required this.lineColor,
-    required this.fillColor,
-    required this.gridColor,
-  });
-
-  final Color lineColor;
-  final Color fillColor;
-  final Color gridColor;
-
-  static const List<double> _points = [
-    0.30,
-    0.45,
-    0.36,
-    0.62,
-    0.54,
-    0.80,
-    0.70,
-  ];
+final class _ChannelSplitCard extends StatelessWidget {
+  const _ChannelSplitCard();
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final gridPaint = Paint()
-      ..color = gridColor
-      ..strokeWidth = 1;
-    for (var index = 0; index <= 3; index++) {
-      final y = size.height * index / 3;
-      canvas.drawLine(Offset(0, y), Offset(size.width, y), gridPaint);
-    }
+  Widget build(BuildContext context) {
+    final l10n = context.localeKeys;
+    final colorScheme = Theme.of(context).colorScheme;
 
-    final points = <Offset>[
-      for (var index = 0; index < _points.length; index++)
-        Offset(
-          size.width * index / (_points.length - 1),
-          size.height * (1 - _points[index]),
-        ),
+    final points = <AdminChartPoint>[
+      AdminChartPoint(
+        label: l10n.dashboardChannelStore,
+        value: 52,
+        color: colorScheme.primary,
+      ),
+      AdminChartPoint(
+        label: l10n.dashboardChannelOnline,
+        value: 31,
+        color: colorScheme.tertiary,
+      ),
+      AdminChartPoint(
+        label: l10n.dashboardChannelWholesale,
+        value: 17,
+        color: const Color(0xFF1B8A5A),
+      ),
     ];
 
-    final line = Path()..moveTo(points.first.dx, points.first.dy);
-    for (var index = 1; index < points.length; index++) {
-      final previous = points[index - 1];
-      final current = points[index];
-      final midX = (previous.dx + current.dx) / 2;
-      line.cubicTo(midX, previous.dy, midX, current.dy, current.dx, current.dy);
-    }
-
-    final area = Path.from(line)
-      ..lineTo(size.width, size.height)
-      ..lineTo(0, size.height)
-      ..close();
-
-    canvas.drawPath(
-      area,
-      Paint()
-        ..shader = LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [fillColor, fillColor.withValues(alpha: 0)],
-        ).createShader(Offset.zero & size),
+    return AdminSurfaceCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AdminSectionHeading(
+            title: l10n.dashboardChannelSplit,
+            icon: LucideIcons.pieChart,
+          ),
+          const SizedBox(height: AppSpacing.medium),
+          AdminDoughnutChart(points: points),
+        ],
+      ),
     );
-
-    canvas.drawPath(
-      line,
-      Paint()
-        ..color = lineColor
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 2.5
-        ..strokeCap = StrokeCap.round,
-    );
-
-    final dotPaint = Paint()..color = lineColor;
-    for (final point in points) {
-      canvas.drawCircle(point, 3, dotPaint);
-    }
   }
+}
+
+final class _MonthlyTargetCard extends StatelessWidget {
+  const _MonthlyTargetCard();
 
   @override
-  bool shouldRepaint(_RevenueChartPainter oldDelegate) {
-    return oldDelegate.lineColor != lineColor ||
-        oldDelegate.fillColor != fillColor ||
-        oldDelegate.gridColor != gridColor;
+  Widget build(BuildContext context) {
+    final l10n = context.localeKeys;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return AdminSurfaceCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          AdminSectionHeading(
+            title: l10n.dashboardMonthlyTarget,
+            icon: LucideIcons.target,
+          ),
+          const SizedBox(height: AppSpacing.medium),
+          const AdminTargetGauge(
+            value: 74,
+            label: '',
+            height: 186,
+          ),
+          const SizedBox(height: AppSpacing.small),
+          Text(
+            l10n.dashboardTargetHint,
+            textAlign: TextAlign.center,
+            style: textTheme.bodySmall?.copyWith(
+              color: colorScheme.onSurfaceVariant,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -449,6 +464,7 @@ final class _RecentOrdersCard extends StatelessWidget {
         customer: l10n.sampleCustomer1,
         status: l10n.dashboardStatusPaid,
         tone: AdminPillTone.success,
+        color: const Color(0xFF1B8A5A),
         total: '1,250',
       ),
       (
@@ -456,6 +472,7 @@ final class _RecentOrdersCard extends StatelessWidget {
         customer: l10n.sampleCustomer2,
         status: l10n.dashboardStatusShipping,
         tone: AdminPillTone.primary,
+        color: colorScheme.primary,
         total: '740',
       ),
       (
@@ -463,6 +480,7 @@ final class _RecentOrdersCard extends StatelessWidget {
         customer: l10n.sampleCustomer3,
         status: l10n.dashboardStatusPending,
         tone: AdminPillTone.warning,
+        color: const Color(0xFFB26A00),
         total: '2,180',
       ),
       (
@@ -470,6 +488,7 @@ final class _RecentOrdersCard extends StatelessWidget {
         customer: l10n.sampleCustomer4,
         status: l10n.dashboardStatusPaid,
         tone: AdminPillTone.success,
+        color: const Color(0xFF1B8A5A),
         total: '980',
       ),
     ];
@@ -493,81 +512,120 @@ final class _RecentOrdersCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AppSpacing.medium),
-          Row(
-            children: [
-              Expanded(
-                flex: 3,
-                child: Text(l10n.dashboardOrder, style: headerStyle),
-              ),
-              Expanded(
-                flex: 2,
-                child: Text(l10n.dashboardStatus, style: headerStyle),
-              ),
-              Expanded(
-                flex: 2,
-                child: Text(
-                  l10n.dashboardTotal,
-                  textAlign: TextAlign.end,
-                  style: headerStyle,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: AppSpacing.small),
-          for (final order in orders) ...[
-            Divider(height: 1, color: colorScheme.outlineVariant),
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: AppSpacing.medium),
-              child: Row(
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth >= 640) {
+                return AdminRecordsGrid(
+                  height: 46 * orders.length + 50,
+                  headers: [
+                    l10n.dashboardOrder,
+                    l10n.dashboardCustomer,
+                    l10n.dashboardStatus,
+                    l10n.dashboardTotal,
+                  ],
+                  records: [
+                    for (final order in orders)
+                      AdminRecord(
+                        reference: order.id,
+                        title: order.customer,
+                        status: order.status,
+                        statusColor: order.color,
+                        value: '${order.total} ${l10n.currencyEgp}',
+                      ),
+                  ],
+                );
+              }
+
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          order.id,
-                          style: textTheme.bodyMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 3,
+                        child: Text(
+                          l10n.dashboardOrder,
+                          style: headerStyle,
                         ),
-                        Text(
-                          order.customer,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: textTheme.bodySmall?.copyWith(
-                            color: colorScheme.onSurfaceVariant,
-                          ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          l10n.dashboardStatus,
+                          style: headerStyle,
                         ),
-                      ],
-                    ),
+                      ),
+                      Expanded(
+                        flex: 2,
+                        child: Text(
+                          l10n.dashboardTotal,
+                          textAlign: TextAlign.end,
+                          style: headerStyle,
+                        ),
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    flex: 2,
-                    child: Align(
-                      alignment: AlignmentDirectional.centerStart,
-                      child: AdminStatusPill(
-                        label: order.status,
-                        tone: order.tone,
+                  const SizedBox(height: AppSpacing.small),
+                  for (final order in orders) ...[
+                    Divider(height: 1, color: colorScheme.outlineVariant),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: AppSpacing.medium,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 3,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  order.id,
+                                  style: textTheme.bodyMedium?.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                Text(
+                                  order.customer,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.bodySmall?.copyWith(
+                                    color: colorScheme.onSurfaceVariant,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Align(
+                              alignment: AlignmentDirectional.centerStart,
+                              child: AdminStatusPill(
+                                label: order.status,
+                                tone: order.tone,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text(
+                              '${order.total} ${l10n.currencyEgp}',
+                              textAlign: TextAlign.end,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: textTheme.bodyMedium?.copyWith(
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      '${order.total} ${l10n.currencyEgp}',
-                      textAlign: TextAlign.end,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: textTheme.bodyMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
+                  ],
                 ],
-              ),
-            ),
-          ],
+              );
+            },
+          ),
         ],
       ),
     );

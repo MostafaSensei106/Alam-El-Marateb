@@ -939,4 +939,79 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sampleCustomer4 => 'كريم نبيل';
+
+  @override
+  String get dashboardChannelSplit => 'المبيعات حسب القناة';
+
+  @override
+  String get dashboardChannelStore => 'المتجر';
+
+  @override
+  String get dashboardChannelOnline => 'أونلاين';
+
+  @override
+  String get dashboardChannelWholesale => 'جملة';
+
+  @override
+  String get dashboardMonthlyTarget => 'هدف الشهر';
+
+  @override
+  String get dashboardTargetHint => 'تم تحقيق 74% من المستهدف الشهري';
+
+  @override
+  String get wireframeTableRef => 'المرجع';
+
+  @override
+  String get wireframeTableName => 'الاسم';
+
+  @override
+  String get wireframeTableStatus => 'الحالة';
+
+  @override
+  String get wireframeTableValue => 'القيمة';
+
+  @override
+  String get wireframeStatsSales => 'المبيعات';
+
+  @override
+  String get wireframeStatsOrders => 'الطلبات';
+
+  @override
+  String get wireframeStatsGrowth => 'النمو';
+
+  @override
+  String get wireframeStatsChartTitle => 'الأداء خلال الفترة';
+
+  @override
+  String get wireframeEventDelivery => 'توصيل طلبات';
+
+  @override
+  String get wireframeEventVisit => 'زيارة عميل';
+
+  @override
+  String get wireframeEventAudit => 'جرد مخزون';
+
+  @override
+  String get wireframeEventMeeting => 'اجتماع فريق';
+
+  @override
+  String get weekdaySat => 'السبت';
+
+  @override
+  String get weekdaySun => 'الأحد';
+
+  @override
+  String get weekdayMon => 'الإثنين';
+
+  @override
+  String get weekdayTue => 'الثلاثاء';
+
+  @override
+  String get weekdayWed => 'الأربعاء';
+
+  @override
+  String get weekdayThu => 'الخميس';
+
+  @override
+  String get weekdayFri => 'الجمعة';
 }

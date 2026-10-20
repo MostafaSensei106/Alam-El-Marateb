@@ -949,4 +949,79 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sampleCustomer4 => 'Karim Nabil';
+
+  @override
+  String get dashboardChannelSplit => 'Sales by channel';
+
+  @override
+  String get dashboardChannelStore => 'Store';
+
+  @override
+  String get dashboardChannelOnline => 'Online';
+
+  @override
+  String get dashboardChannelWholesale => 'Wholesale';
+
+  @override
+  String get dashboardMonthlyTarget => 'Monthly target';
+
+  @override
+  String get dashboardTargetHint => '74% of the monthly target achieved';
+
+  @override
+  String get wireframeTableRef => 'Reference';
+
+  @override
+  String get wireframeTableName => 'Name';
+
+  @override
+  String get wireframeTableStatus => 'Status';
+
+  @override
+  String get wireframeTableValue => 'Value';
+
+  @override
+  String get wireframeStatsSales => 'Sales';
+
+  @override
+  String get wireframeStatsOrders => 'Orders';
+
+  @override
+  String get wireframeStatsGrowth => 'Growth';
+
+  @override
+  String get wireframeStatsChartTitle => 'Performance over time';
+
+  @override
+  String get wireframeEventDelivery => 'Order delivery';
+
+  @override
+  String get wireframeEventVisit => 'Customer visit';
+
+  @override
+  String get wireframeEventAudit => 'Stock audit';
+
+  @override
+  String get wireframeEventMeeting => 'Team meeting';
+
+  @override
+  String get weekdaySat => 'Sat';
+
+  @override
+  String get weekdaySun => 'Sun';
+
+  @override
+  String get weekdayMon => 'Mon';
+
+  @override
+  String get weekdayTue => 'Tue';
+
+  @override
+  String get weekdayWed => 'Wed';
+
+  @override
+  String get weekdayThu => 'Thu';
+
+  @override
+  String get weekdayFri => 'Fri';
 }
