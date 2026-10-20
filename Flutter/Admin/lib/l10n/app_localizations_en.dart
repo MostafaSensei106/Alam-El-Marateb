@@ -1024,4 +1024,181 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get weekdayFri => 'Fri';
+
+  @override
+  String sectionRecordsCount(int count) {
+    return '$count records';
+  }
+
+  @override
+  String paginationShowing(int from, int to, int total) {
+    return 'Showing $from–$to of $total';
+  }
+
+  @override
+  String get paginationPerPage => 'Per page';
+
+  @override
+  String get paginationPrevious => 'Previous';
+
+  @override
+  String get paginationNext => 'Next';
+
+  @override
+  String paginationPageOf(int page, int pages) {
+    return 'Page $page of $pages';
+  }
+
+  @override
+  String get sectionEmptyTitle => 'No records yet';
+
+  @override
+  String get sectionEmptyMessage =>
+      'Add your first record or adjust the filters.';
+
+  @override
+  String get sectionNoResultsTitle => 'No matching results';
+
+  @override
+  String get sectionNoResultsMessage =>
+      'Try a different search term or clear the search.';
+
+  @override
+  String get sectionClearSearch => 'Clear search';
+
+  @override
+  String get sectionDetailTitle => 'Record details';
+
+  @override
+  String get sectionSelectRecord =>
+      'Pick a record from the list to see its details.';
+
+  @override
+  String get sectionTimeline => 'Activity timeline';
+
+  @override
+  String get statusCompleted => 'Completed';
+
+  @override
+  String get statusPending => 'Pending';
+
+  @override
+  String get statusInProgress => 'In progress';
+
+  @override
+  String get statusCancelled => 'Cancelled';
+
+  @override
+  String get statusDelivered => 'Delivered';
+
+  @override
+  String get statusActive => 'Active';
+
+  @override
+  String get statusDraft => 'Draft';
+
+  @override
+  String get formFieldName => 'Name';
+
+  @override
+  String get formFieldReference => 'Reference';
+
+  @override
+  String get formFieldAmount => 'Amount';
+
+  @override
+  String get formFieldDate => 'Date';
+
+  @override
+  String get formFieldNotes => 'Notes';
+
+  @override
+  String get formFieldStatus => 'Status';
+
+  @override
+  String get formFieldBranch => 'Branch';
+
+  @override
+  String get formSaveSuccess => 'Changes saved successfully';
+
+  @override
+  String get boardColumnNew => 'New';
+
+  @override
+  String get boardColumnInProgress => 'In progress';
+
+  @override
+  String get boardColumnDone => 'Done';
+
+  @override
+  String get statsAverageOrder => 'Average order';
+
+  @override
+  String get statsActiveCustomers => 'Active customers';
+
+  @override
+  String get statsConversion => 'Conversion rate';
+
+  @override
+  String get calendarUpcoming => 'Upcoming appointments';
+
+  @override
+  String get mapZone => 'Governorate';
+
+  @override
+  String get mapOrders => 'Orders';
+
+  @override
+  String get mapRevenue => 'Revenue';
+
+  @override
+  String get sampleProduct1 => 'Classic cotton shirt';
+
+  @override
+  String get sampleProduct2 => 'Genuine leather shoes';
+
+  @override
+  String get sampleProduct3 => 'Practical backpack';
+
+  @override
+  String get sampleProduct4 => 'Elegant wristwatch';
+
+  @override
+  String get sampleProduct5 => 'Sunglasses';
+
+  @override
+  String get sampleEmployee1 => 'Ahmed Saeed';
+
+  @override
+  String get sampleEmployee2 => 'Noha Mostafa';
+
+  @override
+  String get sampleEmployee3 => 'Khaled Fouad';
+
+  @override
+  String get sampleEmployee4 => 'Reem Hassan';
+
+  @override
+  String get sampleCampaign1 => 'Eid offer';
+
+  @override
+  String get sampleCampaign2 => 'Weekend discounts';
+
+  @override
+  String get sampleCampaign3 => 'Customer win-back campaign';
+
+  @override
+  String get sampleCampaign4 => 'New collection launch';
+
+  @override
+  String get sampleBranch1 => 'Tanta branch';
+
+  @override
+  String get sampleBranch2 => 'Cairo branch';
+
+  @override
+  String get sampleBranch3 => 'Alexandria branch';
+
+  @override
+  String get sampleBranch4 => 'Mansoura branch';
 }

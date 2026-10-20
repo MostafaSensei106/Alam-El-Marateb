@@ -350,5 +350,91 @@
   "weekdayTue": "Tue",
   "weekdayWed": "Wed",
   "weekdayThu": "Thu",
-  "weekdayFri": "Fri"
+  "weekdayFri": "Fri",
+  "sectionRecordsCount": "{count} records",
+  "@sectionRecordsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "paginationShowing": "Showing {from}–{to} of {total}",
+  "@paginationShowing": {
+    "placeholders": {
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "paginationPerPage": "Per page",
+  "paginationPrevious": "Previous",
+  "paginationNext": "Next",
+  "paginationPageOf": "Page {page} of {pages}",
+  "@paginationPageOf": {
+    "placeholders": {
+      "page": {
+        "type": "int"
+      },
+      "pages": {
+        "type": "int"
+      }
+    }
+  },
+  "sectionEmptyTitle": "No records yet",
+  "sectionEmptyMessage": "Add your first record or adjust the filters.",
+  "sectionNoResultsTitle": "No matching results",
+  "sectionNoResultsMessage": "Try a different search term or clear the search.",
+  "sectionClearSearch": "Clear search",
+  "sectionDetailTitle": "Record details",
+  "sectionSelectRecord": "Pick a record from the list to see its details.",
+  "sectionTimeline": "Activity timeline",
+  "statusCompleted": "Completed",
+  "statusPending": "Pending",
+  "statusInProgress": "In progress",
+  "statusCancelled": "Cancelled",
+  "statusDelivered": "Delivered",
+  "statusActive": "Active",
+  "statusDraft": "Draft",
+  "formFieldName": "Name",
+  "formFieldReference": "Reference",
+  "formFieldAmount": "Amount",
+  "formFieldDate": "Date",
+  "formFieldNotes": "Notes",
+  "formFieldStatus": "Status",
+  "formFieldBranch": "Branch",
+  "formSaveSuccess": "Changes saved successfully",
+  "boardColumnNew": "New",
+  "boardColumnInProgress": "In progress",
+  "boardColumnDone": "Done",
+  "statsAverageOrder": "Average order",
+  "statsActiveCustomers": "Active customers",
+  "statsConversion": "Conversion rate",
+  "calendarUpcoming": "Upcoming appointments",
+  "mapZone": "Governorate",
+  "mapOrders": "Orders",
+  "mapRevenue": "Revenue",
+  "sampleProduct1": "Classic cotton shirt",
+  "sampleProduct2": "Genuine leather shoes",
+  "sampleProduct3": "Practical backpack",
+  "sampleProduct4": "Elegant wristwatch",
+  "sampleProduct5": "Sunglasses",
+  "sampleEmployee1": "Ahmed Saeed",
+  "sampleEmployee2": "Noha Mostafa",
+  "sampleEmployee3": "Khaled Fouad",
+  "sampleEmployee4": "Reem Hassan",
+  "sampleCampaign1": "Eid offer",
+  "sampleCampaign2": "Weekend discounts",
+  "sampleCampaign3": "Customer win-back campaign",
+  "sampleCampaign4": "New collection launch",
+  "sampleBranch1": "Tanta branch",
+  "sampleBranch2": "Cairo branch",
+  "sampleBranch3": "Alexandria branch",
+  "sampleBranch4": "Mansoura branch"
 }

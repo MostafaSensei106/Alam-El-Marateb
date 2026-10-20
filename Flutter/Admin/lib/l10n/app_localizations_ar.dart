@@ -1014,4 +1014,179 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get weekdayFri => 'الجمعة';
+
+  @override
+  String sectionRecordsCount(int count) {
+    return '$count سجل';
+  }
+
+  @override
+  String paginationShowing(int from, int to, int total) {
+    return 'عرض $from–$to من $total';
+  }
+
+  @override
+  String get paginationPerPage => 'لكل صفحة';
+
+  @override
+  String get paginationPrevious => 'السابق';
+
+  @override
+  String get paginationNext => 'التالي';
+
+  @override
+  String paginationPageOf(int page, int pages) {
+    return 'صفحة $page من $pages';
+  }
+
+  @override
+  String get sectionEmptyTitle => 'لا توجد سجلات بعد';
+
+  @override
+  String get sectionEmptyMessage =>
+      'ابدأ بإضافة أول سجل أو عدّل عوامل التصفية.';
+
+  @override
+  String get sectionNoResultsTitle => 'لا توجد نتائج مطابقة';
+
+  @override
+  String get sectionNoResultsMessage => 'جرّب كلمة بحث أخرى أو امسح البحث.';
+
+  @override
+  String get sectionClearSearch => 'مسح البحث';
+
+  @override
+  String get sectionDetailTitle => 'تفاصيل السجل';
+
+  @override
+  String get sectionSelectRecord => 'اختر سجلاً من القائمة لعرض تفاصيله.';
+
+  @override
+  String get sectionTimeline => 'سجل النشاط';
+
+  @override
+  String get statusCompleted => 'مكتمل';
+
+  @override
+  String get statusPending => 'قيد الانتظار';
+
+  @override
+  String get statusInProgress => 'قيد التنفيذ';
+
+  @override
+  String get statusCancelled => 'ملغي';
+
+  @override
+  String get statusDelivered => 'تم التسليم';
+
+  @override
+  String get statusActive => 'نشط';
+
+  @override
+  String get statusDraft => 'مسودة';
+
+  @override
+  String get formFieldName => 'الاسم';
+
+  @override
+  String get formFieldReference => 'المرجع';
+
+  @override
+  String get formFieldAmount => 'المبلغ';
+
+  @override
+  String get formFieldDate => 'التاريخ';
+
+  @override
+  String get formFieldNotes => 'ملاحظات';
+
+  @override
+  String get formFieldStatus => 'الحالة';
+
+  @override
+  String get formFieldBranch => 'الفرع';
+
+  @override
+  String get formSaveSuccess => 'تم حفظ التغييرات بنجاح';
+
+  @override
+  String get boardColumnNew => 'جديد';
+
+  @override
+  String get boardColumnInProgress => 'قيد التنفيذ';
+
+  @override
+  String get boardColumnDone => 'منجز';
+
+  @override
+  String get statsAverageOrder => 'متوسط الطلب';
+
+  @override
+  String get statsActiveCustomers => 'عملاء نشطون';
+
+  @override
+  String get statsConversion => 'معدل التحويل';
+
+  @override
+  String get calendarUpcoming => 'المواعيد القادمة';
+
+  @override
+  String get mapZone => 'المحافظة';
+
+  @override
+  String get mapOrders => 'الطلبات';
+
+  @override
+  String get mapRevenue => 'الإيراد';
+
+  @override
+  String get sampleProduct1 => 'قميص قطني كلاسيك';
+
+  @override
+  String get sampleProduct2 => 'حذاء جلد طبيعي';
+
+  @override
+  String get sampleProduct3 => 'حقيبة ظهر عملية';
+
+  @override
+  String get sampleProduct4 => 'ساعة يد أنيقة';
+
+  @override
+  String get sampleProduct5 => 'نظارة شمسية';
+
+  @override
+  String get sampleEmployee1 => 'أحمد سعيد';
+
+  @override
+  String get sampleEmployee2 => 'نهى مصطفى';
+
+  @override
+  String get sampleEmployee3 => 'خالد فؤاد';
+
+  @override
+  String get sampleEmployee4 => 'ريم حسن';
+
+  @override
+  String get sampleCampaign1 => 'عرض العيد';
+
+  @override
+  String get sampleCampaign2 => 'تخفيضات نهاية الأسبوع';
+
+  @override
+  String get sampleCampaign3 => 'حملة استرجاع العملاء';
+
+  @override
+  String get sampleCampaign4 => 'إطلاق المجموعة الجديدة';
+
+  @override
+  String get sampleBranch1 => 'فرع طنطا';
+
+  @override
+  String get sampleBranch2 => 'فرع القاهرة';
+
+  @override
+  String get sampleBranch3 => 'فرع الإسكندرية';
+
+  @override
+  String get sampleBranch4 => 'فرع المنصورة';
 }

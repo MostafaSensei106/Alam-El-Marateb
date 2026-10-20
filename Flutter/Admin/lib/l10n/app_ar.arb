@@ -343,5 +343,91 @@
   "weekdayTue": "الثلاثاء",
   "weekdayWed": "الأربعاء",
   "weekdayThu": "الخميس",
-  "weekdayFri": "الجمعة"
+  "weekdayFri": "الجمعة",
+  "sectionRecordsCount": "{count} سجل",
+  "@sectionRecordsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "paginationShowing": "عرض {from}–{to} من {total}",
+  "@paginationShowing": {
+    "placeholders": {
+      "from": {
+        "type": "int"
+      },
+      "to": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "paginationPerPage": "لكل صفحة",
+  "paginationPrevious": "السابق",
+  "paginationNext": "التالي",
+  "paginationPageOf": "صفحة {page} من {pages}",
+  "@paginationPageOf": {
+    "placeholders": {
+      "page": {
+        "type": "int"
+      },
+      "pages": {
+        "type": "int"
+      }
+    }
+  },
+  "sectionEmptyTitle": "لا توجد سجلات بعد",
+  "sectionEmptyMessage": "ابدأ بإضافة أول سجل أو عدّل عوامل التصفية.",
+  "sectionNoResultsTitle": "لا توجد نتائج مطابقة",
+  "sectionNoResultsMessage": "جرّب كلمة بحث أخرى أو امسح البحث.",
+  "sectionClearSearch": "مسح البحث",
+  "sectionDetailTitle": "تفاصيل السجل",
+  "sectionSelectRecord": "اختر سجلاً من القائمة لعرض تفاصيله.",
+  "sectionTimeline": "سجل النشاط",
+  "statusCompleted": "مكتمل",
+  "statusPending": "قيد الانتظار",
+  "statusInProgress": "قيد التنفيذ",
+  "statusCancelled": "ملغي",
+  "statusDelivered": "تم التسليم",
+  "statusActive": "نشط",
+  "statusDraft": "مسودة",
+  "formFieldName": "الاسم",
+  "formFieldReference": "المرجع",
+  "formFieldAmount": "المبلغ",
+  "formFieldDate": "التاريخ",
+  "formFieldNotes": "ملاحظات",
+  "formFieldStatus": "الحالة",
+  "formFieldBranch": "الفرع",
+  "formSaveSuccess": "تم حفظ التغييرات بنجاح",
+  "boardColumnNew": "جديد",
+  "boardColumnInProgress": "قيد التنفيذ",
+  "boardColumnDone": "منجز",
+  "statsAverageOrder": "متوسط الطلب",
+  "statsActiveCustomers": "عملاء نشطون",
+  "statsConversion": "معدل التحويل",
+  "calendarUpcoming": "المواعيد القادمة",
+  "mapZone": "المحافظة",
+  "mapOrders": "الطلبات",
+  "mapRevenue": "الإيراد",
+  "sampleProduct1": "قميص قطني كلاسيك",
+  "sampleProduct2": "حذاء جلد طبيعي",
+  "sampleProduct3": "حقيبة ظهر عملية",
+  "sampleProduct4": "ساعة يد أنيقة",
+  "sampleProduct5": "نظارة شمسية",
+  "sampleEmployee1": "أحمد سعيد",
+  "sampleEmployee2": "نهى مصطفى",
+  "sampleEmployee3": "خالد فؤاد",
+  "sampleEmployee4": "ريم حسن",
+  "sampleCampaign1": "عرض العيد",
+  "sampleCampaign2": "تخفيضات نهاية الأسبوع",
+  "sampleCampaign3": "حملة استرجاع العملاء",
+  "sampleCampaign4": "إطلاق المجموعة الجديدة",
+  "sampleBranch1": "فرع طنطا",
+  "sampleBranch2": "فرع القاهرة",
+  "sampleBranch3": "فرع الإسكندرية",
+  "sampleBranch4": "فرع المنصورة"
 }

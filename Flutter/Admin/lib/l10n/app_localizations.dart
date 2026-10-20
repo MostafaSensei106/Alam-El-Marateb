@@ -2036,6 +2036,342 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fri'**
   String get weekdayFri;
+
+  /// No description provided for @sectionRecordsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} records'**
+  String sectionRecordsCount(int count);
+
+  /// No description provided for @paginationShowing.
+  ///
+  /// In en, this message translates to:
+  /// **'Showing {from}–{to} of {total}'**
+  String paginationShowing(int from, int to, int total);
+
+  /// No description provided for @paginationPerPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Per page'**
+  String get paginationPerPage;
+
+  /// No description provided for @paginationPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous'**
+  String get paginationPrevious;
+
+  /// No description provided for @paginationNext.
+  ///
+  /// In en, this message translates to:
+  /// **'Next'**
+  String get paginationNext;
+
+  /// No description provided for @paginationPageOf.
+  ///
+  /// In en, this message translates to:
+  /// **'Page {page} of {pages}'**
+  String paginationPageOf(int page, int pages);
+
+  /// No description provided for @sectionEmptyTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No records yet'**
+  String get sectionEmptyTitle;
+
+  /// No description provided for @sectionEmptyMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first record or adjust the filters.'**
+  String get sectionEmptyMessage;
+
+  /// No description provided for @sectionNoResultsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No matching results'**
+  String get sectionNoResultsTitle;
+
+  /// No description provided for @sectionNoResultsMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search term or clear the search.'**
+  String get sectionNoResultsMessage;
+
+  /// No description provided for @sectionClearSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear search'**
+  String get sectionClearSearch;
+
+  /// No description provided for @sectionDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Record details'**
+  String get sectionDetailTitle;
+
+  /// No description provided for @sectionSelectRecord.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a record from the list to see its details.'**
+  String get sectionSelectRecord;
+
+  /// No description provided for @sectionTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity timeline'**
+  String get sectionTimeline;
+
+  /// No description provided for @statusCompleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Completed'**
+  String get statusCompleted;
+
+  /// No description provided for @statusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get statusPending;
+
+  /// No description provided for @statusInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get statusInProgress;
+
+  /// No description provided for @statusCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get statusCancelled;
+
+  /// No description provided for @statusDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get statusDelivered;
+
+  /// No description provided for @statusActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get statusActive;
+
+  /// No description provided for @statusDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get statusDraft;
+
+  /// No description provided for @formFieldName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get formFieldName;
+
+  /// No description provided for @formFieldReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get formFieldReference;
+
+  /// No description provided for @formFieldAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get formFieldAmount;
+
+  /// No description provided for @formFieldDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get formFieldDate;
+
+  /// No description provided for @formFieldNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get formFieldNotes;
+
+  /// No description provided for @formFieldStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get formFieldStatus;
+
+  /// No description provided for @formFieldBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get formFieldBranch;
+
+  /// No description provided for @formSaveSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes saved successfully'**
+  String get formSaveSuccess;
+
+  /// No description provided for @boardColumnNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get boardColumnNew;
+
+  /// No description provided for @boardColumnInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get boardColumnInProgress;
+
+  /// No description provided for @boardColumnDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get boardColumnDone;
+
+  /// No description provided for @statsAverageOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Average order'**
+  String get statsAverageOrder;
+
+  /// No description provided for @statsActiveCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Active customers'**
+  String get statsActiveCustomers;
+
+  /// No description provided for @statsConversion.
+  ///
+  /// In en, this message translates to:
+  /// **'Conversion rate'**
+  String get statsConversion;
+
+  /// No description provided for @calendarUpcoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Upcoming appointments'**
+  String get calendarUpcoming;
+
+  /// No description provided for @mapZone.
+  ///
+  /// In en, this message translates to:
+  /// **'Governorate'**
+  String get mapZone;
+
+  /// No description provided for @mapOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get mapOrders;
+
+  /// No description provided for @mapRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get mapRevenue;
+
+  /// No description provided for @sampleProduct1.
+  ///
+  /// In en, this message translates to:
+  /// **'Classic cotton shirt'**
+  String get sampleProduct1;
+
+  /// No description provided for @sampleProduct2.
+  ///
+  /// In en, this message translates to:
+  /// **'Genuine leather shoes'**
+  String get sampleProduct2;
+
+  /// No description provided for @sampleProduct3.
+  ///
+  /// In en, this message translates to:
+  /// **'Practical backpack'**
+  String get sampleProduct3;
+
+  /// No description provided for @sampleProduct4.
+  ///
+  /// In en, this message translates to:
+  /// **'Elegant wristwatch'**
+  String get sampleProduct4;
+
+  /// No description provided for @sampleProduct5.
+  ///
+  /// In en, this message translates to:
+  /// **'Sunglasses'**
+  String get sampleProduct5;
+
+  /// No description provided for @sampleEmployee1.
+  ///
+  /// In en, this message translates to:
+  /// **'Ahmed Saeed'**
+  String get sampleEmployee1;
+
+  /// No description provided for @sampleEmployee2.
+  ///
+  /// In en, this message translates to:
+  /// **'Noha Mostafa'**
+  String get sampleEmployee2;
+
+  /// No description provided for @sampleEmployee3.
+  ///
+  /// In en, this message translates to:
+  /// **'Khaled Fouad'**
+  String get sampleEmployee3;
+
+  /// No description provided for @sampleEmployee4.
+  ///
+  /// In en, this message translates to:
+  /// **'Reem Hassan'**
+  String get sampleEmployee4;
+
+  /// No description provided for @sampleCampaign1.
+  ///
+  /// In en, this message translates to:
+  /// **'Eid offer'**
+  String get sampleCampaign1;
+
+  /// No description provided for @sampleCampaign2.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekend discounts'**
+  String get sampleCampaign2;
+
+  /// No description provided for @sampleCampaign3.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer win-back campaign'**
+  String get sampleCampaign3;
+
+  /// No description provided for @sampleCampaign4.
+  ///
+  /// In en, this message translates to:
+  /// **'New collection launch'**
+  String get sampleCampaign4;
+
+  /// No description provided for @sampleBranch1.
+  ///
+  /// In en, this message translates to:
+  /// **'Tanta branch'**
+  String get sampleBranch1;
+
+  /// No description provided for @sampleBranch2.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo branch'**
+  String get sampleBranch2;
+
+  /// No description provided for @sampleBranch3.
+  ///
+  /// In en, this message translates to:
+  /// **'Alexandria branch'**
+  String get sampleBranch3;
+
+  /// No description provided for @sampleBranch4.
+  ///
+  /// In en, this message translates to:
+  /// **'Mansoura branch'**
+  String get sampleBranch4;
 }
 
 class _AppLocalizationsDelegate
