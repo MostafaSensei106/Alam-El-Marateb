@@ -699,7 +699,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get profileBranch => 'الفرع';
 
   @override
-  String get profileBranchValue => 'المعرض الرئيسي · القاهرة';
+  String get profileBranchValue => 'المعرض الرئيسي · طنطا';
 
   @override
   String get profileMemberSince => 'عضو منذ';
@@ -830,7 +830,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsSaved => 'تم حفظ الإعدادات.';
 
   @override
-  String get settingsBranchMain => 'المعرض الرئيسي · القاهرة';
+  String get settingsBranchMain => 'المعرض الرئيسي · طنطا';
 
   @override
   String get settingsBranchAlex => 'فرع الإسكندرية';

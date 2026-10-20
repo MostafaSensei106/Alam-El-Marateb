@@ -1416,7 +1416,7 @@ abstract class AppLocalizations {
   /// No description provided for @profileBranchValue.
   ///
   /// In en, this message translates to:
-  /// **'Main showroom · Cairo'**
+  /// **'Main showroom · Tanta'**
   String get profileBranchValue;
 
   /// No description provided for @profileMemberSince.
@@ -1668,7 +1668,7 @@ abstract class AppLocalizations {
   /// No description provided for @settingsBranchMain.
   ///
   /// In en, this message translates to:
-  /// **'Main showroom · Cairo'**
+  /// **'Main showroom · Tanta'**
   String get settingsBranchMain;
 
   /// No description provided for @settingsBranchAlex.

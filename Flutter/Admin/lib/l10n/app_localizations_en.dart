@@ -701,7 +701,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get profileBranch => 'Branch';
 
   @override
-  String get profileBranchValue => 'Main showroom · Cairo';
+  String get profileBranchValue => 'Main showroom · Tanta';
 
   @override
   String get profileMemberSince => 'Member since';
@@ -839,7 +839,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsSaved => 'Settings saved.';
 
   @override
-  String get settingsBranchMain => 'Main showroom · Cairo';
+  String get settingsBranchMain => 'Main showroom · Tanta';
 
   @override
   String get settingsBranchAlex => 'Alexandria branch';
