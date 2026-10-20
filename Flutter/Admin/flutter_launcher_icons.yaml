@@ -6,9 +6,9 @@ flutter_launcher_icons:
   ios: true
   web:
     generate: true
-    image_path: "assets/icons/play_store_512.png"
-    # background_color: "#C7DEC9"
-    # theme_color: "#C7DEC9"
+    image_path: "assets/icons/icon-512.png"
+    background_color: "#1B487C"
+    theme_color: "#1B487C"
     # windows:
     #   generate: true
     #   image_path: "assets/icons/play_store_512.png"

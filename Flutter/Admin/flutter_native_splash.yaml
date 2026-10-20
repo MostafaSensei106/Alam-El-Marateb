@@ -1,7 +1,7 @@
 # dart run flutter_native_splash:create
 flutter_native_splash:
   # Set the background color of the splash screen
-  color: "#ffffff"
+  color: "#1B487C"
 
   # Add a logo image in the center of the splash screen
   image: assets/icons/play_store_512.png
@@ -17,7 +17,7 @@ flutter_native_splash:
   # Android 12 and later specific configuration
   android_12:
     # Set the background color for Android 12+
-    color: "#ffffff"
+    color: "#1B487C"
     image: assets/icons/ic_launcher_foreground.png
 
   # Dark mode support
@@ -29,4 +29,4 @@ flutter_native_splash:
   web: true
 
   # Enable fullscreen mode to hide the notification bar on Android
-  fullscreen: true
+  fullscreen: false
