@@ -254,7 +254,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navDashboard => 'لوحة التحكم';
 
   @override
-  String get navIdentity => 'الهوية والصلاحيات';
+  String get navIdentity => 'الصلاحيات';
 
   @override
   String get navCatalog => 'الكتالوج';
@@ -269,13 +269,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navPurchasing => 'المشتريات';
 
   @override
-  String get navCrm => 'علاقات العملاء';
+  String get navCrm => 'العملاء';
 
   @override
   String get navDelivery => 'التوصيل';
 
   @override
-  String get navHr => 'الموارد البشرية';
+  String get navHr => 'الموظفون';
 
   @override
   String get navAccounting => 'المحاسبة';
@@ -284,7 +284,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navMarketing => 'التسويق';
 
   @override
-  String get navProfile => 'الملف الشخصي';
+  String get navProfile => 'حسابي';
 
   @override
   String get navSettings => 'الإعدادات';
