@@ -1112,6 +1112,750 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'General system settings'**
   String get settingsFeature3;
+
+  /// No description provided for @adminWorkspace.
+  ///
+  /// In en, this message translates to:
+  /// **'Admin workspace'**
+  String get adminWorkspace;
+
+  /// No description provided for @adminDisplayName.
+  ///
+  /// In en, this message translates to:
+  /// **'Ahmed El-Gazzar'**
+  String get adminDisplayName;
+
+  /// No description provided for @adminRole.
+  ///
+  /// In en, this message translates to:
+  /// **'Super administrator'**
+  String get adminRole;
+
+  /// No description provided for @openAccountMenu.
+  ///
+  /// In en, this message translates to:
+  /// **'Open account menu'**
+  String get openAccountMenu;
+
+  /// No description provided for @account.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// No description provided for @myProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'My profile'**
+  String get myProfile;
+
+  /// No description provided for @signOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out'**
+  String get signOut;
+
+  /// No description provided for @signOutConfirmTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out?'**
+  String get signOutConfirmTitle;
+
+  /// No description provided for @signOutConfirmMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'You will need to sign in again to access the admin workspace.'**
+  String get signOutConfirmMessage;
+
+  /// No description provided for @appearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Appearance'**
+  String get appearance;
+
+  /// No description provided for @themeLight.
+  ///
+  /// In en, this message translates to:
+  /// **'Light'**
+  String get themeLight;
+
+  /// No description provided for @themeDark.
+  ///
+  /// In en, this message translates to:
+  /// **'Dark'**
+  String get themeDark;
+
+  /// No description provided for @language.
+  ///
+  /// In en, this message translates to:
+  /// **'Language'**
+  String get language;
+
+  /// No description provided for @plannedScreens.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned screens'**
+  String get plannedScreens;
+
+  /// No description provided for @interactivePrototype.
+  ///
+  /// In en, this message translates to:
+  /// **'Interactive prototype'**
+  String get interactivePrototype;
+
+  /// No description provided for @prototypeNotice.
+  ///
+  /// In en, this message translates to:
+  /// **'Layout preview with sample data. Screens will be connected to the API next.'**
+  String get prototypeNotice;
+
+  /// No description provided for @sampleData.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample data'**
+  String get sampleData;
+
+  /// No description provided for @dashboardGreeting.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back, {name}'**
+  String dashboardGreeting(String name);
+
+  /// No description provided for @dashboardSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Here is what is happening across your store today.'**
+  String get dashboardSubtitle;
+
+  /// No description provided for @dashboardRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get dashboardRevenue;
+
+  /// No description provided for @dashboardOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get dashboardOrders;
+
+  /// No description provided for @dashboardCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers'**
+  String get dashboardCustomers;
+
+  /// No description provided for @dashboardLowStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock'**
+  String get dashboardLowStock;
+
+  /// No description provided for @dashboardRevenueChange.
+  ///
+  /// In en, this message translates to:
+  /// **'+12.4% vs last week'**
+  String get dashboardRevenueChange;
+
+  /// No description provided for @dashboardOrdersChange.
+  ///
+  /// In en, this message translates to:
+  /// **'+8.1% vs last week'**
+  String get dashboardOrdersChange;
+
+  /// No description provided for @dashboardCustomersChange.
+  ///
+  /// In en, this message translates to:
+  /// **'+4.6% vs last week'**
+  String get dashboardCustomersChange;
+
+  /// No description provided for @dashboardLowStockChange.
+  ///
+  /// In en, this message translates to:
+  /// **'6 items need attention'**
+  String get dashboardLowStockChange;
+
+  /// No description provided for @dashboardRevenueTrend.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue, last 7 days'**
+  String get dashboardRevenueTrend;
+
+  /// No description provided for @dashboardAverageOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Average order'**
+  String get dashboardAverageOrder;
+
+  /// No description provided for @dashboardTodaySales.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get dashboardTodaySales;
+
+  /// No description provided for @dashboardRecentOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent orders'**
+  String get dashboardRecentOrders;
+
+  /// No description provided for @dashboardQuickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick actions'**
+  String get dashboardQuickActions;
+
+  /// No description provided for @dashboardViewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View all'**
+  String get dashboardViewAll;
+
+  /// No description provided for @dashboardOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get dashboardOrder;
+
+  /// No description provided for @dashboardCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get dashboardCustomer;
+
+  /// No description provided for @dashboardStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get dashboardStatus;
+
+  /// No description provided for @dashboardTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get dashboardTotal;
+
+  /// No description provided for @dashboardStatusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get dashboardStatusPaid;
+
+  /// No description provided for @dashboardStatusPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get dashboardStatusPending;
+
+  /// No description provided for @dashboardStatusShipping.
+  ///
+  /// In en, this message translates to:
+  /// **'Shipping'**
+  String get dashboardStatusShipping;
+
+  /// No description provided for @dashboardNewSale.
+  ///
+  /// In en, this message translates to:
+  /// **'New sale'**
+  String get dashboardNewSale;
+
+  /// No description provided for @dashboardAddProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Add product'**
+  String get dashboardAddProduct;
+
+  /// No description provided for @dashboardNewCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'New customer'**
+  String get dashboardNewCustomer;
+
+  /// No description provided for @dashboardCreateTrip.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery trip'**
+  String get dashboardCreateTrip;
+
+  /// No description provided for @profileAccountDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Account details'**
+  String get profileAccountDetails;
+
+  /// No description provided for @profileFullName.
+  ///
+  /// In en, this message translates to:
+  /// **'Full name'**
+  String get profileFullName;
+
+  /// No description provided for @profileJobTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Job title'**
+  String get profileJobTitle;
+
+  /// No description provided for @profileEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get profileEmail;
+
+  /// No description provided for @profilePhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get profilePhone;
+
+  /// No description provided for @profileBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get profileBranch;
+
+  /// No description provided for @profileBranchValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Main showroom · Cairo'**
+  String get profileBranchValue;
+
+  /// No description provided for @profileMemberSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Member since'**
+  String get profileMemberSince;
+
+  /// No description provided for @profileMemberSinceValue.
+  ///
+  /// In en, this message translates to:
+  /// **'January 2024'**
+  String get profileMemberSinceValue;
+
+  /// No description provided for @profileEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit profile'**
+  String get profileEdit;
+
+  /// No description provided for @profilePreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferences'**
+  String get profilePreferences;
+
+  /// No description provided for @profileSecurity.
+  ///
+  /// In en, this message translates to:
+  /// **'Security'**
+  String get profileSecurity;
+
+  /// No description provided for @profileChangePassword.
+  ///
+  /// In en, this message translates to:
+  /// **'Change password'**
+  String get profileChangePassword;
+
+  /// No description provided for @profileChangePasswordDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Use a strong password you don\'t reuse elsewhere.'**
+  String get profileChangePasswordDescription;
+
+  /// No description provided for @profileTwoFactor.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor authentication'**
+  String get profileTwoFactor;
+
+  /// No description provided for @profileTwoFactorDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask for a verification code on every new device.'**
+  String get profileTwoFactorDescription;
+
+  /// No description provided for @profileSessions.
+  ///
+  /// In en, this message translates to:
+  /// **'Active sessions'**
+  String get profileSessions;
+
+  /// No description provided for @profileSessionsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out of every device except this one.'**
+  String get profileSessionsDescription;
+
+  /// No description provided for @profilePermissions.
+  ///
+  /// In en, this message translates to:
+  /// **'Role & permissions'**
+  String get profilePermissions;
+
+  /// No description provided for @profilePermissionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Full access to every module in the workspace.'**
+  String get profilePermissionHint;
+
+  /// No description provided for @profilePermissionAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All modules'**
+  String get profilePermissionAll;
+
+  /// No description provided for @profileEditNotReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Profile editing will be enabled once the API is connected.'**
+  String get profileEditNotReady;
+
+  /// No description provided for @profilePasswordNotReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Password changes will be enabled once the API is connected.'**
+  String get profilePasswordNotReady;
+
+  /// No description provided for @profileTwoFactorOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor authentication enabled.'**
+  String get profileTwoFactorOn;
+
+  /// No description provided for @profileTwoFactorOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Two-factor authentication disabled.'**
+  String get profileTwoFactorOff;
+
+  /// No description provided for @profileSessionsCleared.
+  ///
+  /// In en, this message translates to:
+  /// **'Other sessions were signed out.'**
+  String get profileSessionsCleared;
+
+  /// No description provided for @profileSignOutDevice.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign out from this device'**
+  String get profileSignOutDevice;
+
+  /// No description provided for @settingsAppearanceHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose how the admin panel looks.'**
+  String get settingsAppearanceHint;
+
+  /// No description provided for @settingsNotifications.
+  ///
+  /// In en, this message translates to:
+  /// **'Notifications'**
+  String get settingsNotifications;
+
+  /// No description provided for @settingsNotificationsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick the events you want to be alerted about.'**
+  String get settingsNotificationsHint;
+
+  /// No description provided for @settingsGeneral.
+  ///
+  /// In en, this message translates to:
+  /// **'General'**
+  String get settingsGeneral;
+
+  /// No description provided for @settingsGeneralHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Defaults that apply to the whole workspace.'**
+  String get settingsGeneralHint;
+
+  /// No description provided for @settingsNotificationOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'New orders'**
+  String get settingsNotificationOrders;
+
+  /// No description provided for @settingsNotificationOrdersHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert me when an order is placed.'**
+  String get settingsNotificationOrdersHint;
+
+  /// No description provided for @settingsNotificationLowStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock'**
+  String get settingsNotificationLowStock;
+
+  /// No description provided for @settingsNotificationLowStockHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert me when an item drops below its reorder point.'**
+  String get settingsNotificationLowStockHint;
+
+  /// No description provided for @settingsNotificationReviews.
+  ///
+  /// In en, this message translates to:
+  /// **'New reviews'**
+  String get settingsNotificationReviews;
+
+  /// No description provided for @settingsNotificationReviewsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Alert me when a customer leaves a review.'**
+  String get settingsNotificationReviewsHint;
+
+  /// No description provided for @settingsNotificationDigest.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily digest'**
+  String get settingsNotificationDigest;
+
+  /// No description provided for @settingsNotificationDigestHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Send a summary every morning.'**
+  String get settingsNotificationDigestHint;
+
+  /// No description provided for @settingsDefaultBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Default branch'**
+  String get settingsDefaultBranch;
+
+  /// No description provided for @settingsDefaultBranchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The branch selected when you sign in.'**
+  String get settingsDefaultBranchHint;
+
+  /// No description provided for @settingsLandingPage.
+  ///
+  /// In en, this message translates to:
+  /// **'Landing page'**
+  String get settingsLandingPage;
+
+  /// No description provided for @settingsLandingPageHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The first screen after sign-in.'**
+  String get settingsLandingPageHint;
+
+  /// No description provided for @settingsAutoRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Auto-refresh dashboards'**
+  String get settingsAutoRefresh;
+
+  /// No description provided for @settingsAutoRefreshHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh KPIs every 60 seconds.'**
+  String get settingsAutoRefreshHint;
+
+  /// No description provided for @settingsSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save changes'**
+  String get settingsSave;
+
+  /// No description provided for @settingsSaved.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings saved.'**
+  String get settingsSaved;
+
+  /// No description provided for @settingsBranchMain.
+  ///
+  /// In en, this message translates to:
+  /// **'Main showroom · Cairo'**
+  String get settingsBranchMain;
+
+  /// No description provided for @settingsBranchAlex.
+  ///
+  /// In en, this message translates to:
+  /// **'Alexandria branch'**
+  String get settingsBranchAlex;
+
+  /// No description provided for @settingsBranchGiza.
+  ///
+  /// In en, this message translates to:
+  /// **'Giza branch'**
+  String get settingsBranchGiza;
+
+  /// No description provided for @wireframeTableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Data table'**
+  String get wireframeTableTitle;
+
+  /// No description provided for @wireframeFormTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Form'**
+  String get wireframeFormTitle;
+
+  /// No description provided for @wireframeStatsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Metrics'**
+  String get wireframeStatsTitle;
+
+  /// No description provided for @wireframeCalendarTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar'**
+  String get wireframeCalendarTitle;
+
+  /// No description provided for @wireframeMapTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Map'**
+  String get wireframeMapTitle;
+
+  /// No description provided for @wireframeBoardTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Board'**
+  String get wireframeBoardTitle;
+
+  /// No description provided for @wireframeListTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'List & detail'**
+  String get wireframeListTitle;
+
+  /// No description provided for @wireframeDetailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Record details'**
+  String get wireframeDetailTitle;
+
+  /// No description provided for @wireframeToolbar.
+  ///
+  /// In en, this message translates to:
+  /// **'Search, filters and actions'**
+  String get wireframeToolbar;
+
+  /// No description provided for @wireframeSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search'**
+  String get wireframeSearch;
+
+  /// No description provided for @wireframeFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Filter'**
+  String get wireframeFilter;
+
+  /// No description provided for @wireframeNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get wireframeNew;
+
+  /// No description provided for @wireframeExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get wireframeExport;
+
+  /// No description provided for @wireframeColumns.
+  ///
+  /// In en, this message translates to:
+  /// **'Column'**
+  String get wireframeColumns;
+
+  /// No description provided for @wireframeRows.
+  ///
+  /// In en, this message translates to:
+  /// **'Row'**
+  String get wireframeRows;
+
+  /// No description provided for @wireframeActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Actions'**
+  String get wireframeActions;
+
+  /// No description provided for @wireframeField.
+  ///
+  /// In en, this message translates to:
+  /// **'Field'**
+  String get wireframeField;
+
+  /// No description provided for @wireframeValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get wireframeValue;
+
+  /// No description provided for @wireframeSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get wireframeSave;
+
+  /// No description provided for @wireframeCancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get wireframeCancel;
+
+  /// No description provided for @wireframeChartArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Chart area'**
+  String get wireframeChartArea;
+
+  /// No description provided for @wireframeTableArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Table area'**
+  String get wireframeTableArea;
+
+  /// No description provided for @wireframeMapArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Route and stops'**
+  String get wireframeMapArea;
+
+  /// No description provided for @wireframeTimeline.
+  ///
+  /// In en, this message translates to:
+  /// **'Timeline'**
+  String get wireframeTimeline;
+
+  /// No description provided for @wireframeCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get wireframeCard;
+
+  /// No description provided for @wireframeMetric.
+  ///
+  /// In en, this message translates to:
+  /// **'Metric'**
+  String get wireframeMetric;
+
+  /// No description provided for @wireframePreviewHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Preview of the planned layout'**
+  String get wireframePreviewHint;
+
+  /// No description provided for @hubScreens.
+  ///
+  /// In en, this message translates to:
+  /// **'Screens'**
+  String get hubScreens;
+
+  /// No description provided for @hubSelectScreen.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a screen to preview its planned layout.'**
+  String get hubSelectScreen;
 }
 
 class _AppLocalizationsDelegate

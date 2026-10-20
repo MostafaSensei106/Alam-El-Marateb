@@ -544,4 +544,394 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingsFeature3 => 'General system settings';
+
+  @override
+  String get adminWorkspace => 'Admin workspace';
+
+  @override
+  String get adminDisplayName => 'Ahmed El-Gazzar';
+
+  @override
+  String get adminRole => 'Super administrator';
+
+  @override
+  String get openAccountMenu => 'Open account menu';
+
+  @override
+  String get account => 'Account';
+
+  @override
+  String get myProfile => 'My profile';
+
+  @override
+  String get signOut => 'Sign out';
+
+  @override
+  String get signOutConfirmTitle => 'Sign out?';
+
+  @override
+  String get signOutConfirmMessage =>
+      'You will need to sign in again to access the admin workspace.';
+
+  @override
+  String get appearance => 'Appearance';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get language => 'Language';
+
+  @override
+  String get plannedScreens => 'Planned screens';
+
+  @override
+  String get interactivePrototype => 'Interactive prototype';
+
+  @override
+  String get prototypeNotice =>
+      'Layout preview with sample data. Screens will be connected to the API next.';
+
+  @override
+  String get sampleData => 'Sample data';
+
+  @override
+  String dashboardGreeting(String name) {
+    return 'Welcome back, $name';
+  }
+
+  @override
+  String get dashboardSubtitle =>
+      'Here is what is happening across your store today.';
+
+  @override
+  String get dashboardRevenue => 'Revenue';
+
+  @override
+  String get dashboardOrders => 'Orders';
+
+  @override
+  String get dashboardCustomers => 'Customers';
+
+  @override
+  String get dashboardLowStock => 'Low stock';
+
+  @override
+  String get dashboardRevenueChange => '+12.4% vs last week';
+
+  @override
+  String get dashboardOrdersChange => '+8.1% vs last week';
+
+  @override
+  String get dashboardCustomersChange => '+4.6% vs last week';
+
+  @override
+  String get dashboardLowStockChange => '6 items need attention';
+
+  @override
+  String get dashboardRevenueTrend => 'Revenue, last 7 days';
+
+  @override
+  String get dashboardAverageOrder => 'Average order';
+
+  @override
+  String get dashboardTodaySales => 'Today';
+
+  @override
+  String get dashboardRecentOrders => 'Recent orders';
+
+  @override
+  String get dashboardQuickActions => 'Quick actions';
+
+  @override
+  String get dashboardViewAll => 'View all';
+
+  @override
+  String get dashboardOrder => 'Order';
+
+  @override
+  String get dashboardCustomer => 'Customer';
+
+  @override
+  String get dashboardStatus => 'Status';
+
+  @override
+  String get dashboardTotal => 'Total';
+
+  @override
+  String get dashboardStatusPaid => 'Paid';
+
+  @override
+  String get dashboardStatusPending => 'Pending';
+
+  @override
+  String get dashboardStatusShipping => 'Shipping';
+
+  @override
+  String get dashboardNewSale => 'New sale';
+
+  @override
+  String get dashboardAddProduct => 'Add product';
+
+  @override
+  String get dashboardNewCustomer => 'New customer';
+
+  @override
+  String get dashboardCreateTrip => 'Delivery trip';
+
+  @override
+  String get profileAccountDetails => 'Account details';
+
+  @override
+  String get profileFullName => 'Full name';
+
+  @override
+  String get profileJobTitle => 'Job title';
+
+  @override
+  String get profileEmail => 'Email';
+
+  @override
+  String get profilePhone => 'Phone';
+
+  @override
+  String get profileBranch => 'Branch';
+
+  @override
+  String get profileBranchValue => 'Main showroom · Cairo';
+
+  @override
+  String get profileMemberSince => 'Member since';
+
+  @override
+  String get profileMemberSinceValue => 'January 2024';
+
+  @override
+  String get profileEdit => 'Edit profile';
+
+  @override
+  String get profilePreferences => 'Preferences';
+
+  @override
+  String get profileSecurity => 'Security';
+
+  @override
+  String get profileChangePassword => 'Change password';
+
+  @override
+  String get profileChangePasswordDescription =>
+      'Use a strong password you don\'t reuse elsewhere.';
+
+  @override
+  String get profileTwoFactor => 'Two-factor authentication';
+
+  @override
+  String get profileTwoFactorDescription =>
+      'Ask for a verification code on every new device.';
+
+  @override
+  String get profileSessions => 'Active sessions';
+
+  @override
+  String get profileSessionsDescription =>
+      'Sign out of every device except this one.';
+
+  @override
+  String get profilePermissions => 'Role & permissions';
+
+  @override
+  String get profilePermissionHint =>
+      'Full access to every module in the workspace.';
+
+  @override
+  String get profilePermissionAll => 'All modules';
+
+  @override
+  String get profileEditNotReady =>
+      'Profile editing will be enabled once the API is connected.';
+
+  @override
+  String get profilePasswordNotReady =>
+      'Password changes will be enabled once the API is connected.';
+
+  @override
+  String get profileTwoFactorOn => 'Two-factor authentication enabled.';
+
+  @override
+  String get profileTwoFactorOff => 'Two-factor authentication disabled.';
+
+  @override
+  String get profileSessionsCleared => 'Other sessions were signed out.';
+
+  @override
+  String get profileSignOutDevice => 'Sign out from this device';
+
+  @override
+  String get settingsAppearanceHint => 'Choose how the admin panel looks.';
+
+  @override
+  String get settingsNotifications => 'Notifications';
+
+  @override
+  String get settingsNotificationsHint =>
+      'Pick the events you want to be alerted about.';
+
+  @override
+  String get settingsGeneral => 'General';
+
+  @override
+  String get settingsGeneralHint =>
+      'Defaults that apply to the whole workspace.';
+
+  @override
+  String get settingsNotificationOrders => 'New orders';
+
+  @override
+  String get settingsNotificationOrdersHint =>
+      'Alert me when an order is placed.';
+
+  @override
+  String get settingsNotificationLowStock => 'Low stock';
+
+  @override
+  String get settingsNotificationLowStockHint =>
+      'Alert me when an item drops below its reorder point.';
+
+  @override
+  String get settingsNotificationReviews => 'New reviews';
+
+  @override
+  String get settingsNotificationReviewsHint =>
+      'Alert me when a customer leaves a review.';
+
+  @override
+  String get settingsNotificationDigest => 'Daily digest';
+
+  @override
+  String get settingsNotificationDigestHint => 'Send a summary every morning.';
+
+  @override
+  String get settingsDefaultBranch => 'Default branch';
+
+  @override
+  String get settingsDefaultBranchHint =>
+      'The branch selected when you sign in.';
+
+  @override
+  String get settingsLandingPage => 'Landing page';
+
+  @override
+  String get settingsLandingPageHint => 'The first screen after sign-in.';
+
+  @override
+  String get settingsAutoRefresh => 'Auto-refresh dashboards';
+
+  @override
+  String get settingsAutoRefreshHint => 'Refresh KPIs every 60 seconds.';
+
+  @override
+  String get settingsSave => 'Save changes';
+
+  @override
+  String get settingsSaved => 'Settings saved.';
+
+  @override
+  String get settingsBranchMain => 'Main showroom · Cairo';
+
+  @override
+  String get settingsBranchAlex => 'Alexandria branch';
+
+  @override
+  String get settingsBranchGiza => 'Giza branch';
+
+  @override
+  String get wireframeTableTitle => 'Data table';
+
+  @override
+  String get wireframeFormTitle => 'Form';
+
+  @override
+  String get wireframeStatsTitle => 'Metrics';
+
+  @override
+  String get wireframeCalendarTitle => 'Calendar';
+
+  @override
+  String get wireframeMapTitle => 'Map';
+
+  @override
+  String get wireframeBoardTitle => 'Board';
+
+  @override
+  String get wireframeListTitle => 'List & detail';
+
+  @override
+  String get wireframeDetailTitle => 'Record details';
+
+  @override
+  String get wireframeToolbar => 'Search, filters and actions';
+
+  @override
+  String get wireframeSearch => 'Search';
+
+  @override
+  String get wireframeFilter => 'Filter';
+
+  @override
+  String get wireframeNew => 'New';
+
+  @override
+  String get wireframeExport => 'Export';
+
+  @override
+  String get wireframeColumns => 'Column';
+
+  @override
+  String get wireframeRows => 'Row';
+
+  @override
+  String get wireframeActions => 'Actions';
+
+  @override
+  String get wireframeField => 'Field';
+
+  @override
+  String get wireframeValue => 'Value';
+
+  @override
+  String get wireframeSave => 'Save';
+
+  @override
+  String get wireframeCancel => 'Cancel';
+
+  @override
+  String get wireframeChartArea => 'Chart area';
+
+  @override
+  String get wireframeTableArea => 'Table area';
+
+  @override
+  String get wireframeMapArea => 'Route and stops';
+
+  @override
+  String get wireframeTimeline => 'Timeline';
+
+  @override
+  String get wireframeCard => 'Card';
+
+  @override
+  String get wireframeMetric => 'Metric';
+
+  @override
+  String get wireframePreviewHint => 'Preview of the planned layout';
+
+  @override
+  String get hubScreens => 'Screens';
+
+  @override
+  String get hubSelectScreen =>
+      'Select a screen to preview its planned layout.';
 }

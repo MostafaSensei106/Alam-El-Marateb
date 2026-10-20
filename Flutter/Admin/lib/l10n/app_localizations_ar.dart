@@ -543,4 +543,385 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get settingsFeature3 => 'إعدادات النظام العامة';
+
+  @override
+  String get adminWorkspace => 'مساحة إدارة المتجر';
+
+  @override
+  String get adminDisplayName => 'أحمد الجزار';
+
+  @override
+  String get adminRole => 'مدير عام';
+
+  @override
+  String get openAccountMenu => 'فتح قائمة الحساب';
+
+  @override
+  String get account => 'الحساب';
+
+  @override
+  String get myProfile => 'ملفي الشخصي';
+
+  @override
+  String get signOut => 'تسجيل الخروج';
+
+  @override
+  String get signOutConfirmTitle => 'تسجيل الخروج؟';
+
+  @override
+  String get signOutConfirmMessage =>
+      'ستحتاج إلى تسجيل الدخول مرة أخرى للوصول إلى مساحة الإدارة.';
+
+  @override
+  String get appearance => 'المظهر';
+
+  @override
+  String get themeLight => 'فاتح';
+
+  @override
+  String get themeDark => 'داكن';
+
+  @override
+  String get language => 'اللغة';
+
+  @override
+  String get plannedScreens => 'الشاشات المخطط لها';
+
+  @override
+  String get interactivePrototype => 'نموذج تفاعلي';
+
+  @override
+  String get prototypeNotice =>
+      'معاينة للتخطيط ببيانات تجريبية. سيتم ربط الشاشات بواجهة البيانات لاحقًا.';
+
+  @override
+  String get sampleData => 'بيانات تجريبية';
+
+  @override
+  String dashboardGreeting(String name) {
+    return 'أهلًا بعودتك، $name';
+  }
+
+  @override
+  String get dashboardSubtitle => 'إليك ما يحدث في متجرك اليوم.';
+
+  @override
+  String get dashboardRevenue => 'الإيرادات';
+
+  @override
+  String get dashboardOrders => 'الطلبات';
+
+  @override
+  String get dashboardCustomers => 'العملاء';
+
+  @override
+  String get dashboardLowStock => 'مخزون منخفض';
+
+  @override
+  String get dashboardRevenueChange => '+12.4% مقارنة بالأسبوع الماضي';
+
+  @override
+  String get dashboardOrdersChange => '+8.1% مقارنة بالأسبوع الماضي';
+
+  @override
+  String get dashboardCustomersChange => '+4.6% مقارنة بالأسبوع الماضي';
+
+  @override
+  String get dashboardLowStockChange => '6 أصناف تحتاج إلى متابعة';
+
+  @override
+  String get dashboardRevenueTrend => 'الإيرادات، آخر 7 أيام';
+
+  @override
+  String get dashboardAverageOrder => 'متوسط الطلب';
+
+  @override
+  String get dashboardTodaySales => 'اليوم';
+
+  @override
+  String get dashboardRecentOrders => 'أحدث الطلبات';
+
+  @override
+  String get dashboardQuickActions => 'إجراءات سريعة';
+
+  @override
+  String get dashboardViewAll => 'عرض الكل';
+
+  @override
+  String get dashboardOrder => 'الطلب';
+
+  @override
+  String get dashboardCustomer => 'العميل';
+
+  @override
+  String get dashboardStatus => 'الحالة';
+
+  @override
+  String get dashboardTotal => 'الإجمالي';
+
+  @override
+  String get dashboardStatusPaid => 'مدفوع';
+
+  @override
+  String get dashboardStatusPending => 'قيد الانتظار';
+
+  @override
+  String get dashboardStatusShipping => 'قيد التوصيل';
+
+  @override
+  String get dashboardNewSale => 'بيع جديد';
+
+  @override
+  String get dashboardAddProduct => 'إضافة منتج';
+
+  @override
+  String get dashboardNewCustomer => 'عميل جديد';
+
+  @override
+  String get dashboardCreateTrip => 'رحلة توصيل';
+
+  @override
+  String get profileAccountDetails => 'بيانات الحساب';
+
+  @override
+  String get profileFullName => 'الاسم الكامل';
+
+  @override
+  String get profileJobTitle => 'المسمى الوظيفي';
+
+  @override
+  String get profileEmail => 'البريد الإلكتروني';
+
+  @override
+  String get profilePhone => 'رقم الهاتف';
+
+  @override
+  String get profileBranch => 'الفرع';
+
+  @override
+  String get profileBranchValue => 'المعرض الرئيسي · القاهرة';
+
+  @override
+  String get profileMemberSince => 'عضو منذ';
+
+  @override
+  String get profileMemberSinceValue => 'يناير 2024';
+
+  @override
+  String get profileEdit => 'تعديل الملف';
+
+  @override
+  String get profilePreferences => 'التفضيلات';
+
+  @override
+  String get profileSecurity => 'الأمان';
+
+  @override
+  String get profileChangePassword => 'تغيير كلمة المرور';
+
+  @override
+  String get profileChangePasswordDescription =>
+      'استخدم كلمة مرور قوية لا تعيد استخدامها في مكان آخر.';
+
+  @override
+  String get profileTwoFactor => 'التحقق بخطوتين';
+
+  @override
+  String get profileTwoFactorDescription => 'اطلب رمز تحقق في كل جهاز جديد.';
+
+  @override
+  String get profileSessions => 'الجلسات النشطة';
+
+  @override
+  String get profileSessionsDescription =>
+      'سجّل الخروج من كل الأجهزة عدا هذا الجهاز.';
+
+  @override
+  String get profilePermissions => 'الدور والصلاحيات';
+
+  @override
+  String get profilePermissionHint => 'وصول كامل إلى جميع وحدات مساحة العمل.';
+
+  @override
+  String get profilePermissionAll => 'جميع الوحدات';
+
+  @override
+  String get profileEditNotReady =>
+      'سيتوفر تعديل الملف بعد ربط واجهة البيانات.';
+
+  @override
+  String get profilePasswordNotReady =>
+      'سيتوفر تغيير كلمة المرور بعد ربط واجهة البيانات.';
+
+  @override
+  String get profileTwoFactorOn => 'تم تفعيل التحقق بخطوتين.';
+
+  @override
+  String get profileTwoFactorOff => 'تم إيقاف التحقق بخطوتين.';
+
+  @override
+  String get profileSessionsCleared => 'تم تسجيل الخروج من الجلسات الأخرى.';
+
+  @override
+  String get profileSignOutDevice => 'تسجيل الخروج من هذا الجهاز';
+
+  @override
+  String get settingsAppearanceHint => 'اختر شكل لوحة الإدارة.';
+
+  @override
+  String get settingsNotifications => 'الإشعارات';
+
+  @override
+  String get settingsNotificationsHint => 'اختر الأحداث التي تريد التنبيه بها.';
+
+  @override
+  String get settingsGeneral => 'عام';
+
+  @override
+  String get settingsGeneralHint => 'الإعدادات الافتراضية لكل مساحة العمل.';
+
+  @override
+  String get settingsNotificationOrders => 'الطلبات الجديدة';
+
+  @override
+  String get settingsNotificationOrdersHint => 'نبّهني عند إنشاء طلب.';
+
+  @override
+  String get settingsNotificationLowStock => 'المخزون المنخفض';
+
+  @override
+  String get settingsNotificationLowStockHint =>
+      'نبّهني عندما يقل صنف عن حد إعادة الطلب.';
+
+  @override
+  String get settingsNotificationReviews => 'التقييمات الجديدة';
+
+  @override
+  String get settingsNotificationReviewsHint => 'نبّهني عند ترك عميل لتقييم.';
+
+  @override
+  String get settingsNotificationDigest => 'الملخص اليومي';
+
+  @override
+  String get settingsNotificationDigestHint => 'أرسل ملخصًا كل صباح.';
+
+  @override
+  String get settingsDefaultBranch => 'الفرع الافتراضي';
+
+  @override
+  String get settingsDefaultBranchHint => 'الفرع المحدد عند تسجيل الدخول.';
+
+  @override
+  String get settingsLandingPage => 'الصفحة الرئيسية';
+
+  @override
+  String get settingsLandingPageHint => 'أول شاشة بعد تسجيل الدخول.';
+
+  @override
+  String get settingsAutoRefresh => 'التحديث التلقائي للوحات';
+
+  @override
+  String get settingsAutoRefreshHint => 'تحديث المؤشرات كل 60 ثانية.';
+
+  @override
+  String get settingsSave => 'حفظ التغييرات';
+
+  @override
+  String get settingsSaved => 'تم حفظ الإعدادات.';
+
+  @override
+  String get settingsBranchMain => 'المعرض الرئيسي · القاهرة';
+
+  @override
+  String get settingsBranchAlex => 'فرع الإسكندرية';
+
+  @override
+  String get settingsBranchGiza => 'فرع الجيزة';
+
+  @override
+  String get wireframeTableTitle => 'جدول بيانات';
+
+  @override
+  String get wireframeFormTitle => 'نموذج';
+
+  @override
+  String get wireframeStatsTitle => 'مؤشرات';
+
+  @override
+  String get wireframeCalendarTitle => 'تقويم';
+
+  @override
+  String get wireframeMapTitle => 'خريطة';
+
+  @override
+  String get wireframeBoardTitle => 'لوحة';
+
+  @override
+  String get wireframeListTitle => 'قائمة وتفاصيل';
+
+  @override
+  String get wireframeDetailTitle => 'تفاصيل السجل';
+
+  @override
+  String get wireframeToolbar => 'بحث وفلاتر وإجراءات';
+
+  @override
+  String get wireframeSearch => 'بحث';
+
+  @override
+  String get wireframeFilter => 'تصفية';
+
+  @override
+  String get wireframeNew => 'جديد';
+
+  @override
+  String get wireframeExport => 'تصدير';
+
+  @override
+  String get wireframeColumns => 'عمود';
+
+  @override
+  String get wireframeRows => 'صف';
+
+  @override
+  String get wireframeActions => 'إجراءات';
+
+  @override
+  String get wireframeField => 'حقل';
+
+  @override
+  String get wireframeValue => 'القيمة';
+
+  @override
+  String get wireframeSave => 'حفظ';
+
+  @override
+  String get wireframeCancel => 'إلغاء';
+
+  @override
+  String get wireframeChartArea => 'منطقة الرسم البياني';
+
+  @override
+  String get wireframeTableArea => 'منطقة الجدول';
+
+  @override
+  String get wireframeMapArea => 'المسار ونقاط التوقف';
+
+  @override
+  String get wireframeTimeline => 'الجدول الزمني';
+
+  @override
+  String get wireframeCard => 'بطاقة';
+
+  @override
+  String get wireframeMetric => 'مؤشر';
+
+  @override
+  String get wireframePreviewHint => 'معاينة التخطيط المخطط';
+
+  @override
+  String get hubScreens => 'الشاشات';
+
+  @override
+  String get hubSelectScreen => 'اختر شاشة لمعاينة تخطيطها المخطط.';
 }
