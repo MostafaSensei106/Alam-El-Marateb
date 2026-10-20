@@ -1,7 +1,7 @@
 # dart run flutter_native_splash:create
 flutter_native_splash:
   # Set the background color of the splash screen
-  color: "#1B487C"
+  color: "#ffffff"
 
   # Add a logo image in the center of the splash screen
   image_android: assets/icons/play_store_512.png
@@ -23,7 +23,7 @@ flutter_native_splash:
     image: assets/icons/ic_launcher_foreground.png
 
   # Dark mode support
-  color_dark: "#ffffff"
+  color_dark: "#1B487C"
   # branding_dark: assets/images/MHlogo.png
 
   # Disable splash screen generation for iOS and web
