@@ -274,6 +274,11 @@ class _AdminNavigationRailState extends State<_AdminNavigationRail> {
     final extended =
         _extendedOverride ?? MediaQuery.sizeOf(context).width >= 1200;
 
+    debugPrint(
+      'RAIL size=${MediaQuery.sizeOf(context)} '
+      'dpr=${MediaQuery.devicePixelRatioOf(context)} extended=$extended',
+    );
+
     final width = extended ? _extendedRailWidth : _railWidth;
 
     // `NavigationRail` lays out its leading/trailing widgets with the width
