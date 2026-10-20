@@ -92,6 +92,27 @@ void main() {
     }
   });
 
+  testWidgets('settings exposes an app info tab', (tester) async {
+    await pumpMainPage(tester, surfaceSize: const Size(411, 900));
+
+    final rail = find.byType(NavigationRail);
+    final settings = find.descendant(of: rail, matching: find.text('Settings'));
+
+    await tester.ensureVisible(settings);
+    await tester.pumpAndSettle();
+    await tester.tap(settings);
+    await tester.pumpAndSettle();
+
+    final appInfoTab = find.text('App info');
+    await tester.ensureVisible(appInfoTab);
+    await tester.pumpAndSettle();
+    await tester.tap(appInfoTab);
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    expect(find.text('App information unavailable'), findsOneWidget);
+  });
+
   testWidgets('profile tile opens the account dialog', (tester) async {
     await pumpMainPage(tester, surfaceSize: const Size(1600, 900));
 

@@ -243,6 +243,7 @@ final class _SummaryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.localeKeys;
+    final fallback = l10n.appInfoUnknown;
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -268,14 +269,14 @@ final class _SummaryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                info.appName,
+                _orFallback(info.appName, fallback),
                 style: textTheme.titleLarge,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
               const SizedBox(height: 2),
               Text(
-                info.packageName,
+                _orFallback(info.packageName, fallback),
                 style: textTheme.bodySmall?.copyWith(
                   color: colorScheme.onSurfaceVariant,
                 ),
@@ -290,10 +291,7 @@ final class _SummaryCard extends StatelessWidget {
 
     final copyButton = OutlinedButton.icon(
       onPressed: onCopy,
-      icon: const Icon(
-        LucideIcons.clipboardCopy,
-        size: AppIconSizes.small,
-      ),
+      icon: const Icon(LucideIcons.clipboardCopy, size: AppIconSizes.small),
       label: Text(l10n.appInfoCopy),
     );
 
@@ -332,12 +330,16 @@ final class _SummaryCard extends StatelessWidget {
             runSpacing: AppSpacing.small,
             children: [
               AdminStatusPill(
-                label: '${l10n.appInfoVersion} ${info.version}',
+                label:
+                    '${l10n.appInfoVersion} '
+                    '${_orFallback(info.version, fallback)}',
                 tone: AdminPillTone.primary,
                 icon: LucideIcons.tag,
               ),
               AdminStatusPill(
-                label: '${l10n.appInfoBuildNumber} ${info.buildNumber}',
+                label:
+                    '${l10n.appInfoBuildNumber} '
+                    '${_orFallback(info.buildNumber, fallback)}',
                 icon: LucideIcons.hash,
               ),
               AdminStatusPill(

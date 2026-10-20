@@ -41,19 +41,18 @@ final class AdminModuleHubPage extends StatelessWidget {
 ///
 /// The callback receives the active [AdminSubSection] and its index so a
 /// screen can keep its own state while still using the standard tab strip.
-typedef AdminSectionBuilder =
-    Widget Function(BuildContext context, AdminSubSection section, int index);
+typedef AdminSectionBuilder = Widget Function(
+  BuildContext context,
+  AdminSubSection section,
+  int index,
+);
 
 /// Tab navigator for the screens planned inside one module.
 ///
 /// Every tab renders the full available width instead of sharing space with a
 /// navigation list, so tables and boards stay readable on compact windows.
 final class AdminSectionHub extends HookWidget {
-  const AdminSectionHub({
-    required this.module,
-    super.key,
-    this.sectionBuilder,
-  });
+  const AdminSectionHub({required this.module, super.key, this.sectionBuilder});
 
   final AdminModule module;
 
