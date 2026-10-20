@@ -553,6 +553,8 @@
   "dashboardBranchProfit": "Profit",
   "dashboardBranchOrders": "Orders",
   "dashboardBranchShare": "{value} of revenue",
+  "dashboardShare": "Share",
+  "dashboardWarehouse": "Warehouse",
   "@dashboardBranchShare": {
     "placeholders": {
       "value": {
@@ -704,6 +706,7 @@
     }
   },
   "dashboardTopCustomers": "Top customers",
+  "dashboardTopCustomersHint": "Ranked by lifetime spend and loyalty",
   "dashboardCustomerSearch": "Search by name or phone",
   "dashboardCustomerProfile": "Customer 360",
   "dashboardCustomerSince": "Customer since {date}",
@@ -839,5 +842,45 @@
   "addressLine1": "12 El Geish Street, Tanta",
   "addressLine2": "Nasr City, Cairo",
   "addressLine3": "Smouha, Alexandria",
-  "addressLine4": "El Mashaya, Mansoura"
+  "addressLine4": "El Mashaya, Mansoura",
+  "dashboardProduct": "Product",
+  "@dashboardProduct": {
+    "type": "String"
+  },
+  "dashboardGovernorate": "Governorate",
+  "@dashboardGovernorate": {
+    "type": "String"
+  },
+  "dashboardItems": "Items",
+  "@dashboardItems": {
+    "type": "String"
+  },
+  "dashboardUnits": "Units",
+  "@dashboardUnits": {
+    "type": "String"
+  },
+  "dashboardIssue": "Issue",
+  "@dashboardIssue": {
+    "type": "String"
+  },
+  "dashboardEmpty": "No records match this filter.",
+  "@dashboardEmpty": {
+    "type": "String"
+  },
+  "dashboardAction": "Action",
+  "@dashboardAction": {
+    "type": "String"
+  },
+  "dashboardOutcome": "Outcome",
+  "@dashboardOutcome": {
+    "type": "String"
+  },
+  "dashboardDetails": "Details",
+  "@dashboardDetails": {
+    "type": "String"
+  },
+  "dashboardTime": "Time",
+  "@dashboardTime": {
+    "type": "String"
+  }
 }

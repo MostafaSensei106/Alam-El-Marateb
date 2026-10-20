@@ -483,6 +483,8 @@
   "dashboardBranchProfit": "الربح",
   "dashboardBranchOrders": "الطلبات",
   "dashboardBranchShare": "{value} من الإيراد",
+  "dashboardShare": "الحصة",
+  "dashboardWarehouse": "المخزن",
   "dashboardNoBranches": "لا توجد بيانات فروع لهذا الفلتر.",
   "dashboardVelocity": "حركة المخزون",
   "dashboardVelocityHint": "المبيعات خلال ٣٠ يومًا مقابل التغطية المتاحة",
@@ -540,6 +542,7 @@
   "dashboardAuditWarrantyDetail": "{customer} · {product}",
   "dashboardAuditPurchaseDetail": "{supplier} · {amount}",
   "dashboardTopCustomers": "أفضل العملاء",
+  "dashboardTopCustomersHint": "مرتبون حسب الإنفاق الكلي والولاء",
   "dashboardCustomerSearch": "ابحث بالاسم أو الهاتف",
   "dashboardCustomerProfile": "ملف العميل 360",
   "dashboardCustomerSince": "عميل منذ {date}",
@@ -640,5 +643,45 @@
   "addressLine1": "١٢ شارع الجيش، طنطا",
   "addressLine2": "مدينة نصر، القاهرة",
   "addressLine3": "سموحة، الإسكندرية",
-  "addressLine4": "المشاية، المنصورة"
+  "addressLine4": "المشاية، المنصورة",
+  "dashboardProduct": "المنتج",
+  "@dashboardProduct": {
+    "type": "String"
+  },
+  "dashboardGovernorate": "المحافظة",
+  "@dashboardGovernorate": {
+    "type": "String"
+  },
+  "dashboardItems": "عدد القطع",
+  "@dashboardItems": {
+    "type": "String"
+  },
+  "dashboardUnits": "الوحدات",
+  "@dashboardUnits": {
+    "type": "String"
+  },
+  "dashboardIssue": "المشكلة",
+  "@dashboardIssue": {
+    "type": "String"
+  },
+  "dashboardEmpty": "لا توجد سجلات مطابقة لهذا الفلتر.",
+  "@dashboardEmpty": {
+    "type": "String"
+  },
+  "dashboardAction": "الإجراء",
+  "@dashboardAction": {
+    "type": "String"
+  },
+  "dashboardOutcome": "النتيجة",
+  "@dashboardOutcome": {
+    "type": "String"
+  },
+  "dashboardDetails": "التفاصيل",
+  "@dashboardDetails": {
+    "type": "String"
+  },
+  "dashboardTime": "الوقت",
+  "@dashboardTime": {
+    "type": "String"
+  }
 }

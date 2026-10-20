@@ -1375,6 +1375,12 @@ class AppLocalizationsAr extends AppLocalizations {
   }
 
   @override
+  String get dashboardShare => 'الحصة';
+
+  @override
+  String get dashboardWarehouse => 'المخزن';
+
+  @override
   String get dashboardNoBranches => 'لا توجد بيانات فروع لهذا الفلتر.';
 
   @override
@@ -1885,4 +1891,34 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get addressLine4 => 'المشاية، المنصورة';
+
+  @override
+  String get dashboardProduct => 'المنتج';
+
+  @override
+  String get dashboardGovernorate => 'المحافظة';
+
+  @override
+  String get dashboardItems => 'عدد القطع';
+
+  @override
+  String get dashboardUnits => 'الوحدات';
+
+  @override
+  String get dashboardIssue => 'المشكلة';
+
+  @override
+  String get dashboardEmpty => 'لا توجد سجلات مطابقة لهذا الفلتر.';
+
+  @override
+  String get dashboardAction => 'الإجراء';
+
+  @override
+  String get dashboardOutcome => 'النتيجة';
+
+  @override
+  String get dashboardDetails => 'التفاصيل';
+
+  @override
+  String get dashboardTime => 'الوقت';
 }

@@ -2691,6 +2691,18 @@ abstract class AppLocalizations {
   /// **'{value} of revenue'**
   String dashboardBranchShare(String value);
 
+  /// No description provided for @dashboardShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get dashboardShare;
+
+  /// No description provided for @dashboardWarehouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse'**
+  String get dashboardWarehouse;
+
   /// No description provided for @dashboardNoBranches.
   ///
   /// In en, this message translates to:
@@ -3642,6 +3654,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'El Mashaya, Mansoura'**
   String get addressLine4;
+
+  /// No description provided for @dashboardProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get dashboardProduct;
+
+  /// No description provided for @dashboardGovernorate.
+  ///
+  /// In en, this message translates to:
+  /// **'Governorate'**
+  String get dashboardGovernorate;
+
+  /// No description provided for @dashboardItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get dashboardItems;
+
+  /// No description provided for @dashboardUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get dashboardUnits;
+
+  /// No description provided for @dashboardIssue.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue'**
+  String get dashboardIssue;
+
+  /// No description provided for @dashboardEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No records match this filter.'**
+  String get dashboardEmpty;
+
+  /// No description provided for @dashboardAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Action'**
+  String get dashboardAction;
+
+  /// No description provided for @dashboardOutcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Outcome'**
+  String get dashboardOutcome;
+
+  /// No description provided for @dashboardDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Details'**
+  String get dashboardDetails;
+
+  /// No description provided for @dashboardTime.
+  ///
+  /// In en, this message translates to:
+  /// **'Time'**
+  String get dashboardTime;
 }
 
 class _AppLocalizationsDelegate

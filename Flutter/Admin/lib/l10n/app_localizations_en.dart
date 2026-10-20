@@ -1389,6 +1389,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get dashboardShare => 'Share';
+
+  @override
+  String get dashboardWarehouse => 'Warehouse';
+
+  @override
   String get dashboardNoBranches => 'No branch data for this filter.';
 
   @override
@@ -1906,4 +1912,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addressLine4 => 'El Mashaya, Mansoura';
+
+  @override
+  String get dashboardProduct => 'Product';
+
+  @override
+  String get dashboardGovernorate => 'Governorate';
+
+  @override
+  String get dashboardItems => 'Items';
+
+  @override
+  String get dashboardUnits => 'Units';
+
+  @override
+  String get dashboardIssue => 'Issue';
+
+  @override
+  String get dashboardEmpty => 'No records match this filter.';
+
+  @override
+  String get dashboardAction => 'Action';
+
+  @override
+  String get dashboardOutcome => 'Outcome';
+
+  @override
+  String get dashboardDetails => 'Details';
+
+  @override
+  String get dashboardTime => 'Time';
 }
