@@ -439,5 +439,405 @@
   "sampleBranch1": "Tanta branch",
   "sampleBranch2": "Cairo branch",
   "sampleBranch3": "Alexandria branch",
-  "sampleBranch4": "Mansoura branch"
+  "sampleBranch4": "Mansoura branch",
+  "dashboardSubtitleBranches": "Alam El Marateb performance across branches, stock and customers.",
+  "dashboardPeriod": "Period",
+  "dashboardLast7Days": "Last 7 days",
+  "dashboardLast30Days": "Last 30 days",
+  "dashboardLast90Days": "Last 90 days",
+  "dashboardBranchFilter": "Branch",
+  "dashboardAllBranches": "All branches",
+  "dashboardRefresh": "Refresh",
+  "dashboardExport": "Export",
+  "dashboardExportHint": "Export will be available once the dashboard API is connected.",
+  "dashboardRefreshed": "Dashboard refreshed with the latest sample data.",
+  "dashboardUpdated": "Updated {time}",
+  "@dashboardUpdated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardSampleBadge": "Sample data",
+  "dashboardSampleNote": "Sample data shaped like the analytics API. Flutter-only additions are documented in dashboard-flutter-features.md.",
+  "dashboardActionHint": "\"{action}\" will open here once dashboard actions are connected.",
+  "@dashboardActionHint": {
+    "placeholders": {
+      "action": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardOpenModuleHint": "Open the {module} module to continue.",
+  "@dashboardOpenModuleHint": {
+    "placeholders": {
+      "module": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardClose": "Close",
+  "dashboardKpiRevenue": "Net revenue",
+  "dashboardKpiProfit": "Gross profit",
+  "dashboardKpiOrders": "Orders",
+  "dashboardKpiAverageOrder": "Average order",
+  "dashboardKpiCustomers": "Active customers",
+  "dashboardKpiLowStock": "Low-stock variants",
+  "dashboardVsPrevious": "{value} vs previous period",
+  "@dashboardVsPrevious": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardNoChange": "No change vs previous period",
+  "dashboardRevenueProfit": "Revenue & profit",
+  "dashboardRevenueProfitHint": "Daily performance for the selected period",
+  "dashboardProfit": "Gross profit",
+  "dashboardMargin": "{value} margin",
+  "@dashboardMargin": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardOrdersCount": "{value} orders",
+  "@dashboardOrdersCount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardUnitsCount": "{value} units",
+  "@dashboardUnitsCount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardPreviousPeriod": "vs previous period",
+  "dashboardOperations": "Operational alerts",
+  "dashboardOperationsHint": "Items that need attention from the operations team",
+  "dashboardLowStockAlert": "Low-stock variants",
+  "dashboardLowStockAlertHint": "Below the reorder point",
+  "dashboardPendingTransfers": "Pending transfers",
+  "dashboardPendingTransfersHint": "Waiting for dispatch or receipt",
+  "dashboardOpenAudits": "Open stock audits",
+  "dashboardOpenAuditsHint": "Counts that are not closed yet",
+  "dashboardStockByWarehouse": "Stock by warehouse",
+  "dashboardStockHint": "Quantity and valuation per warehouse",
+  "dashboardStockTotal": "Total stock value",
+  "dashboardStockQuantity": "{value} units",
+  "@dashboardStockQuantity": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardWarehouses": "{value} warehouses",
+  "@dashboardWarehouses": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardBranchPerformance": "Branch performance",
+  "dashboardBranchHint": "Revenue, profit and orders per branch",
+  "dashboardBranchProfit": "Profit",
+  "dashboardBranchOrders": "Orders",
+  "dashboardBranchShare": "{value} of revenue",
+  "@dashboardBranchShare": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardNoBranches": "No branch data for this filter.",
+  "dashboardVelocity": "Stock velocity",
+  "dashboardVelocityHint": "Sold in the last 30 days versus available cover",
+  "dashboardVariant": "Variant",
+  "dashboardSold30d": "Sold 30d",
+  "dashboardCurrentQty": "Available",
+  "dashboardDaysOfCover": "Cover",
+  "dashboardCoverOut": "Out of stock",
+  "dashboardCoverLow": "Reorder now",
+  "dashboardCoverHealthy": "Healthy",
+  "dashboardCoverDays": "{value} days",
+  "@dashboardCoverDays": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardTopProducts": "Top products",
+  "dashboardTopProductsHint": "Best sellers by revenue for the selected period",
+  "dashboardTopProductQty": "Units",
+  "dashboardTopProductRevenue": "Revenue",
+  "dashboardTopProductShare": "Share",
+  "dashboardRfm": "Customer RFM",
+  "dashboardRfmHint": "Recency, frequency and monetary value",
+  "dashboardRfmCustomers": "Customers",
+  "dashboardRfmMonetary": "Monetary",
+  "dashboardRfmChampions": "Champions",
+  "dashboardRfmLoyal": "Loyal",
+  "dashboardRfmPotential": "Potential loyalists",
+  "dashboardRfmNew": "New customers",
+  "dashboardRfmAtRisk": "At risk",
+  "dashboardRfmLost": "Lost",
+  "dashboardGeo": "Orders by governorate",
+  "dashboardGeoHint": "Delivery demand across Egypt",
+  "dashboardGeoTop": "Top governorate",
+  "dashboardInquiries": "Customer inquiries",
+  "dashboardInquiriesHint": "Latest product questions from the floor",
+  "dashboardInquiryBought": "Bought",
+  "dashboardInquiryPrice": "Price question",
+  "dashboardInquiryNoStock": "Out of stock",
+  "dashboardInquiryJustAsking": "Just asking",
+  "dashboardInquiriesCount": "{value} inquiries",
+  "@dashboardInquiriesCount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardTopAsked": "Most asked products",
+  "dashboardTopAskedHint": "Questions and missed sales by product",
+  "dashboardAsked": "Asked",
+  "dashboardNoStockAsked": "No stock",
+  "dashboardPriceAsked": "Price asks",
+  "dashboardAuditTrail": "Audit trail",
+  "dashboardAuditHint": "Recent changes across inventory and sales",
+  "dashboardAuditBy": "by {actor}",
+  "@dashboardAuditBy": {
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardAuditTransfer": "Stock transfer",
+  "dashboardAuditAdjustment": "Stock adjustment",
+  "dashboardAuditPrice": "Price change",
+  "dashboardAuditShift": "Shift closed",
+  "dashboardAuditWarranty": "Warranty claim",
+  "dashboardAuditPurchase": "Purchase receipt",
+  "dashboardAuditTransferDetail": "{qty} units from {from} to {to}",
+  "@dashboardAuditTransferDetail": {
+    "placeholders": {
+      "qty": {
+        "type": "String"
+      },
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardAuditAdjustmentDetail": "{variant} adjusted by {diff}",
+  "@dashboardAuditAdjustmentDetail": {
+    "placeholders": {
+      "variant": {
+        "type": "String"
+      },
+      "diff": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardAuditPriceDetail": "{product}: {oldPrice} to {newPrice}",
+  "@dashboardAuditPriceDetail": {
+    "placeholders": {
+      "product": {
+        "type": "String"
+      },
+      "oldPrice": {
+        "type": "String"
+      },
+      "newPrice": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardAuditShiftDetail": "{branch} closed with {variance} variance",
+  "@dashboardAuditShiftDetail": {
+    "placeholders": {
+      "branch": {
+        "type": "String"
+      },
+      "variance": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardAuditWarrantyDetail": "{customer} · {product}",
+  "@dashboardAuditWarrantyDetail": {
+    "placeholders": {
+      "customer": {
+        "type": "String"
+      },
+      "product": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardAuditPurchaseDetail": "{supplier} · {amount}",
+  "@dashboardAuditPurchaseDetail": {
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardTopCustomers": "Top customers",
+  "dashboardCustomerSearch": "Search by name or phone",
+  "dashboardCustomerProfile": "Customer 360",
+  "dashboardCustomerSince": "Customer since {date}",
+  "@dashboardCustomerSince": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardCustomerContact": "Contact",
+  "dashboardCustomerAddresses": "Addresses",
+  "dashboardCustomerWarranties": "Warranties & claims",
+  "dashboardCustomerLoyalty": "Loyalty",
+  "dashboardCustomerNotes": "Notes",
+  "dashboardCustomerSpend": "Lifetime spend",
+  "dashboardCustomerAvgOrder": "Average order",
+  "dashboardCustomerPoints": "Points",
+  "dashboardCustomerTier": "Tier",
+  "dashboardCustomerRfm": "RFM segment",
+  "dashboardCustomerPreferred": "Preferred channel",
+  "dashboardPreferredBranch": "Preferred branch",
+  "dashboardCustomerRecentOrders": "Recent orders",
+  "dashboardCustomerNoOrders": "No orders on record.",
+  "dashboardCustomerNoClaims": "No warranty claims on record.",
+  "dashboardCustomerNoAddresses": "No saved addresses.",
+  "dashboardWarrantyExpires": "Expires {date}",
+  "@dashboardWarrantyExpires": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardWarrantyPurchased": "Purchased {date}",
+  "@dashboardWarrantyPurchased": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardClaimOpen": "Open",
+  "dashboardClaimInspection": "Inspection",
+  "dashboardClaimResolved": "Resolved",
+  "dashboardTierBronze": "Bronze",
+  "dashboardTierSilver": "Silver",
+  "dashboardTierGold": "Gold",
+  "dashboardTierPlatinum": "Platinum",
+  "dashboardOrderCount": "{value} orders",
+  "@dashboardOrderCount": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardCustomerNote1": "Prefers medical mattresses in 160×200 and confirms visits on WhatsApp.",
+  "dashboardCustomerNote2": "Corporate account: ordered 12 mattresses for a Tanta hotel and needs a tax invoice.",
+  "dashboardCustomerNote3": "Complained about a late delivery before; confirm the slot one day ahead.",
+  "dashboardCustomerNote4": "Interested in instalments and asked to be called when a new batch arrives.",
+  "dashboardRecentOrdersHint": "Latest sales across every branch",
+  "dashboardOrderDate": "Date",
+  "dashboardOrderChannel": "Channel",
+  "dashboardQuickActionsHint": "Shortcuts for the counter and back office",
+  "dashboardStockTransfer": "Stock transfer",
+  "dashboardNewPurchase": "Purchase order",
+  "dashboardChannelShowroom": "Showroom",
+  "dashboardChannelPhone": "Phone",
+  "dashboardChannelWhatsapp": "WhatsApp",
+  "statusPaid": "Paid",
+  "warehouseTanta": "Tanta main warehouse",
+  "warehouseCairo": "Cairo warehouse",
+  "warehouseAlex": "Alexandria warehouse",
+  "warehouseMansoura": "Mansoura warehouse",
+  "govGharbia": "Gharbia",
+  "govCairo": "Cairo",
+  "govAlexandria": "Alexandria",
+  "govDakahlia": "Dakahlia",
+  "govMenoufia": "Menoufia",
+  "govQalyubia": "Qalyubia",
+  "govSharqia": "Sharqia",
+  "govBeheira": "Beheira",
+  "categoryMattress": "Mattresses",
+  "categoryPillow": "Pillows",
+  "categoryBase": "Bed bases",
+  "categoryAccessory": "Accessories",
+  "supplierDeltaFoam": "Delta Foam",
+  "supplierSleepTech": "Sleep Tech",
+  "product1": "Orthopedic mattress 160×200",
+  "product2": "Memory foam mattress 180×200",
+  "product3": "Spring mattress 150×195",
+  "product4": "Kids mattress 120×190",
+  "product5": "Latex pillow 50×70",
+  "product6": "Memory pillow",
+  "product7": "Wooden bed base 160×200",
+  "product8": "Upholstered bed base 180×200",
+  "product9": "Waterproof mattress protector",
+  "product10": "Cotton bed sheet set",
+  "product11": "Custom oval mattress",
+  "product12": "Hotel mattress 200×200",
+  "customer1": "Mona Abdelrahman",
+  "customer2": "Youssef Kamal",
+  "customer3": "Salma Fathy",
+  "customer4": "Karim Nabil",
+  "customer5": "Hana Tarek",
+  "customer6": "Omar Sherif",
+  "customer7": "Nour Adel",
+  "customer8": "Ahmed Fathy",
+  "customer9": "Mariam Hossam",
+  "customer10": "Tamer Said",
+  "dashboardWeek": "Week {value}",
+  "@dashboardWeek": {
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "dashboardInquiryNote1": "Is the orthopedic mattress available in 160×200?",
+  "dashboardInquiryNote2": "What is the difference between memory foam and spring?",
+  "dashboardInquiryNote3": "I need the price of the upholstered bed base.",
+  "dashboardInquiryNote4": "Do you offer interest-free instalments?",
+  "dashboardInquiryNote5": "How many days does a custom oval mattress take?",
+  "dashboardInquiryNote6": "I need hotel mattresses 200×200 in bulk.",
+  "dashboardClaimIssue1": "Sagging on the left side",
+  "dashboardClaimIssue2": "Broken zip on the cover",
+  "dashboardClaimIssue3": "Wrong size delivered",
+  "dashboardClaimIssue4": "Noise from the spring unit",
+  "addressHome": "Home",
+  "addressWork": "Work",
+  "addressFamily": "Family home",
+  "addressLine1": "12 El Geish Street, Tanta",
+  "addressLine2": "Nasr City, Cairo",
+  "addressLine3": "Smouha, Alexandria",
+  "addressLine4": "El Mashaya, Mansoura"
 }

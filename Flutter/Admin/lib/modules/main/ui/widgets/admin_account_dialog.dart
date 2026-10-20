@@ -202,9 +202,8 @@ final class _AccountActionTile extends StatelessWidget {
               Expanded(
                 child: Text(
                   label,
-                  style: Theme.of(
-                    context,
-                  ).textTheme.bodyMedium?.copyWith(color: color),
+                  style: Theme.of(context).textTheme.bodyMedium
+                      ?.copyWith(color: color),
                 ),
               ),
               Icon(

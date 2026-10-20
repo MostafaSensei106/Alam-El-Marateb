@@ -1199,4 +1199,690 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get sampleBranch4 => 'فرع المنصورة';
+
+  @override
+  String get dashboardSubtitleBranches =>
+      'أداء علم المراتب عبر الفروع والمخزون والعملاء.';
+
+  @override
+  String get dashboardPeriod => 'الفترة';
+
+  @override
+  String get dashboardLast7Days => 'آخر ٧ أيام';
+
+  @override
+  String get dashboardLast30Days => 'آخر ٣٠ يومًا';
+
+  @override
+  String get dashboardLast90Days => 'آخر ٩٠ يومًا';
+
+  @override
+  String get dashboardBranchFilter => 'الفرع';
+
+  @override
+  String get dashboardAllBranches => 'كل الفروع';
+
+  @override
+  String get dashboardRefresh => 'تحديث';
+
+  @override
+  String get dashboardExport => 'تصدير';
+
+  @override
+  String get dashboardExportHint =>
+      'سيتوفر التصدير بعد ربط لوحة التحكم بالواجهة البرمجية.';
+
+  @override
+  String get dashboardRefreshed =>
+      'تم تحديث لوحة التحكم بأحدث البيانات التجريبية.';
+
+  @override
+  String dashboardUpdated(String time) {
+    return 'آخر تحديث $time';
+  }
+
+  @override
+  String get dashboardSampleBadge => 'بيانات تجريبية';
+
+  @override
+  String get dashboardSampleNote =>
+      'بيانات تجريبية على شكل واجهة التحليلات. الإضافات الخاصة بـ Flutter موثّقة في dashboard-flutter-features.md.';
+
+  @override
+  String dashboardActionHint(String action) {
+    return 'سيتم فتح «$action» هنا بعد ربط إجراءات لوحة التحكم.';
+  }
+
+  @override
+  String dashboardOpenModuleHint(String module) {
+    return 'افتح وحدة «$module» للمتابعة.';
+  }
+
+  @override
+  String get dashboardClose => 'إغلاق';
+
+  @override
+  String get dashboardKpiRevenue => 'صافي الإيرادات';
+
+  @override
+  String get dashboardKpiProfit => 'الربح الإجمالي';
+
+  @override
+  String get dashboardKpiOrders => 'الطلبات';
+
+  @override
+  String get dashboardKpiAverageOrder => 'متوسط الطلب';
+
+  @override
+  String get dashboardKpiCustomers => 'العملاء النشطون';
+
+  @override
+  String get dashboardKpiLowStock => 'أصناف قاربت على النفاد';
+
+  @override
+  String dashboardVsPrevious(String value) {
+    return '$value مقارنة بالفترة السابقة';
+  }
+
+  @override
+  String get dashboardNoChange => 'دون تغيير عن الفترة السابقة';
+
+  @override
+  String get dashboardRevenueProfit => 'الإيرادات والأرباح';
+
+  @override
+  String get dashboardRevenueProfitHint => 'الأداء اليومي للفترة المحددة';
+
+  @override
+  String get dashboardProfit => 'الربح الإجمالي';
+
+  @override
+  String dashboardMargin(String value) {
+    return 'هامش $value';
+  }
+
+  @override
+  String dashboardOrdersCount(String value) {
+    return '$value طلب';
+  }
+
+  @override
+  String dashboardUnitsCount(String value) {
+    return '$value وحدة';
+  }
+
+  @override
+  String get dashboardPreviousPeriod => 'مقارنة بالفترة السابقة';
+
+  @override
+  String get dashboardOperations => 'تنبيهات التشغيل';
+
+  @override
+  String get dashboardOperationsHint => 'بنود تحتاج متابعة من فريق التشغيل';
+
+  @override
+  String get dashboardLowStockAlert => 'أصناف تحت حد الطلب';
+
+  @override
+  String get dashboardLowStockAlertHint => 'أقل من نقطة إعادة الطلب';
+
+  @override
+  String get dashboardPendingTransfers => 'تحويلات معلّقة';
+
+  @override
+  String get dashboardPendingTransfersHint => 'بانتظار الإرسال أو الاستلام';
+
+  @override
+  String get dashboardOpenAudits => 'جرد مخزون مفتوح';
+
+  @override
+  String get dashboardOpenAuditsHint => 'عمليات جرد لم تُغلق بعد';
+
+  @override
+  String get dashboardStockByWarehouse => 'المخزون حسب المستودع';
+
+  @override
+  String get dashboardStockHint => 'الكمية والقيمة في كل مستودع';
+
+  @override
+  String get dashboardStockTotal => 'إجمالي قيمة المخزون';
+
+  @override
+  String dashboardStockQuantity(String value) {
+    return '$value وحدة';
+  }
+
+  @override
+  String dashboardWarehouses(String value) {
+    return '$value مستودعات';
+  }
+
+  @override
+  String get dashboardBranchPerformance => 'أداء الفروع';
+
+  @override
+  String get dashboardBranchHint => 'الإيراد والربح والطلبات لكل فرع';
+
+  @override
+  String get dashboardBranchProfit => 'الربح';
+
+  @override
+  String get dashboardBranchOrders => 'الطلبات';
+
+  @override
+  String dashboardBranchShare(String value) {
+    return '$value من الإيراد';
+  }
+
+  @override
+  String get dashboardNoBranches => 'لا توجد بيانات فروع لهذا الفلتر.';
+
+  @override
+  String get dashboardVelocity => 'حركة المخزون';
+
+  @override
+  String get dashboardVelocityHint =>
+      'المبيعات خلال ٣٠ يومًا مقابل التغطية المتاحة';
+
+  @override
+  String get dashboardVariant => 'الصنف';
+
+  @override
+  String get dashboardSold30d => 'مبيعات ٣٠ يومًا';
+
+  @override
+  String get dashboardCurrentQty => 'المتاح';
+
+  @override
+  String get dashboardDaysOfCover => 'التغطية';
+
+  @override
+  String get dashboardCoverOut => 'نفد المخزون';
+
+  @override
+  String get dashboardCoverLow => 'أعد الطلب الآن';
+
+  @override
+  String get dashboardCoverHealthy => 'جيد';
+
+  @override
+  String dashboardCoverDays(String value) {
+    return '$value يومًا';
+  }
+
+  @override
+  String get dashboardTopProducts => 'أفضل المنتجات';
+
+  @override
+  String get dashboardTopProductsHint =>
+      'الأكثر مبيعًا بالإيراد خلال الفترة المحددة';
+
+  @override
+  String get dashboardTopProductQty => 'الوحدات';
+
+  @override
+  String get dashboardTopProductRevenue => 'الإيراد';
+
+  @override
+  String get dashboardTopProductShare => 'الحصة';
+
+  @override
+  String get dashboardRfm => 'تحليل RFM للعملاء';
+
+  @override
+  String get dashboardRfmHint => 'الحداثة والتكرار والقيمة النقدية';
+
+  @override
+  String get dashboardRfmCustomers => 'العملاء';
+
+  @override
+  String get dashboardRfmMonetary => 'القيمة النقدية';
+
+  @override
+  String get dashboardRfmChampions => 'الأبطال';
+
+  @override
+  String get dashboardRfmLoyal => 'مخلصون';
+
+  @override
+  String get dashboardRfmPotential => 'محتملون للولاء';
+
+  @override
+  String get dashboardRfmNew => 'عملاء جدد';
+
+  @override
+  String get dashboardRfmAtRisk => 'معرضون للفقد';
+
+  @override
+  String get dashboardRfmLost => 'مفقودون';
+
+  @override
+  String get dashboardGeo => 'الطلبات حسب المحافظة';
+
+  @override
+  String get dashboardGeoHint => 'طلب التوصيل عبر محافظات مصر';
+
+  @override
+  String get dashboardGeoTop => 'أعلى محافظة';
+
+  @override
+  String get dashboardInquiries => 'استفسارات العملاء';
+
+  @override
+  String get dashboardInquiriesHint => 'أحدث أسئلة المنتجات من صالة العرض';
+
+  @override
+  String get dashboardInquiryBought => 'تم الشراء';
+
+  @override
+  String get dashboardInquiryPrice => 'سؤال عن السعر';
+
+  @override
+  String get dashboardInquiryNoStock => 'غير متوفر';
+
+  @override
+  String get dashboardInquiryJustAsking => 'استفسار فقط';
+
+  @override
+  String dashboardInquiriesCount(String value) {
+    return '$value استفسار';
+  }
+
+  @override
+  String get dashboardTopAsked => 'المنتجات الأكثر سؤالًا';
+
+  @override
+  String get dashboardTopAskedHint => 'الأسئلة والمبيعات الفائتة حسب المنتج';
+
+  @override
+  String get dashboardAsked => 'مرات السؤال';
+
+  @override
+  String get dashboardNoStockAsked => 'نفد المخزون';
+
+  @override
+  String get dashboardPriceAsked => 'أسئلة السعر';
+
+  @override
+  String get dashboardAuditTrail => 'سجل التغييرات';
+
+  @override
+  String get dashboardAuditHint => 'أحدث التغييرات في المخزون والمبيعات';
+
+  @override
+  String dashboardAuditBy(String actor) {
+    return 'بواسطة $actor';
+  }
+
+  @override
+  String get dashboardAuditTransfer => 'تحويل مخزون';
+
+  @override
+  String get dashboardAuditAdjustment => 'تسوية مخزون';
+
+  @override
+  String get dashboardAuditPrice => 'تغيير سعر';
+
+  @override
+  String get dashboardAuditShift => 'إغلاق وردية';
+
+  @override
+  String get dashboardAuditWarranty => 'مطالبة ضمان';
+
+  @override
+  String get dashboardAuditPurchase => 'استلام مشتريات';
+
+  @override
+  String dashboardAuditTransferDetail(String qty, String from, String to) {
+    return '$qty وحدة من $from إلى $to';
+  }
+
+  @override
+  String dashboardAuditAdjustmentDetail(String variant, String diff) {
+    return '$variant بعد تعديل $diff';
+  }
+
+  @override
+  String dashboardAuditPriceDetail(
+    String product,
+    String oldPrice,
+    String newPrice,
+  ) {
+    return '$product: $oldPrice ← $newPrice';
+  }
+
+  @override
+  String dashboardAuditShiftDetail(String branch, String variance) {
+    return '$branch أُغلقت بفرق $variance';
+  }
+
+  @override
+  String dashboardAuditWarrantyDetail(String customer, String product) {
+    return '$customer · $product';
+  }
+
+  @override
+  String dashboardAuditPurchaseDetail(String supplier, String amount) {
+    return '$supplier · $amount';
+  }
+
+  @override
+  String get dashboardTopCustomers => 'أفضل العملاء';
+
+  @override
+  String get dashboardCustomerSearch => 'ابحث بالاسم أو الهاتف';
+
+  @override
+  String get dashboardCustomerProfile => 'ملف العميل 360';
+
+  @override
+  String dashboardCustomerSince(String date) {
+    return 'عميل منذ $date';
+  }
+
+  @override
+  String get dashboardCustomerContact => 'بيانات الاتصال';
+
+  @override
+  String get dashboardCustomerAddresses => 'العناوين';
+
+  @override
+  String get dashboardCustomerWarranties => 'الضمانات والمطالبات';
+
+  @override
+  String get dashboardCustomerLoyalty => 'الولاء';
+
+  @override
+  String get dashboardCustomerNotes => 'ملاحظات';
+
+  @override
+  String get dashboardCustomerSpend => 'إجمالي الإنفاق';
+
+  @override
+  String get dashboardCustomerAvgOrder => 'متوسط الطلب';
+
+  @override
+  String get dashboardCustomerPoints => 'النقاط';
+
+  @override
+  String get dashboardCustomerTier => 'الفئة';
+
+  @override
+  String get dashboardCustomerRfm => 'شريحة RFM';
+
+  @override
+  String get dashboardCustomerPreferred => 'القناة المفضلة';
+
+  @override
+  String get dashboardPreferredBranch => 'الفرع المفضل';
+
+  @override
+  String get dashboardCustomerRecentOrders => 'أحدث الطلبات';
+
+  @override
+  String get dashboardCustomerNoOrders => 'لا توجد طلبات مسجلة.';
+
+  @override
+  String get dashboardCustomerNoClaims => 'لا توجد مطالبات ضمان مسجلة.';
+
+  @override
+  String get dashboardCustomerNoAddresses => 'لا توجد عناوين محفوظة.';
+
+  @override
+  String dashboardWarrantyExpires(String date) {
+    return 'ينتهي $date';
+  }
+
+  @override
+  String dashboardWarrantyPurchased(String date) {
+    return 'تم الشراء $date';
+  }
+
+  @override
+  String get dashboardClaimOpen => 'مفتوحة';
+
+  @override
+  String get dashboardClaimInspection => 'فحص';
+
+  @override
+  String get dashboardClaimResolved => 'تم الحل';
+
+  @override
+  String get dashboardTierBronze => 'برونزية';
+
+  @override
+  String get dashboardTierSilver => 'فضية';
+
+  @override
+  String get dashboardTierGold => 'ذهبية';
+
+  @override
+  String get dashboardTierPlatinum => 'بلاتينية';
+
+  @override
+  String dashboardOrderCount(String value) {
+    return '$value طلب';
+  }
+
+  @override
+  String get dashboardCustomerNote1 =>
+      'تفضل المراتب الطبية مقاس 160×200 وتؤكد الزيارة عبر واتساب.';
+
+  @override
+  String get dashboardCustomerNote2 =>
+      'حساب مؤسسي: طلب ١٢ مرتبة لفندق في طنطا ويحتاج فاتورة ضريبية.';
+
+  @override
+  String get dashboardCustomerNote3 =>
+      'اشتكى من تأخر التوصيل سابقًا؛ يُفضّل تأكيد الميعاد قبل يوم.';
+
+  @override
+  String get dashboardCustomerNote4 =>
+      'مهتم بعروض التقسيط ويطلب متابعة عند توفر دفعة جديدة.';
+
+  @override
+  String get dashboardRecentOrdersHint => 'أحدث المبيعات عبر كل الفروع';
+
+  @override
+  String get dashboardOrderDate => 'التاريخ';
+
+  @override
+  String get dashboardOrderChannel => 'القناة';
+
+  @override
+  String get dashboardQuickActionsHint => 'اختصارات للكاشير والإدارة';
+
+  @override
+  String get dashboardStockTransfer => 'تحويل مخزون';
+
+  @override
+  String get dashboardNewPurchase => 'أمر شراء';
+
+  @override
+  String get dashboardChannelShowroom => 'صالة العرض';
+
+  @override
+  String get dashboardChannelPhone => 'الهاتف';
+
+  @override
+  String get dashboardChannelWhatsapp => 'واتساب';
+
+  @override
+  String get statusPaid => 'مدفوع';
+
+  @override
+  String get warehouseTanta => 'مستودع طنطا الرئيسي';
+
+  @override
+  String get warehouseCairo => 'مستودع القاهرة';
+
+  @override
+  String get warehouseAlex => 'مستودع الإسكندرية';
+
+  @override
+  String get warehouseMansoura => 'مستودع المنصورة';
+
+  @override
+  String get govGharbia => 'الغربية';
+
+  @override
+  String get govCairo => 'القاهرة';
+
+  @override
+  String get govAlexandria => 'الإسكندرية';
+
+  @override
+  String get govDakahlia => 'الدقهلية';
+
+  @override
+  String get govMenoufia => 'المنوفية';
+
+  @override
+  String get govQalyubia => 'القليوبية';
+
+  @override
+  String get govSharqia => 'الشرقية';
+
+  @override
+  String get govBeheira => 'البحيرة';
+
+  @override
+  String get categoryMattress => 'مراتب';
+
+  @override
+  String get categoryPillow => 'وسائد';
+
+  @override
+  String get categoryBase => 'قواعد أسرّة';
+
+  @override
+  String get categoryAccessory => 'ملحقات';
+
+  @override
+  String get supplierDeltaFoam => 'دلتا فوم';
+
+  @override
+  String get supplierSleepTech => 'سليب تك';
+
+  @override
+  String get product1 => 'مرتبة طبية 160×200';
+
+  @override
+  String get product2 => 'مرتبة ميموري فوم 180×200';
+
+  @override
+  String get product3 => 'مرتبة سوست 150×195';
+
+  @override
+  String get product4 => 'مرتبة أطفال 120×190';
+
+  @override
+  String get product5 => 'وسادة لاتكس 50×70';
+
+  @override
+  String get product6 => 'وسادة ميموري';
+
+  @override
+  String get product7 => 'قاعدة سرير خشبية 160×200';
+
+  @override
+  String get product8 => 'قاعدة سرير منجدة 180×200';
+
+  @override
+  String get product9 => 'غطاء مرتبة مقاوم للماء';
+
+  @override
+  String get product10 => 'طقم شراشف قطن';
+
+  @override
+  String get product11 => 'مرتبة بيضاوية حسب المقاس';
+
+  @override
+  String get product12 => 'مرتبة فندقية 200×200';
+
+  @override
+  String get customer1 => 'منى عبد الرحمن';
+
+  @override
+  String get customer2 => 'يوسف كمال';
+
+  @override
+  String get customer3 => 'سلمى فتحي';
+
+  @override
+  String get customer4 => 'كريم نبيل';
+
+  @override
+  String get customer5 => 'هنا طارق';
+
+  @override
+  String get customer6 => 'عمر شريف';
+
+  @override
+  String get customer7 => 'نور عادل';
+
+  @override
+  String get customer8 => 'أحمد فتحي';
+
+  @override
+  String get customer9 => 'مريم حسام';
+
+  @override
+  String get customer10 => 'تامر سعيد';
+
+  @override
+  String dashboardWeek(String value) {
+    return 'الأسبوع $value';
+  }
+
+  @override
+  String get dashboardInquiryNote1 => 'هل المرتبة الطبية متوفرة مقاس 160×200؟';
+
+  @override
+  String get dashboardInquiryNote2 => 'ما الفرق بين الميموري فوم والسوست؟';
+
+  @override
+  String get dashboardInquiryNote3 => 'محتاج سعر قاعدة السرير المنجدة.';
+
+  @override
+  String get dashboardInquiryNote4 => 'هل يوجد تقسيط بدون فائدة؟';
+
+  @override
+  String get dashboardInquiryNote5 => 'المرتبة البيضاوية بتاخد كم يوم تصنيع؟';
+
+  @override
+  String get dashboardInquiryNote6 => 'محتاج مراتب فندقية 200×200 بكمية.';
+
+  @override
+  String get dashboardClaimIssue1 => 'هبوط في الجانب الأيسر';
+
+  @override
+  String get dashboardClaimIssue2 => 'سحاب الغطاء مكسور';
+
+  @override
+  String get dashboardClaimIssue3 => 'تم توصيل مقاس مختلف';
+
+  @override
+  String get dashboardClaimIssue4 => 'صوت من وحدة السوست';
+
+  @override
+  String get addressHome => 'المنزل';
+
+  @override
+  String get addressWork => 'العمل';
+
+  @override
+  String get addressFamily => 'منزل العائلة';
+
+  @override
+  String get addressLine1 => '١٢ شارع الجيش، طنطا';
+
+  @override
+  String get addressLine2 => 'مدينة نصر، القاهرة';
+
+  @override
+  String get addressLine3 => 'سموحة، الإسكندرية';
+
+  @override
+  String get addressLine4 => 'المشاية، المنصورة';
 }

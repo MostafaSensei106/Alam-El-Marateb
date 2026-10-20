@@ -1211,4 +1211,699 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get sampleBranch4 => 'Mansoura branch';
+
+  @override
+  String get dashboardSubtitleBranches =>
+      'Alam El Marateb performance across branches, stock and customers.';
+
+  @override
+  String get dashboardPeriod => 'Period';
+
+  @override
+  String get dashboardLast7Days => 'Last 7 days';
+
+  @override
+  String get dashboardLast30Days => 'Last 30 days';
+
+  @override
+  String get dashboardLast90Days => 'Last 90 days';
+
+  @override
+  String get dashboardBranchFilter => 'Branch';
+
+  @override
+  String get dashboardAllBranches => 'All branches';
+
+  @override
+  String get dashboardRefresh => 'Refresh';
+
+  @override
+  String get dashboardExport => 'Export';
+
+  @override
+  String get dashboardExportHint =>
+      'Export will be available once the dashboard API is connected.';
+
+  @override
+  String get dashboardRefreshed =>
+      'Dashboard refreshed with the latest sample data.';
+
+  @override
+  String dashboardUpdated(String time) {
+    return 'Updated $time';
+  }
+
+  @override
+  String get dashboardSampleBadge => 'Sample data';
+
+  @override
+  String get dashboardSampleNote =>
+      'Sample data shaped like the analytics API. Flutter-only additions are documented in dashboard-flutter-features.md.';
+
+  @override
+  String dashboardActionHint(String action) {
+    return '\"$action\" will open here once dashboard actions are connected.';
+  }
+
+  @override
+  String dashboardOpenModuleHint(String module) {
+    return 'Open the $module module to continue.';
+  }
+
+  @override
+  String get dashboardClose => 'Close';
+
+  @override
+  String get dashboardKpiRevenue => 'Net revenue';
+
+  @override
+  String get dashboardKpiProfit => 'Gross profit';
+
+  @override
+  String get dashboardKpiOrders => 'Orders';
+
+  @override
+  String get dashboardKpiAverageOrder => 'Average order';
+
+  @override
+  String get dashboardKpiCustomers => 'Active customers';
+
+  @override
+  String get dashboardKpiLowStock => 'Low-stock variants';
+
+  @override
+  String dashboardVsPrevious(String value) {
+    return '$value vs previous period';
+  }
+
+  @override
+  String get dashboardNoChange => 'No change vs previous period';
+
+  @override
+  String get dashboardRevenueProfit => 'Revenue & profit';
+
+  @override
+  String get dashboardRevenueProfitHint =>
+      'Daily performance for the selected period';
+
+  @override
+  String get dashboardProfit => 'Gross profit';
+
+  @override
+  String dashboardMargin(String value) {
+    return '$value margin';
+  }
+
+  @override
+  String dashboardOrdersCount(String value) {
+    return '$value orders';
+  }
+
+  @override
+  String dashboardUnitsCount(String value) {
+    return '$value units';
+  }
+
+  @override
+  String get dashboardPreviousPeriod => 'vs previous period';
+
+  @override
+  String get dashboardOperations => 'Operational alerts';
+
+  @override
+  String get dashboardOperationsHint =>
+      'Items that need attention from the operations team';
+
+  @override
+  String get dashboardLowStockAlert => 'Low-stock variants';
+
+  @override
+  String get dashboardLowStockAlertHint => 'Below the reorder point';
+
+  @override
+  String get dashboardPendingTransfers => 'Pending transfers';
+
+  @override
+  String get dashboardPendingTransfersHint => 'Waiting for dispatch or receipt';
+
+  @override
+  String get dashboardOpenAudits => 'Open stock audits';
+
+  @override
+  String get dashboardOpenAuditsHint => 'Counts that are not closed yet';
+
+  @override
+  String get dashboardStockByWarehouse => 'Stock by warehouse';
+
+  @override
+  String get dashboardStockHint => 'Quantity and valuation per warehouse';
+
+  @override
+  String get dashboardStockTotal => 'Total stock value';
+
+  @override
+  String dashboardStockQuantity(String value) {
+    return '$value units';
+  }
+
+  @override
+  String dashboardWarehouses(String value) {
+    return '$value warehouses';
+  }
+
+  @override
+  String get dashboardBranchPerformance => 'Branch performance';
+
+  @override
+  String get dashboardBranchHint => 'Revenue, profit and orders per branch';
+
+  @override
+  String get dashboardBranchProfit => 'Profit';
+
+  @override
+  String get dashboardBranchOrders => 'Orders';
+
+  @override
+  String dashboardBranchShare(String value) {
+    return '$value of revenue';
+  }
+
+  @override
+  String get dashboardNoBranches => 'No branch data for this filter.';
+
+  @override
+  String get dashboardVelocity => 'Stock velocity';
+
+  @override
+  String get dashboardVelocityHint =>
+      'Sold in the last 30 days versus available cover';
+
+  @override
+  String get dashboardVariant => 'Variant';
+
+  @override
+  String get dashboardSold30d => 'Sold 30d';
+
+  @override
+  String get dashboardCurrentQty => 'Available';
+
+  @override
+  String get dashboardDaysOfCover => 'Cover';
+
+  @override
+  String get dashboardCoverOut => 'Out of stock';
+
+  @override
+  String get dashboardCoverLow => 'Reorder now';
+
+  @override
+  String get dashboardCoverHealthy => 'Healthy';
+
+  @override
+  String dashboardCoverDays(String value) {
+    return '$value days';
+  }
+
+  @override
+  String get dashboardTopProducts => 'Top products';
+
+  @override
+  String get dashboardTopProductsHint =>
+      'Best sellers by revenue for the selected period';
+
+  @override
+  String get dashboardTopProductQty => 'Units';
+
+  @override
+  String get dashboardTopProductRevenue => 'Revenue';
+
+  @override
+  String get dashboardTopProductShare => 'Share';
+
+  @override
+  String get dashboardRfm => 'Customer RFM';
+
+  @override
+  String get dashboardRfmHint => 'Recency, frequency and monetary value';
+
+  @override
+  String get dashboardRfmCustomers => 'Customers';
+
+  @override
+  String get dashboardRfmMonetary => 'Monetary';
+
+  @override
+  String get dashboardRfmChampions => 'Champions';
+
+  @override
+  String get dashboardRfmLoyal => 'Loyal';
+
+  @override
+  String get dashboardRfmPotential => 'Potential loyalists';
+
+  @override
+  String get dashboardRfmNew => 'New customers';
+
+  @override
+  String get dashboardRfmAtRisk => 'At risk';
+
+  @override
+  String get dashboardRfmLost => 'Lost';
+
+  @override
+  String get dashboardGeo => 'Orders by governorate';
+
+  @override
+  String get dashboardGeoHint => 'Delivery demand across Egypt';
+
+  @override
+  String get dashboardGeoTop => 'Top governorate';
+
+  @override
+  String get dashboardInquiries => 'Customer inquiries';
+
+  @override
+  String get dashboardInquiriesHint =>
+      'Latest product questions from the floor';
+
+  @override
+  String get dashboardInquiryBought => 'Bought';
+
+  @override
+  String get dashboardInquiryPrice => 'Price question';
+
+  @override
+  String get dashboardInquiryNoStock => 'Out of stock';
+
+  @override
+  String get dashboardInquiryJustAsking => 'Just asking';
+
+  @override
+  String dashboardInquiriesCount(String value) {
+    return '$value inquiries';
+  }
+
+  @override
+  String get dashboardTopAsked => 'Most asked products';
+
+  @override
+  String get dashboardTopAskedHint => 'Questions and missed sales by product';
+
+  @override
+  String get dashboardAsked => 'Asked';
+
+  @override
+  String get dashboardNoStockAsked => 'No stock';
+
+  @override
+  String get dashboardPriceAsked => 'Price asks';
+
+  @override
+  String get dashboardAuditTrail => 'Audit trail';
+
+  @override
+  String get dashboardAuditHint => 'Recent changes across inventory and sales';
+
+  @override
+  String dashboardAuditBy(String actor) {
+    return 'by $actor';
+  }
+
+  @override
+  String get dashboardAuditTransfer => 'Stock transfer';
+
+  @override
+  String get dashboardAuditAdjustment => 'Stock adjustment';
+
+  @override
+  String get dashboardAuditPrice => 'Price change';
+
+  @override
+  String get dashboardAuditShift => 'Shift closed';
+
+  @override
+  String get dashboardAuditWarranty => 'Warranty claim';
+
+  @override
+  String get dashboardAuditPurchase => 'Purchase receipt';
+
+  @override
+  String dashboardAuditTransferDetail(String qty, String from, String to) {
+    return '$qty units from $from to $to';
+  }
+
+  @override
+  String dashboardAuditAdjustmentDetail(String variant, String diff) {
+    return '$variant adjusted by $diff';
+  }
+
+  @override
+  String dashboardAuditPriceDetail(
+    String product,
+    String oldPrice,
+    String newPrice,
+  ) {
+    return '$product: $oldPrice to $newPrice';
+  }
+
+  @override
+  String dashboardAuditShiftDetail(String branch, String variance) {
+    return '$branch closed with $variance variance';
+  }
+
+  @override
+  String dashboardAuditWarrantyDetail(String customer, String product) {
+    return '$customer · $product';
+  }
+
+  @override
+  String dashboardAuditPurchaseDetail(String supplier, String amount) {
+    return '$supplier · $amount';
+  }
+
+  @override
+  String get dashboardTopCustomers => 'Top customers';
+
+  @override
+  String get dashboardCustomerSearch => 'Search by name or phone';
+
+  @override
+  String get dashboardCustomerProfile => 'Customer 360';
+
+  @override
+  String dashboardCustomerSince(String date) {
+    return 'Customer since $date';
+  }
+
+  @override
+  String get dashboardCustomerContact => 'Contact';
+
+  @override
+  String get dashboardCustomerAddresses => 'Addresses';
+
+  @override
+  String get dashboardCustomerWarranties => 'Warranties & claims';
+
+  @override
+  String get dashboardCustomerLoyalty => 'Loyalty';
+
+  @override
+  String get dashboardCustomerNotes => 'Notes';
+
+  @override
+  String get dashboardCustomerSpend => 'Lifetime spend';
+
+  @override
+  String get dashboardCustomerAvgOrder => 'Average order';
+
+  @override
+  String get dashboardCustomerPoints => 'Points';
+
+  @override
+  String get dashboardCustomerTier => 'Tier';
+
+  @override
+  String get dashboardCustomerRfm => 'RFM segment';
+
+  @override
+  String get dashboardCustomerPreferred => 'Preferred channel';
+
+  @override
+  String get dashboardPreferredBranch => 'Preferred branch';
+
+  @override
+  String get dashboardCustomerRecentOrders => 'Recent orders';
+
+  @override
+  String get dashboardCustomerNoOrders => 'No orders on record.';
+
+  @override
+  String get dashboardCustomerNoClaims => 'No warranty claims on record.';
+
+  @override
+  String get dashboardCustomerNoAddresses => 'No saved addresses.';
+
+  @override
+  String dashboardWarrantyExpires(String date) {
+    return 'Expires $date';
+  }
+
+  @override
+  String dashboardWarrantyPurchased(String date) {
+    return 'Purchased $date';
+  }
+
+  @override
+  String get dashboardClaimOpen => 'Open';
+
+  @override
+  String get dashboardClaimInspection => 'Inspection';
+
+  @override
+  String get dashboardClaimResolved => 'Resolved';
+
+  @override
+  String get dashboardTierBronze => 'Bronze';
+
+  @override
+  String get dashboardTierSilver => 'Silver';
+
+  @override
+  String get dashboardTierGold => 'Gold';
+
+  @override
+  String get dashboardTierPlatinum => 'Platinum';
+
+  @override
+  String dashboardOrderCount(String value) {
+    return '$value orders';
+  }
+
+  @override
+  String get dashboardCustomerNote1 =>
+      'Prefers medical mattresses in 160×200 and confirms visits on WhatsApp.';
+
+  @override
+  String get dashboardCustomerNote2 =>
+      'Corporate account: ordered 12 mattresses for a Tanta hotel and needs a tax invoice.';
+
+  @override
+  String get dashboardCustomerNote3 =>
+      'Complained about a late delivery before; confirm the slot one day ahead.';
+
+  @override
+  String get dashboardCustomerNote4 =>
+      'Interested in instalments and asked to be called when a new batch arrives.';
+
+  @override
+  String get dashboardRecentOrdersHint => 'Latest sales across every branch';
+
+  @override
+  String get dashboardOrderDate => 'Date';
+
+  @override
+  String get dashboardOrderChannel => 'Channel';
+
+  @override
+  String get dashboardQuickActionsHint =>
+      'Shortcuts for the counter and back office';
+
+  @override
+  String get dashboardStockTransfer => 'Stock transfer';
+
+  @override
+  String get dashboardNewPurchase => 'Purchase order';
+
+  @override
+  String get dashboardChannelShowroom => 'Showroom';
+
+  @override
+  String get dashboardChannelPhone => 'Phone';
+
+  @override
+  String get dashboardChannelWhatsapp => 'WhatsApp';
+
+  @override
+  String get statusPaid => 'Paid';
+
+  @override
+  String get warehouseTanta => 'Tanta main warehouse';
+
+  @override
+  String get warehouseCairo => 'Cairo warehouse';
+
+  @override
+  String get warehouseAlex => 'Alexandria warehouse';
+
+  @override
+  String get warehouseMansoura => 'Mansoura warehouse';
+
+  @override
+  String get govGharbia => 'Gharbia';
+
+  @override
+  String get govCairo => 'Cairo';
+
+  @override
+  String get govAlexandria => 'Alexandria';
+
+  @override
+  String get govDakahlia => 'Dakahlia';
+
+  @override
+  String get govMenoufia => 'Menoufia';
+
+  @override
+  String get govQalyubia => 'Qalyubia';
+
+  @override
+  String get govSharqia => 'Sharqia';
+
+  @override
+  String get govBeheira => 'Beheira';
+
+  @override
+  String get categoryMattress => 'Mattresses';
+
+  @override
+  String get categoryPillow => 'Pillows';
+
+  @override
+  String get categoryBase => 'Bed bases';
+
+  @override
+  String get categoryAccessory => 'Accessories';
+
+  @override
+  String get supplierDeltaFoam => 'Delta Foam';
+
+  @override
+  String get supplierSleepTech => 'Sleep Tech';
+
+  @override
+  String get product1 => 'Orthopedic mattress 160×200';
+
+  @override
+  String get product2 => 'Memory foam mattress 180×200';
+
+  @override
+  String get product3 => 'Spring mattress 150×195';
+
+  @override
+  String get product4 => 'Kids mattress 120×190';
+
+  @override
+  String get product5 => 'Latex pillow 50×70';
+
+  @override
+  String get product6 => 'Memory pillow';
+
+  @override
+  String get product7 => 'Wooden bed base 160×200';
+
+  @override
+  String get product8 => 'Upholstered bed base 180×200';
+
+  @override
+  String get product9 => 'Waterproof mattress protector';
+
+  @override
+  String get product10 => 'Cotton bed sheet set';
+
+  @override
+  String get product11 => 'Custom oval mattress';
+
+  @override
+  String get product12 => 'Hotel mattress 200×200';
+
+  @override
+  String get customer1 => 'Mona Abdelrahman';
+
+  @override
+  String get customer2 => 'Youssef Kamal';
+
+  @override
+  String get customer3 => 'Salma Fathy';
+
+  @override
+  String get customer4 => 'Karim Nabil';
+
+  @override
+  String get customer5 => 'Hana Tarek';
+
+  @override
+  String get customer6 => 'Omar Sherif';
+
+  @override
+  String get customer7 => 'Nour Adel';
+
+  @override
+  String get customer8 => 'Ahmed Fathy';
+
+  @override
+  String get customer9 => 'Mariam Hossam';
+
+  @override
+  String get customer10 => 'Tamer Said';
+
+  @override
+  String dashboardWeek(String value) {
+    return 'Week $value';
+  }
+
+  @override
+  String get dashboardInquiryNote1 =>
+      'Is the orthopedic mattress available in 160×200?';
+
+  @override
+  String get dashboardInquiryNote2 =>
+      'What is the difference between memory foam and spring?';
+
+  @override
+  String get dashboardInquiryNote3 =>
+      'I need the price of the upholstered bed base.';
+
+  @override
+  String get dashboardInquiryNote4 => 'Do you offer interest-free instalments?';
+
+  @override
+  String get dashboardInquiryNote5 =>
+      'How many days does a custom oval mattress take?';
+
+  @override
+  String get dashboardInquiryNote6 =>
+      'I need hotel mattresses 200×200 in bulk.';
+
+  @override
+  String get dashboardClaimIssue1 => 'Sagging on the left side';
+
+  @override
+  String get dashboardClaimIssue2 => 'Broken zip on the cover';
+
+  @override
+  String get dashboardClaimIssue3 => 'Wrong size delivered';
+
+  @override
+  String get dashboardClaimIssue4 => 'Noise from the spring unit';
+
+  @override
+  String get addressHome => 'Home';
+
+  @override
+  String get addressWork => 'Work';
+
+  @override
+  String get addressFamily => 'Family home';
+
+  @override
+  String get addressLine1 => '12 El Geish Street, Tanta';
+
+  @override
+  String get addressLine2 => 'Nasr City, Cairo';
+
+  @override
+  String get addressLine3 => 'Smouha, Alexandria';
+
+  @override
+  String get addressLine4 => 'El Mashaya, Mansoura';
 }

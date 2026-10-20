@@ -2390,6 +2390,1258 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mansoura branch'**
   String get sampleBranch4;
+
+  /// No description provided for @dashboardSubtitleBranches.
+  ///
+  /// In en, this message translates to:
+  /// **'Alam El Marateb performance across branches, stock and customers.'**
+  String get dashboardSubtitleBranches;
+
+  /// No description provided for @dashboardPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get dashboardPeriod;
+
+  /// No description provided for @dashboardLast7Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 7 days'**
+  String get dashboardLast7Days;
+
+  /// No description provided for @dashboardLast30Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 30 days'**
+  String get dashboardLast30Days;
+
+  /// No description provided for @dashboardLast90Days.
+  ///
+  /// In en, this message translates to:
+  /// **'Last 90 days'**
+  String get dashboardLast90Days;
+
+  /// No description provided for @dashboardBranchFilter.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get dashboardBranchFilter;
+
+  /// No description provided for @dashboardAllBranches.
+  ///
+  /// In en, this message translates to:
+  /// **'All branches'**
+  String get dashboardAllBranches;
+
+  /// No description provided for @dashboardRefresh.
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh'**
+  String get dashboardRefresh;
+
+  /// No description provided for @dashboardExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get dashboardExport;
+
+  /// No description provided for @dashboardExportHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Export will be available once the dashboard API is connected.'**
+  String get dashboardExportHint;
+
+  /// No description provided for @dashboardRefreshed.
+  ///
+  /// In en, this message translates to:
+  /// **'Dashboard refreshed with the latest sample data.'**
+  String get dashboardRefreshed;
+
+  /// No description provided for @dashboardUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated {time}'**
+  String dashboardUpdated(String time);
+
+  /// No description provided for @dashboardSampleBadge.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample data'**
+  String get dashboardSampleBadge;
+
+  /// No description provided for @dashboardSampleNote.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample data shaped like the analytics API. Flutter-only additions are documented in dashboard-flutter-features.md.'**
+  String get dashboardSampleNote;
+
+  /// No description provided for @dashboardActionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'\"{action}\" will open here once dashboard actions are connected.'**
+  String dashboardActionHint(String action);
+
+  /// No description provided for @dashboardOpenModuleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Open the {module} module to continue.'**
+  String dashboardOpenModuleHint(String module);
+
+  /// No description provided for @dashboardClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get dashboardClose;
+
+  /// No description provided for @dashboardKpiRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Net revenue'**
+  String get dashboardKpiRevenue;
+
+  /// No description provided for @dashboardKpiProfit.
+  ///
+  /// In en, this message translates to:
+  /// **'Gross profit'**
+  String get dashboardKpiProfit;
+
+  /// No description provided for @dashboardKpiOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get dashboardKpiOrders;
+
+  /// No description provided for @dashboardKpiAverageOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Average order'**
+  String get dashboardKpiAverageOrder;
+
+  /// No description provided for @dashboardKpiCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Active customers'**
+  String get dashboardKpiCustomers;
+
+  /// No description provided for @dashboardKpiLowStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Low-stock variants'**
+  String get dashboardKpiLowStock;
+
+  /// No description provided for @dashboardVsPrevious.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} vs previous period'**
+  String dashboardVsPrevious(String value);
+
+  /// No description provided for @dashboardNoChange.
+  ///
+  /// In en, this message translates to:
+  /// **'No change vs previous period'**
+  String get dashboardNoChange;
+
+  /// No description provided for @dashboardRevenueProfit.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue & profit'**
+  String get dashboardRevenueProfit;
+
+  /// No description provided for @dashboardRevenueProfitHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily performance for the selected period'**
+  String get dashboardRevenueProfitHint;
+
+  /// No description provided for @dashboardProfit.
+  ///
+  /// In en, this message translates to:
+  /// **'Gross profit'**
+  String get dashboardProfit;
+
+  /// No description provided for @dashboardMargin.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} margin'**
+  String dashboardMargin(String value);
+
+  /// No description provided for @dashboardOrdersCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} orders'**
+  String dashboardOrdersCount(String value);
+
+  /// No description provided for @dashboardUnitsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} units'**
+  String dashboardUnitsCount(String value);
+
+  /// No description provided for @dashboardPreviousPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'vs previous period'**
+  String get dashboardPreviousPeriod;
+
+  /// No description provided for @dashboardOperations.
+  ///
+  /// In en, this message translates to:
+  /// **'Operational alerts'**
+  String get dashboardOperations;
+
+  /// No description provided for @dashboardOperationsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Items that need attention from the operations team'**
+  String get dashboardOperationsHint;
+
+  /// No description provided for @dashboardLowStockAlert.
+  ///
+  /// In en, this message translates to:
+  /// **'Low-stock variants'**
+  String get dashboardLowStockAlert;
+
+  /// No description provided for @dashboardLowStockAlertHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Below the reorder point'**
+  String get dashboardLowStockAlertHint;
+
+  /// No description provided for @dashboardPendingTransfers.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending transfers'**
+  String get dashboardPendingTransfers;
+
+  /// No description provided for @dashboardPendingTransfersHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for dispatch or receipt'**
+  String get dashboardPendingTransfersHint;
+
+  /// No description provided for @dashboardOpenAudits.
+  ///
+  /// In en, this message translates to:
+  /// **'Open stock audits'**
+  String get dashboardOpenAudits;
+
+  /// No description provided for @dashboardOpenAuditsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Counts that are not closed yet'**
+  String get dashboardOpenAuditsHint;
+
+  /// No description provided for @dashboardStockByWarehouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock by warehouse'**
+  String get dashboardStockByWarehouse;
+
+  /// No description provided for @dashboardStockHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity and valuation per warehouse'**
+  String get dashboardStockHint;
+
+  /// No description provided for @dashboardStockTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total stock value'**
+  String get dashboardStockTotal;
+
+  /// No description provided for @dashboardStockQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} units'**
+  String dashboardStockQuantity(String value);
+
+  /// No description provided for @dashboardWarehouses.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} warehouses'**
+  String dashboardWarehouses(String value);
+
+  /// No description provided for @dashboardBranchPerformance.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch performance'**
+  String get dashboardBranchPerformance;
+
+  /// No description provided for @dashboardBranchHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue, profit and orders per branch'**
+  String get dashboardBranchHint;
+
+  /// No description provided for @dashboardBranchProfit.
+  ///
+  /// In en, this message translates to:
+  /// **'Profit'**
+  String get dashboardBranchProfit;
+
+  /// No description provided for @dashboardBranchOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get dashboardBranchOrders;
+
+  /// No description provided for @dashboardBranchShare.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} of revenue'**
+  String dashboardBranchShare(String value);
+
+  /// No description provided for @dashboardNoBranches.
+  ///
+  /// In en, this message translates to:
+  /// **'No branch data for this filter.'**
+  String get dashboardNoBranches;
+
+  /// No description provided for @dashboardVelocity.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock velocity'**
+  String get dashboardVelocity;
+
+  /// No description provided for @dashboardVelocityHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Sold in the last 30 days versus available cover'**
+  String get dashboardVelocityHint;
+
+  /// No description provided for @dashboardVariant.
+  ///
+  /// In en, this message translates to:
+  /// **'Variant'**
+  String get dashboardVariant;
+
+  /// No description provided for @dashboardSold30d.
+  ///
+  /// In en, this message translates to:
+  /// **'Sold 30d'**
+  String get dashboardSold30d;
+
+  /// No description provided for @dashboardCurrentQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Available'**
+  String get dashboardCurrentQty;
+
+  /// No description provided for @dashboardDaysOfCover.
+  ///
+  /// In en, this message translates to:
+  /// **'Cover'**
+  String get dashboardDaysOfCover;
+
+  /// No description provided for @dashboardCoverOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of stock'**
+  String get dashboardCoverOut;
+
+  /// No description provided for @dashboardCoverLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder now'**
+  String get dashboardCoverLow;
+
+  /// No description provided for @dashboardCoverHealthy.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy'**
+  String get dashboardCoverHealthy;
+
+  /// No description provided for @dashboardCoverDays.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} days'**
+  String dashboardCoverDays(String value);
+
+  /// No description provided for @dashboardTopProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Top products'**
+  String get dashboardTopProducts;
+
+  /// No description provided for @dashboardTopProductsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Best sellers by revenue for the selected period'**
+  String get dashboardTopProductsHint;
+
+  /// No description provided for @dashboardTopProductQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get dashboardTopProductQty;
+
+  /// No description provided for @dashboardTopProductRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get dashboardTopProductRevenue;
+
+  /// No description provided for @dashboardTopProductShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get dashboardTopProductShare;
+
+  /// No description provided for @dashboardRfm.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer RFM'**
+  String get dashboardRfm;
+
+  /// No description provided for @dashboardRfmHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Recency, frequency and monetary value'**
+  String get dashboardRfmHint;
+
+  /// No description provided for @dashboardRfmCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Customers'**
+  String get dashboardRfmCustomers;
+
+  /// No description provided for @dashboardRfmMonetary.
+  ///
+  /// In en, this message translates to:
+  /// **'Monetary'**
+  String get dashboardRfmMonetary;
+
+  /// No description provided for @dashboardRfmChampions.
+  ///
+  /// In en, this message translates to:
+  /// **'Champions'**
+  String get dashboardRfmChampions;
+
+  /// No description provided for @dashboardRfmLoyal.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyal'**
+  String get dashboardRfmLoyal;
+
+  /// No description provided for @dashboardRfmPotential.
+  ///
+  /// In en, this message translates to:
+  /// **'Potential loyalists'**
+  String get dashboardRfmPotential;
+
+  /// No description provided for @dashboardRfmNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New customers'**
+  String get dashboardRfmNew;
+
+  /// No description provided for @dashboardRfmAtRisk.
+  ///
+  /// In en, this message translates to:
+  /// **'At risk'**
+  String get dashboardRfmAtRisk;
+
+  /// No description provided for @dashboardRfmLost.
+  ///
+  /// In en, this message translates to:
+  /// **'Lost'**
+  String get dashboardRfmLost;
+
+  /// No description provided for @dashboardGeo.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders by governorate'**
+  String get dashboardGeo;
+
+  /// No description provided for @dashboardGeoHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivery demand across Egypt'**
+  String get dashboardGeoHint;
+
+  /// No description provided for @dashboardGeoTop.
+  ///
+  /// In en, this message translates to:
+  /// **'Top governorate'**
+  String get dashboardGeoTop;
+
+  /// No description provided for @dashboardInquiries.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer inquiries'**
+  String get dashboardInquiries;
+
+  /// No description provided for @dashboardInquiriesHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest product questions from the floor'**
+  String get dashboardInquiriesHint;
+
+  /// No description provided for @dashboardInquiryBought.
+  ///
+  /// In en, this message translates to:
+  /// **'Bought'**
+  String get dashboardInquiryBought;
+
+  /// No description provided for @dashboardInquiryPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price question'**
+  String get dashboardInquiryPrice;
+
+  /// No description provided for @dashboardInquiryNoStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of stock'**
+  String get dashboardInquiryNoStock;
+
+  /// No description provided for @dashboardInquiryJustAsking.
+  ///
+  /// In en, this message translates to:
+  /// **'Just asking'**
+  String get dashboardInquiryJustAsking;
+
+  /// No description provided for @dashboardInquiriesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} inquiries'**
+  String dashboardInquiriesCount(String value);
+
+  /// No description provided for @dashboardTopAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'Most asked products'**
+  String get dashboardTopAsked;
+
+  /// No description provided for @dashboardTopAskedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Questions and missed sales by product'**
+  String get dashboardTopAskedHint;
+
+  /// No description provided for @dashboardAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'Asked'**
+  String get dashboardAsked;
+
+  /// No description provided for @dashboardNoStockAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'No stock'**
+  String get dashboardNoStockAsked;
+
+  /// No description provided for @dashboardPriceAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'Price asks'**
+  String get dashboardPriceAsked;
+
+  /// No description provided for @dashboardAuditTrail.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit trail'**
+  String get dashboardAuditTrail;
+
+  /// No description provided for @dashboardAuditHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent changes across inventory and sales'**
+  String get dashboardAuditHint;
+
+  /// No description provided for @dashboardAuditBy.
+  ///
+  /// In en, this message translates to:
+  /// **'by {actor}'**
+  String dashboardAuditBy(String actor);
+
+  /// No description provided for @dashboardAuditTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock transfer'**
+  String get dashboardAuditTransfer;
+
+  /// No description provided for @dashboardAuditAdjustment.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock adjustment'**
+  String get dashboardAuditAdjustment;
+
+  /// No description provided for @dashboardAuditPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price change'**
+  String get dashboardAuditPrice;
+
+  /// No description provided for @dashboardAuditShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift closed'**
+  String get dashboardAuditShift;
+
+  /// No description provided for @dashboardAuditWarranty.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty claim'**
+  String get dashboardAuditWarranty;
+
+  /// No description provided for @dashboardAuditPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase receipt'**
+  String get dashboardAuditPurchase;
+
+  /// No description provided for @dashboardAuditTransferDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{qty} units from {from} to {to}'**
+  String dashboardAuditTransferDetail(String qty, String from, String to);
+
+  /// No description provided for @dashboardAuditAdjustmentDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{variant} adjusted by {diff}'**
+  String dashboardAuditAdjustmentDetail(String variant, String diff);
+
+  /// No description provided for @dashboardAuditPriceDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{product}: {oldPrice} to {newPrice}'**
+  String dashboardAuditPriceDetail(
+    String product,
+    String oldPrice,
+    String newPrice,
+  );
+
+  /// No description provided for @dashboardAuditShiftDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{branch} closed with {variance} variance'**
+  String dashboardAuditShiftDetail(String branch, String variance);
+
+  /// No description provided for @dashboardAuditWarrantyDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{customer} · {product}'**
+  String dashboardAuditWarrantyDetail(String customer, String product);
+
+  /// No description provided for @dashboardAuditPurchaseDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'{supplier} · {amount}'**
+  String dashboardAuditPurchaseDetail(String supplier, String amount);
+
+  /// No description provided for @dashboardTopCustomers.
+  ///
+  /// In en, this message translates to:
+  /// **'Top customers'**
+  String get dashboardTopCustomers;
+
+  /// No description provided for @dashboardCustomerSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name or phone'**
+  String get dashboardCustomerSearch;
+
+  /// No description provided for @dashboardCustomerProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer 360'**
+  String get dashboardCustomerProfile;
+
+  /// No description provided for @dashboardCustomerSince.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer since {date}'**
+  String dashboardCustomerSince(String date);
+
+  /// No description provided for @dashboardCustomerContact.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact'**
+  String get dashboardCustomerContact;
+
+  /// No description provided for @dashboardCustomerAddresses.
+  ///
+  /// In en, this message translates to:
+  /// **'Addresses'**
+  String get dashboardCustomerAddresses;
+
+  /// No description provided for @dashboardCustomerWarranties.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranties & claims'**
+  String get dashboardCustomerWarranties;
+
+  /// No description provided for @dashboardCustomerLoyalty.
+  ///
+  /// In en, this message translates to:
+  /// **'Loyalty'**
+  String get dashboardCustomerLoyalty;
+
+  /// No description provided for @dashboardCustomerNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get dashboardCustomerNotes;
+
+  /// No description provided for @dashboardCustomerSpend.
+  ///
+  /// In en, this message translates to:
+  /// **'Lifetime spend'**
+  String get dashboardCustomerSpend;
+
+  /// No description provided for @dashboardCustomerAvgOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Average order'**
+  String get dashboardCustomerAvgOrder;
+
+  /// No description provided for @dashboardCustomerPoints.
+  ///
+  /// In en, this message translates to:
+  /// **'Points'**
+  String get dashboardCustomerPoints;
+
+  /// No description provided for @dashboardCustomerTier.
+  ///
+  /// In en, this message translates to:
+  /// **'Tier'**
+  String get dashboardCustomerTier;
+
+  /// No description provided for @dashboardCustomerRfm.
+  ///
+  /// In en, this message translates to:
+  /// **'RFM segment'**
+  String get dashboardCustomerRfm;
+
+  /// No description provided for @dashboardCustomerPreferred.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred channel'**
+  String get dashboardCustomerPreferred;
+
+  /// No description provided for @dashboardPreferredBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Preferred branch'**
+  String get dashboardPreferredBranch;
+
+  /// No description provided for @dashboardCustomerRecentOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Recent orders'**
+  String get dashboardCustomerRecentOrders;
+
+  /// No description provided for @dashboardCustomerNoOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'No orders on record.'**
+  String get dashboardCustomerNoOrders;
+
+  /// No description provided for @dashboardCustomerNoClaims.
+  ///
+  /// In en, this message translates to:
+  /// **'No warranty claims on record.'**
+  String get dashboardCustomerNoClaims;
+
+  /// No description provided for @dashboardCustomerNoAddresses.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved addresses.'**
+  String get dashboardCustomerNoAddresses;
+
+  /// No description provided for @dashboardWarrantyExpires.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires {date}'**
+  String dashboardWarrantyExpires(String date);
+
+  /// No description provided for @dashboardWarrantyPurchased.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchased {date}'**
+  String dashboardWarrantyPurchased(String date);
+
+  /// No description provided for @dashboardClaimOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get dashboardClaimOpen;
+
+  /// No description provided for @dashboardClaimInspection.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspection'**
+  String get dashboardClaimInspection;
+
+  /// No description provided for @dashboardClaimResolved.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolved'**
+  String get dashboardClaimResolved;
+
+  /// No description provided for @dashboardTierBronze.
+  ///
+  /// In en, this message translates to:
+  /// **'Bronze'**
+  String get dashboardTierBronze;
+
+  /// No description provided for @dashboardTierSilver.
+  ///
+  /// In en, this message translates to:
+  /// **'Silver'**
+  String get dashboardTierSilver;
+
+  /// No description provided for @dashboardTierGold.
+  ///
+  /// In en, this message translates to:
+  /// **'Gold'**
+  String get dashboardTierGold;
+
+  /// No description provided for @dashboardTierPlatinum.
+  ///
+  /// In en, this message translates to:
+  /// **'Platinum'**
+  String get dashboardTierPlatinum;
+
+  /// No description provided for @dashboardOrderCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{value} orders'**
+  String dashboardOrderCount(String value);
+
+  /// No description provided for @dashboardCustomerNote1.
+  ///
+  /// In en, this message translates to:
+  /// **'Prefers medical mattresses in 160×200 and confirms visits on WhatsApp.'**
+  String get dashboardCustomerNote1;
+
+  /// No description provided for @dashboardCustomerNote2.
+  ///
+  /// In en, this message translates to:
+  /// **'Corporate account: ordered 12 mattresses for a Tanta hotel and needs a tax invoice.'**
+  String get dashboardCustomerNote2;
+
+  /// No description provided for @dashboardCustomerNote3.
+  ///
+  /// In en, this message translates to:
+  /// **'Complained about a late delivery before; confirm the slot one day ahead.'**
+  String get dashboardCustomerNote3;
+
+  /// No description provided for @dashboardCustomerNote4.
+  ///
+  /// In en, this message translates to:
+  /// **'Interested in instalments and asked to be called when a new batch arrives.'**
+  String get dashboardCustomerNote4;
+
+  /// No description provided for @dashboardRecentOrdersHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Latest sales across every branch'**
+  String get dashboardRecentOrdersHint;
+
+  /// No description provided for @dashboardOrderDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get dashboardOrderDate;
+
+  /// No description provided for @dashboardOrderChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get dashboardOrderChannel;
+
+  /// No description provided for @dashboardQuickActionsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Shortcuts for the counter and back office'**
+  String get dashboardQuickActionsHint;
+
+  /// No description provided for @dashboardStockTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock transfer'**
+  String get dashboardStockTransfer;
+
+  /// No description provided for @dashboardNewPurchase.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase order'**
+  String get dashboardNewPurchase;
+
+  /// No description provided for @dashboardChannelShowroom.
+  ///
+  /// In en, this message translates to:
+  /// **'Showroom'**
+  String get dashboardChannelShowroom;
+
+  /// No description provided for @dashboardChannelPhone.
+  ///
+  /// In en, this message translates to:
+  /// **'Phone'**
+  String get dashboardChannelPhone;
+
+  /// No description provided for @dashboardChannelWhatsapp.
+  ///
+  /// In en, this message translates to:
+  /// **'WhatsApp'**
+  String get dashboardChannelWhatsapp;
+
+  /// No description provided for @statusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get statusPaid;
+
+  /// No description provided for @warehouseTanta.
+  ///
+  /// In en, this message translates to:
+  /// **'Tanta main warehouse'**
+  String get warehouseTanta;
+
+  /// No description provided for @warehouseCairo.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo warehouse'**
+  String get warehouseCairo;
+
+  /// No description provided for @warehouseAlex.
+  ///
+  /// In en, this message translates to:
+  /// **'Alexandria warehouse'**
+  String get warehouseAlex;
+
+  /// No description provided for @warehouseMansoura.
+  ///
+  /// In en, this message translates to:
+  /// **'Mansoura warehouse'**
+  String get warehouseMansoura;
+
+  /// No description provided for @govGharbia.
+  ///
+  /// In en, this message translates to:
+  /// **'Gharbia'**
+  String get govGharbia;
+
+  /// No description provided for @govCairo.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo'**
+  String get govCairo;
+
+  /// No description provided for @govAlexandria.
+  ///
+  /// In en, this message translates to:
+  /// **'Alexandria'**
+  String get govAlexandria;
+
+  /// No description provided for @govDakahlia.
+  ///
+  /// In en, this message translates to:
+  /// **'Dakahlia'**
+  String get govDakahlia;
+
+  /// No description provided for @govMenoufia.
+  ///
+  /// In en, this message translates to:
+  /// **'Menoufia'**
+  String get govMenoufia;
+
+  /// No description provided for @govQalyubia.
+  ///
+  /// In en, this message translates to:
+  /// **'Qalyubia'**
+  String get govQalyubia;
+
+  /// No description provided for @govSharqia.
+  ///
+  /// In en, this message translates to:
+  /// **'Sharqia'**
+  String get govSharqia;
+
+  /// No description provided for @govBeheira.
+  ///
+  /// In en, this message translates to:
+  /// **'Beheira'**
+  String get govBeheira;
+
+  /// No description provided for @categoryMattress.
+  ///
+  /// In en, this message translates to:
+  /// **'Mattresses'**
+  String get categoryMattress;
+
+  /// No description provided for @categoryPillow.
+  ///
+  /// In en, this message translates to:
+  /// **'Pillows'**
+  String get categoryPillow;
+
+  /// No description provided for @categoryBase.
+  ///
+  /// In en, this message translates to:
+  /// **'Bed bases'**
+  String get categoryBase;
+
+  /// No description provided for @categoryAccessory.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessories'**
+  String get categoryAccessory;
+
+  /// No description provided for @supplierDeltaFoam.
+  ///
+  /// In en, this message translates to:
+  /// **'Delta Foam'**
+  String get supplierDeltaFoam;
+
+  /// No description provided for @supplierSleepTech.
+  ///
+  /// In en, this message translates to:
+  /// **'Sleep Tech'**
+  String get supplierSleepTech;
+
+  /// No description provided for @product1.
+  ///
+  /// In en, this message translates to:
+  /// **'Orthopedic mattress 160×200'**
+  String get product1;
+
+  /// No description provided for @product2.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory foam mattress 180×200'**
+  String get product2;
+
+  /// No description provided for @product3.
+  ///
+  /// In en, this message translates to:
+  /// **'Spring mattress 150×195'**
+  String get product3;
+
+  /// No description provided for @product4.
+  ///
+  /// In en, this message translates to:
+  /// **'Kids mattress 120×190'**
+  String get product4;
+
+  /// No description provided for @product5.
+  ///
+  /// In en, this message translates to:
+  /// **'Latex pillow 50×70'**
+  String get product5;
+
+  /// No description provided for @product6.
+  ///
+  /// In en, this message translates to:
+  /// **'Memory pillow'**
+  String get product6;
+
+  /// No description provided for @product7.
+  ///
+  /// In en, this message translates to:
+  /// **'Wooden bed base 160×200'**
+  String get product7;
+
+  /// No description provided for @product8.
+  ///
+  /// In en, this message translates to:
+  /// **'Upholstered bed base 180×200'**
+  String get product8;
+
+  /// No description provided for @product9.
+  ///
+  /// In en, this message translates to:
+  /// **'Waterproof mattress protector'**
+  String get product9;
+
+  /// No description provided for @product10.
+  ///
+  /// In en, this message translates to:
+  /// **'Cotton bed sheet set'**
+  String get product10;
+
+  /// No description provided for @product11.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom oval mattress'**
+  String get product11;
+
+  /// No description provided for @product12.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel mattress 200×200'**
+  String get product12;
+
+  /// No description provided for @customer1.
+  ///
+  /// In en, this message translates to:
+  /// **'Mona Abdelrahman'**
+  String get customer1;
+
+  /// No description provided for @customer2.
+  ///
+  /// In en, this message translates to:
+  /// **'Youssef Kamal'**
+  String get customer2;
+
+  /// No description provided for @customer3.
+  ///
+  /// In en, this message translates to:
+  /// **'Salma Fathy'**
+  String get customer3;
+
+  /// No description provided for @customer4.
+  ///
+  /// In en, this message translates to:
+  /// **'Karim Nabil'**
+  String get customer4;
+
+  /// No description provided for @customer5.
+  ///
+  /// In en, this message translates to:
+  /// **'Hana Tarek'**
+  String get customer5;
+
+  /// No description provided for @customer6.
+  ///
+  /// In en, this message translates to:
+  /// **'Omar Sherif'**
+  String get customer6;
+
+  /// No description provided for @customer7.
+  ///
+  /// In en, this message translates to:
+  /// **'Nour Adel'**
+  String get customer7;
+
+  /// No description provided for @customer8.
+  ///
+  /// In en, this message translates to:
+  /// **'Ahmed Fathy'**
+  String get customer8;
+
+  /// No description provided for @customer9.
+  ///
+  /// In en, this message translates to:
+  /// **'Mariam Hossam'**
+  String get customer9;
+
+  /// No description provided for @customer10.
+  ///
+  /// In en, this message translates to:
+  /// **'Tamer Said'**
+  String get customer10;
+
+  /// No description provided for @dashboardWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'Week {value}'**
+  String dashboardWeek(String value);
+
+  /// No description provided for @dashboardInquiryNote1.
+  ///
+  /// In en, this message translates to:
+  /// **'Is the orthopedic mattress available in 160×200?'**
+  String get dashboardInquiryNote1;
+
+  /// No description provided for @dashboardInquiryNote2.
+  ///
+  /// In en, this message translates to:
+  /// **'What is the difference between memory foam and spring?'**
+  String get dashboardInquiryNote2;
+
+  /// No description provided for @dashboardInquiryNote3.
+  ///
+  /// In en, this message translates to:
+  /// **'I need the price of the upholstered bed base.'**
+  String get dashboardInquiryNote3;
+
+  /// No description provided for @dashboardInquiryNote4.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you offer interest-free instalments?'**
+  String get dashboardInquiryNote4;
+
+  /// No description provided for @dashboardInquiryNote5.
+  ///
+  /// In en, this message translates to:
+  /// **'How many days does a custom oval mattress take?'**
+  String get dashboardInquiryNote5;
+
+  /// No description provided for @dashboardInquiryNote6.
+  ///
+  /// In en, this message translates to:
+  /// **'I need hotel mattresses 200×200 in bulk.'**
+  String get dashboardInquiryNote6;
+
+  /// No description provided for @dashboardClaimIssue1.
+  ///
+  /// In en, this message translates to:
+  /// **'Sagging on the left side'**
+  String get dashboardClaimIssue1;
+
+  /// No description provided for @dashboardClaimIssue2.
+  ///
+  /// In en, this message translates to:
+  /// **'Broken zip on the cover'**
+  String get dashboardClaimIssue2;
+
+  /// No description provided for @dashboardClaimIssue3.
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong size delivered'**
+  String get dashboardClaimIssue3;
+
+  /// No description provided for @dashboardClaimIssue4.
+  ///
+  /// In en, this message translates to:
+  /// **'Noise from the spring unit'**
+  String get dashboardClaimIssue4;
+
+  /// No description provided for @addressHome.
+  ///
+  /// In en, this message translates to:
+  /// **'Home'**
+  String get addressHome;
+
+  /// No description provided for @addressWork.
+  ///
+  /// In en, this message translates to:
+  /// **'Work'**
+  String get addressWork;
+
+  /// No description provided for @addressFamily.
+  ///
+  /// In en, this message translates to:
+  /// **'Family home'**
+  String get addressFamily;
+
+  /// No description provided for @addressLine1.
+  ///
+  /// In en, this message translates to:
+  /// **'12 El Geish Street, Tanta'**
+  String get addressLine1;
+
+  /// No description provided for @addressLine2.
+  ///
+  /// In en, this message translates to:
+  /// **'Nasr City, Cairo'**
+  String get addressLine2;
+
+  /// No description provided for @addressLine3.
+  ///
+  /// In en, this message translates to:
+  /// **'Smouha, Alexandria'**
+  String get addressLine3;
+
+  /// No description provided for @addressLine4.
+  ///
+  /// In en, this message translates to:
+  /// **'El Mashaya, Mansoura'**
+  String get addressLine4;
 }
 
 class _AppLocalizationsDelegate
