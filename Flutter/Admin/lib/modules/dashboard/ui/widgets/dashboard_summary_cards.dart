@@ -217,7 +217,7 @@ final class DashboardKpiGrid extends StatelessWidget {
             : width >= 420
             ? 2
             : 1;
-        final gap = AppSpacing.medium;
+        const gap = AppSpacing.medium;
         final itemWidth = (width - gap * (columns - 1)) / columns;
 
         return Wrap(
@@ -372,7 +372,6 @@ final class DashboardRevenueCard extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.small),
         AdminAreaChart(
-          height: 200,
           valueSuffix: 'k',
           points: [
             for (final point in series)

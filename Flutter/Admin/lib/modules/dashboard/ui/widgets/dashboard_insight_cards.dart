@@ -206,12 +206,10 @@ final class DashboardVelocityCard extends StatelessWidget {
           DashboardTableColumn(label: l10n.dashboardWarehouse, flex: 2),
           DashboardTableColumn(
             label: l10n.dashboardSold30d,
-            flex: 1,
             align: AlignmentDirectional.centerEnd,
           ),
           DashboardTableColumn(
             label: l10n.dashboardCurrentQty,
-            flex: 1,
             align: AlignmentDirectional.centerEnd,
           ),
           DashboardTableColumn(
@@ -295,7 +293,6 @@ final class DashboardTopProductsCard extends StatelessWidget {
           DashboardTableColumn(label: l10n.dashboardProduct, flex: 3),
           DashboardTableColumn(
             label: l10n.dashboardTopProductQty,
-            flex: 1,
             align: AlignmentDirectional.centerEnd,
           ),
           DashboardTableColumn(
@@ -372,12 +369,10 @@ final class DashboardTopAskedCard extends StatelessWidget {
           ),
           DashboardTableColumn(
             label: l10n.dashboardNoStockAsked,
-            flex: 1,
             align: AlignmentDirectional.centerEnd,
           ),
           DashboardTableColumn(
             label: l10n.dashboardPriceAsked,
-            flex: 1,
             align: AlignmentDirectional.centerEnd,
           ),
         ],
@@ -436,7 +431,6 @@ final class DashboardAuditTrailCard extends StatelessWidget {
       icon: LucideIcons.history,
       trailing: AdminStatusPill(
         label: dashboardInteger(events.length),
-        tone: AdminPillTone.muted,
         icon: LucideIcons.history,
       ),
       child: events.isEmpty

@@ -47,7 +47,6 @@ final class _DashboardCustomer360Dialog extends StatelessWidget {
           maxHeight: MediaQuery.sizeOf(context).height * 0.86,
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
@@ -121,7 +120,6 @@ final class _DashboardCustomer360Dialog extends StatelessWidget {
                           ),
                           DashboardTableColumn(
                             label: l10n.dashboardItems,
-                            flex: 1,
                             align: AlignmentDirectional.centerEnd,
                           ),
                           DashboardTableColumn(
@@ -336,7 +334,7 @@ final class _CustomerFacts extends StatelessWidget {
             : width >= 330
             ? 2
             : 1;
-        final spacing = AppSpacing.medium;
+        const spacing = AppSpacing.medium;
         final itemWidth = (width - spacing * (columns - 1)) / columns;
 
         final facts = <Widget>[

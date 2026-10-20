@@ -47,7 +47,6 @@ final class DashboardBranchPerformanceCard extends StatelessWidget {
           ),
           DashboardTableColumn(
             label: l10n.dashboardShare,
-            flex: 1,
             align: AlignmentDirectional.centerEnd,
           ),
         ],
@@ -239,7 +238,7 @@ final class DashboardOperationsAlerts extends StatelessWidget {
               : width >= 560
               ? 2
               : 1;
-          final gap = AppSpacing.medium;
+          const gap = AppSpacing.medium;
           final itemWidth = (width - gap * (columns - 1)) / columns;
 
           return Wrap(

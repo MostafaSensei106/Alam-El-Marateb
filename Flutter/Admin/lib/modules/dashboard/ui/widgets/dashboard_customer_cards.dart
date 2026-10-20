@@ -92,7 +92,6 @@ final class DashboardTopCustomersCard extends HookWidget {
                 ),
                 DashboardTableColumn(
                   label: l10n.dashboardOrders,
-                  flex: 1,
                   align: AlignmentDirectional.centerEnd,
                 ),
                 DashboardTableColumn(
@@ -136,7 +135,6 @@ final class DashboardTopCustomersCard extends HookWidget {
               pageCount: pageCount,
               pageSize: pageSize.value,
               total: filtered.length,
-              pageSizeOptions: const [4, 8, 12],
               onPageChanged: (value) => page.value = value,
               onPageSizeChanged: (value) {
                 pageSize.value = value;

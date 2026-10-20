@@ -377,7 +377,6 @@ final class _DashboardTableRecord extends StatelessWidget {
 
   Widget _wideRow(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         for (var index = 0; index < columns.length; index++)
           Expanded(

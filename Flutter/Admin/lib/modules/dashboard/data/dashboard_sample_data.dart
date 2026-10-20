@@ -355,37 +355,37 @@ abstract final class DashboardSampleData {
   }
 
   static List<RfmSlice> _rfm(AppLocalizations l10n) => [
-    RfmSlice(
+    const RfmSlice(
       segment: RfmSegment.champions,
       customers: 412,
       monetary: 31,
       share: 14,
     ),
-    RfmSlice(
+    const RfmSlice(
       segment: RfmSegment.loyal,
       customers: 688,
       monetary: 24,
       share: 23,
     ),
-    RfmSlice(
+    const RfmSlice(
       segment: RfmSegment.potential,
       customers: 534,
       monetary: 16,
       share: 18,
     ),
-    RfmSlice(
+    const RfmSlice(
       segment: RfmSegment.newCustomers,
       customers: 720,
       monetary: 9,
       share: 25,
     ),
-    RfmSlice(
+    const RfmSlice(
       segment: RfmSegment.atRisk,
       customers: 366,
       monetary: 13,
       share: 12,
     ),
-    RfmSlice(segment: RfmSegment.lost, customers: 218, monetary: 7, share: 8),
+    const RfmSlice(segment: RfmSegment.lost, customers: 218, monetary: 7, share: 8),
   ];
 
   static List<GeoCell> _geo(AppLocalizations l10n, double revenue) => [
