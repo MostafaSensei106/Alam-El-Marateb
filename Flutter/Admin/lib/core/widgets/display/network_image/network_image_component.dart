@@ -1,5 +1,6 @@
 import 'package:cached_network_image_ce/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../constants/app_config.dart';
 
@@ -48,7 +49,7 @@ final class NetworkImageComponent extends StatelessWidget {
                 Container(
                   color: Theme.of(context).colorScheme.errorContainer,
                   child: Icon(
-                    Icons.error,
+                    LucideIcons.imageOff,
                     color: Theme.of(context).colorScheme.error,
                   ),
                 ),

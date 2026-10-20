@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../constants/app_config.dart';
 import '../../../extensions/extensions.dart';
@@ -54,8 +55,8 @@ class SidePageAppBarComponent extends StatelessWidget
     leading: _buildSidePageAppBarIcon(
       context,
       cheakLocation(context)
-          ? Icons.keyboard_double_arrow_right_rounded
-          : Icons.keyboard_double_arrow_left_rounded,
+          ? LucideIcons.chevronsRight
+          : LucideIcons.chevronsLeft,
     ),
     title: Text(title, style: TextStyle(color: foregroundColor)),
     backgroundColor: backgroundColor ?? Theme.of(context).colorScheme.surface,

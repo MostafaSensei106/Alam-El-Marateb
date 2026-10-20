@@ -4,6 +4,7 @@ import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kaisel/kaisel.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../core/extensions/extensions.dart';
 import '../../core/router/app_router.dart';
@@ -316,7 +317,6 @@ class _AdminNavigationRailState extends State<_AdminNavigationRail> {
           for (final destination in _destinations(context.localeKeys))
             NavigationRailDestination(
               icon: Icon(destination.icon),
-              selectedIcon: Icon(destination.selectedIcon),
               label: Text(
                 destination.label,
                 maxLines: 1,
@@ -348,7 +348,7 @@ class _RailHeader extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(9),
         child: Icon(
-          Icons.storefront_rounded,
+          LucideIcons.store,
           size: 22,
           color: colorScheme.onPrimaryContainer,
         ),
@@ -359,7 +359,9 @@ class _RailHeader extends StatelessWidget {
       tooltip: extended
           ? context.localeKeys.collapseNavigation
           : context.localeKeys.expandNavigation,
-      icon: Icon(extended ? Icons.menu_open_rounded : Icons.menu_rounded),
+      icon: Icon(
+        extended ? LucideIcons.panelLeftClose : LucideIcons.panelLeftOpen,
+      ),
       visualDensity: VisualDensity.compact,
     );
 
@@ -411,7 +413,7 @@ class _RailFooter extends StatelessWidget {
         children: [
           _RailAction(
             extended: extended,
-            icon: isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
+            icon: isDark ? LucideIcons.sun : LucideIcons.moon,
             label: context.localeKeys.toggleTheme,
             onTap: () {
               unawaited(
@@ -423,7 +425,7 @@ class _RailFooter extends StatelessWidget {
           ),
           _RailAction(
             extended: extended,
-            icon: Icons.translate_rounded,
+            icon: LucideIcons.languages,
             label: isArabic
                 ? context.localeKeys.english
                 : context.localeKeys.arabic,
@@ -495,83 +497,26 @@ class _RailAction extends StatelessWidget {
 }
 
 class _RailDestination {
-  const _RailDestination({
-    required this.label,
-    required this.icon,
-    required this.selectedIcon,
-  });
+  const _RailDestination({required this.label, required this.icon});
 
   final String label;
   final IconData icon;
-  final IconData selectedIcon;
 }
 
 List<_RailDestination> _destinations(AppLocalizations l10n) => [
-  _RailDestination(
-    label: l10n.navDashboard,
-    icon: Icons.dashboard_outlined,
-    selectedIcon: Icons.dashboard,
-  ),
-  _RailDestination(
-    label: l10n.navIdentity,
-    icon: Icons.admin_panel_settings_outlined,
-    selectedIcon: Icons.admin_panel_settings,
-  ),
-  _RailDestination(
-    label: l10n.navCatalog,
-    icon: Icons.inventory_2_outlined,
-    selectedIcon: Icons.inventory_2,
-  ),
-  _RailDestination(
-    label: l10n.navInventory,
-    icon: Icons.warehouse_outlined,
-    selectedIcon: Icons.warehouse,
-  ),
-  _RailDestination(
-    label: l10n.navSales,
-    icon: Icons.point_of_sale_outlined,
-    selectedIcon: Icons.point_of_sale,
-  ),
-  _RailDestination(
-    label: l10n.navPurchasing,
-    icon: Icons.shopping_bag_outlined,
-    selectedIcon: Icons.shopping_bag,
-  ),
-  _RailDestination(
-    label: l10n.navCrm,
-    icon: Icons.support_agent_outlined,
-    selectedIcon: Icons.support_agent,
-  ),
-  _RailDestination(
-    label: l10n.navDelivery,
-    icon: Icons.local_shipping_outlined,
-    selectedIcon: Icons.local_shipping,
-  ),
-  _RailDestination(
-    label: l10n.navHr,
-    icon: Icons.groups_outlined,
-    selectedIcon: Icons.groups,
-  ),
-  _RailDestination(
-    label: l10n.navAccounting,
-    icon: Icons.account_balance_outlined,
-    selectedIcon: Icons.account_balance,
-  ),
-  _RailDestination(
-    label: l10n.navMarketing,
-    icon: Icons.campaign_outlined,
-    selectedIcon: Icons.campaign,
-  ),
-  _RailDestination(
-    label: l10n.navProfile,
-    icon: Icons.account_circle_outlined,
-    selectedIcon: Icons.account_circle,
-  ),
-  _RailDestination(
-    label: l10n.navSettings,
-    icon: Icons.settings_outlined,
-    selectedIcon: Icons.settings,
-  ),
+  _RailDestination(label: l10n.navDashboard, icon: LucideIcons.layoutDashboard),
+  _RailDestination(label: l10n.navIdentity, icon: LucideIcons.shieldCheck),
+  _RailDestination(label: l10n.navCatalog, icon: LucideIcons.package),
+  _RailDestination(label: l10n.navInventory, icon: LucideIcons.warehouse),
+  _RailDestination(label: l10n.navSales, icon: LucideIcons.calculator),
+  _RailDestination(label: l10n.navPurchasing, icon: LucideIcons.shoppingBag),
+  _RailDestination(label: l10n.navCrm, icon: LucideIcons.headset),
+  _RailDestination(label: l10n.navDelivery, icon: LucideIcons.truck),
+  _RailDestination(label: l10n.navHr, icon: LucideIcons.users),
+  _RailDestination(label: l10n.navAccounting, icon: LucideIcons.landmark),
+  _RailDestination(label: l10n.navMarketing, icon: LucideIcons.megaphone),
+  _RailDestination(label: l10n.navProfile, icon: LucideIcons.circleUser),
+  _RailDestination(label: l10n.navSettings, icon: LucideIcons.settings),
 ];
 
 class _AdminSectionPage extends StatelessWidget {
@@ -626,7 +571,7 @@ class _AdminSectionPage extends StatelessWidget {
                     child: Row(
                       children: [
                         Icon(
-                          Icons.construction_rounded,
+                          LucideIcons.construction,
                           size: 18,
                           color: colorScheme.onSecondaryContainer,
                         ),
@@ -669,7 +614,7 @@ class _AdminSectionPage extends StatelessWidget {
                               ),
                               child: ListTile(
                                 leading: Icon(
-                                  Icons.arrow_forward_rounded,
+                                  LucideIcons.arrowRight,
                                   size: 18,
                                   color: colorScheme.primary,
                                 ),

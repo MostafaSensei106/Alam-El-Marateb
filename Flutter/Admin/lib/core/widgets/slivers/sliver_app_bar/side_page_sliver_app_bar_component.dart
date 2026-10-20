@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../constants/app_config.dart';
 import '../../../extensions/extensions.dart';
@@ -60,8 +61,8 @@ final class SidePageSliverAppBarComponent extends StatelessWidget {
     leading: _buildSidePageAppBarIcon(
       context,
       cheakLocation(context)
-          ? Icons.keyboard_double_arrow_right_rounded
-          : Icons.keyboard_double_arrow_left_rounded,
+          ? LucideIcons.chevronsRight
+          : LucideIcons.chevronsLeft,
     ),
     actions: actions,
     pinned: pinned,

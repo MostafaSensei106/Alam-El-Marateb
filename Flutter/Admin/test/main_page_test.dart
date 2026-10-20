@@ -42,10 +42,10 @@ void main() {
   testWidgets('rail toggles between expanded and collapsed', (tester) async {
     await pumpMainPage(tester, surfaceSize: const Size(1600, 900));
 
-    await tester.tap(find.byIcon(Icons.menu_open_rounded));
+    await tester.tap(find.byTooltip('Collapse navigation'));
     await tester.pumpAndSettle();
 
     expect(tester.takeException(), isNull);
-    expect(find.byIcon(Icons.menu_rounded), findsOneWidget);
+    expect(find.byTooltip('Expand navigation'), findsOneWidget);
   });
 }
