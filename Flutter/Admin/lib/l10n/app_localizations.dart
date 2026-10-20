@@ -1856,6 +1856,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Select a screen to preview its planned layout.'**
   String get hubSelectScreen;
+
+  /// No description provided for @currencyEgp.
+  ///
+  /// In en, this message translates to:
+  /// **'EGP'**
+  String get currencyEgp;
+
+  /// No description provided for @sampleCustomer1.
+  ///
+  /// In en, this message translates to:
+  /// **'Mona Abdelrahman'**
+  String get sampleCustomer1;
+
+  /// No description provided for @sampleCustomer2.
+  ///
+  /// In en, this message translates to:
+  /// **'Youssef Kamal'**
+  String get sampleCustomer2;
+
+  /// No description provided for @sampleCustomer3.
+  ///
+  /// In en, this message translates to:
+  /// **'Salma Fathy'**
+  String get sampleCustomer3;
+
+  /// No description provided for @sampleCustomer4.
+  ///
+  /// In en, this message translates to:
+  /// **'Karim Nabil'**
+  String get sampleCustomer4;
 }
 
 class _AppLocalizationsDelegate

@@ -320,5 +320,10 @@
   "wireframeMetric": "Metric",
   "wireframePreviewHint": "Preview of the planned layout",
   "hubScreens": "Screens",
-  "hubSelectScreen": "Select a screen to preview its planned layout."
+  "hubSelectScreen": "Select a screen to preview its planned layout.",
+  "currencyEgp": "EGP",
+  "sampleCustomer1": "Mona Abdelrahman",
+  "sampleCustomer2": "Youssef Kamal",
+  "sampleCustomer3": "Salma Fathy",
+  "sampleCustomer4": "Karim Nabil"
 }

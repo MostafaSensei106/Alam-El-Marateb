@@ -313,5 +313,10 @@
   "wireframeMetric": "مؤشر",
   "wireframePreviewHint": "معاينة التخطيط المخطط",
   "hubScreens": "الشاشات",
-  "hubSelectScreen": "اختر شاشة لمعاينة تخطيطها المخطط."
+  "hubSelectScreen": "اختر شاشة لمعاينة تخطيطها المخطط.",
+  "currencyEgp": "ج.م",
+  "sampleCustomer1": "منى عبد الرحمن",
+  "sampleCustomer2": "يوسف كمال",
+  "sampleCustomer3": "سلمى فتحي",
+  "sampleCustomer4": "كريم نبيل"
 }

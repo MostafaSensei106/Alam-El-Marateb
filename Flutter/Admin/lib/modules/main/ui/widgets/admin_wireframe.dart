@@ -194,11 +194,7 @@ final class _GhostChip extends StatelessWidget {
 }
 
 final class _GhostBox extends StatelessWidget {
-  const _GhostBox({
-    this.height = 14,
-    this.child,
-    this.filled = false,
-  });
+  const _GhostBox({this.height = 14, this.child, this.filled = false});
 
   final double height;
   final Widget? child;
@@ -233,16 +229,26 @@ final class _GhostLine extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return FractionallySizedBox(
-      alignment: AlignmentDirectional.centerStart,
-      widthFactor: widthFactor,
-      child: Container(
-        height: height,
-        decoration: BoxDecoration(
-          color: colorScheme.onSurface.withValues(alpha: 0.1),
-          borderRadius: BorderRadius.circular(AppRadii.small),
-        ),
-      ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Row children and shrink-wrapped boxes hand down an unbounded width.
+        // Fall back to a modest fixed bar so previews still read as text lines.
+        final available = constraints.maxWidth;
+        final width = available.isFinite
+            ? available * widthFactor
+            : 64 * widthFactor;
+
+        return SizedBox(
+          width: width,
+          height: height,
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: colorScheme.onSurface.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(AppRadii.small),
+            ),
+          ),
+        );
+      },
     );
   }
 }

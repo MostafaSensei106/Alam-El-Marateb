@@ -924,4 +924,19 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get hubSelectScreen => 'اختر شاشة لمعاينة تخطيطها المخطط.';
+
+  @override
+  String get currencyEgp => 'ج.م';
+
+  @override
+  String get sampleCustomer1 => 'منى عبد الرحمن';
+
+  @override
+  String get sampleCustomer2 => 'يوسف كمال';
+
+  @override
+  String get sampleCustomer3 => 'سلمى فتحي';
+
+  @override
+  String get sampleCustomer4 => 'كريم نبيل';
 }

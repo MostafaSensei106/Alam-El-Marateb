@@ -934,4 +934,19 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get hubSelectScreen =>
       'Select a screen to preview its planned layout.';
+
+  @override
+  String get currencyEgp => 'EGP';
+
+  @override
+  String get sampleCustomer1 => 'Mona Abdelrahman';
+
+  @override
+  String get sampleCustomer2 => 'Youssef Kamal';
+
+  @override
+  String get sampleCustomer3 => 'Salma Fathy';
+
+  @override
+  String get sampleCustomer4 => 'Karim Nabil';
 }
