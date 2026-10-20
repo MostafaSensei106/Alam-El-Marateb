@@ -2121,6 +2121,24 @@ abstract class AppLocalizations {
   /// **'Activity timeline'**
   String get sectionTimeline;
 
+  /// No description provided for @sectionRecordNote.
+  ///
+  /// In en, this message translates to:
+  /// **'This record was created from the dashboard. You can edit or archive it at any time.'**
+  String get sectionRecordNote;
+
+  /// No description provided for @sectionCreatedAt.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get sectionCreatedAt;
+
+  /// No description provided for @sectionLastUpdate.
+  ///
+  /// In en, this message translates to:
+  /// **'Last update'**
+  String get sectionLastUpdate;
+
   /// No description provided for @statusCompleted.
   ///
   /// In en, this message translates to:

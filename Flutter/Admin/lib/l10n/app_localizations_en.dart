@@ -1077,6 +1077,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sectionTimeline => 'Activity timeline';
 
   @override
+  String get sectionRecordNote =>
+      'This record was created from the dashboard. You can edit or archive it at any time.';
+
+  @override
+  String get sectionCreatedAt => 'Created';
+
+  @override
+  String get sectionLastUpdate => 'Last update';
+
+  @override
   String get statusCompleted => 'Completed';
 
   @override

@@ -1065,6 +1065,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get sectionTimeline => 'سجل النشاط';
 
   @override
+  String get sectionRecordNote =>
+      'تم إنشاء هذا السجل من لوحة التحكم، ويمكن تعديل بياناته أو أرشفته في أي وقت.';
+
+  @override
+  String get sectionCreatedAt => 'تاريخ الإنشاء';
+
+  @override
+  String get sectionLastUpdate => 'آخر تحديث';
+
+  @override
   String get statusCompleted => 'مكتمل';
 
   @override
