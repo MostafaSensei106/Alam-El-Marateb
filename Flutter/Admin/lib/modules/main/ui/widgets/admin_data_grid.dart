@@ -196,10 +196,7 @@ final class _AdminRecordSource extends DataGridSource {
     final index = _rows.indexOf(row);
     final record = records[index];
 
-    Widget cell({
-      required Widget child,
-      bool alignEnd = false,
-    }) {
+    Widget cell({required Widget child, bool alignEnd = false}) {
       return Container(
         alignment: alignEnd
             ? AlignmentDirectional.centerEnd

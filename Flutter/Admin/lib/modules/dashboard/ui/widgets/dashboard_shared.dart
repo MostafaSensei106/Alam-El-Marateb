@@ -77,12 +77,13 @@ extension DashboardInquiryKeys on AppLocalizations {
     InquiryOutcome.justAsking => dashboardInquiryJustAsking,
   };
 
-  AdminPillTone dashboardInquiryTone(InquiryOutcome outcome) => switch (outcome) {
-    InquiryOutcome.bought => AdminPillTone.success,
-    InquiryOutcome.price => AdminPillTone.primary,
-    InquiryOutcome.noStock => AdminPillTone.warning,
-    InquiryOutcome.justAsking => AdminPillTone.muted,
-  };
+  AdminPillTone dashboardInquiryTone(InquiryOutcome outcome) =>
+      switch (outcome) {
+        InquiryOutcome.bought => AdminPillTone.success,
+        InquiryOutcome.price => AdminPillTone.primary,
+        InquiryOutcome.noStock => AdminPillTone.warning,
+        InquiryOutcome.justAsking => AdminPillTone.muted,
+      };
 }
 
 /// Warranty claim labels.
@@ -392,18 +393,15 @@ final class _DashboardTableRecord extends StatelessWidget {
 
   Widget _compactRow(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final labelStyle = Theme.of(context).textTheme.labelSmall?.copyWith(
-      color: colorScheme.onSurfaceVariant,
-    );
+    final labelStyle = Theme.of(context).textTheme.labelSmall
+        ?.copyWith(color: colorScheme.onSurfaceVariant);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         for (var index = 0; index < columns.length; index++)
           Padding(
-            padding: EdgeInsets.only(
-              top: index == 0 ? 0 : AppSpacing.xSmall,
-            ),
+            padding: EdgeInsets.only(top: index == 0 ? 0 : AppSpacing.xSmall),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -591,18 +589,12 @@ final class DashboardSearchField extends StatelessWidget {
       decoration: InputDecoration(
         isDense: true,
         hintText: hint,
-        prefixIcon: const Icon(
-          LucideIcons.search,
-          size: AppIconSizes.small,
-        ),
+        prefixIcon: const Icon(LucideIcons.search, size: AppIconSizes.small),
         suffixIcon: showClear
             ? IconButton(
                 onPressed: onClear,
                 tooltip: context.localeKeys.sectionClearSearch,
-                icon: const Icon(
-                  LucideIcons.x,
-                  size: AppIconSizes.small,
-                ),
+                icon: const Icon(LucideIcons.x, size: AppIconSizes.small),
               )
             : null,
       ),
@@ -725,10 +717,7 @@ final class DashboardPagination extends StatelessWidget {
             children: [
               summary,
               const SizedBox(height: AppSpacing.xSmall),
-              Align(
-                alignment: AlignmentDirectional.centerEnd,
-                child: controls,
-              ),
+              Align(alignment: AlignmentDirectional.centerEnd, child: controls),
             ],
           );
         }

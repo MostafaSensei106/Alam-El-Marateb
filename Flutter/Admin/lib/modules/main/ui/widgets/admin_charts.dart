@@ -32,10 +32,8 @@ final class AdminAreaChart extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final accent = lineColor ?? colorScheme.primary;
-    final labelStyle = Theme.of(context).textTheme.labelSmall?.copyWith(
-      color: colorScheme.onSurfaceVariant,
-      fontSize: 10,
-    );
+    final labelStyle = Theme.of(context).textTheme.labelSmall
+        ?.copyWith(color: colorScheme.onSurfaceVariant, fontSize: 10);
 
     return SizedBox(
       height: height,
@@ -104,9 +102,8 @@ final class AdminDoughnutChart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final labelStyle = Theme.of(context).textTheme.labelSmall?.copyWith(
-      color: colorScheme.onSurfaceVariant,
-    );
+    final labelStyle = Theme.of(context).textTheme.labelSmall
+        ?.copyWith(color: colorScheme.onSurfaceVariant);
     final palette = colors.isEmpty ? _fallbackPalette(colorScheme) : colors;
 
     return SizedBox(

@@ -52,7 +52,8 @@ final class DashboardTopCustomersCard extends HookWidget {
       subtitle: l10n.dashboardTopCustomersHint,
       icon: LucideIcons.crown,
       trailing: AdminStatusPill(
-        label: '${dashboardInteger(filtered.length)} ${l10n.dashboardCustomers}',
+        label:
+            '${dashboardInteger(filtered.length)} ${l10n.dashboardCustomers}',
         tone: AdminPillTone.primary,
         icon: LucideIcons.usersRound,
       ),
@@ -77,10 +78,7 @@ final class DashboardTopCustomersCard extends HookWidget {
               message: l10n.sectionNoResultsMessage,
               action: OutlinedButton.icon(
                 onPressed: resetSearch,
-                icon: const Icon(
-                  LucideIcons.x,
-                  size: AppIconSizes.small,
-                ),
+                icon: const Icon(LucideIcons.x, size: AppIconSizes.small),
                 label: Text(l10n.sectionClearSearch),
               ),
             )
@@ -111,10 +109,7 @@ final class DashboardTopCustomersCard extends HookWidget {
               rows: [
                 for (final customer in visible)
                   DashboardTableRow([
-                    DashboardTableCell(
-                      customer.name,
-                      secondary: customer.id,
-                    ),
+                    DashboardTableCell(customer.name, secondary: customer.id),
                     DashboardTableCell(
                       customer.phone,
                       secondary: customer.branch,
@@ -226,9 +221,7 @@ final class DashboardRecentOrdersCard extends HookWidget {
                       secondary: order.branch,
                     ),
                     DashboardTableCell(order.date),
-                    DashboardTableCell(
-                      dashboardMoney(order.total, currency),
-                    ),
+                    DashboardTableCell(dashboardMoney(order.total, currency)),
                     DashboardTableCell(
                       order.status.name,
                       child: AdminStatusPill(
@@ -282,9 +275,7 @@ final class DashboardInquiriesCard extends HookWidget {
       subtitle: l10n.dashboardInquiriesHint,
       icon: LucideIcons.messageCircleQuestion,
       trailing: AdminStatusPill(
-        label: l10n.dashboardInquiriesCount(
-          dashboardInteger(inquiries.length),
-        ),
+        label: l10n.dashboardInquiriesCount(dashboardInteger(inquiries.length)),
         tone: AdminPillTone.primary,
         icon: LucideIcons.inbox,
       ),

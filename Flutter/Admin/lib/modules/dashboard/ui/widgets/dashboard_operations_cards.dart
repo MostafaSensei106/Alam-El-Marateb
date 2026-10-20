@@ -29,10 +29,7 @@ final class DashboardBranchPerformanceCard extends StatelessWidget {
       icon: LucideIcons.building2,
       child: DashboardTable(
         columns: [
-          DashboardTableColumn(
-            label: l10n.dashboardBranchFilter,
-            flex: 3,
-          ),
+          DashboardTableColumn(label: l10n.dashboardBranchFilter, flex: 3),
           DashboardTableColumn(
             label: l10n.dashboardRevenue,
             flex: 2,
@@ -58,9 +55,7 @@ final class DashboardBranchPerformanceCard extends StatelessWidget {
           for (final branch in branches)
             DashboardTableRow([
               DashboardTableCell(branch.name, secondary: branch.city),
-              DashboardTableCell(
-                dashboardMoney(branch.revenue, currency),
-              ),
+              DashboardTableCell(dashboardMoney(branch.revenue, currency)),
               DashboardTableCell(dashboardMoney(branch.profit, currency)),
               DashboardTableCell(dashboardInteger(branch.orders)),
               DashboardTableCell(dashboardPercent(branch.share)),
@@ -142,10 +137,7 @@ final class DashboardStockCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.medium),
           DashboardTable(
             columns: [
-              DashboardTableColumn(
-                label: l10n.dashboardWarehouse,
-                flex: 3,
-              ),
+              DashboardTableColumn(label: l10n.dashboardWarehouse, flex: 3),
               DashboardTableColumn(
                 label: l10n.dashboardUnits,
                 flex: 2,
@@ -165,16 +157,9 @@ final class DashboardStockCard extends StatelessWidget {
             rows: [
               for (final warehouse in warehouses)
                 DashboardTableRow([
-                  DashboardTableCell(
-                    warehouse.name,
-                    secondary: warehouse.city,
-                  ),
-                  DashboardTableCell(
-                    dashboardInteger(warehouse.quantity),
-                  ),
-                  DashboardTableCell(
-                    dashboardMoney(warehouse.value, currency),
-                  ),
+                  DashboardTableCell(warehouse.name, secondary: warehouse.city),
+                  DashboardTableCell(dashboardInteger(warehouse.quantity)),
+                  DashboardTableCell(dashboardMoney(warehouse.value, currency)),
                   DashboardTableCell(
                     dashboardInteger(warehouse.lowStock),
                     child: warehouse.lowStock == 0

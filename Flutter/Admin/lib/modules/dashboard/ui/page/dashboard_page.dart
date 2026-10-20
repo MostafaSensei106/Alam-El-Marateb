@@ -275,10 +275,7 @@ final class _RevenueCard extends StatelessWidget {
             runSpacing: AppSpacing.xSmall,
             crossAxisAlignment: WrapCrossAlignment.end,
             children: [
-              Text(
-                '128,540 $currency',
-                style: textTheme.headlineSmall,
-              ),
+              Text('128,540 $currency', style: textTheme.headlineSmall),
               Text(
                 '${l10n.dashboardAverageOrder} · 1,150 $currency',
                 style: textTheme.bodySmall?.copyWith(
@@ -355,11 +352,7 @@ final class _MonthlyTargetCard extends StatelessWidget {
             icon: LucideIcons.target,
           ),
           const SizedBox(height: AppSpacing.medium),
-          const AdminTargetGauge(
-            value: 74,
-            label: '',
-            height: 186,
-          ),
+          const AdminTargetGauge(value: 74, label: '', height: 186),
           const SizedBox(height: AppSpacing.small),
           Text(
             l10n.dashboardTargetHint,
@@ -534,17 +527,11 @@ final class _RecentOrdersCard extends StatelessWidget {
                     children: [
                       Expanded(
                         flex: 3,
-                        child: Text(
-                          l10n.dashboardOrder,
-                          style: headerStyle,
-                        ),
+                        child: Text(l10n.dashboardOrder, style: headerStyle),
                       ),
                       Expanded(
                         flex: 2,
-                        child: Text(
-                          l10n.dashboardStatus,
-                          style: headerStyle,
-                        ),
+                        child: Text(l10n.dashboardStatus, style: headerStyle),
                       ),
                       Expanded(
                         flex: 2,
@@ -570,10 +557,7 @@ final class _RecentOrdersCard extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  order.id,
-                                  style: textTheme.bodyMedium,
-                                ),
+                                Text(order.id, style: textTheme.bodyMedium),
                                 Text(
                                   order.customer,
                                   maxLines: 1,

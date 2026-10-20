@@ -466,6 +466,10 @@ String dashboardDecimal(num value) => value.toStringAsFixed(1);
 
 /// Signed percentage used by the KPI change line.
 String dashboardDelta(double value) {
-  final sign = value > 0 ? '+' : value < 0 ? '−' : '';
+  final sign = value > 0
+      ? '+'
+      : value < 0
+      ? '−'
+      : '';
   return '$sign${value.abs().toStringAsFixed(1)}%';
 }

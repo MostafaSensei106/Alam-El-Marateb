@@ -35,11 +35,7 @@ abstract final class DashboardSampleData {
       name: l10n.sampleBranch1,
       city: l10n.govGharbia,
     ),
-    DashboardBranch(
-      id: 'cairo',
-      name: l10n.sampleBranch2,
-      city: l10n.govCairo,
-    ),
+    DashboardBranch(id: 'cairo', name: l10n.sampleBranch2, city: l10n.govCairo),
     DashboardBranch(
       id: 'alex',
       name: l10n.sampleBranch3,
@@ -293,7 +289,8 @@ abstract final class DashboardSampleData {
             name: branch.name,
             city: branch.city,
             revenue: allRevenue * _shares[branch.id]!,
-            profit: allRevenue *
+            profit:
+                allRevenue *
                 _shares[branch.id]! *
                 _margin *
                 (0.94 + _shares[branch.id]! * 0.14),
@@ -334,10 +331,7 @@ abstract final class DashboardSampleData {
     ];
   }
 
-  static List<TopProduct> _topProducts(
-    AppLocalizations l10n,
-    double revenue,
-  ) {
+  static List<TopProduct> _topProducts(AppLocalizations l10n, double revenue) {
     const shares = [0.18, 0.15, 0.12, 0.09, 0.07];
     const prices = [18500.0, 24500.0, 15200.0, 21000.0, 9800.0];
     final products = [
@@ -391,12 +385,7 @@ abstract final class DashboardSampleData {
       monetary: 13,
       share: 12,
     ),
-    RfmSlice(
-      segment: RfmSegment.lost,
-      customers: 218,
-      monetary: 7,
-      share: 8,
-    ),
+    RfmSlice(segment: RfmSegment.lost, customers: 218, monetary: 7, share: 8),
   ];
 
   static List<GeoCell> _geo(AppLocalizations l10n, double revenue) => [
@@ -544,10 +533,7 @@ abstract final class DashboardSampleData {
     ),
   ];
 
-  static List<AuditEvent> _audit(
-    AppLocalizations l10n,
-    String currency,
-  ) => [
+  static List<AuditEvent> _audit(AppLocalizations l10n, String currency) => [
     AuditEvent(
       id: 'AUD-7712',
       action: AuditAction.transfer,
@@ -565,11 +551,7 @@ abstract final class DashboardSampleData {
       action: AuditAction.priceChange,
       actor: l10n.adminDisplayName,
       entity: l10n.product2,
-      detail: l10n.dashboardAuditPriceDetail(
-        l10n.product2,
-        '24,500',
-        '25,900',
-      ),
+      detail: l10n.dashboardAuditPriceDetail(l10n.product2, '24,500', '25,900'),
       at: '2026-10-20 09:46',
     ),
     AuditEvent(
@@ -585,10 +567,7 @@ abstract final class DashboardSampleData {
       action: AuditAction.warranty,
       actor: l10n.sampleEmployee3,
       entity: 'WC-3391',
-      detail: l10n.dashboardAuditWarrantyDetail(
-        l10n.customer1,
-        l10n.product1,
-      ),
+      detail: l10n.dashboardAuditWarrantyDetail(l10n.customer1, l10n.product1),
       at: '2026-10-19 18:38',
     ),
     AuditEvent(
@@ -675,9 +654,30 @@ abstract final class DashboardSampleData {
           address(work, l10n.addressLine2, l10n.govCairo),
         ],
         orderHistory: [
-          order('SO-10482', '2026-10-12', 24800, OrderStatus.delivered, showroom, 2),
-          order('SO-10311', '2026-08-04', 18500, OrderStatus.delivered, whatsapp, 1),
-          order('SO-10102', '2026-05-19', 31200, OrderStatus.delivered, showroom, 3),
+          order(
+            'SO-10482',
+            '2026-10-12',
+            24800,
+            OrderStatus.delivered,
+            showroom,
+            2,
+          ),
+          order(
+            'SO-10311',
+            '2026-08-04',
+            18500,
+            OrderStatus.delivered,
+            whatsapp,
+            1,
+          ),
+          order(
+            'SO-10102',
+            '2026-05-19',
+            31200,
+            OrderStatus.delivered,
+            showroom,
+            3,
+          ),
         ],
         claims: [
           claim(
@@ -703,13 +703,32 @@ abstract final class DashboardSampleData {
         totalSpend: 268000,
         orders: 11,
         loyaltyPoints: 5120,
-        addresses: [
-          address(work, l10n.addressLine2, l10n.govCairo),
-        ],
+        addresses: [address(work, l10n.addressLine2, l10n.govCairo)],
         orderHistory: [
-          order('SO-10475', '2026-10-11', 49000, OrderStatus.paid, phoneChannel, 2),
-          order('SO-10344', '2026-08-22', 73500, OrderStatus.delivered, phoneChannel, 3),
-          order('SO-10089', '2026-04-02', 24500, OrderStatus.delivered, showroom, 1),
+          order(
+            'SO-10475',
+            '2026-10-11',
+            49000,
+            OrderStatus.paid,
+            phoneChannel,
+            2,
+          ),
+          order(
+            'SO-10344',
+            '2026-08-22',
+            73500,
+            OrderStatus.delivered,
+            phoneChannel,
+            3,
+          ),
+          order(
+            'SO-10089',
+            '2026-04-02',
+            24500,
+            OrderStatus.delivered,
+            showroom,
+            1,
+          ),
         ],
         claims: const [],
         notes: l10n.dashboardCustomerNote2,
@@ -727,12 +746,24 @@ abstract final class DashboardSampleData {
         totalSpend: 96400,
         orders: 9,
         loyaltyPoints: 1980,
-        addresses: [
-          address(home, l10n.addressLine1, l10n.govGharbia),
-        ],
+        addresses: [address(home, l10n.addressLine1, l10n.govGharbia)],
         orderHistory: [
-          order('SO-10461', '2026-10-09', 15200, OrderStatus.delivered, showroom, 1),
-          order('SO-10298', '2026-07-17', 29600, OrderStatus.delivered, showroom, 2),
+          order(
+            'SO-10461',
+            '2026-10-09',
+            15200,
+            OrderStatus.delivered,
+            showroom,
+            1,
+          ),
+          order(
+            'SO-10298',
+            '2026-07-17',
+            29600,
+            OrderStatus.delivered,
+            showroom,
+            2,
+          ),
         ],
         claims: const [],
         notes: l10n.dashboardCustomerNote3,
@@ -750,12 +781,24 @@ abstract final class DashboardSampleData {
         totalSpend: 58200,
         orders: 6,
         loyaltyPoints: 860,
-        addresses: [
-          address(home, l10n.addressLine3, l10n.govAlexandria),
-        ],
+        addresses: [address(home, l10n.addressLine3, l10n.govAlexandria)],
         orderHistory: [
-          order('SO-10452', '2026-10-07', 21000, OrderStatus.shipping, whatsapp, 1),
-          order('SO-10240', '2026-06-11', 16900, OrderStatus.delivered, showroom, 1),
+          order(
+            'SO-10452',
+            '2026-10-07',
+            21000,
+            OrderStatus.shipping,
+            whatsapp,
+            1,
+          ),
+          order(
+            'SO-10240',
+            '2026-06-11',
+            16900,
+            OrderStatus.delivered,
+            showroom,
+            1,
+          ),
         ],
         claims: [
           claim(
@@ -781,11 +824,16 @@ abstract final class DashboardSampleData {
         totalSpend: 24800,
         orders: 2,
         loyaltyPoints: 240,
-        addresses: [
-          address(family, l10n.addressLine1, l10n.govGharbia),
-        ],
+        addresses: [address(family, l10n.addressLine1, l10n.govGharbia)],
         orderHistory: [
-          order('SO-10488', '2026-10-14', 24800, OrderStatus.delivered, whatsapp, 1),
+          order(
+            'SO-10488',
+            '2026-10-14',
+            24800,
+            OrderStatus.delivered,
+            whatsapp,
+            1,
+          ),
         ],
         claims: const [],
         notes: l10n.dashboardCustomerNote3,
@@ -803,12 +851,24 @@ abstract final class DashboardSampleData {
         totalSpend: 71900,
         orders: 7,
         loyaltyPoints: 1120,
-        addresses: [
-          address(home, l10n.addressLine4, l10n.govDakahlia),
-        ],
+        addresses: [address(home, l10n.addressLine4, l10n.govDakahlia)],
         orderHistory: [
-          order('SO-10388', '2026-09-02', 19600, OrderStatus.delivered, phoneChannel, 1),
-          order('SO-10174', '2026-03-28', 29400, OrderStatus.cancelled, phoneChannel, 2),
+          order(
+            'SO-10388',
+            '2026-09-02',
+            19600,
+            OrderStatus.delivered,
+            phoneChannel,
+            1,
+          ),
+          order(
+            'SO-10174',
+            '2026-03-28',
+            29400,
+            OrderStatus.cancelled,
+            phoneChannel,
+            2,
+          ),
         ],
         claims: [
           claim(
@@ -834,12 +894,17 @@ abstract final class DashboardSampleData {
         totalSpend: 112300,
         orders: 10,
         loyaltyPoints: 2410,
-        addresses: [
-          address(home, l10n.addressLine2, l10n.govCairo),
-        ],
+        addresses: [address(home, l10n.addressLine2, l10n.govCairo)],
         orderHistory: [
           order('SO-10470', '2026-10-10', 18500, OrderStatus.paid, showroom, 1),
-          order('SO-10301', '2026-07-23', 42000, OrderStatus.delivered, showroom, 2),
+          order(
+            'SO-10301',
+            '2026-07-23',
+            42000,
+            OrderStatus.delivered,
+            showroom,
+            2,
+          ),
         ],
         claims: const [],
         notes: l10n.dashboardCustomerNote3,
@@ -862,8 +927,22 @@ abstract final class DashboardSampleData {
           address(family, l10n.addressLine1, l10n.govGharbia),
         ],
         orderHistory: [
-          order('SO-10480', '2026-10-13', 90000, OrderStatus.paid, phoneChannel, 4),
-          order('SO-10355', '2026-08-29', 63000, OrderStatus.delivered, phoneChannel, 3),
+          order(
+            'SO-10480',
+            '2026-10-13',
+            90000,
+            OrderStatus.paid,
+            phoneChannel,
+            4,
+          ),
+          order(
+            'SO-10355',
+            '2026-08-29',
+            63000,
+            OrderStatus.delivered,
+            phoneChannel,
+            3,
+          ),
         ],
         claims: [
           claim(
@@ -889,12 +968,24 @@ abstract final class DashboardSampleData {
         totalSpend: 44600,
         orders: 5,
         loyaltyPoints: 720,
-        addresses: [
-          address(home, l10n.addressLine1, l10n.govGharbia),
-        ],
+        addresses: [address(home, l10n.addressLine1, l10n.govGharbia)],
         orderHistory: [
-          order('SO-10456', '2026-10-08', 12800, OrderStatus.shipping, whatsapp, 1),
-          order('SO-10266', '2026-06-30', 18400, OrderStatus.delivered, whatsapp, 1),
+          order(
+            'SO-10456',
+            '2026-10-08',
+            12800,
+            OrderStatus.shipping,
+            whatsapp,
+            1,
+          ),
+          order(
+            'SO-10266',
+            '2026-06-30',
+            18400,
+            OrderStatus.delivered,
+            whatsapp,
+            1,
+          ),
         ],
         claims: const [],
         notes: l10n.dashboardCustomerNote1,
@@ -912,11 +1003,16 @@ abstract final class DashboardSampleData {
         totalSpend: 18700,
         orders: 3,
         loyaltyPoints: 180,
-        addresses: [
-          address(home, l10n.addressLine4, l10n.govDakahlia),
-        ],
+        addresses: [address(home, l10n.addressLine4, l10n.govDakahlia)],
         orderHistory: [
-          order('SO-10188', '2026-04-14', 9800, OrderStatus.delivered, showroom, 1),
+          order(
+            'SO-10188',
+            '2026-04-14',
+            9800,
+            OrderStatus.delivered,
+            showroom,
+            1,
+          ),
         ],
         claims: [
           claim(

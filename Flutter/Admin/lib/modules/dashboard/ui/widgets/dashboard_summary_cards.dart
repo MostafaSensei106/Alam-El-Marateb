@@ -79,10 +79,7 @@ final class DashboardFilterBar extends StatelessWidget {
       decoration: InputDecoration(
         isDense: true,
         labelText: l10n.dashboardBranchFilter,
-        prefixIcon: const Icon(
-          LucideIcons.store,
-          size: AppIconSizes.small,
-        ),
+        prefixIcon: const Icon(LucideIcons.store, size: AppIconSizes.small),
       ),
       items: [
         DropdownMenuItem<String>(
@@ -154,9 +151,8 @@ final class DashboardFilterBar extends StatelessWidget {
                   l10n.dashboardUpdated(updatedAt),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
+                  style: Theme.of(context).textTheme.labelSmall
+                      ?.copyWith(color: colorScheme.onSurfaceVariant),
                 ),
               ),
             ],
@@ -294,11 +290,7 @@ final class _DashboardKpiCard extends StatelessWidget {
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: AlignmentDirectional.centerStart,
-            child: Text(
-              kpi.value,
-              maxLines: 1,
-              style: textTheme.titleMedium,
-            ),
+            child: Text(kpi.value, maxLines: 1, style: textTheme.titleMedium),
           ),
           const SizedBox(height: AppSpacing.xSmall),
           Text(
@@ -628,5 +620,7 @@ final class DashboardSampleNote extends StatelessWidget {
 }
 
 /// Resolves a shortcut's owning module label without touching navigation.
-String dashboardModuleLabel(DashboardQuickAction action, AppLocalizations l10n) =>
-    AdminModules.byId(l10n, action.moduleId).label;
+String dashboardModuleLabel(
+  DashboardQuickAction action,
+  AppLocalizations l10n,
+) => AdminModules.byId(l10n, action.moduleId).label;
