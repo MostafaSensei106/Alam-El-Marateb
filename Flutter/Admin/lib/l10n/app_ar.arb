@@ -564,6 +564,7 @@
   "dashboardCustomerNoAddresses": "لا توجد عناوين محفوظة.",
   "dashboardWarrantyExpires": "ينتهي {date}",
   "dashboardWarrantyPurchased": "تم الشراء {date}",
+  "dashboardWarrantyExpiry": "ينتهي في",
   "dashboardClaimOpen": "مفتوحة",
   "dashboardClaimInspection": "فحص",
   "dashboardClaimResolved": "تم الحل",

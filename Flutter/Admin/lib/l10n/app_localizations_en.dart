@@ -1591,6 +1591,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get dashboardTopCustomers => 'Top customers';
 
   @override
+  String get dashboardTopCustomersHint =>
+      'Ranked by lifetime spend and loyalty';
+
+  @override
   String get dashboardCustomerSearch => 'Search by name or phone';
 
   @override
@@ -1658,6 +1662,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String dashboardWarrantyPurchased(String date) {
     return 'Purchased $date';
   }
+
+  @override
+  String get dashboardWarrantyExpiry => 'Expires';
 
   @override
   String get dashboardClaimOpen => 'Open';

@@ -749,6 +749,7 @@
       }
     }
   },
+  "dashboardWarrantyExpiry": "Expires",
   "dashboardClaimOpen": "Open",
   "dashboardClaimInspection": "Inspection",
   "dashboardClaimResolved": "Resolved",

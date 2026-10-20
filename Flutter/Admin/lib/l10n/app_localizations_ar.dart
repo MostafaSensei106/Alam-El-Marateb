@@ -1576,6 +1576,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dashboardTopCustomers => 'أفضل العملاء';
 
   @override
+  String get dashboardTopCustomersHint => 'مرتبون حسب الإنفاق الكلي والولاء';
+
+  @override
   String get dashboardCustomerSearch => 'ابحث بالاسم أو الهاتف';
 
   @override
@@ -1643,6 +1646,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String dashboardWarrantyPurchased(String date) {
     return 'تم الشراء $date';
   }
+
+  @override
+  String get dashboardWarrantyExpiry => 'ينتهي في';
 
   @override
   String get dashboardClaimOpen => 'مفتوحة';

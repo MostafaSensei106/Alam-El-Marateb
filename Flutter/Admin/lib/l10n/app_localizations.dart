@@ -3049,6 +3049,12 @@ abstract class AppLocalizations {
   /// **'Top customers'**
   String get dashboardTopCustomers;
 
+  /// No description provided for @dashboardTopCustomersHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Ranked by lifetime spend and loyalty'**
+  String get dashboardTopCustomersHint;
+
   /// No description provided for @dashboardCustomerSearch.
   ///
   /// In en, this message translates to:
@@ -3174,6 +3180,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Purchased {date}'**
   String dashboardWarrantyPurchased(String date);
+
+  /// No description provided for @dashboardWarrantyExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Expires'**
+  String get dashboardWarrantyExpiry;
 
   /// No description provided for @dashboardClaimOpen.
   ///
