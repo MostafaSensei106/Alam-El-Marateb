@@ -34,7 +34,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get email => 'البريد الإلكتروني';
 
   @override
-  String get alm_el_marateb => 'علم المراتب';
+  String get alm_el_marateb => 'عالم المراتب';
 
   @override
   String get emailAddress => 'عنوان البريد الإلكتروني';

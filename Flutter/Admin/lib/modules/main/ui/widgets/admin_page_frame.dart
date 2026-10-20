@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
+import '../../../../core/extensions/extensions.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// Vertically scrollable page body with a centered, width-limited column.
 ///
@@ -26,7 +26,8 @@ final class AdminPageFrame extends StatelessWidget {
     final isCompact = MediaQuery.sizeOf(context).width < 720;
 
     return ListView(
-      padding: padding ??
+      padding:
+          padding ??
           EdgeInsets.all(isCompact ? AppSpacing.large : AppSpacing.xLarge),
       children: [
         Center(
@@ -127,7 +128,10 @@ final class AdminPageHeader extends StatelessWidget {
             children: [
               heading,
               const SizedBox(height: AppSpacing.large),
-              Align(alignment: AlignmentDirectional.centerStart, child: trailing),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: trailing,
+              ),
             ],
           );
         }
@@ -204,7 +208,6 @@ final class AdminSectionHeading extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         if (icon != null) ...[
           Icon(icon, size: AppIconSizes.small, color: colorScheme.primary),
@@ -286,10 +289,8 @@ final class AdminStatusPill extends StatelessWidget {
           ],
           Text(
             label,
-            style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                  color: color,
-                  fontWeight: FontWeight.w700,
-                ),
+            style: Theme.of(context).textTheme.labelSmall
+                ?.copyWith(color: color, fontWeight: FontWeight.w700),
           ),
         ],
       ),
@@ -305,7 +306,7 @@ final class AdminPrototypeBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.localeKeys;
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -357,11 +358,7 @@ final class AdminPrototypeBanner extends StatelessWidget {
 
 /// Circular initials avatar that does not depend on a network image.
 final class AdminAvatar extends StatelessWidget {
-  const AdminAvatar({
-    required this.name,
-    super.key,
-    this.size = 44,
-  });
+  const AdminAvatar({required this.name, super.key, this.size = 44});
 
   final String name;
   final double size;
@@ -406,10 +403,10 @@ final class AdminAvatar extends StatelessWidget {
       child: Text(
         _initials,
         style: Theme.of(context).textTheme.labelLarge?.copyWith(
-              color: colorScheme.onPrimary,
-              fontWeight: FontWeight.w700,
-              fontSize: size * 0.34,
-            ),
+          color: colorScheme.onPrimary,
+          fontWeight: FontWeight.w700,
+          fontSize: size * 0.34,
+        ),
       ),
     );
   }

@@ -4,18 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/di/di.dart';
+import '../../../../core/extensions/extensions.dart';
 import '../../../../core/utils/localization/logic/cubit/localization_cubit.dart';
 import '../../../../core/utils/theme/logic/cubit/theme_cubit.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
-import '../../../../l10n/app_localizations.dart';
 
 /// One selectable option inside an [AdminSegmentedControl].
 final class AdminSegment<T> {
-  const AdminSegment({
-    required this.value,
-    required this.label,
-    this.icon,
-  });
+  const AdminSegment({required this.value, required this.label, this.icon});
 
   final T value;
   final String label;
@@ -114,10 +110,9 @@ final class _AdminSegmentButton<T> extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                        color: foreground,
-                        fontWeight:
-                            selected ? FontWeight.w700 : FontWeight.w500,
-                      ),
+                    color: foreground,
+                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+                  ),
                 ),
               ),
             ],
@@ -219,16 +214,13 @@ final class AdminPreferenceRow extends StatelessWidget {
 
 /// Theme and language pickers shared by the account dialog and settings page.
 final class AdminThemeLanguageControls extends StatelessWidget {
-  const AdminThemeLanguageControls({
-    super.key,
-    this.controlWidth = 220,
-  });
+  const AdminThemeLanguageControls({super.key, this.controlWidth = 220});
 
   final double controlWidth;
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context);
+    final l10n = context.localeKeys;
     final isDark = Theme.of(context).brightness == Brightness.dark;
     final languageCode = Localizations.localeOf(context).languageCode;
 
