@@ -842,6 +842,89 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsBranchGiza => 'فرع الجيزة';
 
   @override
+  String get appInfoAppName => 'اسم التطبيق';
+
+  @override
+  String get appInfoPackageName => 'اسم الحزمة';
+
+  @override
+  String get appInfoVersion => 'الإصدار';
+
+  @override
+  String get appInfoBuildNumber => 'رقم البناء';
+
+  @override
+  String get appInfoBuildMode => 'وضع البناء';
+
+  @override
+  String get appInfoBuildModeDebug => 'تطوير';
+
+  @override
+  String get appInfoBuildModeRelease => 'إصدار';
+
+  @override
+  String get appInfoOperatingSystem => 'نظام التشغيل';
+
+  @override
+  String get appInfoOperatingSystemVersion => 'إصدار النظام';
+
+  @override
+  String get appInfoFlutterVersion => 'إصدار Flutter';
+
+  @override
+  String get appInfoFlutterChannel => 'قناة Flutter';
+
+  @override
+  String get appInfoDartVersion => 'إصدار Dart';
+
+  @override
+  String get appInfoDartChannel => 'قناة Dart';
+
+  @override
+  String get appInfoInstallDate => 'تاريخ التثبيت';
+
+  @override
+  String get appInfoUpdateDate => 'آخر تحديث';
+
+  @override
+  String get appInfoInstaller => 'مصدر التثبيت';
+
+  @override
+  String get appInfoUnknown => 'غير متاح';
+
+  @override
+  String get appInfoCopy => 'نسخ التفاصيل';
+
+  @override
+  String get appInfoCopied => 'تم نسخ معلومات التطبيق.';
+
+  @override
+  String get appInfoUnavailableTitle => 'معلومات التطبيق غير متاحة';
+
+  @override
+  String get appInfoUnavailableBody =>
+      'خدمة معلومات التطبيق غير متاحة في هذه الجلسة.';
+
+  @override
+  String get appInfoSectionApplication => 'التطبيق';
+
+  @override
+  String get appInfoSectionApplicationHint => 'بيانات نسخة الإدارة المثبتة.';
+
+  @override
+  String get appInfoSectionRuntime => 'بيئة التشغيل';
+
+  @override
+  String get appInfoSectionRuntimeHint =>
+      'إصدارات Flutter وDart ونظام التشغيل.';
+
+  @override
+  String get appInfoSectionDistribution => 'التوزيع';
+
+  @override
+  String get appInfoSectionDistributionHint => 'مصدر التثبيت ووقت التحديث.';
+
+  @override
   String get wireframeTableTitle => 'جدول بيانات';
 
   @override

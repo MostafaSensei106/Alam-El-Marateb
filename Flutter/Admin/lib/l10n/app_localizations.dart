@@ -1689,6 +1689,168 @@ abstract class AppLocalizations {
   /// **'Giza branch'**
   String get settingsBranchGiza;
 
+  /// No description provided for @appInfoAppName.
+  ///
+  /// In en, this message translates to:
+  /// **'App name'**
+  String get appInfoAppName;
+
+  /// No description provided for @appInfoPackageName.
+  ///
+  /// In en, this message translates to:
+  /// **'Package name'**
+  String get appInfoPackageName;
+
+  /// No description provided for @appInfoVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get appInfoVersion;
+
+  /// No description provided for @appInfoBuildNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Build number'**
+  String get appInfoBuildNumber;
+
+  /// No description provided for @appInfoBuildMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Build mode'**
+  String get appInfoBuildMode;
+
+  /// No description provided for @appInfoBuildModeDebug.
+  ///
+  /// In en, this message translates to:
+  /// **'Debug'**
+  String get appInfoBuildModeDebug;
+
+  /// No description provided for @appInfoBuildModeRelease.
+  ///
+  /// In en, this message translates to:
+  /// **'Release'**
+  String get appInfoBuildModeRelease;
+
+  /// No description provided for @appInfoOperatingSystem.
+  ///
+  /// In en, this message translates to:
+  /// **'Operating system'**
+  String get appInfoOperatingSystem;
+
+  /// No description provided for @appInfoOperatingSystemVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'OS version'**
+  String get appInfoOperatingSystemVersion;
+
+  /// No description provided for @appInfoFlutterVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter version'**
+  String get appInfoFlutterVersion;
+
+  /// No description provided for @appInfoFlutterChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter channel'**
+  String get appInfoFlutterChannel;
+
+  /// No description provided for @appInfoDartVersion.
+  ///
+  /// In en, this message translates to:
+  /// **'Dart version'**
+  String get appInfoDartVersion;
+
+  /// No description provided for @appInfoDartChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Dart channel'**
+  String get appInfoDartChannel;
+
+  /// No description provided for @appInfoInstallDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Installed on'**
+  String get appInfoInstallDate;
+
+  /// No description provided for @appInfoUpdateDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Updated on'**
+  String get appInfoUpdateDate;
+
+  /// No description provided for @appInfoInstaller.
+  ///
+  /// In en, this message translates to:
+  /// **'Installer'**
+  String get appInfoInstaller;
+
+  /// No description provided for @appInfoUnknown.
+  ///
+  /// In en, this message translates to:
+  /// **'Not reported'**
+  String get appInfoUnknown;
+
+  /// No description provided for @appInfoCopy.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy details'**
+  String get appInfoCopy;
+
+  /// No description provided for @appInfoCopied.
+  ///
+  /// In en, this message translates to:
+  /// **'App details copied.'**
+  String get appInfoCopied;
+
+  /// No description provided for @appInfoUnavailableTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'App information unavailable'**
+  String get appInfoUnavailableTitle;
+
+  /// No description provided for @appInfoUnavailableBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The app information service is not available in this session.'**
+  String get appInfoUnavailableBody;
+
+  /// No description provided for @appInfoSectionApplication.
+  ///
+  /// In en, this message translates to:
+  /// **'Application'**
+  String get appInfoSectionApplication;
+
+  /// No description provided for @appInfoSectionApplicationHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Identity of the installed admin build.'**
+  String get appInfoSectionApplicationHint;
+
+  /// No description provided for @appInfoSectionRuntime.
+  ///
+  /// In en, this message translates to:
+  /// **'Runtime'**
+  String get appInfoSectionRuntime;
+
+  /// No description provided for @appInfoSectionRuntimeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Flutter, Dart and the host platform.'**
+  String get appInfoSectionRuntimeHint;
+
+  /// No description provided for @appInfoSectionDistribution.
+  ///
+  /// In en, this message translates to:
+  /// **'Distribution'**
+  String get appInfoSectionDistribution;
+
+  /// No description provided for @appInfoSectionDistributionHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Install source and update timing.'**
+  String get appInfoSectionDistributionHint;
+
   /// No description provided for @wireframeTableTitle.
   ///
   /// In en, this message translates to:

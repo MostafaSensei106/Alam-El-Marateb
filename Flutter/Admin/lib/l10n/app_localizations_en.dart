@@ -851,6 +851,91 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsBranchGiza => 'Giza branch';
 
   @override
+  String get appInfoAppName => 'App name';
+
+  @override
+  String get appInfoPackageName => 'Package name';
+
+  @override
+  String get appInfoVersion => 'Version';
+
+  @override
+  String get appInfoBuildNumber => 'Build number';
+
+  @override
+  String get appInfoBuildMode => 'Build mode';
+
+  @override
+  String get appInfoBuildModeDebug => 'Debug';
+
+  @override
+  String get appInfoBuildModeRelease => 'Release';
+
+  @override
+  String get appInfoOperatingSystem => 'Operating system';
+
+  @override
+  String get appInfoOperatingSystemVersion => 'OS version';
+
+  @override
+  String get appInfoFlutterVersion => 'Flutter version';
+
+  @override
+  String get appInfoFlutterChannel => 'Flutter channel';
+
+  @override
+  String get appInfoDartVersion => 'Dart version';
+
+  @override
+  String get appInfoDartChannel => 'Dart channel';
+
+  @override
+  String get appInfoInstallDate => 'Installed on';
+
+  @override
+  String get appInfoUpdateDate => 'Updated on';
+
+  @override
+  String get appInfoInstaller => 'Installer';
+
+  @override
+  String get appInfoUnknown => 'Not reported';
+
+  @override
+  String get appInfoCopy => 'Copy details';
+
+  @override
+  String get appInfoCopied => 'App details copied.';
+
+  @override
+  String get appInfoUnavailableTitle => 'App information unavailable';
+
+  @override
+  String get appInfoUnavailableBody =>
+      'The app information service is not available in this session.';
+
+  @override
+  String get appInfoSectionApplication => 'Application';
+
+  @override
+  String get appInfoSectionApplicationHint =>
+      'Identity of the installed admin build.';
+
+  @override
+  String get appInfoSectionRuntime => 'Runtime';
+
+  @override
+  String get appInfoSectionRuntimeHint =>
+      'Flutter, Dart and the host platform.';
+
+  @override
+  String get appInfoSectionDistribution => 'Distribution';
+
+  @override
+  String get appInfoSectionDistributionHint =>
+      'Install source and update timing.';
+
+  @override
   String get wireframeTableTitle => 'Data table';
 
   @override
