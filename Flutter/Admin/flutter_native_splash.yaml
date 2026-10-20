@@ -4,7 +4,9 @@ flutter_native_splash:
   color: "#1B487C"
 
   # Add a logo image in the center of the splash screen
-  image: assets/icons/play_store_512.png
+  image_android: assets/icons/play_store_512.png
+
+  image: assets/icons/icon-512.png
 
   # Position the logo image at the center of the screen
   android_gravity: center
