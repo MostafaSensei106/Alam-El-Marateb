@@ -1122,7 +1122,7 @@ abstract class AppLocalizations {
   /// No description provided for @adminDisplayName.
   ///
   /// In en, this message translates to:
-  /// **'Ahmed El-Gazzar'**
+  /// **'Mostafa Mahmoud'**
   String get adminDisplayName;
 
   /// No description provided for @adminRole.

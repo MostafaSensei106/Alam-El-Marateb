@@ -549,7 +549,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get adminWorkspace => 'Admin workspace';
 
   @override
-  String get adminDisplayName => 'Ahmed El-Gazzar';
+  String get adminDisplayName => 'Mostafa Mahmoud';
 
   @override
   String get adminRole => 'Super administrator';

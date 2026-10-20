@@ -220,20 +220,14 @@ final class _KpiCard extends StatelessWidget {
             data.value,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.headlineSmall?.copyWith(
-              fontWeight: FontWeight.w700,
-              height: 1.2,
-            ),
+            style: textTheme.headlineSmall?.copyWith(height: 1.2),
           ),
           const SizedBox(height: AppSpacing.xSmall),
           Text(
             data.change,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.labelSmall?.copyWith(
-              color: accent,
-              fontWeight: FontWeight.w600,
-            ),
+            style: textTheme.labelSmall?.copyWith(color: accent),
           ),
         ],
       ),
@@ -283,9 +277,7 @@ final class _RevenueCard extends StatelessWidget {
             children: [
               Text(
                 '128,540 $currency',
-                style: textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+                style: textTheme.headlineSmall,
               ),
               Text(
                 '${l10n.dashboardAverageOrder} · 1,150 $currency',
@@ -495,7 +487,6 @@ final class _RecentOrdersCard extends StatelessWidget {
 
     final headerStyle = textTheme.labelSmall?.copyWith(
       color: colorScheme.onSurfaceVariant,
-      fontWeight: FontWeight.w700,
       letterSpacing: 0.4,
     );
 
@@ -581,9 +572,7 @@ final class _RecentOrdersCard extends StatelessWidget {
                               children: [
                                 Text(
                                   order.id,
-                                  style: textTheme.bodyMedium?.copyWith(
-                                    fontWeight: FontWeight.w700,
-                                  ),
+                                  style: textTheme.bodyMedium,
                                 ),
                                 Text(
                                   order.customer,
@@ -613,9 +602,7 @@ final class _RecentOrdersCard extends StatelessWidget {
                               textAlign: TextAlign.end,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
-                              style: textTheme.bodyMedium?.copyWith(
-                                fontWeight: FontWeight.w600,
-                              ),
+                              style: textTheme.bodyMedium,
                             ),
                           ),
                         ],

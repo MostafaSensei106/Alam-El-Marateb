@@ -131,9 +131,7 @@ final class _AccountCard extends StatelessWidget {
                       children: [
                         Text(
                           l10n.adminDisplayName,
-                          style: textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: textTheme.titleMedium,
                         ),
                         const SizedBox(height: 2),
                         Text(
@@ -342,8 +340,7 @@ final class _SignOutCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   l10n.profileSignOutDevice,
-                  style: Theme.of(context).textTheme.titleSmall
-                      ?.copyWith(fontWeight: FontWeight.w700),
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
             ],

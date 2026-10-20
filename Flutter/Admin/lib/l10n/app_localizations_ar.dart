@@ -548,7 +548,7 @@ class AppLocalizationsAr extends AppLocalizations {
   String get adminWorkspace => 'مساحة إدارة المتجر';
 
   @override
-  String get adminDisplayName => 'أحمد الجزار';
+  String get adminDisplayName => 'مصطفي محمود';
 
   @override
   String get adminRole => 'مدير عام';
