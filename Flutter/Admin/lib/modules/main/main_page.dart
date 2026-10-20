@@ -261,8 +261,10 @@ class _AdminNavigationRail extends StatefulWidget {
   State<_AdminNavigationRail> createState() => _AdminNavigationRailState();
 }
 
+const double _railWidth = 100;
+const double _extendedRailWidth = 256;
+
 class _AdminNavigationRailState extends State<_AdminNavigationRail> {
-  /// `null` follows the breakpoint, a value keeps the user's choice.
   bool? _extendedOverride;
 
   @override
@@ -271,50 +273,59 @@ class _AdminNavigationRailState extends State<_AdminNavigationRail> {
     final extended =
         _extendedOverride ?? MediaQuery.sizeOf(context).width >= 1200;
 
-    return NavigationRail(
-      extended: extended,
-      labelType: extended
-          ? NavigationRailLabelType.none
-          : NavigationRailLabelType.all,
-      selectedIndex: widget.selectedIndex,
-      onDestinationSelected: widget.onDestinationSelected,
-      scrollable: true,
-      trailingAtBottom: true,
-      groupAlignment: -1,
-      minWidth: 100,
-      minExtendedWidth: 256,
-      backgroundColor: theme.colorScheme.surface,
-      indicatorColor: theme.colorScheme.secondaryContainer,
-      indicatorShape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
-      selectedLabelTextStyle: theme.textTheme.labelMedium?.copyWith(
-        fontWeight: FontWeight.w700,
-        color: theme.colorScheme.onSurface,
-      ),
-      unselectedLabelTextStyle: theme.textTheme.labelMedium?.copyWith(
-        color: theme.colorScheme.onSurfaceVariant,
-      ),
-      leading: _RailHeader(
+    final width = extended ? _extendedRailWidth : _railWidth;
+
+    // `NavigationRail` lays out its leading/trailing widgets with the width
+    // constraints it receives. Inside a `Row` those constraints are unbounded,
+    // so give the rail an explicit width to avoid a RenderFlex unbounded-width
+    // assertion from the `Expanded` children in the header/footer.
+    return SizedBox(
+      width: width,
+      child: NavigationRail(
         extended: extended,
-        onToggleExtended: () {
-          setState(() => _extendedOverride = !extended);
-        },
-      ),
-      trailing: _RailFooter(extended: extended),
-      destinations: [
-        for (final destination in _destinations(context.localeKeys))
-          NavigationRailDestination(
-            icon: Icon(destination.icon),
-            selectedIcon: Icon(destination.selectedIcon),
-            label: Text(
-              destination.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
+        labelType: extended
+            ? NavigationRailLabelType.none
+            : NavigationRailLabelType.all,
+        selectedIndex: widget.selectedIndex,
+        onDestinationSelected: widget.onDestinationSelected,
+        scrollable: true,
+        trailingAtBottom: true,
+        groupAlignment: -1,
+        minWidth: _railWidth,
+        minExtendedWidth: _extendedRailWidth,
+        backgroundColor: theme.colorScheme.surface,
+        indicatorColor: theme.colorScheme.secondaryContainer,
+        indicatorShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        selectedLabelTextStyle: theme.textTheme.labelMedium?.copyWith(
+          fontWeight: FontWeight.w700,
+          color: theme.colorScheme.onSurface,
+        ),
+        unselectedLabelTextStyle: theme.textTheme.labelMedium?.copyWith(
+          color: theme.colorScheme.onSurfaceVariant,
+        ),
+        leading: _RailHeader(
+          extended: extended,
+          onToggleExtended: () {
+            setState(() => _extendedOverride = !extended);
+          },
+        ),
+        trailing: _RailFooter(extended: extended),
+        destinations: [
+          for (final destination in _destinations(context.localeKeys))
+            NavigationRailDestination(
+              icon: Icon(destination.icon),
+              selectedIcon: Icon(destination.selectedIcon),
+              label: Text(
+                destination.label,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                textAlign: TextAlign.center,
+              ),
             ),
-          ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -373,9 +384,7 @@ class _RailHeader extends StatelessWidget {
               context.localeKeys.alm_el_marateb,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.titleSmall?.copyWith(
-                fontWeight: FontWeight.w700,
-              ),
+              style: theme.textTheme.titleSmall?.copyWith(),
             ),
           ),
           toggle,
