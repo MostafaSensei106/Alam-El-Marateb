@@ -279,7 +279,6 @@ class _AdminNavigationRailState extends State<_AdminNavigationRail> {
       selectedIndex: widget.selectedIndex,
       onDestinationSelected: widget.onDestinationSelected,
       scrollable: true,
-      leadingAtTop: true,
       trailingAtBottom: true,
       groupAlignment: -1,
       minWidth: 100,
@@ -302,7 +301,7 @@ class _AdminNavigationRailState extends State<_AdminNavigationRail> {
           setState(() => _extendedOverride = !extended);
         },
       ),
-      trailing: const _RailFooter(),
+      trailing: _RailFooter(extended: extended),
       destinations: [
         for (final destination in _destinations(context.localeKeys))
           NavigationRailDestination(
@@ -321,10 +320,7 @@ class _AdminNavigationRailState extends State<_AdminNavigationRail> {
 }
 
 class _RailHeader extends StatelessWidget {
-  const _RailHeader({
-    required this.extended,
-    required this.onToggleExtended,
-  });
+  const _RailHeader({required this.extended, required this.onToggleExtended});
 
   final bool extended;
   final VoidCallback onToggleExtended;
@@ -352,9 +348,7 @@ class _RailHeader extends StatelessWidget {
       tooltip: extended
           ? context.localeKeys.collapseNavigation
           : context.localeKeys.expandNavigation,
-      icon: Icon(
-        extended ? Icons.menu_open_rounded : Icons.menu_rounded,
-      ),
+      icon: Icon(extended ? Icons.menu_open_rounded : Icons.menu_rounded),
       visualDensity: VisualDensity.compact,
     );
 
@@ -363,11 +357,7 @@ class _RailHeader extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            brandMark,
-            const SizedBox(height: 4),
-            toggle,
-          ],
+          children: [brandMark, const SizedBox(height: 4), toggle],
         ),
       );
     }
@@ -396,7 +386,9 @@ class _RailHeader extends StatelessWidget {
 }
 
 class _RailFooter extends StatelessWidget {
-  const _RailFooter();
+  const _RailFooter({required this.extended});
+
+  final bool extended;
 
   @override
   Widget build(BuildContext context) {
@@ -409,9 +401,8 @@ class _RailFooter extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           _RailAction(
-            icon: isDark
-                ? Icons.light_mode_outlined
-                : Icons.dark_mode_outlined,
+            extended: extended,
+            icon: isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
             label: context.localeKeys.toggleTheme,
             onTap: () {
               unawaited(
@@ -422,6 +413,7 @@ class _RailFooter extends StatelessWidget {
             },
           ),
           _RailAction(
+            extended: extended,
             icon: Icons.translate_rounded,
             label: isArabic
                 ? context.localeKeys.english
@@ -443,12 +435,14 @@ class _RailFooter extends StatelessWidget {
 
 class _RailAction extends StatelessWidget {
   const _RailAction({
+    required this.extended,
     required this.icon,
     required this.label,
     required this.onTap,
     this.tooltip,
   });
 
+  final bool extended;
   final IconData icon;
   final String label;
   final VoidCallback onTap;
@@ -456,11 +450,7 @@ class _RailAction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final extended = context
-        .findAncestorWidgetOfExactType<NavigationRail>()
-        ?.extended;
-
-    if (extended != true) {
+    if (!extended) {
       return IconButton(
         onPressed: onTap,
         tooltip: tooltip ?? label,

@@ -34,7 +34,7 @@ final class AppTheme {
 
   static ThemeData dark = ThemeData(
     useMaterial3: true,
-    //  brightness: .dark,
+    brightness: .dark,
 
     fontFamily: 'Rubik',
 
