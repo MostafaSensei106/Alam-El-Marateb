@@ -1113,6 +1113,12 @@ abstract class AppLocalizations {
   /// **'General system settings'**
   String get settingsFeature3;
 
+  /// No description provided for @settingsFeature4.
+  ///
+  /// In en, this message translates to:
+  /// **'App info'**
+  String get settingsFeature4;
+
   /// No description provided for @adminWorkspace.
   ///
   /// In en, this message translates to:

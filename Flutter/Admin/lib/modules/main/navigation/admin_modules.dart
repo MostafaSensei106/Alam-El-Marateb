@@ -399,6 +399,11 @@ abstract final class AdminModules {
           icon: LucideIcons.slidersHorizontal,
           wireframe: AdminWireframeKind.form,
         ),
+        AdminSubSection(
+          title: l10n.settingsFeature4,
+          icon: LucideIcons.info,
+          wireframe: AdminWireframeKind.detail,
+        ),
       ],
     ),
   ];

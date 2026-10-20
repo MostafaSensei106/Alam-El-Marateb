@@ -545,6 +545,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get settingsFeature3 => 'إعدادات النظام العامة';
 
   @override
+  String get settingsFeature4 => 'معلومات التطبيق';
+
+  @override
   String get adminWorkspace => 'مساحة إدارة المتجر';
 
   @override

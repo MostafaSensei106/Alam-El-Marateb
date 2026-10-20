@@ -37,14 +37,29 @@ final class AdminModuleHubPage extends StatelessWidget {
   }
 }
 
+/// Builds custom content for one hub section.
+///
+/// The callback receives the active [AdminSubSection] and its index so a
+/// screen can keep its own state while still using the standard tab strip.
+typedef AdminSectionBuilder =
+    Widget Function(BuildContext context, AdminSubSection section, int index);
+
 /// Tab navigator for the screens planned inside one module.
 ///
 /// Every tab renders the full available width instead of sharing space with a
 /// navigation list, so tables and boards stay readable on compact windows.
 final class AdminSectionHub extends HookWidget {
-  const AdminSectionHub({required this.module, super.key});
+  const AdminSectionHub({
+    required this.module,
+    super.key,
+    this.sectionBuilder,
+  });
 
   final AdminModule module;
+
+  /// Optional override for tabs that need bespoke content instead of the
+  /// generic section workspace.
+  final AdminSectionBuilder? sectionBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +67,7 @@ final class AdminSectionHub extends HookWidget {
     final sections = module.subSections;
     final activeIndex = selectedIndex.value.clamp(0, sections.length - 1);
     final activeSection = sections[activeIndex];
+    final builder = sectionBuilder;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -66,11 +82,16 @@ final class AdminSectionHub extends HookWidget {
           duration: AppMotion.fast,
           switchInCurve: Curves.easeOut,
           switchOutCurve: Curves.easeIn,
-          child: AdminSectionWorkspace(
-            key: ValueKey(activeSection.title),
-            module: module,
-            section: activeSection,
-          ),
+          child: builder == null
+              ? AdminSectionWorkspace(
+                  key: ValueKey(activeSection.title),
+                  module: module,
+                  section: activeSection,
+                )
+              : KeyedSubtree(
+                  key: ValueKey(activeSection.title),
+                  child: builder(context, activeSection, activeIndex),
+                ),
         ),
       ],
     );

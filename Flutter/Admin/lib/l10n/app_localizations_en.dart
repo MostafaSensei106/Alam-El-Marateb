@@ -546,6 +546,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get settingsFeature3 => 'General system settings';
 
   @override
+  String get settingsFeature4 => 'App info';
+
+  @override
   String get adminWorkspace => 'Admin workspace';
 
   @override
