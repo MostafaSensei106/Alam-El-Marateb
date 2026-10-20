@@ -423,7 +423,6 @@ final class DashboardAuditTrailCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.localeKeys;
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
 
     return DashboardSection(
       title: l10n.dashboardAuditTrail,

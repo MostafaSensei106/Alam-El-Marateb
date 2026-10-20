@@ -90,6 +90,7 @@
 | `/delivery/my-trips|trips|stops|orders` + إدارة رحلات ومركبات | DELIVERY_DRIVER | موجود |
 | `/analytics/summary`, `/product-velocity`, `/audit-trail/...` | BRANCH_MANAGER | **موجود** |
 | باقي `/analytics/*` (إيراد، RFM، فروع، heatmap، beacon، inquiries) | BRANCH_MANAGER | موجود |
+| احتياجات لوحة تحكم Flutter (Customer 360، أحدث الأوردرات، أفضل العملاء، Audit feed) | BRANCH_MANAGER | [مقترح — التفاصيل](api/dashboard-flutter-features.md) |
 | `/auth/**` (عام) + `/identity/branches|access|fleet` | مدير | مخطط P7 (الـ auth موجود جزئياً) |
 
 ## قواعد الردود الموحدة
