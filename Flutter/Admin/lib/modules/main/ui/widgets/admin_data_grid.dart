@@ -53,7 +53,6 @@ final class AdminRecordsGrid extends StatelessWidget {
         final dividerColor = colorScheme.outlineVariant.withValues(alpha: 0.4);
         final headerStyle = textTheme.labelSmall?.copyWith(
           color: colorScheme.onSurfaceVariant,
-          fontWeight: FontWeight.w700,
         );
 
         final source = _AdminRecordSource(
@@ -223,7 +222,6 @@ final class _AdminRecordSource extends DataGridSource {
               overflow: TextOverflow.ellipsis,
               style: textTheme.labelSmall?.copyWith(
                 color: colorScheme.onSurfaceVariant,
-                fontWeight: FontWeight.w600,
               ),
             ),
           ),
@@ -233,7 +231,7 @@ final class _AdminRecordSource extends DataGridSource {
             maxLines: 1,
             softWrap: false,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.bodySmall?.copyWith(fontWeight: FontWeight.w600),
+            style: textTheme.bodySmall,
           ),
         ),
         cell(
@@ -250,7 +248,6 @@ final class _AdminRecordSource extends DataGridSource {
               overflow: TextOverflow.ellipsis,
               style: textTheme.labelSmall?.copyWith(
                 color: record.statusColor,
-                fontWeight: FontWeight.w700,
                 fontSize: 10,
               ),
             ),
@@ -263,7 +260,7 @@ final class _AdminRecordSource extends DataGridSource {
             maxLines: 1,
             softWrap: false,
             overflow: TextOverflow.ellipsis,
-            style: textTheme.labelMedium?.copyWith(fontWeight: FontWeight.w700),
+            style: textTheme.labelMedium,
           ),
         ),
       ],

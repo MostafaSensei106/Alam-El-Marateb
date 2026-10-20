@@ -77,9 +77,7 @@ final class _AdminAccountDialog extends StatelessWidget {
                       children: [
                         Text(
                           l10n.adminDisplayName,
-                          style: textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: textTheme.titleMedium,
                         ),
                         const SizedBox(height: 2),
                         Text(
@@ -204,8 +202,9 @@ final class _AccountActionTile extends StatelessWidget {
               Expanded(
                 child: Text(
                   label,
-                  style: Theme.of(context).textTheme.bodyMedium
-                      ?.copyWith(color: color, fontWeight: FontWeight.w600),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodyMedium?.copyWith(color: color),
                 ),
               ),
               Icon(

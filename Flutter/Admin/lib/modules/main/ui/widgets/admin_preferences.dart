@@ -109,10 +109,9 @@ final class _AdminSegmentButton<T> extends StatelessWidget {
                   segment.label,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                    color: foreground,
-                    fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
-                  ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.labelMedium?.copyWith(color: foreground),
                 ),
               ),
             ],
@@ -167,9 +166,7 @@ final class AdminPreferenceRow extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: textTheme.bodyMedium?.copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+                style: textTheme.bodyMedium,
               ),
               if (description != null) ...[
                 const SizedBox(height: 2),

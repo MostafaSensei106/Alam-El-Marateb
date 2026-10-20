@@ -51,7 +51,6 @@ final class AdminScheduleCalendar extends StatelessWidget {
         todayHighlightColor: colorScheme.primary,
         todayTextStyle: textTheme.labelMedium?.copyWith(
           color: colorScheme.primary,
-          fontWeight: FontWeight.w700,
         ),
         headerHeight: showHeader ? 40 : 0,
         headerDateFormat: 'MMMM yyyy',
@@ -60,7 +59,6 @@ final class AdminScheduleCalendar extends StatelessWidget {
           backgroundColor: Colors.transparent,
           textStyle: textTheme.titleSmall?.copyWith(
             color: colorScheme.onSurface,
-            fontWeight: FontWeight.w700,
           ),
         ),
         viewHeaderHeight: 34,
@@ -68,7 +66,6 @@ final class AdminScheduleCalendar extends StatelessWidget {
           backgroundColor: Colors.transparent,
           dayTextStyle: textTheme.labelSmall?.copyWith(
             color: colorScheme.onSurfaceVariant,
-            fontWeight: FontWeight.w600,
           ),
           dateTextStyle: textTheme.labelMedium?.copyWith(
             color: colorScheme.onSurface,
@@ -105,7 +102,6 @@ final class AdminScheduleCalendar extends StatelessWidget {
                       color: inMonth
                           ? (isToday ? scheme.primary : scheme.onSurface)
                           : scheme.onSurfaceVariant.withValues(alpha: 0.4),
-                      fontWeight: isToday ? FontWeight.w700 : FontWeight.w500,
                       fontSize: 11,
                     ),
                   ),

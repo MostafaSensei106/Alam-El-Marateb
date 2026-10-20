@@ -180,7 +180,6 @@ final class _HubListTile extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                     style: textTheme.bodySmall?.copyWith(
                       color: selected ? colorScheme.onSecondaryContainer : null,
-                      fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                     ),
                   ),
                 ),
@@ -245,7 +244,6 @@ final class _HubChip extends StatelessWidget {
               Text(
                 section.title,
                 style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                  fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
                   color: selected
                       ? colorScheme.onSecondaryContainer
                       : colorScheme.onSurfaceVariant,

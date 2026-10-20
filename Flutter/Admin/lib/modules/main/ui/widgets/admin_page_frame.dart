@@ -91,10 +91,7 @@ final class AdminPageHeader extends StatelessWidget {
                 builder: (context, constraints) {
                   final titleText = Text(
                     title,
-                    style: textTheme.headlineSmall?.copyWith(
-                      fontWeight: FontWeight.w700,
-                      height: 1.2,
-                    ),
+                    style: textTheme.headlineSmall?.copyWith(height: 1.2),
                   );
                   if (badge == null) return titleText;
 
@@ -195,13 +192,6 @@ final class AdminSurfaceCard extends StatelessWidget {
         border: Border.all(
           color: colorScheme.outlineVariant.withValues(alpha: 0.55),
         ),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow.withValues(alpha: 0.05),
-            blurRadius: 24,
-            offset: const Offset(0, 10),
-          ),
-        ],
       ),
       child: child,
     );
@@ -238,12 +228,7 @@ final class AdminSectionHeading extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                title,
-                style: textTheme.titleMedium?.copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
-              ),
+              Text(title, style: textTheme.titleMedium),
               if (subtitle != null) ...[
                 const SizedBox(height: 2),
                 Text(
@@ -336,7 +321,7 @@ final class AdminStatusPill extends StatelessWidget {
             softWrap: false,
             overflow: TextOverflow.ellipsis,
             style: Theme.of(context).textTheme.labelSmall
-                ?.copyWith(color: color, fontWeight: FontWeight.w700),
+                ?.copyWith(color: color),
           );
 
           return Row(
@@ -394,7 +379,6 @@ final class AdminPrototypeBanner extends StatelessWidget {
                 Text(
                   label ?? l10n.interactivePrototype,
                   style: textTheme.titleSmall?.copyWith(
-                    fontWeight: FontWeight.w700,
                     color: colorScheme.onSecondaryContainer,
                   ),
                 ),
@@ -461,11 +445,8 @@ final class AdminAvatar extends StatelessWidget {
       ),
       child: Text(
         _initials,
-        style: Theme.of(context).textTheme.labelLarge?.copyWith(
-          color: colorScheme.onPrimary,
-          fontWeight: FontWeight.w700,
-          fontSize: size * 0.34,
-        ),
+        style: Theme.of(context).textTheme.labelLarge
+            ?.copyWith(color: colorScheme.onPrimary, fontSize: size * 0.34),
       ),
     );
   }
@@ -512,14 +493,7 @@ final class AdminDetailRow extends StatelessWidget {
             ),
           ),
           const SizedBox(width: AppSpacing.small),
-          Expanded(
-            child: Text(
-              value,
-              style: textTheme.bodyMedium?.copyWith(
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
+          Expanded(child: Text(value, style: textTheme.bodyMedium)),
         ],
       ),
     );

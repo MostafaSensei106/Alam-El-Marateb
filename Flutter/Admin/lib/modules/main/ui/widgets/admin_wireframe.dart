@@ -186,8 +186,9 @@ final class _GhostChip extends StatelessWidget {
             const SizedBox(width: AppSpacing.small),
             Text(
               label!,
-              style: Theme.of(context).textTheme.labelMedium
-                  ?.copyWith(color: foreground, fontWeight: FontWeight.w600),
+              style: Theme.of(
+                context,
+              ).textTheme.labelMedium?.copyWith(color: foreground),
             ),
           ],
         ],
@@ -487,9 +488,7 @@ final class _StatsWireframe extends StatelessWidget {
                             tile.$2,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
-                            style: textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
+                            style: textTheme.titleMedium,
                           ),
                         ],
                       ),
@@ -607,13 +606,6 @@ final class _MapWireframe extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: colorScheme.surface,
                     borderRadius: BorderRadius.circular(AppRadii.pill),
-                    boxShadow: [
-                      BoxShadow(
-                        color: colorScheme.shadow.withValues(alpha: 0.12),
-                        blurRadius: 12,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -626,8 +618,9 @@ final class _MapWireframe extends StatelessWidget {
                       const SizedBox(width: AppSpacing.small),
                       Text(
                         l10n.wireframeMapArea,
-                        style: Theme.of(context).textTheme.labelMedium
-                            ?.copyWith(fontWeight: FontWeight.w600),
+                        style: Theme.of(
+                          context,
+                        ).textTheme.labelMedium,
                       ),
                     ],
                   ),

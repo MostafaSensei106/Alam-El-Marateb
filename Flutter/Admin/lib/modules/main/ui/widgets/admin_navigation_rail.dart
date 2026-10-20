@@ -72,7 +72,6 @@ final class AdminNavigationRail extends HookWidget {
           borderRadius: BorderRadius.circular(16),
         ),
         selectedLabelTextStyle: theme.textTheme.labelMedium?.copyWith(
-          fontWeight: FontWeight.w700,
           color: theme.colorScheme.onSurface,
         ),
         unselectedLabelTextStyle: theme.textTheme.labelMedium?.copyWith(
@@ -257,9 +256,7 @@ final class _RailProfileTile extends StatelessWidget {
                           l10n.adminDisplayName,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: textTheme.labelLarge?.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
+                          style: textTheme.labelLarge,
                         ),
                         const SizedBox(height: 2),
                         Text(

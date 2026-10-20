@@ -212,7 +212,6 @@ final class AdminTargetGauge extends StatelessWidget {
                     Text(
                       '${progress.round()}%',
                       style: textTheme.headlineSmall?.copyWith(
-                        fontWeight: FontWeight.w700,
                         color: colorScheme.onSurface,
                       ),
                     ),
@@ -278,9 +277,7 @@ final class AdminChartLegend extends StatelessWidget {
                 const SizedBox(width: AppSpacing.small),
                 Text(
                   total <= 0 ? '—' : '${(point.value / total * 100).round()}%',
-                  style: textTheme.labelMedium?.copyWith(
-                    fontWeight: FontWeight.w700,
-                  ),
+                  style: textTheme.labelMedium,
                 ),
               ],
             ),
