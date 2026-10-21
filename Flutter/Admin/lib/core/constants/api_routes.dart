@@ -4,12 +4,6 @@ final class ApiRoutes {
   static const String apiBaseURL =
       'https://hadidi-win-back.inxhub.online/api/mobile/';
 
-  /// Admin dashboard API. The admin screens use the versioned web surface
-  /// (`/api/v1`) rather than the mobile surface above, so calls resolve
-  /// against this absolute base and bypass the mobile [Dio] `baseUrl`.
-  static const String adminBaseURL =
-      'https://hadidi-win-back.inxhub.online/api/v1/';
-
   /// Auth
   static const String authRegister = 'auth/register';
   static const String authLogin = 'auth/login';
