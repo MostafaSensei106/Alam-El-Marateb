@@ -975,5 +975,357 @@
   "permissionsRoleWarehouse": "Warehouse",
   "@permissionsRoleWarehouse": {
     "type": "String"
+  },
+  "plannedNoticeTitle": "Planned screen",
+  "@plannedNoticeTitle": {
+    "type": "String"
+  },
+  "plannedNoticeBody": "This screen is designed and ready, but its backend endpoint is not available yet. The values below are sample data and saving is disabled.",
+  "@plannedNoticeBody": {
+    "type": "String"
+  },
+  "adminSampleActionMessage": "Sample action: no data was saved.",
+  "@adminSampleActionMessage": {
+    "type": "String"
+  },
+  "catalogTabProducts": "Products",
+  "@catalogTabProducts": {
+    "type": "String"
+  },
+  "catalogTabCategories": "Categories",
+  "@catalogTabCategories": {
+    "type": "String"
+  },
+  "catalogTabAttributes": "Attributes",
+  "@catalogTabAttributes": {
+    "type": "String"
+  },
+  "catalogTabPrices": "Price sheets",
+  "@catalogTabPrices": {
+    "type": "String"
+  },
+  "catalogTabMeter": "Meter pricing",
+  "@catalogTabMeter": {
+    "type": "String"
+  },
+  "catalogSearchProducts": "Search products or SKU",
+  "@catalogSearchProducts": {
+    "type": "String"
+  },
+  "catalogSearchAttributes": "Search attributes",
+  "@catalogSearchAttributes": {
+    "type": "String"
+  },
+  "catalogSearchPrices": "Search price entries",
+  "@catalogSearchPrices": {
+    "type": "String"
+  },
+  "catalogMetricProducts": "Products",
+  "@catalogMetricProducts": {
+    "type": "String"
+  },
+  "catalogMetricLowStock": "Low stock",
+  "@catalogMetricLowStock": {
+    "type": "String"
+  },
+  "catalogMetricAveragePrice": "Average price",
+  "@catalogMetricAveragePrice": {
+    "type": "String"
+  },
+  "catalogMetricStockValue": "Stock value",
+  "@catalogMetricStockValue": {
+    "type": "String"
+  },
+  "catalogMetricCategories": "Categories",
+  "@catalogMetricCategories": {
+    "type": "String"
+  },
+  "catalogMetricCategoryProducts": "Categorized products",
+  "@catalogMetricCategoryProducts": {
+    "type": "String"
+  },
+  "catalogMetricTopCategory": "Largest category",
+  "@catalogMetricTopCategory": {
+    "type": "String"
+  },
+  "catalogMetricAttributes": "Attributes",
+  "@catalogMetricAttributes": {
+    "type": "String"
+  },
+  "catalogMetricValues": "Values",
+  "@catalogMetricValues": {
+    "type": "String"
+  },
+  "catalogMetricRequired": "Required",
+  "@catalogMetricRequired": {
+    "type": "String"
+  },
+  "catalogMetricPriceLists": "Price lists",
+  "@catalogMetricPriceLists": {
+    "type": "String"
+  },
+  "catalogMetricChannels": "Channels",
+  "@catalogMetricChannels": {
+    "type": "String"
+  },
+  "catalogMetricAverageMargin": "Average margin",
+  "@catalogMetricAverageMargin": {
+    "type": "String"
+  },
+  "catalogMetricEntries": "Price entries",
+  "@catalogMetricEntries": {
+    "type": "String"
+  },
+  "catalogColProduct": "Product",
+  "@catalogColProduct": {
+    "type": "String"
+  },
+  "catalogColSku": "SKU",
+  "@catalogColSku": {
+    "type": "String"
+  },
+  "catalogColCategory": "Category",
+  "@catalogColCategory": {
+    "type": "String"
+  },
+  "catalogColPrice": "Price",
+  "@catalogColPrice": {
+    "type": "String"
+  },
+  "catalogColStock": "Stock",
+  "@catalogColStock": {
+    "type": "String"
+  },
+  "catalogColValues": "Values",
+  "@catalogColValues": {
+    "type": "String"
+  },
+  "catalogColUsage": "Products",
+  "@catalogColUsage": {
+    "type": "String"
+  },
+  "catalogColRequirement": "Requirement",
+  "@catalogColRequirement": {
+    "type": "String"
+  },
+  "catalogColPriceList": "Price list",
+  "@catalogColPriceList": {
+    "type": "String"
+  },
+  "catalogColChannel": "Channel",
+  "@catalogColChannel": {
+    "type": "String"
+  },
+  "catalogColMargin": "Margin",
+  "@catalogColMargin": {
+    "type": "String"
+  },
+  "catalogStockIn": "In stock",
+  "@catalogStockIn": {
+    "type": "String"
+  },
+  "catalogStockLow": "Low stock",
+  "@catalogStockLow": {
+    "type": "String"
+  },
+  "catalogStockOut": "Out of stock",
+  "@catalogStockOut": {
+    "type": "String"
+  },
+  "catalogCategoryShareLabel": "Share of catalog",
+  "@catalogCategoryShareLabel": {
+    "type": "String"
+  },
+  "catalogCategoryProductsCount": "{count, plural, =0{No products} =1{1 product} other{{count} products}}",
+  "@catalogCategoryProductsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "catalogAttributeSize": "Size",
+  "@catalogAttributeSize": {
+    "type": "String"
+  },
+  "catalogAttributeColor": "Color",
+  "@catalogAttributeColor": {
+    "type": "String"
+  },
+  "catalogAttributeMaterial": "Material",
+  "@catalogAttributeMaterial": {
+    "type": "String"
+  },
+  "catalogAttributeFirmness": "Firmness",
+  "@catalogAttributeFirmness": {
+    "type": "String"
+  },
+  "catalogAttributeWarranty": "Warranty",
+  "@catalogAttributeWarranty": {
+    "type": "String"
+  },
+  "catalogValueSize1": "160 × 200",
+  "@catalogValueSize1": {
+    "type": "String"
+  },
+  "catalogValueSize2": "180 × 200",
+  "@catalogValueSize2": {
+    "type": "String"
+  },
+  "catalogValueSize3": "150 × 195",
+  "@catalogValueSize3": {
+    "type": "String"
+  },
+  "catalogValueColor1": "White",
+  "@catalogValueColor1": {
+    "type": "String"
+  },
+  "catalogValueColor2": "Beige",
+  "@catalogValueColor2": {
+    "type": "String"
+  },
+  "catalogValueColor3": "Grey",
+  "@catalogValueColor3": {
+    "type": "String"
+  },
+  "catalogValueMaterial1": "Cotton",
+  "@catalogValueMaterial1": {
+    "type": "String"
+  },
+  "catalogValueMaterial2": "Foam",
+  "@catalogValueMaterial2": {
+    "type": "String"
+  },
+  "catalogValueMaterial3": "Latex",
+  "@catalogValueMaterial3": {
+    "type": "String"
+  },
+  "catalogValueFirmness1": "Soft",
+  "@catalogValueFirmness1": {
+    "type": "String"
+  },
+  "catalogValueFirmness2": "Medium",
+  "@catalogValueFirmness2": {
+    "type": "String"
+  },
+  "catalogValueFirmness3": "Firm",
+  "@catalogValueFirmness3": {
+    "type": "String"
+  },
+  "catalogValueWarranty1": "1 year",
+  "@catalogValueWarranty1": {
+    "type": "String"
+  },
+  "catalogValueWarranty2": "5 years",
+  "@catalogValueWarranty2": {
+    "type": "String"
+  },
+  "catalogRequired": "Required",
+  "@catalogRequired": {
+    "type": "String"
+  },
+  "catalogOptional": "Optional",
+  "@catalogOptional": {
+    "type": "String"
+  },
+  "catalogPriceListRetail": "Retail",
+  "@catalogPriceListRetail": {
+    "type": "String"
+  },
+  "catalogPriceListWholesale": "Wholesale",
+  "@catalogPriceListWholesale": {
+    "type": "String"
+  },
+  "catalogPriceListOnline": "Online",
+  "@catalogPriceListOnline": {
+    "type": "String"
+  },
+  "catalogChannelShowroom": "Showroom",
+  "@catalogChannelShowroom": {
+    "type": "String"
+  },
+  "catalogChannelWeb": "Web store",
+  "@catalogChannelWeb": {
+    "type": "String"
+  },
+  "catalogChannelWholesale": "Wholesale",
+  "@catalogChannelWholesale": {
+    "type": "String"
+  },
+  "catalogMeterDimensions": "Dimensions and shape",
+  "@catalogMeterDimensions": {
+    "type": "String"
+  },
+  "catalogMeterPricing": "Pricing inputs",
+  "@catalogMeterPricing": {
+    "type": "String"
+  },
+  "catalogMeterSummary": "Live estimate",
+  "@catalogMeterSummary": {
+    "type": "String"
+  },
+  "catalogMeterWidth": "Width (cm)",
+  "@catalogMeterWidth": {
+    "type": "String"
+  },
+  "catalogMeterHeight": "Height (cm)",
+  "@catalogMeterHeight": {
+    "type": "String"
+  },
+  "catalogMeterRate": "Price per m²",
+  "@catalogMeterRate": {
+    "type": "String"
+  },
+  "catalogMeterWaste": "Waste (%)",
+  "@catalogMeterWaste": {
+    "type": "String"
+  },
+  "catalogMeterShape": "Shape",
+  "@catalogMeterShape": {
+    "type": "String"
+  },
+  "catalogShapeRectangle": "Rectangle",
+  "@catalogShapeRectangle": {
+    "type": "String"
+  },
+  "catalogShapeRound": "Round",
+  "@catalogShapeRound": {
+    "type": "String"
+  },
+  "catalogShapeLShape": "L-shape",
+  "@catalogShapeLShape": {
+    "type": "String"
+  },
+  "catalogMeterArea": "Area",
+  "@catalogMeterArea": {
+    "type": "String"
+  },
+  "catalogMeterBasePrice": "Base price",
+  "@catalogMeterBasePrice": {
+    "type": "String"
+  },
+  "catalogMeterWasteCost": "Waste cost",
+  "@catalogMeterWasteCost": {
+    "type": "String"
+  },
+  "catalogMeterTotal": "Estimated price",
+  "@catalogMeterTotal": {
+    "type": "String"
+  },
+  "catalogMeterHint": "Updates as you type",
+  "@catalogMeterHint": {
+    "type": "String"
+  },
+  "catalogMeterInvalid": "Enter width, height and price to see the estimate.",
+  "@catalogMeterInvalid": {
+    "type": "String"
+  },
+  "catalogMeterUnit": "m²",
+  "@catalogMeterUnit": {
+    "type": "String"
+  },
+  "adminFilterAll": "All",
+  "@adminFilterAll": {
+    "type": "String"
   }
 }

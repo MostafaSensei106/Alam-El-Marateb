@@ -66,13 +66,13 @@ final class AdminNavigationRail extends HookWidget {
         groupAlignment: -1,
         minWidth: collapsedWidth,
         minExtendedWidth: extendedWidth,
-        backgroundColor: theme.colorScheme.surface,
-        indicatorColor: theme.colorScheme.secondaryContainer,
+        backgroundColor: theme.colorScheme.surfaceContainer,
+        indicatorColor: theme.colorScheme.primaryContainer,
         indicatorShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(16),
         ),
         selectedLabelTextStyle: theme.textTheme.labelMedium?.copyWith(
-          color: theme.colorScheme.onSurface,
+          color: theme.colorScheme.onPrimaryContainer,
         ),
         unselectedLabelTextStyle: theme.textTheme.labelMedium?.copyWith(
           color: theme.colorScheme.onSurfaceVariant,

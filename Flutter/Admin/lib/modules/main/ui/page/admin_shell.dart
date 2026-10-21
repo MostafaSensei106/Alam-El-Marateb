@@ -29,17 +29,15 @@ final class AdminShell extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Row(
-          children: [
-            AdminNavigationRail(
-              selectedIndex: selectedIndex,
-              onDestinationSelected: onDestinationSelected,
-              onSelectModule: onSelectModule,
-            ),
-            Expanded(child: child),
-          ],
-        ),
+      body: Row(
+        children: [
+          AdminNavigationRail(
+            selectedIndex: selectedIndex,
+            onDestinationSelected: onDestinationSelected,
+            onSelectModule: onSelectModule,
+          ),
+          Expanded(child: child),
+        ],
       ),
     );
   }

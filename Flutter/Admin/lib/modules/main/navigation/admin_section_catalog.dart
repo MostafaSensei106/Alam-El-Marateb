@@ -38,6 +38,7 @@ abstract final class AdminSectionCatalog {
   };
 
   static const Set<String> _local = {
+    'catalog.meter-pricing',
     'profile.details',
     'profile.edit',
     'profile.password',

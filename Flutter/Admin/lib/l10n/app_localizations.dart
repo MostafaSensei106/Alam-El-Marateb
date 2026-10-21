@@ -3990,6 +3990,528 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Warehouse'**
   String get permissionsRoleWarehouse;
+
+  /// No description provided for @plannedNoticeTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned screen'**
+  String get plannedNoticeTitle;
+
+  /// No description provided for @plannedNoticeBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This screen is designed and ready, but its backend endpoint is not available yet. The values below are sample data and saving is disabled.'**
+  String get plannedNoticeBody;
+
+  /// No description provided for @adminSampleActionMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample action: no data was saved.'**
+  String get adminSampleActionMessage;
+
+  /// No description provided for @catalogTabProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get catalogTabProducts;
+
+  /// No description provided for @catalogTabCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get catalogTabCategories;
+
+  /// No description provided for @catalogTabAttributes.
+  ///
+  /// In en, this message translates to:
+  /// **'Attributes'**
+  String get catalogTabAttributes;
+
+  /// No description provided for @catalogTabPrices.
+  ///
+  /// In en, this message translates to:
+  /// **'Price sheets'**
+  String get catalogTabPrices;
+
+  /// No description provided for @catalogTabMeter.
+  ///
+  /// In en, this message translates to:
+  /// **'Meter pricing'**
+  String get catalogTabMeter;
+
+  /// No description provided for @catalogSearchProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Search products or SKU'**
+  String get catalogSearchProducts;
+
+  /// No description provided for @catalogSearchAttributes.
+  ///
+  /// In en, this message translates to:
+  /// **'Search attributes'**
+  String get catalogSearchAttributes;
+
+  /// No description provided for @catalogSearchPrices.
+  ///
+  /// In en, this message translates to:
+  /// **'Search price entries'**
+  String get catalogSearchPrices;
+
+  /// No description provided for @catalogMetricProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get catalogMetricProducts;
+
+  /// No description provided for @catalogMetricLowStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock'**
+  String get catalogMetricLowStock;
+
+  /// No description provided for @catalogMetricAveragePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Average price'**
+  String get catalogMetricAveragePrice;
+
+  /// No description provided for @catalogMetricStockValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock value'**
+  String get catalogMetricStockValue;
+
+  /// No description provided for @catalogMetricCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Categories'**
+  String get catalogMetricCategories;
+
+  /// No description provided for @catalogMetricCategoryProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Categorized products'**
+  String get catalogMetricCategoryProducts;
+
+  /// No description provided for @catalogMetricTopCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Largest category'**
+  String get catalogMetricTopCategory;
+
+  /// No description provided for @catalogMetricAttributes.
+  ///
+  /// In en, this message translates to:
+  /// **'Attributes'**
+  String get catalogMetricAttributes;
+
+  /// No description provided for @catalogMetricValues.
+  ///
+  /// In en, this message translates to:
+  /// **'Values'**
+  String get catalogMetricValues;
+
+  /// No description provided for @catalogMetricRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get catalogMetricRequired;
+
+  /// No description provided for @catalogMetricPriceLists.
+  ///
+  /// In en, this message translates to:
+  /// **'Price lists'**
+  String get catalogMetricPriceLists;
+
+  /// No description provided for @catalogMetricChannels.
+  ///
+  /// In en, this message translates to:
+  /// **'Channels'**
+  String get catalogMetricChannels;
+
+  /// No description provided for @catalogMetricAverageMargin.
+  ///
+  /// In en, this message translates to:
+  /// **'Average margin'**
+  String get catalogMetricAverageMargin;
+
+  /// No description provided for @catalogMetricEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'Price entries'**
+  String get catalogMetricEntries;
+
+  /// No description provided for @catalogColProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get catalogColProduct;
+
+  /// No description provided for @catalogColSku.
+  ///
+  /// In en, this message translates to:
+  /// **'SKU'**
+  String get catalogColSku;
+
+  /// No description provided for @catalogColCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get catalogColCategory;
+
+  /// No description provided for @catalogColPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get catalogColPrice;
+
+  /// No description provided for @catalogColStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock'**
+  String get catalogColStock;
+
+  /// No description provided for @catalogColValues.
+  ///
+  /// In en, this message translates to:
+  /// **'Values'**
+  String get catalogColValues;
+
+  /// No description provided for @catalogColUsage.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get catalogColUsage;
+
+  /// No description provided for @catalogColRequirement.
+  ///
+  /// In en, this message translates to:
+  /// **'Requirement'**
+  String get catalogColRequirement;
+
+  /// No description provided for @catalogColPriceList.
+  ///
+  /// In en, this message translates to:
+  /// **'Price list'**
+  String get catalogColPriceList;
+
+  /// No description provided for @catalogColChannel.
+  ///
+  /// In en, this message translates to:
+  /// **'Channel'**
+  String get catalogColChannel;
+
+  /// No description provided for @catalogColMargin.
+  ///
+  /// In en, this message translates to:
+  /// **'Margin'**
+  String get catalogColMargin;
+
+  /// No description provided for @catalogStockIn.
+  ///
+  /// In en, this message translates to:
+  /// **'In stock'**
+  String get catalogStockIn;
+
+  /// No description provided for @catalogStockLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock'**
+  String get catalogStockLow;
+
+  /// No description provided for @catalogStockOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of stock'**
+  String get catalogStockOut;
+
+  /// No description provided for @catalogCategoryShareLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Share of catalog'**
+  String get catalogCategoryShareLabel;
+
+  /// No description provided for @catalogCategoryProductsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No products} =1{1 product} other{{count} products}}'**
+  String catalogCategoryProductsCount(int count);
+
+  /// No description provided for @catalogAttributeSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Size'**
+  String get catalogAttributeSize;
+
+  /// No description provided for @catalogAttributeColor.
+  ///
+  /// In en, this message translates to:
+  /// **'Color'**
+  String get catalogAttributeColor;
+
+  /// No description provided for @catalogAttributeMaterial.
+  ///
+  /// In en, this message translates to:
+  /// **'Material'**
+  String get catalogAttributeMaterial;
+
+  /// No description provided for @catalogAttributeFirmness.
+  ///
+  /// In en, this message translates to:
+  /// **'Firmness'**
+  String get catalogAttributeFirmness;
+
+  /// No description provided for @catalogAttributeWarranty.
+  ///
+  /// In en, this message translates to:
+  /// **'Warranty'**
+  String get catalogAttributeWarranty;
+
+  /// No description provided for @catalogValueSize1.
+  ///
+  /// In en, this message translates to:
+  /// **'160 × 200'**
+  String get catalogValueSize1;
+
+  /// No description provided for @catalogValueSize2.
+  ///
+  /// In en, this message translates to:
+  /// **'180 × 200'**
+  String get catalogValueSize2;
+
+  /// No description provided for @catalogValueSize3.
+  ///
+  /// In en, this message translates to:
+  /// **'150 × 195'**
+  String get catalogValueSize3;
+
+  /// No description provided for @catalogValueColor1.
+  ///
+  /// In en, this message translates to:
+  /// **'White'**
+  String get catalogValueColor1;
+
+  /// No description provided for @catalogValueColor2.
+  ///
+  /// In en, this message translates to:
+  /// **'Beige'**
+  String get catalogValueColor2;
+
+  /// No description provided for @catalogValueColor3.
+  ///
+  /// In en, this message translates to:
+  /// **'Grey'**
+  String get catalogValueColor3;
+
+  /// No description provided for @catalogValueMaterial1.
+  ///
+  /// In en, this message translates to:
+  /// **'Cotton'**
+  String get catalogValueMaterial1;
+
+  /// No description provided for @catalogValueMaterial2.
+  ///
+  /// In en, this message translates to:
+  /// **'Foam'**
+  String get catalogValueMaterial2;
+
+  /// No description provided for @catalogValueMaterial3.
+  ///
+  /// In en, this message translates to:
+  /// **'Latex'**
+  String get catalogValueMaterial3;
+
+  /// No description provided for @catalogValueFirmness1.
+  ///
+  /// In en, this message translates to:
+  /// **'Soft'**
+  String get catalogValueFirmness1;
+
+  /// No description provided for @catalogValueFirmness2.
+  ///
+  /// In en, this message translates to:
+  /// **'Medium'**
+  String get catalogValueFirmness2;
+
+  /// No description provided for @catalogValueFirmness3.
+  ///
+  /// In en, this message translates to:
+  /// **'Firm'**
+  String get catalogValueFirmness3;
+
+  /// No description provided for @catalogValueWarranty1.
+  ///
+  /// In en, this message translates to:
+  /// **'1 year'**
+  String get catalogValueWarranty1;
+
+  /// No description provided for @catalogValueWarranty2.
+  ///
+  /// In en, this message translates to:
+  /// **'5 years'**
+  String get catalogValueWarranty2;
+
+  /// No description provided for @catalogRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get catalogRequired;
+
+  /// No description provided for @catalogOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Optional'**
+  String get catalogOptional;
+
+  /// No description provided for @catalogPriceListRetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Retail'**
+  String get catalogPriceListRetail;
+
+  /// No description provided for @catalogPriceListWholesale.
+  ///
+  /// In en, this message translates to:
+  /// **'Wholesale'**
+  String get catalogPriceListWholesale;
+
+  /// No description provided for @catalogPriceListOnline.
+  ///
+  /// In en, this message translates to:
+  /// **'Online'**
+  String get catalogPriceListOnline;
+
+  /// No description provided for @catalogChannelShowroom.
+  ///
+  /// In en, this message translates to:
+  /// **'Showroom'**
+  String get catalogChannelShowroom;
+
+  /// No description provided for @catalogChannelWeb.
+  ///
+  /// In en, this message translates to:
+  /// **'Web store'**
+  String get catalogChannelWeb;
+
+  /// No description provided for @catalogChannelWholesale.
+  ///
+  /// In en, this message translates to:
+  /// **'Wholesale'**
+  String get catalogChannelWholesale;
+
+  /// No description provided for @catalogMeterDimensions.
+  ///
+  /// In en, this message translates to:
+  /// **'Dimensions and shape'**
+  String get catalogMeterDimensions;
+
+  /// No description provided for @catalogMeterPricing.
+  ///
+  /// In en, this message translates to:
+  /// **'Pricing inputs'**
+  String get catalogMeterPricing;
+
+  /// No description provided for @catalogMeterSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Live estimate'**
+  String get catalogMeterSummary;
+
+  /// No description provided for @catalogMeterWidth.
+  ///
+  /// In en, this message translates to:
+  /// **'Width (cm)'**
+  String get catalogMeterWidth;
+
+  /// No description provided for @catalogMeterHeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Height (cm)'**
+  String get catalogMeterHeight;
+
+  /// No description provided for @catalogMeterRate.
+  ///
+  /// In en, this message translates to:
+  /// **'Price per m²'**
+  String get catalogMeterRate;
+
+  /// No description provided for @catalogMeterWaste.
+  ///
+  /// In en, this message translates to:
+  /// **'Waste (%)'**
+  String get catalogMeterWaste;
+
+  /// No description provided for @catalogMeterShape.
+  ///
+  /// In en, this message translates to:
+  /// **'Shape'**
+  String get catalogMeterShape;
+
+  /// No description provided for @catalogShapeRectangle.
+  ///
+  /// In en, this message translates to:
+  /// **'Rectangle'**
+  String get catalogShapeRectangle;
+
+  /// No description provided for @catalogShapeRound.
+  ///
+  /// In en, this message translates to:
+  /// **'Round'**
+  String get catalogShapeRound;
+
+  /// No description provided for @catalogShapeLShape.
+  ///
+  /// In en, this message translates to:
+  /// **'L-shape'**
+  String get catalogShapeLShape;
+
+  /// No description provided for @catalogMeterArea.
+  ///
+  /// In en, this message translates to:
+  /// **'Area'**
+  String get catalogMeterArea;
+
+  /// No description provided for @catalogMeterBasePrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Base price'**
+  String get catalogMeterBasePrice;
+
+  /// No description provided for @catalogMeterWasteCost.
+  ///
+  /// In en, this message translates to:
+  /// **'Waste cost'**
+  String get catalogMeterWasteCost;
+
+  /// No description provided for @catalogMeterTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated price'**
+  String get catalogMeterTotal;
+
+  /// No description provided for @catalogMeterHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Updates as you type'**
+  String get catalogMeterHint;
+
+  /// No description provided for @catalogMeterInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter width, height and price to see the estimate.'**
+  String get catalogMeterInvalid;
+
+  /// No description provided for @catalogMeterUnit.
+  ///
+  /// In en, this message translates to:
+  /// **'m²'**
+  String get catalogMeterUnit;
+
+  /// No description provided for @adminFilterAll.
+  ///
+  /// In en, this message translates to:
+  /// **'All'**
+  String get adminFilterAll;
 }
 
 class _AppLocalizationsDelegate

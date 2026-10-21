@@ -116,8 +116,7 @@ final class AdminSectionWorkspace extends HookWidget {
                 icon: LucideIcons.listFilter,
               ),
               FilledButton.icon(
-                onPressed:
-                    availability == AdminSectionAvailability.planned
+                onPressed: availability == AdminSectionAvailability.planned
                     ? null
                     : () {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -680,9 +679,7 @@ final class _TimelineRow extends StatelessWidget {
                 height: 10,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: done
-                      ? color
-                      : color.withValues(alpha: 0.35),
+                  color: done ? color : color.withValues(alpha: 0.35),
                 ),
               ),
               if (!last)

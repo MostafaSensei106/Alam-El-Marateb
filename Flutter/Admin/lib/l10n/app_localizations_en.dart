@@ -2086,4 +2086,276 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permissionsRoleWarehouse => 'Warehouse';
+
+  @override
+  String get plannedNoticeTitle => 'Planned screen';
+
+  @override
+  String get plannedNoticeBody =>
+      'This screen is designed and ready, but its backend endpoint is not available yet. The values below are sample data and saving is disabled.';
+
+  @override
+  String get adminSampleActionMessage => 'Sample action: no data was saved.';
+
+  @override
+  String get catalogTabProducts => 'Products';
+
+  @override
+  String get catalogTabCategories => 'Categories';
+
+  @override
+  String get catalogTabAttributes => 'Attributes';
+
+  @override
+  String get catalogTabPrices => 'Price sheets';
+
+  @override
+  String get catalogTabMeter => 'Meter pricing';
+
+  @override
+  String get catalogSearchProducts => 'Search products or SKU';
+
+  @override
+  String get catalogSearchAttributes => 'Search attributes';
+
+  @override
+  String get catalogSearchPrices => 'Search price entries';
+
+  @override
+  String get catalogMetricProducts => 'Products';
+
+  @override
+  String get catalogMetricLowStock => 'Low stock';
+
+  @override
+  String get catalogMetricAveragePrice => 'Average price';
+
+  @override
+  String get catalogMetricStockValue => 'Stock value';
+
+  @override
+  String get catalogMetricCategories => 'Categories';
+
+  @override
+  String get catalogMetricCategoryProducts => 'Categorized products';
+
+  @override
+  String get catalogMetricTopCategory => 'Largest category';
+
+  @override
+  String get catalogMetricAttributes => 'Attributes';
+
+  @override
+  String get catalogMetricValues => 'Values';
+
+  @override
+  String get catalogMetricRequired => 'Required';
+
+  @override
+  String get catalogMetricPriceLists => 'Price lists';
+
+  @override
+  String get catalogMetricChannels => 'Channels';
+
+  @override
+  String get catalogMetricAverageMargin => 'Average margin';
+
+  @override
+  String get catalogMetricEntries => 'Price entries';
+
+  @override
+  String get catalogColProduct => 'Product';
+
+  @override
+  String get catalogColSku => 'SKU';
+
+  @override
+  String get catalogColCategory => 'Category';
+
+  @override
+  String get catalogColPrice => 'Price';
+
+  @override
+  String get catalogColStock => 'Stock';
+
+  @override
+  String get catalogColValues => 'Values';
+
+  @override
+  String get catalogColUsage => 'Products';
+
+  @override
+  String get catalogColRequirement => 'Requirement';
+
+  @override
+  String get catalogColPriceList => 'Price list';
+
+  @override
+  String get catalogColChannel => 'Channel';
+
+  @override
+  String get catalogColMargin => 'Margin';
+
+  @override
+  String get catalogStockIn => 'In stock';
+
+  @override
+  String get catalogStockLow => 'Low stock';
+
+  @override
+  String get catalogStockOut => 'Out of stock';
+
+  @override
+  String get catalogCategoryShareLabel => 'Share of catalog';
+
+  @override
+  String catalogCategoryProductsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count products',
+      one: '1 product',
+      zero: 'No products',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get catalogAttributeSize => 'Size';
+
+  @override
+  String get catalogAttributeColor => 'Color';
+
+  @override
+  String get catalogAttributeMaterial => 'Material';
+
+  @override
+  String get catalogAttributeFirmness => 'Firmness';
+
+  @override
+  String get catalogAttributeWarranty => 'Warranty';
+
+  @override
+  String get catalogValueSize1 => '160 × 200';
+
+  @override
+  String get catalogValueSize2 => '180 × 200';
+
+  @override
+  String get catalogValueSize3 => '150 × 195';
+
+  @override
+  String get catalogValueColor1 => 'White';
+
+  @override
+  String get catalogValueColor2 => 'Beige';
+
+  @override
+  String get catalogValueColor3 => 'Grey';
+
+  @override
+  String get catalogValueMaterial1 => 'Cotton';
+
+  @override
+  String get catalogValueMaterial2 => 'Foam';
+
+  @override
+  String get catalogValueMaterial3 => 'Latex';
+
+  @override
+  String get catalogValueFirmness1 => 'Soft';
+
+  @override
+  String get catalogValueFirmness2 => 'Medium';
+
+  @override
+  String get catalogValueFirmness3 => 'Firm';
+
+  @override
+  String get catalogValueWarranty1 => '1 year';
+
+  @override
+  String get catalogValueWarranty2 => '5 years';
+
+  @override
+  String get catalogRequired => 'Required';
+
+  @override
+  String get catalogOptional => 'Optional';
+
+  @override
+  String get catalogPriceListRetail => 'Retail';
+
+  @override
+  String get catalogPriceListWholesale => 'Wholesale';
+
+  @override
+  String get catalogPriceListOnline => 'Online';
+
+  @override
+  String get catalogChannelShowroom => 'Showroom';
+
+  @override
+  String get catalogChannelWeb => 'Web store';
+
+  @override
+  String get catalogChannelWholesale => 'Wholesale';
+
+  @override
+  String get catalogMeterDimensions => 'Dimensions and shape';
+
+  @override
+  String get catalogMeterPricing => 'Pricing inputs';
+
+  @override
+  String get catalogMeterSummary => 'Live estimate';
+
+  @override
+  String get catalogMeterWidth => 'Width (cm)';
+
+  @override
+  String get catalogMeterHeight => 'Height (cm)';
+
+  @override
+  String get catalogMeterRate => 'Price per m²';
+
+  @override
+  String get catalogMeterWaste => 'Waste (%)';
+
+  @override
+  String get catalogMeterShape => 'Shape';
+
+  @override
+  String get catalogShapeRectangle => 'Rectangle';
+
+  @override
+  String get catalogShapeRound => 'Round';
+
+  @override
+  String get catalogShapeLShape => 'L-shape';
+
+  @override
+  String get catalogMeterArea => 'Area';
+
+  @override
+  String get catalogMeterBasePrice => 'Base price';
+
+  @override
+  String get catalogMeterWasteCost => 'Waste cost';
+
+  @override
+  String get catalogMeterTotal => 'Estimated price';
+
+  @override
+  String get catalogMeterHint => 'Updates as you type';
+
+  @override
+  String get catalogMeterInvalid =>
+      'Enter width, height and price to see the estimate.';
+
+  @override
+  String get catalogMeterUnit => 'm²';
+
+  @override
+  String get adminFilterAll => 'All';
 }

@@ -776,5 +776,357 @@
   "permissionsRoleWarehouse": "المخزن",
   "@permissionsRoleWarehouse": {
     "type": "String"
+  },
+  "plannedNoticeTitle": "شاشة مخططة",
+  "@plannedNoticeTitle": {
+    "type": "String"
+  },
+  "plannedNoticeBody": "هذه الشاشة جاهزة تصميمياً، لكن نقطة النهاية الخاصة بها في الخادم غير متاحة بعد. القيم أدناه بيانات تجريبية والحفظ معطّل.",
+  "@plannedNoticeBody": {
+    "type": "String"
+  },
+  "adminSampleActionMessage": "إجراء تجريبي: لم يتم حفظ أي بيانات.",
+  "@adminSampleActionMessage": {
+    "type": "String"
+  },
+  "catalogTabProducts": "المنتجات",
+  "@catalogTabProducts": {
+    "type": "String"
+  },
+  "catalogTabCategories": "الفئات",
+  "@catalogTabCategories": {
+    "type": "String"
+  },
+  "catalogTabAttributes": "الخصائص",
+  "@catalogTabAttributes": {
+    "type": "String"
+  },
+  "catalogTabPrices": "قوائم الأسعار",
+  "@catalogTabPrices": {
+    "type": "String"
+  },
+  "catalogTabMeter": "تسعير المتر",
+  "@catalogTabMeter": {
+    "type": "String"
+  },
+  "catalogSearchProducts": "ابحث في المنتجات أو رمز الصنف",
+  "@catalogSearchProducts": {
+    "type": "String"
+  },
+  "catalogSearchAttributes": "ابحث في الخصائص",
+  "@catalogSearchAttributes": {
+    "type": "String"
+  },
+  "catalogSearchPrices": "ابحث في بنود الأسعار",
+  "@catalogSearchPrices": {
+    "type": "String"
+  },
+  "catalogMetricProducts": "المنتجات",
+  "@catalogMetricProducts": {
+    "type": "String"
+  },
+  "catalogMetricLowStock": "مخزون منخفض",
+  "@catalogMetricLowStock": {
+    "type": "String"
+  },
+  "catalogMetricAveragePrice": "متوسط السعر",
+  "@catalogMetricAveragePrice": {
+    "type": "String"
+  },
+  "catalogMetricStockValue": "قيمة المخزون",
+  "@catalogMetricStockValue": {
+    "type": "String"
+  },
+  "catalogMetricCategories": "الفئات",
+  "@catalogMetricCategories": {
+    "type": "String"
+  },
+  "catalogMetricCategoryProducts": "منتجات مصنفة",
+  "@catalogMetricCategoryProducts": {
+    "type": "String"
+  },
+  "catalogMetricTopCategory": "أكبر فئة",
+  "@catalogMetricTopCategory": {
+    "type": "String"
+  },
+  "catalogMetricAttributes": "الخصائص",
+  "@catalogMetricAttributes": {
+    "type": "String"
+  },
+  "catalogMetricValues": "القيم",
+  "@catalogMetricValues": {
+    "type": "String"
+  },
+  "catalogMetricRequired": "إلزامية",
+  "@catalogMetricRequired": {
+    "type": "String"
+  },
+  "catalogMetricPriceLists": "قوائم الأسعار",
+  "@catalogMetricPriceLists": {
+    "type": "String"
+  },
+  "catalogMetricChannels": "قنوات البيع",
+  "@catalogMetricChannels": {
+    "type": "String"
+  },
+  "catalogMetricAverageMargin": "متوسط الهامش",
+  "@catalogMetricAverageMargin": {
+    "type": "String"
+  },
+  "catalogMetricEntries": "بنود الأسعار",
+  "@catalogMetricEntries": {
+    "type": "String"
+  },
+  "catalogColProduct": "المنتج",
+  "@catalogColProduct": {
+    "type": "String"
+  },
+  "catalogColSku": "رمز الصنف",
+  "@catalogColSku": {
+    "type": "String"
+  },
+  "catalogColCategory": "الفئة",
+  "@catalogColCategory": {
+    "type": "String"
+  },
+  "catalogColPrice": "السعر",
+  "@catalogColPrice": {
+    "type": "String"
+  },
+  "catalogColStock": "المخزون",
+  "@catalogColStock": {
+    "type": "String"
+  },
+  "catalogColValues": "القيم",
+  "@catalogColValues": {
+    "type": "String"
+  },
+  "catalogColUsage": "المنتجات",
+  "@catalogColUsage": {
+    "type": "String"
+  },
+  "catalogColRequirement": "الإلزام",
+  "@catalogColRequirement": {
+    "type": "String"
+  },
+  "catalogColPriceList": "قائمة الأسعار",
+  "@catalogColPriceList": {
+    "type": "String"
+  },
+  "catalogColChannel": "القناة",
+  "@catalogColChannel": {
+    "type": "String"
+  },
+  "catalogColMargin": "الهامش",
+  "@catalogColMargin": {
+    "type": "String"
+  },
+  "catalogStockIn": "متوفر",
+  "@catalogStockIn": {
+    "type": "String"
+  },
+  "catalogStockLow": "منخفض",
+  "@catalogStockLow": {
+    "type": "String"
+  },
+  "catalogStockOut": "غير متوفر",
+  "@catalogStockOut": {
+    "type": "String"
+  },
+  "catalogCategoryShareLabel": "الحصة من الكتالوج",
+  "@catalogCategoryShareLabel": {
+    "type": "String"
+  },
+  "catalogCategoryProductsCount": "{count, plural, =0{لا توجد منتجات} =1{منتج واحد} other{{count} منتج}}",
+  "@catalogCategoryProductsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "catalogAttributeSize": "المقاس",
+  "@catalogAttributeSize": {
+    "type": "String"
+  },
+  "catalogAttributeColor": "اللون",
+  "@catalogAttributeColor": {
+    "type": "String"
+  },
+  "catalogAttributeMaterial": "الخامة",
+  "@catalogAttributeMaterial": {
+    "type": "String"
+  },
+  "catalogAttributeFirmness": "درجة الثبات",
+  "@catalogAttributeFirmness": {
+    "type": "String"
+  },
+  "catalogAttributeWarranty": "الضمان",
+  "@catalogAttributeWarranty": {
+    "type": "String"
+  },
+  "catalogValueSize1": "160 × 200",
+  "@catalogValueSize1": {
+    "type": "String"
+  },
+  "catalogValueSize2": "180 × 200",
+  "@catalogValueSize2": {
+    "type": "String"
+  },
+  "catalogValueSize3": "150 × 195",
+  "@catalogValueSize3": {
+    "type": "String"
+  },
+  "catalogValueColor1": "أبيض",
+  "@catalogValueColor1": {
+    "type": "String"
+  },
+  "catalogValueColor2": "بيج",
+  "@catalogValueColor2": {
+    "type": "String"
+  },
+  "catalogValueColor3": "رمادي",
+  "@catalogValueColor3": {
+    "type": "String"
+  },
+  "catalogValueMaterial1": "قطن",
+  "@catalogValueMaterial1": {
+    "type": "String"
+  },
+  "catalogValueMaterial2": "فوم",
+  "@catalogValueMaterial2": {
+    "type": "String"
+  },
+  "catalogValueMaterial3": "لاتكس",
+  "@catalogValueMaterial3": {
+    "type": "String"
+  },
+  "catalogValueFirmness1": "ناعم",
+  "@catalogValueFirmness1": {
+    "type": "String"
+  },
+  "catalogValueFirmness2": "متوسط",
+  "@catalogValueFirmness2": {
+    "type": "String"
+  },
+  "catalogValueFirmness3": "ثابت",
+  "@catalogValueFirmness3": {
+    "type": "String"
+  },
+  "catalogValueWarranty1": "سنة واحدة",
+  "@catalogValueWarranty1": {
+    "type": "String"
+  },
+  "catalogValueWarranty2": "5 سنوات",
+  "@catalogValueWarranty2": {
+    "type": "String"
+  },
+  "catalogRequired": "إلزامي",
+  "@catalogRequired": {
+    "type": "String"
+  },
+  "catalogOptional": "اختياري",
+  "@catalogOptional": {
+    "type": "String"
+  },
+  "catalogPriceListRetail": "التجزئة",
+  "@catalogPriceListRetail": {
+    "type": "String"
+  },
+  "catalogPriceListWholesale": "الجملة",
+  "@catalogPriceListWholesale": {
+    "type": "String"
+  },
+  "catalogPriceListOnline": "الإنترنت",
+  "@catalogPriceListOnline": {
+    "type": "String"
+  },
+  "catalogChannelShowroom": "المعرض",
+  "@catalogChannelShowroom": {
+    "type": "String"
+  },
+  "catalogChannelWeb": "المتجر الإلكتروني",
+  "@catalogChannelWeb": {
+    "type": "String"
+  },
+  "catalogChannelWholesale": "الجملة",
+  "@catalogChannelWholesale": {
+    "type": "String"
+  },
+  "catalogMeterDimensions": "المقاس والشكل",
+  "@catalogMeterDimensions": {
+    "type": "String"
+  },
+  "catalogMeterPricing": "مدخلات السعر",
+  "@catalogMeterPricing": {
+    "type": "String"
+  },
+  "catalogMeterSummary": "التقدير المباشر",
+  "@catalogMeterSummary": {
+    "type": "String"
+  },
+  "catalogMeterWidth": "العرض (سم)",
+  "@catalogMeterWidth": {
+    "type": "String"
+  },
+  "catalogMeterHeight": "الطول (سم)",
+  "@catalogMeterHeight": {
+    "type": "String"
+  },
+  "catalogMeterRate": "سعر المتر المربع",
+  "@catalogMeterRate": {
+    "type": "String"
+  },
+  "catalogMeterWaste": "الهالك (%)",
+  "@catalogMeterWaste": {
+    "type": "String"
+  },
+  "catalogMeterShape": "الشكل",
+  "@catalogMeterShape": {
+    "type": "String"
+  },
+  "catalogShapeRectangle": "مستطيل",
+  "@catalogShapeRectangle": {
+    "type": "String"
+  },
+  "catalogShapeRound": "دائري",
+  "@catalogShapeRound": {
+    "type": "String"
+  },
+  "catalogShapeLShape": "على شكل L",
+  "@catalogShapeLShape": {
+    "type": "String"
+  },
+  "catalogMeterArea": "المساحة",
+  "@catalogMeterArea": {
+    "type": "String"
+  },
+  "catalogMeterBasePrice": "السعر الأساسي",
+  "@catalogMeterBasePrice": {
+    "type": "String"
+  },
+  "catalogMeterWasteCost": "قيمة الهالك",
+  "@catalogMeterWasteCost": {
+    "type": "String"
+  },
+  "catalogMeterTotal": "السعر التقديري",
+  "@catalogMeterTotal": {
+    "type": "String"
+  },
+  "catalogMeterHint": "يتحدث أثناء الكتابة",
+  "@catalogMeterHint": {
+    "type": "String"
+  },
+  "catalogMeterInvalid": "أدخل العرض والطول والسعر لعرض التقدير.",
+  "@catalogMeterInvalid": {
+    "type": "String"
+  },
+  "catalogMeterUnit": "م²",
+  "@catalogMeterUnit": {
+    "type": "String"
+  },
+  "adminFilterAll": "الكل",
+  "@adminFilterAll": {
+    "type": "String"
   }
 }

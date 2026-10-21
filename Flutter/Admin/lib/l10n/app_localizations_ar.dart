@@ -2062,4 +2062,275 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get permissionsRoleWarehouse => 'المخزن';
+
+  @override
+  String get plannedNoticeTitle => 'شاشة مخططة';
+
+  @override
+  String get plannedNoticeBody =>
+      'هذه الشاشة جاهزة تصميمياً، لكن نقطة النهاية الخاصة بها في الخادم غير متاحة بعد. القيم أدناه بيانات تجريبية والحفظ معطّل.';
+
+  @override
+  String get adminSampleActionMessage => 'إجراء تجريبي: لم يتم حفظ أي بيانات.';
+
+  @override
+  String get catalogTabProducts => 'المنتجات';
+
+  @override
+  String get catalogTabCategories => 'الفئات';
+
+  @override
+  String get catalogTabAttributes => 'الخصائص';
+
+  @override
+  String get catalogTabPrices => 'قوائم الأسعار';
+
+  @override
+  String get catalogTabMeter => 'تسعير المتر';
+
+  @override
+  String get catalogSearchProducts => 'ابحث في المنتجات أو رمز الصنف';
+
+  @override
+  String get catalogSearchAttributes => 'ابحث في الخصائص';
+
+  @override
+  String get catalogSearchPrices => 'ابحث في بنود الأسعار';
+
+  @override
+  String get catalogMetricProducts => 'المنتجات';
+
+  @override
+  String get catalogMetricLowStock => 'مخزون منخفض';
+
+  @override
+  String get catalogMetricAveragePrice => 'متوسط السعر';
+
+  @override
+  String get catalogMetricStockValue => 'قيمة المخزون';
+
+  @override
+  String get catalogMetricCategories => 'الفئات';
+
+  @override
+  String get catalogMetricCategoryProducts => 'منتجات مصنفة';
+
+  @override
+  String get catalogMetricTopCategory => 'أكبر فئة';
+
+  @override
+  String get catalogMetricAttributes => 'الخصائص';
+
+  @override
+  String get catalogMetricValues => 'القيم';
+
+  @override
+  String get catalogMetricRequired => 'إلزامية';
+
+  @override
+  String get catalogMetricPriceLists => 'قوائم الأسعار';
+
+  @override
+  String get catalogMetricChannels => 'قنوات البيع';
+
+  @override
+  String get catalogMetricAverageMargin => 'متوسط الهامش';
+
+  @override
+  String get catalogMetricEntries => 'بنود الأسعار';
+
+  @override
+  String get catalogColProduct => 'المنتج';
+
+  @override
+  String get catalogColSku => 'رمز الصنف';
+
+  @override
+  String get catalogColCategory => 'الفئة';
+
+  @override
+  String get catalogColPrice => 'السعر';
+
+  @override
+  String get catalogColStock => 'المخزون';
+
+  @override
+  String get catalogColValues => 'القيم';
+
+  @override
+  String get catalogColUsage => 'المنتجات';
+
+  @override
+  String get catalogColRequirement => 'الإلزام';
+
+  @override
+  String get catalogColPriceList => 'قائمة الأسعار';
+
+  @override
+  String get catalogColChannel => 'القناة';
+
+  @override
+  String get catalogColMargin => 'الهامش';
+
+  @override
+  String get catalogStockIn => 'متوفر';
+
+  @override
+  String get catalogStockLow => 'منخفض';
+
+  @override
+  String get catalogStockOut => 'غير متوفر';
+
+  @override
+  String get catalogCategoryShareLabel => 'الحصة من الكتالوج';
+
+  @override
+  String catalogCategoryProductsCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count منتج',
+      one: 'منتج واحد',
+      zero: 'لا توجد منتجات',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get catalogAttributeSize => 'المقاس';
+
+  @override
+  String get catalogAttributeColor => 'اللون';
+
+  @override
+  String get catalogAttributeMaterial => 'الخامة';
+
+  @override
+  String get catalogAttributeFirmness => 'درجة الثبات';
+
+  @override
+  String get catalogAttributeWarranty => 'الضمان';
+
+  @override
+  String get catalogValueSize1 => '160 × 200';
+
+  @override
+  String get catalogValueSize2 => '180 × 200';
+
+  @override
+  String get catalogValueSize3 => '150 × 195';
+
+  @override
+  String get catalogValueColor1 => 'أبيض';
+
+  @override
+  String get catalogValueColor2 => 'بيج';
+
+  @override
+  String get catalogValueColor3 => 'رمادي';
+
+  @override
+  String get catalogValueMaterial1 => 'قطن';
+
+  @override
+  String get catalogValueMaterial2 => 'فوم';
+
+  @override
+  String get catalogValueMaterial3 => 'لاتكس';
+
+  @override
+  String get catalogValueFirmness1 => 'ناعم';
+
+  @override
+  String get catalogValueFirmness2 => 'متوسط';
+
+  @override
+  String get catalogValueFirmness3 => 'ثابت';
+
+  @override
+  String get catalogValueWarranty1 => 'سنة واحدة';
+
+  @override
+  String get catalogValueWarranty2 => '5 سنوات';
+
+  @override
+  String get catalogRequired => 'إلزامي';
+
+  @override
+  String get catalogOptional => 'اختياري';
+
+  @override
+  String get catalogPriceListRetail => 'التجزئة';
+
+  @override
+  String get catalogPriceListWholesale => 'الجملة';
+
+  @override
+  String get catalogPriceListOnline => 'الإنترنت';
+
+  @override
+  String get catalogChannelShowroom => 'المعرض';
+
+  @override
+  String get catalogChannelWeb => 'المتجر الإلكتروني';
+
+  @override
+  String get catalogChannelWholesale => 'الجملة';
+
+  @override
+  String get catalogMeterDimensions => 'المقاس والشكل';
+
+  @override
+  String get catalogMeterPricing => 'مدخلات السعر';
+
+  @override
+  String get catalogMeterSummary => 'التقدير المباشر';
+
+  @override
+  String get catalogMeterWidth => 'العرض (سم)';
+
+  @override
+  String get catalogMeterHeight => 'الطول (سم)';
+
+  @override
+  String get catalogMeterRate => 'سعر المتر المربع';
+
+  @override
+  String get catalogMeterWaste => 'الهالك (%)';
+
+  @override
+  String get catalogMeterShape => 'الشكل';
+
+  @override
+  String get catalogShapeRectangle => 'مستطيل';
+
+  @override
+  String get catalogShapeRound => 'دائري';
+
+  @override
+  String get catalogShapeLShape => 'على شكل L';
+
+  @override
+  String get catalogMeterArea => 'المساحة';
+
+  @override
+  String get catalogMeterBasePrice => 'السعر الأساسي';
+
+  @override
+  String get catalogMeterWasteCost => 'قيمة الهالك';
+
+  @override
+  String get catalogMeterTotal => 'السعر التقديري';
+
+  @override
+  String get catalogMeterHint => 'يتحدث أثناء الكتابة';
+
+  @override
+  String get catalogMeterInvalid => 'أدخل العرض والطول والسعر لعرض التقدير.';
+
+  @override
+  String get catalogMeterUnit => 'م²';
+
+  @override
+  String get adminFilterAll => 'الكل';
 }

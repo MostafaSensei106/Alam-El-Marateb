@@ -29,7 +29,7 @@ final class AdminPageFrame extends StatelessWidget {
     return ListView(
       padding:
           padding ??
-          EdgeInsets.all(isCompact ? AppSpacing.large : AppSpacing.xLarge),
+          EdgeInsets.all(isCompact ? AppSpacing.large : AppSpacing.large),
       children: [
         Center(
           child: ConstrainedBox(
