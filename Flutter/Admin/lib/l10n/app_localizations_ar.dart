@@ -1425,10 +1425,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get dashboardOpenAuditsHint => 'عمليات جرد لم تُغلق بعد';
 
   @override
-  String get dashboardStockByWarehouse => 'المخزون حسب المستودع';
+  String get dashboardStockByWarehouse => 'المخزون حسب المخزن';
 
   @override
-  String get dashboardStockHint => 'الكمية والقيمة في كل مستودع';
+  String get dashboardStockHint => 'الكمية والقيمة في كل مخزن';
 
   @override
   String get dashboardStockTotal => 'إجمالي قيمة المخزون';
@@ -1809,16 +1809,16 @@ class AppLocalizationsAr extends AppLocalizations {
   String get statusPaid => 'مدفوع';
 
   @override
-  String get warehouseTanta => 'مستودع طنطا الرئيسي';
+  String get warehouseTanta => 'مخزن طنطا الرئيسي';
 
   @override
-  String get warehouseCairo => 'مستودع القاهرة';
+  String get warehouseCairo => 'مخزن القاهرة';
 
   @override
-  String get warehouseAlex => 'مستودع الإسكندرية';
+  String get warehouseAlex => 'مخزن الإسكندرية';
 
   @override
-  String get warehouseMansoura => 'مستودع المنصورة';
+  String get warehouseMansoura => 'مخزن المنصورة';
 
   @override
   String get govGharbia => 'الغربية';
