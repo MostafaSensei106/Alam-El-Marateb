@@ -13,6 +13,7 @@ import 'admin_charts.dart';
 import 'admin_data_grid.dart';
 import 'admin_page_frame.dart';
 import 'admin_schedule_calendar.dart';
+import 'admin_workspace_shared.dart';
 
 const _pageSizeOptions = <int>[6, 12, 24];
 const _defaultPageSize = 6;
@@ -105,9 +106,27 @@ final class AdminSectionWorkspace extends HookWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (isRecordKind) ...[
-          _WorkspaceHeader(section: section, total: filtered.length),
+          AdminWorkspaceHeader(
+            title: section.title,
+            icon: section.icon,
+            pills: [
+              AdminStatusPill(
+                label: l10n.sectionRecordsCount(filtered.length),
+                icon: LucideIcons.listFilter,
+              ),
+              FilledButton.icon(
+                onPressed: () {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(l10n.wireframeNew)));
+                },
+                icon: const Icon(LucideIcons.plus, size: AppIconSizes.small),
+                label: Text(l10n.wireframeNew),
+              ),
+            ],
+          ),
           const SizedBox(height: AppSpacing.medium),
-          _WorkspaceSearchBar(
+          AdminWorkspaceSearchBar(
             search: search,
             hasQuery: term.isNotEmpty,
             onClear: search.clear,
@@ -115,10 +134,21 @@ final class AdminSectionWorkspace extends HookWidget {
           const SizedBox(height: AppSpacing.medium),
         ],
         if (isRecordKind && filtered.isEmpty)
-          _EmptyState(
-            section: section,
-            hasQuery: term.isNotEmpty,
-            onClear: search.clear,
+          AdminWorkspaceEmptyState(
+            icon: term.isNotEmpty ? LucideIcons.searchX : section.icon,
+            title: term.isNotEmpty
+                ? l10n.sectionNoResultsTitle
+                : l10n.sectionEmptyTitle,
+            subtitle: term.isNotEmpty
+                ? l10n.sectionNoResultsMessage
+                : l10n.sectionEmptyMessage,
+            action: term.isNotEmpty
+                ? TextButton.icon(
+                    onPressed: search.clear,
+                    icon: const Icon(LucideIcons.x, size: AppIconSizes.small),
+                    label: Text(l10n.sectionClearSearch),
+                  )
+                : null,
           )
         else
           AnimatedSwitcher(
@@ -132,13 +162,14 @@ final class AdminSectionWorkspace extends HookWidget {
           ),
         if (isRecordKind && filtered.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.medium),
-          _PaginationBar(
+          AdminPaginationBar(
             page: currentPage,
             pageCount: pageCount,
             pageSize: pageSize.value,
             from: start + 1,
             to: start + visible.length,
             total: filtered.length,
+            pageSizeOptions: _pageSizeOptions,
             onPageChanged: (value) => page.value = value,
             onPageSizeChanged: (value) {
               pageSize.value = value;
@@ -147,88 +178,6 @@ final class AdminSectionWorkspace extends HookWidget {
           ),
         ],
       ],
-    );
-  }
-}
-
-final class _WorkspaceHeader extends StatelessWidget {
-  const _WorkspaceHeader({required this.section, required this.total});
-
-  final AdminSubSection section;
-  final int total;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.localeKeys;
-
-    return AdminSurfaceCard(
-      padding: const EdgeInsets.all(AppSpacing.medium),
-      child: AdminSectionHeading(
-        title: section.title,
-        icon: section.icon,
-        trailing: Wrap(
-          spacing: AppSpacing.small,
-          runSpacing: AppSpacing.small,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            AdminStatusPill(
-              label: l10n.sectionRecordsCount(total),
-              icon: LucideIcons.listFilter,
-            ),
-            FilledButton.icon(
-              onPressed: () {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text(l10n.wireframeNew)));
-              },
-              icon: const Icon(LucideIcons.plus, size: AppIconSizes.small),
-              label: Text(l10n.wireframeNew),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-/// Standalone search field intentionally kept outside the header card so it
-/// reads as its own control instead of part of the section chrome.
-final class _WorkspaceSearchBar extends StatelessWidget {
-  const _WorkspaceSearchBar({
-    required this.search,
-    required this.hasQuery,
-    required this.onClear,
-  });
-
-  final TextEditingController search;
-  final bool hasQuery;
-  final VoidCallback onClear;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.localeKeys;
-
-    return Align(
-      alignment: AlignmentDirectional.centerStart,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 480),
-        child: SearchBarComponent(
-          controller: search,
-          hintText: l10n.wireframeSearch,
-          trailing: hasQuery
-              ? [
-                  IconButton(
-                    onPressed: onClear,
-                    tooltip: l10n.sectionClearSearch,
-                    icon: const Icon(
-                      LucideIcons.x,
-                      size: AppIconSizes.small,
-                    ),
-                  ),
-                ]
-              : null,
-        ),
-      ),
     );
   }
 }
@@ -1391,183 +1340,6 @@ final class _MapContent extends StatelessWidget {
             ),
           ],
         ],
-      ),
-    );
-  }
-}
-
-final class _PaginationBar extends StatelessWidget {
-  const _PaginationBar({
-    required this.page,
-    required this.pageCount,
-    required this.pageSize,
-    required this.from,
-    required this.to,
-    required this.total,
-    required this.onPageChanged,
-    required this.onPageSizeChanged,
-  });
-
-  final int page;
-  final int pageCount;
-  final int pageSize;
-  final int from;
-  final int to;
-  final int total;
-  final ValueChanged<int> onPageChanged;
-  final ValueChanged<int> onPageSizeChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.localeKeys;
-    final colorScheme = Theme.of(context).colorScheme;
-    final isRtl = Directionality.of(context) == TextDirection.rtl;
-    final textTheme = Theme.of(context).textTheme;
-
-    return AdminSurfaceCard(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.medium,
-        vertical: AppSpacing.small,
-      ),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          final compact = constraints.maxWidth < 560;
-          final veryCompact = constraints.maxWidth < 420;
-          final pageLabel = compact
-              ? '${page + 1}/$pageCount'
-              : l10n.paginationPageOf(page + 1, pageCount);
-          final iconButtonStyle = IconButton.styleFrom(
-            minimumSize: const Size(32, 32),
-            padding: EdgeInsets.zero,
-            visualDensity: VisualDensity.compact,
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-          );
-
-          final controls = Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              if (!veryCompact) ...[
-                Text(
-                  l10n.paginationPerPage,
-                  style: textTheme.labelSmall?.copyWith(
-                    color: colorScheme.onSurfaceVariant,
-                  ),
-                ),
-                const SizedBox(width: AppSpacing.xSmall),
-              ],
-              DropdownButtonHideUnderline(
-                child: DropdownButton<int>(
-                  value: pageSize,
-                  isDense: true,
-                  iconSize: AppIconSizes.small,
-                  style: textTheme.labelMedium,
-                  items: [
-                    for (final size in _pageSizeOptions)
-                      DropdownMenuItem(value: size, child: Text('$size')),
-                  ],
-                  onChanged: (value) {
-                    if (value != null) onPageSizeChanged(value);
-                  },
-                ),
-              ),
-              const SizedBox(width: AppSpacing.small),
-              Text(
-                pageLabel,
-                style: textTheme.labelSmall?.copyWith(
-                  color: colorScheme.onSurfaceVariant,
-                ),
-              ),
-              const SizedBox(width: AppSpacing.xSmall),
-              IconButton(
-                onPressed: page > 0 ? () => onPageChanged(page - 1) : null,
-                tooltip: l10n.paginationPrevious,
-                style: iconButtonStyle,
-                icon: Icon(
-                  isRtl ? LucideIcons.chevronRight : LucideIcons.chevronLeft,
-                  size: AppIconSizes.small,
-                ),
-              ),
-              IconButton(
-                onPressed: page < pageCount - 1
-                    ? () => onPageChanged(page + 1)
-                    : null,
-                tooltip: l10n.paginationNext,
-                style: iconButtonStyle,
-                icon: Icon(
-                  isRtl ? LucideIcons.chevronLeft : LucideIcons.chevronRight,
-                  size: AppIconSizes.small,
-                ),
-              ),
-            ],
-          );
-
-          final summary = Text(
-            l10n.paginationShowing(from, to, total),
-            style: textTheme.labelSmall?.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
-          );
-
-          if (compact) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                summary,
-                const SizedBox(height: AppSpacing.xSmall),
-                Align(
-                  alignment: AlignmentDirectional.centerEnd,
-                  child: controls,
-                ),
-              ],
-            );
-          }
-
-          return Row(
-            children: [
-              Expanded(child: summary),
-              const SizedBox(width: AppSpacing.small),
-              controls,
-            ],
-          );
-        },
-      ),
-    );
-  }
-}
-
-final class _EmptyState extends StatelessWidget {
-  const _EmptyState({
-    required this.section,
-    required this.hasQuery,
-    required this.onClear,
-  });
-
-  final AdminSubSection section;
-  final bool hasQuery;
-  final VoidCallback onClear;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.localeKeys;
-
-    return AdminSurfaceCard(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.large,
-        vertical: AppSpacing.xxLarge,
-      ),
-      child: EmptyStateWidget(
-        icon: hasQuery ? LucideIcons.searchX : section.icon,
-        title: hasQuery ? l10n.sectionNoResultsTitle : l10n.sectionEmptyTitle,
-        subtitle: hasQuery
-            ? l10n.sectionNoResultsMessage
-            : l10n.sectionEmptyMessage,
-        action: hasQuery
-            ? TextButton.icon(
-                onPressed: onClear,
-                icon: const Icon(LucideIcons.x, size: AppIconSizes.small),
-                label: Text(l10n.sectionClearSearch),
-              )
-            : null,
       ),
     );
   }

@@ -35,10 +35,15 @@ enum AdminWireframeKind {
 /// A screen planned inside an [AdminModule].
 final class AdminSubSection {
   const AdminSubSection({
+    required this.id,
     required this.title,
     required this.icon,
     required this.wireframe,
   });
+
+  /// Stable, locale-independent key used by the section registry to resolve
+  /// the backing endpoint, columns and availability.
+  final String id;
 
   final String title;
   final IconData icon;
