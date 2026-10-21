@@ -198,30 +198,6 @@ final class _WorkspaceToolbar extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.medium),
-          TextField(
-            controller: search,
-            textInputAction: TextInputAction.search,
-            decoration: InputDecoration(
-              hintText: l10n.wireframeSearch,
-              isDense: true,
-              prefixIcon: Icon(
-                LucideIcons.search,
-                size: AppIconSizes.small,
-                color: colorScheme.onSurfaceVariant,
-              ),
-              suffixIcon: hasQuery
-                  ? IconButton(
-                      onPressed: onClear,
-                      tooltip: l10n.sectionClearSearch,
-                      icon: const Icon(LucideIcons.x, size: AppIconSizes.small),
-                    )
-                  : null,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(AppRadii.medium),
-              ),
-            ),
-          ),
         ],
       ),
     );

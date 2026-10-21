@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
+import '../../../../core/widgets/buttons/text_button/text_button_component.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
 import '../../../main/navigation/admin_identity.dart';
 import '../../../main/navigation/admin_modules.dart';
@@ -236,9 +237,9 @@ final class _SecurityCard extends StatelessWidget {
             label: l10n.profileChangePassword,
             description: l10n.profileChangePasswordDescription,
             controlWidth: 170,
-            control: OutlinedButton(
+            control: TextButtonComponent(
               onPressed: () => _notify(context, l10n.profilePasswordNotReady),
-              child: Text(l10n.profileChangePassword),
+              label: l10n.profileChangePassword,
             ),
           ),
           Divider(

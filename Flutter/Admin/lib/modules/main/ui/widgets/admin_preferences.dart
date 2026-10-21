@@ -43,9 +43,6 @@ final class AdminSegmentedControl<T> extends StatelessWidget {
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(AppRadii.large),
-        border: Border.all(
-          color: colorScheme.outlineVariant.withValues(alpha: 0.6),
-        ),
       ),
       child: Row(
         children: [

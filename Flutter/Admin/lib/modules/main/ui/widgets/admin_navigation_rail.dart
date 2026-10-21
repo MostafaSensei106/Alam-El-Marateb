@@ -28,7 +28,7 @@ final class AdminNavigationRail extends HookWidget {
   static const double collapsedWidth = 100;
 
   /// Width of the rail with labels and the profile block.
-  static const double extendedWidth = 256;
+  static const double extendedWidth = 200;
 
   /// Branch index currently displayed by the shell.
   final int selectedIndex;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../../core/extensions/extensions.dart';
 import '../../navigation/admin_module.dart';
 import '../widgets/admin_navigation_rail.dart';
 
@@ -37,10 +36,6 @@ final class AdminShell extends StatelessWidget {
               selectedIndex: selectedIndex,
               onDestinationSelected: onDestinationSelected,
               onSelectModule: onSelectModule,
-            ),
-            VerticalDivider(
-              width: 1,
-              color: context.colorScheme.outlineVariant,
             ),
             Expanded(child: child),
           ],

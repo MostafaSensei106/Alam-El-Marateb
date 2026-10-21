@@ -110,18 +110,16 @@ class MainPage extends StatelessWidget {
           },
         ),
       ],
-      // A branch is mounted the first time it is opened, then kept alive so
-      // each page keeps its own scroll position and hub selection.
       lazy: true,
       chromeBuilder: (context, active, branchContent, switchBranch) {
         return AdminShell(
           selectedIndex: active,
           onDestinationSelected: (index) {
-            unawaited(HapticFeedback.lightImpact());
+            unawaited(HapticFeedback.vibrate());
             switchBranch(index);
           },
           onSelectModule: (module) {
-            unawaited(HapticFeedback.lightImpact());
+            unawaited(HapticFeedback.vibrate());
             switchBranch(module.index);
           },
           child: branchContent,

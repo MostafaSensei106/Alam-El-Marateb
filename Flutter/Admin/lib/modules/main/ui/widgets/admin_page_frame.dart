@@ -189,9 +189,6 @@ final class AdminSurfaceCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: color ?? colorScheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppRadii.xLarge),
-        border: Border.all(
-          color: colorScheme.outlineVariant.withValues(alpha: 0.55),
-        ),
       ),
       child: child,
     );
@@ -221,8 +218,8 @@ final class AdminSectionHeading extends StatelessWidget {
     final heading = Row(
       children: [
         if (icon != null) ...[
-          Icon(icon, size: AppIconSizes.small, color: colorScheme.primary),
-          const SizedBox(width: AppSpacing.small),
+          Icon(icon, size: AppIconSizes.medium, color: colorScheme.primary),
+          const SizedBox(width: AppSpacing.medium),
         ],
         Expanded(
           child: Column(
@@ -311,7 +308,6 @@ final class AdminStatusPill extends StatelessWidget {
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
         borderRadius: BorderRadius.circular(AppRadii.pill),
-        border: Border.all(color: color.withValues(alpha: 0.28)),
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
@@ -331,8 +327,6 @@ final class AdminStatusPill extends StatelessWidget {
                 Icon(icon, size: 13, color: color),
                 const SizedBox(width: AppSpacing.xSmall),
               ],
-              // Rows inside shrink-wrapped cells can hand down an unbounded
-              // width, where `Flexible` would be illegal.
               if (constraints.hasBoundedWidth) Flexible(child: text) else text,
             ],
           );

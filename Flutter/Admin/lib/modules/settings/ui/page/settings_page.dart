@@ -32,25 +32,10 @@ final class SettingsPage extends HookWidget {
     final modules = AdminModules.all(l10n);
     final settingsModule = modules[AdminModuleId.settings.index];
 
-    Widget saveButton() {
-      return FilledButton.icon(
-        onPressed: () {
-          ScaffoldMessenger.of(context)
-              .showSnackBar(SnackBar(content: Text(l10n.settingsSaved)));
-        },
-        icon: const Icon(LucideIcons.check, size: AppIconSizes.small),
-        label: Text(l10n.settingsSave),
-      );
-    }
-
     Widget preferenceTab(Widget card) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          card,
-          const SizedBox(height: AppSpacing.large),
-          Align(alignment: AlignmentDirectional.centerEnd, child: saveButton()),
-        ],
+        children: [card],
       );
     }
 

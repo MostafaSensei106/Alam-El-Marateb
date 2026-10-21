@@ -117,9 +117,6 @@ final class _SectionTabStrip extends StatelessWidget {
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppRadii.large),
-        border: Border.all(
-          color: colorScheme.outlineVariant.withValues(alpha: 0.6),
-        ),
       ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -173,11 +170,11 @@ final class _SectionTab extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(section.icon, size: AppIconSizes.small, color: foreground),
-              const SizedBox(width: AppSpacing.xSmall),
+              Icon(section.icon, size: AppIconSizes.medium, color: foreground),
+              const SizedBox(width: AppSpacing.small),
               Text(
                 section.title,
-                style: Theme.of(context).textTheme.labelMedium
+                style: Theme.of(context).textTheme.labelLarge
                     ?.copyWith(color: foreground),
               ),
             ],
