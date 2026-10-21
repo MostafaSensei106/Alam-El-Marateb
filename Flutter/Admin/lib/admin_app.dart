@@ -45,6 +45,7 @@ final class AdminApp extends StatelessWidget {
                 restorationScopeId: 'app',
                 localizationsDelegates: const [
                   ...AppLocalizations.localizationsDelegates,
+                  AppLocalizations.delegate,
                   SfGlobalLocalizations.delegate,
                 ],
                 supportedLocales: AppLocalizations.supportedLocales,
