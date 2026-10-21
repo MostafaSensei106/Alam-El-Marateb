@@ -5,6 +5,7 @@ import '../../../../core/extensions/extensions.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
 import '../../../../core/widgets/display/empty_state_widget.dart';
 import '../../../../core/widgets/inputs/search_bar/search_bar_component.dart';
+import '../../navigation/admin_section_catalog.dart';
 import 'admin_page_frame.dart';
 
 /// Shared chrome for every full-width admin workspace.
@@ -260,5 +261,38 @@ final class AdminWorkspaceEmptyState extends StatelessWidget {
         action: action,
       ),
     );
+  }
+}
+
+/// Readiness pill for the active section.
+///
+/// The workspace is UI-only, so the pill states plainly whether the screen is
+/// backed by a live endpoint, still planned, or purely local. It never triggers
+/// a request.
+final class AdminAvailabilityPill extends StatelessWidget {
+  const AdminAvailabilityPill({required this.availability, super.key});
+
+  final AdminSectionAvailability availability;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.localeKeys;
+
+    return switch (availability) {
+      AdminSectionAvailability.live => AdminStatusPill(
+        label: l10n.availabilityLive,
+        tone: AdminPillTone.success,
+        icon: LucideIcons.check,
+      ),
+      AdminSectionAvailability.planned => AdminStatusPill(
+        label: l10n.availabilityPlanned,
+        tone: AdminPillTone.warning,
+        icon: LucideIcons.clock,
+      ),
+      AdminSectionAvailability.local => AdminStatusPill(
+        label: l10n.availabilityLocal,
+        icon: LucideIcons.laptop,
+      ),
+    };
   }
 }

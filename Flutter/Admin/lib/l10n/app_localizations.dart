@@ -3894,6 +3894,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Time'**
   String get dashboardTime;
+
+  /// No description provided for @identityFeature4.
+  ///
+  /// In en, this message translates to:
+  /// **'Roles and the permissions matrix'**
+  String get identityFeature4;
+
+  /// No description provided for @availabilityLive.
+  ///
+  /// In en, this message translates to:
+  /// **'Live data'**
+  String get availabilityLive;
+
+  /// No description provided for @availabilityPlanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Planned'**
+  String get availabilityPlanned;
+
+  /// No description provided for @availabilityLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'Local'**
+  String get availabilityLocal;
+
+  /// No description provided for @permissionsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Permissions matrix'**
+  String get permissionsTitle;
+
+  /// No description provided for @permissionsHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a role, then grant each module its capabilities. Changes are saved on this device only.'**
+  String get permissionsHint;
+
+  /// No description provided for @permissionsReset.
+  ///
+  /// In en, this message translates to:
+  /// **'Restore defaults'**
+  String get permissionsReset;
+
+  /// No description provided for @permissionsModuleColumn.
+  ///
+  /// In en, this message translates to:
+  /// **'Module'**
+  String get permissionsModuleColumn;
+
+  /// No description provided for @permissionsActionView.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get permissionsActionView;
+
+  /// No description provided for @permissionsActionCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Create'**
+  String get permissionsActionCreate;
+
+  /// No description provided for @permissionsActionEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get permissionsActionEdit;
+
+  /// No description provided for @permissionsActionDelete.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete'**
+  String get permissionsActionDelete;
+
+  /// No description provided for @permissionsRoleAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'Administrator'**
+  String get permissionsRoleAdmin;
+
+  /// No description provided for @permissionsRoleManager.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager'**
+  String get permissionsRoleManager;
+
+  /// No description provided for @permissionsRoleCashier.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier'**
+  String get permissionsRoleCashier;
+
+  /// No description provided for @permissionsRoleWarehouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse'**
+  String get permissionsRoleWarehouse;
 }
 
 class _AppLocalizationsDelegate

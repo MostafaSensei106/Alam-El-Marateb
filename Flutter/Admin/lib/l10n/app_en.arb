@@ -911,5 +911,69 @@
   "dashboardTime": "Time",
   "@dashboardTime": {
     "type": "String"
+  },
+  "identityFeature4": "Roles and the permissions matrix",
+  "@identityFeature4": {
+    "type": "String"
+  },
+  "availabilityLive": "Live data",
+  "@availabilityLive": {
+    "type": "String"
+  },
+  "availabilityPlanned": "Planned",
+  "@availabilityPlanned": {
+    "type": "String"
+  },
+  "availabilityLocal": "Local",
+  "@availabilityLocal": {
+    "type": "String"
+  },
+  "permissionsTitle": "Permissions matrix",
+  "@permissionsTitle": {
+    "type": "String"
+  },
+  "permissionsHint": "Pick a role, then grant each module its capabilities. Changes are saved on this device only.",
+  "@permissionsHint": {
+    "type": "String"
+  },
+  "permissionsReset": "Restore defaults",
+  "@permissionsReset": {
+    "type": "String"
+  },
+  "permissionsModuleColumn": "Module",
+  "@permissionsModuleColumn": {
+    "type": "String"
+  },
+  "permissionsActionView": "View",
+  "@permissionsActionView": {
+    "type": "String"
+  },
+  "permissionsActionCreate": "Create",
+  "@permissionsActionCreate": {
+    "type": "String"
+  },
+  "permissionsActionEdit": "Edit",
+  "@permissionsActionEdit": {
+    "type": "String"
+  },
+  "permissionsActionDelete": "Delete",
+  "@permissionsActionDelete": {
+    "type": "String"
+  },
+  "permissionsRoleAdmin": "Administrator",
+  "@permissionsRoleAdmin": {
+    "type": "String"
+  },
+  "permissionsRoleManager": "Manager",
+  "@permissionsRoleManager": {
+    "type": "String"
+  },
+  "permissionsRoleCashier": "Cashier",
+  "@permissionsRoleCashier": {
+    "type": "String"
+  },
+  "permissionsRoleWarehouse": "Warehouse",
+  "@permissionsRoleWarehouse": {
+    "type": "String"
   }
 }

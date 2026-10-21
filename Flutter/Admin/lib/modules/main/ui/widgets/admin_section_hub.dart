@@ -13,9 +13,17 @@ import 'admin_section_workspace.dart';
 /// The page renders the localized module header, a full-width tab strip for the
 /// planned screens, and one dense workspace per tab.
 final class AdminModuleHubPage extends StatelessWidget {
-  const AdminModuleHubPage({required this.moduleId, super.key});
+  const AdminModuleHubPage({
+    required this.moduleId,
+    super.key,
+    this.sectionBuilder,
+  });
 
   final AdminModuleId moduleId;
+
+  /// Optional override for tabs that need bespoke content instead of the
+  /// generic section workspace.
+  final AdminSectionBuilder? sectionBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +39,7 @@ final class AdminModuleHubPage extends StatelessWidget {
           badge: l10n.adminWorkspace,
         ),
         const SizedBox(height: AppSpacing.large),
-        AdminSectionHub(module: module),
+        AdminSectionHub(module: module, sectionBuilder: sectionBuilder),
       ],
     );
   }

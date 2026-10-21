@@ -712,5 +712,69 @@
   "dashboardTime": "الوقت",
   "@dashboardTime": {
     "type": "String"
+  },
+  "identityFeature4": "الأدوار ومصفوفة الصلاحيات",
+  "@identityFeature4": {
+    "type": "String"
+  },
+  "availabilityLive": "بيانات مباشرة",
+  "@availabilityLive": {
+    "type": "String"
+  },
+  "availabilityPlanned": "قيد التطوير",
+  "@availabilityPlanned": {
+    "type": "String"
+  },
+  "availabilityLocal": "محلي",
+  "@availabilityLocal": {
+    "type": "String"
+  },
+  "permissionsTitle": "مصفوفة الصلاحيات",
+  "@permissionsTitle": {
+    "type": "String"
+  },
+  "permissionsHint": "اختر دوراً ثم امنح كل وحدة صلاحياتها. تُحفظ التغييرات على هذا الجهاز فقط.",
+  "@permissionsHint": {
+    "type": "String"
+  },
+  "permissionsReset": "استعادة الافتراضي",
+  "@permissionsReset": {
+    "type": "String"
+  },
+  "permissionsModuleColumn": "الوحدة",
+  "@permissionsModuleColumn": {
+    "type": "String"
+  },
+  "permissionsActionView": "عرض",
+  "@permissionsActionView": {
+    "type": "String"
+  },
+  "permissionsActionCreate": "إنشاء",
+  "@permissionsActionCreate": {
+    "type": "String"
+  },
+  "permissionsActionEdit": "تعديل",
+  "@permissionsActionEdit": {
+    "type": "String"
+  },
+  "permissionsActionDelete": "حذف",
+  "@permissionsActionDelete": {
+    "type": "String"
+  },
+  "permissionsRoleAdmin": "مدير النظام",
+  "@permissionsRoleAdmin": {
+    "type": "String"
+  },
+  "permissionsRoleManager": "مدير",
+  "@permissionsRoleManager": {
+    "type": "String"
+  },
+  "permissionsRoleCashier": "كاشير",
+  "@permissionsRoleCashier": {
+    "type": "String"
+  },
+  "permissionsRoleWarehouse": "المخزن",
+  "@permissionsRoleWarehouse": {
+    "type": "String"
   }
 }

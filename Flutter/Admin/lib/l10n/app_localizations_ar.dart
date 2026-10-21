@@ -2013,4 +2013,53 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get dashboardTime => 'الوقت';
+
+  @override
+  String get identityFeature4 => 'الأدوار ومصفوفة الصلاحيات';
+
+  @override
+  String get availabilityLive => 'بيانات مباشرة';
+
+  @override
+  String get availabilityPlanned => 'قيد التطوير';
+
+  @override
+  String get availabilityLocal => 'محلي';
+
+  @override
+  String get permissionsTitle => 'مصفوفة الصلاحيات';
+
+  @override
+  String get permissionsHint =>
+      'اختر دوراً ثم امنح كل وحدة صلاحياتها. تُحفظ التغييرات على هذا الجهاز فقط.';
+
+  @override
+  String get permissionsReset => 'استعادة الافتراضي';
+
+  @override
+  String get permissionsModuleColumn => 'الوحدة';
+
+  @override
+  String get permissionsActionView => 'عرض';
+
+  @override
+  String get permissionsActionCreate => 'إنشاء';
+
+  @override
+  String get permissionsActionEdit => 'تعديل';
+
+  @override
+  String get permissionsActionDelete => 'حذف';
+
+  @override
+  String get permissionsRoleAdmin => 'مدير النظام';
+
+  @override
+  String get permissionsRoleManager => 'مدير';
+
+  @override
+  String get permissionsRoleCashier => 'كاشير';
+
+  @override
+  String get permissionsRoleWarehouse => 'المخزن';
 }

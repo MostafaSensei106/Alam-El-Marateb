@@ -6,16 +6,14 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
-import '../../../../core/widgets/display/empty_state_widget.dart';
-import '../../../../core/widgets/inputs/search_bar/search_bar_component.dart';
 import '../../navigation/admin_module.dart';
+import '../../navigation/admin_section_catalog.dart';
 import 'admin_charts.dart';
 import 'admin_data_grid.dart';
 import 'admin_page_frame.dart';
 import 'admin_schedule_calendar.dart';
 import 'admin_workspace_shared.dart';
 
-const _pageSizeOptions = <int>[6, 12, 24];
 const _defaultPageSize = 6;
 
 /// Full-width, interactive workspace for a single module sub-section.
@@ -34,6 +32,7 @@ final class AdminSectionWorkspace extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.localeKeys;
     final search = useTextEditingController();
     final query = useValueListenable(search);
     final page = useState(0);
@@ -41,6 +40,7 @@ final class AdminSectionWorkspace extends HookWidget {
     final selectedIndex = useState(0);
 
     final kind = section.wireframe;
+    final availability = AdminSectionCatalog.availabilityOf(section.id);
     final isRecordKind =
         kind == AdminWireframeKind.table ||
         kind == AdminWireframeKind.list ||
@@ -110,16 +110,20 @@ final class AdminSectionWorkspace extends HookWidget {
             title: section.title,
             icon: section.icon,
             pills: [
+              AdminAvailabilityPill(availability: availability),
               AdminStatusPill(
                 label: l10n.sectionRecordsCount(filtered.length),
                 icon: LucideIcons.listFilter,
               ),
               FilledButton.icon(
-                onPressed: () {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text(l10n.wireframeNew)));
-                },
+                onPressed:
+                    availability == AdminSectionAvailability.planned
+                    ? null
+                    : () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(l10n.wireframeNew)),
+                        );
+                      },
                 icon: const Icon(LucideIcons.plus, size: AppIconSizes.small),
                 label: Text(l10n.wireframeNew),
               ),
@@ -169,7 +173,6 @@ final class AdminSectionWorkspace extends HookWidget {
             from: start + 1,
             to: start + visible.length,
             total: filtered.length,
-            pageSizeOptions: _pageSizeOptions,
             onPageChanged: (value) => page.value = value,
             onPageSizeChanged: (value) {
               pageSize.value = value;

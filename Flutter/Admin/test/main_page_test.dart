@@ -1,8 +1,10 @@
 import 'package:alam_el_marateb_admin/l10n/app_localizations.dart';
+import 'package:alam_el_marateb_admin/modules/identity/ui/widgets/permissions_matrix_panel.dart';
 import 'package:alam_el_marateb_admin/modules/main/main_page.dart';
 import 'package:alam_el_marateb_admin/modules/main/navigation/admin_modules.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 void main() {
   Future<void> pumpMainPage(
@@ -123,5 +125,70 @@ void main() {
     expect(find.byType(Dialog), findsOneWidget);
     expect(find.text('My profile'), findsOneWidget);
     expect(find.text('Sign out'), findsOneWidget);
+  });
+
+  testWidgets('identity permissions tab renders the local matrix', (
+    tester,
+  ) async {
+    await pumpMainPage(tester, surfaceSize: const Size(411, 900));
+
+    final rail = find.byType(NavigationRail);
+    final identity = find.descendant(of: rail, matching: find.text('Identity'));
+
+    await tester.ensureVisible(identity);
+    await tester.pumpAndSettle();
+    await tester.tap(identity);
+    await tester.pumpAndSettle();
+
+    final permissionsTab = find.text('Roles and the permissions matrix');
+    await tester.ensureVisible(permissionsTab);
+    await tester.pumpAndSettle();
+    await tester.tap(permissionsTab);
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    expect(find.text('Permissions matrix'), findsOneWidget);
+
+    final matrix = find.byType(PermissionsMatrixPanel);
+    final checks = find.descendant(
+      of: matrix,
+      matching: find.byIcon(LucideIcons.check),
+    );
+    final grantedBefore = checks.evaluate().length;
+
+    final hrDelete = find.byKey(const ValueKey('hr.delete'));
+    await tester.ensureVisible(hrDelete);
+    await tester.pumpAndSettle();
+    await tester.tap(hrDelete);
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    expect(checks.evaluate().length, grantedBefore + 1);
+  });
+
+  testWidgets('planned sections show the pill and disable the create action', (
+    tester,
+  ) async {
+    await pumpMainPage(tester, surfaceSize: const Size(411, 900));
+
+    final rail = find.byType(NavigationRail);
+    final crm = find.descendant(of: rail, matching: find.text('CRM'));
+
+    await tester.ensureVisible(crm);
+    await tester.pumpAndSettle();
+    await tester.tap(crm);
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    expect(find.text('Warranty registry'), findsWidgets);
+    expect(find.text('Planned'), findsOneWidget);
+
+    final createButton = find.ancestor(
+      of: find.text('New'),
+      matching: find.byWidgetPredicate((widget) => widget is FilledButton),
+    );
+
+    expect(createButton, findsOneWidget);
+    expect(tester.widget<FilledButton>(createButton).onPressed, isNull);
   });
 }

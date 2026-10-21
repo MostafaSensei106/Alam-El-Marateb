@@ -2037,4 +2037,53 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get dashboardTime => 'Time';
+
+  @override
+  String get identityFeature4 => 'Roles and the permissions matrix';
+
+  @override
+  String get availabilityLive => 'Live data';
+
+  @override
+  String get availabilityPlanned => 'Planned';
+
+  @override
+  String get availabilityLocal => 'Local';
+
+  @override
+  String get permissionsTitle => 'Permissions matrix';
+
+  @override
+  String get permissionsHint =>
+      'Pick a role, then grant each module its capabilities. Changes are saved on this device only.';
+
+  @override
+  String get permissionsReset => 'Restore defaults';
+
+  @override
+  String get permissionsModuleColumn => 'Module';
+
+  @override
+  String get permissionsActionView => 'View';
+
+  @override
+  String get permissionsActionCreate => 'Create';
+
+  @override
+  String get permissionsActionEdit => 'Edit';
+
+  @override
+  String get permissionsActionDelete => 'Delete';
+
+  @override
+  String get permissionsRoleAdmin => 'Administrator';
+
+  @override
+  String get permissionsRoleManager => 'Manager';
+
+  @override
+  String get permissionsRoleCashier => 'Cashier';
+
+  @override
+  String get permissionsRoleWarehouse => 'Warehouse';
 }
