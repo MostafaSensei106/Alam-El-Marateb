@@ -18,41 +18,38 @@ final class AdminApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocSignalProvider(
-      providers: const [],
-      child: ToastificationWrapper(
-        child: MultiBlocSignalProvider(
-          providers: [
-            BlocSignalProvider(create: (_) => getIt<LocalizationCubit>()),
-            BlocSignalProvider(create: (_) => getIt<NetworkCubit>()),
-            BlocSignalProvider(create: (_) => getIt<ThemeCubit>()),
-          ],
-          child: Builder(
-            builder: (context) {
-              final locale = context.select(
-                (LocalizationCubit cubit) => cubit.state.value.langCode,
-              );
-              final themeMode = context.select(
-                (ThemeCubit cubit) => cubit.state.value.themeMode,
-              );
-              return MaterialApp.router(
-                title: AppMetadata.name,
-                theme: AppTheme.light,
-                darkTheme: AppTheme.dark,
-                themeMode: themeMode,
-                locale: Locale(locale),
-                scrollBehavior: const CupertinoScrollBehavior(),
-                restorationScopeId: 'app',
-                localizationsDelegates: const [
-                  ...AppLocalizations.localizationsDelegates,
-                  AppLocalizations.delegate,
-                  SfGlobalLocalizations.delegate,
-                ],
-                supportedLocales: AppLocalizations.supportedLocales,
-                routerConfig: AppRouter.config,
-              );
-            },
-          ),
+    return ToastificationWrapper(
+      child: MultiBlocSignalProvider(
+        providers: [
+          BlocSignalProvider(create: (_) => getIt<LocalizationCubit>()),
+          BlocSignalProvider(create: (_) => getIt<NetworkCubit>()),
+          BlocSignalProvider(create: (_) => getIt<ThemeCubit>()),
+        ],
+        child: Builder(
+          builder: (context) {
+            final locale = context.select(
+              (LocalizationCubit cubit) => cubit.state.value.langCode,
+            );
+            final themeMode = context.select(
+              (ThemeCubit cubit) => cubit.state.value.themeMode,
+            );
+            return MaterialApp.router(
+              title: AppMetadata.name,
+              theme: AppTheme.light,
+              darkTheme: AppTheme.dark,
+              themeMode: themeMode,
+              locale: Locale(locale),
+              scrollBehavior: const CupertinoScrollBehavior(),
+              restorationScopeId: 'app',
+              localizationsDelegates: const [
+                ...AppLocalizations.localizationsDelegates,
+                AppLocalizations.delegate,
+                SfGlobalLocalizations.delegate,
+              ],
+              supportedLocales: AppLocalizations.supportedLocales,
+              routerConfig: AppRouter.config,
+            );
+          },
         ),
       ),
     );
