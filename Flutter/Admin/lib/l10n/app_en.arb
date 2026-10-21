@@ -2406,6 +2406,10 @@
   "@opsTaskCreated": {
     "type": "String"
   },
+  "opsTitleRequired": "Add a title for the task.",
+  "@opsTitleRequired": {
+    "type": "String"
+  },
   "opsBranchManager": "Manager",
   "@opsBranchManager": {
     "type": "String"

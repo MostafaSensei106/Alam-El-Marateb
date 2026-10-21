@@ -3125,6 +3125,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get opsTaskCreated => 'تم إنشاء المهمة.';
 
   @override
+  String get opsTitleRequired => 'أضف عنوانًا للمهمة.';
+
+  @override
   String get opsBranchManager => 'المدير';
 
   @override

@@ -14,7 +14,6 @@ import '../hr/ui/page/hr_page.dart';
 import '../identity/ui/page/identity_page.dart';
 import '../inventory/ui/page/inventory_page.dart';
 import '../marketing/ui/page/marketing_page.dart';
-import '../operations/ui/page/operations_page.dart';
 import '../profile/ui/page/profile_page.dart';
 import '../purchasing/ui/page/purchasing_page.dart';
 import '../sales/ui/page/sales_page.dart';

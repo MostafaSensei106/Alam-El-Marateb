@@ -6031,6 +6031,12 @@ abstract class AppLocalizations {
   /// **'Task created.'**
   String get opsTaskCreated;
 
+  /// No description provided for @opsTitleRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a title for the task.'**
+  String get opsTitleRequired;
+
   /// No description provided for @opsBranchManager.
   ///
   /// In en, this message translates to:

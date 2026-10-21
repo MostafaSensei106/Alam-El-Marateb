@@ -1642,6 +1642,7 @@
   "opsNoAssignees": "اختر مسندًا إليه واحدًا على الأقل.",
   "opsNoBranches": "اختر فرعًا واحدًا على الأقل.",
   "opsTaskCreated": "تم إنشاء المهمة.",
+  "opsTitleRequired": "أضف عنوانًا للمهمة.",
   "opsBranchManager": "المدير",
   "opsBranchOpenTasks": "{count} مفتوحة",
   "opsBranchOverdueTasks": "{count} متأخرة",

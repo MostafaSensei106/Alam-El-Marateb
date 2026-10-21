@@ -3153,6 +3153,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get opsTaskCreated => 'Task created.';
 
   @override
+  String get opsTitleRequired => 'Add a title for the task.';
+
+  @override
   String get opsBranchManager => 'Manager';
 
   @override
