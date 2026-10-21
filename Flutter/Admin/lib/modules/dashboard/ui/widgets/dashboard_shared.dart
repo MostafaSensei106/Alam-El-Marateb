@@ -759,9 +759,6 @@ final class DashboardFact extends StatelessWidget {
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppRadii.large),
-        border: Border.all(
-          color: colorScheme.outlineVariant.withValues(alpha: 0.5),
-        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

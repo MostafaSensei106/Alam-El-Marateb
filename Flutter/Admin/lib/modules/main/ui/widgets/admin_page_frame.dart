@@ -3,6 +3,7 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
+import '../../../../core/widgets/display/card/card_component.dart';
 
 /// Vertically scrollable page body with a centered, width-limited column.
 ///
@@ -184,12 +185,9 @@ final class AdminSurfaceCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    return Container(
+    return CardComponent(
       padding: padding,
-      decoration: BoxDecoration(
-        color: color ?? colorScheme.surfaceContainerLow,
-        borderRadius: BorderRadius.circular(AppRadii.xLarge),
-      ),
+      color: color ?? colorScheme.surfaceContainerLow,
       child: child,
     );
   }
@@ -353,9 +351,6 @@ final class AdminPrototypeBanner extends StatelessWidget {
       decoration: BoxDecoration(
         color: colorScheme.secondaryContainer.withValues(alpha: 0.55),
         borderRadius: BorderRadius.circular(AppRadii.large),
-        border: Border.all(
-          color: colorScheme.secondary.withValues(alpha: 0.25),
-        ),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -431,10 +426,6 @@ final class AdminAvatar extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [colorScheme.primary, colorScheme.tertiary],
-        ),
-        border: Border.all(
-          color: colorScheme.surface.withValues(alpha: 0.7),
-          width: 1.5,
         ),
       ),
       child: Text(

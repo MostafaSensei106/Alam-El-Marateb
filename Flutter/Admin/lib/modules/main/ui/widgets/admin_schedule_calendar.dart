@@ -86,11 +86,8 @@ final class AdminScheduleCalendar extends StatelessWidget {
           return Container(
             margin: const EdgeInsets.all(2),
             decoration: BoxDecoration(
-              color: isToday ? scheme.primary.withValues(alpha: 0.1) : null,
+              color: isToday ? scheme.primary.withValues(alpha: 0.14) : null,
               borderRadius: BorderRadius.circular(AppRadii.small),
-              border: isToday
-                  ? Border.all(color: scheme.primary.withValues(alpha: 0.45))
-                  : null,
             ),
             child: Center(
               child: Column(

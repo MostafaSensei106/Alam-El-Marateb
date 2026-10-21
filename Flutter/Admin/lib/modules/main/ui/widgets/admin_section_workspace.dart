@@ -6,6 +6,8 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
+import '../../../../core/widgets/display/empty_state_widget.dart';
+import '../../../../core/widgets/inputs/search_bar/search_bar_component.dart';
 import '../../navigation/admin_module.dart';
 import 'admin_charts.dart';
 import 'admin_data_grid.dart';
@@ -103,10 +105,10 @@ final class AdminSectionWorkspace extends HookWidget {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         if (isRecordKind) ...[
-          _WorkspaceToolbar(
-            section: section,
+          _WorkspaceHeader(section: section, total: filtered.length),
+          const SizedBox(height: AppSpacing.medium),
+          _WorkspaceSearchBar(
             search: search,
-            total: filtered.length,
             hasQuery: term.isNotEmpty,
             onClear: search.clear,
           ),
@@ -149,56 +151,83 @@ final class AdminSectionWorkspace extends HookWidget {
   }
 }
 
-final class _WorkspaceToolbar extends StatelessWidget {
-  const _WorkspaceToolbar({
-    required this.section,
+final class _WorkspaceHeader extends StatelessWidget {
+  const _WorkspaceHeader({required this.section, required this.total});
+
+  final AdminSubSection section;
+  final int total;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.localeKeys;
+
+    return AdminSurfaceCard(
+      padding: const EdgeInsets.all(AppSpacing.medium),
+      child: AdminSectionHeading(
+        title: section.title,
+        icon: section.icon,
+        trailing: Wrap(
+          spacing: AppSpacing.small,
+          runSpacing: AppSpacing.small,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: [
+            AdminStatusPill(
+              label: l10n.sectionRecordsCount(total),
+              icon: LucideIcons.listFilter,
+            ),
+            FilledButton.icon(
+              onPressed: () {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text(l10n.wireframeNew)));
+              },
+              icon: const Icon(LucideIcons.plus, size: AppIconSizes.small),
+              label: Text(l10n.wireframeNew),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Standalone search field intentionally kept outside the header card so it
+/// reads as its own control instead of part of the section chrome.
+final class _WorkspaceSearchBar extends StatelessWidget {
+  const _WorkspaceSearchBar({
     required this.search,
-    required this.total,
     required this.hasQuery,
     required this.onClear,
   });
 
-  final AdminSubSection section;
   final TextEditingController search;
-  final int total;
   final bool hasQuery;
   final VoidCallback onClear;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.localeKeys;
-    final colorScheme = Theme.of(context).colorScheme;
 
-    return AdminSurfaceCard(
-      padding: const EdgeInsets.all(AppSpacing.medium),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          AdminSectionHeading(
-            title: section.title,
-            icon: section.icon,
-            trailing: Wrap(
-              spacing: AppSpacing.small,
-              runSpacing: AppSpacing.small,
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                AdminStatusPill(
-                  label: l10n.sectionRecordsCount(total),
-                  icon: LucideIcons.listFilter,
-                ),
-                FilledButton.icon(
-                  onPressed: () {
-                    ScaffoldMessenger.of(
-                      context,
-                    ).showSnackBar(SnackBar(content: Text(l10n.wireframeNew)));
-                  },
-                  icon: const Icon(LucideIcons.plus, size: AppIconSizes.small),
-                  label: Text(l10n.wireframeNew),
-                ),
-              ],
-            ),
-          ),
-        ],
+    return Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(maxWidth: 480),
+        child: SearchBarComponent(
+          controller: search,
+          hintText: l10n.wireframeSearch,
+          trailing: hasQuery
+              ? [
+                  IconButton(
+                    onPressed: onClear,
+                    tooltip: l10n.sectionClearSearch,
+                    icon: const Icon(
+                      LucideIcons.x,
+                      size: AppIconSizes.small,
+                    ),
+                  ),
+                ]
+              : null,
+        ),
       ),
     );
   }
@@ -423,9 +452,6 @@ final class _BoardCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(AppRadii.medium),
-        border: Border.all(
-          color: colorScheme.outlineVariant.withValues(alpha: 0.45),
-        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -702,8 +728,9 @@ final class _TimelineRow extends StatelessWidget {
                 height: 10,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: done ? color : Colors.transparent,
-                  border: Border.all(color: color),
+                  color: done
+                      ? color
+                      : color.withValues(alpha: 0.35),
                 ),
               ),
               if (!last)
@@ -1522,52 +1549,25 @@ final class _EmptyState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.localeKeys;
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
 
     return AdminSurfaceCard(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.large,
         vertical: AppSpacing.xxLarge,
       ),
-      child: Column(
-        children: [
-          Container(
-            width: 56,
-            height: 56,
-            decoration: BoxDecoration(
-              color: colorScheme.surfaceContainerHighest,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(
-              hasQuery ? LucideIcons.searchX : section.icon,
-              size: AppIconSizes.medium,
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-          const SizedBox(height: AppSpacing.medium),
-          Text(
-            hasQuery ? l10n.sectionNoResultsTitle : l10n.sectionEmptyTitle,
-            textAlign: TextAlign.center,
-            style: textTheme.titleSmall,
-          ),
-          const SizedBox(height: AppSpacing.xSmall),
-          Text(
-            hasQuery ? l10n.sectionNoResultsMessage : l10n.sectionEmptyMessage,
-            textAlign: TextAlign.center,
-            style: textTheme.bodySmall?.copyWith(
-              color: colorScheme.onSurfaceVariant,
-            ),
-          ),
-          if (hasQuery) ...[
-            const SizedBox(height: AppSpacing.medium),
-            TextButton.icon(
-              onPressed: onClear,
-              icon: const Icon(LucideIcons.x, size: AppIconSizes.small),
-              label: Text(l10n.sectionClearSearch),
-            ),
-          ],
-        ],
+      child: EmptyStateWidget(
+        icon: hasQuery ? LucideIcons.searchX : section.icon,
+        title: hasQuery ? l10n.sectionNoResultsTitle : l10n.sectionEmptyTitle,
+        subtitle: hasQuery
+            ? l10n.sectionNoResultsMessage
+            : l10n.sectionEmptyMessage,
+        action: hasQuery
+            ? TextButton.icon(
+                onPressed: onClear,
+                icon: const Icon(LucideIcons.x, size: AppIconSizes.small),
+                label: Text(l10n.sectionClearSearch),
+              )
+            : null,
       ),
     );
   }

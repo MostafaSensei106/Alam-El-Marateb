@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../constants/app_config.dart';
-import '../../../di/di.dart';
-import '../../../services/theme/theme_service.dart';
 
 final class SearchBarComponent extends StatelessWidget {
   const SearchBarComponent({
@@ -24,7 +22,7 @@ final class SearchBarComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = getIt<ThemeService>().get(context);
+    final colorScheme = Theme.of(context).colorScheme;
 
     return SearchBar(
       controller: controller,
