@@ -1128,5 +1128,441 @@
   "adminFilterAll": "الكل",
   "@adminFilterAll": {
     "type": "String"
-  }
+  },
+  "inventoryTabWarehouses": "المخازن",
+  "@inventoryTabWarehouses": {
+    "type": "String"
+  },
+  "inventoryTabStocks": "أرصدة المخزون",
+  "@inventoryTabStocks": {
+    "type": "String"
+  },
+  "inventoryTabTransfers": "التحويلات",
+  "@inventoryTabTransfers": {
+    "type": "String"
+  },
+  "inventoryTabAudits": "جرد المخزون",
+  "@inventoryTabAudits": {
+    "type": "String"
+  },
+  "inventoryTabBatches": "الدفعات والصلاحية",
+  "@inventoryTabBatches": {
+    "type": "String"
+  },
+  "inventorySearchWarehouses": "ابحث عن مخزن أو مسؤول",
+  "@inventorySearchWarehouses": {
+    "type": "String"
+  },
+  "inventorySearchStocks": "ابحث عن منتج أو رمز أو مخزن",
+  "@inventorySearchStocks": {
+    "type": "String"
+  },
+  "inventorySearchTransfers": "ابحث عن التحويلات",
+  "@inventorySearchTransfers": {
+    "type": "String"
+  },
+  "inventorySearchAudits": "ابحث عن الجرد أو المعدّين",
+  "@inventorySearchAudits": {
+    "type": "String"
+  },
+  "inventorySearchBatches": "ابحث عن دفعة أو منتج",
+  "@inventorySearchBatches": {
+    "type": "String"
+  },
+  "inventoryMetricWarehouses": "المخازن",
+  "@inventoryMetricWarehouses": {
+    "type": "String"
+  },
+  "inventoryMetricProducts": "المنتجات",
+  "@inventoryMetricProducts": {
+    "type": "String"
+  },
+  "inventoryMetricUnitsOnHand": "الوحدات المتاحة",
+  "@inventoryMetricUnitsOnHand": {
+    "type": "String"
+  },
+  "inventoryMetricCapacityUsed": "السعة المستخدمة",
+  "@inventoryMetricCapacityUsed": {
+    "type": "String"
+  },
+  "inventoryMetricStockValue": "قيمة المخزون",
+  "@inventoryMetricStockValue": {
+    "type": "String"
+  },
+  "inventoryMetricSkus": "أصناف",
+  "@inventoryMetricSkus": {
+    "type": "String"
+  },
+  "inventoryMetricLowStock": "مخزون منخفض",
+  "@inventoryMetricLowStock": {
+    "type": "String"
+  },
+  "inventoryMetricOutOfStock": "نفد المخزون",
+  "@inventoryMetricOutOfStock": {
+    "type": "String"
+  },
+  "inventoryMetricReorderValue": "قيمة إعادة الطلب",
+  "@inventoryMetricReorderValue": {
+    "type": "String"
+  },
+  "inventoryMetricPendingTransfers": "تحويلات معلقة",
+  "@inventoryMetricPendingTransfers": {
+    "type": "String"
+  },
+  "inventoryMetricUnitsInTransit": "وحدات في الطريق",
+  "@inventoryMetricUnitsInTransit": {
+    "type": "String"
+  },
+  "inventoryMetricReceivedTransfers": "تحويلات مستلمة",
+  "@inventoryMetricReceivedTransfers": {
+    "type": "String"
+  },
+  "inventoryMetricLastTransfer": "آخر تحويل",
+  "@inventoryMetricLastTransfer": {
+    "type": "String"
+  },
+  "inventoryMetricOpenAudits": "جرد مفتوح",
+  "@inventoryMetricOpenAudits": {
+    "type": "String"
+  },
+  "inventoryMetricVarianceUnits": "صافي الفرق",
+  "@inventoryMetricVarianceUnits": {
+    "type": "String"
+  },
+  "inventoryMetricClosedAudits": "جرد مغلق",
+  "@inventoryMetricClosedAudits": {
+    "type": "String"
+  },
+  "inventoryMetricNextAudit": "الجرد القادم",
+  "@inventoryMetricNextAudit": {
+    "type": "String"
+  },
+  "inventoryMetricActiveBatches": "دفعات نشطة",
+  "@inventoryMetricActiveBatches": {
+    "type": "String"
+  },
+  "inventoryMetricExpiringSoon": "قرب الانتهاء",
+  "@inventoryMetricExpiringSoon": {
+    "type": "String"
+  },
+  "inventoryMetricExpiredBatches": "دفعات منتهية",
+  "@inventoryMetricExpiredBatches": {
+    "type": "String"
+  },
+  "inventoryMetricBatchValue": "قيمة الدفعات",
+  "@inventoryMetricBatchValue": {
+    "type": "String"
+  },
+  "inventoryColWarehouse": "المخزن",
+  "@inventoryColWarehouse": {
+    "type": "String"
+  },
+  "inventoryColManager": "المسؤول",
+  "@inventoryColManager": {
+    "type": "String"
+  },
+  "inventoryColCapacity": "السعة",
+  "@inventoryColCapacity": {
+    "type": "String"
+  },
+  "inventoryColUtilization": "الاستخدام",
+  "@inventoryColUtilization": {
+    "type": "String"
+  },
+  "inventoryColProducts": "المنتجات",
+  "@inventoryColProducts": {
+    "type": "String"
+  },
+  "inventoryColProduct": "المنتج",
+  "@inventoryColProduct": {
+    "type": "String"
+  },
+  "inventoryColSku": "الرمز",
+  "@inventoryColSku": {
+    "type": "String"
+  },
+  "inventoryColOnHand": "المتاح",
+  "@inventoryColOnHand": {
+    "type": "String"
+  },
+  "inventoryColReorder": "حد إعادة الطلب",
+  "@inventoryColReorder": {
+    "type": "String"
+  },
+  "inventoryColValue": "القيمة",
+  "@inventoryColValue": {
+    "type": "String"
+  },
+  "inventoryColState": "الحالة",
+  "@inventoryColState": {
+    "type": "String"
+  },
+  "inventoryColTransfer": "التحويل",
+  "@inventoryColTransfer": {
+    "type": "String"
+  },
+  "inventoryColRoute": "المسار",
+  "@inventoryColRoute": {
+    "type": "String"
+  },
+  "inventoryColUnits": "الوحدات",
+  "@inventoryColUnits": {
+    "type": "String"
+  },
+  "inventoryColDate": "التاريخ",
+  "@inventoryColDate": {
+    "type": "String"
+  },
+  "inventoryColAudit": "الجرد",
+  "@inventoryColAudit": {
+    "type": "String"
+  },
+  "inventoryColCounter": "المعدّ",
+  "@inventoryColCounter": {
+    "type": "String"
+  },
+  "inventoryColVariance": "الفرق",
+  "@inventoryColVariance": {
+    "type": "String"
+  },
+  "inventoryColBatch": "الدفعة",
+  "@inventoryColBatch": {
+    "type": "String"
+  },
+  "inventoryColExpiry": "الصلاحية",
+  "@inventoryColExpiry": {
+    "type": "String"
+  },
+  "inventoryColQuantity": "الكمية",
+  "@inventoryColQuantity": {
+    "type": "String"
+  },
+  "inventoryColDaysLeft": "الأيام المتبقية",
+  "@inventoryColDaysLeft": {
+    "type": "String"
+  },
+  "inventoryStateHealthy": "جيد",
+  "@inventoryStateHealthy": {
+    "type": "String"
+  },
+  "inventoryStateLow": "منخفض",
+  "@inventoryStateLow": {
+    "type": "String"
+  },
+  "inventoryStateOut": "نافد",
+  "@inventoryStateOut": {
+    "type": "String"
+  },
+  "inventoryTransferDraft": "مسودة",
+  "@inventoryTransferDraft": {
+    "type": "String"
+  },
+  "inventoryTransferTransit": "في الطريق",
+  "@inventoryTransferTransit": {
+    "type": "String"
+  },
+  "inventoryTransferReceived": "مستلم",
+  "@inventoryTransferReceived": {
+    "type": "String"
+  },
+  "inventoryAuditScheduled": "مجدول",
+  "@inventoryAuditScheduled": {
+    "type": "String"
+  },
+  "inventoryAuditCounting": "جارٍ الجرد",
+  "@inventoryAuditCounting": {
+    "type": "String"
+  },
+  "inventoryAuditClosed": "مغلق",
+  "@inventoryAuditClosed": {
+    "type": "String"
+  },
+  "inventoryBatchValid": "صالح",
+  "@inventoryBatchValid": {
+    "type": "String"
+  },
+  "inventoryBatchExpiring": "قارب الانتهاء",
+  "@inventoryBatchExpiring": {
+    "type": "String"
+  },
+  "inventoryBatchExpired": "منتهي",
+  "@inventoryBatchExpired": {
+    "type": "String"
+  },
+  "inventoryCapacityRatio": "{used} / {capacity}",
+  "@inventoryCapacityRatio": {
+    "type": "String",
+    "placeholders": {
+      "used": {
+        "type": "String"
+      },
+      "capacity": {
+        "type": "String"
+      }
+    }
+  },
+  "inventoryCapacityUsed": "{percent}% مستخدم",
+  "@inventoryCapacityUsed": {
+    "type": "String",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryUnits": "{count} وحدة",
+  "@inventoryUnits": {
+    "type": "String",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryDaysLeft": "{days} يوم",
+  "@inventoryDaysLeft": {
+    "type": "String",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryDaysAgo": "منذ {days} يوم",
+  "@inventoryDaysAgo": {
+    "type": "String",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryLowStockItems": "{count} أصناف منخفضة",
+  "@inventoryLowStockItems": {
+    "type": "String",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryProductsCount": "{count} منتج",
+  "@inventoryProductsCount": {
+    "type": "String",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryPlannedTransfersBody": "ستُحفظ مسودات التحويل في الخادم عند توفر واجهة التحويلات. حتى ذلك الحين المسودات أدناه بيانات تجريبية ولا يُسجل أي حركة.",
+  "@inventoryPlannedTransfersBody": {
+    "type": "String"
+  },
+  "inventoryPlannedAuditsBody": "جلسات الجرد للقراءة فقط حالياً: يحتاج سير عمل الجرد إلى واجهة الجرد. الجلسات أدناه بيانات تجريبية.",
+  "@inventoryPlannedAuditsBody": {
+    "type": "String"
+  },
+  "salesTabPos": "نقطة البيع",
+  "salesTabPayments": "المدفوعات",
+  "salesTabShifts": "الورديات",
+  "salesTabOrders": "الطلبات",
+  "salesTabCustomOrders": "الطلبات المخصصة",
+  "salesTabPromotions": "العروض",
+  "salesSearchPos": "ابحث عن منتج أو رمز SKU",
+  "salesSearchPayments": "ابحث في المدفوعات أو الطلبات أو العملاء",
+  "salesSearchShifts": "ابحث في الورديات أو أمناء الصندوق",
+  "salesSearchOrders": "ابحث في الطلبات أو العملاء",
+  "salesSearchCustomOrders": "ابحث في الطلبات المخصصة أو العملاء",
+  "salesSearchPromotions": "ابحث في العروض أو الأكواد",
+  "salesColPayment": "الدفعة",
+  "salesColOrder": "الطلب",
+  "salesColCustomer": "العميل",
+  "salesColMethod": "طريقة الدفع",
+  "salesColAmount": "المبلغ",
+  "salesColStatus": "الحالة",
+  "salesColDate": "التاريخ",
+  "salesColShift": "الوردية",
+  "salesColCashier": "أمين الصندوق",
+  "salesColOpened": "الفتح",
+  "salesColClosed": "الإغلاق",
+  "salesColSales": "المبيعات",
+  "salesColVariance": "الفرق",
+  "salesColItems": "العناصر",
+  "salesColTotal": "الإجمالي",
+  "salesColCustomOrder": "الطلب المخصص",
+  "salesColDimensions": "المقاسات",
+  "salesColDeposit": "العربون",
+  "salesColDue": "الاستحقاق",
+  "salesColPromotion": "العرض",
+  "salesColCode": "الكود",
+  "salesColUses": "الاستخدامات",
+  "salesColWindow": "الفترة",
+  "salesPayCash": "نقدي",
+  "salesPayCard": "بطاقة",
+  "salesPayCredit": "آجل",
+  "salesPayWallet": "محفظة",
+  "salesPayPaid": "مدفوعة",
+  "salesPayPending": "معلقة",
+  "salesPayRefunded": "مستردة",
+  "salesPosCart": "البيع الحالي",
+  "salesPosEmptyCart": "السلة فارغة. أضف منتجًا لبدء البيع.",
+  "salesPosWalkIn": "عميل نقدي",
+  "salesPosQty": "الكمية",
+  "salesPosAdd": "أضف إلى السلة",
+  "salesPosRemove": "إزالة",
+  "salesPosClear": "إفراغ السلة",
+  "salesPosSubtotal": "المجموع الفرعي",
+  "salesPosVat": "ضريبة القيمة المضافة (١٤٪)",
+  "salesPosTotal": "الإجمالي",
+  "salesPosCharge": "تحصيل {amount}",
+  "salesPosChargeMessage": "بيع تجريبي: لم تُعالج أي دفعة.",
+  "salesMetricCartItems": "عناصر السلة",
+  "salesMetricCartSubtotal": "المجموع الفرعي",
+  "salesMetricCartVat": "ضريبة القيمة المضافة",
+  "salesMetricCartTotal": "المطلوب",
+  "salesMetricCollected": "المحصّل",
+  "salesMetricCardShare": "حصة البطاقات",
+  "salesMetricPendingCredit": "آجل معلق",
+  "salesMetricRefunds": "المستردات",
+  "salesShiftOpen": "مفتوحة",
+  "salesShiftClosed": "مغلقة",
+  "salesMetricOpenShifts": "ورديات مفتوحة",
+  "salesMetricShiftSales": "مبيعات الورديات",
+  "salesMetricCashDrawer": "النقد في الدرج",
+  "salesMetricCashVariance": "فرق النقد",
+  "salesOrderNew": "جديد",
+  "salesOrderProcessing": "قيد التنفيذ",
+  "salesOrderDelivered": "تم التسليم",
+  "salesOrderCancelled": "ملغي",
+  "salesMetricOpenOrders": "طلبات مفتوحة",
+  "salesMetricOrderValue": "قيمة الطلبات",
+  "salesMetricDeliveredOrders": "تم تسليمها",
+  "salesMetricCancelledOrders": "ملغاة",
+  "salesPlannedOrdersBody": "قائمة الطلبات تحتاج إلى واجهة الطلبات في الخادم. الصفوف أدناه بيانات تجريبية ويبقى إنشاء الطلب معطّلًا حتى تشغيل الواجهة.",
+  "salesCustomDeposit": "تم دفع العربون",
+  "salesCustomProduction": "قيد التصنيع",
+  "salesCustomReady": "جاهز",
+  "salesMetricOpenCustomOrders": "طلبات مخصصة مفتوحة",
+  "salesMetricCustomDeposits": "عرابين محتجزة",
+  "salesMetricCustomReady": "جاهز للاستلام",
+  "salesMetricCustomOverdue": "متأخرة",
+  "salesPlannedCustomOrdersBody": "لوحة الطلبات المخصصة تحتاج إلى واجهة الطلبات المخصصة. البطاقات أدناه بيانات تجريبية ويبقى إنشاء الطلب معطّلًا حتى تشغيل الواجهة.",
+  "salesPromoActive": "نشط",
+  "salesPromoScheduled": "مجدول",
+  "salesPromoExpired": "منتهي",
+  "salesMetricActivePromotions": "عروض نشطة",
+  "salesMetricPromoRedemptions": "مرات الاستخدام",
+  "salesMetricPromoDiscount": "قيمة الخصومات",
+  "salesMetricPromoExpiring": "تنتهي قريبًا",
+  "salesPlannedPromotionsBody": "قائمة العروض تحتاج إلى واجهة العروض. البطاقات أدناه بيانات تجريبية ويبقى إنشاء العرض معطّلًا حتى تشغيل الواجهة.",
+  "salesPromoOff": "خصم {percent}%",
+  "salesPromoWinter": "تخفيضات الشتاء للمراتب",
+  "salesPromoPillowBundle": "باقة الوسائد",
+  "salesPromoBaseClearance": "تصفية القواعد",
+  "salesPromoVip": "ولاء كبار العملاء",
+  "salesPromoNewHome": "باقة المنزل الجديد",
+  "salesPromoHotel": "عقد الفنادق",
+  "salesPromoClearance": "تصفية المخزن",
+  "salesPromoRamadan": "عرض رمضان"
 }

@@ -1327,5 +1327,757 @@
   "adminFilterAll": "All",
   "@adminFilterAll": {
     "type": "String"
+  },
+  "inventoryTabWarehouses": "Warehouses",
+  "@inventoryTabWarehouses": {
+    "type": "String"
+  },
+  "inventoryTabStocks": "Stock balances",
+  "@inventoryTabStocks": {
+    "type": "String"
+  },
+  "inventoryTabTransfers": "Transfers",
+  "@inventoryTabTransfers": {
+    "type": "String"
+  },
+  "inventoryTabAudits": "Stock audits",
+  "@inventoryTabAudits": {
+    "type": "String"
+  },
+  "inventoryTabBatches": "Batches & expiry",
+  "@inventoryTabBatches": {
+    "type": "String"
+  },
+  "inventorySearchWarehouses": "Search warehouses or managers",
+  "@inventorySearchWarehouses": {
+    "type": "String"
+  },
+  "inventorySearchStocks": "Search products, SKU or warehouse",
+  "@inventorySearchStocks": {
+    "type": "String"
+  },
+  "inventorySearchTransfers": "Search transfers",
+  "@inventorySearchTransfers": {
+    "type": "String"
+  },
+  "inventorySearchAudits": "Search audits or counters",
+  "@inventorySearchAudits": {
+    "type": "String"
+  },
+  "inventorySearchBatches": "Search batches or products",
+  "@inventorySearchBatches": {
+    "type": "String"
+  },
+  "inventoryMetricWarehouses": "Warehouses",
+  "@inventoryMetricWarehouses": {
+    "type": "String"
+  },
+  "inventoryMetricProducts": "Products",
+  "@inventoryMetricProducts": {
+    "type": "String"
+  },
+  "inventoryMetricUnitsOnHand": "Units on hand",
+  "@inventoryMetricUnitsOnHand": {
+    "type": "String"
+  },
+  "inventoryMetricCapacityUsed": "Capacity used",
+  "@inventoryMetricCapacityUsed": {
+    "type": "String"
+  },
+  "inventoryMetricStockValue": "Stock value",
+  "@inventoryMetricStockValue": {
+    "type": "String"
+  },
+  "inventoryMetricSkus": "SKUs",
+  "@inventoryMetricSkus": {
+    "type": "String"
+  },
+  "inventoryMetricLowStock": "Low stock",
+  "@inventoryMetricLowStock": {
+    "type": "String"
+  },
+  "inventoryMetricOutOfStock": "Out of stock",
+  "@inventoryMetricOutOfStock": {
+    "type": "String"
+  },
+  "inventoryMetricReorderValue": "Reorder value",
+  "@inventoryMetricReorderValue": {
+    "type": "String"
+  },
+  "inventoryMetricPendingTransfers": "Pending transfers",
+  "@inventoryMetricPendingTransfers": {
+    "type": "String"
+  },
+  "inventoryMetricUnitsInTransit": "Units in transit",
+  "@inventoryMetricUnitsInTransit": {
+    "type": "String"
+  },
+  "inventoryMetricReceivedTransfers": "Received transfers",
+  "@inventoryMetricReceivedTransfers": {
+    "type": "String"
+  },
+  "inventoryMetricLastTransfer": "Last transfer",
+  "@inventoryMetricLastTransfer": {
+    "type": "String"
+  },
+  "inventoryMetricOpenAudits": "Open audits",
+  "@inventoryMetricOpenAudits": {
+    "type": "String"
+  },
+  "inventoryMetricVarianceUnits": "Net variance",
+  "@inventoryMetricVarianceUnits": {
+    "type": "String"
+  },
+  "inventoryMetricClosedAudits": "Closed audits",
+  "@inventoryMetricClosedAudits": {
+    "type": "String"
+  },
+  "inventoryMetricNextAudit": "Next audit",
+  "@inventoryMetricNextAudit": {
+    "type": "String"
+  },
+  "inventoryMetricActiveBatches": "Active batches",
+  "@inventoryMetricActiveBatches": {
+    "type": "String"
+  },
+  "inventoryMetricExpiringSoon": "Expiring soon",
+  "@inventoryMetricExpiringSoon": {
+    "type": "String"
+  },
+  "inventoryMetricExpiredBatches": "Expired batches",
+  "@inventoryMetricExpiredBatches": {
+    "type": "String"
+  },
+  "inventoryMetricBatchValue": "Batch value",
+  "@inventoryMetricBatchValue": {
+    "type": "String"
+  },
+  "inventoryColWarehouse": "Warehouse",
+  "@inventoryColWarehouse": {
+    "type": "String"
+  },
+  "inventoryColManager": "Manager",
+  "@inventoryColManager": {
+    "type": "String"
+  },
+  "inventoryColCapacity": "Capacity",
+  "@inventoryColCapacity": {
+    "type": "String"
+  },
+  "inventoryColUtilization": "Utilization",
+  "@inventoryColUtilization": {
+    "type": "String"
+  },
+  "inventoryColProducts": "Products",
+  "@inventoryColProducts": {
+    "type": "String"
+  },
+  "inventoryColProduct": "Product",
+  "@inventoryColProduct": {
+    "type": "String"
+  },
+  "inventoryColSku": "SKU",
+  "@inventoryColSku": {
+    "type": "String"
+  },
+  "inventoryColOnHand": "On hand",
+  "@inventoryColOnHand": {
+    "type": "String"
+  },
+  "inventoryColReorder": "Reorder at",
+  "@inventoryColReorder": {
+    "type": "String"
+  },
+  "inventoryColValue": "Value",
+  "@inventoryColValue": {
+    "type": "String"
+  },
+  "inventoryColState": "State",
+  "@inventoryColState": {
+    "type": "String"
+  },
+  "inventoryColTransfer": "Transfer",
+  "@inventoryColTransfer": {
+    "type": "String"
+  },
+  "inventoryColRoute": "Route",
+  "@inventoryColRoute": {
+    "type": "String"
+  },
+  "inventoryColUnits": "Units",
+  "@inventoryColUnits": {
+    "type": "String"
+  },
+  "inventoryColDate": "Date",
+  "@inventoryColDate": {
+    "type": "String"
+  },
+  "inventoryColAudit": "Audit",
+  "@inventoryColAudit": {
+    "type": "String"
+  },
+  "inventoryColCounter": "Counter",
+  "@inventoryColCounter": {
+    "type": "String"
+  },
+  "inventoryColVariance": "Variance",
+  "@inventoryColVariance": {
+    "type": "String"
+  },
+  "inventoryColBatch": "Batch",
+  "@inventoryColBatch": {
+    "type": "String"
+  },
+  "inventoryColExpiry": "Expiry",
+  "@inventoryColExpiry": {
+    "type": "String"
+  },
+  "inventoryColQuantity": "Quantity",
+  "@inventoryColQuantity": {
+    "type": "String"
+  },
+  "inventoryColDaysLeft": "Days left",
+  "@inventoryColDaysLeft": {
+    "type": "String"
+  },
+  "inventoryStateHealthy": "Healthy",
+  "@inventoryStateHealthy": {
+    "type": "String"
+  },
+  "inventoryStateLow": "Low",
+  "@inventoryStateLow": {
+    "type": "String"
+  },
+  "inventoryStateOut": "Out",
+  "@inventoryStateOut": {
+    "type": "String"
+  },
+  "inventoryTransferDraft": "Draft",
+  "@inventoryTransferDraft": {
+    "type": "String"
+  },
+  "inventoryTransferTransit": "In transit",
+  "@inventoryTransferTransit": {
+    "type": "String"
+  },
+  "inventoryTransferReceived": "Received",
+  "@inventoryTransferReceived": {
+    "type": "String"
+  },
+  "inventoryAuditScheduled": "Scheduled",
+  "@inventoryAuditScheduled": {
+    "type": "String"
+  },
+  "inventoryAuditCounting": "Counting",
+  "@inventoryAuditCounting": {
+    "type": "String"
+  },
+  "inventoryAuditClosed": "Closed",
+  "@inventoryAuditClosed": {
+    "type": "String"
+  },
+  "inventoryBatchValid": "Valid",
+  "@inventoryBatchValid": {
+    "type": "String"
+  },
+  "inventoryBatchExpiring": "Expiring",
+  "@inventoryBatchExpiring": {
+    "type": "String"
+  },
+  "inventoryBatchExpired": "Expired",
+  "@inventoryBatchExpired": {
+    "type": "String"
+  },
+  "inventoryCapacityRatio": "{used} / {capacity}",
+  "@inventoryCapacityRatio": {
+    "type": "String",
+    "placeholders": {
+      "used": {
+        "type": "String"
+      },
+      "capacity": {
+        "type": "String"
+      }
+    }
+  },
+  "inventoryCapacityUsed": "{percent}% used",
+  "@inventoryCapacityUsed": {
+    "type": "String",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryUnits": "{count} units",
+  "@inventoryUnits": {
+    "type": "String",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryDaysLeft": "{days} days",
+  "@inventoryDaysLeft": {
+    "type": "String",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryDaysAgo": "{days} days ago",
+  "@inventoryDaysAgo": {
+    "type": "String",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryLowStockItems": "{count} low-stock items",
+  "@inventoryLowStockItems": {
+    "type": "String",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryProductsCount": "{count} products",
+  "@inventoryProductsCount": {
+    "type": "String",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "inventoryPlannedTransfersBody": "Transfer drafts will be saved to the backend once the transfers endpoint ships. Until then the drafts below are sample data and no movement is recorded.",
+  "@inventoryPlannedTransfersBody": {
+    "type": "String"
+  },
+  "inventoryPlannedAuditsBody": "Audit sessions are read-only for now: the counting workflow needs the audit endpoint. The sessions below are sample data.",
+  "@inventoryPlannedAuditsBody": {
+    "type": "String"
+  },
+  "salesTabPos": "Point of sale",
+  "@salesTabPos": {
+    "type": "String"
+  },
+  "salesTabPayments": "Payments",
+  "@salesTabPayments": {
+    "type": "String"
+  },
+  "salesTabShifts": "Shifts",
+  "@salesTabShifts": {
+    "type": "String"
+  },
+  "salesTabOrders": "Orders",
+  "@salesTabOrders": {
+    "type": "String"
+  },
+  "salesTabCustomOrders": "Custom orders",
+  "@salesTabCustomOrders": {
+    "type": "String"
+  },
+  "salesTabPromotions": "Promotions",
+  "@salesTabPromotions": {
+    "type": "String"
+  },
+  "salesSearchPos": "Search products or SKU",
+  "@salesSearchPos": {
+    "type": "String"
+  },
+  "salesSearchPayments": "Search payments, orders or customers",
+  "@salesSearchPayments": {
+    "type": "String"
+  },
+  "salesSearchShifts": "Search shifts or cashiers",
+  "@salesSearchShifts": {
+    "type": "String"
+  },
+  "salesSearchOrders": "Search orders or customers",
+  "@salesSearchOrders": {
+    "type": "String"
+  },
+  "salesSearchCustomOrders": "Search custom orders or customers",
+  "@salesSearchCustomOrders": {
+    "type": "String"
+  },
+  "salesSearchPromotions": "Search promotions or codes",
+  "@salesSearchPromotions": {
+    "type": "String"
+  },
+  "salesColPayment": "Payment",
+  "@salesColPayment": {
+    "type": "String"
+  },
+  "salesColOrder": "Order",
+  "@salesColOrder": {
+    "type": "String"
+  },
+  "salesColCustomer": "Customer",
+  "@salesColCustomer": {
+    "type": "String"
+  },
+  "salesColMethod": "Method",
+  "@salesColMethod": {
+    "type": "String"
+  },
+  "salesColAmount": "Amount",
+  "@salesColAmount": {
+    "type": "String"
+  },
+  "salesColStatus": "Status",
+  "@salesColStatus": {
+    "type": "String"
+  },
+  "salesColDate": "Date",
+  "@salesColDate": {
+    "type": "String"
+  },
+  "salesColShift": "Shift",
+  "@salesColShift": {
+    "type": "String"
+  },
+  "salesColCashier": "Cashier",
+  "@salesColCashier": {
+    "type": "String"
+  },
+  "salesColOpened": "Opened",
+  "@salesColOpened": {
+    "type": "String"
+  },
+  "salesColClosed": "Closed",
+  "@salesColClosed": {
+    "type": "String"
+  },
+  "salesColSales": "Sales",
+  "@salesColSales": {
+    "type": "String"
+  },
+  "salesColVariance": "Variance",
+  "@salesColVariance": {
+    "type": "String"
+  },
+  "salesColItems": "Items",
+  "@salesColItems": {
+    "type": "String"
+  },
+  "salesColTotal": "Total",
+  "@salesColTotal": {
+    "type": "String"
+  },
+  "salesColCustomOrder": "Custom order",
+  "@salesColCustomOrder": {
+    "type": "String"
+  },
+  "salesColDimensions": "Dimensions",
+  "@salesColDimensions": {
+    "type": "String"
+  },
+  "salesColDeposit": "Deposit",
+  "@salesColDeposit": {
+    "type": "String"
+  },
+  "salesColDue": "Due",
+  "@salesColDue": {
+    "type": "String"
+  },
+  "salesColPromotion": "Promotion",
+  "@salesColPromotion": {
+    "type": "String"
+  },
+  "salesColCode": "Code",
+  "@salesColCode": {
+    "type": "String"
+  },
+  "salesColUses": "Uses",
+  "@salesColUses": {
+    "type": "String"
+  },
+  "salesColWindow": "Window",
+  "@salesColWindow": {
+    "type": "String"
+  },
+  "salesPayCash": "Cash",
+  "@salesPayCash": {
+    "type": "String"
+  },
+  "salesPayCard": "Card",
+  "@salesPayCard": {
+    "type": "String"
+  },
+  "salesPayCredit": "Credit",
+  "@salesPayCredit": {
+    "type": "String"
+  },
+  "salesPayWallet": "Wallet",
+  "@salesPayWallet": {
+    "type": "String"
+  },
+  "salesPayPaid": "Paid",
+  "@salesPayPaid": {
+    "type": "String"
+  },
+  "salesPayPending": "Pending",
+  "@salesPayPending": {
+    "type": "String"
+  },
+  "salesPayRefunded": "Refunded",
+  "@salesPayRefunded": {
+    "type": "String"
+  },
+  "salesPosCart": "Current sale",
+  "@salesPosCart": {
+    "type": "String"
+  },
+  "salesPosEmptyCart": "The cart is empty. Add a product to start a sale.",
+  "@salesPosEmptyCart": {
+    "type": "String"
+  },
+  "salesPosWalkIn": "Walk-in customer",
+  "@salesPosWalkIn": {
+    "type": "String"
+  },
+  "salesPosQty": "Qty",
+  "@salesPosQty": {
+    "type": "String"
+  },
+  "salesPosAdd": "Add to cart",
+  "@salesPosAdd": {
+    "type": "String"
+  },
+  "salesPosRemove": "Remove",
+  "@salesPosRemove": {
+    "type": "String"
+  },
+  "salesPosClear": "Clear cart",
+  "@salesPosClear": {
+    "type": "String"
+  },
+  "salesPosSubtotal": "Subtotal",
+  "@salesPosSubtotal": {
+    "type": "String"
+  },
+  "salesPosVat": "VAT (14%)",
+  "@salesPosVat": {
+    "type": "String"
+  },
+  "salesPosTotal": "Total",
+  "@salesPosTotal": {
+    "type": "String"
+  },
+  "salesPosCharge": "Charge {amount}",
+  "@salesPosCharge": {
+    "type": "String",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "salesPosChargeMessage": "Sample sale: no payment was processed.",
+  "@salesPosChargeMessage": {
+    "type": "String"
+  },
+  "salesMetricCartItems": "Cart items",
+  "@salesMetricCartItems": {
+    "type": "String"
+  },
+  "salesMetricCartSubtotal": "Cart subtotal",
+  "@salesMetricCartSubtotal": {
+    "type": "String"
+  },
+  "salesMetricCartVat": "VAT",
+  "@salesMetricCartVat": {
+    "type": "String"
+  },
+  "salesMetricCartTotal": "Total due",
+  "@salesMetricCartTotal": {
+    "type": "String"
+  },
+  "salesMetricCollected": "Collected",
+  "@salesMetricCollected": {
+    "type": "String"
+  },
+  "salesMetricCardShare": "Card share",
+  "@salesMetricCardShare": {
+    "type": "String"
+  },
+  "salesMetricPendingCredit": "Pending credit",
+  "@salesMetricPendingCredit": {
+    "type": "String"
+  },
+  "salesMetricRefunds": "Refunds",
+  "@salesMetricRefunds": {
+    "type": "String"
+  },
+  "salesShiftOpen": "Open",
+  "@salesShiftOpen": {
+    "type": "String"
+  },
+  "salesShiftClosed": "Closed",
+  "@salesShiftClosed": {
+    "type": "String"
+  },
+  "salesMetricOpenShifts": "Open shifts",
+  "@salesMetricOpenShifts": {
+    "type": "String"
+  },
+  "salesMetricShiftSales": "Shift sales",
+  "@salesMetricShiftSales": {
+    "type": "String"
+  },
+  "salesMetricCashDrawer": "Cash in drawer",
+  "@salesMetricCashDrawer": {
+    "type": "String"
+  },
+  "salesMetricCashVariance": "Cash variance",
+  "@salesMetricCashVariance": {
+    "type": "String"
+  },
+  "salesOrderNew": "New",
+  "@salesOrderNew": {
+    "type": "String"
+  },
+  "salesOrderProcessing": "Processing",
+  "@salesOrderProcessing": {
+    "type": "String"
+  },
+  "salesOrderDelivered": "Delivered",
+  "@salesOrderDelivered": {
+    "type": "String"
+  },
+  "salesOrderCancelled": "Cancelled",
+  "@salesOrderCancelled": {
+    "type": "String"
+  },
+  "salesMetricOpenOrders": "Open orders",
+  "@salesMetricOpenOrders": {
+    "type": "String"
+  },
+  "salesMetricOrderValue": "Order value",
+  "@salesMetricOrderValue": {
+    "type": "String"
+  },
+  "salesMetricDeliveredOrders": "Delivered",
+  "@salesMetricDeliveredOrders": {
+    "type": "String"
+  },
+  "salesMetricCancelledOrders": "Cancelled",
+  "@salesMetricCancelledOrders": {
+    "type": "String"
+  },
+  "salesPlannedOrdersBody": "Order listing needs the sales order endpoint. The rows below are sample data and the create action stays disabled until the API ships.",
+  "@salesPlannedOrdersBody": {
+    "type": "String"
+  },
+  "salesCustomDeposit": "Deposit paid",
+  "@salesCustomDeposit": {
+    "type": "String"
+  },
+  "salesCustomProduction": "In production",
+  "@salesCustomProduction": {
+    "type": "String"
+  },
+  "salesCustomReady": "Ready",
+  "@salesCustomReady": {
+    "type": "String"
+  },
+  "salesMetricOpenCustomOrders": "Open custom orders",
+  "@salesMetricOpenCustomOrders": {
+    "type": "String"
+  },
+  "salesMetricCustomDeposits": "Deposits held",
+  "@salesMetricCustomDeposits": {
+    "type": "String"
+  },
+  "salesMetricCustomReady": "Ready for pickup",
+  "@salesMetricCustomReady": {
+    "type": "String"
+  },
+  "salesMetricCustomOverdue": "Overdue",
+  "@salesMetricCustomOverdue": {
+    "type": "String"
+  },
+  "salesPlannedCustomOrdersBody": "The custom order board needs the custom order endpoint. The cards below are sample data and the create action stays disabled until the API ships.",
+  "@salesPlannedCustomOrdersBody": {
+    "type": "String"
+  },
+  "salesPromoActive": "Active",
+  "@salesPromoActive": {
+    "type": "String"
+  },
+  "salesPromoScheduled": "Scheduled",
+  "@salesPromoScheduled": {
+    "type": "String"
+  },
+  "salesPromoExpired": "Expired",
+  "@salesPromoExpired": {
+    "type": "String"
+  },
+  "salesMetricActivePromotions": "Active promotions",
+  "@salesMetricActivePromotions": {
+    "type": "String"
+  },
+  "salesMetricPromoRedemptions": "Redemptions",
+  "@salesMetricPromoRedemptions": {
+    "type": "String"
+  },
+  "salesMetricPromoDiscount": "Discount given",
+  "@salesMetricPromoDiscount": {
+    "type": "String"
+  },
+  "salesMetricPromoExpiring": "Expiring soon",
+  "@salesMetricPromoExpiring": {
+    "type": "String"
+  },
+  "salesPlannedPromotionsBody": "Promotion listing needs the promotions endpoint. The cards below are sample data and the create action stays disabled until the API ships.",
+  "@salesPlannedPromotionsBody": {
+    "type": "String"
+  },
+  "salesPromoOff": "{percent}% off",
+  "@salesPromoOff": {
+    "type": "String",
+    "placeholders": {
+      "percent": {
+        "type": "int"
+      }
+    }
+  },
+  "salesPromoWinter": "Winter mattress sale",
+  "@salesPromoWinter": {
+    "type": "String"
+  },
+  "salesPromoPillowBundle": "Pillow bundle",
+  "@salesPromoPillowBundle": {
+    "type": "String"
+  },
+  "salesPromoBaseClearance": "Base clearance",
+  "@salesPromoBaseClearance": {
+    "type": "String"
+  },
+  "salesPromoVip": "VIP loyalty",
+  "@salesPromoVip": {
+    "type": "String"
+  },
+  "salesPromoNewHome": "New home bundle",
+  "@salesPromoNewHome": {
+    "type": "String"
+  },
+  "salesPromoHotel": "Hotel contract",
+  "@salesPromoHotel": {
+    "type": "String"
+  },
+  "salesPromoClearance": "Warehouse clearance",
+  "@salesPromoClearance": {
+    "type": "String"
+  },
+  "salesPromoRamadan": "Ramadan offer",
+  "@salesPromoRamadan": {
+    "type": "String"
   }
 }

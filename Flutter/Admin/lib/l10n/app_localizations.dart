@@ -4512,6 +4512,1062 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'All'**
   String get adminFilterAll;
+
+  /// No description provided for @inventoryTabWarehouses.
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouses'**
+  String get inventoryTabWarehouses;
+
+  /// No description provided for @inventoryTabStocks.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock balances'**
+  String get inventoryTabStocks;
+
+  /// No description provided for @inventoryTabTransfers.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfers'**
+  String get inventoryTabTransfers;
+
+  /// No description provided for @inventoryTabAudits.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock audits'**
+  String get inventoryTabAudits;
+
+  /// No description provided for @inventoryTabBatches.
+  ///
+  /// In en, this message translates to:
+  /// **'Batches & expiry'**
+  String get inventoryTabBatches;
+
+  /// No description provided for @inventorySearchWarehouses.
+  ///
+  /// In en, this message translates to:
+  /// **'Search warehouses or managers'**
+  String get inventorySearchWarehouses;
+
+  /// No description provided for @inventorySearchStocks.
+  ///
+  /// In en, this message translates to:
+  /// **'Search products, SKU or warehouse'**
+  String get inventorySearchStocks;
+
+  /// No description provided for @inventorySearchTransfers.
+  ///
+  /// In en, this message translates to:
+  /// **'Search transfers'**
+  String get inventorySearchTransfers;
+
+  /// No description provided for @inventorySearchAudits.
+  ///
+  /// In en, this message translates to:
+  /// **'Search audits or counters'**
+  String get inventorySearchAudits;
+
+  /// No description provided for @inventorySearchBatches.
+  ///
+  /// In en, this message translates to:
+  /// **'Search batches or products'**
+  String get inventorySearchBatches;
+
+  /// No description provided for @inventoryMetricWarehouses.
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouses'**
+  String get inventoryMetricWarehouses;
+
+  /// No description provided for @inventoryMetricProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get inventoryMetricProducts;
+
+  /// No description provided for @inventoryMetricUnitsOnHand.
+  ///
+  /// In en, this message translates to:
+  /// **'Units on hand'**
+  String get inventoryMetricUnitsOnHand;
+
+  /// No description provided for @inventoryMetricCapacityUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Capacity used'**
+  String get inventoryMetricCapacityUsed;
+
+  /// No description provided for @inventoryMetricStockValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock value'**
+  String get inventoryMetricStockValue;
+
+  /// No description provided for @inventoryMetricSkus.
+  ///
+  /// In en, this message translates to:
+  /// **'SKUs'**
+  String get inventoryMetricSkus;
+
+  /// No description provided for @inventoryMetricLowStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Low stock'**
+  String get inventoryMetricLowStock;
+
+  /// No description provided for @inventoryMetricOutOfStock.
+  ///
+  /// In en, this message translates to:
+  /// **'Out of stock'**
+  String get inventoryMetricOutOfStock;
+
+  /// No description provided for @inventoryMetricReorderValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder value'**
+  String get inventoryMetricReorderValue;
+
+  /// No description provided for @inventoryMetricPendingTransfers.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending transfers'**
+  String get inventoryMetricPendingTransfers;
+
+  /// No description provided for @inventoryMetricUnitsInTransit.
+  ///
+  /// In en, this message translates to:
+  /// **'Units in transit'**
+  String get inventoryMetricUnitsInTransit;
+
+  /// No description provided for @inventoryMetricReceivedTransfers.
+  ///
+  /// In en, this message translates to:
+  /// **'Received transfers'**
+  String get inventoryMetricReceivedTransfers;
+
+  /// No description provided for @inventoryMetricLastTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Last transfer'**
+  String get inventoryMetricLastTransfer;
+
+  /// No description provided for @inventoryMetricOpenAudits.
+  ///
+  /// In en, this message translates to:
+  /// **'Open audits'**
+  String get inventoryMetricOpenAudits;
+
+  /// No description provided for @inventoryMetricVarianceUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Net variance'**
+  String get inventoryMetricVarianceUnits;
+
+  /// No description provided for @inventoryMetricClosedAudits.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed audits'**
+  String get inventoryMetricClosedAudits;
+
+  /// No description provided for @inventoryMetricNextAudit.
+  ///
+  /// In en, this message translates to:
+  /// **'Next audit'**
+  String get inventoryMetricNextAudit;
+
+  /// No description provided for @inventoryMetricActiveBatches.
+  ///
+  /// In en, this message translates to:
+  /// **'Active batches'**
+  String get inventoryMetricActiveBatches;
+
+  /// No description provided for @inventoryMetricExpiringSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring soon'**
+  String get inventoryMetricExpiringSoon;
+
+  /// No description provided for @inventoryMetricExpiredBatches.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired batches'**
+  String get inventoryMetricExpiredBatches;
+
+  /// No description provided for @inventoryMetricBatchValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Batch value'**
+  String get inventoryMetricBatchValue;
+
+  /// No description provided for @inventoryColWarehouse.
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse'**
+  String get inventoryColWarehouse;
+
+  /// No description provided for @inventoryColManager.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager'**
+  String get inventoryColManager;
+
+  /// No description provided for @inventoryColCapacity.
+  ///
+  /// In en, this message translates to:
+  /// **'Capacity'**
+  String get inventoryColCapacity;
+
+  /// No description provided for @inventoryColUtilization.
+  ///
+  /// In en, this message translates to:
+  /// **'Utilization'**
+  String get inventoryColUtilization;
+
+  /// No description provided for @inventoryColProducts.
+  ///
+  /// In en, this message translates to:
+  /// **'Products'**
+  String get inventoryColProducts;
+
+  /// No description provided for @inventoryColProduct.
+  ///
+  /// In en, this message translates to:
+  /// **'Product'**
+  String get inventoryColProduct;
+
+  /// No description provided for @inventoryColSku.
+  ///
+  /// In en, this message translates to:
+  /// **'SKU'**
+  String get inventoryColSku;
+
+  /// No description provided for @inventoryColOnHand.
+  ///
+  /// In en, this message translates to:
+  /// **'On hand'**
+  String get inventoryColOnHand;
+
+  /// No description provided for @inventoryColReorder.
+  ///
+  /// In en, this message translates to:
+  /// **'Reorder at'**
+  String get inventoryColReorder;
+
+  /// No description provided for @inventoryColValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get inventoryColValue;
+
+  /// No description provided for @inventoryColState.
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get inventoryColState;
+
+  /// No description provided for @inventoryColTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get inventoryColTransfer;
+
+  /// No description provided for @inventoryColRoute.
+  ///
+  /// In en, this message translates to:
+  /// **'Route'**
+  String get inventoryColRoute;
+
+  /// No description provided for @inventoryColUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'Units'**
+  String get inventoryColUnits;
+
+  /// No description provided for @inventoryColDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get inventoryColDate;
+
+  /// No description provided for @inventoryColAudit.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit'**
+  String get inventoryColAudit;
+
+  /// No description provided for @inventoryColCounter.
+  ///
+  /// In en, this message translates to:
+  /// **'Counter'**
+  String get inventoryColCounter;
+
+  /// No description provided for @inventoryColVariance.
+  ///
+  /// In en, this message translates to:
+  /// **'Variance'**
+  String get inventoryColVariance;
+
+  /// No description provided for @inventoryColBatch.
+  ///
+  /// In en, this message translates to:
+  /// **'Batch'**
+  String get inventoryColBatch;
+
+  /// No description provided for @inventoryColExpiry.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiry'**
+  String get inventoryColExpiry;
+
+  /// No description provided for @inventoryColQuantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get inventoryColQuantity;
+
+  /// No description provided for @inventoryColDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'Days left'**
+  String get inventoryColDaysLeft;
+
+  /// No description provided for @inventoryStateHealthy.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy'**
+  String get inventoryStateHealthy;
+
+  /// No description provided for @inventoryStateLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get inventoryStateLow;
+
+  /// No description provided for @inventoryStateOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Out'**
+  String get inventoryStateOut;
+
+  /// No description provided for @inventoryTransferDraft.
+  ///
+  /// In en, this message translates to:
+  /// **'Draft'**
+  String get inventoryTransferDraft;
+
+  /// No description provided for @inventoryTransferTransit.
+  ///
+  /// In en, this message translates to:
+  /// **'In transit'**
+  String get inventoryTransferTransit;
+
+  /// No description provided for @inventoryTransferReceived.
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get inventoryTransferReceived;
+
+  /// No description provided for @inventoryAuditScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get inventoryAuditScheduled;
+
+  /// No description provided for @inventoryAuditCounting.
+  ///
+  /// In en, this message translates to:
+  /// **'Counting'**
+  String get inventoryAuditCounting;
+
+  /// No description provided for @inventoryAuditClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get inventoryAuditClosed;
+
+  /// No description provided for @inventoryBatchValid.
+  ///
+  /// In en, this message translates to:
+  /// **'Valid'**
+  String get inventoryBatchValid;
+
+  /// No description provided for @inventoryBatchExpiring.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring'**
+  String get inventoryBatchExpiring;
+
+  /// No description provided for @inventoryBatchExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get inventoryBatchExpired;
+
+  /// No description provided for @inventoryCapacityRatio.
+  ///
+  /// In en, this message translates to:
+  /// **'{used} / {capacity}'**
+  String inventoryCapacityRatio(String used, String capacity);
+
+  /// No description provided for @inventoryCapacityUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% used'**
+  String inventoryCapacityUsed(int percent);
+
+  /// No description provided for @inventoryUnits.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} units'**
+  String inventoryUnits(int count);
+
+  /// No description provided for @inventoryDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days'**
+  String inventoryDaysLeft(int days);
+
+  /// No description provided for @inventoryDaysAgo.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days ago'**
+  String inventoryDaysAgo(int days);
+
+  /// No description provided for @inventoryLowStockItems.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} low-stock items'**
+  String inventoryLowStockItems(int count);
+
+  /// No description provided for @inventoryProductsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} products'**
+  String inventoryProductsCount(int count);
+
+  /// No description provided for @inventoryPlannedTransfersBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer drafts will be saved to the backend once the transfers endpoint ships. Until then the drafts below are sample data and no movement is recorded.'**
+  String get inventoryPlannedTransfersBody;
+
+  /// No description provided for @inventoryPlannedAuditsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Audit sessions are read-only for now: the counting workflow needs the audit endpoint. The sessions below are sample data.'**
+  String get inventoryPlannedAuditsBody;
+
+  /// No description provided for @salesTabPos.
+  ///
+  /// In en, this message translates to:
+  /// **'Point of sale'**
+  String get salesTabPos;
+
+  /// No description provided for @salesTabPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get salesTabPayments;
+
+  /// No description provided for @salesTabShifts.
+  ///
+  /// In en, this message translates to:
+  /// **'Shifts'**
+  String get salesTabShifts;
+
+  /// No description provided for @salesTabOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Orders'**
+  String get salesTabOrders;
+
+  /// No description provided for @salesTabCustomOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom orders'**
+  String get salesTabCustomOrders;
+
+  /// No description provided for @salesTabPromotions.
+  ///
+  /// In en, this message translates to:
+  /// **'Promotions'**
+  String get salesTabPromotions;
+
+  /// No description provided for @salesSearchPos.
+  ///
+  /// In en, this message translates to:
+  /// **'Search products or SKU'**
+  String get salesSearchPos;
+
+  /// No description provided for @salesSearchPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Search payments, orders or customers'**
+  String get salesSearchPayments;
+
+  /// No description provided for @salesSearchShifts.
+  ///
+  /// In en, this message translates to:
+  /// **'Search shifts or cashiers'**
+  String get salesSearchShifts;
+
+  /// No description provided for @salesSearchOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Search orders or customers'**
+  String get salesSearchOrders;
+
+  /// No description provided for @salesSearchCustomOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Search custom orders or customers'**
+  String get salesSearchCustomOrders;
+
+  /// No description provided for @salesSearchPromotions.
+  ///
+  /// In en, this message translates to:
+  /// **'Search promotions or codes'**
+  String get salesSearchPromotions;
+
+  /// No description provided for @salesColPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get salesColPayment;
+
+  /// No description provided for @salesColOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Order'**
+  String get salesColOrder;
+
+  /// No description provided for @salesColCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get salesColCustomer;
+
+  /// No description provided for @salesColMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'Method'**
+  String get salesColMethod;
+
+  /// No description provided for @salesColAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get salesColAmount;
+
+  /// No description provided for @salesColStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get salesColStatus;
+
+  /// No description provided for @salesColDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get salesColDate;
+
+  /// No description provided for @salesColShift.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift'**
+  String get salesColShift;
+
+  /// No description provided for @salesColCashier.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashier'**
+  String get salesColCashier;
+
+  /// No description provided for @salesColOpened.
+  ///
+  /// In en, this message translates to:
+  /// **'Opened'**
+  String get salesColOpened;
+
+  /// No description provided for @salesColClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get salesColClosed;
+
+  /// No description provided for @salesColSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get salesColSales;
+
+  /// No description provided for @salesColVariance.
+  ///
+  /// In en, this message translates to:
+  /// **'Variance'**
+  String get salesColVariance;
+
+  /// No description provided for @salesColItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get salesColItems;
+
+  /// No description provided for @salesColTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get salesColTotal;
+
+  /// No description provided for @salesColCustomOrder.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom order'**
+  String get salesColCustomOrder;
+
+  /// No description provided for @salesColDimensions.
+  ///
+  /// In en, this message translates to:
+  /// **'Dimensions'**
+  String get salesColDimensions;
+
+  /// No description provided for @salesColDeposit.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit'**
+  String get salesColDeposit;
+
+  /// No description provided for @salesColDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get salesColDue;
+
+  /// No description provided for @salesColPromotion.
+  ///
+  /// In en, this message translates to:
+  /// **'Promotion'**
+  String get salesColPromotion;
+
+  /// No description provided for @salesColCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get salesColCode;
+
+  /// No description provided for @salesColUses.
+  ///
+  /// In en, this message translates to:
+  /// **'Uses'**
+  String get salesColUses;
+
+  /// No description provided for @salesColWindow.
+  ///
+  /// In en, this message translates to:
+  /// **'Window'**
+  String get salesColWindow;
+
+  /// No description provided for @salesPayCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get salesPayCash;
+
+  /// No description provided for @salesPayCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get salesPayCard;
+
+  /// No description provided for @salesPayCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit'**
+  String get salesPayCredit;
+
+  /// No description provided for @salesPayWallet.
+  ///
+  /// In en, this message translates to:
+  /// **'Wallet'**
+  String get salesPayWallet;
+
+  /// No description provided for @salesPayPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get salesPayPaid;
+
+  /// No description provided for @salesPayPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending'**
+  String get salesPayPending;
+
+  /// No description provided for @salesPayRefunded.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunded'**
+  String get salesPayRefunded;
+
+  /// No description provided for @salesPosCart.
+  ///
+  /// In en, this message translates to:
+  /// **'Current sale'**
+  String get salesPosCart;
+
+  /// No description provided for @salesPosEmptyCart.
+  ///
+  /// In en, this message translates to:
+  /// **'The cart is empty. Add a product to start a sale.'**
+  String get salesPosEmptyCart;
+
+  /// No description provided for @salesPosWalkIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Walk-in customer'**
+  String get salesPosWalkIn;
+
+  /// No description provided for @salesPosQty.
+  ///
+  /// In en, this message translates to:
+  /// **'Qty'**
+  String get salesPosQty;
+
+  /// No description provided for @salesPosAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add to cart'**
+  String get salesPosAdd;
+
+  /// No description provided for @salesPosRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get salesPosRemove;
+
+  /// No description provided for @salesPosClear.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear cart'**
+  String get salesPosClear;
+
+  /// No description provided for @salesPosSubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get salesPosSubtotal;
+
+  /// No description provided for @salesPosVat.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT (14%)'**
+  String get salesPosVat;
+
+  /// No description provided for @salesPosTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get salesPosTotal;
+
+  /// No description provided for @salesPosCharge.
+  ///
+  /// In en, this message translates to:
+  /// **'Charge {amount}'**
+  String salesPosCharge(String amount);
+
+  /// No description provided for @salesPosChargeMessage.
+  ///
+  /// In en, this message translates to:
+  /// **'Sample sale: no payment was processed.'**
+  String get salesPosChargeMessage;
+
+  /// No description provided for @salesMetricCartItems.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart items'**
+  String get salesMetricCartItems;
+
+  /// No description provided for @salesMetricCartSubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Cart subtotal'**
+  String get salesMetricCartSubtotal;
+
+  /// No description provided for @salesMetricCartVat.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get salesMetricCartVat;
+
+  /// No description provided for @salesMetricCartTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total due'**
+  String get salesMetricCartTotal;
+
+  /// No description provided for @salesMetricCollected.
+  ///
+  /// In en, this message translates to:
+  /// **'Collected'**
+  String get salesMetricCollected;
+
+  /// No description provided for @salesMetricCardShare.
+  ///
+  /// In en, this message translates to:
+  /// **'Card share'**
+  String get salesMetricCardShare;
+
+  /// No description provided for @salesMetricPendingCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending credit'**
+  String get salesMetricPendingCredit;
+
+  /// No description provided for @salesMetricRefunds.
+  ///
+  /// In en, this message translates to:
+  /// **'Refunds'**
+  String get salesMetricRefunds;
+
+  /// No description provided for @salesShiftOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get salesShiftOpen;
+
+  /// No description provided for @salesShiftClosed.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get salesShiftClosed;
+
+  /// No description provided for @salesMetricOpenShifts.
+  ///
+  /// In en, this message translates to:
+  /// **'Open shifts'**
+  String get salesMetricOpenShifts;
+
+  /// No description provided for @salesMetricShiftSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Shift sales'**
+  String get salesMetricShiftSales;
+
+  /// No description provided for @salesMetricCashDrawer.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash in drawer'**
+  String get salesMetricCashDrawer;
+
+  /// No description provided for @salesMetricCashVariance.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash variance'**
+  String get salesMetricCashVariance;
+
+  /// No description provided for @salesOrderNew.
+  ///
+  /// In en, this message translates to:
+  /// **'New'**
+  String get salesOrderNew;
+
+  /// No description provided for @salesOrderProcessing.
+  ///
+  /// In en, this message translates to:
+  /// **'Processing'**
+  String get salesOrderProcessing;
+
+  /// No description provided for @salesOrderDelivered.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get salesOrderDelivered;
+
+  /// No description provided for @salesOrderCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get salesOrderCancelled;
+
+  /// No description provided for @salesMetricOpenOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Open orders'**
+  String get salesMetricOpenOrders;
+
+  /// No description provided for @salesMetricOrderValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Order value'**
+  String get salesMetricOrderValue;
+
+  /// No description provided for @salesMetricDeliveredOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Delivered'**
+  String get salesMetricDeliveredOrders;
+
+  /// No description provided for @salesMetricCancelledOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get salesMetricCancelledOrders;
+
+  /// No description provided for @salesPlannedOrdersBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Order listing needs the sales order endpoint. The rows below are sample data and the create action stays disabled until the API ships.'**
+  String get salesPlannedOrdersBody;
+
+  /// No description provided for @salesCustomDeposit.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit paid'**
+  String get salesCustomDeposit;
+
+  /// No description provided for @salesCustomProduction.
+  ///
+  /// In en, this message translates to:
+  /// **'In production'**
+  String get salesCustomProduction;
+
+  /// No description provided for @salesCustomReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get salesCustomReady;
+
+  /// No description provided for @salesMetricOpenCustomOrders.
+  ///
+  /// In en, this message translates to:
+  /// **'Open custom orders'**
+  String get salesMetricOpenCustomOrders;
+
+  /// No description provided for @salesMetricCustomDeposits.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits held'**
+  String get salesMetricCustomDeposits;
+
+  /// No description provided for @salesMetricCustomReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready for pickup'**
+  String get salesMetricCustomReady;
+
+  /// No description provided for @salesMetricCustomOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get salesMetricCustomOverdue;
+
+  /// No description provided for @salesPlannedCustomOrdersBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The custom order board needs the custom order endpoint. The cards below are sample data and the create action stays disabled until the API ships.'**
+  String get salesPlannedCustomOrdersBody;
+
+  /// No description provided for @salesPromoActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Active'**
+  String get salesPromoActive;
+
+  /// No description provided for @salesPromoScheduled.
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get salesPromoScheduled;
+
+  /// No description provided for @salesPromoExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get salesPromoExpired;
+
+  /// No description provided for @salesMetricActivePromotions.
+  ///
+  /// In en, this message translates to:
+  /// **'Active promotions'**
+  String get salesMetricActivePromotions;
+
+  /// No description provided for @salesMetricPromoRedemptions.
+  ///
+  /// In en, this message translates to:
+  /// **'Redemptions'**
+  String get salesMetricPromoRedemptions;
+
+  /// No description provided for @salesMetricPromoDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount given'**
+  String get salesMetricPromoDiscount;
+
+  /// No description provided for @salesMetricPromoExpiring.
+  ///
+  /// In en, this message translates to:
+  /// **'Expiring soon'**
+  String get salesMetricPromoExpiring;
+
+  /// No description provided for @salesPlannedPromotionsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Promotion listing needs the promotions endpoint. The cards below are sample data and the create action stays disabled until the API ships.'**
+  String get salesPlannedPromotionsBody;
+
+  /// No description provided for @salesPromoOff.
+  ///
+  /// In en, this message translates to:
+  /// **'{percent}% off'**
+  String salesPromoOff(int percent);
+
+  /// No description provided for @salesPromoWinter.
+  ///
+  /// In en, this message translates to:
+  /// **'Winter mattress sale'**
+  String get salesPromoWinter;
+
+  /// No description provided for @salesPromoPillowBundle.
+  ///
+  /// In en, this message translates to:
+  /// **'Pillow bundle'**
+  String get salesPromoPillowBundle;
+
+  /// No description provided for @salesPromoBaseClearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Base clearance'**
+  String get salesPromoBaseClearance;
+
+  /// No description provided for @salesPromoVip.
+  ///
+  /// In en, this message translates to:
+  /// **'VIP loyalty'**
+  String get salesPromoVip;
+
+  /// No description provided for @salesPromoNewHome.
+  ///
+  /// In en, this message translates to:
+  /// **'New home bundle'**
+  String get salesPromoNewHome;
+
+  /// No description provided for @salesPromoHotel.
+  ///
+  /// In en, this message translates to:
+  /// **'Hotel contract'**
+  String get salesPromoHotel;
+
+  /// No description provided for @salesPromoClearance.
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse clearance'**
+  String get salesPromoClearance;
+
+  /// No description provided for @salesPromoRamadan.
+  ///
+  /// In en, this message translates to:
+  /// **'Ramadan offer'**
+  String get salesPromoRamadan;
 }
 
 class _AppLocalizationsDelegate

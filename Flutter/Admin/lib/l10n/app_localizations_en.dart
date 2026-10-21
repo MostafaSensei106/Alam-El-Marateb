@@ -2358,4 +2358,556 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get adminFilterAll => 'All';
+
+  @override
+  String get inventoryTabWarehouses => 'Warehouses';
+
+  @override
+  String get inventoryTabStocks => 'Stock balances';
+
+  @override
+  String get inventoryTabTransfers => 'Transfers';
+
+  @override
+  String get inventoryTabAudits => 'Stock audits';
+
+  @override
+  String get inventoryTabBatches => 'Batches & expiry';
+
+  @override
+  String get inventorySearchWarehouses => 'Search warehouses or managers';
+
+  @override
+  String get inventorySearchStocks => 'Search products, SKU or warehouse';
+
+  @override
+  String get inventorySearchTransfers => 'Search transfers';
+
+  @override
+  String get inventorySearchAudits => 'Search audits or counters';
+
+  @override
+  String get inventorySearchBatches => 'Search batches or products';
+
+  @override
+  String get inventoryMetricWarehouses => 'Warehouses';
+
+  @override
+  String get inventoryMetricProducts => 'Products';
+
+  @override
+  String get inventoryMetricUnitsOnHand => 'Units on hand';
+
+  @override
+  String get inventoryMetricCapacityUsed => 'Capacity used';
+
+  @override
+  String get inventoryMetricStockValue => 'Stock value';
+
+  @override
+  String get inventoryMetricSkus => 'SKUs';
+
+  @override
+  String get inventoryMetricLowStock => 'Low stock';
+
+  @override
+  String get inventoryMetricOutOfStock => 'Out of stock';
+
+  @override
+  String get inventoryMetricReorderValue => 'Reorder value';
+
+  @override
+  String get inventoryMetricPendingTransfers => 'Pending transfers';
+
+  @override
+  String get inventoryMetricUnitsInTransit => 'Units in transit';
+
+  @override
+  String get inventoryMetricReceivedTransfers => 'Received transfers';
+
+  @override
+  String get inventoryMetricLastTransfer => 'Last transfer';
+
+  @override
+  String get inventoryMetricOpenAudits => 'Open audits';
+
+  @override
+  String get inventoryMetricVarianceUnits => 'Net variance';
+
+  @override
+  String get inventoryMetricClosedAudits => 'Closed audits';
+
+  @override
+  String get inventoryMetricNextAudit => 'Next audit';
+
+  @override
+  String get inventoryMetricActiveBatches => 'Active batches';
+
+  @override
+  String get inventoryMetricExpiringSoon => 'Expiring soon';
+
+  @override
+  String get inventoryMetricExpiredBatches => 'Expired batches';
+
+  @override
+  String get inventoryMetricBatchValue => 'Batch value';
+
+  @override
+  String get inventoryColWarehouse => 'Warehouse';
+
+  @override
+  String get inventoryColManager => 'Manager';
+
+  @override
+  String get inventoryColCapacity => 'Capacity';
+
+  @override
+  String get inventoryColUtilization => 'Utilization';
+
+  @override
+  String get inventoryColProducts => 'Products';
+
+  @override
+  String get inventoryColProduct => 'Product';
+
+  @override
+  String get inventoryColSku => 'SKU';
+
+  @override
+  String get inventoryColOnHand => 'On hand';
+
+  @override
+  String get inventoryColReorder => 'Reorder at';
+
+  @override
+  String get inventoryColValue => 'Value';
+
+  @override
+  String get inventoryColState => 'State';
+
+  @override
+  String get inventoryColTransfer => 'Transfer';
+
+  @override
+  String get inventoryColRoute => 'Route';
+
+  @override
+  String get inventoryColUnits => 'Units';
+
+  @override
+  String get inventoryColDate => 'Date';
+
+  @override
+  String get inventoryColAudit => 'Audit';
+
+  @override
+  String get inventoryColCounter => 'Counter';
+
+  @override
+  String get inventoryColVariance => 'Variance';
+
+  @override
+  String get inventoryColBatch => 'Batch';
+
+  @override
+  String get inventoryColExpiry => 'Expiry';
+
+  @override
+  String get inventoryColQuantity => 'Quantity';
+
+  @override
+  String get inventoryColDaysLeft => 'Days left';
+
+  @override
+  String get inventoryStateHealthy => 'Healthy';
+
+  @override
+  String get inventoryStateLow => 'Low';
+
+  @override
+  String get inventoryStateOut => 'Out';
+
+  @override
+  String get inventoryTransferDraft => 'Draft';
+
+  @override
+  String get inventoryTransferTransit => 'In transit';
+
+  @override
+  String get inventoryTransferReceived => 'Received';
+
+  @override
+  String get inventoryAuditScheduled => 'Scheduled';
+
+  @override
+  String get inventoryAuditCounting => 'Counting';
+
+  @override
+  String get inventoryAuditClosed => 'Closed';
+
+  @override
+  String get inventoryBatchValid => 'Valid';
+
+  @override
+  String get inventoryBatchExpiring => 'Expiring';
+
+  @override
+  String get inventoryBatchExpired => 'Expired';
+
+  @override
+  String inventoryCapacityRatio(String used, String capacity) {
+    return '$used / $capacity';
+  }
+
+  @override
+  String inventoryCapacityUsed(int percent) {
+    return '$percent% used';
+  }
+
+  @override
+  String inventoryUnits(int count) {
+    return '$count units';
+  }
+
+  @override
+  String inventoryDaysLeft(int days) {
+    return '$days days';
+  }
+
+  @override
+  String inventoryDaysAgo(int days) {
+    return '$days days ago';
+  }
+
+  @override
+  String inventoryLowStockItems(int count) {
+    return '$count low-stock items';
+  }
+
+  @override
+  String inventoryProductsCount(int count) {
+    return '$count products';
+  }
+
+  @override
+  String get inventoryPlannedTransfersBody =>
+      'Transfer drafts will be saved to the backend once the transfers endpoint ships. Until then the drafts below are sample data and no movement is recorded.';
+
+  @override
+  String get inventoryPlannedAuditsBody =>
+      'Audit sessions are read-only for now: the counting workflow needs the audit endpoint. The sessions below are sample data.';
+
+  @override
+  String get salesTabPos => 'Point of sale';
+
+  @override
+  String get salesTabPayments => 'Payments';
+
+  @override
+  String get salesTabShifts => 'Shifts';
+
+  @override
+  String get salesTabOrders => 'Orders';
+
+  @override
+  String get salesTabCustomOrders => 'Custom orders';
+
+  @override
+  String get salesTabPromotions => 'Promotions';
+
+  @override
+  String get salesSearchPos => 'Search products or SKU';
+
+  @override
+  String get salesSearchPayments => 'Search payments, orders or customers';
+
+  @override
+  String get salesSearchShifts => 'Search shifts or cashiers';
+
+  @override
+  String get salesSearchOrders => 'Search orders or customers';
+
+  @override
+  String get salesSearchCustomOrders => 'Search custom orders or customers';
+
+  @override
+  String get salesSearchPromotions => 'Search promotions or codes';
+
+  @override
+  String get salesColPayment => 'Payment';
+
+  @override
+  String get salesColOrder => 'Order';
+
+  @override
+  String get salesColCustomer => 'Customer';
+
+  @override
+  String get salesColMethod => 'Method';
+
+  @override
+  String get salesColAmount => 'Amount';
+
+  @override
+  String get salesColStatus => 'Status';
+
+  @override
+  String get salesColDate => 'Date';
+
+  @override
+  String get salesColShift => 'Shift';
+
+  @override
+  String get salesColCashier => 'Cashier';
+
+  @override
+  String get salesColOpened => 'Opened';
+
+  @override
+  String get salesColClosed => 'Closed';
+
+  @override
+  String get salesColSales => 'Sales';
+
+  @override
+  String get salesColVariance => 'Variance';
+
+  @override
+  String get salesColItems => 'Items';
+
+  @override
+  String get salesColTotal => 'Total';
+
+  @override
+  String get salesColCustomOrder => 'Custom order';
+
+  @override
+  String get salesColDimensions => 'Dimensions';
+
+  @override
+  String get salesColDeposit => 'Deposit';
+
+  @override
+  String get salesColDue => 'Due';
+
+  @override
+  String get salesColPromotion => 'Promotion';
+
+  @override
+  String get salesColCode => 'Code';
+
+  @override
+  String get salesColUses => 'Uses';
+
+  @override
+  String get salesColWindow => 'Window';
+
+  @override
+  String get salesPayCash => 'Cash';
+
+  @override
+  String get salesPayCard => 'Card';
+
+  @override
+  String get salesPayCredit => 'Credit';
+
+  @override
+  String get salesPayWallet => 'Wallet';
+
+  @override
+  String get salesPayPaid => 'Paid';
+
+  @override
+  String get salesPayPending => 'Pending';
+
+  @override
+  String get salesPayRefunded => 'Refunded';
+
+  @override
+  String get salesPosCart => 'Current sale';
+
+  @override
+  String get salesPosEmptyCart =>
+      'The cart is empty. Add a product to start a sale.';
+
+  @override
+  String get salesPosWalkIn => 'Walk-in customer';
+
+  @override
+  String get salesPosQty => 'Qty';
+
+  @override
+  String get salesPosAdd => 'Add to cart';
+
+  @override
+  String get salesPosRemove => 'Remove';
+
+  @override
+  String get salesPosClear => 'Clear cart';
+
+  @override
+  String get salesPosSubtotal => 'Subtotal';
+
+  @override
+  String get salesPosVat => 'VAT (14%)';
+
+  @override
+  String get salesPosTotal => 'Total';
+
+  @override
+  String salesPosCharge(String amount) {
+    return 'Charge $amount';
+  }
+
+  @override
+  String get salesPosChargeMessage => 'Sample sale: no payment was processed.';
+
+  @override
+  String get salesMetricCartItems => 'Cart items';
+
+  @override
+  String get salesMetricCartSubtotal => 'Cart subtotal';
+
+  @override
+  String get salesMetricCartVat => 'VAT';
+
+  @override
+  String get salesMetricCartTotal => 'Total due';
+
+  @override
+  String get salesMetricCollected => 'Collected';
+
+  @override
+  String get salesMetricCardShare => 'Card share';
+
+  @override
+  String get salesMetricPendingCredit => 'Pending credit';
+
+  @override
+  String get salesMetricRefunds => 'Refunds';
+
+  @override
+  String get salesShiftOpen => 'Open';
+
+  @override
+  String get salesShiftClosed => 'Closed';
+
+  @override
+  String get salesMetricOpenShifts => 'Open shifts';
+
+  @override
+  String get salesMetricShiftSales => 'Shift sales';
+
+  @override
+  String get salesMetricCashDrawer => 'Cash in drawer';
+
+  @override
+  String get salesMetricCashVariance => 'Cash variance';
+
+  @override
+  String get salesOrderNew => 'New';
+
+  @override
+  String get salesOrderProcessing => 'Processing';
+
+  @override
+  String get salesOrderDelivered => 'Delivered';
+
+  @override
+  String get salesOrderCancelled => 'Cancelled';
+
+  @override
+  String get salesMetricOpenOrders => 'Open orders';
+
+  @override
+  String get salesMetricOrderValue => 'Order value';
+
+  @override
+  String get salesMetricDeliveredOrders => 'Delivered';
+
+  @override
+  String get salesMetricCancelledOrders => 'Cancelled';
+
+  @override
+  String get salesPlannedOrdersBody =>
+      'Order listing needs the sales order endpoint. The rows below are sample data and the create action stays disabled until the API ships.';
+
+  @override
+  String get salesCustomDeposit => 'Deposit paid';
+
+  @override
+  String get salesCustomProduction => 'In production';
+
+  @override
+  String get salesCustomReady => 'Ready';
+
+  @override
+  String get salesMetricOpenCustomOrders => 'Open custom orders';
+
+  @override
+  String get salesMetricCustomDeposits => 'Deposits held';
+
+  @override
+  String get salesMetricCustomReady => 'Ready for pickup';
+
+  @override
+  String get salesMetricCustomOverdue => 'Overdue';
+
+  @override
+  String get salesPlannedCustomOrdersBody =>
+      'The custom order board needs the custom order endpoint. The cards below are sample data and the create action stays disabled until the API ships.';
+
+  @override
+  String get salesPromoActive => 'Active';
+
+  @override
+  String get salesPromoScheduled => 'Scheduled';
+
+  @override
+  String get salesPromoExpired => 'Expired';
+
+  @override
+  String get salesMetricActivePromotions => 'Active promotions';
+
+  @override
+  String get salesMetricPromoRedemptions => 'Redemptions';
+
+  @override
+  String get salesMetricPromoDiscount => 'Discount given';
+
+  @override
+  String get salesMetricPromoExpiring => 'Expiring soon';
+
+  @override
+  String get salesPlannedPromotionsBody =>
+      'Promotion listing needs the promotions endpoint. The cards below are sample data and the create action stays disabled until the API ships.';
+
+  @override
+  String salesPromoOff(int percent) {
+    return '$percent% off';
+  }
+
+  @override
+  String get salesPromoWinter => 'Winter mattress sale';
+
+  @override
+  String get salesPromoPillowBundle => 'Pillow bundle';
+
+  @override
+  String get salesPromoBaseClearance => 'Base clearance';
+
+  @override
+  String get salesPromoVip => 'VIP loyalty';
+
+  @override
+  String get salesPromoNewHome => 'New home bundle';
+
+  @override
+  String get salesPromoHotel => 'Hotel contract';
+
+  @override
+  String get salesPromoClearance => 'Warehouse clearance';
+
+  @override
+  String get salesPromoRamadan => 'Ramadan offer';
 }

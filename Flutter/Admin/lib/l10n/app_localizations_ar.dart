@@ -2333,4 +2333,555 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get adminFilterAll => 'الكل';
+
+  @override
+  String get inventoryTabWarehouses => 'المخازن';
+
+  @override
+  String get inventoryTabStocks => 'أرصدة المخزون';
+
+  @override
+  String get inventoryTabTransfers => 'التحويلات';
+
+  @override
+  String get inventoryTabAudits => 'جرد المخزون';
+
+  @override
+  String get inventoryTabBatches => 'الدفعات والصلاحية';
+
+  @override
+  String get inventorySearchWarehouses => 'ابحث عن مخزن أو مسؤول';
+
+  @override
+  String get inventorySearchStocks => 'ابحث عن منتج أو رمز أو مخزن';
+
+  @override
+  String get inventorySearchTransfers => 'ابحث عن التحويلات';
+
+  @override
+  String get inventorySearchAudits => 'ابحث عن الجرد أو المعدّين';
+
+  @override
+  String get inventorySearchBatches => 'ابحث عن دفعة أو منتج';
+
+  @override
+  String get inventoryMetricWarehouses => 'المخازن';
+
+  @override
+  String get inventoryMetricProducts => 'المنتجات';
+
+  @override
+  String get inventoryMetricUnitsOnHand => 'الوحدات المتاحة';
+
+  @override
+  String get inventoryMetricCapacityUsed => 'السعة المستخدمة';
+
+  @override
+  String get inventoryMetricStockValue => 'قيمة المخزون';
+
+  @override
+  String get inventoryMetricSkus => 'أصناف';
+
+  @override
+  String get inventoryMetricLowStock => 'مخزون منخفض';
+
+  @override
+  String get inventoryMetricOutOfStock => 'نفد المخزون';
+
+  @override
+  String get inventoryMetricReorderValue => 'قيمة إعادة الطلب';
+
+  @override
+  String get inventoryMetricPendingTransfers => 'تحويلات معلقة';
+
+  @override
+  String get inventoryMetricUnitsInTransit => 'وحدات في الطريق';
+
+  @override
+  String get inventoryMetricReceivedTransfers => 'تحويلات مستلمة';
+
+  @override
+  String get inventoryMetricLastTransfer => 'آخر تحويل';
+
+  @override
+  String get inventoryMetricOpenAudits => 'جرد مفتوح';
+
+  @override
+  String get inventoryMetricVarianceUnits => 'صافي الفرق';
+
+  @override
+  String get inventoryMetricClosedAudits => 'جرد مغلق';
+
+  @override
+  String get inventoryMetricNextAudit => 'الجرد القادم';
+
+  @override
+  String get inventoryMetricActiveBatches => 'دفعات نشطة';
+
+  @override
+  String get inventoryMetricExpiringSoon => 'قرب الانتهاء';
+
+  @override
+  String get inventoryMetricExpiredBatches => 'دفعات منتهية';
+
+  @override
+  String get inventoryMetricBatchValue => 'قيمة الدفعات';
+
+  @override
+  String get inventoryColWarehouse => 'المخزن';
+
+  @override
+  String get inventoryColManager => 'المسؤول';
+
+  @override
+  String get inventoryColCapacity => 'السعة';
+
+  @override
+  String get inventoryColUtilization => 'الاستخدام';
+
+  @override
+  String get inventoryColProducts => 'المنتجات';
+
+  @override
+  String get inventoryColProduct => 'المنتج';
+
+  @override
+  String get inventoryColSku => 'الرمز';
+
+  @override
+  String get inventoryColOnHand => 'المتاح';
+
+  @override
+  String get inventoryColReorder => 'حد إعادة الطلب';
+
+  @override
+  String get inventoryColValue => 'القيمة';
+
+  @override
+  String get inventoryColState => 'الحالة';
+
+  @override
+  String get inventoryColTransfer => 'التحويل';
+
+  @override
+  String get inventoryColRoute => 'المسار';
+
+  @override
+  String get inventoryColUnits => 'الوحدات';
+
+  @override
+  String get inventoryColDate => 'التاريخ';
+
+  @override
+  String get inventoryColAudit => 'الجرد';
+
+  @override
+  String get inventoryColCounter => 'المعدّ';
+
+  @override
+  String get inventoryColVariance => 'الفرق';
+
+  @override
+  String get inventoryColBatch => 'الدفعة';
+
+  @override
+  String get inventoryColExpiry => 'الصلاحية';
+
+  @override
+  String get inventoryColQuantity => 'الكمية';
+
+  @override
+  String get inventoryColDaysLeft => 'الأيام المتبقية';
+
+  @override
+  String get inventoryStateHealthy => 'جيد';
+
+  @override
+  String get inventoryStateLow => 'منخفض';
+
+  @override
+  String get inventoryStateOut => 'نافد';
+
+  @override
+  String get inventoryTransferDraft => 'مسودة';
+
+  @override
+  String get inventoryTransferTransit => 'في الطريق';
+
+  @override
+  String get inventoryTransferReceived => 'مستلم';
+
+  @override
+  String get inventoryAuditScheduled => 'مجدول';
+
+  @override
+  String get inventoryAuditCounting => 'جارٍ الجرد';
+
+  @override
+  String get inventoryAuditClosed => 'مغلق';
+
+  @override
+  String get inventoryBatchValid => 'صالح';
+
+  @override
+  String get inventoryBatchExpiring => 'قارب الانتهاء';
+
+  @override
+  String get inventoryBatchExpired => 'منتهي';
+
+  @override
+  String inventoryCapacityRatio(String used, String capacity) {
+    return '$used / $capacity';
+  }
+
+  @override
+  String inventoryCapacityUsed(int percent) {
+    return '$percent% مستخدم';
+  }
+
+  @override
+  String inventoryUnits(int count) {
+    return '$count وحدة';
+  }
+
+  @override
+  String inventoryDaysLeft(int days) {
+    return '$days يوم';
+  }
+
+  @override
+  String inventoryDaysAgo(int days) {
+    return 'منذ $days يوم';
+  }
+
+  @override
+  String inventoryLowStockItems(int count) {
+    return '$count أصناف منخفضة';
+  }
+
+  @override
+  String inventoryProductsCount(int count) {
+    return '$count منتج';
+  }
+
+  @override
+  String get inventoryPlannedTransfersBody =>
+      'ستُحفظ مسودات التحويل في الخادم عند توفر واجهة التحويلات. حتى ذلك الحين المسودات أدناه بيانات تجريبية ولا يُسجل أي حركة.';
+
+  @override
+  String get inventoryPlannedAuditsBody =>
+      'جلسات الجرد للقراءة فقط حالياً: يحتاج سير عمل الجرد إلى واجهة الجرد. الجلسات أدناه بيانات تجريبية.';
+
+  @override
+  String get salesTabPos => 'نقطة البيع';
+
+  @override
+  String get salesTabPayments => 'المدفوعات';
+
+  @override
+  String get salesTabShifts => 'الورديات';
+
+  @override
+  String get salesTabOrders => 'الطلبات';
+
+  @override
+  String get salesTabCustomOrders => 'الطلبات المخصصة';
+
+  @override
+  String get salesTabPromotions => 'العروض';
+
+  @override
+  String get salesSearchPos => 'ابحث عن منتج أو رمز SKU';
+
+  @override
+  String get salesSearchPayments => 'ابحث في المدفوعات أو الطلبات أو العملاء';
+
+  @override
+  String get salesSearchShifts => 'ابحث في الورديات أو أمناء الصندوق';
+
+  @override
+  String get salesSearchOrders => 'ابحث في الطلبات أو العملاء';
+
+  @override
+  String get salesSearchCustomOrders => 'ابحث في الطلبات المخصصة أو العملاء';
+
+  @override
+  String get salesSearchPromotions => 'ابحث في العروض أو الأكواد';
+
+  @override
+  String get salesColPayment => 'الدفعة';
+
+  @override
+  String get salesColOrder => 'الطلب';
+
+  @override
+  String get salesColCustomer => 'العميل';
+
+  @override
+  String get salesColMethod => 'طريقة الدفع';
+
+  @override
+  String get salesColAmount => 'المبلغ';
+
+  @override
+  String get salesColStatus => 'الحالة';
+
+  @override
+  String get salesColDate => 'التاريخ';
+
+  @override
+  String get salesColShift => 'الوردية';
+
+  @override
+  String get salesColCashier => 'أمين الصندوق';
+
+  @override
+  String get salesColOpened => 'الفتح';
+
+  @override
+  String get salesColClosed => 'الإغلاق';
+
+  @override
+  String get salesColSales => 'المبيعات';
+
+  @override
+  String get salesColVariance => 'الفرق';
+
+  @override
+  String get salesColItems => 'العناصر';
+
+  @override
+  String get salesColTotal => 'الإجمالي';
+
+  @override
+  String get salesColCustomOrder => 'الطلب المخصص';
+
+  @override
+  String get salesColDimensions => 'المقاسات';
+
+  @override
+  String get salesColDeposit => 'العربون';
+
+  @override
+  String get salesColDue => 'الاستحقاق';
+
+  @override
+  String get salesColPromotion => 'العرض';
+
+  @override
+  String get salesColCode => 'الكود';
+
+  @override
+  String get salesColUses => 'الاستخدامات';
+
+  @override
+  String get salesColWindow => 'الفترة';
+
+  @override
+  String get salesPayCash => 'نقدي';
+
+  @override
+  String get salesPayCard => 'بطاقة';
+
+  @override
+  String get salesPayCredit => 'آجل';
+
+  @override
+  String get salesPayWallet => 'محفظة';
+
+  @override
+  String get salesPayPaid => 'مدفوعة';
+
+  @override
+  String get salesPayPending => 'معلقة';
+
+  @override
+  String get salesPayRefunded => 'مستردة';
+
+  @override
+  String get salesPosCart => 'البيع الحالي';
+
+  @override
+  String get salesPosEmptyCart => 'السلة فارغة. أضف منتجًا لبدء البيع.';
+
+  @override
+  String get salesPosWalkIn => 'عميل نقدي';
+
+  @override
+  String get salesPosQty => 'الكمية';
+
+  @override
+  String get salesPosAdd => 'أضف إلى السلة';
+
+  @override
+  String get salesPosRemove => 'إزالة';
+
+  @override
+  String get salesPosClear => 'إفراغ السلة';
+
+  @override
+  String get salesPosSubtotal => 'المجموع الفرعي';
+
+  @override
+  String get salesPosVat => 'ضريبة القيمة المضافة (١٤٪)';
+
+  @override
+  String get salesPosTotal => 'الإجمالي';
+
+  @override
+  String salesPosCharge(String amount) {
+    return 'تحصيل $amount';
+  }
+
+  @override
+  String get salesPosChargeMessage => 'بيع تجريبي: لم تُعالج أي دفعة.';
+
+  @override
+  String get salesMetricCartItems => 'عناصر السلة';
+
+  @override
+  String get salesMetricCartSubtotal => 'المجموع الفرعي';
+
+  @override
+  String get salesMetricCartVat => 'ضريبة القيمة المضافة';
+
+  @override
+  String get salesMetricCartTotal => 'المطلوب';
+
+  @override
+  String get salesMetricCollected => 'المحصّل';
+
+  @override
+  String get salesMetricCardShare => 'حصة البطاقات';
+
+  @override
+  String get salesMetricPendingCredit => 'آجل معلق';
+
+  @override
+  String get salesMetricRefunds => 'المستردات';
+
+  @override
+  String get salesShiftOpen => 'مفتوحة';
+
+  @override
+  String get salesShiftClosed => 'مغلقة';
+
+  @override
+  String get salesMetricOpenShifts => 'ورديات مفتوحة';
+
+  @override
+  String get salesMetricShiftSales => 'مبيعات الورديات';
+
+  @override
+  String get salesMetricCashDrawer => 'النقد في الدرج';
+
+  @override
+  String get salesMetricCashVariance => 'فرق النقد';
+
+  @override
+  String get salesOrderNew => 'جديد';
+
+  @override
+  String get salesOrderProcessing => 'قيد التنفيذ';
+
+  @override
+  String get salesOrderDelivered => 'تم التسليم';
+
+  @override
+  String get salesOrderCancelled => 'ملغي';
+
+  @override
+  String get salesMetricOpenOrders => 'طلبات مفتوحة';
+
+  @override
+  String get salesMetricOrderValue => 'قيمة الطلبات';
+
+  @override
+  String get salesMetricDeliveredOrders => 'تم تسليمها';
+
+  @override
+  String get salesMetricCancelledOrders => 'ملغاة';
+
+  @override
+  String get salesPlannedOrdersBody =>
+      'قائمة الطلبات تحتاج إلى واجهة الطلبات في الخادم. الصفوف أدناه بيانات تجريبية ويبقى إنشاء الطلب معطّلًا حتى تشغيل الواجهة.';
+
+  @override
+  String get salesCustomDeposit => 'تم دفع العربون';
+
+  @override
+  String get salesCustomProduction => 'قيد التصنيع';
+
+  @override
+  String get salesCustomReady => 'جاهز';
+
+  @override
+  String get salesMetricOpenCustomOrders => 'طلبات مخصصة مفتوحة';
+
+  @override
+  String get salesMetricCustomDeposits => 'عرابين محتجزة';
+
+  @override
+  String get salesMetricCustomReady => 'جاهز للاستلام';
+
+  @override
+  String get salesMetricCustomOverdue => 'متأخرة';
+
+  @override
+  String get salesPlannedCustomOrdersBody =>
+      'لوحة الطلبات المخصصة تحتاج إلى واجهة الطلبات المخصصة. البطاقات أدناه بيانات تجريبية ويبقى إنشاء الطلب معطّلًا حتى تشغيل الواجهة.';
+
+  @override
+  String get salesPromoActive => 'نشط';
+
+  @override
+  String get salesPromoScheduled => 'مجدول';
+
+  @override
+  String get salesPromoExpired => 'منتهي';
+
+  @override
+  String get salesMetricActivePromotions => 'عروض نشطة';
+
+  @override
+  String get salesMetricPromoRedemptions => 'مرات الاستخدام';
+
+  @override
+  String get salesMetricPromoDiscount => 'قيمة الخصومات';
+
+  @override
+  String get salesMetricPromoExpiring => 'تنتهي قريبًا';
+
+  @override
+  String get salesPlannedPromotionsBody =>
+      'قائمة العروض تحتاج إلى واجهة العروض. البطاقات أدناه بيانات تجريبية ويبقى إنشاء العرض معطّلًا حتى تشغيل الواجهة.';
+
+  @override
+  String salesPromoOff(int percent) {
+    return 'خصم $percent%';
+  }
+
+  @override
+  String get salesPromoWinter => 'تخفيضات الشتاء للمراتب';
+
+  @override
+  String get salesPromoPillowBundle => 'باقة الوسائد';
+
+  @override
+  String get salesPromoBaseClearance => 'تصفية القواعد';
+
+  @override
+  String get salesPromoVip => 'ولاء كبار العملاء';
+
+  @override
+  String get salesPromoNewHome => 'باقة المنزل الجديد';
+
+  @override
+  String get salesPromoHotel => 'عقد الفنادق';
+
+  @override
+  String get salesPromoClearance => 'تصفية المخزن';
+
+  @override
+  String get salesPromoRamadan => 'عرض رمضان';
 }
