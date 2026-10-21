@@ -25,6 +25,16 @@ enum _PermissionRole { admin, manager, cashier, warehouse }
 
 const _storageKey = 'admin.permissions.matrix.v1';
 
+/// Session cache of the last known grants.
+///
+/// Tab switches rebuild the panel, so without this cache a remount would paint
+/// the defaults for a frame before the device copy is read back.
+Map<_PermissionRole, Set<String>>? _sessionGrants;
+
+/// Clears the in-memory cache so tests start from the documented defaults.
+@visibleForTesting
+void resetPermissionsSessionCache() => _sessionGrants = null;
+
 const _modules = <AdminModuleId>[
   AdminModuleId.catalog,
   AdminModuleId.inventory,
@@ -49,19 +59,25 @@ final class PermissionsMatrixPanel extends HookWidget {
   Widget build(BuildContext context) {
     final l10n = context.localeKeys;
     final role = useState(_PermissionRole.manager);
+    final touched = useRef(false);
     final grants = useState<Map<_PermissionRole, Set<String>>>(
-      _defaultGrants(),
+      _sessionGrants ?? _defaultGrants(),
     );
     useEffect(() {
+      if (_sessionGrants != null) return null;
+
       unawaited(() async {
         final stored = await _readGrants();
-        if (stored == null || !context.mounted) return;
+        if (stored == null || !context.mounted || touched.value) return;
+        _sessionGrants = stored;
         grants.value = stored;
       }());
       return null;
     }, const <Object>[]);
 
     void persist(Map<_PermissionRole, Set<String>> value) {
+      touched.value = true;
+      _sessionGrants = value;
       grants.value = value;
       unawaited(_writeGrants(value));
     }

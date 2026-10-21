@@ -7,6 +7,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 void main() {
+  setUp(resetPermissionsSessionCache);
+
   Future<void> pumpMainPage(
     WidgetTester tester, {
     required Size surfaceSize,
@@ -25,6 +27,33 @@ void main() {
     );
     await tester.pumpAndSettle();
   }
+
+  Future<void> openIdentityTab(WidgetTester tester, String label) async {
+    final tab = find.text(label);
+    await tester.ensureVisible(tab);
+    await tester.pumpAndSettle();
+    await tester.tap(tab);
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> openIdentityPermissions(WidgetTester tester) async {
+    await pumpMainPage(tester, surfaceSize: const Size(411, 900));
+
+    final rail = find.byType(NavigationRail);
+    final identity = find.descendant(of: rail, matching: find.text('Identity'));
+
+    await tester.ensureVisible(identity);
+    await tester.pumpAndSettle();
+    await tester.tap(identity);
+    await tester.pumpAndSettle();
+
+    await openIdentityTab(tester, 'Roles and the permissions matrix');
+  }
+
+  final permissionChecks = find.descendant(
+    of: find.byType(PermissionsMatrixPanel),
+    matching: find.byIcon(LucideIcons.check),
+  );
 
   testWidgets('rail lays out extended on a wide window', (tester) async {
     await pumpMainPage(tester, surfaceSize: const Size(1600, 900));
@@ -130,31 +159,12 @@ void main() {
   testWidgets('identity permissions tab renders the local matrix', (
     tester,
   ) async {
-    await pumpMainPage(tester, surfaceSize: const Size(411, 900));
-
-    final rail = find.byType(NavigationRail);
-    final identity = find.descendant(of: rail, matching: find.text('Identity'));
-
-    await tester.ensureVisible(identity);
-    await tester.pumpAndSettle();
-    await tester.tap(identity);
-    await tester.pumpAndSettle();
-
-    final permissionsTab = find.text('Roles and the permissions matrix');
-    await tester.ensureVisible(permissionsTab);
-    await tester.pumpAndSettle();
-    await tester.tap(permissionsTab);
-    await tester.pumpAndSettle();
+    await openIdentityPermissions(tester);
 
     expect(tester.takeException(), isNull);
     expect(find.text('Permissions matrix'), findsOneWidget);
 
-    final matrix = find.byType(PermissionsMatrixPanel);
-    final checks = find.descendant(
-      of: matrix,
-      matching: find.byIcon(LucideIcons.check),
-    );
-    final grantedBefore = checks.evaluate().length;
+    final grantedBefore = permissionChecks.evaluate().length;
 
     final hrDelete = find.byKey(const ValueKey('hr.delete'));
     await tester.ensureVisible(hrDelete);
@@ -163,13 +173,57 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(tester.takeException(), isNull);
-    expect(checks.evaluate().length, grantedBefore + 1);
+    expect(permissionChecks.evaluate().length, grantedBefore + 1);
+  });
+
+  testWidgets('permissions keep their grants when the tab is reopened', (
+    tester,
+  ) async {
+    await openIdentityPermissions(tester);
+
+    final hrDelete = find.byKey(const ValueKey('hr.delete'));
+    await tester.ensureVisible(hrDelete);
+    await tester.pumpAndSettle();
+    await tester.tap(hrDelete);
+    await tester.pumpAndSettle();
+
+    final granted = permissionChecks.evaluate().length;
+
+    await openIdentityTab(tester, 'Manage branches and showrooms');
+    await openIdentityTab(tester, 'Roles and the permissions matrix');
+
+    expect(tester.takeException(), isNull);
+    expect(permissionChecks.evaluate().length, granted);
+  });
+
+  testWidgets('permissions matrix fits a narrow RTL window', (tester) async {
+    tester.view.physicalSize = const Size(360, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    await tester.pumpWidget(
+      const MaterialApp(
+        locale: Locale('ar'),
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: SingleChildScrollView(
+            padding: EdgeInsets.all(12),
+            child: PermissionsMatrixPanel(),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(tester.takeException(), isNull);
+    expect(find.text('مصفوفة الصلاحيات'), findsOneWidget);
   });
 
   testWidgets('planned sections show the pill and disable the create action', (
     tester,
-  ) async {
-    await pumpMainPage(tester, surfaceSize: const Size(411, 900));
+  ) async {    await pumpMainPage(tester, surfaceSize: const Size(411, 900));
 
     final rail = find.byType(NavigationRail);
     final crm = find.descendant(of: rail, matching: find.text('CRM'));

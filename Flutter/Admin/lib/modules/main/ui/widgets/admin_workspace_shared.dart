@@ -67,24 +67,18 @@ final class AdminWorkspaceSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.localeKeys;
 
-    return Align(
-      alignment: AlignmentDirectional.centerStart,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 480),
-        child: SearchBarComponent(
-          controller: search,
-          hintText: hintText ?? l10n.wireframeSearch,
-          trailing: hasQuery
-              ? [
-                  IconButton(
-                    onPressed: onClear,
-                    tooltip: l10n.sectionClearSearch,
-                    icon: const Icon(LucideIcons.x, size: AppIconSizes.small),
-                  ),
-                ]
-              : null,
-        ),
-      ),
+    return SearchBarComponent(
+      controller: search,
+      hintText: hintText ?? l10n.wireframeSearch,
+      trailing: hasQuery
+          ? [
+              IconButton(
+                onPressed: onClear,
+                tooltip: l10n.sectionClearSearch,
+                icon: const Icon(LucideIcons.x, size: AppIconSizes.small),
+              ),
+            ]
+          : null,
     );
   }
 }
