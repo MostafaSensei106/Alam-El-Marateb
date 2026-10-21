@@ -2884,4 +2884,450 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get salesPromoRamadan => 'عرض رمضان';
+
+  @override
+  String get navOperations => 'العمليات';
+
+  @override
+  String get operationsTitle => 'العمليات والفروع';
+
+  @override
+  String get operationsDescription =>
+      'المهام الداخلية وحمل الفروع وحجوزات العملاء';
+
+  @override
+  String get operationsFeature1 => 'مهام لشخص أو مجموعة أو فرق الفروع';
+
+  @override
+  String get operationsFeature2 => 'عبء العمل بالفروع والمتأخرات ونسبة الإنجاز';
+
+  @override
+  String get operationsFeature3 => 'حجوزات العملاء للبضائع والمقاسات المخصصة';
+
+  @override
+  String get opsTabTasks => 'المهام';
+
+  @override
+  String get opsTabBranches => 'حمل الفروع';
+
+  @override
+  String get opsTabHolds => 'حجوزات العملاء';
+
+  @override
+  String get opsSearchTasks => 'ابحث في المهام أو الأشخاص أو الفروع';
+
+  @override
+  String get opsSearchBranches => 'ابحث في الفروع أو المديرين';
+
+  @override
+  String get opsSearchHolds => 'ابحث في الحجوزات أو العملاء أو الأصناف';
+
+  @override
+  String get opsColTask => 'المهمة';
+
+  @override
+  String get opsColAssignee => 'المسند إليه';
+
+  @override
+  String get opsColBranch => 'الفرع';
+
+  @override
+  String get opsColPriority => 'الأولوية';
+
+  @override
+  String get opsColDue => 'الاستحقاق';
+
+  @override
+  String get opsColStatus => 'الحالة';
+
+  @override
+  String get opsColChecklist => 'قائمة الخطوات';
+
+  @override
+  String get opsColCustomer => 'العميل';
+
+  @override
+  String get opsColItem => 'الصنف';
+
+  @override
+  String get opsColDeposit => 'العربون';
+
+  @override
+  String get opsColExpected => 'الوصول المتوقع';
+
+  @override
+  String get opsStatusOpen => 'مفتوحة';
+
+  @override
+  String get opsStatusInProgress => 'قيد التنفيذ';
+
+  @override
+  String get opsStatusBlocked => 'متوقفة';
+
+  @override
+  String get opsStatusDone => 'مكتملة';
+
+  @override
+  String get opsHoldWaiting => 'في الانتظار';
+
+  @override
+  String get opsHoldArrived => 'وصل';
+
+  @override
+  String get opsHoldReady => 'جاهز';
+
+  @override
+  String get opsHoldCancelled => 'ملغي';
+
+  @override
+  String get opsPriorityLow => 'منخفضة';
+
+  @override
+  String get opsPriorityNormal => 'عادية';
+
+  @override
+  String get opsPriorityHigh => 'مرتفعة';
+
+  @override
+  String get opsPriorityUrgent => 'عاجلة';
+
+  @override
+  String get opsAssigneePerson => 'شخص';
+
+  @override
+  String get opsAssigneeGroup => 'مجموعة';
+
+  @override
+  String get opsAssigneeBranch => 'فرع';
+
+  @override
+  String get opsTaskDetail => 'تفاصيل المهمة';
+
+  @override
+  String get opsTaskConditions => 'السياق والشروط';
+
+  @override
+  String get opsTaskChecklist => 'قائمة المهام';
+
+  @override
+  String get opsTaskChecklistEmpty => 'لا توجد خطوات لهذه المهمة.';
+
+  @override
+  String opsTaskChecklistProgress(int done, int total) {
+    return 'تم $done من $total';
+  }
+
+  @override
+  String get opsAssignedTo => 'مسندة إلى';
+
+  @override
+  String get opsBranchesLabel => 'الفروع';
+
+  @override
+  String get opsDueToday => 'مستحقة اليوم';
+
+  @override
+  String get opsDueTomorrow => 'مستحقة غدًا';
+
+  @override
+  String opsDaysOverdue(int days) {
+    return 'متأخرة $days يومًا';
+  }
+
+  @override
+  String opsDaysLeft(int days) {
+    return 'متبقي $days يومًا';
+  }
+
+  @override
+  String get opsExpectedToday => 'متوقع وصوله اليوم';
+
+  @override
+  String get opsMetricOpenTasks => 'مهام مفتوحة';
+
+  @override
+  String get opsMetricDueToday => 'مستحقة اليوم';
+
+  @override
+  String get opsMetricOverdue => 'متأخرة';
+
+  @override
+  String get opsMetricBlocked => 'متوقفة';
+
+  @override
+  String get opsMetricBranches => 'الفروع';
+
+  @override
+  String get opsMetricBranchOpen => 'مهام مفتوحة';
+
+  @override
+  String get opsMetricBranchOverdue => 'مهام متأخرة';
+
+  @override
+  String get opsMetricBranchHolds => 'حجوزات منتظرة';
+
+  @override
+  String get opsMetricWaiting => 'حجوزات منتظرة';
+
+  @override
+  String get opsMetricArriving => 'تصل هذا الأسبوع';
+
+  @override
+  String get opsMetricDeposits => 'عرابين محتجزة';
+
+  @override
+  String get opsMetricReady => 'جاهزة للاستلام';
+
+  @override
+  String get opsNewTask => 'مهمة جديدة';
+
+  @override
+  String get opsCreateTask => 'إنشاء المهمة';
+
+  @override
+  String get opsClose => 'إغلاق';
+
+  @override
+  String get opsTaskTitle => 'عنوان المهمة';
+
+  @override
+  String get opsTaskTitleHint => 'ما المطلوب تنفيذه؟';
+
+  @override
+  String get opsTaskContext => 'السياق والشروط';
+
+  @override
+  String get opsTaskContextHint =>
+      'أضف التفاصيل والقيود التي يحتاجها المسند إليه';
+
+  @override
+  String get opsAssignTo => 'الإسناد إلى';
+
+  @override
+  String get opsChooseAssignee => 'اختر من يتولى المهمة';
+
+  @override
+  String get opsChooseBranch => 'الفرع';
+
+  @override
+  String get opsChecklistHint => 'خطوة واحدة في كل سطر';
+
+  @override
+  String get opsDueDate => 'تاريخ الاستحقاق';
+
+  @override
+  String get opsNoAssignees => 'اختر مسندًا إليه واحدًا على الأقل.';
+
+  @override
+  String get opsNoBranches => 'اختر فرعًا واحدًا على الأقل.';
+
+  @override
+  String get opsTaskCreated => 'تم إنشاء المهمة.';
+
+  @override
+  String get opsBranchManager => 'المدير';
+
+  @override
+  String opsBranchOpenTasks(int count) {
+    return '$count مفتوحة';
+  }
+
+  @override
+  String opsBranchOverdueTasks(int count) {
+    return '$count متأخرة';
+  }
+
+  @override
+  String opsBranchHolds(int count) {
+    return '$count حجوزات';
+  }
+
+  @override
+  String opsBranchTeam(int count) {
+    return '$count أشخاص';
+  }
+
+  @override
+  String get opsBranchOnTrack => 'منتظم';
+
+  @override
+  String get opsBranchBusy => 'مزدحم';
+
+  @override
+  String get opsBranchOverloaded => 'محمّل زيادة';
+
+  @override
+  String get opsBranchCompletion => 'الإنجاز';
+
+  @override
+  String get opsHoldStockItem => 'صنف من المخزن';
+
+  @override
+  String get opsHoldCustomSize => 'مقاس مخصص';
+
+  @override
+  String opsSizeCustom(int width, int length) {
+    return '$width × $length سم';
+  }
+
+  @override
+  String get opsPlannedHoldsTitle => 'حجوزات بانتظار الواجهة الخلفية';
+
+  @override
+  String get opsPlannedHoldsBody =>
+      'حجز البضائع والمقاسات المخصصة يعمل في الواجهة. سيتم تشغيل حفظ الحجز عند إتاحة واجهة الحجوزات في المخزون.';
+
+  @override
+  String get opsPerson1 => 'هالة مصطفى';
+
+  @override
+  String get opsPerson2 => 'رامي فؤاد';
+
+  @override
+  String get opsPerson3 => 'دينا سمير';
+
+  @override
+  String get opsPerson4 => 'مصطفى عادل';
+
+  @override
+  String get opsPerson5 => 'ندى شريف';
+
+  @override
+  String get opsPerson6 => 'شريف كامل';
+
+  @override
+  String get opsGroup1 => 'فريق البيع';
+
+  @override
+  String get opsGroup2 => 'فريق المخزن';
+
+  @override
+  String get opsGroup3 => 'فريق التنجيد';
+
+  @override
+  String get opsGroup4 => 'فريق الدعم';
+
+  @override
+  String get opsTask1Title => 'تجهيز معرض طنطا للمجموعة الجديدة';
+
+  @override
+  String get opsTask1Context =>
+      'انقل معروضات المخزن القديمة إلى الغرفة الخلفية، وبخّر ألواح القماش وصوّر النتيجة قبل وصول المجموعة يوم الخميس.';
+
+  @override
+  String get opsTask2Title => 'تأكيد مواعيد تسليم عطلة القاهرة';
+
+  @override
+  String get opsTask2Context =>
+      'اتصل بكل طلب مجدول الجمعة والسبت، وأكد العنوان وسجل أي قيود على البوابة أو المصعد قبل طباعة ورقة المندوب.';
+
+  @override
+  String get opsTask3Title => 'إنهاء جدول أسعار المقاسات المخصصة للإسكندرية';
+
+  @override
+  String get opsTask3Context =>
+      'أضف تكاليف الإسفنج والأغلفة لعام 2026، وقرّب سعر كل مقاس إلى أقرب 50 جنيهًا وأرسل الجدول لمدير الفرع للاعتماد.';
+
+  @override
+  String get opsTask4Title => 'جرد أغلفة المراتب في المنصورة';
+
+  @override
+  String get opsTask4Context =>
+      'الجرد متأخر أسبوعين. اجرد كل مقاس، وسجل الفروق مقابل ورقة المخزون وحدد أي غلاف ما زال محتجزًا لعميل.';
+
+  @override
+  String get opsTask5Title => 'استلام شحنة الإسفنج في طنطا';
+
+  @override
+  String get opsTask5Context =>
+      'طابق إذن التسليم مع أمر الشراء، وافحص اللفائف من التمزق وسلّم الإذن الموقّع للحسابات.';
+
+  @override
+  String get opsTask6Title => 'إنهاء حجز القاهرة لمقاس 180×200';
+
+  @override
+  String get opsTask6Context =>
+      'دفع العميل العربون منذ ثلاثة أسابيع. أكد موعد المورد، واعرض وحدة بديلة وحدّث العميل قبل نهاية اليوم.';
+
+  @override
+  String get opsTask7Title => 'متابعة شكاوى التسليم في الإسكندرية';
+
+  @override
+  String get opsTask7Context =>
+      'أبلغ ثلاثة عملاء عن تأخر التسليم الأسبوع الماضي. اتصل بكل منهم، وسجل السبب واتفق على تعويض رمزي مع الدعم.';
+
+  @override
+  String get opsTask8Title => 'تسعير عرض الربيع في المنصورة';
+
+  @override
+  String get opsTask8Context =>
+      'أنشئ باقة لوسادتين وغطاء واقٍ، وقارنها بعرض القاهرة وحافظ على هامش أعلى من 25 بالمائة.';
+
+  @override
+  String get opsTask9Title => 'اعتماد قائمة تسليم النقد في طنطا';
+
+  @override
+  String get opsTask9Context =>
+      'قابل أمناء الصندوق، وأغلق الثغرات في تسليم المساء وحدّث لوحة الفرع قبل الوردية التالية.';
+
+  @override
+  String get opsTask10Title => 'إنهاء الطلب المخصص C-2214 في القاهرة';
+
+  @override
+  String get opsTask10Context =>
+      'تم قص الغلاف. افحص الخياطة، وغلّف المرتبة واتصل بالعميل واحجز موعد التسليم.';
+
+  @override
+  String get opsStep1 => 'راجع ورقة التسليم';
+
+  @override
+  String get opsStep2 => 'تحقق من المخزون المتاح';
+
+  @override
+  String get opsStep3 => 'اتصل بالعميل';
+
+  @override
+  String get opsStep4 => 'أكد مواعيد التسليم';
+
+  @override
+  String get opsStep5 => 'حدّث جدول الأسعار';
+
+  @override
+  String get opsStep6 => 'اجرد الوحدات';
+
+  @override
+  String get opsStep7 => 'سجل أي فروق';
+
+  @override
+  String get opsStep8 => 'استلم الشحنة';
+
+  @override
+  String get opsStep9 => 'افحص لفائف الإسفنج';
+
+  @override
+  String get opsStep10 => 'أبلغ فريق البيع';
+
+  @override
+  String get opsStep11 => 'جهّز عينات القماش';
+
+  @override
+  String get opsStep12 => 'صوّر النتيجة';
+
+  @override
+  String get opsStep13 => 'احجز المندوب';
+
+  @override
+  String get opsStep14 => 'اطبع ملصقات المقاسات';
+
+  @override
+  String get opsStep15 => 'تحقق من العربون';
+
+  @override
+  String get opsStep16 => 'أفرغ منطقة الكاشير';
+
+  @override
+  String get opsStep17 => 'حدّث لوحة الفرع';
+
+  @override
+  String get opsStep18 => 'أكد مع مدير الفرع';
 }

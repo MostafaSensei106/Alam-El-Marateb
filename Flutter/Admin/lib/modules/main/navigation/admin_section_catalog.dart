@@ -27,6 +27,7 @@ abstract final class AdminSectionCatalog {
     'sales.orders',
     'sales.custom-orders',
     'sales.promotions',
+    'operations.holds',
     'purchasing.shipments',
     'purchasing.invoices',
     'crm.warranties',
@@ -39,6 +40,8 @@ abstract final class AdminSectionCatalog {
 
   static const Set<String> _local = {
     'catalog.meter-pricing',
+    'operations.tasks',
+    'operations.branches',
     'profile.details',
     'profile.edit',
     'profile.password',

@@ -2910,4 +2910,452 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get salesPromoRamadan => 'Ramadan offer';
+
+  @override
+  String get navOperations => 'Operations';
+
+  @override
+  String get operationsTitle => 'Operations & branches';
+
+  @override
+  String get operationsDescription =>
+      'Internal tasks, branch load and customer holds';
+
+  @override
+  String get operationsFeature1 =>
+      'Tasks for a person, a group or branch teams';
+
+  @override
+  String get operationsFeature2 =>
+      'Branch workload, overdue work and completion';
+
+  @override
+  String get operationsFeature3 => 'Customer holds for goods and custom sizes';
+
+  @override
+  String get opsTabTasks => 'Tasks';
+
+  @override
+  String get opsTabBranches => 'Branch load';
+
+  @override
+  String get opsTabHolds => 'Customer holds';
+
+  @override
+  String get opsSearchTasks => 'Search tasks, people or branches';
+
+  @override
+  String get opsSearchBranches => 'Search branches or managers';
+
+  @override
+  String get opsSearchHolds => 'Search holds, customers or items';
+
+  @override
+  String get opsColTask => 'Task';
+
+  @override
+  String get opsColAssignee => 'Assignee';
+
+  @override
+  String get opsColBranch => 'Branch';
+
+  @override
+  String get opsColPriority => 'Priority';
+
+  @override
+  String get opsColDue => 'Due';
+
+  @override
+  String get opsColStatus => 'Status';
+
+  @override
+  String get opsColChecklist => 'Checklist';
+
+  @override
+  String get opsColCustomer => 'Customer';
+
+  @override
+  String get opsColItem => 'Item';
+
+  @override
+  String get opsColDeposit => 'Deposit';
+
+  @override
+  String get opsColExpected => 'Expected';
+
+  @override
+  String get opsStatusOpen => 'Open';
+
+  @override
+  String get opsStatusInProgress => 'In progress';
+
+  @override
+  String get opsStatusBlocked => 'Blocked';
+
+  @override
+  String get opsStatusDone => 'Done';
+
+  @override
+  String get opsHoldWaiting => 'Waiting';
+
+  @override
+  String get opsHoldArrived => 'Arrived';
+
+  @override
+  String get opsHoldReady => 'Ready';
+
+  @override
+  String get opsHoldCancelled => 'Cancelled';
+
+  @override
+  String get opsPriorityLow => 'Low';
+
+  @override
+  String get opsPriorityNormal => 'Normal';
+
+  @override
+  String get opsPriorityHigh => 'High';
+
+  @override
+  String get opsPriorityUrgent => 'Urgent';
+
+  @override
+  String get opsAssigneePerson => 'Person';
+
+  @override
+  String get opsAssigneeGroup => 'Group';
+
+  @override
+  String get opsAssigneeBranch => 'Branch';
+
+  @override
+  String get opsTaskDetail => 'Task details';
+
+  @override
+  String get opsTaskConditions => 'Context and conditions';
+
+  @override
+  String get opsTaskChecklist => 'To-do list';
+
+  @override
+  String get opsTaskChecklistEmpty => 'No checklist items for this task.';
+
+  @override
+  String opsTaskChecklistProgress(int done, int total) {
+    return '$done of $total done';
+  }
+
+  @override
+  String get opsAssignedTo => 'Assigned to';
+
+  @override
+  String get opsBranchesLabel => 'Branches';
+
+  @override
+  String get opsDueToday => 'Due today';
+
+  @override
+  String get opsDueTomorrow => 'Due tomorrow';
+
+  @override
+  String opsDaysOverdue(int days) {
+    return '$days days overdue';
+  }
+
+  @override
+  String opsDaysLeft(int days) {
+    return '$days days left';
+  }
+
+  @override
+  String get opsExpectedToday => 'Expected today';
+
+  @override
+  String get opsMetricOpenTasks => 'Open tasks';
+
+  @override
+  String get opsMetricDueToday => 'Due today';
+
+  @override
+  String get opsMetricOverdue => 'Overdue';
+
+  @override
+  String get opsMetricBlocked => 'Blocked';
+
+  @override
+  String get opsMetricBranches => 'Branches';
+
+  @override
+  String get opsMetricBranchOpen => 'Open tasks';
+
+  @override
+  String get opsMetricBranchOverdue => 'Overdue tasks';
+
+  @override
+  String get opsMetricBranchHolds => 'Waiting holds';
+
+  @override
+  String get opsMetricWaiting => 'Waiting holds';
+
+  @override
+  String get opsMetricArriving => 'Arriving this week';
+
+  @override
+  String get opsMetricDeposits => 'Deposits held';
+
+  @override
+  String get opsMetricReady => 'Ready for pickup';
+
+  @override
+  String get opsNewTask => 'New task';
+
+  @override
+  String get opsCreateTask => 'Create task';
+
+  @override
+  String get opsClose => 'Close';
+
+  @override
+  String get opsTaskTitle => 'Task title';
+
+  @override
+  String get opsTaskTitleHint => 'What needs to happen?';
+
+  @override
+  String get opsTaskContext => 'Context and conditions';
+
+  @override
+  String get opsTaskContextHint =>
+      'Add the details and constraints the assignee needs';
+
+  @override
+  String get opsAssignTo => 'Assign to';
+
+  @override
+  String get opsChooseAssignee => 'Choose who owns the task';
+
+  @override
+  String get opsChooseBranch => 'Branch';
+
+  @override
+  String get opsChecklistHint => 'One step per line';
+
+  @override
+  String get opsDueDate => 'Due date';
+
+  @override
+  String get opsNoAssignees => 'Pick at least one assignee.';
+
+  @override
+  String get opsNoBranches => 'Pick at least one branch.';
+
+  @override
+  String get opsTaskCreated => 'Task created.';
+
+  @override
+  String get opsBranchManager => 'Manager';
+
+  @override
+  String opsBranchOpenTasks(int count) {
+    return '$count open';
+  }
+
+  @override
+  String opsBranchOverdueTasks(int count) {
+    return '$count overdue';
+  }
+
+  @override
+  String opsBranchHolds(int count) {
+    return '$count holds';
+  }
+
+  @override
+  String opsBranchTeam(int count) {
+    return '$count people';
+  }
+
+  @override
+  String get opsBranchOnTrack => 'On track';
+
+  @override
+  String get opsBranchBusy => 'Busy';
+
+  @override
+  String get opsBranchOverloaded => 'Overloaded';
+
+  @override
+  String get opsBranchCompletion => 'Completion';
+
+  @override
+  String get opsHoldStockItem => 'Stock item';
+
+  @override
+  String get opsHoldCustomSize => 'Custom size';
+
+  @override
+  String opsSizeCustom(int width, int length) {
+    return '$width × $length cm';
+  }
+
+  @override
+  String get opsPlannedHoldsTitle => 'Holds awaiting the backend';
+
+  @override
+  String get opsPlannedHoldsBody =>
+      'Reserving goods and custom sizes already works in the UI. Saving a hold will be enabled when the inventory endpoint exposes reservations.';
+
+  @override
+  String get opsPerson1 => 'Hala Mostafa';
+
+  @override
+  String get opsPerson2 => 'Rami Fouad';
+
+  @override
+  String get opsPerson3 => 'Dina Samir';
+
+  @override
+  String get opsPerson4 => 'Mostafa Adel';
+
+  @override
+  String get opsPerson5 => 'Nada Sherif';
+
+  @override
+  String get opsPerson6 => 'Sherif Kamel';
+
+  @override
+  String get opsGroup1 => 'Sales team';
+
+  @override
+  String get opsGroup2 => 'Warehouse team';
+
+  @override
+  String get opsGroup3 => 'Tailoring team';
+
+  @override
+  String get opsGroup4 => 'Support team';
+
+  @override
+  String get opsTask1Title => 'Reset the Tanta showroom for the new collection';
+
+  @override
+  String get opsTask1Context =>
+      'Move the old display stock to the back room, steam the fabric panels and photograph the result before the collection lands on Thursday.';
+
+  @override
+  String get opsTask2Title => 'Confirm the Cairo weekend delivery slots';
+
+  @override
+  String get opsTask2Context =>
+      'Call every order scheduled for Friday and Saturday, confirm the address and note any gate or elevator restrictions before the courier sheet is printed.';
+
+  @override
+  String get opsTask3Title => 'Finish the Alexandria custom size price sheet';
+
+  @override
+  String get opsTask3Context =>
+      'Add the 2026 foam and cover costs, round each size to the nearest 50 EGP and send the sheet to the branch manager for approval.';
+
+  @override
+  String get opsTask4Title => 'Count the Mansoura mattress covers';
+
+  @override
+  String get opsTask4Context =>
+      'The count is two weeks late. Count every size, log variances against the stock sheet and flag any cover that is still in a customer hold.';
+
+  @override
+  String get opsTask5Title => 'Receive the foam shipment at Tanta';
+
+  @override
+  String get opsTask5Context =>
+      'Check the delivery note against the purchase order, inspect the rolls for tears and hand the signed note to accounting.';
+
+  @override
+  String get opsTask6Title => 'Resolve the Cairo hold for the 180×200 size';
+
+  @override
+  String get opsTask6Context =>
+      'The customer paid a deposit three weeks ago. Confirm the supplier date, offer a loan unit and update the customer before the end of the day.';
+
+  @override
+  String get opsTask7Title => 'Follow up on the Alexandria delivery complaints';
+
+  @override
+  String get opsTask7Context =>
+      'Three customers reported late arrivals last week. Call each one, log the reason and agree a goodwill gesture with support.';
+
+  @override
+  String get opsTask8Title => 'Price the Mansoura spring promotion';
+
+  @override
+  String get opsTask8Context =>
+      'Build a bundle for two pillows and a protector, compare it with the Cairo promotion and keep the margin above 25 percent.';
+
+  @override
+  String get opsTask9Title => 'Agree the Tanta cash handover checklist';
+
+  @override
+  String get opsTask9Context =>
+      'Meet the cashiers, close the gaps in the evening handover and update the branch board before the next shift.';
+
+  @override
+  String get opsTask10Title => 'Finish the Cairo custom order C-2214';
+
+  @override
+  String get opsTask10Context =>
+      'The cover is cut. Check the stitching, wrap the mattress, call the customer and book the delivery slot.';
+
+  @override
+  String get opsStep1 => 'Review the handover sheet';
+
+  @override
+  String get opsStep2 => 'Check stock on hand';
+
+  @override
+  String get opsStep3 => 'Call the customer';
+
+  @override
+  String get opsStep4 => 'Confirm delivery slots';
+
+  @override
+  String get opsStep5 => 'Update the price sheet';
+
+  @override
+  String get opsStep6 => 'Count the units';
+
+  @override
+  String get opsStep7 => 'Log any variance';
+
+  @override
+  String get opsStep8 => 'Receive the shipment';
+
+  @override
+  String get opsStep9 => 'Inspect the foam rolls';
+
+  @override
+  String get opsStep10 => 'Notify the sales team';
+
+  @override
+  String get opsStep11 => 'Prepare the fabric samples';
+
+  @override
+  String get opsStep12 => 'Photograph the result';
+
+  @override
+  String get opsStep13 => 'Book the courier';
+
+  @override
+  String get opsStep14 => 'Print the size labels';
+
+  @override
+  String get opsStep15 => 'Verify the deposit';
+
+  @override
+  String get opsStep16 => 'Clear the counter area';
+
+  @override
+  String get opsStep17 => 'Update the branch board';
+
+  @override
+  String get opsStep18 => 'Confirm with the branch manager';
 }

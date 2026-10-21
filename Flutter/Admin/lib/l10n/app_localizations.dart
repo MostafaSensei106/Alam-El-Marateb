@@ -5568,6 +5568,840 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Ramadan offer'**
   String get salesPromoRamadan;
+
+  /// No description provided for @navOperations.
+  ///
+  /// In en, this message translates to:
+  /// **'Operations'**
+  String get navOperations;
+
+  /// No description provided for @operationsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Operations & branches'**
+  String get operationsTitle;
+
+  /// No description provided for @operationsDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Internal tasks, branch load and customer holds'**
+  String get operationsDescription;
+
+  /// No description provided for @operationsFeature1.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks for a person, a group or branch teams'**
+  String get operationsFeature1;
+
+  /// No description provided for @operationsFeature2.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch workload, overdue work and completion'**
+  String get operationsFeature2;
+
+  /// No description provided for @operationsFeature3.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer holds for goods and custom sizes'**
+  String get operationsFeature3;
+
+  /// No description provided for @opsTabTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Tasks'**
+  String get opsTabTasks;
+
+  /// No description provided for @opsTabBranches.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch load'**
+  String get opsTabBranches;
+
+  /// No description provided for @opsTabHolds.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer holds'**
+  String get opsTabHolds;
+
+  /// No description provided for @opsSearchTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Search tasks, people or branches'**
+  String get opsSearchTasks;
+
+  /// No description provided for @opsSearchBranches.
+  ///
+  /// In en, this message translates to:
+  /// **'Search branches or managers'**
+  String get opsSearchBranches;
+
+  /// No description provided for @opsSearchHolds.
+  ///
+  /// In en, this message translates to:
+  /// **'Search holds, customers or items'**
+  String get opsSearchHolds;
+
+  /// No description provided for @opsColTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Task'**
+  String get opsColTask;
+
+  /// No description provided for @opsColAssignee.
+  ///
+  /// In en, this message translates to:
+  /// **'Assignee'**
+  String get opsColAssignee;
+
+  /// No description provided for @opsColBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get opsColBranch;
+
+  /// No description provided for @opsColPriority.
+  ///
+  /// In en, this message translates to:
+  /// **'Priority'**
+  String get opsColPriority;
+
+  /// No description provided for @opsColDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get opsColDue;
+
+  /// No description provided for @opsColStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get opsColStatus;
+
+  /// No description provided for @opsColChecklist.
+  ///
+  /// In en, this message translates to:
+  /// **'Checklist'**
+  String get opsColChecklist;
+
+  /// No description provided for @opsColCustomer.
+  ///
+  /// In en, this message translates to:
+  /// **'Customer'**
+  String get opsColCustomer;
+
+  /// No description provided for @opsColItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Item'**
+  String get opsColItem;
+
+  /// No description provided for @opsColDeposit.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposit'**
+  String get opsColDeposit;
+
+  /// No description provided for @opsColExpected.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected'**
+  String get opsColExpected;
+
+  /// No description provided for @opsStatusOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get opsStatusOpen;
+
+  /// No description provided for @opsStatusInProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'In progress'**
+  String get opsStatusInProgress;
+
+  /// No description provided for @opsStatusBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get opsStatusBlocked;
+
+  /// No description provided for @opsStatusDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get opsStatusDone;
+
+  /// No description provided for @opsHoldWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting'**
+  String get opsHoldWaiting;
+
+  /// No description provided for @opsHoldArrived.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrived'**
+  String get opsHoldArrived;
+
+  /// No description provided for @opsHoldReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready'**
+  String get opsHoldReady;
+
+  /// No description provided for @opsHoldCancelled.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get opsHoldCancelled;
+
+  /// No description provided for @opsPriorityLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Low'**
+  String get opsPriorityLow;
+
+  /// No description provided for @opsPriorityNormal.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal'**
+  String get opsPriorityNormal;
+
+  /// No description provided for @opsPriorityHigh.
+  ///
+  /// In en, this message translates to:
+  /// **'High'**
+  String get opsPriorityHigh;
+
+  /// No description provided for @opsPriorityUrgent.
+  ///
+  /// In en, this message translates to:
+  /// **'Urgent'**
+  String get opsPriorityUrgent;
+
+  /// No description provided for @opsAssigneePerson.
+  ///
+  /// In en, this message translates to:
+  /// **'Person'**
+  String get opsAssigneePerson;
+
+  /// No description provided for @opsAssigneeGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get opsAssigneeGroup;
+
+  /// No description provided for @opsAssigneeBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get opsAssigneeBranch;
+
+  /// No description provided for @opsTaskDetail.
+  ///
+  /// In en, this message translates to:
+  /// **'Task details'**
+  String get opsTaskDetail;
+
+  /// No description provided for @opsTaskConditions.
+  ///
+  /// In en, this message translates to:
+  /// **'Context and conditions'**
+  String get opsTaskConditions;
+
+  /// No description provided for @opsTaskChecklist.
+  ///
+  /// In en, this message translates to:
+  /// **'To-do list'**
+  String get opsTaskChecklist;
+
+  /// No description provided for @opsTaskChecklistEmpty.
+  ///
+  /// In en, this message translates to:
+  /// **'No checklist items for this task.'**
+  String get opsTaskChecklistEmpty;
+
+  /// No description provided for @opsTaskChecklistProgress.
+  ///
+  /// In en, this message translates to:
+  /// **'{done} of {total} done'**
+  String opsTaskChecklistProgress(int done, int total);
+
+  /// No description provided for @opsAssignedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Assigned to'**
+  String get opsAssignedTo;
+
+  /// No description provided for @opsBranchesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Branches'**
+  String get opsBranchesLabel;
+
+  /// No description provided for @opsDueToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get opsDueToday;
+
+  /// No description provided for @opsDueTomorrow.
+  ///
+  /// In en, this message translates to:
+  /// **'Due tomorrow'**
+  String get opsDueTomorrow;
+
+  /// No description provided for @opsDaysOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days overdue'**
+  String opsDaysOverdue(int days);
+
+  /// No description provided for @opsDaysLeft.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days left'**
+  String opsDaysLeft(int days);
+
+  /// No description provided for @opsExpectedToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected today'**
+  String get opsExpectedToday;
+
+  /// No description provided for @opsMetricOpenTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'Open tasks'**
+  String get opsMetricOpenTasks;
+
+  /// No description provided for @opsMetricDueToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Due today'**
+  String get opsMetricDueToday;
+
+  /// No description provided for @opsMetricOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue'**
+  String get opsMetricOverdue;
+
+  /// No description provided for @opsMetricBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'Blocked'**
+  String get opsMetricBlocked;
+
+  /// No description provided for @opsMetricBranches.
+  ///
+  /// In en, this message translates to:
+  /// **'Branches'**
+  String get opsMetricBranches;
+
+  /// No description provided for @opsMetricBranchOpen.
+  ///
+  /// In en, this message translates to:
+  /// **'Open tasks'**
+  String get opsMetricBranchOpen;
+
+  /// No description provided for @opsMetricBranchOverdue.
+  ///
+  /// In en, this message translates to:
+  /// **'Overdue tasks'**
+  String get opsMetricBranchOverdue;
+
+  /// No description provided for @opsMetricBranchHolds.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting holds'**
+  String get opsMetricBranchHolds;
+
+  /// No description provided for @opsMetricWaiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting holds'**
+  String get opsMetricWaiting;
+
+  /// No description provided for @opsMetricArriving.
+  ///
+  /// In en, this message translates to:
+  /// **'Arriving this week'**
+  String get opsMetricArriving;
+
+  /// No description provided for @opsMetricDeposits.
+  ///
+  /// In en, this message translates to:
+  /// **'Deposits held'**
+  String get opsMetricDeposits;
+
+  /// No description provided for @opsMetricReady.
+  ///
+  /// In en, this message translates to:
+  /// **'Ready for pickup'**
+  String get opsMetricReady;
+
+  /// No description provided for @opsNewTask.
+  ///
+  /// In en, this message translates to:
+  /// **'New task'**
+  String get opsNewTask;
+
+  /// No description provided for @opsCreateTask.
+  ///
+  /// In en, this message translates to:
+  /// **'Create task'**
+  String get opsCreateTask;
+
+  /// No description provided for @opsClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get opsClose;
+
+  /// No description provided for @opsTaskTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Task title'**
+  String get opsTaskTitle;
+
+  /// No description provided for @opsTaskTitleHint.
+  ///
+  /// In en, this message translates to:
+  /// **'What needs to happen?'**
+  String get opsTaskTitleHint;
+
+  /// No description provided for @opsTaskContext.
+  ///
+  /// In en, this message translates to:
+  /// **'Context and conditions'**
+  String get opsTaskContext;
+
+  /// No description provided for @opsTaskContextHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the details and constraints the assignee needs'**
+  String get opsTaskContextHint;
+
+  /// No description provided for @opsAssignTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Assign to'**
+  String get opsAssignTo;
+
+  /// No description provided for @opsChooseAssignee.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose who owns the task'**
+  String get opsChooseAssignee;
+
+  /// No description provided for @opsChooseBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get opsChooseBranch;
+
+  /// No description provided for @opsChecklistHint.
+  ///
+  /// In en, this message translates to:
+  /// **'One step per line'**
+  String get opsChecklistHint;
+
+  /// No description provided for @opsDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get opsDueDate;
+
+  /// No description provided for @opsNoAssignees.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick at least one assignee.'**
+  String get opsNoAssignees;
+
+  /// No description provided for @opsNoBranches.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick at least one branch.'**
+  String get opsNoBranches;
+
+  /// No description provided for @opsTaskCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Task created.'**
+  String get opsTaskCreated;
+
+  /// No description provided for @opsBranchManager.
+  ///
+  /// In en, this message translates to:
+  /// **'Manager'**
+  String get opsBranchManager;
+
+  /// No description provided for @opsBranchOpenTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} open'**
+  String opsBranchOpenTasks(int count);
+
+  /// No description provided for @opsBranchOverdueTasks.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} overdue'**
+  String opsBranchOverdueTasks(int count);
+
+  /// No description provided for @opsBranchHolds.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} holds'**
+  String opsBranchHolds(int count);
+
+  /// No description provided for @opsBranchTeam.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} people'**
+  String opsBranchTeam(int count);
+
+  /// No description provided for @opsBranchOnTrack.
+  ///
+  /// In en, this message translates to:
+  /// **'On track'**
+  String get opsBranchOnTrack;
+
+  /// No description provided for @opsBranchBusy.
+  ///
+  /// In en, this message translates to:
+  /// **'Busy'**
+  String get opsBranchBusy;
+
+  /// No description provided for @opsBranchOverloaded.
+  ///
+  /// In en, this message translates to:
+  /// **'Overloaded'**
+  String get opsBranchOverloaded;
+
+  /// No description provided for @opsBranchCompletion.
+  ///
+  /// In en, this message translates to:
+  /// **'Completion'**
+  String get opsBranchCompletion;
+
+  /// No description provided for @opsHoldStockItem.
+  ///
+  /// In en, this message translates to:
+  /// **'Stock item'**
+  String get opsHoldStockItem;
+
+  /// No description provided for @opsHoldCustomSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom size'**
+  String get opsHoldCustomSize;
+
+  /// No description provided for @opsSizeCustom.
+  ///
+  /// In en, this message translates to:
+  /// **'{width} × {length} cm'**
+  String opsSizeCustom(int width, int length);
+
+  /// No description provided for @opsPlannedHoldsTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Holds awaiting the backend'**
+  String get opsPlannedHoldsTitle;
+
+  /// No description provided for @opsPlannedHoldsBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Reserving goods and custom sizes already works in the UI. Saving a hold will be enabled when the inventory endpoint exposes reservations.'**
+  String get opsPlannedHoldsBody;
+
+  /// No description provided for @opsPerson1.
+  ///
+  /// In en, this message translates to:
+  /// **'Hala Mostafa'**
+  String get opsPerson1;
+
+  /// No description provided for @opsPerson2.
+  ///
+  /// In en, this message translates to:
+  /// **'Rami Fouad'**
+  String get opsPerson2;
+
+  /// No description provided for @opsPerson3.
+  ///
+  /// In en, this message translates to:
+  /// **'Dina Samir'**
+  String get opsPerson3;
+
+  /// No description provided for @opsPerson4.
+  ///
+  /// In en, this message translates to:
+  /// **'Mostafa Adel'**
+  String get opsPerson4;
+
+  /// No description provided for @opsPerson5.
+  ///
+  /// In en, this message translates to:
+  /// **'Nada Sherif'**
+  String get opsPerson5;
+
+  /// No description provided for @opsPerson6.
+  ///
+  /// In en, this message translates to:
+  /// **'Sherif Kamel'**
+  String get opsPerson6;
+
+  /// No description provided for @opsGroup1.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales team'**
+  String get opsGroup1;
+
+  /// No description provided for @opsGroup2.
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse team'**
+  String get opsGroup2;
+
+  /// No description provided for @opsGroup3.
+  ///
+  /// In en, this message translates to:
+  /// **'Tailoring team'**
+  String get opsGroup3;
+
+  /// No description provided for @opsGroup4.
+  ///
+  /// In en, this message translates to:
+  /// **'Support team'**
+  String get opsGroup4;
+
+  /// No description provided for @opsTask1Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset the Tanta showroom for the new collection'**
+  String get opsTask1Title;
+
+  /// No description provided for @opsTask1Context.
+  ///
+  /// In en, this message translates to:
+  /// **'Move the old display stock to the back room, steam the fabric panels and photograph the result before the collection lands on Thursday.'**
+  String get opsTask1Context;
+
+  /// No description provided for @opsTask2Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm the Cairo weekend delivery slots'**
+  String get opsTask2Title;
+
+  /// No description provided for @opsTask2Context.
+  ///
+  /// In en, this message translates to:
+  /// **'Call every order scheduled for Friday and Saturday, confirm the address and note any gate or elevator restrictions before the courier sheet is printed.'**
+  String get opsTask2Context;
+
+  /// No description provided for @opsTask3Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish the Alexandria custom size price sheet'**
+  String get opsTask3Title;
+
+  /// No description provided for @opsTask3Context.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the 2026 foam and cover costs, round each size to the nearest 50 EGP and send the sheet to the branch manager for approval.'**
+  String get opsTask3Context;
+
+  /// No description provided for @opsTask4Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Count the Mansoura mattress covers'**
+  String get opsTask4Title;
+
+  /// No description provided for @opsTask4Context.
+  ///
+  /// In en, this message translates to:
+  /// **'The count is two weeks late. Count every size, log variances against the stock sheet and flag any cover that is still in a customer hold.'**
+  String get opsTask4Context;
+
+  /// No description provided for @opsTask5Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive the foam shipment at Tanta'**
+  String get opsTask5Title;
+
+  /// No description provided for @opsTask5Context.
+  ///
+  /// In en, this message translates to:
+  /// **'Check the delivery note against the purchase order, inspect the rolls for tears and hand the signed note to accounting.'**
+  String get opsTask5Context;
+
+  /// No description provided for @opsTask6Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Resolve the Cairo hold for the 180×200 size'**
+  String get opsTask6Title;
+
+  /// No description provided for @opsTask6Context.
+  ///
+  /// In en, this message translates to:
+  /// **'The customer paid a deposit three weeks ago. Confirm the supplier date, offer a loan unit and update the customer before the end of the day.'**
+  String get opsTask6Context;
+
+  /// No description provided for @opsTask7Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Follow up on the Alexandria delivery complaints'**
+  String get opsTask7Title;
+
+  /// No description provided for @opsTask7Context.
+  ///
+  /// In en, this message translates to:
+  /// **'Three customers reported late arrivals last week. Call each one, log the reason and agree a goodwill gesture with support.'**
+  String get opsTask7Context;
+
+  /// No description provided for @opsTask8Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Price the Mansoura spring promotion'**
+  String get opsTask8Title;
+
+  /// No description provided for @opsTask8Context.
+  ///
+  /// In en, this message translates to:
+  /// **'Build a bundle for two pillows and a protector, compare it with the Cairo promotion and keep the margin above 25 percent.'**
+  String get opsTask8Context;
+
+  /// No description provided for @opsTask9Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Agree the Tanta cash handover checklist'**
+  String get opsTask9Title;
+
+  /// No description provided for @opsTask9Context.
+  ///
+  /// In en, this message translates to:
+  /// **'Meet the cashiers, close the gaps in the evening handover and update the branch board before the next shift.'**
+  String get opsTask9Context;
+
+  /// No description provided for @opsTask10Title.
+  ///
+  /// In en, this message translates to:
+  /// **'Finish the Cairo custom order C-2214'**
+  String get opsTask10Title;
+
+  /// No description provided for @opsTask10Context.
+  ///
+  /// In en, this message translates to:
+  /// **'The cover is cut. Check the stitching, wrap the mattress, call the customer and book the delivery slot.'**
+  String get opsTask10Context;
+
+  /// No description provided for @opsStep1.
+  ///
+  /// In en, this message translates to:
+  /// **'Review the handover sheet'**
+  String get opsStep1;
+
+  /// No description provided for @opsStep2.
+  ///
+  /// In en, this message translates to:
+  /// **'Check stock on hand'**
+  String get opsStep2;
+
+  /// No description provided for @opsStep3.
+  ///
+  /// In en, this message translates to:
+  /// **'Call the customer'**
+  String get opsStep3;
+
+  /// No description provided for @opsStep4.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm delivery slots'**
+  String get opsStep4;
+
+  /// No description provided for @opsStep5.
+  ///
+  /// In en, this message translates to:
+  /// **'Update the price sheet'**
+  String get opsStep5;
+
+  /// No description provided for @opsStep6.
+  ///
+  /// In en, this message translates to:
+  /// **'Count the units'**
+  String get opsStep6;
+
+  /// No description provided for @opsStep7.
+  ///
+  /// In en, this message translates to:
+  /// **'Log any variance'**
+  String get opsStep7;
+
+  /// No description provided for @opsStep8.
+  ///
+  /// In en, this message translates to:
+  /// **'Receive the shipment'**
+  String get opsStep8;
+
+  /// No description provided for @opsStep9.
+  ///
+  /// In en, this message translates to:
+  /// **'Inspect the foam rolls'**
+  String get opsStep9;
+
+  /// No description provided for @opsStep10.
+  ///
+  /// In en, this message translates to:
+  /// **'Notify the sales team'**
+  String get opsStep10;
+
+  /// No description provided for @opsStep11.
+  ///
+  /// In en, this message translates to:
+  /// **'Prepare the fabric samples'**
+  String get opsStep11;
+
+  /// No description provided for @opsStep12.
+  ///
+  /// In en, this message translates to:
+  /// **'Photograph the result'**
+  String get opsStep12;
+
+  /// No description provided for @opsStep13.
+  ///
+  /// In en, this message translates to:
+  /// **'Book the courier'**
+  String get opsStep13;
+
+  /// No description provided for @opsStep14.
+  ///
+  /// In en, this message translates to:
+  /// **'Print the size labels'**
+  String get opsStep14;
+
+  /// No description provided for @opsStep15.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify the deposit'**
+  String get opsStep15;
+
+  /// No description provided for @opsStep16.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the counter area'**
+  String get opsStep16;
+
+  /// No description provided for @opsStep17.
+  ///
+  /// In en, this message translates to:
+  /// **'Update the branch board'**
+  String get opsStep17;
+
+  /// No description provided for @opsStep18.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm with the branch manager'**
+  String get opsStep18;
 }
 
 class _AppLocalizationsDelegate

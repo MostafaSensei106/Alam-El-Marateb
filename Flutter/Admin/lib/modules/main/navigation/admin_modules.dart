@@ -205,6 +205,33 @@ abstract final class AdminModules {
       ],
     ),
     AdminModule(
+      id: AdminModuleId.operations,
+      label: l10n.navOperations,
+      title: l10n.operationsTitle,
+      description: l10n.operationsDescription,
+      icon: LucideIcons.building2,
+      subSections: [
+        AdminSubSection(
+          id: 'operations.tasks',
+          title: l10n.opsTabTasks,
+          icon: LucideIcons.listChecks,
+          wireframe: AdminWireframeKind.table,
+        ),
+        AdminSubSection(
+          id: 'operations.branches',
+          title: l10n.opsTabBranches,
+          icon: LucideIcons.building2,
+          wireframe: AdminWireframeKind.stats,
+        ),
+        AdminSubSection(
+          id: 'operations.holds',
+          title: l10n.opsTabHolds,
+          icon: LucideIcons.packageCheck,
+          wireframe: AdminWireframeKind.table,
+        ),
+      ],
+    ),
+    AdminModule(
       id: AdminModuleId.purchasing,
       label: l10n.navPurchasing,
       title: l10n.purchasingTitle,

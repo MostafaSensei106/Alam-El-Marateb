@@ -10,6 +10,7 @@ enum AdminModuleId {
   catalog,
   inventory,
   sales,
+  operations,
   purchasing,
   crm,
   delivery,

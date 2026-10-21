@@ -66,6 +66,17 @@ final class SalesRoot extends SalesRoute {
   List<Object?> get props => [];
 }
 
+sealed class OperationsRoute extends KaiselRoute {
+  const OperationsRoute();
+}
+
+final class OperationsRoot extends OperationsRoute {
+  const OperationsRoot();
+
+  @override
+  List<Object?> get props => [];
+}
+
 sealed class PurchasingRoute extends KaiselRoute {
   const PurchasingRoute();
 }

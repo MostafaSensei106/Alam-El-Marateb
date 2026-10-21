@@ -2079,5 +2079,607 @@
   "salesPromoRamadan": "Ramadan offer",
   "@salesPromoRamadan": {
     "type": "String"
+  },
+  "navOperations": "Operations",
+  "@navOperations": {
+    "type": "String"
+  },
+  "operationsTitle": "Operations & branches",
+  "@operationsTitle": {
+    "type": "String"
+  },
+  "operationsDescription": "Internal tasks, branch load and customer holds",
+  "@operationsDescription": {
+    "type": "String"
+  },
+  "operationsFeature1": "Tasks for a person, a group or branch teams",
+  "@operationsFeature1": {
+    "type": "String"
+  },
+  "operationsFeature2": "Branch workload, overdue work and completion",
+  "@operationsFeature2": {
+    "type": "String"
+  },
+  "operationsFeature3": "Customer holds for goods and custom sizes",
+  "@operationsFeature3": {
+    "type": "String"
+  },
+  "opsTabTasks": "Tasks",
+  "@opsTabTasks": {
+    "type": "String"
+  },
+  "opsTabBranches": "Branch load",
+  "@opsTabBranches": {
+    "type": "String"
+  },
+  "opsTabHolds": "Customer holds",
+  "@opsTabHolds": {
+    "type": "String"
+  },
+  "opsSearchTasks": "Search tasks, people or branches",
+  "@opsSearchTasks": {
+    "type": "String"
+  },
+  "opsSearchBranches": "Search branches or managers",
+  "@opsSearchBranches": {
+    "type": "String"
+  },
+  "opsSearchHolds": "Search holds, customers or items",
+  "@opsSearchHolds": {
+    "type": "String"
+  },
+  "opsColTask": "Task",
+  "@opsColTask": {
+    "type": "String"
+  },
+  "opsColAssignee": "Assignee",
+  "@opsColAssignee": {
+    "type": "String"
+  },
+  "opsColBranch": "Branch",
+  "@opsColBranch": {
+    "type": "String"
+  },
+  "opsColPriority": "Priority",
+  "@opsColPriority": {
+    "type": "String"
+  },
+  "opsColDue": "Due",
+  "@opsColDue": {
+    "type": "String"
+  },
+  "opsColStatus": "Status",
+  "@opsColStatus": {
+    "type": "String"
+  },
+  "opsColChecklist": "Checklist",
+  "@opsColChecklist": {
+    "type": "String"
+  },
+  "opsColCustomer": "Customer",
+  "@opsColCustomer": {
+    "type": "String"
+  },
+  "opsColItem": "Item",
+  "@opsColItem": {
+    "type": "String"
+  },
+  "opsColDeposit": "Deposit",
+  "@opsColDeposit": {
+    "type": "String"
+  },
+  "opsColExpected": "Expected",
+  "@opsColExpected": {
+    "type": "String"
+  },
+  "opsStatusOpen": "Open",
+  "@opsStatusOpen": {
+    "type": "String"
+  },
+  "opsStatusInProgress": "In progress",
+  "@opsStatusInProgress": {
+    "type": "String"
+  },
+  "opsStatusBlocked": "Blocked",
+  "@opsStatusBlocked": {
+    "type": "String"
+  },
+  "opsStatusDone": "Done",
+  "@opsStatusDone": {
+    "type": "String"
+  },
+  "opsHoldWaiting": "Waiting",
+  "@opsHoldWaiting": {
+    "type": "String"
+  },
+  "opsHoldArrived": "Arrived",
+  "@opsHoldArrived": {
+    "type": "String"
+  },
+  "opsHoldReady": "Ready",
+  "@opsHoldReady": {
+    "type": "String"
+  },
+  "opsHoldCancelled": "Cancelled",
+  "@opsHoldCancelled": {
+    "type": "String"
+  },
+  "opsPriorityLow": "Low",
+  "@opsPriorityLow": {
+    "type": "String"
+  },
+  "opsPriorityNormal": "Normal",
+  "@opsPriorityNormal": {
+    "type": "String"
+  },
+  "opsPriorityHigh": "High",
+  "@opsPriorityHigh": {
+    "type": "String"
+  },
+  "opsPriorityUrgent": "Urgent",
+  "@opsPriorityUrgent": {
+    "type": "String"
+  },
+  "opsAssigneePerson": "Person",
+  "@opsAssigneePerson": {
+    "type": "String"
+  },
+  "opsAssigneeGroup": "Group",
+  "@opsAssigneeGroup": {
+    "type": "String"
+  },
+  "opsAssigneeBranch": "Branch",
+  "@opsAssigneeBranch": {
+    "type": "String"
+  },
+  "opsTaskDetail": "Task details",
+  "@opsTaskDetail": {
+    "type": "String"
+  },
+  "opsTaskConditions": "Context and conditions",
+  "@opsTaskConditions": {
+    "type": "String"
+  },
+  "opsTaskChecklist": "To-do list",
+  "@opsTaskChecklist": {
+    "type": "String"
+  },
+  "opsTaskChecklistEmpty": "No checklist items for this task.",
+  "@opsTaskChecklistEmpty": {
+    "type": "String"
+  },
+  "opsTaskChecklistProgress": "{done} of {total} done",
+  "@opsTaskChecklistProgress": {
+    "type": "String",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "opsAssignedTo": "Assigned to",
+  "@opsAssignedTo": {
+    "type": "String"
+  },
+  "opsBranchesLabel": "Branches",
+  "@opsBranchesLabel": {
+    "type": "String"
+  },
+  "opsDueToday": "Due today",
+  "@opsDueToday": {
+    "type": "String"
+  },
+  "opsDueTomorrow": "Due tomorrow",
+  "@opsDueTomorrow": {
+    "type": "String"
+  },
+  "opsDaysOverdue": "{days} days overdue",
+  "@opsDaysOverdue": {
+    "type": "String",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "opsDaysLeft": "{days} days left",
+  "@opsDaysLeft": {
+    "type": "String",
+    "placeholders": {
+      "days": {
+        "type": "int"
+      }
+    }
+  },
+  "opsExpectedToday": "Expected today",
+  "@opsExpectedToday": {
+    "type": "String"
+  },
+  "opsMetricOpenTasks": "Open tasks",
+  "@opsMetricOpenTasks": {
+    "type": "String"
+  },
+  "opsMetricDueToday": "Due today",
+  "@opsMetricDueToday": {
+    "type": "String"
+  },
+  "opsMetricOverdue": "Overdue",
+  "@opsMetricOverdue": {
+    "type": "String"
+  },
+  "opsMetricBlocked": "Blocked",
+  "@opsMetricBlocked": {
+    "type": "String"
+  },
+  "opsMetricBranches": "Branches",
+  "@opsMetricBranches": {
+    "type": "String"
+  },
+  "opsMetricBranchOpen": "Open tasks",
+  "@opsMetricBranchOpen": {
+    "type": "String"
+  },
+  "opsMetricBranchOverdue": "Overdue tasks",
+  "@opsMetricBranchOverdue": {
+    "type": "String"
+  },
+  "opsMetricBranchHolds": "Waiting holds",
+  "@opsMetricBranchHolds": {
+    "type": "String"
+  },
+  "opsMetricWaiting": "Waiting holds",
+  "@opsMetricWaiting": {
+    "type": "String"
+  },
+  "opsMetricArriving": "Arriving this week",
+  "@opsMetricArriving": {
+    "type": "String"
+  },
+  "opsMetricDeposits": "Deposits held",
+  "@opsMetricDeposits": {
+    "type": "String"
+  },
+  "opsMetricReady": "Ready for pickup",
+  "@opsMetricReady": {
+    "type": "String"
+  },
+  "opsNewTask": "New task",
+  "@opsNewTask": {
+    "type": "String"
+  },
+  "opsCreateTask": "Create task",
+  "@opsCreateTask": {
+    "type": "String"
+  },
+  "opsClose": "Close",
+  "@opsClose": {
+    "type": "String"
+  },
+  "opsTaskTitle": "Task title",
+  "@opsTaskTitle": {
+    "type": "String"
+  },
+  "opsTaskTitleHint": "What needs to happen?",
+  "@opsTaskTitleHint": {
+    "type": "String"
+  },
+  "opsTaskContext": "Context and conditions",
+  "@opsTaskContext": {
+    "type": "String"
+  },
+  "opsTaskContextHint": "Add the details and constraints the assignee needs",
+  "@opsTaskContextHint": {
+    "type": "String"
+  },
+  "opsAssignTo": "Assign to",
+  "@opsAssignTo": {
+    "type": "String"
+  },
+  "opsChooseAssignee": "Choose who owns the task",
+  "@opsChooseAssignee": {
+    "type": "String"
+  },
+  "opsChooseBranch": "Branch",
+  "@opsChooseBranch": {
+    "type": "String"
+  },
+  "opsChecklistHint": "One step per line",
+  "@opsChecklistHint": {
+    "type": "String"
+  },
+  "opsDueDate": "Due date",
+  "@opsDueDate": {
+    "type": "String"
+  },
+  "opsNoAssignees": "Pick at least one assignee.",
+  "@opsNoAssignees": {
+    "type": "String"
+  },
+  "opsNoBranches": "Pick at least one branch.",
+  "@opsNoBranches": {
+    "type": "String"
+  },
+  "opsTaskCreated": "Task created.",
+  "@opsTaskCreated": {
+    "type": "String"
+  },
+  "opsBranchManager": "Manager",
+  "@opsBranchManager": {
+    "type": "String"
+  },
+  "opsBranchOpenTasks": "{count} open",
+  "@opsBranchOpenTasks": {
+    "type": "String",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "opsBranchOverdueTasks": "{count} overdue",
+  "@opsBranchOverdueTasks": {
+    "type": "String",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "opsBranchHolds": "{count} holds",
+  "@opsBranchHolds": {
+    "type": "String",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "opsBranchTeam": "{count} people",
+  "@opsBranchTeam": {
+    "type": "String",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "opsBranchOnTrack": "On track",
+  "@opsBranchOnTrack": {
+    "type": "String"
+  },
+  "opsBranchBusy": "Busy",
+  "@opsBranchBusy": {
+    "type": "String"
+  },
+  "opsBranchOverloaded": "Overloaded",
+  "@opsBranchOverloaded": {
+    "type": "String"
+  },
+  "opsBranchCompletion": "Completion",
+  "@opsBranchCompletion": {
+    "type": "String"
+  },
+  "opsHoldStockItem": "Stock item",
+  "@opsHoldStockItem": {
+    "type": "String"
+  },
+  "opsHoldCustomSize": "Custom size",
+  "@opsHoldCustomSize": {
+    "type": "String"
+  },
+  "opsSizeCustom": "{width} × {length} cm",
+  "@opsSizeCustom": {
+    "type": "String",
+    "placeholders": {
+      "width": {
+        "type": "int"
+      },
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "opsPlannedHoldsTitle": "Holds awaiting the backend",
+  "@opsPlannedHoldsTitle": {
+    "type": "String"
+  },
+  "opsPlannedHoldsBody": "Reserving goods and custom sizes already works in the UI. Saving a hold will be enabled when the inventory endpoint exposes reservations.",
+  "@opsPlannedHoldsBody": {
+    "type": "String"
+  },
+  "opsPerson1": "Hala Mostafa",
+  "@opsPerson1": {
+    "type": "String"
+  },
+  "opsPerson2": "Rami Fouad",
+  "@opsPerson2": {
+    "type": "String"
+  },
+  "opsPerson3": "Dina Samir",
+  "@opsPerson3": {
+    "type": "String"
+  },
+  "opsPerson4": "Mostafa Adel",
+  "@opsPerson4": {
+    "type": "String"
+  },
+  "opsPerson5": "Nada Sherif",
+  "@opsPerson5": {
+    "type": "String"
+  },
+  "opsPerson6": "Sherif Kamel",
+  "@opsPerson6": {
+    "type": "String"
+  },
+  "opsGroup1": "Sales team",
+  "@opsGroup1": {
+    "type": "String"
+  },
+  "opsGroup2": "Warehouse team",
+  "@opsGroup2": {
+    "type": "String"
+  },
+  "opsGroup3": "Tailoring team",
+  "@opsGroup3": {
+    "type": "String"
+  },
+  "opsGroup4": "Support team",
+  "@opsGroup4": {
+    "type": "String"
+  },
+  "opsTask1Title": "Reset the Tanta showroom for the new collection",
+  "@opsTask1Title": {
+    "type": "String"
+  },
+  "opsTask1Context": "Move the old display stock to the back room, steam the fabric panels and photograph the result before the collection lands on Thursday.",
+  "@opsTask1Context": {
+    "type": "String"
+  },
+  "opsTask2Title": "Confirm the Cairo weekend delivery slots",
+  "@opsTask2Title": {
+    "type": "String"
+  },
+  "opsTask2Context": "Call every order scheduled for Friday and Saturday, confirm the address and note any gate or elevator restrictions before the courier sheet is printed.",
+  "@opsTask2Context": {
+    "type": "String"
+  },
+  "opsTask3Title": "Finish the Alexandria custom size price sheet",
+  "@opsTask3Title": {
+    "type": "String"
+  },
+  "opsTask3Context": "Add the 2026 foam and cover costs, round each size to the nearest 50 EGP and send the sheet to the branch manager for approval.",
+  "@opsTask3Context": {
+    "type": "String"
+  },
+  "opsTask4Title": "Count the Mansoura mattress covers",
+  "@opsTask4Title": {
+    "type": "String"
+  },
+  "opsTask4Context": "The count is two weeks late. Count every size, log variances against the stock sheet and flag any cover that is still in a customer hold.",
+  "@opsTask4Context": {
+    "type": "String"
+  },
+  "opsTask5Title": "Receive the foam shipment at Tanta",
+  "@opsTask5Title": {
+    "type": "String"
+  },
+  "opsTask5Context": "Check the delivery note against the purchase order, inspect the rolls for tears and hand the signed note to accounting.",
+  "@opsTask5Context": {
+    "type": "String"
+  },
+  "opsTask6Title": "Resolve the Cairo hold for the 180×200 size",
+  "@opsTask6Title": {
+    "type": "String"
+  },
+  "opsTask6Context": "The customer paid a deposit three weeks ago. Confirm the supplier date, offer a loan unit and update the customer before the end of the day.",
+  "@opsTask6Context": {
+    "type": "String"
+  },
+  "opsTask7Title": "Follow up on the Alexandria delivery complaints",
+  "@opsTask7Title": {
+    "type": "String"
+  },
+  "opsTask7Context": "Three customers reported late arrivals last week. Call each one, log the reason and agree a goodwill gesture with support.",
+  "@opsTask7Context": {
+    "type": "String"
+  },
+  "opsTask8Title": "Price the Mansoura spring promotion",
+  "@opsTask8Title": {
+    "type": "String"
+  },
+  "opsTask8Context": "Build a bundle for two pillows and a protector, compare it with the Cairo promotion and keep the margin above 25 percent.",
+  "@opsTask8Context": {
+    "type": "String"
+  },
+  "opsTask9Title": "Agree the Tanta cash handover checklist",
+  "@opsTask9Title": {
+    "type": "String"
+  },
+  "opsTask9Context": "Meet the cashiers, close the gaps in the evening handover and update the branch board before the next shift.",
+  "@opsTask9Context": {
+    "type": "String"
+  },
+  "opsTask10Title": "Finish the Cairo custom order C-2214",
+  "@opsTask10Title": {
+    "type": "String"
+  },
+  "opsTask10Context": "The cover is cut. Check the stitching, wrap the mattress, call the customer and book the delivery slot.",
+  "@opsTask10Context": {
+    "type": "String"
+  },
+  "opsStep1": "Review the handover sheet",
+  "@opsStep1": {
+    "type": "String"
+  },
+  "opsStep2": "Check stock on hand",
+  "@opsStep2": {
+    "type": "String"
+  },
+  "opsStep3": "Call the customer",
+  "@opsStep3": {
+    "type": "String"
+  },
+  "opsStep4": "Confirm delivery slots",
+  "@opsStep4": {
+    "type": "String"
+  },
+  "opsStep5": "Update the price sheet",
+  "@opsStep5": {
+    "type": "String"
+  },
+  "opsStep6": "Count the units",
+  "@opsStep6": {
+    "type": "String"
+  },
+  "opsStep7": "Log any variance",
+  "@opsStep7": {
+    "type": "String"
+  },
+  "opsStep8": "Receive the shipment",
+  "@opsStep8": {
+    "type": "String"
+  },
+  "opsStep9": "Inspect the foam rolls",
+  "@opsStep9": {
+    "type": "String"
+  },
+  "opsStep10": "Notify the sales team",
+  "@opsStep10": {
+    "type": "String"
+  },
+  "opsStep11": "Prepare the fabric samples",
+  "@opsStep11": {
+    "type": "String"
+  },
+  "opsStep12": "Photograph the result",
+  "@opsStep12": {
+    "type": "String"
+  },
+  "opsStep13": "Book the courier",
+  "@opsStep13": {
+    "type": "String"
+  },
+  "opsStep14": "Print the size labels",
+  "@opsStep14": {
+    "type": "String"
+  },
+  "opsStep15": "Verify the deposit",
+  "@opsStep15": {
+    "type": "String"
+  },
+  "opsStep16": "Clear the counter area",
+  "@opsStep16": {
+    "type": "String"
+  },
+  "opsStep17": "Update the branch board",
+  "@opsStep17": {
+    "type": "String"
+  },
+  "opsStep18": "Confirm with the branch manager",
+  "@opsStep18": {
+    "type": "String"
   }
 }

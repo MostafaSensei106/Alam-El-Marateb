@@ -14,13 +14,14 @@ import '../hr/ui/page/hr_page.dart';
 import '../identity/ui/page/identity_page.dart';
 import '../inventory/ui/page/inventory_page.dart';
 import '../marketing/ui/page/marketing_page.dart';
+import '../operations/ui/page/operations_page.dart';
 import '../profile/ui/page/profile_page.dart';
 import '../purchasing/ui/page/purchasing_page.dart';
 import '../sales/ui/page/sales_page.dart';
 import '../settings/ui/page/settings_page.dart';
 import 'ui/page/admin_shell.dart';
 
-/// Hosts the thirteen admin branches and the shared workspace chrome.
+/// Hosts the fourteen admin branches and the shared workspace chrome.
 ///
 /// The branch order must match [AdminModuleId] so the rail index, the account
 /// menu shortcuts and the router all resolve to the same page.
@@ -59,6 +60,12 @@ class MainPage extends StatelessWidget {
           initial: const SalesRoot(),
           builder: (context, route) => switch (route) {
             SalesRoot() => const SalesPage(),
+          },
+        ),
+        KaiselBranchSpec<OperationsRoute>(
+          initial: const OperationsRoot(),
+          builder: (context, route) => switch (route) {
+            OperationsRoot() => const OperationsPage(),
           },
         ),
         KaiselBranchSpec<PurchasingRoute>(
