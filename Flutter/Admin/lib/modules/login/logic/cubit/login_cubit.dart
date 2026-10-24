@@ -1,6 +1,8 @@
 import 'package:bloc_signals/bloc_signals.dart';
+import 'package:formz/formz.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/utils/validator/login/login_validators.dart';
 import '../usecase/login_usecase.dart';
 import 'login_state.dart';
 
@@ -28,5 +30,33 @@ final class LoginCubit extends CubitSignal<LoginState> {
       success: (s) => emit(Success(state.value.formState, data: s)),
       failure: (e) => emit(Failure(state.value.formState, error: e)),
     );
+  }
+
+  void onPhoneChanged(String value) {
+    final phone = LoginPhoneValidator.dirty(value);
+    _validateForm(phone: phone);
+  }
+
+  void onPasswordChanged(String value) {
+    final password = LoginPasswordValidator.dirty(value);
+    _validateForm(password: password);
+  }
+
+  void _validateForm({
+    LoginPhoneValidator? phone,
+    LoginPasswordValidator? password,
+  }) {
+    phone ??= state.value.formState.phone;
+    password ??= state.value.formState.password;
+    final formState = state.value.formState.copyWith(
+      phone: phone,
+      password: password,
+      isValid: Formz.validate([phone, password]),
+    );
+    emit(LoginState.initial(formState));
+  }
+
+  void onRememberMeChanged(bool value) {
+    emit(LoginState.initial(state.value.formState.copyWith(rememberMe: value)));
   }
 }

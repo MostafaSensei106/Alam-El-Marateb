@@ -1,3 +1,6 @@
+// ignore_for_file: unnecessary_non_null_assertion
+
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:kaisel/kaisel.dart';
@@ -5,12 +8,15 @@ import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
 import '../../../../core/router/app_router.dart';
+import '../../../../core/utils/validator/login/login_validators.dart';
 import '../../../../core/widgets/buttons/filled_button/filled_button_component.dart';
 import '../../../../core/widgets/buttons/text_button/text_button_component.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
 import '../../../../core/widgets/inputs/checkbox/checkbox_component.dart';
 import '../../../../core/widgets/inputs/password_form_field/password_form_field_component.dart';
 import '../../../../core/widgets/inputs/text_form_field/text_form_field_component.dart';
+import '../../logic/cubit/login_cubit.dart';
+import '../../logic/cubit/login_state.dart';
 
 /// Credential form half of the wide login screen.
 ///
@@ -74,7 +80,7 @@ final class LoginFormBody extends StatelessWidget {
                   const _LoginSubtitle(),
                   const SizedBox(height: AppSpacing.xxLarge),
                 ],
-                const _LoginEmailField(),
+                const _LogiPhoneField(),
                 const SizedBox(height: AppSpacing.xLarge),
                 const _LoginPasswordField(),
                 const SizedBox(height: AppSpacing.small),
@@ -139,15 +145,23 @@ final class _LoginSubtitle extends StatelessWidget {
 }
 
 /// Email input of the login form.
-final class _LoginEmailField extends StatelessWidget {
-  const _LoginEmailField();
+final class _LogiPhoneField extends StatelessWidget {
+  const _LogiPhoneField();
 
   @override
   Widget build(BuildContext context) {
-    return TextFormFieldComponent(
-      label: context.localeKeys.emailAddress,
-      prefixIcon: LucideIcons.mail,
-      keyboardType: TextInputType.emailAddress,
+    return BlocSignalBuilder<LoginCubit, LoginState>(
+      buildWhen: (p, c) =>
+          p.formState.phone != c.formState.phone ||
+          (p is Loading) != (c is Loading),
+      builder: (context, state) => TextFormFieldComponent(
+        label: context.localeKeys.phone,
+        prefixIcon: LucideIcons.phone,
+        keyboardType: TextInputType.phone,
+        isEnable: state! is Loading,
+        onChanged: context.read<LoginCubit>().onPhoneChanged,
+        errorText: state.formState.phone.displayError?.message(context),
+      ),
     );
   }
 }
@@ -158,7 +172,19 @@ final class _LoginPasswordField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PasswordFieldComponent(label: context.localeKeys.password);
+    return BlocSignalBuilder<LoginCubit, LoginState>(
+      buildWhen: (p, c) =>
+          p.formState.password != c.formState.password ||
+          (p is Loading) != (c is Loading),
+      builder: (context, state) {
+        return PasswordFieldComponent(
+          label: context.localeKeys.password,
+          isEnable: state! is Loading,
+          onChanged: context.read<LoginCubit>().onPasswordChanged,
+          errorText: state.formState.phone.displayError?.message(context),
+        );
+      },
+    );
   }
 }
 
@@ -168,19 +194,28 @@ final class _LoginOptionsRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        CheckboxComponent(
-          title: context.localeKeys.rememberMe,
-          value: true,
-          onChanged: (v) {},
-        ),
-        TextButtonComponent(
-          label: context.localeKeys.forgetPassword,
-          onPressed: () {},
-        ),
-      ],
+    return BlocSignalBuilder<LoginCubit, LoginState>(
+      buildWhen: (p, c) =>
+          p.formState.rememberMe != c.formState.rememberMe ||
+          (p is Loading) != (c is Loading),
+      builder: (context, state) {
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CheckboxComponent(
+              title: context.localeKeys.rememberMe,
+              value: state.formState.rememberMe,
+              onChanged: (v) =>
+                  context.read<LoginCubit>().onRememberMeChanged(v ?? false),
+            ),
+            TextButtonComponent(
+              label: context.localeKeys.forgetPassword,
+              isEnable: state! is Loading,
+              onPressed: () {},
+            ),
+          ],
+        );
+      },
     );
   }
 }

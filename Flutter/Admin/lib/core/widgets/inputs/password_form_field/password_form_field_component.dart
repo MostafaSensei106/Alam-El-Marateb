@@ -34,6 +34,7 @@ final class PasswordFieldComponent extends HookWidget {
       label: label,
       controller: controller,
       prefixIcon: LucideIcons.lock,
+      keyboardType: TextInputType.visiblePassword,
       obscureText: obscureText.value,
       isEnable: isEnable,
       errorText: errorText,
