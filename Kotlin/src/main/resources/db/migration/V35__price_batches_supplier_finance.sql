@@ -1,4 +1,4 @@
--- V35: distributor economics — price sheets, channel prices, batch cost layers (FIFO),
+-- V35: distributor economics  price sheets, channel prices, batch cost layers (FIFO),
 -- supplier shipments / invoices / installments.
 -- Rule: selling price is per-channel current; inventory cost is per-batch immutable.
 

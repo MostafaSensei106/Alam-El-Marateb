@@ -5,7 +5,7 @@ import 'audit_severity.dart';
 /// Why a sealed class instead of `AppLogger.security('phone_launch')`:
 /// - Stringly-typed events typo silently, break dashboards, and accept
 ///   arbitrary payloads (including secrets).
-/// - Typed events carry ONLY non-sensitive, whitelisted fields — the compiler
+/// - Typed events carry ONLY non-sensitive, whitelisted fields  the compiler
 ///   rejects logging a token/password by construction.
 /// - Analytics/forensics can `switch` exhaustively over events.
 sealed class SecurityEvent {

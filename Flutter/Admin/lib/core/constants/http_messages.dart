@@ -1,7 +1,7 @@
 /// Centralised HTTP / network error messages.
 ///
-/// Every string the UI might display lives here — never scattered across
-/// handler classes — so copy-writers and translators have a single file to edit.
+/// Every string the UI might display lives here  never scattered across
+/// handler classes  so copy-writers and translators have a single file to edit.
 abstract final class HttpMessages {
   // ── Network & Transport ───────────────────────────────────────────────────
   static const noInternet =

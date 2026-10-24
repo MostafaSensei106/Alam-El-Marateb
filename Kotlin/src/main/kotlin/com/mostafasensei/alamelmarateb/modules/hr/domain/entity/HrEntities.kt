@@ -17,7 +17,7 @@ import java.util.UUID
  * All `employee_id` FKs reference employees(id) ON DELETE CASCADE.
  *
  * Commission note: kinds FIXED_MONTHLY (flat value) and PERCENT_OF_BASE
- * (value % of base_salary). No sales coupling by design — HR must never
+ * (value % of base_salary). No sales coupling by design  HR must never
  * read another module's tables.
  */
 @Entity

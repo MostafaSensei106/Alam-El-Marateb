@@ -36,7 +36,7 @@ class ProductImageService(
             ProductImageJpaEntity(productId = productId, url = url, sortOrder = nextSort),
         )
         // Same-transaction event for future async processors (search index,
-        // thumbnails in Phase 3) — upload response never waits for them.
+        // thumbnails in Phase 3)  upload response never waits for them.
         outbox.emit(
             "product-image", saved.id, OutboxWriter.MEDIA_UPLOADED,
             MediaUploadedEvent(imageId = saved.id!!, productId = productId, url = url),

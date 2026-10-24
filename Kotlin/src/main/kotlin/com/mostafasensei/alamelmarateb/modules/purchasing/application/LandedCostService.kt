@@ -46,7 +46,7 @@ data class LandedCostView(
  * - Allocation rows are INSERT-ONLY: every estimate/finalize run appends,
  *   so the full reconciliation history is auditable.
  * - Remaining stock absorbs its batch share (landed_unit_cost grows);
- *   sold stock is never restated — its delta lands in variance_amount.
+ *   sold stock is never restated  its delta lands in variance_amount.
  * - BY_VALUE (default): share ∝ purchase value; BY_QTY: share ∝ units.
  */
 @Service

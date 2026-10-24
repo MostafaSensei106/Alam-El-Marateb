@@ -65,7 +65,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Reviews (customer)", description = "Submit + my reviews — CUSTOMER")
+@Tag(name = "Reviews (customer)", description = "Submit + my reviews  CUSTOMER")
 @RestController
 @RequestMapping(PortalRoutes.REVIEWS)
 @CustomerApi

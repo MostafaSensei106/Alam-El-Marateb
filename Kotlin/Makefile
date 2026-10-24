@@ -69,7 +69,7 @@ build: cert ## Full local stack: cert + build images + start with logs (Ctrl-C s
 
 run: cert ## Run the full stack in the foreground with live logs (no rebuild; Ctrl-C stops)
 	@echo "🚀 [backend] Starting stack in the foreground (no rebuild; Ctrl-C to stop) ..."
-	@echo "📜 [backend] Streaming logs below — attached mode, nothing is detached."
+	@echo "📜 [backend] Streaming logs below  attached mode, nothing is detached."
 	@echo "ℹ️  Fresh image needed? Use: make run-build"
 	$(COMPOSE) up
 
@@ -77,12 +77,12 @@ run-build: cert ## Rebuild the app image then run the full stack in the foregrou
 	@echo "🔨 [backend] Building app image ..."
 	$(COMPOSE) build app
 	@echo "🚀 [backend] Starting stack in the foreground (Ctrl-C to stop) ..."
-	@echo "📜 [backend] Streaming logs below — attached mode, nothing is detached."
+	@echo "📜 [backend] Streaming logs below  attached mode, nothing is detached."
 	$(COMPOSE) up
 
 run-backend: cert ## Run only the app + postgres/redis in the foreground (app logs, Ctrl-C stops)
 	@echo "🚀 [backend] Starting app (with postgres + redis) in the foreground ..."
-	@echo "📜 [backend] Streaming app logs below — press Ctrl-C to stop."
+	@echo "📜 [backend] Streaming app logs below  press Ctrl-C to stop."
 	$(COMPOSE) up app
 
 build-run: cert ## Build images then run the whole stack detached
@@ -270,7 +270,7 @@ smoke: ## Verify edge live: 80->301, H2 ALPN, Alt-Svc H3, H1+H2+H3 bodies (HOST/
 	@echo "== Alt-Svc (want h3)"; curl -skI https://$(HOST):$(HTTPS_PORT)/healthz | grep -i "alt-svc" || (echo "❌ MISSING Alt-Svc!"; exit 1)
 	@echo "== HTTP/1.1 fallback"; curl -sk --http1.1 -o /dev/null -w "%{http_code} v%{http_version}\n" https://$(HOST):$(HTTPS_PORT)/healthz
 	@echo "== HTTP/2 body"; curl -sk --http2 https://$(HOST):$(HTTPS_PORT)/healthz; echo ""
-	@echo "== HTTP/3 (best effort)"; curl -sk --http3 -o /dev/null -w "%{http_code} v%{http_version}\n" https://$(HOST):$(HTTPS_PORT)/healthz || echo "⚠️  (no H3 client support or UDP blocked — H1/H2 fallback unaffected)"
+	@echo "== HTTP/3 (best effort)"; curl -sk --http3 -o /dev/null -w "%{http_code} v%{http_version}\n" https://$(HOST):$(HTTPS_PORT)/healthz || echo "⚠️  (no H3 client support or UDP blocked  H1/H2 fallback unaffected)"
 	@echo "✅ Smoke test finished."
 
 scan: ## Scan backend image with Trivy (if installed): IMAGE_NAME / TAG
@@ -283,11 +283,11 @@ scan: ## Scan backend image with Trivy (if installed): IMAGE_NAME / TAG
 
 env-check: ## Warn about dev-default secrets before production deploy
 	@echo "🔎 Checking .env for production-unsafe defaults ..."
-	@test -f .env || echo "⚠️  WARN: no .env file — compose falls back to LOCAL-ONLY dev defaults"
+	@test -f .env || echo "⚠️  WARN: no .env file  compose falls back to LOCAL-ONLY dev defaults"
 	@grep -q "CHANGE-ME" .env 2>/dev/null && echo "⚠️  WARN: .env still contains CHANGE-ME placeholders" || true
 	@grep -q "^DOCS_ENABLED=true" .env 2>/dev/null && echo "⚠️  WARN: DOCS_ENABLED=true exposes Swagger UI (set false in prod)" || true
 	@grep -q "^DB_PASSWORD=root" .env 2>/dev/null && echo "⚠️  WARN: DB_PASSWORD is still the dev default" || true
-	@echo "✅ env-check done (warnings only — fix before exposing to the internet)"
+	@echo "✅ env-check done (warnings only  fix before exposing to the internet)"
 
 ##@ Backend without Docker (Gradle)
 jar: ## Build Spring Boot jar locally (no Docker): ./gradlew bootJar

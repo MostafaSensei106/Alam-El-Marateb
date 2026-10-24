@@ -15,15 +15,15 @@ import tools.jackson.databind.ObjectMapper
 import java.security.MessageDigest
 
 /**
- * First-party client gate: a valid JWT alone is NOT enough — the caller
+ * First-party client gate: a valid JWT alone is NOT enough  the caller
  * must also prove it is one of our own apps via `X-Api-Client` + `X-Api-Key`.
  * Runs before the whole security chain and rejects unknown clients with
  * 401 CLIENT_REJECTED (same ApiResponse envelope, no body timestamps).
  *
  * Exempt (no key needed): actuator health/info, public uploads (plain <img>
- * tags cannot send headers), CORS preflights, and — dev only — Swagger/OpenAPI
+ * tags cannot send headers), CORS preflights, and  dev only  Swagger/OpenAPI
  * (gated by app.docs.enabled, mirrored in SecurityConfig).
- * Everything else under the /api/ routes requires a key — login included.
+ * Everything else under the /api/ routes requires a key  login included.
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE + 2)

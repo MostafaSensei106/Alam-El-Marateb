@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Purchasing routes — owning module: purchasing.
+ * Purchasing routes  owning module: purchasing.
  * Audience: branch managers (suppliers + purchase orders + goods receipt).
  * Required roles: BRANCH_MANAGER, SUPER_ADMIN.
  */

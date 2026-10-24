@@ -1,19 +1,19 @@
-# سياسة HTTP — الميثودز والأكواد لكل الحالات (v1)
+# سياسة HTTP  الميثودز والأكواد لكل الحالات (v1)
 
 > المرجع الملزم لكل كنترولر. الهدف: أي فشل له كود دقيق ومعنى واحد ثابت في السيستم كله.
 
-## 1. الميثودز — متى تُستخدم
+## 1. الميثودز  متى تُستخدم
 
 | الميثود | الاستخدام | Idempotent | مثال |
 |---|---|---|---|
 | GET | قراءة فقط، لا يغيّر داتا أبداً | نعم | بحث، تفاصيل، تتبع |
 | POST | إنشاء مورد جديد / أمر تنفيذي | **لا** (إلا بـ `Idempotency-Key`) | إنشاء منتج، إتمام بيع، تأكيد استلام |
 | PUT | استبدال كامل لمورد معروف الـ id | نعم | تحديث منتج، ربط صفات صنف |
-| PATCH | تعديل جزئي (تُستخدم بحذر — الأفضل PUT مع nullable) | نعم | (غير مستخدمة حالياً) |
+| PATCH | تعديل جزئي (تُستخدم بحذر  الأفضل PUT مع nullable) | نعم | (غير مستخدمة حالياً) |
 | DELETE | حذف/إلغاء | نعم | حذف preset، إزالة مفضلة |
 
 - `Idempotency-Key` **إجباري** في: `place-order` (متجر/POS)، `complete-sale`، `confirm-receipt`، `receive` (دفعات).
-  إعادة نفس المفتاح تُرجع **نفس الرد الأصلي** (200/201) + هيدر `Idempotent-Replay: true` — لا تنفيذ مكرر أبداً.
+  إعادة نفس المفتاح تُرجع **نفس الرد الأصلي** (200/201) + هيدر `Idempotent-Replay: true`  لا تنفيذ مكرر أبداً.
 
 ## 2. أكواد النجاح
 
@@ -22,9 +22,9 @@
 | 200 OK | نجح + رد | كل GET، PUT، POST تنفيذي (toggle, confirm, reconcile)، DELETE مفضلة (مع رسالة) |
 | 201 Created | اتخلق مورد جديد + `Location` header | POST إنشاء (منتج، طلب، برومو، عنوان، مطالبة) |
 | 202 Accepted | استُلم وحيتنفذ لاحقاً | إنشاء PDF فاتورة، refresh تحليلات، إعادة جدولة توصيل، تأكيد تحويل بنكي (pending) |
-| 204 No Content | نجح بلا رد | (اختياري) DELETE صامت — الحالي يُرجع 200 برسالة وهو مقبول كبديل موحد |
+| 204 No Content | نجح بلا رد | (اختياري) DELETE صامت  الحالي يُرجع 200 برسالة وهو مقبول كبديل موحد |
 
-## 3. أخطاء العميل 4xx — القاموس الدقيق
+## 3. أخطاء العميل 4xx  القاموس الدقيق
 
 | الكود | يُستخدم عند | مثال من سيستمنا | الموجود؟ |
 |---|---|---|---|
@@ -35,11 +35,11 @@
 | 405 Method Not Allowed | ميثود غلط على مسار صح + هيدر `Allow` | DELETE على `/products` (جماعي ممنوع) | ✅ |
 | 409 Conflict | تعارض حالة/تكرار: (1) مكرر فريد (2) انتقال حالة مستحيل (3) نسخة قديمة optimistic lock (4) رصيد لا يكفي | slug/SKU مكرر، اعتماد تحويل `draft`، بيع كمية > المتاح، تعديل بفاتورة قديمة | ✅ جزئياً |
 | 410 Gone | مورد كان موجوداً وحُذف نهائياً وله أثر (روابط قديمة) | منتج موقف نهائياً يُفتح من لينك قديم/مفضلة | ❌ يُضاف |
-| 412 Precondition Failed | شرط `If-Match: <version>` فشل (تعديل متزامن واعٍ) | مديرين يعدلان نفس المنتج — الثاني يأخذ نسخة قديمة | ❌ يُضاف P2 |
+| 412 Precondition Failed | شرط `If-Match: <version>` فشل (تعديل متزامن واعٍ) | مديرين يعدلان نفس المنتج  الثاني يأخذ نسخة قديمة | ❌ يُضاف P2 |
 | 422 Unprocessable Entity | الصيغة سليمة لكن **المعنى مرفوض** (أهم كود للبيزنس) | سلة فاضية، variant لا ينتمي للمنتج، برومو منتهي/مستنفد، مقاس غير متاح، عربون > الإجمالي | ❌ يُضاف (يفصل عن 400) |
 | 429 Too Many Requests | تجاوز حد الاستخدام + هيدر `Retry-After` | محاولات دخول، إرسال OTP، price-preview مكثف | ❌ يُضاف مع rate limiter |
 
-### 400 مقابل 422 — قاعدة سريعة
+### 400 مقابل 422  قاعدة سريعة
 - **400** = "مش فاهم طلبك" (syntax). **422** = "فاهمك لكن مينفعش" (semantics).
 - كل `@Valid` (حقل ناقص/سالب) → **400**. كل قاعدة بيزنس (مخزون/صلاحية عرض/حالة طلب) → **422**.
 
@@ -51,7 +51,7 @@
 
 | الكود | يُستخدم عند | ملاحظة |
 |---|---|---|
-| 500 Internal | خطأ غير متوقع — يُسجل بـ traceId ولا يُعرض تفصيله | الرد: "حدث خطأ غير متوقع" + `traceId` للتتبع |
+| 500 Internal | خطأ غير متوقع  يُسجل بـ traceId ولا يُعرض تفصيله | الرد: "حدث خطأ غير متوقع" + `traceId` للتتبع |
 | 502 Bad Gateway | بوابة خارجية ردت غلط (SMS/دفع مستقبلاً) | مع retry + fallback |
 | 503 Unavailable | قاعدة البيانات/Redis واقعة + هيدر `Retry-After` | فحص `/actuator/health` |
 
@@ -62,8 +62,8 @@
   "errors": ["variant 120x195 غير موجود في preset X"],
   "traceId": "9f3a…", "timestamp": "…" }
 ```
-- `traceId` يُضاف لكل رد (نجاح وفشل) — ✅ تم (`ApiResponse.traceId` + هيدر `X-Trace-Id`).
-- رسائل المستخدم **عربية مبسطة + حل مقترح** ("المقاس خلص — جرّب 160×195") — ✅ تم: الـ `message` والـ `errors` كلها مفاتيح i18n (`LocalizedException.errorKey` + args) تُحل بلغة الطلب (`X-Lang`)، وتفاصيل الماكينة فقط (`TOKEN_EXPIRED`, أرقام التتبع) تبقى ثابتة بلا ترجمة.
+- `traceId` يُضاف لكل رد (نجاح وفشل)  ✅ تم (`ApiResponse.traceId` + هيدر `X-Trace-Id`).
+- رسائل المستخدم **عربية مبسطة + حل مقترح** ("المقاس خلص  جرّب 160×195")  ✅ تم: الـ `message` والـ `errors` كلها مفاتيح i18n (`LocalizedException.errorKey` + args) تُحل بلغة الطلب (`X-Lang`)، وتفاصيل الماكينة فقط (`TOKEN_EXPIRED`, أرقام التتبع) تبقى ثابتة بلا ترجمة.
 
 ## 6. مصفوفة الفشل حسب الدومين (أهم 20 حالة)
 
@@ -84,13 +84,13 @@
 | ملف صورة مخالف (نوع/حجم) | 400 + الحدود المسموحة |
 | تصدير Excel لتقرير ضخم | 202 + رابط جاهز لاحقاً (async) |
 
-## 7. ما يُضاف للكود (مخطط — لا تنفيذ الآن)
+## 7. ما يُضاف للكود (مخطط  لا تنفيذ الآن)
 
-1. `traceId` في `ApiResponse` (MDC + filter). — ✅ تم: `TraceIdFilter` + `ApiResponse.traceId` + هيدر `X-Trace-Id`.
-2. استثناءات: `UnprocessableException → 422`، `GoneException → 410`، `PreconditionException → 412`، `RateLimitException → 429`. — ✅ تم في `DomainExceptions` + `GlobalExceptionHandler`.
-3. فصل `MethodArgumentNotValid` (400) عن أخطاء البيزنس (422) في السيرفسز. — ✅ تم: سلة فاضية/variant غلط/دفع مقدم مخالف/قناة POS → 422، و`resolveLines` الغامض → 404.
-4. `Idempotency-Key` filter + جدول `idempotency_keys` في P3. — ⚠️ جزئي: إعادة نفس المفتاح تُرجع نفس الأوردر + هيدر `Idempotent-Replay: true` (place-order POS/shop)؛ الجدول العام والفلتر الشامل مؤجلان لـ P3.
-5. Rate limiter (login/OTP/preview) في P3. — ✅ جزئي: `RateLimitFilter` داخل الذاكرة (login/refresh 10/min، price-preview 60/min) يُرجع 429 + `Retry-After`؛ نسخة Redis متعددة النسخ مؤجلة.
-6. `405 Method Not Allowed` يُرجع 405 + هيدر `Allow` (كان 400 خطأً). — ✅ تم.
-7. روت غير موجود يُرجع 404 JSON موحد (`spring.mvc.throw-exception-if-no-handler-found=true`). — ✅ تم؛ غير المسجل بـ 401 يبقى 401 للأمان.
-8. كل الردود (نجاح/فشل، و401/403 من الـ filter-chain) بنفس غلاف `ApiResponse` + `traceId`. — ✅ تم (`ApiAccessDeniedHandler` + `JwtAuthenticationEntryPoint`).
+1. `traceId` في `ApiResponse` (MDC + filter).  ✅ تم: `TraceIdFilter` + `ApiResponse.traceId` + هيدر `X-Trace-Id`.
+2. استثناءات: `UnprocessableException → 422`، `GoneException → 410`، `PreconditionException → 412`، `RateLimitException → 429`.  ✅ تم في `DomainExceptions` + `GlobalExceptionHandler`.
+3. فصل `MethodArgumentNotValid` (400) عن أخطاء البيزنس (422) في السيرفسز.  ✅ تم: سلة فاضية/variant غلط/دفع مقدم مخالف/قناة POS → 422، و`resolveLines` الغامض → 404.
+4. `Idempotency-Key` filter + جدول `idempotency_keys` في P3.  ⚠️ جزئي: إعادة نفس المفتاح تُرجع نفس الأوردر + هيدر `Idempotent-Replay: true` (place-order POS/shop)؛ الجدول العام والفلتر الشامل مؤجلان لـ P3.
+5. Rate limiter (login/OTP/preview) في P3.  ✅ جزئي: `RateLimitFilter` داخل الذاكرة (login/refresh 10/min، price-preview 60/min) يُرجع 429 + `Retry-After`؛ نسخة Redis متعددة النسخ مؤجلة.
+6. `405 Method Not Allowed` يُرجع 405 + هيدر `Allow` (كان 400 خطأً).  ✅ تم.
+7. روت غير موجود يُرجع 404 JSON موحد (`spring.mvc.throw-exception-if-no-handler-found=true`).  ✅ تم؛ غير المسجل بـ 401 يبقى 401 للأمان.
+8. كل الردود (نجاح/فشل، و401/403 من الـ filter-chain) بنفس غلاف `ApiResponse` + `traceId`.  ✅ تم (`ApiAccessDeniedHandler` + `JwtAuthenticationEntryPoint`).

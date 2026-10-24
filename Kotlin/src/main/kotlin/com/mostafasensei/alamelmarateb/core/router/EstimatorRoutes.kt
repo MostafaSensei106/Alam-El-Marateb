@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Estimator routes — owning module: estimator.
+ * Estimator routes  owning module: estimator.
  * Audience: storefront customers (quote + spin), in-store staff (same quote
  * with channel=pos), managers (spin campaigns + prizes).
  * Public reads/computes are open; spin needs CUSTOMER; management needs BRANCH_MANAGER.

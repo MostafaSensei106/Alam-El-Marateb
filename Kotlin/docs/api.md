@@ -1,20 +1,20 @@
-# كتالوج الـ API — تفصيلي (v1)
+# كتالوج الـ API  تفصيلي (v1)
 
 > كل endpoint: الميثود + المسار + الدور + الكنترولر/السيرفس + أهم حقول الطلب/الرد.
 > `(موجود)` = كود شغال. `(مخطط Pn)` = يُبنى في مرحلته. `(يُحذف)` = ملغى بقرار.
 
-## Catalog — إدارة (BRANCH_MANAGER)
+## Catalog  إدارة (BRANCH_MANAGER)
 
 | الميثود والمسار | الحالة | الدور/الملاحظة |
 |---|---|---|
-| GET/POST `/catalog/products` + GET/PUT/DELETE `/catalog/products/{id}` | موجود | `ProductAdminController` — POST تُرجع 201 + `@Valid` |
+| GET/POST `/catalog/products` + GET/PUT/DELETE `/catalog/products/{id}` | موجود | `ProductAdminController`  POST تُرجع 201 + `@Valid` |
 | POST `/catalog/products/from-preset/{presetId}` | موجود | نسخ كل مقاسات القالب |
 | POST `/catalog/products/quick-create` | موجود | قالب + مقاس واحد (8.1 arch.md) |
 | CRUD `/catalog/categories[/{id}]` + PUT `/catalog/categories/{id}/attributes` | موجود | ربط الصفات |
 | CRUD `/catalog/attributes[/{id}]` + POST/DELETE `/catalog/attributes/{id}/options[/{optionId}]` | موجود | |
 | CRUD `/catalog/presets[/{id}]` | موجود | |
 
-## Catalog — متجر عام (بدون auth للـ GET)
+## Catalog  متجر عام (بدون auth للـ GET)
 
 | الميثود والمسار | الحالة |
 |---|---|
@@ -26,7 +26,7 @@
 | GET `/analytics/notifications` (طابور المتابعة) | موجود |
 | GET `/catalog/public/categories` + GET `/catalog/public/products/{slug}/reviews` + brands/quiz/compare/bought-together/Q&A | موجود |
 
-## Sales — POS (CASHIER)
+## Sales  POS (CASHIER)
 
 | الميثود والمسار | الحالة |
 |---|---|
@@ -40,7 +40,7 @@
 | GET `/sales/orders` + GET `/sales/orders/{orderId}` + POST `/{id}/confirm-payment` (مدير) | مخطط P3 |
 | GET/POST `/sales/promotions` + POST `/{id}/toggle` (مدير فقط) | مخطط P3 |
 
-## Shop — عميل (CUSTOMER)
+## Shop  عميل (CUSTOMER)
 
 | الميثود والمسار | الحالة |
 |---|---|
@@ -49,7 +49,7 @@
 | GET `/shop/orders/track/{n}/location` + POST `/portal/deliveries/{orderId}/rate` | موجود |
 | POST `/delivery/trips/{id}/location|optimize` + POST `/delivery/stops/{id}/pin` | موجود |
 
-## Shop — عميل (CUSTOMER)
+## Shop  عميل (CUSTOMER)
 
 | الميثود والمسار | الحالة |
 |---|---|
@@ -79,7 +79,7 @@
 | GET `/warehouse/transfers/pending` + POST `/{id}/confirm-receipt` (دفعات) + POST `/audits/{id}/count` | أمين | موجود |
 | CRUD `/purchasing/suppliers` + CRUD `/purchase-orders` + POST `/{id}/receive` (دفعة) + supplier-payments | مدير | موجود |
 
-## HR (بلا حضور — قرار) + Self + Accounting + Delivery + Analytics + Identity
+## HR (بلا حضور  قرار) + Self + Accounting + Delivery + Analytics + Identity
 
 | الميثود والمسار | الدور | الحالة |
 |---|---|---|
@@ -90,13 +90,13 @@
 | `/delivery/my-trips|trips|stops|orders` + إدارة رحلات ومركبات | DELIVERY_DRIVER | موجود |
 | `/analytics/summary`, `/product-velocity`, `/audit-trail/...` | BRANCH_MANAGER | **موجود** |
 | باقي `/analytics/*` (إيراد، RFM، فروع، heatmap، beacon، inquiries) | BRANCH_MANAGER | موجود |
-| احتياجات لوحة تحكم Flutter (Customer 360، أحدث الأوردرات، أفضل العملاء، Audit feed) | BRANCH_MANAGER | [مقترح — التفاصيل](api/dashboard-flutter-features.md) |
+| احتياجات لوحة تحكم Flutter (Customer 360، أحدث الأوردرات، أفضل العملاء، Audit feed) | BRANCH_MANAGER | [مقترح  التفاصيل](api/dashboard-flutter-features.md) |
 | `/auth/**` (عام) + `/identity/branches|access|fleet` | مدير | مخطط P7 (الـ auth موجود جزئياً) |
 
 ## قواعد الردود الموحدة
 
 - النجاح: `ApiResponse{success,message,data}` عبر `BaseController` (201 للإنشاء).
-- اللغة: هيدر `X-Lang: ar|en` يحدد لغة `message` (افتراضي ar) — نفس الشكل في كل اللغات (التفصيل `core/i18n`).
+- اللغة: هيدر `X-Lang: ar|en` يحدد لغة `message` (افتراضي ar)  نفس الشكل في كل اللغات (التفصيل `core/i18n`).
 - المحتوى ثنائي اللغة: الكتابة تقبل `translations: {lang: {name, description}}` (الأكواد من `app.i18n.supported` فقط)، والقراءة تُحل بلغة الطلب (المطلوبة ← ar ← canonical). لغة جديدة = صفوف فقط.
 - القوائم الكبيرة: `PagedResponse{items,page,size,totalElements,totalPages}` + `Pageable`.
 - الأخطاء: `GlobalExceptionHandler` (400 تحقق/404 NotFoundException/409 تعارض).

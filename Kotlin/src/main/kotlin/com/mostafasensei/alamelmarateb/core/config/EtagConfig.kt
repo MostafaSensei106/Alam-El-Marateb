@@ -14,7 +14,7 @@ import org.springframework.web.util.ContentCachingResponseWrapper
 import java.security.MessageDigest
 
 /**
- * HTTP caching via content ETags (conditional GET) — allowlisted endpoints only.
+ * HTTP caching via content ETags (conditional GET)  allowlisted endpoints only.
  *
  * Covered (stable, shared, high-traffic reads):
  * - storefront catalog under catalog-public: products, search, suggest,
@@ -23,7 +23,7 @@ import java.security.MessageDigest
  * - identity reference data (branches, roles)
  *
  * Deliberately NOT covered: carts, orders, shifts, analytics, loyalty,
- * portal/personal data, auth, live GPS, notifications, audit trails —
+ * portal/personal data, auth, live GPS, notifications, audit trails
  * per-user or constantly-changing payloads where hashing costs more than
  * any 304 could ever save, and a stale 304 would be a bug magnet.
  *

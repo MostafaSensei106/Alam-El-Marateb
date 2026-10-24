@@ -65,7 +65,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Catalog extras (management)", description = "Quick-create, brands, variant attributes — BRANCH_MANAGER")
+@Tag(name = "Catalog extras (management)", description = "Quick-create, brands, variant attributes  BRANCH_MANAGER")
 @RestController
 @ManagerApi
 class ModerateReviewController(

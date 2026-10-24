@@ -40,7 +40,7 @@ abstract interface class BaseUserSessionService {
   /// Drops the RAM token only when the session is persisted on disk
   /// ("Remember Me"), so the next [getToken] transparently re-hydrates
   /// from secure storage. For memory-only sessions (`rememberMe == false`)
-  /// wiping would equal a silent logout, so the token is kept — such
+  /// wiping would equal a silent logout, so the token is kept  such
   /// sessions live in RAM by explicit contract (see [saveUserSession]).
   Future<void> onAppBackgrounded();
 }

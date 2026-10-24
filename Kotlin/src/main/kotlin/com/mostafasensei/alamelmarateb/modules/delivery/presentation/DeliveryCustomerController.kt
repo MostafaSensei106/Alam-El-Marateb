@@ -26,7 +26,7 @@ import java.util.UUID
  * Customer delivery experience, CUSTOMER role. Uses portal and shop paths,
  * which bypass the driver-only delivery HTTP matcher.
  */
-@Tag(name = "Delivery (customer)", description = "Live location + driver rating — CUSTOMER")
+@Tag(name = "Delivery (customer)", description = "Live location + driver rating  CUSTOMER")
 @RestController
 @CustomerApi
 class DeliveryCustomerController(

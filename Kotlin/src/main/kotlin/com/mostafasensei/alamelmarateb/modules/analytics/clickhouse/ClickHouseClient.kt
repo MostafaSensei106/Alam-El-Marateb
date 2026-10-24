@@ -9,7 +9,7 @@ import tools.jackson.databind.ObjectMapper
 import tools.jackson.module.kotlin.readValue
 
 /**
- * ClickHouse over its HTTP interface (docs/modules/analytics.md §4 — heavy
+ * ClickHouse over its HTTP interface (docs/modules/analytics.md §4  heavy
  * analytics when data grows). No native driver: INSERTs use JSONEachRow,
  * SELECTs use JSON output, all best-effort (analytics must never break sales).
  *

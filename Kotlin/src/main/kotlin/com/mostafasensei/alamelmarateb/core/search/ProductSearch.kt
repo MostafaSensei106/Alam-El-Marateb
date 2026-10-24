@@ -4,7 +4,7 @@ import java.math.BigDecimal
 import java.util.UUID
 
 /**
- * Search document (Phase 3). The DB stays the source of truth — search only
+ * Search document (Phase 3). The DB stays the source of truth  search only
  * ranks/filters and returns ids; the service hydrates full products from
  * Postgres. `altNames` carries translated names so EN queries match.
  */
@@ -32,7 +32,7 @@ data class ProductSearchQuery(
 
 /**
  * Search port (Strategy): Meilisearch today, swappable tomorrow.
- * Nullable results mean "backend unavailable/disabled" — callers MUST fall
+ * Nullable results mean "backend unavailable/disabled"  callers MUST fall
  * back to the Postgres filter so search never breaks the storefront.
  */
 interface ProductSearch {

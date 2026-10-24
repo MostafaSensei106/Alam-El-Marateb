@@ -1,4 +1,4 @@
-# النشر والتشغيل — v1-backend
+# النشر والتشغيل  v1-backend
 
 ## 1. المتطلبات
 
@@ -56,11 +56,11 @@ docker run -p 8080:8080 \
 1. `GET /actuator/health` → `{"status":"UP"}`.
 2. `POST /api/v1/auth/login` بالأدمن → access + refresh tokens.
 3. `GET /api/v1/analytics/summary` بالتوكن → ملخص الداشبورد.
-4. Swagger: `/swagger-ui.html` — Postman: `docs/api/postman_collection.json`.
+4. Swagger: `/swagger-ui.html`  Postman: `docs/api/postman_collection.json`.
 
 ## 6. أول خطوات بعد الدخول
 
-1. غيّر باسورد الأدمن (أنشئ مستخدماً جديداً وعطّل القديم — لا endpoint لتغيير الباسورد بعد، يُضاف مع identity الكامل).
+1. غيّر باسورد الأدمن (أنشئ مستخدماً جديداً وعطّل القديم  لا endpoint لتغيير الباسورد بعد، يُضاف مع identity الكامل).
 2. أنشئ الفروع (`POST /identity/branches`) والمستخدمين (`POST /identity/access/users`).
 3. أنشئ مخزناً لكل فرع (`POST /inventory/warehouses`) ثم الأصناف والمنتجات.
 
@@ -68,4 +68,4 @@ docker run -p 8080:8080 \
 
 - تغيير الباسورد/self-service للمستخدم: غير موجود (P-identity الكامل).
 - الدفع الإلكتروني: مؤجل (يدوي فقط). التقارير المتقدمة والـ Quiz: مخططة ولم تُبنَ.
-- بيانات تجارب التستات تتراكم في داتابيز التطوير (seed ب Ramdom) — للإنتاج قاعدة نظيفة تُهاجر من V1.
+- بيانات تجارب التستات تتراكم في داتابيز التطوير (seed ب Ramdom)  للإنتاج قاعدة نظيفة تُهاجر من V1.

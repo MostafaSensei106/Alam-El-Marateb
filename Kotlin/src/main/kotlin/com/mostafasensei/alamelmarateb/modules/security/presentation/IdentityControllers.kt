@@ -79,9 +79,9 @@ data class StaffCreateRequest(
 data class SetRolesRequest(val roles: List<String> = emptyList())
 
 /**
- * Public auth — /api/v1/auth/... No login required (except /me).
+ * Public auth  /api/v1/auth/... No login required (except /me).
  */
-@Tag(name = "Auth", description = "Register, login, refresh — public")
+@Tag(name = "Auth", description = "Register, login, refresh  public")
 @RestController
 @RequestMapping(AuthRoutes.BASE)
 class AuthController(
@@ -137,10 +137,10 @@ class AuthController(
 }
 
 /**
- * Identity administration — /api/v1/identity/... Super-admin only
+ * Identity administration  /api/v1/identity/... Super-admin only
  * (branch managers get scoped access in a later phase).
  */
-@Tag(name = "Identity (admin)", description = "Branches, staff, roles — SUPER_ADMIN")
+@Tag(name = "Identity (admin)", description = "Branches, staff, roles  SUPER_ADMIN")
 @RestController
 @RequestMapping(IdentityAdminRoutes.BASE)
 @SuperAdminApi

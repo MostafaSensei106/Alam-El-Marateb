@@ -12,7 +12,7 @@ import 'base_url_launcher_services.dart';
 /// - `http/https` only for websites; `mailto:` recipients strictly validated;
 ///   phone numbers normalized to E.164-ish digits before `tel:`.
 /// - Length-bounded email subject/body to block intent-injection.
-/// - Every launch emits a typed [SecurityEvent] (host only — never the full
+/// - Every launch emits a typed [SecurityEvent] (host only  never the full
 ///   URL, which may carry tokens in query params).
 @LazySingleton(as: BaseUrlLauncherServices)
 final class UrlLauncherService implements BaseUrlLauncherServices {
@@ -32,7 +32,7 @@ final class UrlLauncherService implements BaseUrlLauncherServices {
         'Only http and https schemes are allowed for launching websites.',
       );
     }
-    // NOTE: no trusted-domain allowlist — social/whatsapp links are
+    // NOTE: no trusted-domain allowlist  social/whatsapp links are
     // legitimately external. SSRF protection lives at the download boundary
     // (AttachmentHandler) which writes to disk.
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {

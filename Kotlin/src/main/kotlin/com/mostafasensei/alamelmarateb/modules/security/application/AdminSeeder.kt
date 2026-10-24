@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component
 /**
  * First-boot seed: Main branch + super-admin user.
  * Runs ONLY when no SUPER_ADMIN exists. Configure via env:
- * ADMIN_PHONE (default 01000000000), ADMIN_PASSWORD (default admin123 — change immediately),
+ * ADMIN_PHONE (default 01000000000), ADMIN_PASSWORD (default admin123  change immediately),
  * ADMIN_NAME (default System Admin).
  */
 @Component
@@ -37,7 +37,7 @@ class AdminSeeder(
             BranchJpaEntity(name = "Main Branch", code = "MAIN", phone = adminPhone, city = "Tanta", address = "Tanta"),
         )
         val superAdmin = roles.findByName(AppRole.SUPER_ADMIN.roleName)
-            .orElseThrow { IllegalStateException("ROLE_SUPER_ADMIN seed missing — is V1 applied?") }
+            .orElseThrow { IllegalStateException("ROLE_SUPER_ADMIN seed missing  is V1 applied?") }
         users.save(
             UserJpaEntity(
                 branchId = branch.id, fullName = adminName, phoneNumber = adminPhone,
@@ -45,6 +45,6 @@ class AdminSeeder(
                 roles = mutableSetOf(superAdmin),
             ),
         )
-        log.warn("Seeded super-admin {} on branch MAIN — change ADMIN_PASSWORD immediately!", adminPhone)
+        log.warn("Seeded super-admin {} on branch MAIN  change ADMIN_PASSWORD immediately!", adminPhone)
     }
 }

@@ -16,7 +16,7 @@ import 'failures/security_failures.dart';
 ///
 /// Key-management model (deliberate, non-negotiable):
 /// - Operational keys are random 256-bit values used DIRECTLY with
-///   AES-256-GCM. No KDF is applied to them — stretching a full-entropy
+///   AES-256-GCM. No KDF is applied to them  stretching a full-entropy
 ///   random key adds cost without adding security.
 /// - Argon2id is used ONLY when the key material starts as a human
 ///   passphrase ([deriveKeyAndStore], e.g. master-password / export flows

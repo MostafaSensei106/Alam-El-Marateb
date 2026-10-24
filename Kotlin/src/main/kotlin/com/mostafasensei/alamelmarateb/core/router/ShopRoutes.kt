@@ -1,10 +1,10 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Customer shop routes — owning module: sales.
+ * Customer shop routes  owning module: sales.
  * Audience: end customers (website / app buyers).
  * Required roles: CUSTOMER, SUPER_ADMIN.
- * Staff must NOT use these — they have SalesPosRoutes.
+ * Staff must NOT use these  they have SalesPosRoutes.
  */
 object ShopRoutes {
     private const val CART = "/api/v1/shop/cart"

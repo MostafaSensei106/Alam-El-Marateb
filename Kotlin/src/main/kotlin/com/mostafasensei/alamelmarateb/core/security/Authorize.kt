@@ -3,7 +3,7 @@ package com.mostafasensei.alamelmarateb.core.security
 import org.springframework.security.access.prepost.PreAuthorize
 
 /**
- * Audience annotations — use these instead of raw @PreAuthorize strings.
+ * Audience annotations  use these instead of raw @PreAuthorize strings.
  * Each one is the only place its role-set is spelled out; controllers just
  * declare their audience. URL-level matchers in SecurityConfig mirror the
  * same sets via [AppRole] (defense in depth).

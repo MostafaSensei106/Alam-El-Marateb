@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Purchasing (landed cost)", description = "Shipment landed costs + allocation — BRANCH_MANAGER")
+@Tag(name = "Purchasing (landed cost)", description = "Shipment landed costs + allocation  BRANCH_MANAGER")
 @RestController
 @ManagerApi
 class AddLandedCostController(

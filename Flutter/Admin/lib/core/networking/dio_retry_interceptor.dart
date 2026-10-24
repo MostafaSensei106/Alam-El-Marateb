@@ -6,7 +6,7 @@ import 'package:dio_smart_retry/dio_smart_retry.dart';
 /// Design notes:
 /// - No request gating: requests always go to the network stack. A truly
 ///   offline device fails fast with [DioExceptionType.connectionError] from
-///   the socket itself, which is never retried — the cache interceptor's
+///   the socket itself, which is never retried  the cache interceptor's
 ///   `onError` fallback (or the offline Failure mapping downstream) then
 ///   resolves immediately instead of paying back-off delays.
 /// - App connectivity state is owned solely by [NetworkCubit]'s debounced
@@ -69,7 +69,7 @@ final class DioRetryInterceptor extends Interceptor {
   /// `true` only for failures worth retrying: timeouts (the request left the
   /// device but the server was too slow) and transient 502/503/504.
   /// Deliberately excludes `cancel`, `badCertificate`, `unknown`, and every
-  /// other 4xx/5xx — those are answers, not accidents.
+  /// other 4xx/5xx  those are answers, not accidents.
   bool _isTransientError(DioException err) {
     return switch (err.type) {
       DioExceptionType.connectionTimeout ||

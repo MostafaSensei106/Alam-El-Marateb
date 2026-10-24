@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Delivery routes — owning module: delivery.
+ * Delivery routes  owning module: delivery.
  * Audience: delivery drivers (trips, stops, proof of delivery).
  * Required roles: DELIVERY_DRIVER, SUPER_ADMIN.
  */

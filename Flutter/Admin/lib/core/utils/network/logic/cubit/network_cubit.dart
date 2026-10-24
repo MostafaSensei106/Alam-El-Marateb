@@ -41,7 +41,7 @@ class NetworkCubit extends CubitSignal<NetworkState> {
 
   /// Called by the Dio interceptor when a request succeeds or fails.
   void forceUpdateStatus({required bool isConnected}) {
-    // Force updates bypass debounce — they come from actual HTTP results.
+    // Force updates bypass debounce  they come from actual HTTP results.
     _debounceTimer?.cancel();
     _emitIfChanged(isConnected);
   }

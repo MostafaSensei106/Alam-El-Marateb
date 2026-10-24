@@ -10,7 +10,7 @@ import 'base_file_opener_service.dart';
 /// The file itself is never fetched into app memory/disk here, so no
 /// trusted-domain allowlist applies (the download-to-disk path in
 /// `AttachmentHandler` keeps the strict SSRF guard). Only the host is
-/// audited — never query params, which may carry signed-URL tokens.
+/// audited  never query params, which may carry signed-URL tokens.
 @Injectable(as: BaseFileOpenerService)
 final class UrlFileOpenerService implements BaseFileOpenerService {
   const UrlFileOpenerService(this._urlLauncher, this._audit);

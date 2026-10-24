@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.security
 
 /**
- * Canonical application roles — the single source of truth.
+ * Canonical application roles  the single source of truth.
  * [roleName] is the Spring Security authority (ROLE_*); [names] feeds
  * both the URL matchers in SecurityConfig and the method annotations
  * in this package, so role strings never appear as literals elsewhere.

@@ -14,7 +14,7 @@ import tools.jackson.module.kotlin.readValue
  * Consumes `catalog.product_changed` in both transports: in-process Spring
  * events (default) and the `catalog.product_changed` Kafka topic (group
  * `search`). Both funnel into [CatalogSearchIndexer.indexProduct], which
- * deduplicates — safe under redelivery and rebalances.
+ * deduplicates  safe under redelivery and rebalances.
  */
 @Component
 class CatalogSearchListener(

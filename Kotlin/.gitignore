@@ -39,7 +39,7 @@ out/
 ### Kotlin ###
 .kotlin
 
-# Local secrets — NEVER commit (see .env.example for the template)
+# Local secrets  NEVER commit (see .env.example for the template)
 .env
 !.env.example
 

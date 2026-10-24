@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Inventory (batches)", description = "Per-batch stock layers + valuation — BRANCH_MANAGER")
+@Tag(name = "Inventory (batches)", description = "Per-batch stock layers + valuation  BRANCH_MANAGER")
 @RestController
 @ManagerApi
 class BatchValuationController(

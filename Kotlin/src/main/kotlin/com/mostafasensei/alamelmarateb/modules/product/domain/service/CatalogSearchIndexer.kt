@@ -12,7 +12,7 @@ import java.util.UUID
 
 /**
  * Search index writer (Phase 3). Consumes `catalog.product_changed` events
- * (in-process or Kafka — same method) and upserts one Meilisearch document
+ * (in-process or Kafka  same method) and upserts one Meilisearch document
  * per product. Idempotent: upsert-by-id plus [IdempotencyGuard], so replays
  * and rebalances are safe. Missing/inactive products delete the document,
  * which uniformly covers product deletes and deactivations.

@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 
 /**
- * Shared controller helpers — single place for ApiResponse wrapping,
+ * Shared controller helpers  single place for ApiResponse wrapping,
  * status codes and pagination so feature controllers stay thin.
  *
  * Rules:

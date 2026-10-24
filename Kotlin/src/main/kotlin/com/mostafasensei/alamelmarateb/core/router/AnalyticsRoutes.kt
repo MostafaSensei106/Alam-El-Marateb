@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Analytics / dashboard routes — owning module: analytics (read-model over all modules).
+ * Analytics / dashboard routes  owning module: analytics (read-model over all modules).
  * Audience: management dashboard ONLY (aggregated business data).
  * Required roles: BRANCH_MANAGER, SUPER_ADMIN.
  * Never exposed to customers or operational staff.

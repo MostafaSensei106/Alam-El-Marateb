@@ -39,10 +39,10 @@ import java.util.UUID
 import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 
 /**
- * Management dashboard — /api/v1/analytics/...
+ * Management dashboard  /api/v1/analytics/...
  * BRANCH_MANAGER only. Revenue/RFM arrive with the sales module.
  */
-@Tag(name = "Analytics (dashboard)", description = "Executive overview, velocity, audit trail — BRANCH_MANAGER")
+@Tag(name = "Analytics (dashboard)", description = "Executive overview, velocity, audit trail  BRANCH_MANAGER")
 @RestController
 @RequestMapping(AnalyticsRoutes.BASE)
 @ManagerApi
@@ -70,9 +70,9 @@ class AnalyticsController(
 }
 
 /**
- * Revenue + customers + branches — BRANCH_MANAGER.
+ * Revenue + customers + branches  BRANCH_MANAGER.
  */
-@Tag(name = "Analytics revenue", description = "Revenue, RFM, branches, geo — BRANCH_MANAGER")
+@Tag(name = "Analytics revenue", description = "Revenue, RFM, branches, geo  BRANCH_MANAGER")
 @RestController
 @RequestMapping(AnalyticsRoutes.BASE)
 @ManagerApi

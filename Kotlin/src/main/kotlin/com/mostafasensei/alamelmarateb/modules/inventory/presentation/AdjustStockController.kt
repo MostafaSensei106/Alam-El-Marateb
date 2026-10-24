@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Warehouse (operations)", description = "Lookup, adjustments, receipts, counts — WAREHOUSE_KEEPER")
+@Tag(name = "Warehouse (operations)", description = "Lookup, adjustments, receipts, counts  WAREHOUSE_KEEPER")
 @RestController
 @RequestMapping(WarehouseOpsRoutes.BASE)
 @KeeperApi

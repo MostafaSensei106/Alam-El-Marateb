@@ -36,7 +36,7 @@ data class CustomQuote(
  * NO size limits: any positive width/length is quotable. Area by shape
  * (meters) x price-per-meter, plus an operating-cost surcharge driven by
  * the requested WIDTH. Brackets come from the operating_brackets table
- * (global rows, or per-model overrides) — never hardcoded here.
+ * (global rows, or per-model overrides)  never hardcoded here.
  * Widths outside every bracket carry no surcharge (0%).
  */
 object CustomSizeEngine {

@@ -1,7 +1,7 @@
 /// Pure, testable redaction policy for audit payloads.
 ///
 /// Defense-in-depth: even though [SecurityEvent] only carries whitelisted
-/// fields, errors and legacy maps may still contain secrets — this policy
+/// fields, errors and legacy maps may still contain secrets  this policy
 /// strips them before they reach any sink.
 final class RedactionPolicy {
   const RedactionPolicy();

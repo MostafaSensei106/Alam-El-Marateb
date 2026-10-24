@@ -57,7 +57,7 @@ class TripStopJpaEntity(
     @Column(name = "seq", nullable = false)
     var seq: Int = 0,
 
-    // "window" is a reserved word in Postgres — quoted in V12 and here.
+    // "window" is a reserved word in Postgres  quoted in V12 and here.
     @Column(name = "\"window\"", length = 50)
     var window: String? = null,
 

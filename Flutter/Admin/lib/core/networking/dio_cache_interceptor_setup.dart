@@ -12,7 +12,7 @@ import 'package:http_cache_hive_store/http_cache_hive_store.dart';
 /// - Only GET responses are cached (enforced by [DioCacheInterceptor]
 ///   itself, so no method checks are needed here).
 /// - Per-request opt-out (e.g. pagination) lives in the repository layer
-///   via [noCacheExtra] passed as Retrofit `@Extras()` — never as
+///   via [noCacheExtra] passed as Retrofit `@Extras()`  never as
 ///   hardcoded query-param sniffing inside an interceptor.
 abstract class CacheConfig {
   /// GetIt instance name under which [SysInit] registers the pre-resolved

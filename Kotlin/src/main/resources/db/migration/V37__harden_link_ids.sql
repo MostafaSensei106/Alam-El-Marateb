@@ -1,4 +1,4 @@
--- V37: harden link ids — every id that joins tables gets a real FK.
+-- V37: harden link ids  every id that joins tables gets a real FK.
 -- Verified zero orphans before constraining (po_items, receipt_items).
 -- Intentionally-nullable ids (documented, NOT touched):
 --   stock_moves.ref_id/ref_type      polymorphic reference (SALE/PO/TRANSFER/...)

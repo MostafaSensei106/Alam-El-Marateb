@@ -1,4 +1,4 @@
-# تخطيط موديول المبيعات sales (v2 — تفصيلي)
+# تخطيط موديول المبيعات sales (v2  تفصيلي)
 
 > **الحالة: مُنفذ ومُختبر** (طلبات + سلة + خصومات + تقسيط + حجوزات + شفتات + `OrderFlowTest` و`PromotionEngineTest` خضر).
 > أول revenue path. التفاصيل الكاملة للجداول في `docs/database.md` (3)، والـ endpoints في `docs/api.md`.
@@ -15,11 +15,11 @@ cancelled  returned   failed_delivery → rescheduled
 
 - **POS**: draft سريع → complete-sale (دفع فوري) أو place-order (توصيل لاحق).
 - **المتجر**: cart → checkout (ضيف برقم موبايل أو عميل) → place-order بحالة `confirmed` + دفع `COD` أو `TRANSFER/WALLET` بحالة `pending_confirmation` يؤكدها المدير يدوياً (9 في ux.md).
-- **الحجز**: طلب `reserved` بميعاد تسليم + عربون اختياري — يُغذي المتابعة.
+- **الحجز**: طلب `reserved` بميعاد تسليم + عربون اختياري  يُغذي المتابعة.
 
 ## 2. الجداول (تفصيل 4.3 في arch.md)
 
-- `orders`: branch_id, customer_id/user nullable + guest_phone, channel (pos/shop), status, payment_method (CASH/CARD/COD/TRANSFER/WALLET/INSTALLMENT؟), payment_status, subtotal, discount_total, delivery_fee, grand_total (كلها NUMERIC — 10 arch.md)، idempotency_key.
+- `orders`: branch_id, customer_id/user nullable + guest_phone, channel (pos/shop), status, payment_method (CASH/CARD/COD/TRANSFER/WALLET/INSTALLMENT؟), payment_status, subtotal, discount_total, delivery_fee, grand_total (كلها NUMERIC  10 arch.md)، idempotency_key.
 - `order_items`: variant_id, qty, unit_price, discount, net, applied_promo_codes[], is_gift.
 - `invoices`: رقم مسلسل لكل فرع/سنة + PDF.
 - `returns`: order_id, items, reason, status, refund_method.
@@ -36,9 +36,9 @@ cancelled  returned   failed_delivery → rescheduled
 
 - **الحجز**: `POST /reservations` (عربون + `deliverAt` + حجز مخزن) → `pay` دفعات (ممنوع تجاوز المتبقي) →
   `fulfill` عند السداد الكامل (خصم مخزن بحركة SALE) أو `cancel` (فك الحجز). التفاصيل تتضمن المتبقي والمدفوعات.
-- **المقاس الخاص**: `POST /custom-order` (منتج أساس + شكل + أبعاد + عربون اختياري) — يُنشئ variant فعلياً
+- **المقاس الخاص**: `POST /custom-order` (منتج أساس + شكل + أبعاد + عربون اختياري)  يُنشئ variant فعلياً
   بالسعر الهندسي، بلا حجز مخزن (تصنيع عند الطلب)، مع فاتورة وتحليلات عادية.
-- **دفع باقي الطلب**: `POST /sales/orders/{id}/pay-balance` — يُكمل الدفع الجزئي حتى `paid`.
+- **دفع باقي الطلب**: `POST /sales/orders/{id}/pay-balance`  يُكمل الدفع الجزئي حتى `paid`.
 
 ## 4. الـ APIs
 
@@ -52,6 +52,6 @@ cancelled  returned   failed_delivery → rescheduled
 
 ## 6. قرارات محسومة (من النقاش)
 
-1. **التقسيط الداخلي**: موجود من P3 — دفعات على الطلب (`installment_plans` + أقساط وحالاتها).
+1. **التقسيط الداخلي**: موجود من P3  دفعات على الطلب (`installment_plans` + أقساط وحالاتها).
 2. **الحجوزات**: جدول مستقل `reservations` (ميعاد تسليم + عربون اختياري) مرتبط بالعميل والفرع.
-3. **Click & collect**: متاح من الأول — الطلب الأونلاين يتيح الاستلام من الفرع.
+3. **Click & collect**: متاح من الأول  الطلب الأونلاين يتيح الاستلام من الفرع.

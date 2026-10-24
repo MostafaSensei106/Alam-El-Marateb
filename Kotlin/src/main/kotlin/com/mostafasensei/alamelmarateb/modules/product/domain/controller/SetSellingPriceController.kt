@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController
 import java.math.BigDecimal
 import java.util.UUID
 
-@Tag(name = "Catalog (selling prices)", description = "Channel prices + history — BRANCH_MANAGER")
+@Tag(name = "Catalog (selling prices)", description = "Channel prices + history  BRANCH_MANAGER")
 @RestController
 @ManagerApi
 class SetSellingPriceController(

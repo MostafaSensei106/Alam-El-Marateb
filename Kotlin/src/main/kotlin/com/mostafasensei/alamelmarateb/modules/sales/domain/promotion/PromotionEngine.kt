@@ -4,7 +4,7 @@ import java.math.BigDecimal
 import java.math.RoundingMode
 
 /**
- * Pure pricing engine — no Spring, no DB. Fully unit-testable.
+ * Pure pricing engine  no Spring, no DB. Fully unit-testable.
  *
  * Order: item promos → bundle promos (proportional split) → cart promos → gifts.
  * Exclusive: best single exclusive wins alone. Discounts never exceed their base.

@@ -12,7 +12,7 @@ import java.util.UUID
 /**
  * Writes domain events into outbox_events in the caller's transaction
  * (Strategy: same-transaction guarantee today, Kafka envelope in Phase 2
- * without changing callers — they only know aggregate + type + object).
+ * without changing callers  they only know aggregate + type + object).
  */
 @Service
 class OutboxWriter(

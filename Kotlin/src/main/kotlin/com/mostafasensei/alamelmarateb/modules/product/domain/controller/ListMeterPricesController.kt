@@ -65,7 +65,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Pricing tables (management)", description = "Meter prices + operating brackets — BRANCH_MANAGER")
+@Tag(name = "Pricing tables (management)", description = "Meter prices + operating brackets  BRANCH_MANAGER")
 @RestController
 @ManagerApi
 class ListMeterPricesController(

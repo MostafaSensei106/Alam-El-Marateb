@@ -14,7 +14,7 @@ import java.util.UUID
  * Kafka rebalances return false and must be skipped.
  *
  * REQUIRES_NEW so the claim commits even if the surrounding handler rolls
- * back — a poison event is still marked processed and won't loop forever.
+ * back  a poison event is still marked processed and won't loop forever.
  * (Business-level guards, e.g. loyalty's per-order ledger check, stay as a
  * second layer for same-order/different-event cases.)
  */

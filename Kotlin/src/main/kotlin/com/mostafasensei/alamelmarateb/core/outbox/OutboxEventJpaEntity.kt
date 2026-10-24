@@ -12,7 +12,7 @@ import java.util.UUID
  *
  * Written atomically with business data in the same DB transaction.
  * [OutboxRelay] publishes PENDING rows afterwards, so a broker outage
- * never loses an event — the row stays PENDING and is retried.
+ * never loses an event  the row stays PENDING and is retried.
  */
 @Entity
 @Table(name = "outbox_events")

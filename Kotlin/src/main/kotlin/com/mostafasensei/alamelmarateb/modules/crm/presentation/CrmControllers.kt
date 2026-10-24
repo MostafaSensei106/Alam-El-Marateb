@@ -39,9 +39,9 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 /**
- * CRM MANAGEMENT — /api/v1/crm/... Managers only.
+ * CRM MANAGEMENT  /api/v1/crm/... Managers only.
  */
-@Tag(name = "CRM (management)", description = "Warranties, claims — BRANCH_MANAGER")
+@Tag(name = "CRM (management)", description = "Warranties, claims  BRANCH_MANAGER")
 @RestController
 @RequestMapping(CrmAdminRoutes.BASE)
 @ManagerApi
@@ -95,9 +95,9 @@ class CrmAdminController(
 }
 
 /**
- * Customer PORTAL — /api/v1/portal/... Own data only.
+ * Customer PORTAL  /api/v1/portal/... Own data only.
  */
-@Tag(name = "Portal (customer)", description = "Profile, addresses, favorites, warranties, claims — CUSTOMER")
+@Tag(name = "Portal (customer)", description = "Profile, addresses, favorites, warranties, claims  CUSTOMER")
 @RestController
 @RequestMapping(PortalRoutes.BASE)
 @CustomerApi

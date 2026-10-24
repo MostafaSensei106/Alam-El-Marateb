@@ -108,8 +108,8 @@ class AuthService(
     }
 
     /**
-     * Authenticated password change (skills: backend-security-coder —
-     * current-password check; auth-implementation-patterns — audit).
+     * Authenticated password change (skills: backend-security-coder
+     * current-password check; auth-implementation-patterns  audit).
      * Bumps token_version: every other session/token dies immediately.
      */
     @Transactional
@@ -128,7 +128,7 @@ class AuthService(
 
     /**
      * Forgot-password, phone-based (broken-authentication §10: no account
-     * enumeration — identical response whether the phone exists or not).
+     * enumeration  identical response whether the phone exists or not).
      * Single-use 15-minute token, hash-only storage, delivered through the
      * notification channel (log today, SMS/WhatsApp when a sender is wired).
      */

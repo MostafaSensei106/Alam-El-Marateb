@@ -14,7 +14,7 @@ import java.time.OffsetDateTime
 /**
  * Polls outbox_events and publishes due rows via [DomainEventPublisher].
  *
- * Phase 1: transport is in-process (or Kafka if enabled) — same publisher
+ * Phase 1: transport is in-process (or Kafka if enabled)  same publisher
  * the app already uses. Phase 2 only swaps the publisher/consumer side;
  * this relay stays unchanged.
  *

@@ -84,7 +84,7 @@ class OutboxRelayTest {
             )
             assertEquals(1, (facts["qty"] as Number).toInt())
 
-            // Second relay run finds nothing due — no republish, no double facts.
+            // Second relay run finds nothing due  no republish, no double facts.
             relay.relay()
             val facts2 = jdbc.queryForMap(
                 "SELECT qty FROM sales_daily_facts WHERE day = ? AND branch_id = ? AND variant_id = ?",

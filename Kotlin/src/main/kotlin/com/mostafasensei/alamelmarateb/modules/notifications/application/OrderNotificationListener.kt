@@ -10,7 +10,7 @@ import org.springframework.transaction.event.TransactionalEventListener
  * Turns order events into queued notifications (Phase 2: async by design).
  *
  * The checkout/delivery transaction never waits for a provider: this
- * listener only inserts a `notifications` row (same outbox philosophy —
+ * listener only inserts a `notifications` row (same outbox philosophy
  * durable first, delivered later by the 5-minute dispatcher). The `ref`
  * key (`order-delivered:{id}`, `order-receipt:{id}`) makes redelivered
  * events a no-op via NotificationService.queue's pending-ref check.
@@ -31,8 +31,8 @@ class OrderNotificationListener(
                 "en" to "New invoice",
             ),
             bodies = mapOf(
-                "ar" to "تم إصدار فاتورة طلبك (${event.lines.sumOf { it.qty }} قطعة) — شكراً لتسوقك معنا",
-                "en" to "Your order invoice is ready (${event.lines.sumOf { it.qty }} items) — thank you",
+                "ar" to "تم إصدار فاتورة طلبك (${event.lines.sumOf { it.qty }} قطعة)  شكراً لتسوقك معنا",
+                "en" to "Your order invoice is ready (${event.lines.sumOf { it.qty }} items)  thank you",
             ),
         )
     }
@@ -48,8 +48,8 @@ class OrderNotificationListener(
                 "en" to "Delivered",
             ),
             bodies = mapOf(
-                "ar" to "تم توصيل طلبك بإجمالي ${event.grandTotal} — قيّم تجربتك",
-                "en" to "Your order (${event.grandTotal}) was delivered — please rate us",
+                "ar" to "تم توصيل طلبك بإجمالي ${event.grandTotal}  قيّم تجربتك",
+                "en" to "Your order (${event.grandTotal}) was delivered  please rate us",
             ),
         )
     }

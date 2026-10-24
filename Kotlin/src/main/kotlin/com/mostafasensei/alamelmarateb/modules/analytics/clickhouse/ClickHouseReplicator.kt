@@ -10,7 +10,7 @@ import org.springframework.transaction.event.TransactionalEventListener
 /**
  * Replicates invoice lines into ClickHouse `order_lines` (star schema for
  * heavy drilldowns). AFTER_COMMIT like the Postgres facts; failures are
- * swallowed inside the client — sales never break for analytics.
+ * swallowed inside the client  sales never break for analytics.
  * At-least-once safe via [IdempotencyGuard] (same event redelivered).
  */
 @Component

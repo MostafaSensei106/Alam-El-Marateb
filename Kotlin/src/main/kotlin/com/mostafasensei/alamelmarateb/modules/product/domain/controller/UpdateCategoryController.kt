@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Catalog (management)", description = "Categories + attribute links — BRANCH_MANAGER")
+@Tag(name = "Catalog (management)", description = "Categories + attribute links  BRANCH_MANAGER")
 @RestController
 @RequestMapping(CatalogAdminRoutes.CATEGORIES)
 @ManagerApi

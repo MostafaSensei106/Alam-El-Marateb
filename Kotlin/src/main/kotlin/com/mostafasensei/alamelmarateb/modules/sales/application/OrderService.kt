@@ -157,7 +157,7 @@ class OrderService(
         return placed
     }
 
-    /** POS ticket: saved with list prices, no stock hold, no invoice — completed later. */
+    /** POS ticket: saved with list prices, no stock hold, no invoice  completed later. */
     @Transactional
     fun saveDraft(input: PlaceOrderInput): Order {
         validateIdentity(input)
@@ -464,7 +464,7 @@ class OrderService(
     fun scanVariant(barcode: String): ScannedVariantView {
         val variant = variantRepository.findByBarcode(barcode)
             ?: throw NotFoundException("error.order.no_variant_barcode", listOf(barcode))
-        // Persisted variants always carry ids — null here means corrupt data.
+        // Persisted variants always carry ids  null here means corrupt data.
         val variantId = variant.id
             ?: throw UnprocessableException("error.order.unknown_variant", listOf(barcode))
         val productId = variant.productId

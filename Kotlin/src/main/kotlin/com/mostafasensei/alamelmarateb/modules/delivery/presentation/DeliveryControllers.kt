@@ -40,9 +40,9 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 /**
- * Delivery DRIVER — /api/v1/delivery/... Own trips only.
+ * Delivery DRIVER  /api/v1/delivery/... Own trips only.
  */
-@Tag(name = "Delivery (driver)", description = "My trips, stops, proof of delivery — DELIVERY_DRIVER")
+@Tag(name = "Delivery (driver)", description = "My trips, stops, proof of delivery  DELIVERY_DRIVER")
 @RestController
 @DriverApi
 class DeliveryDriverController(
@@ -97,13 +97,13 @@ class DeliveryDriverController(
 }
 
 /**
- * Delivery MANAGEMENT — fleet vehicles (identity prefix) + trip lifecycle.
+ * Delivery MANAGEMENT  fleet vehicles (identity prefix) + trip lifecycle.
  * Vehicles sit under the identity prefix so they are SUPER_ADMIN-only (SecurityConfig);
  * trip management under the delivery prefix is likewise SUPER_ADMIN-only.
  */
 
 
-@Tag(name = "Delivery (management)", description = "Fleet vehicles, trip lifecycle — SUPER_ADMIN")
+@Tag(name = "Delivery (management)", description = "Fleet vehicles, trip lifecycle  SUPER_ADMIN")
 @RestController
 class DeliveryManagerController(
     private val deliveryService: DeliveryService,

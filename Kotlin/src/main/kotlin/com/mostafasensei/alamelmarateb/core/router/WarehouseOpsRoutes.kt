@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Warehouse OPERATIONS routes — owning module: inventory.
+ * Warehouse OPERATIONS routes  owning module: inventory.
  * Audience: warehouse keepers (daily floor operations: lookup, adjust, receive, count).
  * Required roles: WAREHOUSE_KEEPER, SUPER_ADMIN.
  */

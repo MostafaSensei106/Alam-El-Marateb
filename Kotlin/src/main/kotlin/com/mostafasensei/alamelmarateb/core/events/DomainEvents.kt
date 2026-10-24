@@ -12,7 +12,7 @@ import java.util.UUID
  * happened, analytics (and later accounting) consume. Delivery is
  * at-least-once (outbox relay + Kafka), so every event carries a stable
  * [eventId] and every consumer deduplicates via `consumer_processed_events`
- * (see core/outbox/IdempotencyGuard) — never rely on "exactly once".
+ * (see core/outbox/IdempotencyGuard)  never rely on "exactly once".
  */
 data class InvoicedLine(
     val variantId: UUID,

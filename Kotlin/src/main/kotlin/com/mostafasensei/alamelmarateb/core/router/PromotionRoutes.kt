@@ -1,10 +1,10 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Promotion MANAGEMENT routes — owning module: sales.
+ * Promotion MANAGEMENT routes  owning module: sales.
  * Audience: branch managers (create/disable discounts, bundles, gifts).
  * Required roles: BRANCH_MANAGER, SUPER_ADMIN.
- * Customers only see the EFFECT via ShopRoutes.price-preview — never these endpoints.
+ * Customers only see the EFFECT via ShopRoutes.price-preview  never these endpoints.
  */
 object PromotionRoutes {
     private const val PREFIX = "/api/v1/sales/promotions"

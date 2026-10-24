@@ -13,7 +13,7 @@ import javax.crypto.spec.SecretKeySpec
 /**
  * Dev/test simulator: creates intents with fake refs and accepts callbacks
  * signed with the shared dev secret (X-Fake-Signature: HMAC_SHA256(secret, ref)).
- * Never enabled implicitly — the `fake` gateway name must be requested.
+ * Never enabled implicitly  the `fake` gateway name must be requested.
  */
 @Component
 class FakePaymentGateway(

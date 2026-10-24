@@ -20,7 +20,7 @@ final class SysInit {
   const SysInit._();
 
   /// Non-sensitive boot diagnostics, reported to the crash sink once it is
-  /// up (see [initializeDeferredServices]). Never contains secrets — only
+  /// up (see [initializeDeferredServices]). Never contains secrets  only
   /// [HydratedBootDecision] names.
   // static String? _pendingStorageIssue;
 

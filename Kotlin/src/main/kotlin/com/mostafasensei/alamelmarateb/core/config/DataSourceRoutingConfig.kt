@@ -23,7 +23,7 @@ import javax.sql.DataSource
  * - `@Transactional(readOnly = true)` is routed to REPLICA via [ReadOnlyRouteAspect].
  * - Today the replica defaults to the primary URL (zero operational change,
  *   zero replication lag). Phase 4 only sets REPLICA_URL/USER/PASSWORD env
- *   to a real streaming replica — no code change.
+ *   to a real streaming replica  no code change.
  */
 enum class DbRole { PRIMARY, REPLICA }
 

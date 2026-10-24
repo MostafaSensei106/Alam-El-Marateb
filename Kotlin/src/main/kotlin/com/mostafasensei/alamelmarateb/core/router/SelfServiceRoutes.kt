@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Staff SELF-SERVICE routes — owning module: hr.
+ * Staff SELF-SERVICE routes  owning module: hr.
  * Audience: every authenticated employee, scoped to their OWN record only.
  * Access: authenticated (any staff role). No management data exposed here.
  */

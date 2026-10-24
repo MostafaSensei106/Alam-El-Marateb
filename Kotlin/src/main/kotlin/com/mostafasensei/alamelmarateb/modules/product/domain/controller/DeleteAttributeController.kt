@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Catalog (management)", description = "Attributes + options — BRANCH_MANAGER")
+@Tag(name = "Catalog (management)", description = "Attributes + options  BRANCH_MANAGER")
 @RestController
 @RequestMapping(CatalogAdminRoutes.ATTRIBUTES)
 @ManagerApi

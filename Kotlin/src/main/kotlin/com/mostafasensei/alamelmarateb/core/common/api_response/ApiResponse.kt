@@ -3,7 +3,7 @@ package com.mostafasensei.alamelmarateb.core.common.api_response
 import com.fasterxml.jackson.annotation.JsonInclude
 
 /**
- * Global response contract: {success, message, data?, errors?} — nothing else.
+ * Global response contract: {success, message, data?, errors?}  nothing else.
  * No timestamps, no trace ids in the body: clients cache and diff payloads
  * byte-for-byte. Correlation travels in the `X-Trace-Id` response header.
  */

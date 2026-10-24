@@ -11,7 +11,7 @@ import java.time.Duration
 import java.util.UUID
 
 /**
- * Cached reference reads for checkout math (docs/modules/analytics.md 4 —
+ * Cached reference reads for checkout math (docs/modules/analytics.md 4
  * Redis caches product prices and static reference data).
  *
  * Zones/fees change only via DB seeds (no admin mutation endpoints yet),

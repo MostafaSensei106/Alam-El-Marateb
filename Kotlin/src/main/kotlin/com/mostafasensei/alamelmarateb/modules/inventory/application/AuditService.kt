@@ -78,7 +78,7 @@ class AuditService(
         return toResult(auditRepository.save(audit))
     }
 
-    /** Manager: reconcile — variances become AUDIT moves, audit is final. */
+    /** Manager: reconcile  variances become AUDIT moves, audit is final. */
     @Transactional
     fun reconcile(auditId: UUID, by: String? = null): AuditResult {
         val audit = load(auditId)

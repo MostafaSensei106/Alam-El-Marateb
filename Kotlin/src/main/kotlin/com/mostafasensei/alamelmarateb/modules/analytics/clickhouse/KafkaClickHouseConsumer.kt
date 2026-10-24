@@ -13,7 +13,7 @@ import tools.jackson.module.kotlin.readValue
  * app.events.transport=kafka and the ClickHouse store is enabled.
  * Delegates to [ClickHouseReplicator.replicate], which deduplicates via
  * IdempotencyGuard; ClickHouse inserts themselves stay best-effort inside
- * the client — analytics never break sales.
+ * the client  analytics never break sales.
  */
 @Component
 @ConditionalOnProperty(name = ["app.events.transport"], havingValue = "kafka")

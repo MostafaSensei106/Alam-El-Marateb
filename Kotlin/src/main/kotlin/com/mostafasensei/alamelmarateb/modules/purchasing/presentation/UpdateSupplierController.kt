@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Purchasing (suppliers)", description = "Suppliers, supplier payments — BRANCH_MANAGER")
+@Tag(name = "Purchasing (suppliers)", description = "Suppliers, supplier payments  BRANCH_MANAGER")
 @RestController
 @ManagerApi
 class UpdateSupplierController(

@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Accounting routes — owning module: accounting.
+ * Accounting routes  owning module: accounting.
  * Audience: accountants (books, treasuries, expenses, checks, tax reports).
  * Required roles: ACCOUNTANT, SUPER_ADMIN.
  */

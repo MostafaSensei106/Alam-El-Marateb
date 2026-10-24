@@ -72,7 +72,7 @@ class EstimatorService(
     }
 
     /**
-     * Steps 2+3: price a concrete configuration automatically —
+     * Steps 2+3: price a concrete configuration automatically
      * mattress (geometry + operating %) + shipping + carry-up = grand total.
      * Works for storefront (channel=shop) and in-store staff (channel=pos).
      */

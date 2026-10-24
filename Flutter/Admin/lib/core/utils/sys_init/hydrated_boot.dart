@@ -18,7 +18,7 @@ enum HydratedBootDecision {
 /// Fail-closed [HydratedStorage]: all reads miss, all writes are dropped.
 ///
 /// Used when the secure backend cannot be established. The app keeps running
-/// (availability) but persists nothing (confidentiality) — strictly better
+/// (availability) but persists nothing (confidentiality)  strictly better
 /// than a silent plaintext downgrade.
 final class DisabledStorage implements HydratedStorage {
   const DisabledStorage();

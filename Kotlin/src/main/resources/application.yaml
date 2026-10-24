@@ -16,8 +16,7 @@ spring:
   application:
     name: alamelm-arateb-backend
 
-  lifecycle:
-    timeout-pre-shutdown-phase 30s
+  lifecycle: timeout-pre-shutdown-phase 30s
 
   #Database Configuration
   datasource:
@@ -52,7 +51,7 @@ spring:
     producer:
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.apache.kafka.common.serialization.StringSerializer
-      # Phase 2: safe producer — no duplicates on retry, all replicas ack.
+      # Phase 2: safe producer  no duplicates on retry, all replicas ack.
       acks: all
       retries: 5
       properties:
@@ -93,14 +92,14 @@ spring:
             client-id: ${GOOGLE_CLIENT_ID:google-client-id-placeholder}
             client-secret: ${GOOGLE_CLIENT_SECRET:google-client-secret-placeholder}
             scope:
-              - email
-              - profile
+            - email
+            - profile
           facebook:
             client-id: ${FACEBOOK_CLIENT_ID:facebook-client-id-placeholder}
             client-secret: ${FACEBOOK_CLIENT_SECRET:facebook-client-secret-placeholder}
             scope:
-              - email
-              - public_profile
+            - email
+            - public_profile
 
 # JWT Custom Properties
 app:

@@ -29,7 +29,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException
  *
  * Localization (arch.md 11): `message` and every entry of `errors` are
  * resolved from messages_*.properties in the request locale (X-Lang).
- * Services throw keys ([LocalizedException.errorKey]) — never English text.
+ * Services throw keys ([LocalizedException.errorKey])  never English text.
  */
 @RestControllerAdvice
 class GlobalExceptionHandler(private val msg: MessageService) {

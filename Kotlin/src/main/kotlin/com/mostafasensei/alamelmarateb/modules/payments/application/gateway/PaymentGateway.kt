@@ -29,6 +29,6 @@ interface PaymentGateway {
     /** Returns null when the callback carries no recognizable reference. */
     fun parseCallback(headers: Map<String, String>, body: String): GatewayCallback?
 
-    /** HMAC/signature verification — MUST pass before any state change. */
+    /** HMAC/signature verification  MUST pass before any state change. */
     fun verifySignature(headers: Map<String, String>, body: String): Boolean
 }

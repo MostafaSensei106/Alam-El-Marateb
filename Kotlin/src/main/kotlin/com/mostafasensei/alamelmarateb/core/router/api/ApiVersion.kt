@@ -16,7 +16,7 @@ object ApiVersion {
     const val V1 = "v1"
     const val CURRENT = V1
 
-    /** Prefix: /api/v1 — kept as literal so feature routes stay compile-time const. */
+    /** Prefix: /api/v1  kept as literal so feature routes stay compile-time const. */
     const val V1_PREFIX: String = "/api/v1"
 
     val SUPPORTED: Set<String> = setOf(V1)

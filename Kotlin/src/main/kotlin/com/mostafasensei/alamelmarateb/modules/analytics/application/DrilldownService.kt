@@ -20,7 +20,7 @@ data class DrilldownRow(
 
 /**
  * Heavy sales drilldown: ClickHouse when enabled, Postgres facts otherwise.
- * Same shape either way — the frontend never knows which engine answered.
+ * Same shape either way  the frontend never knows which engine answered.
  */
 @Service
 class DrilldownService(

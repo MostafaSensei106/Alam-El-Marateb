@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Inventory MANAGEMENT routes — owning module: inventory.
+ * Inventory MANAGEMENT routes  owning module: inventory.
  * Audience: branch managers (warehouses, stock policy, transfers, audits, alerts).
  * Required roles: BRANCH_MANAGER, SUPER_ADMIN.
  * Warehouse keepers must use WarehouseOpsRoutes instead.

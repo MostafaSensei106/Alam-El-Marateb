@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Customer self-service portal — owning module: crm.
+ * Customer self-service portal  owning module: crm.
  * Audience: end customers managing their own data only.
  * Required roles: CUSTOMER, SUPER_ADMIN.
  */

@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * CRM MANAGEMENT routes — owning module: crm.
+ * CRM MANAGEMENT routes  owning module: crm.
  * Audience: backoffice staff (customer records, warranty + claim handling).
  * Required roles: BRANCH_MANAGER, SUPER_ADMIN.
  */

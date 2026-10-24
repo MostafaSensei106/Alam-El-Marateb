@@ -24,7 +24,7 @@ import java.util.Locale
  * Single source of truth is [AppLocaleResolver] (a Spring MVC LocaleResolver),
  * so DispatcherServlet and MessageService always agree.
  *
- * Bundle wiring lives in application.yaml (spring.messages.*) — Boot auto-config
+ * Bundle wiring lives in application.yaml (spring.messages.*)  Boot auto-config
  * builds the MessageSource; no manual bean needed.
  */
 @Service
@@ -99,7 +99,7 @@ class AppLocaleResolver(
         request.getHeader("X-Lang")?.lowercase()?.let {
             if (it in supportedCodes) return Locale(it)
         }
-        // 2. Explicit Accept-Language only — never the server JVM default.
+        // 2. Explicit Accept-Language only  never the server JVM default.
         val header = request.getHeader("Accept-Language")
         if (header != null) {
             val tag = header.split(",").firstOrNull()
@@ -115,7 +115,7 @@ class AppLocaleResolver(
 /**
  * Sets the holder locale EARLY (before the security chain) using the same
  * rules as [AppLocaleResolver], so 401/403 responses are localized too.
- * DispatcherServlet re-resolves identically afterwards — no conflict.
+ * DispatcherServlet re-resolves identically afterwards  no conflict.
  */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)

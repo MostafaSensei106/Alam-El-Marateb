@@ -29,10 +29,10 @@ data class LoyaltyQuoteRequest(
 data class LoyaltyQuoteResponse(val points: Int, val discount: BigDecimal)
 
 /**
- * Customer loyalty — CUSTOMER. Earn is automatic on delivery;
+ * Customer loyalty  CUSTOMER. Earn is automatic on delivery;
  * redemption flows through place-order (redeemPoints).
  */
-@Tag(name = "Loyalty (customer)", description = "Points balance, ledger, quote — CUSTOMER")
+@Tag(name = "Loyalty (customer)", description = "Points balance, ledger, quote  CUSTOMER")
 @RestController
 @RequestMapping(PortalRoutes.LOYALTY)
 @CustomerApi

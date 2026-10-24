@@ -70,9 +70,9 @@ private fun PlaceOrderRequest.toInput(channel: String, by: String?) = PlaceOrder
 )
 
 /**
- * Promotion MANAGEMENT — /api/v1/sales/promotions. Managers only.
+ * Promotion MANAGEMENT  /api/v1/sales/promotions. Managers only.
  */
-@Tag(name = "Promotions (management)", description = "Discounts, bundles, gifts — BRANCH_MANAGER")
+@Tag(name = "Promotions (management)", description = "Discounts, bundles, gifts  BRANCH_MANAGER")
 @RestController
 @RequestMapping(PromotionRoutes.BASE)
 @ManagerApi
@@ -97,9 +97,9 @@ class PromotionController(
 }
 
 /**
- * POS — /api/v1/sales/pos + /api/v1/sales/orders. Cashiers and managers.
+ * POS  /api/v1/sales/pos + /api/v1/sales/orders. Cashiers and managers.
  */
-@Tag(name = "Sales POS", description = "In-store selling, drafts, returns, shifts — CASHIER")
+@Tag(name = "Sales POS", description = "In-store selling, drafts, returns, shifts  CASHIER")
 @RestController
 @RequestMapping(SalesPosRoutes.BASE)
 @CashierApi
@@ -109,7 +109,7 @@ class PosOrderController(
 
     /**
      * In-store sales attribute to the staff member behind the till unless
-     * a rep is stated explicitly — this drives HR sales commission.
+     * a rep is stated explicitly  this drives HR sales commission.
      */
     private fun withSeller(request: PlaceOrderRequest, principal: UserPrincipal): PlaceOrderInput =
         request.toInput("pos", principal.fullName).copy(salesRepId = request.salesRepId ?: principal.id)
@@ -156,7 +156,7 @@ class PosOrderController(
     @PostMapping("/place-order")
     fun placeOrder(
         @Valid @RequestBody request: PlaceOrderRequest,
-        @Parameter(description = "Idempotency key — same key returns the original order + Idempotent-Replay: true")
+        @Parameter(description = "Idempotency key  same key returns the original order + Idempotent-Replay: true")
         @RequestHeader(value = "Idempotency-Key", required = false) key: String?,
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<OrderResponse>> {
@@ -219,9 +219,9 @@ class PosOrderController(
 }
 
 /**
- * Reservations balance flow — /api/v1/sales/pos/reservations.
+ * Reservations balance flow  /api/v1/sales/pos/reservations.
  */
-@Tag(name = "Reservations", description = "Book now, pay in parts, receive on a set day — CASHIER")
+@Tag(name = "Reservations", description = "Book now, pay in parts, receive on a set day  CASHIER")
 @RestController
 @RequestMapping(SalesPosRoutes.BASE)
 @CashierApi
@@ -261,7 +261,7 @@ class ReservationController(
 }
 
 /**
- * Staff order management — /api/v1/sales/orders.
+ * Staff order management  /api/v1/sales/orders.
  */
 @Tag(name = "Sales orders", description = "Order lookup, payment confirmation, returns approval")
 @RestController
@@ -308,9 +308,9 @@ class SalesOrderController(
 }
 
 /**
- * Cash drawer shifts + receipts — /api/v1/sales/pos. Cashiers and managers.
+ * Cash drawer shifts + receipts  /api/v1/sales/pos. Cashiers and managers.
  */
-@Tag(name = "Sales shifts", description = "Drawer open/drop/close + receipts — CASHIER")
+@Tag(name = "Sales shifts", description = "Drawer open/drop/close + receipts  CASHIER")
 @RestController
 @RequestMapping(SalesPosRoutes.BASE)
 @CashierApi
@@ -363,10 +363,10 @@ class PosShiftController(
             <!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="utf-8">
             <title>فاتورة ${r.serial ?: r.orderId}</title></head><body>
             <h1>فاتورة ${r.serial ?: ""}</h1>
-            <p>التتبع: ${r.trackingNumber ?: ""} — الحالة: ${r.status} — الدفع: ${r.paymentMethod ?: ""}</p>
+            <p>التتبع: ${r.trackingNumber ?: ""}  الحالة: ${r.status}  الدفع: ${r.paymentMethod ?: ""}</p>
             <table border="1" cellpadding="6"><tr><th>الكمية</th><th>السعر</th><th>الخصم</th><th>الصافي</th></tr>$rows</table>
-            <p>الإجمالي الفرعي: ${r.subtotal} — الخصم: ${r.discountTotal}</p>
-            <p>التوصيل: ${r.deliveryFee} — التطليع: ${r.carryUpFee}</p>
+            <p>الإجمالي الفرعي: ${r.subtotal}  الخصم: ${r.discountTotal}</p>
+            <p>التوصيل: ${r.deliveryFee}  التطليع: ${r.carryUpFee}</p>
             <h2>الإجمالي: ${r.grandTotal} ج.م</h2>
             </body></html>
         """.trimIndent()
@@ -377,9 +377,9 @@ class PosShiftController(
 }
 
 /**
- * Customer shop — /api/v1/shop. Customers (+ staff preview).
+ * Customer shop  /api/v1/shop. Customers (+ staff preview).
  */
-@Tag(name = "Shop (customer)", description = "Cart, checkout, tracking — CUSTOMER")
+@Tag(name = "Shop (customer)", description = "Cart, checkout, tracking  CUSTOMER")
 @RestController
 @RequestMapping(ShopRoutes.CART_BASE)
 @CustomerApi
@@ -457,7 +457,7 @@ class ShopCheckoutController(
     @PostMapping("/place-order")
     fun place(
         @Valid @RequestBody request: PlaceOrderRequest,
-        @Parameter(description = "Idempotency key — same key returns the original order + Idempotent-Replay: true")
+        @Parameter(description = "Idempotency key  same key returns the original order + Idempotent-Replay: true")
         @RequestHeader(value = "Idempotency-Key", required = false) key: String?,
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<OrderResponse>> {
@@ -474,9 +474,9 @@ class ShopCheckoutController(
 }
 
 /**
- * Customer orders — /api/v1/shop/orders. Owner views own orders.
+ * Customer orders  /api/v1/shop/orders. Owner views own orders.
  */
-@Tag(name = "Shop orders", description = "My orders — CUSTOMER")
+@Tag(name = "Shop orders", description = "My orders  CUSTOMER")
 @RestController
 @RequestMapping(ShopRoutes.MY_ORDERS)
 @CustomerApi

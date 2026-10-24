@@ -49,7 +49,7 @@ mixin SmartCacheCubitMixin<State, Data> on CubitSignal<State>
   /// (toast / snackbar) informing the user that fresh data could not
   /// be loaded, while still displaying the cached version.
   ///
-  /// By default this is a no-op — override to surface the error.
+  /// By default this is a no-op  override to surface the error.
   void onRefreshFailed(Failures error) {}
 
   StreamSubscription<NetworkState>? _networkSubscription;

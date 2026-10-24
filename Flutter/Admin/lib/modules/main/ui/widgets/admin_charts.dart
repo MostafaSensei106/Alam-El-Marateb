@@ -273,7 +273,7 @@ final class AdminChartLegend extends StatelessWidget {
                 ),
                 const SizedBox(width: AppSpacing.small),
                 Text(
-                  total <= 0 ? '—' : '${(point.value / total * 100).round()}%',
+                  total <= 0 ? '' : '${(point.value / total * 100).round()}%',
                   style: textTheme.labelMedium,
                 ),
               ],

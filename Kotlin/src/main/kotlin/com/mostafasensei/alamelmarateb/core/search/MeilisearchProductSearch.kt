@@ -13,7 +13,7 @@ import java.time.Duration
 import java.util.UUID
 
 /**
- * Meilisearch backend over its HTTP API (Phase 3). No extra dependency —
+ * Meilisearch backend over its HTTP API (Phase 3). No extra dependency
  * plain RestClient like ClickHouseClient. Best-effort everywhere: any
  * failure returns false/null and callers fall back to Postgres.
  *

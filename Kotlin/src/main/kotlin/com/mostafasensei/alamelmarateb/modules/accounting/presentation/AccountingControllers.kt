@@ -49,7 +49,7 @@ import java.time.LocalDate
 import java.util.UUID
 
 
-@Tag(name = "Accounting — chart", description = "Chart of accounts — ACCOUNTANT")
+@Tag(name = "Accounting  chart", description = "Chart of accounts  ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.CHART_OF_ACCOUNTS)
 @AccountantApi
@@ -103,7 +103,7 @@ class ChartOfAccountsController(
     }
 }
 
-@Tag(name = "Accounting — journals", description = "Journal entries — ACCOUNTANT")
+@Tag(name = "Accounting  journals", description = "Journal entries  ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.JOURNAL_ENTRIES)
 @AccountantApi
@@ -136,7 +136,7 @@ class JournalEntriesController(
         ok(accountingService.journal(id))
 }
 
-@Tag(name = "Accounting — ledger", description = "General ledger — ACCOUNTANT")
+@Tag(name = "Accounting  ledger", description = "General ledger  ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.GENERAL_LEDGER)
 @AccountantApi
@@ -154,7 +154,7 @@ class GeneralLedgerController(
         ok(accountingService.generalLedger(accountCode, from, to))
 }
 
-@Tag(name = "Accounting — treasuries", description = "Treasuries — ACCOUNTANT")
+@Tag(name = "Accounting  treasuries", description = "Treasuries  ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.TREASURIES)
 @AccountantApi
@@ -200,7 +200,7 @@ class TreasuriesController(
     }
 }
 
-@Tag(name = "Accounting — transfers", description = "Treasury transfers — ACCOUNTANT")
+@Tag(name = "Accounting  transfers", description = "Treasury transfers  ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.TREASURY_TRANSFERS)
 @AccountantApi
@@ -217,7 +217,7 @@ class TreasuryTransfersController(
         created(accountingService.transfer(request.fromId, request.toId, request.amount, principal.fullName))
 }
 
-@Tag(name = "Accounting — expenses", description = "Expenses — ACCOUNTANT")
+@Tag(name = "Accounting  expenses", description = "Expenses  ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.EXPENSES)
 @AccountantApi
@@ -268,7 +268,7 @@ class ExpensesController(
     }
 }
 
-@Tag(name = "Accounting — checks", description = "Checks — ACCOUNTANT")
+@Tag(name = "Accounting  checks", description = "Checks  ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.CHECKS)
 @AccountantApi
@@ -322,7 +322,7 @@ class ChecksController(
         ok(accountingService.checkStatus(id, request.status))
 }
 
-@Tag(name = "Accounting — tax report", description = "VAT report (prices VAT-inclusive) — ACCOUNTANT")
+@Tag(name = "Accounting  tax report", description = "VAT report (prices VAT-inclusive)  ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.TAX_REPORT)
 @AccountantApi
@@ -339,7 +339,7 @@ class TaxReportController(
         ok(accountingService.taxReport(from, to))
 }
 
-@Tag(name = "Accounting — profit & loss", description = "Profit/loss report — ACCOUNTANT")
+@Tag(name = "Accounting  profit & loss", description = "Profit/loss report  ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.PROFIT_AND_LOSS)
 @AccountantApi
@@ -356,7 +356,7 @@ class ProfitLossController(
         ok(accountingService.profitLoss(from, to))
 }
 
-@Tag(name = "Accounting — balance sheet", description = "Balance sheet report — ACCOUNTANT")
+@Tag(name = "Accounting  balance sheet", description = "Balance sheet report  ACCOUNTANT")
 @RestController
 @RequestMapping(AccountingRoutes.BALANCE_SHEET)
 @AccountantApi

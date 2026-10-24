@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Purchasing (distributor finance)", description = "Price sheets, shipments, invoices — BRANCH_MANAGER")
+@Tag(name = "Purchasing (distributor finance)", description = "Price sheets, shipments, invoices  BRANCH_MANAGER")
 @RestController
 @ManagerApi
 class AllocateInvoiceController(

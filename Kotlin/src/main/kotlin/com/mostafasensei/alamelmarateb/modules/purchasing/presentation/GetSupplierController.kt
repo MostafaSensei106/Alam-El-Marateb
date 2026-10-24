@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Purchasing (suppliers)", description = "Suppliers, supplier payments — BRANCH_MANAGER")
+@Tag(name = "Purchasing (suppliers)", description = "Suppliers, supplier payments  BRANCH_MANAGER")
 @RestController
 @ManagerApi
 class GetSupplierController(

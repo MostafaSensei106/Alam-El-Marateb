@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * HR MANAGEMENT routes — owning module: hr.
+ * HR MANAGEMENT routes  owning module: hr.
  * Audience: branch managers (people management, payroll approval).
  * Required roles: BRANCH_MANAGER, SUPER_ADMIN.
  * Employees must use SelfServiceRoutes for their own data.

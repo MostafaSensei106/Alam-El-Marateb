@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController
 
-@Tag(name = "Purchasing (distributor finance)", description = "Price sheets, shipments, invoices — BRANCH_MANAGER")
+@Tag(name = "Purchasing (distributor finance)", description = "Price sheets, shipments, invoices  BRANCH_MANAGER")
 @RestController
 @ManagerApi
 class CreatePriceSheetController(

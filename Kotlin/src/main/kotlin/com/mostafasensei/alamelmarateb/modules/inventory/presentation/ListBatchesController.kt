@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Inventory (batches)", description = "Per-batch stock layers + valuation — BRANCH_MANAGER")
+@Tag(name = "Inventory (batches)", description = "Per-batch stock layers + valuation  BRANCH_MANAGER")
 @RestController
 @ManagerApi
 class ListBatchesController(
     private val batchService: InventoryBatchService,
 ) : BaseController() {
 
-    @Operation(summary = "List batches (one row per receipt — batch_no, remaining, unit_cost)")
+    @Operation(summary = "List batches (one row per receipt  batch_no, remaining, unit_cost)")
     @GetMapping(InventoryAdminRoutes.BATCHES)
     fun batches(
         @RequestParam(required = false) warehouseId: UUID?,

@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 
 /**
- * Notification outbox reads — BRANCH_MANAGER (follow-up opportunities).
+ * Notification outbox reads  BRANCH_MANAGER (follow-up opportunities).
  * Writes happen via scheduler jobs; providers plug in via NotificationSender.
  */
-@Tag(name = "Notifications", description = "Outbox reads — BRANCH_MANAGER")
+@Tag(name = "Notifications", description = "Outbox reads  BRANCH_MANAGER")
 @RestController
 @RequestMapping(AnalyticsRoutes.BASE)
 @ManagerApi

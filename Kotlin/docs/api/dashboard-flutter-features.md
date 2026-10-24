@@ -1,4 +1,4 @@
-# لوحة التحكم — ما يستهلكه Flutter وما ينقصه في Postman
+# لوحة التحكم  ما يستهلكه Flutter وما ينقصه في Postman
 
 > الملف ده مرجع للـ API calls اللي لوحة تحكم Flutter (`Flutter/Admin`) محتاجاها.
 > اللوحة حاليًا شغالة على بيانات عيّنة (`DashboardSampleData`) بنفس شكل الـ DTOs
@@ -22,23 +22,23 @@
 |---|---|---|---|
 | 1 | `GET /summary` | KPI مخزون، عدد المنتجات، تنبيهات التشغيل (low stock / transfers / audits) | مفيش إيراد/ربح/أوردرات/عملاء في الـ summary |
 | 2 | `GET /revenue-profit?from=&to=&branchId=` | كارت الإيراد + الربح + هامش الربح + متوسط الأوردر | محتاج `branchId` و`orders` وبيانات يومية متجمعة |
-| 3 | `GET /performance/branches?from=&to=` | جدول أداء الفروع | بيرجّع `branchId` فقط — محتاج `branchName` و`city` و`share` |
-| 4 | `GET /product-velocity?warehouseId=` | جدول سرعة البيع وتغطية المخزون | بيرجّع `variantId` فقط — محتاج اسم المنتج/المقاس والمخزن |
-| 5 | `GET /products/top?from=&to=&limit=` | كارت أفضل المنتجات | بيرجّع `variantId` فقط — محتاج الاسم/التصنيف/النصيب |
-| 6 | `GET /geo-heatmap?from=&to=` | كارت التوزيع الجغرافي | النصيب محسوب عند العميل — مقبول، أو يتحسب سيرفر |
-| 7 | `GET /customers/rfm` | كارت RFM | بيرجّع صف لكل عميل — محتاج تجميع (عدد/قيمة/نصيب لكل شريحة) |
-| 8 | `GET /inquiries?branchId=` | كارت استفسارات المعرض | بيرجّع IDs فقط — محتاج اسم العميل/المنتج/الفرع + pagination |
-| 9 | `GET /inquiries/top-asked?from=&limit=` | كارت أكثر المنتجات المطلوبة | بيرجّع `productId` فقط — محتاج اسم المنتج |
+| 3 | `GET /performance/branches?from=&to=` | جدول أداء الفروع | بيرجّع `branchId` فقط  محتاج `branchName` و`city` و`share` |
+| 4 | `GET /product-velocity?warehouseId=` | جدول سرعة البيع وتغطية المخزون | بيرجّع `variantId` فقط  محتاج اسم المنتج/المقاس والمخزن |
+| 5 | `GET /products/top?from=&to=&limit=` | كارت أفضل المنتجات | بيرجّع `variantId` فقط  محتاج الاسم/التصنيف/النصيب |
+| 6 | `GET /geo-heatmap?from=&to=` | كارت التوزيع الجغرافي | النصيب محسوب عند العميل  مقبول، أو يتحسب سيرفر |
+| 7 | `GET /customers/rfm` | كارت RFM | بيرجّع صف لكل عميل  محتاج تجميع (عدد/قيمة/نصيب لكل شريحة) |
+| 8 | `GET /inquiries?branchId=` | كارت استفسارات المعرض | بيرجّع IDs فقط  محتاج اسم العميل/المنتج/الفرع + pagination |
+| 9 | `GET /inquiries/top-asked?from=&limit=` | كارت أكثر المنتجات المطلوبة | بيرجّع `productId` فقط  محتاج اسم المنتج |
 
 ### إضافات موجودة لكن غير مستهلكة بعد
 
-- `GET /analytics/revenue` — alias لنفس بيانات `revenue-profit`.
-- `GET /analytics/customers/rfm` — موجود بالفعل ضمن الجدول أعلاه.
-- `GET /analytics/notifications` — طابور متابعة، ممكن يغذّي تنبيهات التشغيل.
-- `GET /analytics/sales-drilldown?from=&to=&branchId=&limit=` — ممكن يغذّي
+- `GET /analytics/revenue`  alias لنفس بيانات `revenue-profit`.
+- `GET /analytics/customers/rfm`  موجود بالفعل ضمن الجدول أعلاه.
+- `GET /analytics/notifications`  طابور متابعة، ممكن يغذّي تنبيهات التشغيل.
+- `GET /analytics/sales-drilldown?from=&to=&branchId=&limit=`  ممكن يغذّي
   «أحدث الأوردرات» أو صفحة تحليل أعمق.
-- `POST /analytics/inquiries` — تسجيل استفسار من الكاشير (موجود).
-- `POST /analytics/events` — beacon للسلوك (موجود، 202 دايمًا).
+- `POST /analytics/inquiries`  تسجيل استفسار من الكاشير (موجود).
+- `POST /analytics/events`  beacon للسلوك (موجود، 202 دايمًا).
 
 ## 3. ميزات Flutter فقط (مش مغطاة بأي endpoint)
 
@@ -194,7 +194,7 @@ GET /api/v1/crm/customers/{customerId}/360
 
 ## 5. خطة تحديث Postman
 
-1. أضف فولدر `Analytics — dashboard gaps` جوه فولدر `analytics`.
+1. أضف فولدر `Analytics  dashboard gaps` جوه فولدر `analytics`.
 2. أضف الـ 5 endpoints المقترحة أعلاه مع أمثلة response.
 3. أضف متغيرات: `from`, `to`, `branchId`, `customerId`, `analyticsLimit`.
 4. أضف اختبارات Postman أساسية:

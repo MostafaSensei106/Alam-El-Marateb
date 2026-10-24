@@ -33,7 +33,7 @@ class OpenApiConfig {
         return OpenAPI()
             .info(
                 Info()
-                    .title("Alamelmarateb — Mattress Store ERP")
+                    .title("Alamelmarateb  Mattress Store ERP")
                     .version("v1")
                     .description(
                         "Modular monolith backend: catalog, sales, inventory, purchasing, " +
@@ -44,7 +44,7 @@ class OpenApiConfig {
                             "and expect X-Trace-Id + Idempotent-Replay / Retry-After / Allow headers where documented.",
                     )
                     .contact(Contact().name("Alamelmarateb backend").url("/swagger-ui.html"))
-                    .license(License().name("Private — internal use")),
+                    .license(License().name("Private  internal use")),
             )
             .servers(listOf(Server().url("/").description("Same origin (use docs/api/postman_collection.json for hosted envs)")))
             .addSecurityItem(SecurityRequirement().addList(bearer))
@@ -69,7 +69,7 @@ class OpenApiConfig {
                         "Idempotency-Key",
                         io.swagger.v3.oas.models.parameters.HeaderParameter()
                             .name("Idempotency-Key")
-                            .description("Required for place-order / complete-sale / confirm-receipt — replay returns the original response + Idempotent-Replay: true")
+                            .description("Required for place-order / complete-sale / confirm-receipt  replay returns the original response + Idempotent-Replay: true")
                             .schema(Schema<String>().example("order-2026-09-20-001"))
                             .required(false),
                     )
@@ -100,14 +100,14 @@ class OpenApiConfig {
                 )
             }
         }
-        error("400", "Bad request — malformed JSON / @Valid failure (api-status 400)")
-        error("401", "Missing/expired JWT — refresh and retry (TOKEN_EXPIRED)")
+        error("400", "Bad request  malformed JSON / @Valid failure (api-status 400)")
+        error("401", "Missing/expired JWT  refresh and retry (TOKEN_EXPIRED)")
         error("403", "Authenticated but role not allowed")
         error("404", "Unknown route or missing resource id")
-        error("405", "Wrong HTTP method — see Allow header")
-        error("409", "State conflict — duplicate key / bad transition / insufficient stock / stale version")
-        error("422", "Valid syntax, rejected semantics — empty cart, wrong variant, expired promo, bad down payment")
-        error("429", "Rate limited — see Retry-After header")
+        error("405", "Wrong HTTP method  see Allow header")
+        error("409", "State conflict  duplicate key / bad transition / insufficient stock / stale version")
+        error("422", "Valid syntax, rejected semantics  empty cart, wrong variant, expired promo, bad down payment")
+        error("429", "Rate limited  see Retry-After header")
         operation.responses(responses)
         operation
     }

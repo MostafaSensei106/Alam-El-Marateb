@@ -30,7 +30,7 @@ data class PaymentIntentRequest(
     val guestPhone: String? = null,
 )
 
-@Tag(name = "Shop payments", description = "Gateway intents — CUSTOMER")
+@Tag(name = "Shop payments", description = "Gateway intents  CUSTOMER")
 @RestController
 @RequestMapping(ShopRoutes.CHECKOUT_BASE)
 @CustomerApi
@@ -56,9 +56,9 @@ class PaymentIntentController(
 }
 
 /**
- * Provider callbacks — PUBLIC (no JWT) + HMAC verified. Always precise codes.
+ * Provider callbacks  PUBLIC (no JWT) + HMAC verified. Always precise codes.
  */
-@Tag(name = "Payment callbacks", description = "Gateway webhooks — public, signature-verified")
+@Tag(name = "Payment callbacks", description = "Gateway webhooks  public, signature-verified")
 @RestController
 @RequestMapping(ShopRoutes.CHECKOUT_BASE)
 class PaymentCallbackController(

@@ -1,7 +1,7 @@
 {
   "info": {
-    "name": "Alamelmarateb ERP — v1",
-    "description": "Alamelmarateb ERP v1 — Catalog, Inventory, Sales, CRM, Identity. Login first, paste tokens into variables. Swagger UI: {{baseUrl}}/swagger-ui.html | Contract: ApiResponse{success,message,data,errors} (X-Trace-Id header only); every /api call needs X-Api-Client + X-Api-Key headers (clientId/clientKey vars; default key dev-local-key = CLIENT_KEYS); X-Lang ar|en; Idempotency-Key on place-order/complete-sale (replay -> 200 + Idempotent-Replay: true); X-Trace-Id echoed; beacon 202; 400 syntax vs 422 semantics vs 409 conflict; 404 unknown route; 405 wrong method + Allow; 429 + Retry-After. | Role matrix (URL + @PreAuthorize agree): shop/portal CUSTOMER; sales/pos CASHIER+MANAGER; promotions MANAGER; warehouse KEEPER+MANAGER; delivery trips DRIVER / dispatch SUPER_ADMIN; catalog/inventory/purchasing/crm/hr/analytics MANAGER; identity SUPER_ADMIN; accounting ACCOUNTANT (+SUPER_ADMIN everywhere). Track-order is authenticated (CUSTOMER), NOT public. | Tokens auto-save: login/register/refresh store access+refresh into adminJwt/managerJwt/customerJwt/keeperJwt/cashierJwt/driverJwt/accountantJwt (+*Refresh, refreshToken, userId) based on the account role. Setup order: login as admin -> List branches (saves branchId) -> Create warehouse (saves warehouseA) -> Create category/product (saves ids) -> adjust stock -> place order (saves orderId+trackingNumber). | Fake pay: create intent (saves providerRef) -> Fake callback auto-computes X-Fake-Signature = HMAC-SHA256(providerRef, dev-secret).",
+    "name": "Alamelmarateb ERP  v1",
+    "description": "Alamelmarateb ERP v1  Catalog, Inventory, Sales, CRM, Identity. Login first, paste tokens into variables. Swagger UI: {{baseUrl}}/swagger-ui.html | Contract: ApiResponse{success,message,data,errors} (X-Trace-Id header only); every /api call needs X-Api-Client + X-Api-Key headers (clientId/clientKey vars; default key dev-local-key = CLIENT_KEYS); X-Lang ar|en; Idempotency-Key on place-order/complete-sale (replay -> 200 + Idempotent-Replay: true); X-Trace-Id echoed; beacon 202; 400 syntax vs 422 semantics vs 409 conflict; 404 unknown route; 405 wrong method + Allow; 429 + Retry-After. | Role matrix (URL + @PreAuthorize agree): shop/portal CUSTOMER; sales/pos CASHIER+MANAGER; promotions MANAGER; warehouse KEEPER+MANAGER; delivery trips DRIVER / dispatch SUPER_ADMIN; catalog/inventory/purchasing/crm/hr/analytics MANAGER; identity SUPER_ADMIN; accounting ACCOUNTANT (+SUPER_ADMIN everywhere). Track-order is authenticated (CUSTOMER), NOT public. | Tokens auto-save: login/register/refresh store access+refresh into adminJwt/managerJwt/customerJwt/keeperJwt/cashierJwt/driverJwt/accountantJwt (+*Refresh, refreshToken, userId) based on the account role. Setup order: login as admin -> List branches (saves branchId) -> Create warehouse (saves warehouseA) -> Create category/product (saves ids) -> adjust stock -> place order (saves orderId+trackingNumber). | Fake pay: create intent (saves providerRef) -> Fake callback auto-computes X-Fake-Signature = HMAC-SHA256(providerRef, dev-secret).",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
   "variable": [
@@ -272,7 +272,7 @@
   ],
   "item": [
     {
-      "name": "🔐 Auth — public (start here)",
+      "name": "🔐 Auth  public (start here)",
       "item": [
         {
           "name": "📝 Register customer",
@@ -582,7 +582,7 @@
           }
         },
         {
-          "name": "🩹 PATCH example — partial category update",
+          "name": "🩹 PATCH example  partial category update",
           "request": {
             "method": "PATCH",
             "url": "{{baseUrl}}/api/v1/catalog/categories/{{categoryId}}",
@@ -650,7 +650,7 @@
       ]
     },
     {
-      "name": "🗄️ Catalog — management",
+      "name": "🗄️ Catalog  management",
       "item": [
         {
           "name": "➕ Create category",
@@ -1562,7 +1562,7 @@
       ]
     },
     {
-      "name": "🛍️ Catalog — storefront (public)",
+      "name": "🛍️ Catalog  storefront (public)",
       "item": [
         {
           "name": "🛍️ Browse products",
@@ -1720,7 +1720,7 @@
       ]
     },
     {
-      "name": "📦 Inventory — management",
+      "name": "📦 Inventory  management",
       "item": [
         {
           "name": "➕ Create warehouse",
@@ -2087,7 +2087,7 @@
       ]
     },
     {
-      "name": "🏭 Warehouse — operations",
+      "name": "🏭 Warehouse  operations",
       "item": [
         {
           "name": "🔎 Stock lookup by barcode/SKU",
@@ -2221,7 +2221,7 @@
       ]
     },
     {
-      "name": "📊 Analytics — dashboard",
+      "name": "📊 Analytics  dashboard",
       "item": [
         {
           "name": "📊 Executive summary",
@@ -2415,7 +2415,7 @@
       ]
     },
     {
-      "name": "🧾 Sales — POS",
+      "name": "🧾 Sales  POS",
       "item": [
         {
           "name": "✅ Complete sale (cash)",
@@ -2715,7 +2715,7 @@
       ]
     },
     {
-      "name": "🛒 Shop — customer",
+      "name": "🛒 Shop  customer",
       "item": [
         {
           "name": "➕ Add to cart",
@@ -3048,7 +3048,7 @@
       ]
     },
     {
-      "name": "👥 CRM — management",
+      "name": "👥 CRM  management",
       "item": [
         {
           "name": "📝 Register warranty",
@@ -3203,7 +3203,7 @@
       ]
     },
     {
-      "name": "🙋 Portal — customer",
+      "name": "🙋 Portal  customer",
       "item": [
         {
           "name": "🙋 My profile (upsert)",
@@ -3480,7 +3480,7 @@
       ]
     },
     {
-      "name": "🔑 Identity — admin",
+      "name": "🔑 Identity  admin",
       "item": [
         {
           "name": "📋 List branches",
@@ -3864,7 +3864,7 @@
       "name": "⚠️ Edge cases & HTTP policy",
       "item": [
         {
-          "name": "404 — unknown route",
+          "name": "404  unknown route",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/no-such-thing",
@@ -3885,7 +3885,7 @@
           }
         },
         {
-          "name": "405 — wrong method (DELETE on collection)",
+          "name": "405  wrong method (DELETE on collection)",
           "request": {
             "method": "DELETE",
             "url": "{{baseUrl}}/api/v1/catalog/products",
@@ -3906,7 +3906,7 @@
           }
         },
         {
-          "name": "400 — @Valid failure (negative qty)",
+          "name": "400  @Valid failure (negative qty)",
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/api/v1/shop/cart/items?guestKey=g1",
@@ -3935,7 +3935,7 @@
           }
         },
         {
-          "name": "422 — empty cart preview",
+          "name": "422  empty cart preview",
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/api/v1/shop/checkout/price-preview",
@@ -3964,7 +3964,7 @@
           }
         },
         {
-          "name": "422 — bad down payment (exceeds total)",
+          "name": "422  bad down payment (exceeds total)",
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/api/v1/shop/checkout/place-order",
@@ -3993,7 +3993,7 @@
           }
         },
         {
-          "name": "409 — insufficient stock (huge qty)",
+          "name": "409  insufficient stock (huge qty)",
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/api/v1/sales/pos/complete-sale",
@@ -4026,7 +4026,7 @@
           }
         },
         {
-          "name": "403 — customer hits manager analytics",
+          "name": "403  customer hits manager analytics",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/analytics/summary",
@@ -4047,7 +4047,7 @@
           }
         },
         {
-          "name": "401 — no token on protected route",
+          "name": "401  no token on protected route",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/analytics/summary",
@@ -4064,7 +4064,7 @@
           }
         },
         {
-          "name": "Idempotency replay — same key twice",
+          "name": "Idempotency replay  same key twice",
           "request": {
             "method": "POST",
             "url": "{{baseUrl}}/api/v1/shop/checkout/place-order",
@@ -4097,7 +4097,7 @@
           }
         },
         {
-          "name": "X-Lang EN — same shape, English message",
+          "name": "X-Lang EN  same shape, English message",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/catalog/products/00000000-0000-0000-0000-000000000000",
@@ -7399,7 +7399,7 @@
       "name": "⛔ Client gate (edge cases)",
       "item": [
         {
-          "name": "401 — no client key",
+          "name": "401  no client key",
           "request": {
             "method": "GET",
             "url": "{{baseUrl}}/api/v1/analytics/summary",

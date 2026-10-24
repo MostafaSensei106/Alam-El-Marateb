@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter
  * Daily at 03:00:
  * - Ensures next month's partition exists for each time-partitioned table
  *   (migrations pre-create a wide window; this rolls it forward forever).
- * - Drops whole partitions fully older than the retention window — O(1),
+ * - Drops whole partitions fully older than the retention window  O(1),
  *   no table bloat, unlike DELETE on a giant table.
  * - Purges DEFAULT-partition strays older than the window (direct DELETE on
  *   the default child only, never a full scan of real partitions).

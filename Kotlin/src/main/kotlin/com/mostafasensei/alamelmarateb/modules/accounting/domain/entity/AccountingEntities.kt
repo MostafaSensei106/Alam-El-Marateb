@@ -17,7 +17,7 @@ import java.time.LocalDate
 import java.util.UUID
 
 /**
- * Chart of accounts — String PK (hierarchical code), so it cannot extend
+ * Chart of accounts  String PK (hierarchical code), so it cannot extend
  * EntityBase<UUID>; audit columns are mapped explicitly to match V11.
  */
 @Entity

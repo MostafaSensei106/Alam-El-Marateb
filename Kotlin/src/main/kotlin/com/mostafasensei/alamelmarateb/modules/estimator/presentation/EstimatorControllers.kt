@@ -34,10 +34,10 @@ import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
 /**
- * Public estimator — catalog picker + automatic price quote.
+ * Public estimator  catalog picker + automatic price quote.
  * Same flow serves the storefront and in-store staff (channel=pos).
  */
-@Tag(name = "Estimator", description = "Catalog picker + automatic price — public")
+@Tag(name = "Estimator", description = "Catalog picker + automatic price  public")
 @RestController
 @RequestMapping(EstimatorRoutes.BASE)
 class EstimatorController(
@@ -67,9 +67,9 @@ class EstimatorController(
 }
 
 /**
- * Spin management — BRANCH_MANAGER (dashboard defines the 6 prizes + windows).
+ * Spin management  BRANCH_MANAGER (dashboard defines the 6 prizes + windows).
  */
-@Tag(name = "Spin (management)", description = "Campaigns + prizes — BRANCH_MANAGER")
+@Tag(name = "Spin (management)", description = "Campaigns + prizes  BRANCH_MANAGER")
 @RestController
 @RequestMapping(EstimatorRoutes.BASE)
 @ManagerApi
@@ -119,9 +119,9 @@ class SpinManagerController(
 }
 
 /**
- * Customer spin — CUSTOMER, one spin per campaign (spins_per_customer).
+ * Customer spin  CUSTOMER, one spin per campaign (spins_per_customer).
  */
-@Tag(name = "Spin (customer)", description = "Spin the wheel — CUSTOMER")
+@Tag(name = "Spin (customer)", description = "Spin the wheel  CUSTOMER")
 @RestController
 @RequestMapping(EstimatorRoutes.BASE)
 @CustomerApi

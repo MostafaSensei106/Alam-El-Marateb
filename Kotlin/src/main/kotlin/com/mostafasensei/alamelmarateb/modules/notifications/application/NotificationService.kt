@@ -162,8 +162,8 @@ class NotificationJobs(
                         "en" to "Warranty expiring soon",
                     ),
                     bodies = mapOf(
-                        "ar" to "ضمان فاتورتك يغطي حتى ${warranty.coversUntil} — اسأل عن عروض التجديد",
-                        "en" to "Your invoice warranty covers until ${warranty.coversUntil} — ask about renewal offers",
+                        "ar" to "ضمان فاتورتك يغطي حتى ${warranty.coversUntil}  اسأل عن عروض التجديد",
+                        "en" to "Your invoice warranty covers until ${warranty.coversUntil}  ask about renewal offers",
                     ),
                 )
             }

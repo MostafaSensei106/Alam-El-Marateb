@@ -52,7 +52,7 @@ class LoyaltyService(
     /**
      * Shared by the in-process listener and the Kafka consumer.
      * Two dedup layers: transport-level [IdempotencyGuard] (same event
-     * redelivered) + ledger check (same order, different event — e.g.
+     * redelivered) + ledger check (same order, different event  e.g.
      * markDelivered retried after a crash between commit and publish).
      */
     fun awardFor(event: OrderDeliveredEvent) {

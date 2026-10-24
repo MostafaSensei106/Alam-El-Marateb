@@ -10,7 +10,7 @@ import '../services/security/audit/security_event.dart';
 /// Uses primary + backup pins so cert rotation never bricks the app.
 /// Keep [SecurityConfigs.backupSHAFingerprints] populated BEFORE enabling
 /// [SecurityConfigs.enableCertificatePinning]. The audit event carries only
-/// the pin count — never the pins themselves.
+/// the pin count  never the pins themselves.
 Interceptor createCertificatePinningInterceptor({BaseAuditLogger? audit}) {
   final pins = SecurityConfigs.allSHAFingerprints;
   audit?.audit(CertPinningEnabled(pins.length));

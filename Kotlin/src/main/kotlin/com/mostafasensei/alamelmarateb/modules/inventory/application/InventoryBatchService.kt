@@ -46,7 +46,7 @@ data class BatchView(
 )
 
 /**
- * FIFO cost layers. Sales never pick a batch — they ask for qty and this
+ * FIFO cost layers. Sales never pick a batch  they ask for qty and this
  * service consumes the oldest available layers, returning per-batch COGS.
  * Old inventory keeps its own cost; only new receipts create new layers.
  */
@@ -99,8 +99,8 @@ class InventoryBatchService(
         consumeLayers(warehouseId, variantId, qty, MoveType.SALE, refType, refId, note)
 
     /**
-     * Generic FIFO layer consumption (sales, transfers, ...). The seller —
-     * or the transfer clerk — never picks a batch; oldest layers go first.
+     * Generic FIFO layer consumption (sales, transfers, ...). The seller
+     * or the transfer clerk  never picks a batch; oldest layers go first.
      */
     @Transactional
     fun consumeLayers(

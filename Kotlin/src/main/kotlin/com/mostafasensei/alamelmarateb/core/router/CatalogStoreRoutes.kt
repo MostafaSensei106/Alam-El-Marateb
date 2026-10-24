@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Catalog STOREFRONT routes — owning module: catalog (product).
+ * Catalog STOREFRONT routes  owning module: catalog (product).
  * Audience: public (anonymous browsing).
  * Access: GET permitAll, no auth required.
  */

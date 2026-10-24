@@ -12,7 +12,7 @@ import java.nio.file.StandardCopyOption
 import java.util.UUID
 
 /**
- * File storage port (arch.md §12: local disk now, S3-compatible later —
+ * File storage port (arch.md §12: local disk now, S3-compatible later
  * swapping means a new StorageService bean, zero caller changes).
  *
  * Phase 1 hardening: shared validation ([StorageRules]), namespace

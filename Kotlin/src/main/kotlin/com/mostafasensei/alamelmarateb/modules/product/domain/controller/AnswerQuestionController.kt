@@ -65,7 +65,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Q&A (management)", description = "Answer product questions — BRANCH_MANAGER")
+@Tag(name = "Q&A (management)", description = "Answer product questions  BRANCH_MANAGER")
 @RestController
 @RequestMapping(CatalogAdminRoutes.PRODUCTS + "/qa")
 @ManagerApi

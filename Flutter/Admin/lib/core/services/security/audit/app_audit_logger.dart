@@ -8,13 +8,13 @@ import 'redaction_policy.dart';
 import 'security_event.dart';
 
 /// Production audit sink: `dev.log` in debug, Crashlytics breadcrumbs in
-/// release. Secrets can never reach either sink — events are typed and
+/// release. Secrets can never reach either sink  events are typed and
 /// error paths go through [RedactionPolicy].
 @LazySingleton(as: BaseAuditLogger)
 final class AppAuditLogger implements BaseAuditLogger {
   // NOTE: intentionally dependency-free. An earlier version took an
   // optional [RedactionPolicy] with a default value, but injectable
-  // ignores defaults and generated `gh<RedactionPolicy>()` — an
+  // ignores defaults and generated `gh<RedactionPolicy>()`  an
   // unregistered lookup that crashed every resolution at runtime.
   const AppAuditLogger() : _redaction = const RedactionPolicy();
 

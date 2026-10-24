@@ -32,7 +32,7 @@ final class BiometricFailure extends SecurityFailure {
   const BiometricFailure.denied() : this('Authentication was not completed.');
 }
 
-/// Outcome of a biometric gate check — explicit, no boolean traps.
+/// Outcome of a biometric gate check  explicit, no boolean traps.
 sealed class BiometricOutcome {
   const BiometricOutcome();
 }

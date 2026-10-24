@@ -41,7 +41,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Inventory (management)", description = "Warehouses, stocks, transfers, audits — BRANCH_MANAGER")
+@Tag(name = "Inventory (management)", description = "Warehouses, stocks, transfers, audits  BRANCH_MANAGER")
 @RestController
 @RequestMapping(InventoryAdminRoutes.BASE)
 @ManagerApi

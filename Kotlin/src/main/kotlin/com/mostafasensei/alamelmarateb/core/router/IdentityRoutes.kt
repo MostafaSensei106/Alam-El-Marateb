@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Auth routes — owning module: identity.
+ * Auth routes  owning module: identity.
  * Audience: public (login / register / refresh / social).
  * Access: permitAll.
  */
@@ -12,7 +12,7 @@ object AuthRoutes {
 }
 
 /**
- * Identity administration routes — owning module: identity.
+ * Identity administration routes  owning module: identity.
  * Audience: system administration (branches, users, roles, fleet).
  * Required roles: SUPER_ADMIN for everything under /identity
  * (SecurityConfig + @SuperAdminApi agree; managers use their own modules).

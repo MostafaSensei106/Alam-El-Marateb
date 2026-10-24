@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import java.util.UUID
 
-@Tag(name = "Catalog (management)", description = "Products CRUD + from-preset — BRANCH_MANAGER")
+@Tag(name = "Catalog (management)", description = "Products CRUD + from-preset  BRANCH_MANAGER")
 @RestController
 @RequestMapping(CatalogAdminRoutes.PRODUCTS)
 @ManagerApi

@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * Catalog MANAGEMENT routes — owning module: catalog (product).
+ * Catalog MANAGEMENT routes  owning module: catalog (product).
  * Audience: backoffice staff only.
  * Required roles: BRANCH_MANAGER, SUPER_ADMIN (enforced in SecurityConfig + @PreAuthorize).
  */

@@ -47,10 +47,10 @@ import java.nio.charset.StandardCharsets
 import java.util.UUID
 
 /**
- * HR MANAGEMENT — /api/v1/hr/... Branch managers only.
+ * HR MANAGEMENT  /api/v1/hr/... Branch managers only.
  * All paths come from HrAdminRoutes; no literals here.
  */
-@Tag(name = "HR (management)", description = "Employees, leaves, commissions, advances, deductions, payroll — BRANCH_MANAGER")
+@Tag(name = "HR (management)", description = "Employees, leaves, commissions, advances, deductions, payroll  BRANCH_MANAGER")
 @RestController
 @ManagerApi
 class HrAdminController(
@@ -183,10 +183,10 @@ class HrAdminController(
 }
 
 /**
- * Staff SELF-SERVICE — /api/v1/me/... Any authenticated employee, own record only.
+ * Staff SELF-SERVICE  /api/v1/me/... Any authenticated employee, own record only.
  * All paths come from SelfServiceRoutes; no literals here.
  */
-@Tag(name = "Self service", description = "Leave requests, commissions, payslips — authenticated staff")
+@Tag(name = "Self service", description = "Leave requests, commissions, payslips  authenticated staff")
 @RestController
 @AuthenticatedApi
 class SelfServiceController(

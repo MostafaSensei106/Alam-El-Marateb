@@ -1,5 +1,5 @@
 -- Delivery module: fleet vehicles, trips, stops.
--- NOTE: delivery_zones / carry_up_fees already exist in V6 — not recreated here.
+-- NOTE: delivery_zones / carry_up_fees already exist in V6  not recreated here.
 
 CREATE TABLE vehicles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),

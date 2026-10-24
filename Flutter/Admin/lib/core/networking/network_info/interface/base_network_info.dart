@@ -12,7 +12,7 @@ abstract interface class BaseNetworkInfo {
 
   /// `true` when at least one network adapter (WiFi, mobile, ethernet) is active.
   ///
-  /// **Does NOT guarantee internet access** — use [hasInternetAccess] for that.
+  /// **Does NOT guarantee internet access**  use [hasInternetAccess] for that.
   Future<bool> get isConnected;
 
   /// `true` when the device can actually reach the internet.

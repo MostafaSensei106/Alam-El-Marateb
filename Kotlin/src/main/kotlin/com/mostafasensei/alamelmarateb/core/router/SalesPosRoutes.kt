@@ -1,7 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.router
 
 /**
- * POS + order-fulfillment routes — owning module: sales.
+ * POS + order-fulfillment routes  owning module: sales.
  * Audience: branch staff (in-store selling, returns, receipts, cash shifts).
  * Required roles: CASHIER, BRANCH_MANAGER, SUPER_ADMIN.
  */

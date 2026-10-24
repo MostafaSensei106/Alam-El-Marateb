@@ -11,7 +11,7 @@ import java.time.LocalDate
 
 /**
  * Builds `sales_daily_facts` incrementally from every invoice
- * (docs/database.md 10 — read-model, no strict FKs needed at write time).
+ * (docs/database.md 10  read-model, no strict FKs needed at write time).
  *
  * AFTER_COMMIT (with fallback for outbox-relay delivery) => a rolled-back
  * sale never produces facts. At-least-once safe: [IdempotencyGuard] drops

@@ -909,7 +909,7 @@ During startup:
 
 ### 4. Call the API (Postman or curl)
 
-Every `/api/**` request — login included — must carry the first-party client headers:
+Every `/api/**` request  login included  must carry the first-party client headers:
 
 | Header | Value | Source |
 | :--- | :--- | :--- |
@@ -1098,7 +1098,7 @@ Audience: Branch Managers creating promotional campaigns and bundles.
 
 ### 6. 🛍️ Customer Storefront & E-Commerce Cart
 
-Audience: Retail Customers ordering online (`CUSTOMER` or `SUPER_ADMIN` — staff must use the POS endpoints above, not these).
+Audience: Retail Customers ordering online (`CUSTOMER` or `SUPER_ADMIN`  staff must use the POS endpoints above, not these).
 *Note: every `/shop/**` call requires a Bearer token; even order tracking is authenticated (call `GET /shop/orders/track/{n}` with the customer token, not anonymously).*
 
 | Method | Endpoint | Allowed Roles | Description |
@@ -1245,7 +1245,7 @@ Audience: Certified Accountants and Branch Finance Officers.
 | `GET` | `/api/v1/accounting/general-ledger` | `ACCOUNTANT` | Extract General Ledger report for specific account code |
 | `GET` / `POST` | `/api/v1/accounting/treasuries` | `ACCOUNTANT` | List / create showroom cash safes (`{branchId?, name, openingBalance?}`) |
 | `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/accounting/treasuries/{id}` | `ACCOUNTANT` | Retrieve / update / remove a treasury |
-| `POST` | `/api/v1/accounting/treasuries/transfers`| `ACCOUNTANT`| Record fund transfer between treasuries (`{fromId, toId, amount}` — UUIDs) |
+| `POST` | `/api/v1/accounting/treasuries/transfers`| `ACCOUNTANT`| Record fund transfer between treasuries (`{fromId, toId, amount}`  UUIDs) |
 | `GET` / `POST` | `/api/v1/accounting/expenses` | `ACCOUNTANT` | List / register branch operating expenses (`{branchId?, category, amount}`) |
 | `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/accounting/expenses/{id}` | `ACCOUNTANT` | Retrieve / update / remove an expense |
 | `GET` / `POST` | `/api/v1/accounting/checks` | `ACCOUNTANT` | List / register commercial checks (`{direction: in\|out, amount, dueDate?, party?}`) |
@@ -1329,7 +1329,7 @@ Audience: Storefront Visitors and In-Store Sales Reps.
 | `POST` | `/api/v1/portal/reviews/qa` | `CUSTOMER` | Ask a product question (`{productId, question}`) |
 | `POST` | `/api/v1/portal/reviews/{id}/helpful` | `CUSTOMER` | Mark a review helpful |
 | `POST` | `/api/v1/crm/reviews/{id}/moderate` | `BRANCH_MANAGER` | Approve / reject a review (`{approve}`) |
-| `POST` | `/api/v1/shop/checkout/payment-callback/{gateway}` | **Public** (signature-verified) | Gateway webhook — `fake` requires `X-Fake-Signature: HMAC-SHA256(provider_ref, FAKE_SECRET)` (default secret `dev-secret`); 422 on bad signature, 409 when there is nothing to confirm |
+| `POST` | `/api/v1/shop/checkout/payment-callback/{gateway}` | **Public** (signature-verified) | Gateway webhook  `fake` requires `X-Fake-Signature: HMAC-SHA256(provider_ref, FAKE_SECRET)` (default secret `dev-secret`); 422 on bad signature, 409 when there is nothing to confirm |
 
 ---
 
@@ -1717,12 +1717,12 @@ docker run -d \
 
 ### 5. `403` on a documented endpoint
 - **Symptom**: `لا تملك الصلاحية` despite a valid token.
-- **Cause**: Wrong role for the area — e.g. branch managers cannot touch `/identity/**` (super-admin only), cashiers cannot use `/shop/**` (customers only), managers cannot open `/delivery/my-trips` (drivers only), and order tracking is authenticated (not public).
+- **Cause**: Wrong role for the area  e.g. branch managers cannot touch `/identity/**` (super-admin only), cashiers cannot use `/shop/**` (customers only), managers cannot open `/delivery/my-trips` (drivers only), and order tracking is authenticated (not public).
 - **Resolution**: Log in with an account that carries the required role (see the role matrix in Quick Start §4); the Postman collection auto-saves one token per role.
 
 ### 6. `409` / `422` on writes
 - **Symptom**: `409` (e.g. branch has no warehouse, insufficient loyalty points, order not deliverable) or `422` (empty cart, bad signature, product without meter price).
-- **Cause**: Business-rule rejection, not a bug — read `errors[]`.
+- **Cause**: Business-rule rejection, not a bug  read `errors[]`.
 - **Resolution**: Satisfy the precondition first (create a warehouse for the branch, add stock, configure a meter price, fund loyalty points).
 
 ---

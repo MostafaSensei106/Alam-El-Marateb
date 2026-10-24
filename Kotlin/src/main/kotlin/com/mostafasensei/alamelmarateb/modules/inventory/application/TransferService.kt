@@ -78,7 +78,7 @@ class TransferService(
     /**
      * Manager: move from draft to in_transit. Consumes source FIFO layers
      * (clerk never picks batches) and stages them for exact mirroring
-     * at receive. Zero profit, zero cost change — a location move only.
+     * at receive. Zero profit, zero cost change  a location move only.
      */
     @Transactional
     fun dispatch(id: UUID, by: String? = null): Transfer {
@@ -119,7 +119,7 @@ class TransferService(
      * Keeper: receive one batch (partial allowed). Mirrors the exact staged
      * source layers into destination batches (same costs, no recalculation)
      * and records immutable transfer_batch_links. Damaged qty physically
-     * arrives as pending — deducted back at manager approve().
+     * arrives as pending  deducted back at manager approve().
      */
     @Transactional
     fun receiveBatch(id: UUID, lines: List<TransferItemRequest>, damaged: Map<UUID, Int>, by: String? = null): Transfer {
@@ -150,7 +150,7 @@ class TransferService(
             item.damagedQty += qty
             // Damaged goods physically arrive: enter stock as pending,
             // deducted back at manager approve() (DAMAGE move).
-            mirrorStaged(transfer.id!!, to, variantId, qty, "Damaged on arrival — pending manager approval", by)
+            mirrorStaged(transfer.id!!, to, variantId, qty, "Damaged on arrival  pending manager approval", by)
         }
         val allReceived = transfer.items.all { it.receivedQty + it.damagedQty >= it.sentQty }
         transfer.status = if (allReceived) TransferStatus.received.name else TransferStatus.partially_received.name
@@ -231,7 +231,7 @@ class TransferService(
                 val take = minOf(rest, available)
                 batchService.writeOff(
                     dstId, take, MoveType.DAMAGE, "TRANSFER", transfer.id,
-                    "Damaged on receipt — manager approved",
+                    "Damaged on receipt  manager approved",
                 )
                 rest -= take
             }

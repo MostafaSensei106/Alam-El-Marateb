@@ -10,7 +10,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 /**
  * CORS allowlist: only our own frontends may call the API cross-origin.
  * Custom client headers (X-Api-Key, Idempotency-Key, X-Lang) are exposed
- * explicitly — browsers block them otherwise, preflight included.
+ * explicitly  browsers block them otherwise, preflight included.
  */
 @Configuration
 class CorsConfig(
