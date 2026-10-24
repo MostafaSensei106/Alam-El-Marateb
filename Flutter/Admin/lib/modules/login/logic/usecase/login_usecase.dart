@@ -20,7 +20,7 @@ final class LoginParams {
 
 @injectable
 final class LoginUsecase implements UseCaseBase<UserEntity, LoginParams> {
-  new({required this._repo});
+  const LoginUsecase({required this._repo});
 
   final LoginRepository _repo;
 

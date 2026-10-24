@@ -91,8 +91,12 @@ import 'package:alam_el_marateb_admin/core/utils/theme/data/theme_repository.dar
     as _i958;
 import 'package:alam_el_marateb_admin/core/utils/theme/logic/cubit/theme_cubit.dart'
     as _i573;
+import 'package:alam_el_marateb_admin/modules/login/data/interface/login_repository.dart'
+    as _i850;
 import 'package:alam_el_marateb_admin/modules/login/logic/cubit/login_cubit.dart'
     as _i826;
+import 'package:alam_el_marateb_admin/modules/login/logic/repository/login_repository_impl.dart'
+    as _i139;
 import 'package:alam_el_marateb_admin/modules/login/logic/usecase/login_usecase.dart'
     as _i172;
 import 'package:connectivity_plus/connectivity_plus.dart' as _i895;
@@ -128,9 +132,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i823.L10nService>(() => _i823.L10nService());
     gh.lazySingleton<_i781.ThemeService>(() => _i781.ThemeService());
     gh.lazySingleton<_i1068.CacheManager>(() => _i1068.CacheManager());
-    gh.factory<_i826.LoginCubit>(
-      () => _i826.LoginCubit(gh<_i172.LoginUsecase>()),
-    );
     gh.lazySingleton<_i453.BaseNetworkInfo>(
       () => _i606.NetworkInfo(gh<_i895.Connectivity>()),
     );
@@ -221,6 +222,18 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i822.BaseFileManagerFacade>(
       () => _i679.FileManagerFacade(gh<_i909.BaseAttachmentHandlerService>()),
     );
+    gh.lazySingleton<_i850.LoginRepository>(
+      () => _i139.LoginRepositoryImpl(
+        api: gh<_i425.ApiService>(),
+        session: gh<_i173.UserSessionServiceBase>(),
+      ),
+    );
+    gh.factory<_i172.LoginUsecase>(
+      () => _i172.LoginUsecase(repo: gh<_i850.LoginRepository>()),
+    );
+    gh.factory<_i826.LoginCubit>(
+      () => _i826.LoginCubit(gh<_i172.LoginUsecase>()),
+    );
     return this;
   }
 
@@ -229,8 +242,6 @@ extension GetItInjectableX on _i174.GetIt {
   _i781.ThemeService get themeService => get<_i781.ThemeService>();
 
   _i1068.CacheManager get cacheManager => get<_i1068.CacheManager>();
-
-  _i826.LoginCubit get loginCubit => get<_i826.LoginCubit>();
 
   _i606.NetworkInfo get networkInfo => get<_i606.NetworkInfo>();
 
@@ -289,6 +300,13 @@ extension GetItInjectableX on _i174.GetIt {
 
   _i679.FileManagerFacade get fileManagerFacade =>
       get<_i679.FileManagerFacade>();
+
+  _i139.LoginRepositoryImpl get loginRepositoryImpl =>
+      get<_i139.LoginRepositoryImpl>();
+
+  _i172.LoginUsecase get loginUsecase => get<_i172.LoginUsecase>();
+
+  _i826.LoginCubit get loginCubit => get<_i826.LoginCubit>();
 }
 
 class _$InjectionModule extends _i441.InjectionModule {}

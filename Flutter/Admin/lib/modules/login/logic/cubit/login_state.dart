@@ -2,17 +2,18 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/utils/validator/login/login_validators.dart';
+import '../entity/user_entity.dart';
 
 part 'login_state.freezed.dart';
 
 @freezed
-sealed class LoginState<T> with _$LoginState {
+sealed class LoginState with _$LoginState {
   const factory LoginState.initial(LoginFormState formState) = _Initial;
   const factory LoginState.loading(LoginFormState formState) = Loading;
   const factory LoginState.success(
     LoginFormState formState, {
-    required T data,
-  }) = Success<T>;
+    required UserEntity data,
+  }) = Success;
   const factory LoginState.failure(
     LoginFormState formState, {
     required Failures error,

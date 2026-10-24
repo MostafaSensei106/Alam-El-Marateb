@@ -12,7 +12,7 @@ import '../entity/user_entity.dart';
 
 @LazySingleton(as: LoginRepository)
 final class LoginRepositoryImpl implements LoginRepository {
-  new({required this._api, required this._session});
+  const LoginRepositoryImpl({required this._api, required this._session});
 
   final ApiService _api;
   final UserSessionServiceBase _session;

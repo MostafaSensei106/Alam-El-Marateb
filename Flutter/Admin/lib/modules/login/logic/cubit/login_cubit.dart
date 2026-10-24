@@ -7,11 +7,7 @@ import 'login_state.dart';
 @injectable
 final class LoginCubit extends CubitSignal<LoginState> {
   LoginCubit(this._u)
-    : super(
-        initialState: const LoginState<LoginFormState>.initial(
-          LoginFormState(),
-        ),
-      );
+    : super(initialState: const LoginState.initial(LoginFormState()));
 
   final LoginUsecase _u;
 

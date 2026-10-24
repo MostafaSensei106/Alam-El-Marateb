@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
+import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/buttons/filled_button/filled_button_component.dart';
 import '../../../../core/widgets/buttons/text_button/text_button_component.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
@@ -10,7 +12,7 @@ import '../../../../core/widgets/inputs/checkbox/checkbox_component.dart';
 import '../../../../core/widgets/inputs/password_form_field/password_form_field_component.dart';
 import '../../../../core/widgets/inputs/text_form_field/text_form_field_component.dart';
 
-/// Credential form half of the login screen.
+/// Credential form half of the wide login screen.
 ///
 /// The heading, inputs, options and submit action stay together because they
 /// share one staggered entrance animation.
@@ -31,33 +33,7 @@ final class LoginFormPanel extends StatelessWidget {
             child: SingleChildScrollView(
               child: ConstrainedBox(
                 constraints: const BoxConstraints(maxWidth: 500),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children:
-                      [
-                            const _LoginBrandTitle(),
-                            const SizedBox(height: AppSpacing.xxLarge),
-                            const _LoginTitle(),
-                            const SizedBox(height: AppSpacing.small),
-                            const _LoginSubtitle(),
-                            const SizedBox(height: AppSpacing.xxLarge),
-                            const _LoginEmailField(),
-                            const SizedBox(height: AppSpacing.xLarge),
-                            const _LoginPasswordField(),
-                            const SizedBox(height: AppSpacing.small),
-                            const _LoginOptionsRow(),
-                            const SizedBox(height: AppSpacing.xLarge),
-                            const _LoginSubmitButton(),
-                          ]
-                          .animate(delay: 550.ms, interval: 90.ms)
-                          .fadeIn(duration: 350.ms)
-                          .slideY(
-                            begin: 0.06,
-                            end: 0,
-                            duration: 450.ms,
-                            curve: Curves.easeOutCubic,
-                          ),
-                ),
+                child: const LoginFormBody(),
               ),
             ),
           ),
@@ -70,6 +46,51 @@ final class LoginFormPanel extends StatelessWidget {
           curve: Curves.easeOutCubic,
         )
         .fadeIn(duration: 500.ms);
+  }
+}
+
+/// Login fields shared by the wide panel and the compact sheet.
+///
+/// Every row staggers in from top to bottom; [showHeader] is disabled on
+/// compact screens because the photographic header already greets the user and
+/// the collapsed app bar carries the product name.
+final class LoginFormBody extends StatelessWidget {
+  const LoginFormBody({super.key, this.showHeader = true});
+
+  final bool showHeader;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children:
+          [
+                if (showHeader) ...[
+                  const _LoginBrandTitle(),
+                  const SizedBox(height: AppSpacing.xxLarge),
+                  const _LoginTitle(),
+                  const SizedBox(height: AppSpacing.small),
+                  const _LoginSubtitle(),
+                  const SizedBox(height: AppSpacing.xxLarge),
+                ],
+                const _LoginEmailField(),
+                const SizedBox(height: AppSpacing.xLarge),
+                const _LoginPasswordField(),
+                const SizedBox(height: AppSpacing.small),
+                const _LoginOptionsRow(),
+                const SizedBox(height: AppSpacing.xLarge),
+                const _LoginSubmitButton(),
+              ]
+              .animate(delay: 550.ms, interval: 90.ms)
+              .fadeIn(duration: 350.ms)
+              .slideY(
+                begin: 0.06,
+                end: 0,
+                duration: 450.ms,
+                curve: Curves.easeOutCubic,
+              ),
+    );
   }
 }
 
@@ -174,7 +195,8 @@ final class _LoginSubmitButton extends StatelessWidget {
       icon: LucideIcons.logIn,
       label: context.localeKeys.login,
       height: 53,
-      onPressed: () {},
+      onPressed: () =>
+          context.router<AppRoute>().replaceTop(const MainRouteEntry()),
     );
   }
 }
