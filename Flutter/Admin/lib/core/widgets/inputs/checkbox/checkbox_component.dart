@@ -16,7 +16,7 @@ final class CheckboxComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         unawaited(HapticFeedback.vibrate());
         onChanged(!value);

@@ -16,7 +16,7 @@ final class LoginCubit extends CubitSignal<LoginState> {
   Future<void> login() async {
     if (state is Loading || !state.value.formState.isValid) return;
 
-    emit(Loading(state.value.formState));
+    emit(LoginState.loading(state.value.formState));
 
     final p = LoginParams(
       phone: state.value.formState.phone.value,
@@ -27,8 +27,8 @@ final class LoginCubit extends CubitSignal<LoginState> {
     final response = await _u.call(p);
 
     response.when(
-      success: (s) => emit(Success(state.value.formState, data: s)),
-      failure: (e) => emit(Failure(state.value.formState, error: e)),
+      success: (s) => emit(LoginState.success(state.value.formState, data: s)),
+      failure: (e) => emit(LoginState.failure(state.value.formState, error: e)),
     );
   }
 

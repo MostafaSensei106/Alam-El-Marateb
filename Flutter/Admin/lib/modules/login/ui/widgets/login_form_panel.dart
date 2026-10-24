@@ -158,7 +158,6 @@ final class _LogiPhoneField extends StatelessWidget {
         label: context.localeKeys.phone,
         prefixIcon: LucideIcons.phone,
         keyboardType: TextInputType.phone,
-        isEnable: state! is Loading,
         onChanged: context.read<LoginCubit>().onPhoneChanged,
         errorText: state.formState.phone.displayError?.message(context),
       ),
@@ -179,7 +178,6 @@ final class _LoginPasswordField extends StatelessWidget {
       builder: (context, state) {
         return PasswordFieldComponent(
           label: context.localeKeys.password,
-          isEnable: state! is Loading,
           onChanged: context.read<LoginCubit>().onPasswordChanged,
           errorText: state.formState.phone.displayError?.message(context),
         );
@@ -210,8 +208,7 @@ final class _LoginOptionsRow extends StatelessWidget {
             ),
             TextButtonComponent(
               label: context.localeKeys.forgetPassword,
-              isEnable: state! is Loading,
-              onPressed: () {},
+              onPressed: () => context.toast.showInfo(context, 'تحت التجريب'),
             ),
           ],
         );
