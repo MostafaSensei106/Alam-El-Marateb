@@ -113,10 +113,12 @@ app:
   clients:
     enabled: ${CLIENT_GATE_ENABLED:true}
     keys: ${CLIENT_KEYS:dev-local-key}
+
   # CORS allowlist for browser frontends. APP_ORIGINS replaces the whole list,
   # so include the Flutter dev origin when running the admin app on port 8099.
- # cors:
- #   origins: ${APP_ORIGINS:http://localhost:3000,http://localhost:8080,http://localhost:8099,http://127.0.0.1:8099}
+  cors:
+    origins: ${APP_ORIGINS:http://localhost:3000,http://localhost:8080,http://localhost:8099,http://127.0.0.1:8099}
+
   jwt:
     secret: ${JWT_SECRET:404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970}
     expiration-ms: 86400000 # 24 Hours

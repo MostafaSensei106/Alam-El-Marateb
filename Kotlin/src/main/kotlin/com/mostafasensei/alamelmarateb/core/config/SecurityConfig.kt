@@ -19,21 +19,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.web.cors.CorsConfigurationSource
 
-/**
- * URL-level authorization mirrors the route split in core/router:
- * every route object declares its audience + required roles.
- * Controllers add @PreAuthorize as a second layer (defense in depth).
- */
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
-class SecurityConfig (
+class SecurityConfig(
     private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
     private val jwtAuthenticationFilter: JwtAuthenticationFilter,
     private val apiAccessDeniedHandler: ApiAccessDeniedHandler,
+    private val corsConfigurationSource: CorsConfigurationSource,
     @Value("\${app.docs.enabled:true}") private val docsEnabled: Boolean,
-){
+) {
     @Bean
     fun passwordEncoder(): PasswordEncoder = BCryptPasswordEncoder()
 
@@ -46,7 +43,7 @@ class SecurityConfig (
         val v1 = ApiVersion.V1_PREFIX
         http
             .csrf { it.disable() }
-            .cors { }
+            .cors { it.configurationSource(corsConfigurationSource) }
             .exceptionHandling {
                 it.authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 it.accessDeniedHandler(apiAccessDeniedHandler)
@@ -54,9 +51,9 @@ class SecurityConfig (
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { auth ->
                 auth
+                    .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
                     // Public: auth + storefront browsing
-                    // (me/change-password stay authenticated despite the /auth prefix,
-                    // so expired/invalid tokens get precise TOKEN_* codes)
                     .requestMatchers("$v1/auth/me", "$v1/auth/change-password").authenticated()
                     .requestMatchers("$v1/auth/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "$v1/catalog/public/**").permitAll()
@@ -66,12 +63,10 @@ class SecurityConfig (
                     .requestMatchers(HttpMethod.POST, "$v1/shop/checkout/payment-callback/**").permitAll()
                     .requestMatchers("$v1/estimator/**").permitAll()
 
-                    // API docs: public in dev (DOCS_ENABLED=true), login-required
-                    // in prod. Disabled paths fall through to anyRequest() below.
-                    if (docsEnabled) {
-                        auth.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
-                    }
-                    auth.requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
+                if (docsEnabled) {
+                    auth.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()
+                }
+                auth.requestMatchers(HttpMethod.GET, "/uploads/**").permitAll()
                     .requestMatchers("/actuator/health/**", "/actuator/info").permitAll()
 
                     // Customers: shop + self-service portal
