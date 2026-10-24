@@ -29,8 +29,6 @@ class DioFactory {
     if (dio == null) {
       dio = Dio();
       dio!.transformer = BackgroundTransformer();
-      // HTTP/2 is a dart:io-only transport. On web the default Dio adapter
-      // (BrowserHttpClientAdapter) must be left in place.
       if (!kIsWeb) {
         dio!.httpClientAdapter = Http2Adapter(ConnectionManager());
       }
@@ -38,6 +36,8 @@ class DioFactory {
       dio!
         ..options.headers[ApiHeader.accept] = ApiHeader.applicationJson
         ..options.headers[ApiHeader.contentType] = ApiHeader.applicationJson
+        ..options.headers[ApiHeader.xApiKey] = 'dev-local-key'
+        ..options.headers[ApiHeader.xApiClient] = 'postman'
         ..options.connectTimeout = NetworkTimeouts.connect
         ..options.receiveTimeout = NetworkTimeouts.receive
         ..options.sendTimeout = NetworkTimeouts.send;

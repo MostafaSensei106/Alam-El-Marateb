@@ -1,13 +1,9 @@
-// ignore_for_file: unnecessary_non_null_assertion
-
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:kaisel/kaisel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
-import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/validator/login/login_validators.dart';
 import '../../../../core/widgets/buttons/filled_button/filled_button_component.dart';
 import '../../../../core/widgets/buttons/text_button/text_button_component.dart';
@@ -158,6 +154,7 @@ final class _LogiPhoneField extends StatelessWidget {
         label: context.localeKeys.phone,
         prefixIcon: LucideIcons.phone,
         keyboardType: TextInputType.phone,
+        isEnable: state is! Loading,
         onChanged: context.read<LoginCubit>().onPhoneChanged,
         errorText: state.formState.phone.displayError?.message(context),
       ),
@@ -178,8 +175,9 @@ final class _LoginPasswordField extends StatelessWidget {
       builder: (context, state) {
         return PasswordFieldComponent(
           label: context.localeKeys.password,
+          isEnable: state is! Loading,
           onChanged: context.read<LoginCubit>().onPasswordChanged,
-          errorText: state.formState.phone.displayError?.message(context),
+          errorText: state.formState.password.displayError?.message(context),
         );
       },
     );
@@ -208,6 +206,7 @@ final class _LoginOptionsRow extends StatelessWidget {
             ),
             TextButtonComponent(
               label: context.localeKeys.forgetPassword,
+              isEnable: state is! Loading,
               onPressed: () => context.toast.showInfo(context, 'تحت التجريب'),
             ),
           ],
@@ -223,12 +222,15 @@ final class _LoginSubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilledButtonComponent.icon(
-      icon: LucideIcons.logIn,
-      label: context.localeKeys.login,
-      height: 53,
-      onPressed: () =>
-          context.router<AppRoute>().replaceTop(const MainRouteEntry()),
+    return BlocSignalSelector<LoginCubit, LoginState, bool>(
+      selector: (state) => state.formState.isValid,
+      builder: (context, bool value) => FilledButtonComponent.icon(
+        icon: LucideIcons.logIn,
+        label: context.localeKeys.login,
+        isEnabled: value,
+        height: 53,
+        onPressed: () => context.read<LoginCubit>().login(),
+      ),
     );
   }
 }

@@ -56,6 +56,9 @@ final class ApiHeader {
   /// The header used to provide an API key.
   static const String xApiKey = 'X-API-Key';
 
+  ///
+  static const String xApiClient = 'X-API-Client';
+
   /// The header reporting the original client IP address through proxies.
   static const String xForwardedFor = 'X-Forwarded-For';
 
