@@ -59,6 +59,7 @@
   "unpaid": "Unpaid",
   "partial": "Partially paid",
   "httpNoInternet": "No internet connection. Please check your network.",
+  "httpConnectionFailed": "Could not reach the server. Check your connection and try again.",
   "httpRequestCancelled": "The request was cancelled.",
   "httpBadCertificate": "The server certificate could not be verified.",
   "httpGatewayTimeout": "The server took too long to respond.",

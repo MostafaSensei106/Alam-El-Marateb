@@ -60,6 +60,7 @@
   "unpaid": "غير مدفوع",
   "partial": "مدفوع جزئيًا",
   "httpNoInternet": "لا يوجد اتصال بالإنترنت. يرجى التحقق من شبكتك.",
+  "httpConnectionFailed": "تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى.",
   "httpRequestCancelled": "تم إلغاء الطلب.",
   "httpBadCertificate": "تعذر التحقق من شهادة الخادم.",
   "httpGatewayTimeout": "استغرق الخادم وقتًا طويلاً للاستجابة.",

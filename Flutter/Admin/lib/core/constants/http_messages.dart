@@ -6,6 +6,8 @@ abstract final class HttpMessages {
   // ── Network & Transport ───────────────────────────────────────────────────
   static const noInternet =
       'No internet connection. Please check your network and try again.';
+  static const connectionFailed =
+      'Could not reach the server. Check your connection and try again.';
   static const connectionTimeout =
       'Connection timed out. Please verify your connection and try again.';
   static const sendTimeout =

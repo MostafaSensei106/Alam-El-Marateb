@@ -326,6 +326,12 @@ abstract class AppLocalizations {
   /// **'No internet connection. Please check your network.'**
   String get httpNoInternet;
 
+  /// No description provided for @httpConnectionFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach the server. Check your connection and try again.'**
+  String get httpConnectionFailed;
+
   /// No description provided for @httpRequestCancelled.
   ///
   /// In en, this message translates to:

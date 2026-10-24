@@ -12,7 +12,7 @@ extension FailureLocalizer on Failures {
       ApiFailure(errorType: final type, apiErrorModel: final model) =>
         switch (type) {
           ErrorType.offline => l.httpNoInternet,
-          ErrorType.network => l.httpNoInternet,
+          ErrorType.network => l.httpConnectionFailed,
           ErrorType.timeout => l.httpGatewayTimeout,
           ErrorType.cancelled => l.httpRequestCancelled,
           ErrorType.certificate => l.httpBadCertificate,
@@ -25,7 +25,7 @@ extension FailureLocalizer on Failures {
       ServerFailure() => l.httpInternalServerError,
       CacheFailure() => 'Cache Error', // Or add l.cacheError
       CooldownFailure(message: final msg) => msg,
-      NetworkFailure() => l.httpNoInternet,
+      NetworkFailure() => l.httpConnectionFailed,
       UnknownFailure(message: final msg) => msg,
       TimeoutFailure() => l.httpGatewayTimeout,
       OfflineFailure() => l.httpNoInternet,

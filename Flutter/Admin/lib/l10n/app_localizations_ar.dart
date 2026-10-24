@@ -132,6 +132,10 @@ class AppLocalizationsAr extends AppLocalizations {
   String get httpNoInternet => 'لا يوجد اتصال بالإنترنت. يرجى التحقق من شبكتك.';
 
   @override
+  String get httpConnectionFailed =>
+      'تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى.';
+
+  @override
   String get httpRequestCancelled => 'تم إلغاء الطلب.';
 
   @override

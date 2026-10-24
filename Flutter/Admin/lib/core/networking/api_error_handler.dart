@@ -7,6 +7,7 @@ import '../constants/http_status_code.dart';
 import '../error/failures.dart';
 import 'api_error_model/api_error_model.dart';
 import 'error_type.dart';
+import 'platform_connectivity.dart';
 
 /// Pure failure mapper that classifies raw exceptions and HTTP responses
 /// into structured domain [ApiFailure] instances.
@@ -49,11 +50,7 @@ abstract final class ApiFailureMapper {
     }
 
     return switch (error.type) {
-      DioExceptionType.connectionError => (
-        _fromConnectionError(error.error),
-        ErrorType.offline,
-        null,
-      ),
+      DioExceptionType.connectionError => _fromConnectionError(error.error),
       DioExceptionType.connectionTimeout => (
         _buildModel(HttpMessages.connectionTimeout),
         ErrorType.timeout,
@@ -89,9 +86,19 @@ abstract final class ApiFailureMapper {
     };
   }
 
-  static ApiErrorModel _fromConnectionError(Object? cause) {
-    if (cause is SocketException) return _noInternetModel();
-    return _noInternetModel();
+  /// A connection error does **not** imply the device is offline: browsers
+  /// report blocked CORS preflights, DNS failures, refused connections and
+  /// unreachable hosts the same way (`DioExceptionType.connectionError`).
+  ///
+  /// Only claim "no internet" when we can prove it — the browser reports no
+  /// active adapter, or a native socket failed before any HTTP response
+  /// existed. Everything else is "couldn't reach the server".
+  static (ApiErrorModel, ErrorType, int?) _fromConnectionError(Object? cause) {
+    if (!isDeviceOnline || cause is SocketException) {
+      return (_noInternetModel(), ErrorType.offline, null);
+    }
+
+    return (_connectionFailedModel(), ErrorType.network, null);
   }
 
   static (ApiErrorModel, ErrorType, int?) _fromResponse(
@@ -138,7 +145,7 @@ abstract final class ApiFailureMapper {
 
     // 2. Classify cause when no response is available
     if (cause is SocketException) {
-      return (_noInternetModel(), ErrorType.network, null);
+      return _fromConnectionError(cause);
     }
 
     return (_unknownModel(), ErrorType.unknown, null);
@@ -162,6 +169,9 @@ abstract final class ApiFailureMapper {
 
   static ApiErrorModel _noInternetModel() =>
       _buildModel(HttpMessages.noInternet);
+
+  static ApiErrorModel _connectionFailedModel() =>
+      _buildModel(HttpMessages.connectionFailed);
 
   static ApiErrorModel _unknownModel() =>
       _buildModel(HttpMessages.unknownError);
