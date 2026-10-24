@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
-import '../../../../../core/constants/app_config.dart';
-import '../../../../../core/constants/assets_images.dart';
-import '../../../../../core/extensions/extensions.dart';
+import '../../../../core/constants/app_config.dart';
+import '../../../../core/constants/assets_images.dart';
+import '../../../../core/extensions/extensions.dart';
 
 /// Decorative image half of the login screen.
 ///

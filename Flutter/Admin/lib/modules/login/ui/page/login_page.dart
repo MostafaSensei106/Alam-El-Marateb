@@ -1,32 +1,37 @@
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
-import 'package:kaisel/kaisel.dart';
-import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../../../core/constants/app_config.dart';
-import '../../../../core/constants/assets_images.dart';
 import '../../../../core/extensions/extensions.dart';
-import '../../../../core/router/app_router.dart';
-import '../../../../core/widgets/buttons/filled_button/filled_button_component.dart';
-import '../../../../core/widgets/buttons/text_button/text_button_component.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
-import '../../../../core/widgets/inputs/checkbox/checkbox_component.dart';
-import '../../../../core/widgets/inputs/password_form_field/password_form_field_component.dart';
-import '../../../../core/widgets/inputs/text_form_field/text_form_field_component.dart';
 import '../../logic/cubit/login_cubit.dart';
 import '../../logic/cubit/login_state.dart';
+import '../widgets/login_form_panel.dart';
+import '../widgets/login_image_panel.dart';
+import '../widgets/login_language_button.dart';
 
+/// Admin sign-in screen.
+///
+/// Wide windows place the form beside the image; narrow windows stack the
+/// image above the form. The language switch floats over both layouts.
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
 
+  static const double _wideBreakpoint = 800;
+
   @override
   Widget build(BuildContext context) {
-    final isWide = MediaQuery.sizeOf(context).width >= 800;
+    final isWide = MediaQuery.sizeOf(context).width >= _wideBreakpoint;
 
     return Scaffold(
       body: BlocSignalListener<LoginCubit, LoginState>(
-        listener: (BuildContext context, state) {},
+        listener: (BuildContext context, state) {
+          state.whenOrNull(
+            loading: (_) => context.dialog.showLoading(),
+            success: (_, user) {
+              context.pop();
+            },
+          );
+        },
         child: Padding(
           padding: const EdgeInsets.all(AppSpacing.large),
           child: Stack(
@@ -35,32 +40,24 @@ class LoginPage extends StatelessWidget {
               if (isWide)
                 const Row(
                   children: [
-                    Expanded(child: _LoginFormPanel()),
-                    Expanded(child: _LoginImagePanel()),
+                    Expanded(child: LoginFormPanel()),
+                    Expanded(child: LoginImagePanel()),
                   ],
                 )
               else
                 const Column(
                   children: [
-                    Expanded(flex: 3, child: _LoginImagePanel()),
-                    Expanded(flex: 2, child: _LoginFormPanel()),
+                    Expanded(flex: 3, child: LoginImagePanel()),
+                    Expanded(flex: 2, child: LoginFormPanel()),
                   ],
                 ),
               Positioned(
                 top: MediaQuery.paddingOf(context).top,
                 left: 0,
                 right: 0,
-                child: Padding(
-                  padding: const EdgeInsets.all(AppSpacing.small),
-                  child: Row(
-                    children: [
-                      TextButtonComponent.icon(
-                        label: context.localeKeys.changeLanguage,
-                        icon: LucideIcons.languages,
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
+                child: const Padding(
+                  padding: EdgeInsets.all(AppSpacing.small),
+                  child: LoginLanguageButton(),
                 ),
               ),
             ],
@@ -68,148 +65,5 @@ class LoginPage extends StatelessWidget {
         ),
       ),
     );
-  }
-}
-
-class _LoginImagePanel extends StatelessWidget {
-  const _LoginImagePanel();
-
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-          borderRadius: BorderRadius.circular(AppConfig.outBorderRadius),
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Image.asset(AssetsImages.authBackground, fit: BoxFit.cover),
-              PositionedDirectional(
-                start: 32,
-                end: 32,
-                bottom: 40,
-                child:
-                    Text(
-                          context.localeKeys.welcomeBack,
-                          style: context.textTheme.displayMedium!.copyWith(
-                            color: Colors.white,
-                          ),
-                        )
-                        .animate()
-                        .fadeIn(delay: 500.ms, duration: 400.ms)
-                        .slideY(
-                          begin: 0.08,
-                          end: 0,
-                          duration: 500.ms,
-                          curve: Curves.easeOutCubic,
-                        ),
-              ),
-            ],
-          ),
-        )
-        .animate()
-        .slideX(begin: -1, end: 0, duration: 800.ms, curve: Curves.easeOutCubic)
-        .fadeIn(duration: 350.ms);
-  }
-}
-
-class _LoginFormPanel extends StatelessWidget {
-  const _LoginFormPanel();
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    final fields = <Widget>[
-      Text(
-        context.localeKeys.alm_el_marateb,
-        textAlign: TextAlign.center,
-        style: theme.textTheme.headlineSmall,
-      ),
-      Text(context.localeKeys.login, style: theme.textTheme.headlineMedium),
-      Text(
-        context.localeKeys.enterYourCredentialsToAccessYourAccount,
-        style: theme.textTheme.bodyMedium?.copyWith(
-          color: theme.colorScheme.onSurfaceVariant,
-        ),
-      ),
-      TextFormFieldComponent(
-        label: context.localeKeys.emailAddress,
-        prefixIcon: LucideIcons.mail,
-        keyboardType: TextInputType.emailAddress,
-      ),
-      PasswordFieldComponent(label: context.localeKeys.password),
-      Row(
-        mainAxisAlignment: .spaceBetween,
-        children: [
-          CheckboxComponent(
-            title: context.localeKeys.rememberMe,
-            value: true,
-            onChanged: (v) {},
-          ),
-          TextButtonComponent(
-            label: context.localeKeys.forgetPassword,
-            onPressed: () {},
-          ),
-        ],
-      ),
-      FilledButtonComponent.icon(
-        icon: LucideIcons.logIn,
-        label: context.localeKeys.login,
-        height: 53,
-        onPressed: () =>
-            context.router<AppRoute>().replaceTop(const MainRouteEntry()),
-      ),
-    ];
-
-    return Container(
-          width: double.infinity,
-          height: double.infinity,
-          color: context.colorScheme.surface,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.xLarge,
-            vertical: AppSpacing.xLarge,
-          ),
-          child: Center(
-            child: SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 500),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children:
-                      [
-                            fields[0],
-                            const SizedBox(height: AppSpacing.xxLarge),
-                            fields[1],
-                            const SizedBox(height: AppSpacing.small),
-                            fields[2],
-                            const SizedBox(height: AppSpacing.xxLarge),
-                            fields[3],
-                            const SizedBox(height: AppSpacing.xLarge),
-                            fields[4],
-                            const SizedBox(height: AppSpacing.small),
-                            fields[5],
-                            const SizedBox(height: AppSpacing.xLarge),
-                            fields[6],
-                          ]
-                          .animate(delay: 550.ms, interval: 90.ms)
-                          .fadeIn(duration: 350.ms)
-                          .slideY(
-                            begin: 0.06,
-                            end: 0,
-                            duration: 450.ms,
-                            curve: Curves.easeOutCubic,
-                          ),
-                ),
-              ),
-            ),
-          ),
-        )
-        .animate(delay: 250.ms)
-        .slideX(
-          begin: 0.12,
-          end: 0,
-          duration: 700.ms,
-          curve: Curves.easeOutCubic,
-        )
-        .fadeIn(duration: 500.ms);
   }
 }

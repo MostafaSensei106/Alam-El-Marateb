@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../../../../core/extensions/extensions.dart';
-import '../../../../../core/widgets/buttons/text_button/text_button_component.dart';
+import '../../../../core/extensions/extensions.dart';
+import '../../../../core/widgets/buttons/text_button/text_button_component.dart';
 
 /// Language switch shown in the top overlay of the login screen.
 final class LoginLanguageButton extends StatelessWidget {
