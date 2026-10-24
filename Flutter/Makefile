@@ -66,29 +66,37 @@ all: build-all ## Alias for build-all
 build: build-platforms ## Build APP for every platform folder available on this host
 
 build-all: ## Build every detected app (Admin + Customer when present)
+	@echo "🎯 Building all detected apps: $(APPS)"
 	@set -e; for app in $(APPS); do \
-		echo ""; echo "==> $$app"; \
+		echo ""; echo "📱 ===== $$app ====="; \
 		$(MAKE) --no-print-directory build-platforms APP=$$app; \
 	done
+	@echo ""
+	@echo "✅ All apps built."
 
 build-platforms: ## Build APP for each platform folder present and supported by this host
 	@set -e; built=0; \
-	[ -f "$(APP)/pubspec.yaml" ] || { echo "ERROR: app '$(APP)' not found ($(APP)/pubspec.yaml)"; exit 1; }; \
+	echo "🎯 App: $(APP) | mode: $(BUILD_MODE) | host: $(OS)"; \
+	[ -f "$(APP)/pubspec.yaml" ] || { echo "❌ ERROR: app '$(APP)' not found ($(APP)/pubspec.yaml)"; exit 1; }; \
 	for p in $(PLATFORMS); do \
-		if [ ! -d "$(APP)/$$p" ]; then echo "SKIP $$p: $(APP)/$$p missing"; continue; fi; \
+		if [ ! -d "$(APP)/$$p" ]; then echo "⏭️  SKIP $$p: $(APP)/$$p missing"; continue; fi; \
 		case $$p in \
 			ios|macos) \
-				[ "$(OS)" = "Darwin" ] || { echo "SKIP $$p: requires a macOS host (host is $(OS))"; continue; } ;; \
+				[ "$(OS)" = "Darwin" ] || { echo "⏭️  SKIP $$p: requires a macOS host (host is $(OS))"; continue; } ;; \
 			windows) \
-				case "$(OS)" in MINGW*|MSYS*|CYGWIN*) ;; *) echo "SKIP windows: requires a Windows host (host is $(OS))"; continue ;; esac ;; \
+				case "$(OS)" in MINGW*|MSYS*|CYGWIN*) ;; *) echo "⏭️  SKIP windows: requires a Windows host (host is $(OS))"; continue ;; esac ;; \
 			linux) \
-				[ "$(OS)" = "Linux" ] || { echo "SKIP linux: requires a Linux host (host is $(OS))"; continue; } ;; \
+				[ "$(OS)" = "Linux" ] || { echo "⏭️  SKIP linux: requires a Linux host (host is $(OS))"; continue; } ;; \
 		esac; \
-		echo ""; echo "==> $(APP) / $$p"; \
+		case $$p in \
+			android) e="🤖" ;; ios) e="🍎" ;; web) e="🌐" ;; \
+			windows) e="🪟" ;; linux) e="🐧" ;; macos) e="🖥️" ;; esac; \
+		echo ""; echo "$$e [$(APP)] Building $$p ($(BUILD_MODE)) ..."; \
 		$(MAKE) --no-print-directory build-$$p APP=$(APP) BUILD_MODE=$(BUILD_MODE) FLUTTER=$(FLUTTER); \
+		echo "✅ [$(APP)] $$p done"; \
 		built=1; \
 	done; \
-	if [ $$built -eq 0 ]; then echo "WARN: no buildable platform for $(APP) on $(OS)"; fi
+	if [ $$built -eq 0 ]; then echo "⚠️  No buildable platform for $(APP) on $(OS)"; else echo "🎉 $(APP): all available platforms built."; fi
 
 # `make build-admin` / `make build-customer` / any folder name (case-insensitive).
 $(APP_TARGETS):
@@ -96,70 +104,99 @@ $(APP_TARGETS):
 	for dir in $(APPS); do \
 		if [ "$$(echo $$dir | tr '[:upper:]' '[:lower:]')" = "$$want" ]; then app="$$dir"; fi; \
 	done; \
-	[ -n "$$app" ] || { echo "ERROR: no app matching '$$want'. Detected: $(APPS)"; exit 1; }; \
+	[ -n "$$app" ] || { echo "❌ ERROR: no app matching '$$want'. Detected: $(APPS)"; exit 1; }; \
 	$(MAKE) --no-print-directory build-platforms APP="$$app" BUILD_MODE=$(BUILD_MODE) FLUTTER=$(FLUTTER)
 
 ##@ Build (single platform)
 build-android: build-apk build-appbundle ## Android: APK + App Bundle
 
 build-apk: ## Build Android APK (BUILD_MODE=release|debug|profile)
-	cd $(APP) && $(FLUTTER) build apk --$(BUILD_MODE)
+	@echo "🤖 [$(APP)] Building Android APK ($(BUILD_MODE)) ..."
+	@cd $(APP) && $(FLUTTER) build apk --$(BUILD_MODE)
+	@echo "✅ APK ready → $(APP)/build/app/outputs/flutter-apk/"
 
 build-appbundle: ## Build Android App Bundle for Play Store
-	cd $(APP) && $(FLUTTER) build appbundle --$(BUILD_MODE)
+	@echo "📦 [$(APP)] Building Android App Bundle ($(BUILD_MODE)) ..."
+	@cd $(APP) && $(FLUTTER) build appbundle --$(BUILD_MODE)
+	@echo "✅ AAB ready → $(APP)/build/app/outputs/bundle/"
 
 build-ios: ## Build iOS bundle (macOS host only)
-	@[ "$(OS)" = "Darwin" ] || { echo "SKIP ios: requires a macOS host (host is $(OS))"; exit 0; }
-	@[ -d "$(APP)/ios" ] || { echo "SKIP ios: $(APP)/ios missing"; exit 0; }
-	cd $(APP) && $(FLUTTER) build ios --$(BUILD_MODE) --no-codesign
+	@[ "$(OS)" = "Darwin" ] || { echo "⏭️  SKIP ios: requires a macOS host (host is $(OS))"; exit 0; }
+	@[ -d "$(APP)/ios" ] || { echo "⏭️  SKIP ios: $(APP)/ios missing"; exit 0; }
+	@echo "🍎 [$(APP)] Building iOS bundle ($(BUILD_MODE), no codesign) ..."
+	@cd $(APP) && $(FLUTTER) build ios --$(BUILD_MODE) --no-codesign
+	@echo "✅ iOS build ready → $(APP)/build/ios/"
 
 build-web: ## Build web release bundle (build/web)
-	@[ -d "$(APP)/web" ] || { echo "SKIP web: $(APP)/web missing"; exit 0; }
-	cd $(APP) && $(FLUTTER) build web --$(BUILD_MODE)
+	@[ -d "$(APP)/web" ] || { echo "⏭️  SKIP web: $(APP)/web missing"; exit 0; }
+	@echo "🌐 [$(APP)] Building web bundle ($(BUILD_MODE)) ..."
+	@cd $(APP) && $(FLUTTER) build web --$(BUILD_MODE)
+	@echo "✅ Web bundle ready → $(APP)/build/web/"
 
 build-windows: ## Build Windows desktop app (Windows host only)
-	@case "$(OS)" in MINGW*|MSYS*|CYGWIN*) ;; *) echo "SKIP windows: requires a Windows host (host is $(OS))"; exit 0 ;; esac
-	@[ -d "$(APP)/windows" ] || { echo "SKIP windows: $(APP)/windows missing"; exit 0; }
-	cd $(APP) && $(FLUTTER) build windows --$(BUILD_MODE)
+	@case "$(OS)" in MINGW*|MSYS*|CYGWIN*) ;; *) echo "⏭️  SKIP windows: requires a Windows host (host is $(OS))"; exit 0 ;; esac
+	@[ -d "$(APP)/windows" ] || { echo "⏭️  SKIP windows: $(APP)/windows missing"; exit 0; }
+	@echo "🪟 [$(APP)] Building Windows desktop app ($(BUILD_MODE)) ..."
+	@cd $(APP) && $(FLUTTER) build windows --$(BUILD_MODE)
+	@echo "✅ Windows build ready → $(APP)/build/windows/"
 
 build-linux: ## Build Linux desktop app (Linux host only)
-	@[ "$(OS)" = "Linux" ] || { echo "SKIP linux: requires a Linux host (host is $(OS))"; exit 0; }
-	@[ -d "$(APP)/linux" ] || { echo "SKIP linux: $(APP)/linux missing"; exit 0; }
-	cd $(APP) && $(FLUTTER) build linux --$(BUILD_MODE)
+	@[ "$(OS)" = "Linux" ] || { echo "⏭️  SKIP linux: requires a Linux host (host is $(OS))"; exit 0; }
+	@[ -d "$(APP)/linux" ] || { echo "⏭️  SKIP linux: $(APP)/linux missing"; exit 0; }
+	@echo "🐧 [$(APP)] Building Linux desktop app ($(BUILD_MODE)) ..."
+	@cd $(APP) && $(FLUTTER) build linux --$(BUILD_MODE)
+	@echo "✅ Linux build ready → $(APP)/build/linux/"
 
 build-macos: ## Build macOS desktop app (macOS host only)
-	@[ "$(OS)" = "Darwin" ] || { echo "SKIP macos: requires a macOS host (host is $(OS))"; exit 0; }
-	@[ -d "$(APP)/macos" ] || { echo "SKIP macos: $(APP)/macos missing"; exit 0; }
-	cd $(APP) && $(FLUTTER) build macos --$(BUILD_MODE)
+	@[ "$(OS)" = "Darwin" ] || { echo "⏭️  SKIP macos: requires a macOS host (host is $(OS))"; exit 0; }
+	@[ -d "$(APP)/macos" ] || { echo "⏭️  SKIP macos: $(APP)/macos missing"; exit 0; }
+	@echo "🖥️  [$(APP)] Building macOS desktop app ($(BUILD_MODE)) ..."
+	@cd $(APP) && $(FLUTTER) build macos --$(BUILD_MODE)
+	@echo "✅ macOS build ready → $(APP)/build/macos/"
 
 ##@ App lifecycle
 pub-get: ## Resolve dependencies for APP
-	cd $(APP) && $(FLUTTER) pub get
+	@echo "📥 [$(APP)] Resolving dependencies ..."
+	@cd $(APP) && $(FLUTTER) pub get
+	@echo "✅ Dependencies resolved."
 
 pub-upgrade: ## Upgrade dependencies for APP
-	cd $(APP) && $(FLUTTER) pub upgrade
+	@echo "⬆️  [$(APP)] Upgrading dependencies ..."
+	@cd $(APP) && $(FLUTTER) pub upgrade
+	@echo "✅ Dependencies upgraded."
 
 analyze: ## Static analysis for APP
-	cd $(APP) && $(FLUTTER) analyze
+	@echo "🔎 [$(APP)] Running static analysis ..."
+	@cd $(APP) && $(FLUTTER) analyze
+	@echo "✅ Analysis done."
 
 test: ## Run tests for APP
-	cd $(APP) && $(FLUTTER) test
+	@echo "🧪 [$(APP)] Running tests ..."
+	@cd $(APP) && $(FLUTTER) test
+	@echo "✅ Tests done."
 
 run: ## Run APP on DEVICE (e.g. DEVICE=chrome; default: Flutter's picker)
-	cd $(APP) && $(FLUTTER) run $(if $(DEVICE),-d $(DEVICE),)
+	@echo "🚀 [$(APP)] Starting app$(if $(DEVICE), on $(DEVICE),) ..."
+	@cd $(APP) && $(FLUTTER) run $(if $(DEVICE),-d $(DEVICE),)
 
 doctor: ## Show Flutter / toolchain health
-	$(FLUTTER) doctor -v
+	@echo "🩺 Checking Flutter toolchain ..."
+	@$(FLUTTER) doctor -v
 
 devices: ## List devices Flutter can target
-	$(FLUTTER) devices
+	@echo "📱 Listing available devices ..."
+	@$(FLUTTER) devices
 
 ##@ Cleanup
 clean: ## Clean build artifacts for APP
-	cd $(APP) && $(FLUTTER) clean
+	@echo "🧹 [$(APP)] Cleaning build artifacts ..."
+	@cd $(APP) && $(FLUTTER) clean
+	@echo "✅ Clean done."
 
 clean-all: ## Clean every detected app
+	@echo "🧹 Cleaning all apps: $(APPS)"
 	@set -e; for app in $(APPS); do \
-		echo "==> cleaning $$app"; \
+		echo "🧹 cleaning $$app ..."; \
 		cd "$$app" && $(FLUTTER) clean && cd ..; \
 	done
+	@echo "✅ All clean."

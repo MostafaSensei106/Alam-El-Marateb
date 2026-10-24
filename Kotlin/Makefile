@@ -54,75 +54,101 @@ help: ## Show this help (make help)
 
 ##@ Local lifecycle
 build: cert ## Full local stack: cert + build images + start with logs (Ctrl-C stops)
+	@echo "🔨 [backend] Building app image ..."
 	$(COMPOSE) build app
+	@echo "🚀 [backend] Starting stack (Ctrl-C to stop) ..."
 	$(COMPOSE) up
 
 build-run: cert ## Build images then run the whole stack detached
+	@echo "🔨 [backend] Building app image ..."
 	$(COMPOSE) build app
+	@echo "🚀 [backend] Starting stack detached ..."
 	$(COMPOSE) up -d
 	@$(MAKE) --no-print-directory ps
+	@echo "✅ Stack is up."
 
 build-and-run: build-run ## Alias for build-run
 
 up: cert ## Start core stack detached (nginx + app + postgres + redis)
+	@echo "🚀 [backend] Starting core stack ..."
 	$(COMPOSE) up -d
 	@$(MAKE) --no-print-directory ps
 
 up-all: cert ## Start core + ALL opt-in profiles (replica, kafka, minio, clickhouse, search)
+	@echo "🚀 [backend] Starting core stack + all profiles ..."
 	$(COMPOSE) --profile replica --profile kafka --profile minio --profile clickhouse --profile search up -d
 	@$(MAKE) --no-print-directory ps
 
 up-replica: ## Start core + postgres read-replica (:5433)
+	@echo "🚀 [backend] Starting stack with postgres replica ..."
 	$(COMPOSE) --profile replica up -d
 
 up-kafka: ## Start core + Kafka event transport (:9092)
+	@echo "🚀 [backend] Starting stack with Kafka ..."
 	$(COMPOSE) --profile kafka up -d
 
 up-minio: ## Start core + MinIO S3 storage (:9000, console :9001)
+	@echo "🚀 [backend] Starting stack with MinIO ..."
 	$(COMPOSE) --profile minio up -d
 
 up-clickhouse: ## Start core + ClickHouse analytics (:8123)
+	@echo "🚀 [backend] Starting stack with ClickHouse ..."
 	$(COMPOSE) --profile clickhouse up -d
 
 up-search: ## Start core + Meilisearch catalog search (:7700)
+	@echo "🚀 [backend] Starting stack with Meilisearch ..."
 	$(COMPOSE) --profile search up -d
 
 down: ## Stop stack (keep volumes/data)
+	@echo "🛑 [backend] Stopping stack (volumes kept) ..."
 	$(COMPOSE) down
 
 restart: ## Restart app + nginx only
+	@echo "🔄 [backend] Restarting app + nginx ..."
 	$(COMPOSE) restart app nginx
 
 restart-%: ## Restart one service, e.g. make restart-app / restart-nginx / restart-postgres
+	@echo "🔄 [backend] Restarting $* ..."
 	$(COMPOSE) restart $*
 
 pull: ## Pull images from registries (no build; pairs with deploy)
+	@echo "📥 [backend] Pulling images ..."
 	$(COMPOSE) pull
 
 pull-image: ## Alias for pull (fetch images)
+	@echo "📥 [backend] Pulling images ..."
 	$(MAKE) pull
 
 update: pull ## Pull latest images then recreate containers (no build)
+	@echo "🚀 [backend] Recreating containers with pulled images ..."
 	$(COMPOSE) up -d
 	@$(MAKE) --no-print-directory ps
+	@echo "✅ Update done."
 
 rebuild: ## Rebuild changed images then restart (uses cache)
+	@echo "🔨 [backend] Rebuilding changed images ..."
 	$(COMPOSE) up -d --build
 	@$(MAKE) --no-print-directory ps
+	@echo "✅ Rebuild done."
 
 ps: ## Show container status
+	@echo "📋 [backend] Container status:"
 	$(COMPOSE) ps
 
 logs: ## Tail logs, all services (Ctrl-C to exit)
+	@echo "📜 [backend] Tailing all service logs (Ctrl-C to exit) ..."
 	$(COMPOSE) logs -f --tail=200
 
 logs-app: ## Tail backend logs only
+	@echo "📜 [backend] Tailing app logs (Ctrl-C to exit) ..."
 	$(COMPOSE) logs -f --tail=200 app
 
 logs-nginx: ## Tail edge proxy logs only
+	@echo "📜 [backend] Tailing nginx logs (Ctrl-C to exit) ..."
 	$(COMPOSE) logs -f --tail=200 nginx
 
 logs-db: ## Tail postgres logs only
+	@echo "📜 [backend] Tailing postgres logs (Ctrl-C to exit) ..."
 	$(COMPOSE) logs -f --tail=200 postgres
 
 ##@ Image & release (build / tag / push separately or together)
