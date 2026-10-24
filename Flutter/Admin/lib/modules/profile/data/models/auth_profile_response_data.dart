@@ -1,5 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import '../../logic/entity/profile_entity.dart';
+
 part 'auth_profile_response_data.g.dart';
 
 @JsonSerializable()
@@ -28,4 +30,15 @@ final class AuthProfileResponseData {
   final List<String> roles;
   @JsonKey(name: 'active')
   final bool active;
+}
+
+extension AuthProfileX on AuthProfileResponseData {
+  ProfileEntity toEntity() {
+    return ProfileEntity(
+      fullName: fullName,
+      phoneNumber: phoneNumber,
+      email: email,
+      roles: roles,
+    );
+  }
 }

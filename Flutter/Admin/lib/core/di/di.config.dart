@@ -99,6 +99,12 @@ import 'package:alam_el_marateb_admin/modules/login/logic/repository/login_repos
     as _i139;
 import 'package:alam_el_marateb_admin/modules/login/logic/usecase/login_usecase.dart'
     as _i172;
+import 'package:alam_el_marateb_admin/modules/profile/data/interface/auth_profile_repository.dart'
+    as _i680;
+import 'package:alam_el_marateb_admin/modules/profile/logic/repository/auth_profile_repository_impl.dart'
+    as _i84;
+import 'package:alam_el_marateb_admin/modules/profile/logic/usecase/get_profile_usecase.dart'
+    as _i1028;
 import 'package:connectivity_plus/connectivity_plus.dart' as _i895;
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
@@ -219,8 +225,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i425.ApiService>(
       () => injectionModule.apiService(gh<_i361.Dio>()),
     );
+    gh.lazySingleton<_i680.AuthProfileRepository>(
+      () => _i84.AuthProfileRepositoryImpl(gh<_i425.ApiService>()),
+    );
     gh.factory<_i822.BaseFileManagerFacade>(
       () => _i679.FileManagerFacade(gh<_i909.BaseAttachmentHandlerService>()),
+    );
+    gh.factory<_i1028.GetProfileUsecase>(
+      () => _i1028.GetProfileUsecase(gh<_i680.AuthProfileRepository>()),
     );
     gh.lazySingleton<_i850.LoginRepository>(
       () => _i139.LoginRepositoryImpl(
@@ -298,8 +310,14 @@ extension GetItInjectableX on _i174.GetIt {
   _i230.AttachmentHandlerService get attachmentHandlerService =>
       get<_i230.AttachmentHandlerService>();
 
+  _i84.AuthProfileRepositoryImpl get authProfileRepositoryImpl =>
+      get<_i84.AuthProfileRepositoryImpl>();
+
   _i679.FileManagerFacade get fileManagerFacade =>
       get<_i679.FileManagerFacade>();
+
+  _i1028.GetProfileUsecase get getProfileUsecase =>
+      get<_i1028.GetProfileUsecase>();
 
   _i139.LoginRepositoryImpl get loginRepositoryImpl =>
       get<_i139.LoginRepositoryImpl>();
