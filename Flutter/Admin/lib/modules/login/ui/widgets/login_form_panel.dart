@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:kaisel/kaisel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
-import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/buttons/filled_button/filled_button_component.dart';
 import '../../../../core/widgets/buttons/text_button/text_button_component.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
@@ -176,8 +174,7 @@ final class _LoginSubmitButton extends StatelessWidget {
       icon: LucideIcons.logIn,
       label: context.localeKeys.login,
       height: 53,
-      onPressed: () =>
-          context.router<AppRoute>().replaceTop(const MainRouteEntry()),
+      onPressed: () {},
     );
   }
 }
