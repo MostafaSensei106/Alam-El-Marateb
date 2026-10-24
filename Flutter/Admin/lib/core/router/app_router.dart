@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kaisel/kaisel.dart';
 
 import '../../modules/login/logic/cubit/login_cubit.dart';
-import '../../modules/login/page/login_page.dart';
+import '../../modules/login/ui/page/login_page.dart';
 import '../../modules/main/main_page.dart';
 import '../di/di.dart';
 import 'observers/app_navigator_observer.dart';

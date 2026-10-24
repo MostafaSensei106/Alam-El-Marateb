@@ -1,18 +1,21 @@
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:kaisel/kaisel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../../core/constants/app_config.dart';
-import '../../../core/constants/assets_images.dart';
-import '../../../core/extensions/extensions.dart';
-import '../../../core/router/app_router.dart';
-import '../../../core/widgets/buttons/filled_button/filled_button_component.dart';
-import '../../../core/widgets/buttons/text_button/text_button_component.dart';
-import '../../../core/widgets/design_system/tokens/tokens.dart';
-import '../../../core/widgets/inputs/checkbox/checkbox_component.dart';
-import '../../../core/widgets/inputs/password_form_field/password_form_field_component.dart';
-import '../../../core/widgets/inputs/text_form_field/text_form_field_component.dart';
+import '../../../../core/constants/app_config.dart';
+import '../../../../core/constants/assets_images.dart';
+import '../../../../core/extensions/extensions.dart';
+import '../../../../core/router/app_router.dart';
+import '../../../../core/widgets/buttons/filled_button/filled_button_component.dart';
+import '../../../../core/widgets/buttons/text_button/text_button_component.dart';
+import '../../../../core/widgets/design_system/tokens/tokens.dart';
+import '../../../../core/widgets/inputs/checkbox/checkbox_component.dart';
+import '../../../../core/widgets/inputs/password_form_field/password_form_field_component.dart';
+import '../../../../core/widgets/inputs/text_form_field/text_form_field_component.dart';
+import '../../logic/cubit/login_cubit.dart';
+import '../../logic/cubit/login_state.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -22,43 +25,46 @@ class LoginPage extends StatelessWidget {
     final isWide = MediaQuery.sizeOf(context).width >= 800;
 
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(AppSpacing.large),
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            if (isWide)
-              const Row(
-                children: [
-                  Expanded(child: _LoginFormPanel()),
-                  Expanded(child: _LoginImagePanel()),
-                ],
-              )
-            else
-              const Column(
-                children: [
-                  Expanded(flex: 3, child: _LoginImagePanel()),
-                  Expanded(flex: 2, child: _LoginFormPanel()),
-                ],
-              ),
-            Positioned(
-              top: MediaQuery.paddingOf(context).top,
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding: const EdgeInsets.all(AppSpacing.small),
-                child: Row(
+      body: BlocSignalListener<LoginCubit, LoginState>(
+        listener: (BuildContext context, state) {},
+        child: Padding(
+          padding: const EdgeInsets.all(AppSpacing.large),
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              if (isWide)
+                const Row(
                   children: [
-                    TextButtonComponent.icon(
-                      label: context.localeKeys.changeLanguage,
-                      icon: LucideIcons.languages,
-                      onPressed: () {},
-                    ),
+                    Expanded(child: _LoginFormPanel()),
+                    Expanded(child: _LoginImagePanel()),
+                  ],
+                )
+              else
+                const Column(
+                  children: [
+                    Expanded(flex: 3, child: _LoginImagePanel()),
+                    Expanded(flex: 2, child: _LoginFormPanel()),
                   ],
                 ),
+              Positioned(
+                top: MediaQuery.paddingOf(context).top,
+                left: 0,
+                right: 0,
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.small),
+                  child: Row(
+                    children: [
+                      TextButtonComponent.icon(
+                        label: context.localeKeys.changeLanguage,
+                        icon: LucideIcons.languages,
+                        onPressed: () {},
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
