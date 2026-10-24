@@ -91,8 +91,10 @@ import 'package:alam_el_marateb_admin/core/utils/theme/data/theme_repository.dar
     as _i958;
 import 'package:alam_el_marateb_admin/core/utils/theme/logic/cubit/theme_cubit.dart'
     as _i573;
-import 'package:alam_el_marateb_admin/modules/login/logic/repository/login_repository_impl.dart'
-    as _i139;
+import 'package:alam_el_marateb_admin/modules/login/logic/cubit/login_cubit.dart'
+    as _i826;
+import 'package:alam_el_marateb_admin/modules/login/logic/usecase/login_usecase.dart'
+    as _i172;
 import 'package:connectivity_plus/connectivity_plus.dart' as _i895;
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
@@ -126,8 +128,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i823.L10nService>(() => _i823.L10nService());
     gh.lazySingleton<_i781.ThemeService>(() => _i781.ThemeService());
     gh.lazySingleton<_i1068.CacheManager>(() => _i1068.CacheManager());
-    gh.lazySingleton<_i139.LoginRepositoryImpl>(
-      () => _i139.LoginRepositoryImpl(),
+    gh.factory<_i826.LoginCubit>(
+      () => _i826.LoginCubit(gh<_i172.LoginUsecase>()),
     );
     gh.lazySingleton<_i453.BaseNetworkInfo>(
       () => _i606.NetworkInfo(gh<_i895.Connectivity>()),
@@ -228,8 +230,7 @@ extension GetItInjectableX on _i174.GetIt {
 
   _i1068.CacheManager get cacheManager => get<_i1068.CacheManager>();
 
-  _i139.LoginRepositoryImpl get loginRepositoryImpl =>
-      get<_i139.LoginRepositoryImpl>();
+  _i826.LoginCubit get loginCubit => get<_i826.LoginCubit>();
 
   _i606.NetworkInfo get networkInfo => get<_i606.NetworkInfo>();
 

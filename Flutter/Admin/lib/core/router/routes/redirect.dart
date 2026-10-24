@@ -30,7 +30,7 @@ List<AppRoute> authGuard(List<AppRoute> current, List<AppRoute> proposed) {
   final target = proposed.last;
   final isAuthenticated = AppAuthNotifier.instance.isAuthenticated;
 
-  final isAuthOnly = target is LoginRoute || target is RegisterRoute;
+  final isAuthOnly = target is LoginRoute;
 
   if (isAuthenticated && isAuthOnly) {
     return [const MainRouteEntry()];

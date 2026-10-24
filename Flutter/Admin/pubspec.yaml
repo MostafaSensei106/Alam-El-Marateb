@@ -18,7 +18,7 @@ dependencies:
   cached_network_image_ce: ^4.13.1
   lucide_icons_flutter: ^4.0.0
   smooth_page_indicator: ^3.0.0
-  toastification: ^3.2.0
+  toastification: ^3.2.1
   freezed_annotation: ^3.1.0
   get_it: ^9.3.0
   dio: ^5.11.1

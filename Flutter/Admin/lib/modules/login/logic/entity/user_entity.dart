@@ -5,5 +5,9 @@ part 'user_entity.freezed.dart';
 
 @freezed
 abstract class UserEntity with _$UserEntity {
-  const factory UserEntity({required String userId}) = _UserEntity;
+  const factory UserEntity({
+    required String token,
+    required String refreshToken,
+    required String userId,
+  }) = _UserEntity;
 }

@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserEntity implements DiagnosticableTreeMixin {
 
- String get userId;
+ String get token; String get refreshToken; String get userId;
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,26 +28,26 @@ void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   final _this = this as UserEntity;
   properties
     ..add(DiagnosticsProperty('type', 'UserEntity'))
-    ..add(DiagnosticsProperty('userId', _this.userId));
+    ..add(DiagnosticsProperty('token', _this.token))..add(DiagnosticsProperty('refreshToken', _this.refreshToken))..add(DiagnosticsProperty('userId', _this.userId));
 }
 
 @override
 bool operator ==(Object other) {
   final _this = this as UserEntity;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEntity&&(identical(other.userId, _this.userId) || other.userId == _this.userId));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserEntity&&(identical(other.token, _this.token) || other.token == _this.token)&&(identical(other.refreshToken, _this.refreshToken) || other.refreshToken == _this.refreshToken)&&(identical(other.userId, _this.userId) || other.userId == _this.userId));
 }
 
 
 @override
 int get hashCode {
   final _this = this as UserEntity;
-  return Object.hash(runtimeType,_this.userId);
+  return Object.hash(runtimeType,_this.token,_this.refreshToken,_this.userId);
 }
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   final _this = this as UserEntity;
-  return 'UserEntity(userId: ${_this.userId})';
+  return 'UserEntity(token: ${_this.token}, refreshToken: ${_this.refreshToken}, userId: ${_this.userId})';
 }
 
 
@@ -58,7 +58,7 @@ abstract mixin class $UserEntityCopyWith<$Res>  {
   factory $UserEntityCopyWith(UserEntity value, $Res Function(UserEntity) _then) = _$UserEntityCopyWithImpl;
 @useResult
 $Res call({
- String userId
+ String token, String refreshToken, String userId
 });
 
 
@@ -75,9 +75,11 @@ class _$UserEntityCopyWithImpl<$Res>
 
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? userId = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? token = null,Object? refreshToken = null,Object? userId = null,}) {
   return _then(UserEntity(
-userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+token: null == token ? _self.token : token // ignore: cast_nullable_to_non_nullable
+as String,refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -163,10 +165,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String userId)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String token,  String refreshToken,  String userId)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserEntity() when $default != null:
-return $default(_that.userId);case _:
+return $default(_that.token,_that.refreshToken,_that.userId);case _:
   return orElse();
 
 }
@@ -184,10 +186,10 @@ return $default(_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String userId)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String token,  String refreshToken,  String userId)  $default,) {final _that = this;
 switch (_that) {
 case _UserEntity():
-return $default(_that.userId);case _:
+return $default(_that.token,_that.refreshToken,_that.userId);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -204,10 +206,10 @@ return $default(_that.userId);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String userId)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String token,  String refreshToken,  String userId)?  $default,) {final _that = this;
 switch (_that) {
 case _UserEntity() when $default != null:
-return $default(_that.userId);case _:
+return $default(_that.token,_that.refreshToken,_that.userId);case _:
   return null;
 
 }
@@ -219,9 +221,11 @@ return $default(_that.userId);case _:
 
 
 class _UserEntity with DiagnosticableTreeMixin implements UserEntity {
-  const _UserEntity({required this.userId});
+  const _UserEntity({required this.token, required this.refreshToken, required this.userId});
   
 
+@override final  String token;
+@override final  String refreshToken;
 @override final  String userId;
 
 /// Create a copy of UserEntity
@@ -235,23 +239,23 @@ _$UserEntityCopyWith<_UserEntity> get copyWith => __$UserEntityCopyWithImpl<_Use
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
     ..add(DiagnosticsProperty('type', 'UserEntity'))
-    ..add(DiagnosticsProperty('userId', userId));
+    ..add(DiagnosticsProperty('token', token))..add(DiagnosticsProperty('refreshToken', refreshToken))..add(DiagnosticsProperty('userId', userId));
 }
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserEntity&&(identical(other.userId, userId) || other.userId == userId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserEntity&&(identical(other.token, token) || other.token == token)&&(identical(other.refreshToken, refreshToken) || other.refreshToken == refreshToken)&&(identical(other.userId, userId) || other.userId == userId));
 }
 
 
 @override
 int get hashCode {
-    return Object.hash(runtimeType,userId);
+    return Object.hash(runtimeType,token,refreshToken,userId);
 }
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-    return 'UserEntity(userId: $userId)';
+    return 'UserEntity(token: $token, refreshToken: $refreshToken, userId: $userId)';
 }
 
 
@@ -262,7 +266,7 @@ abstract mixin class _$UserEntityCopyWith<$Res> implements $UserEntityCopyWith<$
   factory _$UserEntityCopyWith(_UserEntity value, $Res Function(_UserEntity) _then) = __$UserEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String userId
+ String token, String refreshToken, String userId
 });
 
 
@@ -279,9 +283,11 @@ class __$UserEntityCopyWithImpl<$Res>
 
 /// Create a copy of UserEntity
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? userId = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? token = null,Object? refreshToken = null,Object? userId = null,}) {
   return _then(_UserEntity(
-userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
+token: null == token ? _self.token : token // ignore: cast_nullable_to_non_nullable
+as String,refreshToken: null == refreshToken ? _self.refreshToken : refreshToken // ignore: cast_nullable_to_non_nullable
+as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }

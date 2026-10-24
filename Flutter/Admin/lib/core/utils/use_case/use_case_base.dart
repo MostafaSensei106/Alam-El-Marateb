@@ -1,7 +1,7 @@
 import '../../error/failures.dart';
 import '../result/result.dart';
 
-abstract interface class BaseUseCase<T, Params> {
+abstract interface class UseCaseBase<T, Params> {
   Future<Result<T, Failures>> call(Params params);
 }
 
