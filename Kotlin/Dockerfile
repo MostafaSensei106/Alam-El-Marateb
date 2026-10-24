@@ -17,7 +17,11 @@ RUN --mount=type=cache,target=/root/.gradle \
 FROM eclipse-temurin:21-jre-alpine AS extractor
 WORKDIR /builder
 COPY --from=builder /builder/build/libs/*.jar app.jar
-RUN java -Djarmode=layertools -jar app.jar extract
+# Spring Boot 4 dropped the old `layertools` jarmode; `tools` is its
+# replacement and produces the same layered directory layout.
+RUN java -Djarmode=tools -jar app.jar extract \
+    --layers dependencies,spring-boot-loader,snapshot-dependencies,application \
+    --launcher --destination extracted
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
@@ -29,10 +33,10 @@ RUN apk add --no-cache curl \
 
 USER 10001:10001
 
-COPY --from=extractor --chown=10001:10001 /builder/dependencies/ ./
-COPY --from=extractor --chown=10001:10001 /builder/spring-boot-loader/ ./
-COPY --from=extractor --chown=10001:10001 /builder/snapshot-dependencies/ ./
-COPY --from=extractor --chown=10001:10001 /builder/application/ ./
+COPY --from=extractor --chown=10001:10001 /builder/extracted/dependencies/ ./
+COPY --from=extractor --chown=10001:10001 /builder/extracted/spring-boot-loader/ ./
+COPY --from=extractor --chown=10001:10001 /builder/extracted/snapshot-dependencies/ ./
+COPY --from=extractor --chown=10001:10001 /builder/extracted/application/ ./
 
 ENV JAVA_TOOL_OPTIONS="-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -XX:+ExitOnOutOfMemoryError -Djava.security.egd=file:/dev/./urandom"
 ENV PORT=8080

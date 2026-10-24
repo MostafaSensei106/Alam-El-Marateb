@@ -121,38 +121,57 @@ build-appbundle: ## Build Android App Bundle for Play Store
 	@echo "✅ AAB ready → $(APP)/build/app/outputs/bundle/"
 
 build-ios: ## Build iOS bundle (macOS host only)
-	@[ "$(OS)" = "Darwin" ] || { echo "⏭️  SKIP ios: requires a macOS host (host is $(OS))"; exit 0; }
-	@[ -d "$(APP)/ios" ] || { echo "⏭️  SKIP ios: $(APP)/ios missing"; exit 0; }
-	@echo "🍎 [$(APP)] Building iOS bundle ($(BUILD_MODE), no codesign) ..."
-	@cd $(APP) && $(FLUTTER) build ios --$(BUILD_MODE) --no-codesign
-	@echo "✅ iOS build ready → $(APP)/build/ios/"
+	@if [ "$(OS)" != "Darwin" ]; then \
+		echo "⏭️  SKIP ios: requires a macOS host (host is $(OS))"; \
+	elif [ ! -d "$(APP)/ios" ]; then \
+		echo "⏭️  SKIP ios: $(APP)/ios missing"; \
+	else \
+		echo "🍎 [$(APP)] Building iOS bundle ($(BUILD_MODE), no codesign) ..."; \
+		cd $(APP) && $(FLUTTER) build ios --$(BUILD_MODE) --no-codesign && \
+		echo "✅ iOS build ready → $(APP)/build/ios/"; \
+	fi
 
 build-web: ## Build web release bundle (build/web)
-	@[ -d "$(APP)/web" ] || { echo "⏭️  SKIP web: $(APP)/web missing"; exit 0; }
-	@echo "🌐 [$(APP)] Building web bundle ($(BUILD_MODE)) ..."
-	@cd $(APP) && $(FLUTTER) build web --$(BUILD_MODE)
-	@echo "✅ Web bundle ready → $(APP)/build/web/"
+	@if [ ! -d "$(APP)/web" ]; then \
+		echo "⏭️  SKIP web: $(APP)/web missing"; \
+	else \
+		echo "🌐 [$(APP)] Building web bundle ($(BUILD_MODE)) ..."; \
+		cd $(APP) && $(FLUTTER) build web --$(BUILD_MODE) && \
+		echo "✅ Web bundle ready → $(APP)/build/web/"; \
+	fi
 
 build-windows: ## Build Windows desktop app (Windows host only)
-	@case "$(OS)" in MINGW*|MSYS*|CYGWIN*) ;; *) echo "⏭️  SKIP windows: requires a Windows host (host is $(OS))"; exit 0 ;; esac
-	@[ -d "$(APP)/windows" ] || { echo "⏭️  SKIP windows: $(APP)/windows missing"; exit 0; }
-	@echo "🪟 [$(APP)] Building Windows desktop app ($(BUILD_MODE)) ..."
-	@cd $(APP) && $(FLUTTER) build windows --$(BUILD_MODE)
-	@echo "✅ Windows build ready → $(APP)/build/windows/"
+	@if ! case "$(OS)" in MINGW*|MSYS*|CYGWIN*) true ;; *) false ;; esac; then \
+		echo "⏭️  SKIP windows: requires a Windows host (host is $(OS))"; \
+	elif [ ! -d "$(APP)/windows" ]; then \
+		echo "⏭️  SKIP windows: $(APP)/windows missing"; \
+	else \
+		echo "🪟 [$(APP)] Building Windows desktop app ($(BUILD_MODE)) ..."; \
+		cd $(APP) && $(FLUTTER) build windows --$(BUILD_MODE) && \
+		echo "✅ Windows build ready → $(APP)/build/windows/"; \
+	fi
 
 build-linux: ## Build Linux desktop app (Linux host only)
-	@[ "$(OS)" = "Linux" ] || { echo "⏭️  SKIP linux: requires a Linux host (host is $(OS))"; exit 0; }
-	@[ -d "$(APP)/linux" ] || { echo "⏭️  SKIP linux: $(APP)/linux missing"; exit 0; }
-	@echo "🐧 [$(APP)] Building Linux desktop app ($(BUILD_MODE)) ..."
-	@cd $(APP) && $(FLUTTER) build linux --$(BUILD_MODE)
-	@echo "✅ Linux build ready → $(APP)/build/linux/"
+	@if [ "$(OS)" != "Linux" ]; then \
+		echo "⏭️  SKIP linux: requires a Linux host (host is $(OS))"; \
+	elif [ ! -d "$(APP)/linux" ]; then \
+		echo "⏭️  SKIP linux: $(APP)/linux missing"; \
+	else \
+		echo "🐧 [$(APP)] Building Linux desktop app ($(BUILD_MODE)) ..."; \
+		cd $(APP) && $(FLUTTER) build linux --$(BUILD_MODE) && \
+		echo "✅ Linux build ready → $(APP)/build/linux/"; \
+	fi
 
 build-macos: ## Build macOS desktop app (macOS host only)
-	@[ "$(OS)" = "Darwin" ] || { echo "⏭️  SKIP macos: requires a macOS host (host is $(OS))"; exit 0; }
-	@[ -d "$(APP)/macos" ] || { echo "⏭️  SKIP macos: $(APP)/macos missing"; exit 0; }
-	@echo "🖥️  [$(APP)] Building macOS desktop app ($(BUILD_MODE)) ..."
-	@cd $(APP) && $(FLUTTER) build macos --$(BUILD_MODE)
-	@echo "✅ macOS build ready → $(APP)/build/macos/"
+	@if [ "$(OS)" != "Darwin" ]; then \
+		echo "⏭️  SKIP macos: requires a macOS host (host is $(OS))"; \
+	elif [ ! -d "$(APP)/macos" ]; then \
+		echo "⏭️  SKIP macos: $(APP)/macos missing"; \
+	else \
+		echo "🖥️  [$(APP)] Building macOS desktop app ($(BUILD_MODE)) ..."; \
+		cd $(APP) && $(FLUTTER) build macos --$(BUILD_MODE) && \
+		echo "✅ macOS build ready → $(APP)/build/macos/"; \
+	fi
 
 ##@ App lifecycle
 pub-get: ## Resolve dependencies for APP

@@ -274,9 +274,12 @@ smoke: ## Verify edge live: 80->301, H2 ALPN, Alt-Svc H3, H1+H2+H3 bodies (HOST/
 	@echo "✅ Smoke test finished."
 
 scan: ## Scan backend image with Trivy (if installed): IMAGE_NAME / TAG
-	@command -v trivy >/dev/null || (echo "❌ ERROR: trivy not installed (https://trivy.dev)"; exit 1)
-	@echo "🔎 [backend] Scanning $(IMAGE_NAME):$(TAG) with Trivy ..."
-	trivy image --severity HIGH,CRITICAL $(IMAGE_NAME):$(TAG)
+	@if ! command -v trivy >/dev/null; then \
+		echo "⚠️  SKIP scan: trivy not installed (https://trivy.dev)"; \
+	else \
+		echo "🔎 [backend] Scanning $(IMAGE_NAME):$(TAG) with Trivy ..."; \
+		trivy image --severity HIGH,CRITICAL $(IMAGE_NAME):$(TAG); \
+	fi
 
 env-check: ## Warn about dev-default secrets before production deploy
 	@echo "🔎 Checking .env for production-unsafe defaults ..."
