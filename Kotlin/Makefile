@@ -153,30 +153,36 @@ logs-db: ## Tail postgres logs only
 
 ##@ Image & release (build / tag / push separately or together)
 image: ## Build backend image only (no containers): IMAGE_NAME / TAG
+	@echo "🔨 [backend] Building image $(IMAGE_NAME):$(TAG) ..."
 	docker build -t $(IMAGE_NAME):$(TAG) .
-	@docker images $(IMAGE_NAME):$(TAG) --format "Built {{.Repository}}:{{.Tag}} ({{.Size}})"
+	@docker images $(IMAGE_NAME):$(TAG) --format "✅ Image ready: {{.Repository}}:{{.Tag}} ({{.Size}})"
 
 image-nc: ## Rebuild backend image from scratch (no cache)
+	@echo "🔨 [backend] Building image $(IMAGE_NAME):$(TAG) from scratch (--no-cache --pull) ..."
 	docker build --no-cache --pull -t $(IMAGE_NAME):$(TAG) .
-	@docker images $(IMAGE_NAME):$(TAG) --format "Built {{.Repository}}:{{.Tag}} ({{.Size}})"
+	@docker images $(IMAGE_NAME):$(TAG) --format "✅ Image ready: {{.Repository}}:{{.Tag}} ({{.Size}})"
 
 build-image: image ## Alias for image (build the backend image)
 
 tag: ## Tag local image for registry (needs REGISTRY=...): REGISTRY / TAG
-	@test -n "$(REGISTRY)" || (echo "ERROR: set REGISTRY=... (e.g. REGISTRY=ghcr.io/myorg make tag)"; exit 1)
+	@test -n "$(REGISTRY)" || (echo "❌ ERROR: set REGISTRY=... (e.g. REGISTRY=ghcr.io/myorg make tag)"; exit 1)
+	@echo "🏷️  [backend] Tagging $(IMAGE_NAME):$(TAG) → $(FULL_IMAGE) ..."
 	docker tag $(IMAGE_NAME):$(TAG) $(FULL_IMAGE)
-	@echo "Tagged $(FULL_IMAGE)"
+	@echo "✅ Tagged $(FULL_IMAGE)"
 
 push: ## Push image to registry (needs REGISTRY=...): REGISTRY / TAG
-	@test -n "$(REGISTRY)" || (echo "ERROR: set REGISTRY=... (e.g. REGISTRY=ghcr.io/myorg make push)"; exit 1)
+	@test -n "$(REGISTRY)" || (echo "❌ ERROR: set REGISTRY=... (e.g. REGISTRY=ghcr.io/myorg make push)"; exit 1)
+	@echo "⬆️  [backend] Pushing $(FULL_IMAGE) ..."
 	docker push $(FULL_IMAGE)
-	@echo "Pushed $(FULL_IMAGE)"
+	@echo "✅ Pushed $(FULL_IMAGE)"
 
 release: image tag push ## Full release: build image -> tag -> push (needs REGISTRY=...)
-	@echo "Released $(FULL_IMAGE)"
+	@echo "✅ Released $(FULL_IMAGE)"
 
 deploy: cert ## Deploy only: pull released image + restart, NO build (server path)
+	@echo "📥 [backend] Pulling released images ..."
 	$(COMPOSE) pull app nginx 2>/dev/null || $(COMPOSE) pull
+	@echo "🚀 [backend] Recreating containers ..."
 	$(COMPOSE) up -d
 	@$(MAKE) --no-print-directory ps
 	@echo ""
@@ -184,7 +190,9 @@ deploy: cert ## Deploy only: pull released image + restart, NO build (server pat
 	@echo "         curl -k --http3 -I https://$(HOST):$(HTTPS_PORT)/healthz"
 
 deploy-build: cert ## Deploy by building on the server (no registry needed)
+	@echo "🔨 [backend] Building image on the server ..."
 	$(COMPOSE) build app
+	@echo "🚀 [backend] Recreating containers ..."
 	$(COMPOSE) up -d
 	@$(MAKE) --no-print-directory ps
 	@echo ""
@@ -195,100 +203,125 @@ deploy-build: cert ## Deploy by building on the server (no registry needed)
 ##@ TLS & checks
 cert: ## Generate self-signed cert for Nginx if missing (dev only; DOMAIN=...)
 	@if [ -f "$(CERT_DIR)/fullchain.pem" ] && [ -f "$(CERT_DIR)/privkey.pem" ]; then \
-		echo "Cert exists: $(CERT_DIR)/ (skip)"; \
+		echo "🔐 Cert exists: $(CERT_DIR)/ (skip)"; \
 	else \
-		echo "Generating self-signed cert for CN=$(DOMAIN) ..."; \
+		echo "🔐 Generating self-signed cert for CN=$(DOMAIN) ..."; \
 		mkdir -p "$(CERT_DIR)"; \
 		openssl req -x509 -newkey rsa:2048 -nodes -days 825 \
 			-keyout "$(CERT_DIR)/privkey.pem" \
 			-out "$(CERT_DIR)/fullchain.pem" \
 			-subj "/CN=$(DOMAIN)"; \
 		chmod 600 "$(CERT_DIR)/privkey.pem"; \
-		echo "Wrote $(CERT_DIR)/fullchain.pem + privkey.pem"; \
+		echo "✅ Wrote $(CERT_DIR)/fullchain.pem + privkey.pem"; \
 	fi
 
 cert-check: ## Show cert expiry + SAN (catch expired self-signed/LE certs)
-	@test -f "$(CERT_DIR)/fullchain.pem" || (echo "ERROR: no cert at $(CERT_DIR)/ (run make cert)"; exit 1)
-	openssl x509 -in $(CERT_DIR)/fullchain.pem -noout -subject -enddate
+	@test -f "$(CERT_DIR)/fullchain.pem" || (echo "❌ ERROR: no cert at $(CERT_DIR)/ (run make cert)"; exit 1)
+	@echo "🔐 Certificate details:"
+	@openssl x509 -in $(CERT_DIR)/fullchain.pem -noout -subject -enddate
 
 compose-check: ## Validate docker-compose.yaml interpolation + schema
-	$(COMPOSE) config --quiet && echo "compose: OK"
+	@echo "🔎 Validating docker-compose.yaml ..."
+	@$(COMPOSE) config --quiet && echo "✅ compose: OK"
 
 nginx-test: ## Validate nginx.conf syntax inside the nginx image (no stack needed)
 	# --add-host stubs the `app` upstream: `nginx -t` only needs the name to
 	# resolve, real DNS happens on the compose network at runtime.
-	docker run --rm --add-host app:127.0.0.1 \
+	@echo "🔎 Validating nginx.conf syntax ..."
+	@docker run --rm --add-host app:127.0.0.1 \
 		-v "$$(pwd)/docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro" \
 		-v "$$(pwd)/docker/nginx/ssl:/etc/nginx/ssl:ro" \
 		nginx:1.29-alpine nginx -t
+	@echo "✅ nginx: OK"
 
 audit: compose-check nginx-test ## Config audit: compose schema + nginx syntax
-	@echo "audit: OK"
+	@echo "✅ audit: OK"
 
 smoke: ## Verify edge live: 80->301, H2 ALPN, Alt-Svc H3, H1+H2+H3 bodies (HOST/ports overridable)
+	@echo "🧪 [backend] Edge smoke test against $(HOST) ..."
 	@echo "== 80 -> 301 redirect"; curl -s -o /dev/null -w "%{http_code} -> %{redirect_url}\n" http://$(HOST):$(HTTP_PORT)/healthz
 	@echo "== ALPN version (want 2)"; curl -sk -o /dev/null -w "%{http_version}\n" https://$(HOST):$(HTTPS_PORT)/healthz
-	@echo "== Alt-Svc (want h3)"; curl -skI https://$(HOST):$(HTTPS_PORT)/healthz | grep -i "alt-svc" || (echo "MISSING Alt-Svc!"; exit 1)
+	@echo "== Alt-Svc (want h3)"; curl -skI https://$(HOST):$(HTTPS_PORT)/healthz | grep -i "alt-svc" || (echo "❌ MISSING Alt-Svc!"; exit 1)
 	@echo "== HTTP/1.1 fallback"; curl -sk --http1.1 -o /dev/null -w "%{http_code} v%{http_version}\n" https://$(HOST):$(HTTPS_PORT)/healthz
 	@echo "== HTTP/2 body"; curl -sk --http2 https://$(HOST):$(HTTPS_PORT)/healthz; echo ""
-	@echo "== HTTP/3 (best effort)"; curl -sk --http3 -o /dev/null -w "%{http_code} v%{http_version}\n" https://$(HOST):$(HTTPS_PORT)/healthz || echo "(no H3 client support or UDP blocked — H1/H2 fallback unaffected)"
+	@echo "== HTTP/3 (best effort)"; curl -sk --http3 -o /dev/null -w "%{http_code} v%{http_version}\n" https://$(HOST):$(HTTPS_PORT)/healthz || echo "⚠️  (no H3 client support or UDP blocked — H1/H2 fallback unaffected)"
+	@echo "✅ Smoke test finished."
 
 scan: ## Scan backend image with Trivy (if installed): IMAGE_NAME / TAG
-	@command -v trivy >/dev/null || (echo "ERROR: trivy not installed (https://trivy.dev)"; exit 1)
+	@command -v trivy >/dev/null || (echo "❌ ERROR: trivy not installed (https://trivy.dev)"; exit 1)
+	@echo "🔎 [backend] Scanning $(IMAGE_NAME):$(TAG) with Trivy ..."
 	trivy image --severity HIGH,CRITICAL $(IMAGE_NAME):$(TAG)
 
 env-check: ## Warn about dev-default secrets before production deploy
-	@test -f .env || echo "WARN: no .env file — compose falls back to LOCAL-ONLY dev defaults"
-	@grep -q "CHANGE-ME" .env 2>/dev/null && echo "WARN: .env still contains CHANGE-ME placeholders" || true
-	@grep -q "^DOCS_ENABLED=true" .env 2>/dev/null && echo "WARN: DOCS_ENABLED=true exposes Swagger UI (set false in prod)" || true
-	@grep -q "^DB_PASSWORD=root" .env 2>/dev/null && echo "WARN: DB_PASSWORD is still the dev default" || true
-	@echo "env-check done (warnings only — fix before exposing to the internet)"
+	@echo "🔎 Checking .env for production-unsafe defaults ..."
+	@test -f .env || echo "⚠️  WARN: no .env file — compose falls back to LOCAL-ONLY dev defaults"
+	@grep -q "CHANGE-ME" .env 2>/dev/null && echo "⚠️  WARN: .env still contains CHANGE-ME placeholders" || true
+	@grep -q "^DOCS_ENABLED=true" .env 2>/dev/null && echo "⚠️  WARN: DOCS_ENABLED=true exposes Swagger UI (set false in prod)" || true
+	@grep -q "^DB_PASSWORD=root" .env 2>/dev/null && echo "⚠️  WARN: DB_PASSWORD is still the dev default" || true
+	@echo "✅ env-check done (warnings only — fix before exposing to the internet)"
 
 ##@ Backend without Docker (Gradle)
 jar: ## Build Spring Boot jar locally (no Docker): ./gradlew bootJar
+	@echo "🔨 [backend] Building Spring Boot jar (Gradle) ..."
 	./gradlew bootJar --no-daemon -x test
+	@echo "✅ Jar ready → build/libs/"
 
 test: ## Run backend unit tests: ./gradlew test
+	@echo "🧪 [backend] Running unit tests ..."
 	./gradlew test --no-daemon
+	@echo "✅ Tests done."
 
 dev: ## Run backend locally without Docker (needs local postgres/redis)
+	@echo "🚀 [backend] Starting Spring Boot locally (bootRun) ..."
 	./gradlew bootRun --no-daemon
 
 ##@ Data & shells
 db-shell: ## Open psql shell in postgres container
+	@echo "🐘 Opening psql shell in postgres ..."
 	$(COMPOSE) exec postgres psql -U $${DB_USER:-root} -d $${DB_NAME:-mydatabase}
 
 db-backup: ## pg_dump -> backups/backup-TAG-timestamp.sql.gz (needs stack running)
+	@echo "💾 [backend] Dumping database ..."
 	@mkdir -p backups
 	$(COMPOSE) exec -T postgres pg_dump -U $${DB_USER:-root} $${DB_NAME:-mydatabase} | gzip > backups/backup-$(TAG)-$$(date +%Y%m%d-%H%M%S).sql.gz
-	@echo "Backup written to backups/"
+	@echo "✅ Backup written to backups/"
 
 db-restore: ## Restore: make db-restore FILE=backups/<file>.sql.gz (STOPS app first)
-	@test -n "$(FILE)" || (echo "ERROR: FILE=... required (e.g. make db-restore FILE=backups/backup-latest-20240101.sql.gz)"; exit 1)
+	@test -n "$(FILE)" || (echo "❌ ERROR: FILE=... required (e.g. make db-restore FILE=backups/backup-latest-20240101.sql.gz)"; exit 1)
+	@echo "⏸️  [backend] Stopping app before restore ..."
 	$(COMPOSE) stop app
+	@echo "💾 Restoring $(FILE) into postgres ..."
 	gunzip -c $(FILE) | $(COMPOSE) exec -T postgres psql -U $${DB_USER:-root} -d $${DB_NAME:-mydatabase}
+	@echo "🚀 Starting app again ..."
 	$(COMPOSE) start app
-	@echo "Restored $(FILE)"
+	@echo "✅ Restored $(FILE)"
 
 redis-shell: ## Open redis-cli in redis container
+	@echo "🧠 Opening redis-cli in redis ..."
 	$(COMPOSE) exec redis redis-cli
 
 shell-app: ## Shell into backend container (debug)
+	@echo "🐚 Opening shell in app ..."
 	$(COMPOSE) exec app sh
 
 shell-nginx: ## Shell into edge proxy container (debug)
+	@echo "🐚 Opening shell in nginx ..."
 	$(COMPOSE) exec nginx sh
 
 ##@ Cleanup
 clean: ## Stop stack AND delete volumes (DATA LOSS: postgres/redis/minio/...)
-	@echo "This deletes ALL compose volumes (databases). Ctrl-C now to abort; continuing in 5s..."
+	@echo "🧹 This deletes ALL compose volumes (databases). Ctrl-C now to abort; continuing in 5s..."
 	@sleep 5
 	$(COMPOSE) down -v
+	@echo "✅ Stack and volumes removed."
 
 clean-images: ## Remove locally built backend images (keeps volumes/data)
-	docker rmi $(IMAGE_NAME):$(TAG) 2>/dev/null || echo "no local image $(IMAGE_NAME):$(TAG)"
+	@echo "🧹 Removing local image $(IMAGE_NAME):$(TAG) ..."
+	@docker rmi $(IMAGE_NAME):$(TAG) 2>/dev/null || echo "⚠️  no local image $(IMAGE_NAME):$(TAG)"
+	@echo "✅ Done."
 
 prune: ## Prune unused Docker data (dangling images/networks/build cache)
-	@echo "This prunes ALL unused Docker data system-wide. Ctrl-C now to abort; continuing in 5s..."
+	@echo "🧹 This prunes ALL unused Docker data system-wide. Ctrl-C now to abort; continuing in 5s..."
 	@sleep 5
 	docker system prune -f
+	@echo "✅ Docker pruned."

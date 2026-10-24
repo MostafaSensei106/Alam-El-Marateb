@@ -42,47 +42,67 @@ help: ## Show this help (make help)
 all: build-all ## Build everything (alias for build-all)
 
 build: kotlin-build-image flutter-build ## Backend image + default Flutter app
+	@echo ""
+	@echo "✅ Everything built (backend image + default Flutter app)."
 
 build-all: kotlin-build-image flutter-build-all ## Backend image + every Flutter app
+	@echo ""
+	@echo "✅ Everything built (backend image + every Flutter app)."
 
 check: ## Validate compose config and run Flutter static analysis
-	$(MAKE) -C $(KOTLIN_DIR) compose-check
-	$(MAKE) -C $(FLUTTER_DIR) analyze
+	@echo "🔎 Checking backend compose config ..."
+	@$(MAKE) -C $(KOTLIN_DIR) compose-check
+	@echo "🔎 Checking Flutter static analysis ..."
+	@$(MAKE) -C $(FLUTTER_DIR) analyze
+	@echo "✅ Check passed."
 
 ##@ Backend shortcuts (full list: make kotlin-help)
 up: ## Start backend stack detached (docker compose up -d)
-	$(MAKE) -C $(KOTLIN_DIR) up
+	@echo "🚀 Starting backend stack from the repo root ..."
+	@$(MAKE) -C $(KOTLIN_DIR) up
 
 down: ## Stop backend stack (keeps volumes)
-	$(MAKE) -C $(KOTLIN_DIR) down
+	@echo "🛑 Stopping backend stack ..."
+	@$(MAKE) -C $(KOTLIN_DIR) down
 
 logs: ## Tail backend logs
-	$(MAKE) -C $(KOTLIN_DIR) logs
+	@echo "📜 Tailing backend logs ..."
+	@$(MAKE) -C $(KOTLIN_DIR) logs
 
 ps: ## Show backend container status
-	$(MAKE) -C $(KOTLIN_DIR) ps
+	@echo "📋 Backend container status ..."
+	@$(MAKE) -C $(KOTLIN_DIR) ps
 
 clean: ## Clean Flutter artifacts and stop the backend stack (keeps volumes)
-	$(MAKE) -C $(FLUTTER_DIR) clean-all
-	$(MAKE) -C $(KOTLIN_DIR) down
+	@echo "🧹 Cleaning Flutter artifacts ..."
+	@$(MAKE) -C $(FLUTTER_DIR) clean-all
+	@echo "🛑 Stopping backend stack (volumes kept) ..."
+	@$(MAKE) -C $(KOTLIN_DIR) down
+	@echo "✅ Clean done."
 
 ##@ Delegation
 kotlin: ## Run `make -C Kotlin` with TARGET=... (e.g. make kotlin TARGET=help)
-	@test -n "$(TARGET)" || (echo "ERROR: set TARGET=... (e.g. make kotlin TARGET=help)"; exit 1)
-	$(MAKE) -C $(KOTLIN_DIR) $(TARGET)
+	@test -n "$(TARGET)" || (echo "❌ ERROR: set TARGET=... (e.g. make kotlin TARGET=help)"; exit 1)
+	@echo "☕ Delegating to Kotlin/: make $(TARGET)"
+	@$(MAKE) -C $(KOTLIN_DIR) $(TARGET)
 
 flutter: ## Run `make -C Flutter` with TARGET=... (e.g. make flutter TARGET=help)
-	@test -n "$(TARGET)" || (echo "ERROR: set TARGET=... (e.g. make flutter TARGET=help)"; exit 1)
-	$(MAKE) -C $(FLUTTER_DIR) $(TARGET)
+	@test -n "$(TARGET)" || (echo "❌ ERROR: set TARGET=... (e.g. make flutter TARGET=help)"; exit 1)
+	@echo "🎯 Delegating to Flutter/: make $(TARGET)"
+	@$(MAKE) -C $(FLUTTER_DIR) $(TARGET)
 
 kotlin-help: ## Show the backend Makefile help
-	$(MAKE) -C $(KOTLIN_DIR) help
+	@echo "☕ Kotlin/ backend targets:"
+	@$(MAKE) -C $(KOTLIN_DIR) help
 
 flutter-help: ## Show the Flutter Makefile help
-	$(MAKE) -C $(FLUTTER_DIR) help
+	@echo "🎯 Flutter/ app targets:"
+	@$(MAKE) -C $(FLUTTER_DIR) help
 
 kotlin-%: ## Delegate kotlin-<target> to Kotlin/Makefile
-	$(MAKE) -C $(KOTLIN_DIR) $*
+	@echo "☕ make -C $(KOTLIN_DIR) $*"
+	@$(MAKE) -C $(KOTLIN_DIR) $*
 
 flutter-%: ## Delegate flutter-<target> to Flutter/Makefile
-	$(MAKE) -C $(FLUTTER_DIR) $*
+	@echo "🎯 make -C $(FLUTTER_DIR) $*"
+	@$(MAKE) -C $(FLUTTER_DIR) $*
