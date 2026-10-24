@@ -62,7 +62,7 @@ final class DioTokenInterceptor extends Interceptor {
     // Check 401 ONLY if the endpoint actually required authentication
     if (err.response?.statusCode == 401 &&
         requiresToken &&
-        !requestPath.contains(ApiRoutes.authLogin)) {
+        !requestPath.contains(ApiRoutes.authLoginPath)) {
       if (_isHandling401) {
         return handler.reject(
           DioException(
