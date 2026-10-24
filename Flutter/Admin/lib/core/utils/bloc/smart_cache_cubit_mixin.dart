@@ -8,7 +8,6 @@ import '../../error/failures.dart';
 import '../cache/cache_manager.dart';
 import '../network/logic/cubit/network_cubit.dart';
 import '../network/logic/cubit/network_state.dart';
-import '../result/result.dart';
 
 /// A mixin for Cubits to achieve SOLID, offline-first smart caching.
 /// Handles background fetching, offline modes, and auto-retry on reconnection.

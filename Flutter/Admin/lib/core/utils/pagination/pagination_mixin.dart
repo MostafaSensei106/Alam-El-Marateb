@@ -1,7 +1,6 @@
 import 'package:bloc_signals/bloc_signals.dart';
 
 import '../../constants/types/type_def.dart';
-import '../result/result.dart';
 import 'base_pagination_state.dart';
 
 mixin PaginationMixin<T> on CubitSignal<PaginationState<T>> {

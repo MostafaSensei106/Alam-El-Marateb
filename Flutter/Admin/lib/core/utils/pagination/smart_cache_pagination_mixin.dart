@@ -8,7 +8,6 @@ import '../../error/failures.dart';
 import '../cache/cache_manager.dart';
 import '../network/logic/cubit/network_cubit.dart';
 import '../network/logic/cubit/network_state.dart';
-import '../result/result.dart';
 import 'base_pagination_state.dart';
 
 /// An enhanced pagination mixin that is aware of network state and local cache.
