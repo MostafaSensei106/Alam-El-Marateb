@@ -21,7 +21,7 @@ FLUTTER_DIR := Flutter
 
 .DEFAULT_GOAL := help
 .PHONY: help all build build-all kotlin flutter kotlin-help flutter-help \
-	check up down logs ps clean
+	check up run run-build run-backend down logs ps clean
 
 ##@ Everything
 help: ## Show this help (make help)

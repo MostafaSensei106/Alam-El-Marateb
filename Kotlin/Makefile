@@ -10,6 +10,11 @@
 #   make up-search      start only core + Meilisearch profile
 #   make smoke          verify H1/H2/H3 + health through Nginx
 #
+# Run locally (foreground, logs in your terminal, Ctrl-C stops):
+#   make run            no rebuild, full stack attached
+#   make run-build      rebuild the app image, then run attached
+#   make run-backend    only the app (+ postgres/redis), attached app logs
+#
 # Short aliases: build-image (image), build-run / build-and-run, pull-image (pull)
 #
 # Env overrides: IMAGE_NAME=... TAG=... REGISTRY=... DOMAIN=... make <target>
@@ -33,8 +38,8 @@ FULL_IMAGE := $(if $(REGISTRY),$(REGISTRY)/$(IMAGE_NAME):$(TAG),$(IMAGE_NAME):$(
 export
 
 .DEFAULT_GOAL := help
-.PHONY: help build up up-all up-replica up-kafka up-minio up-clickhouse up-search \
-	down restart restart-% ps logs logs-app logs-nginx logs-db pull \
+.PHONY: help build run run-build run-backend up up-all up-replica up-kafka up-minio \
+	up-clickhouse up-search down restart restart-% ps logs logs-app logs-nginx logs-db pull \
 	image image-nc build-image tag push release deploy deploy-build update \
 	build-run build-and-run \
 	cert cert-check nginx-test compose-check audit smoke env-check \
@@ -46,6 +51,9 @@ help: ## Show this help (make help)
 	@awk 'BEGIN {FS = ":.*##"; printf "\nTargets:\n"} /^[a-zA-Z0-9_/%-]+:.*##/ {printf "  \033[36m%-16s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
 	@echo ""
 	@echo "Examples:"
+	@echo "  make run                         # local: start attached, live logs (Ctrl-C stops)"
+	@echo "  make run-build                   # local: rebuild image, then start attached"
+	@echo "  make run-backend                 # local: app only, attached app logs"
 	@echo "  make build                       # local: cert + build + start (foreground logs)"
 	@echo "  make image TAG=v1.2.0            # build backend image only, no containers"
 	@echo "  make release REGISTRY=ghcr.io/myorg TAG=v1.2.0   # image -> tag -> push"
@@ -58,6 +66,24 @@ build: cert ## Full local stack: cert + build images + start with logs (Ctrl-C s
 	$(COMPOSE) build app
 	@echo "🚀 [backend] Starting stack (Ctrl-C to stop) ..."
 	$(COMPOSE) up
+
+run: cert ## Run the full stack in the foreground with live logs (no rebuild; Ctrl-C stops)
+	@echo "🚀 [backend] Starting stack in the foreground (no rebuild; Ctrl-C to stop) ..."
+	@echo "📜 [backend] Streaming logs below — attached mode, nothing is detached."
+	@echo "ℹ️  Fresh image needed? Use: make run-build"
+	$(COMPOSE) up
+
+run-build: cert ## Rebuild the app image then run the full stack in the foreground (Ctrl-C stops)
+	@echo "🔨 [backend] Building app image ..."
+	$(COMPOSE) build app
+	@echo "🚀 [backend] Starting stack in the foreground (Ctrl-C to stop) ..."
+	@echo "📜 [backend] Streaming logs below — attached mode, nothing is detached."
+	$(COMPOSE) up
+
+run-backend: cert ## Run only the app + postgres/redis in the foreground (app logs, Ctrl-C stops)
+	@echo "🚀 [backend] Starting app (with postgres + redis) in the foreground ..."
+	@echo "📜 [backend] Streaming app logs below — press Ctrl-C to stop."
+	$(COMPOSE) up app
 
 build-run: cert ## Build images then run the whole stack detached
 	@echo "🔨 [backend] Building app image ..."
