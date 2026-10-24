@@ -37,6 +37,9 @@ help: ## Show this help (make help)
 	@echo "  make build                    # backend image + Flutter default app"
 	@echo "  make build-all                # backend image + every Flutter app"
 	@echo "  make up                       # start the backend stack detached"
+	@echo "  make run                      # backend stack in foreground (live logs, Ctrl-C stops)"
+	@echo "  make run-build                # rebuild backend image, then run in foreground"
+	@echo "  make run-backend              # backend app only in foreground (app logs)"
 	@echo "  make flutter-build-customer   # once Flutter/Customer exists"
 
 all: build-all ## Build everything (alias for build-all)
@@ -60,6 +63,18 @@ check: ## Validate compose config and run Flutter static analysis
 up: ## Start backend stack detached (docker compose up -d)
 	@echo "🚀 Starting backend stack from the repo root ..."
 	@$(MAKE) -C $(KOTLIN_DIR) up
+
+run: ## Run backend stack in the foreground with live logs (Ctrl-C stops, no rebuild)
+	@echo "🚀 Starting backend in the foreground (attached, live logs) ..."
+	@$(MAKE) -C $(KOTLIN_DIR) run
+
+run-build: ## Rebuild backend image, then run in the foreground with live logs (Ctrl-C stops)
+	@echo "🔨 Rebuilding backend image, then running in the foreground ..."
+	@$(MAKE) -C $(KOTLIN_DIR) run-build
+
+run-backend: ## Run only the backend app (+ postgres/redis) in the foreground (app logs)
+	@echo "🚀 Starting backend app in the foreground (attached app logs) ..."
+	@$(MAKE) -C $(KOTLIN_DIR) run-backend
 
 down: ## Stop backend stack (keeps volumes)
 	@echo "🛑 Stopping backend stack ..."
