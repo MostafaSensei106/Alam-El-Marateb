@@ -10,6 +10,8 @@
 #   make up-search      start only core + Meilisearch profile
 #   make smoke          verify H1/H2/H3 + health through Nginx
 #
+# Short aliases: build-image (image), build-run / build-and-run, pull-image (pull)
+#
 # Env overrides: IMAGE_NAME=... TAG=... REGISTRY=... DOMAIN=... make <target>
 # Local dev uses a self-signed cert (browsers warn, curl needs -k).
 # Production: place Let's Encrypt files at docker/nginx/ssl/fullchain.pem +
@@ -33,7 +35,8 @@ export
 .DEFAULT_GOAL := help
 .PHONY: help build up up-all up-replica up-kafka up-minio up-clickhouse up-search \
 	down restart restart-% ps logs logs-app logs-nginx logs-db pull \
-	image image-nc tag push release deploy deploy-build update \
+	image image-nc build-image tag push release deploy deploy-build update \
+	build-run build-and-run \
 	cert cert-check nginx-test compose-check audit smoke env-check \
 	jar test dev db-shell db-backup db-restore redis-shell \
 	shell-app shell-nginx clean clean-images prune
@@ -53,6 +56,13 @@ help: ## Show this help (make help)
 build: cert ## Full local stack: cert + build images + start with logs (Ctrl-C stops)
 	$(COMPOSE) build app
 	$(COMPOSE) up
+
+build-run: cert ## Build images then run the whole stack detached
+	$(COMPOSE) build app
+	$(COMPOSE) up -d
+	@$(MAKE) --no-print-directory ps
+
+build-and-run: build-run ## Alias for build-run
 
 up: cert ## Start core stack detached (nginx + app + postgres + redis)
 	$(COMPOSE) up -d
@@ -89,6 +99,9 @@ restart-%: ## Restart one service, e.g. make restart-app / restart-nginx / resta
 pull: ## Pull images from registries (no build; pairs with deploy)
 	$(COMPOSE) pull
 
+pull-image: ## Alias for pull (fetch images)
+	$(MAKE) pull
+
 update: pull ## Pull latest images then recreate containers (no build)
 	$(COMPOSE) up -d
 	@$(MAKE) --no-print-directory ps
@@ -120,6 +133,8 @@ image: ## Build backend image only (no containers): IMAGE_NAME / TAG
 image-nc: ## Rebuild backend image from scratch (no cache)
 	docker build --no-cache --pull -t $(IMAGE_NAME):$(TAG) .
 	@docker images $(IMAGE_NAME):$(TAG) --format "Built {{.Repository}}:{{.Tag}} ({{.Size}})"
+
+build-image: image ## Alias for image (build the backend image)
 
 tag: ## Tag local image for registry (needs REGISTRY=...): REGISTRY / TAG
 	@test -n "$(REGISTRY)" || (echo "ERROR: set REGISTRY=... (e.g. REGISTRY=ghcr.io/myorg make tag)"; exit 1)
