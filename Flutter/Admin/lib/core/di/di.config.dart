@@ -91,6 +91,8 @@ import 'package:alam_el_marateb_admin/core/utils/theme/data/theme_repository.dar
     as _i958;
 import 'package:alam_el_marateb_admin/core/utils/theme/logic/cubit/theme_cubit.dart'
     as _i573;
+import 'package:alam_el_marateb_admin/modules/login/logic/repository/login_repository_impl.dart'
+    as _i139;
 import 'package:connectivity_plus/connectivity_plus.dart' as _i895;
 import 'package:dio/dio.dart' as _i361;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i558;
@@ -124,6 +126,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i823.L10nService>(() => _i823.L10nService());
     gh.lazySingleton<_i781.ThemeService>(() => _i781.ThemeService());
     gh.lazySingleton<_i1068.CacheManager>(() => _i1068.CacheManager());
+    gh.lazySingleton<_i139.LoginRepositoryImpl>(
+      () => _i139.LoginRepositoryImpl(),
+    );
     gh.lazySingleton<_i453.BaseNetworkInfo>(
       () => _i606.NetworkInfo(gh<_i895.Connectivity>()),
     );
@@ -191,25 +196,25 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i79.BaseAuditLogger>(),
       ),
     );
-    gh.lazySingleton<_i173.BaseUserSessionService>(
-      () => _i173.UserSessionService(gh<_i200.StorageFacade>()),
-    );
     gh.lazySingleton<_i573.ThemeCubit>(
       () => _i573.ThemeCubit(gh<_i957.BaseThemeRepository>()),
+    );
+    gh.lazySingleton<_i173.UserSessionServiceBase>(
+      () => _i173.UserSessionService(gh<_i200.StorageFacade>()),
     );
     await gh.factoryAsync<_i361.Dio>(
       () => injectionModule.dio(
         gh<_i976.LocalizationCubit>(),
-        gh<_i173.BaseUserSessionService>(),
+        gh<_i173.UserSessionServiceBase>(),
         gh<String>(instanceName: 'dioCachePath'),
       ),
       preResolve: true,
     );
-    gh.lazySingleton<_i425.ApiService>(
-      () => injectionModule.apiService(gh<_i361.Dio>()),
-    );
     gh.factory<_i909.BaseAttachmentHandlerService>(
       () => _i230.AttachmentHandlerService(gh<_i361.Dio>()),
+    );
+    gh.lazySingleton<_i425.ApiService>(
+      () => injectionModule.apiService(gh<_i361.Dio>()),
     );
     gh.factory<_i822.BaseFileManagerFacade>(
       () => _i679.FileManagerFacade(gh<_i909.BaseAttachmentHandlerService>()),
@@ -222,6 +227,9 @@ extension GetItInjectableX on _i174.GetIt {
   _i781.ThemeService get themeService => get<_i781.ThemeService>();
 
   _i1068.CacheManager get cacheManager => get<_i1068.CacheManager>();
+
+  _i139.LoginRepositoryImpl get loginRepositoryImpl =>
+      get<_i139.LoginRepositoryImpl>();
 
   _i606.NetworkInfo get networkInfo => get<_i606.NetworkInfo>();
 
@@ -270,10 +278,10 @@ extension GetItInjectableX on _i174.GetIt {
   _i624.UrlFileOpenerService get urlFileOpenerService =>
       get<_i624.UrlFileOpenerService>();
 
+  _i573.ThemeCubit get themeCubit => get<_i573.ThemeCubit>();
+
   _i173.UserSessionService get userSessionService =>
       get<_i173.UserSessionService>();
-
-  _i573.ThemeCubit get themeCubit => get<_i573.ThemeCubit>();
 
   _i230.AttachmentHandlerService get attachmentHandlerService =>
       get<_i230.AttachmentHandlerService>();

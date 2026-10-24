@@ -14,7 +14,7 @@ import '../widgets/feedback/dialog/dialog_component.dart';
 final class DioTokenInterceptor extends Interceptor {
   DioTokenInterceptor(this._sessionService);
 
-  final BaseUserSessionService _sessionService;
+  final UserSessionServiceBase _sessionService;
 
   static bool _isHandling401 = false;
 

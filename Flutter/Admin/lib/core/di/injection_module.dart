@@ -41,7 +41,7 @@ abstract class InjectionModule {
   @preResolve
   Future<Dio> dio(
     LocalizationCubit localizationCubit,
-    BaseUserSessionService userSessionService,
+    UserSessionServiceBase userSessionService,
     @Named(CacheConfig.diInstanceName) String cacheStoragePath,
   ) => DioFactory.getDio(
     localizationCubit: localizationCubit,

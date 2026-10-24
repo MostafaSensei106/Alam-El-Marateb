@@ -5,7 +5,7 @@ import '../../di/di.dart' as di;
 import '../../router/app_auth_notifier.dart';
 import '../shared_prefs/storage_facade.dart';
 
-abstract interface class BaseUserSessionService {
+abstract interface class UserSessionServiceBase {
   /// Saves the current user session data.
   /// If [rememberMe] is `false`, the session should persist only for the
   /// app process lifetime (In-Memory).
@@ -45,8 +45,8 @@ abstract interface class BaseUserSessionService {
   Future<void> onAppBackgrounded();
 }
 
-@LazySingleton(as: BaseUserSessionService)
-final class UserSessionService implements BaseUserSessionService {
+@LazySingleton(as: UserSessionServiceBase)
+final class UserSessionService implements UserSessionServiceBase {
   UserSessionService(this._storageFacade);
 
   final StorageFacade _storageFacade;

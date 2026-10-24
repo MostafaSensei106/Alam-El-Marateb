@@ -31,8 +31,8 @@ Future<void> showAdminAccountDialog(
 /// Both the session service and the router are optional so the helper stays
 /// safe inside isolated widget tests.
 Future<void> performAdminSignOut(BuildContext context) async {
-  if (getIt.isRegistered<BaseUserSessionService>()) {
-    await getIt<BaseUserSessionService>().clearUserSession();
+  if (getIt.isRegistered<UserSessionServiceBase>()) {
+    await getIt<UserSessionServiceBase>().clearUserSession();
   }
   if (!context.mounted) return;
   await context.router<AppRoute>().replaceTop(const LoginRoute());

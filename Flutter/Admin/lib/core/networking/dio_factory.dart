@@ -23,7 +23,7 @@ class DioFactory {
 
   static Future<Dio> getDio({
     required LocalizationCubit localizationCubit,
-    required BaseUserSessionService userSessionService,
+    required UserSessionServiceBase userSessionService,
     required String cacheStoragePath,
   }) async {
     if (dio == null) {
@@ -54,7 +54,7 @@ class DioFactory {
 
   static void addDioInterceptors({
     required LocalizationCubit localizationCubit,
-    required BaseUserSessionService userSessionService,
+    required UserSessionServiceBase userSessionService,
     required String cacheStoragePath,
   }) {
     dio?.interceptors.add(DioTokenInterceptor(userSessionService));

@@ -16,7 +16,7 @@ Future<AppRoute> getStartRoute() async {
     return const LoginRoute();
   }
 
-  final sessionService = getIt<BaseUserSessionService>();
+  final sessionService = getIt<UserSessionServiceBase>();
   final isAuthenticated = await sessionService.isAuthenticated();
 
   AppAuthNotifier.instance.notifyAuthChanged(isAuthenticated);
