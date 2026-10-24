@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 
 import '../constants/api_header.dart';
 import '../constants/api_routes.dart';
+import '../constants/http_status_code.dart';
 import '../constants/security_configs.dart';
 import '../extensions/extensions.dart';
 import '../router/app_router.dart';
@@ -59,9 +60,8 @@ final class DioTokenInterceptor extends Interceptor {
     final requiresToken =
         err.requestOptions.extra[SecurityConfigs.requireToken] != false;
 
-    // Check 401 ONLY if the endpoint actually required authentication
-    if (err.response?.statusCode == 401 &&
-        requiresToken &&
+    if (err.response?.statusCode == HttpStatusCodes.unauthorized &&
+        requiresToken == true &&
         !requestPath.contains(ApiRoutes.authLoginPath)) {
       if (_isHandling401) {
         return handler.reject(

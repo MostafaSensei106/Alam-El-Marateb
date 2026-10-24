@@ -171,7 +171,7 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( LoginFormState formState)?  initial,TResult Function( LoginFormState formState)?  loading,TResult Function( LoginFormState formState,  UserEntity data)?  success,TResult Function( LoginFormState formState,  Failures error)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function( LoginFormState formState)?  initial,TResult Function( LoginFormState formState)?  loading,TResult Function( LoginFormState formState,  UserEntity data)?  success,TResult Function( LoginFormState formState,  String error)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.formState);case Loading() when loading != null:
@@ -195,7 +195,7 @@ return failure(_that.formState,_that.error);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( LoginFormState formState)  initial,required TResult Function( LoginFormState formState)  loading,required TResult Function( LoginFormState formState,  UserEntity data)  success,required TResult Function( LoginFormState formState,  Failures error)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function( LoginFormState formState)  initial,required TResult Function( LoginFormState formState)  loading,required TResult Function( LoginFormState formState,  UserEntity data)  success,required TResult Function( LoginFormState formState,  String error)  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that.formState);case Loading():
@@ -215,7 +215,7 @@ return failure(_that.formState,_that.error);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( LoginFormState formState)?  initial,TResult? Function( LoginFormState formState)?  loading,TResult? Function( LoginFormState formState,  UserEntity data)?  success,TResult? Function( LoginFormState formState,  Failures error)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function( LoginFormState formState)?  initial,TResult? Function( LoginFormState formState)?  loading,TResult? Function( LoginFormState formState,  UserEntity data)?  success,TResult? Function( LoginFormState formState,  String error)?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that.formState);case Loading() when loading != null:
@@ -479,7 +479,7 @@ class Failure implements LoginState {
   
 
 @override final  LoginFormState formState;
- final  Failures error;
+ final  String error;
 
 /// Create a copy of LoginState
 /// with the given fields replaced by the non-null parameter values.
@@ -513,7 +513,7 @@ abstract mixin class $FailureCopyWith<$Res> implements $LoginStateCopyWith<$Res>
   factory $FailureCopyWith(Failure value, $Res Function(Failure) _then) = _$FailureCopyWithImpl;
 @override @useResult
 $Res call({
- LoginFormState formState, Failures error
+ LoginFormState formState, String error
 });
 
 
@@ -534,7 +534,7 @@ class _$FailureCopyWithImpl<$Res>
   return _then(Failure(
 null == formState ? _self.formState : formState // ignore: cast_nullable_to_non_nullable
 as LoginFormState,error: null == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
-as Failures,
+as String,
   ));
 }
 

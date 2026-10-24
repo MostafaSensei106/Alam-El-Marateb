@@ -2,7 +2,6 @@ import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:kaisel/kaisel.dart' show KaiselRouterContextX;
 
-import '../../../../core/error/failures.dart';
 import '../../../../core/extensions/extensions.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
@@ -32,7 +31,7 @@ class LoginPage extends StatelessWidget {
           state.whenOrNull(
             loading: (_) => context.dialog.showLoading(),
             success: (_, _) async {
-              context.pop();
+              Navigator.of(context).pop();
               context.toast.showSuccess(context, context.localeKeys.welcome);
               await context.router<AppRoute>().replaceTop(
                 const MainRouteEntry(),
@@ -40,10 +39,10 @@ class LoginPage extends StatelessWidget {
             },
 
             failure: (_, e) async {
-              context.pop();
+              Navigator.of(context).pop();
               await context.dialog.showError(
                 title: context.localeKeys.error,
-                error: e.getLocalizedMessage(context),
+                error: e,
               );
             },
           );

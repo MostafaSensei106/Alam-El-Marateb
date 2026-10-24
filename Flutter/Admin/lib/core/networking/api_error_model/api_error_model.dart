@@ -7,7 +7,7 @@ class ApiErrorModel {
   const ApiErrorModel({
     required this.success,
     required this.message,
-    this.errors,
+    required this.errors,
   });
 
   factory ApiErrorModel.fromJson(Map<String, dynamic> json) =>
@@ -18,5 +18,5 @@ class ApiErrorModel {
   final bool? success;
   @JsonKey(defaultValue: 'An unexpected error occurred.')
   final String message;
-  final Map<String, List<String>>? errors;
+  final List<String> errors;
 }

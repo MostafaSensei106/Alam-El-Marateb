@@ -55,6 +55,12 @@ sealed class Result<T, E> {
   R? whenOrNull<R>({R Function(T data)? success, R Function(E error)? failure});
 
   T getOrThrow();
+
+  @override
+  String toString() => when(
+    success: (data) => 'Result.success(data: $data)',
+    failure: (error) => 'Result.failure(error: $error)',
+  );
 }
 
 final class Success<T, E> extends Result<T, E> {

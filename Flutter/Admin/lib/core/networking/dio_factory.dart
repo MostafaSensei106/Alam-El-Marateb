@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
@@ -29,9 +28,9 @@ class DioFactory {
     if (dio == null) {
       dio = Dio();
       dio!.transformer = BackgroundTransformer();
-      if (!kIsWeb) {
-        dio!.httpClientAdapter = Http2Adapter(ConnectionManager());
-      }
+      // if (!kIsWeb) {
+      //   dio!.httpClientAdapter = Http2Adapter(ConnectionManager());
+      // }
 
       dio!
         ..options.headers[ApiHeader.accept] = ApiHeader.applicationJson

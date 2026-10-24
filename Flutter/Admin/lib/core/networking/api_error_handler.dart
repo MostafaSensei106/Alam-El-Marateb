@@ -117,7 +117,7 @@ abstract final class ApiFailureMapper {
         final hasMeaningfulMessage =
             model.message.trim().isNotEmpty &&
             model.message != 'An unexpected error occurred.';
-        final hasErrors = model.errors != null && model.errors!.isNotEmpty;
+        final hasErrors = model.errors.isNotEmpty;
 
         if (hasMeaningfulMessage || hasErrors) {
           return (model, errorType, statusCode);
@@ -165,7 +165,7 @@ abstract final class ApiFailureMapper {
   // ── model factories ─────────────────────────────────────────────────────────
 
   static ApiErrorModel _buildModel(String message) =>
-      ApiErrorModel(success: false, message: message, errors: const {});
+      ApiErrorModel(success: false, message: message, errors: []);
 
   static ApiErrorModel _noInternetModel() =>
       _buildModel(HttpMessages.noInternet);

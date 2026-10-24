@@ -13,7 +13,7 @@ part of 'api_service.dart';
 
 class _ApiService implements ApiService {
   _ApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://localhost:8080';
+    baseUrl ??= 'http://192.168.1.16:8080';
   }
 
   final Dio _dio;
@@ -33,7 +33,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://localhost:8080/api/v1/auth/login',
+            'http://192.168.1.16:8080/api/v1/auth/login',
             queryParameters: queryParameters,
             data: _data,
           )

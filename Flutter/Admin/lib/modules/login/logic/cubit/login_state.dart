@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../../core/error/failures.dart';
 import '../../../../core/utils/validator/login/login_validators.dart';
 import '../entity/user_entity.dart';
 
@@ -16,7 +15,7 @@ sealed class LoginState with _$LoginState {
   }) = Success;
   const factory LoginState.failure(
     LoginFormState formState, {
-    required Failures error,
+    required String error,
   }) = Failure;
 }
 

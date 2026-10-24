@@ -28,7 +28,8 @@ final class LoginCubit extends CubitSignal<LoginState> {
 
     response.when(
       success: (s) => emit(LoginState.success(state.value.formState, data: s)),
-      failure: (e) => emit(LoginState.failure(state.value.formState, error: e)),
+      failure: (e) =>
+          emit(LoginState.failure(state.value.formState, error: e.message)),
     );
   }
 

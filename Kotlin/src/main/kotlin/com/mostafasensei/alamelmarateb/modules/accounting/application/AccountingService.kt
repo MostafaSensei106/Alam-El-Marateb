@@ -27,8 +27,7 @@ import java.util.UUID
 
 data class AccountView(
     val code: String,
-    val nameAr: String,
-    val nameEn: String?,
+    val name: String,
     val type: String,
     val parentCode: String?,
     val branchId: UUID?,

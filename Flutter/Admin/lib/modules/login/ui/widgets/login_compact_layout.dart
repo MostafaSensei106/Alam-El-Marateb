@@ -161,47 +161,15 @@ final class _LoginSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    return Container(
-          width: double.infinity,
-          padding: const EdgeInsets.fromLTRB(
-            AppSpacing.xLarge,
-            AppSpacing.medium,
-            AppSpacing.xLarge,
-            AppSpacing.xLarge,
-          ),
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
-            borderRadius: BorderRadius.circular(radius),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.18),
-                blurRadius: 32,
-                offset: const Offset(0, 14),
-              ),
-            ],
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Container(
-                width: 44,
-                height: 4,
-                decoration: BoxDecoration(
-                  color: theme.colorScheme.onSurfaceVariant.withValues(
-                    alpha: 0.35,
-                  ),
-                  borderRadius: BorderRadius.circular(AppSpacing.xSmall),
-                ),
-              ),
-              const SizedBox(height: AppSpacing.large),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 480),
-                child: const LoginFormBody(showHeader: false),
-              ),
-            ],
-          ),
+    return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const SizedBox(height: AppSpacing.large),
+            ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 480),
+              child: const LoginFormBody(showHeader: false),
+            ),
+          ],
         )
         .animate(delay: 150.ms)
         .slideY(
