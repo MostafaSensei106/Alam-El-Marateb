@@ -569,6 +569,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get signOut => 'تسجيل الخروج';
 
   @override
+  String get rememberMe => 'تذكرني';
+
+  @override
   String get signOutConfirmTitle => 'تسجيل الخروج؟';
 
   @override

@@ -10,6 +10,7 @@ import '../../../core/router/app_router.dart';
 import '../../../core/widgets/buttons/filled_button/filled_button_component.dart';
 import '../../../core/widgets/buttons/text_button/text_button_component.dart';
 import '../../../core/widgets/design_system/tokens/tokens.dart';
+import '../../../core/widgets/inputs/checkbox/checkbox_component.dart';
 import '../../../core/widgets/inputs/password_form_field/password_form_field_component.dart';
 import '../../../core/widgets/inputs/text_form_field/text_form_field_component.dart';
 
@@ -70,9 +71,7 @@ class _LoginImagePanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-          borderRadius: BorderRadiusGeometry.circular(
-            AppConfig.outBorderRadius,
-          ),
+          borderRadius: BorderRadius.circular(AppConfig.outBorderRadius),
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -132,12 +131,19 @@ class _LoginFormPanel extends StatelessWidget {
         keyboardType: TextInputType.emailAddress,
       ),
       PasswordFieldComponent(label: context.localeKeys.password),
-      Align(
-        alignment: AlignmentDirectional.centerEnd,
-        child: TextButtonComponent(
-          label: context.localeKeys.forgetPassword,
-          onPressed: () {},
-        ),
+      Row(
+        mainAxisAlignment: .spaceBetween,
+        children: [
+          CheckboxComponent(
+            title: context.localeKeys.rememberMe,
+            value: true,
+            onChanged: (v) {},
+          ),
+          TextButtonComponent(
+            label: context.localeKeys.forgetPassword,
+            onPressed: () {},
+          ),
+        ],
       ),
       FilledButtonComponent.icon(
         icon: LucideIcons.logIn,

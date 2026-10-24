@@ -570,6 +570,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get signOut => 'Sign out';
 
   @override
+  String get rememberMe => 'Remember Me';
+
+  @override
   String get signOutConfirmTitle => 'Sign out?';
 
   @override

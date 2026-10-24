@@ -1161,6 +1161,12 @@ abstract class AppLocalizations {
   /// **'Sign out'**
   String get signOut;
 
+  /// No description provided for @rememberMe.
+  ///
+  /// In en, this message translates to:
+  /// **'Remember Me'**
+  String get rememberMe;
+
   /// No description provided for @signOutConfirmTitle.
   ///
   /// In en, this message translates to:

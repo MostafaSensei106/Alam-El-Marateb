@@ -198,6 +198,7 @@
   "account": "Account",
   "myProfile": "My profile",
   "signOut": "Sign out",
+  "rememberMe": "Remember Me",
   "signOutConfirmTitle": "Sign out?",
   "signOutConfirmMessage": "You will need to sign in again to access the admin workspace.",
   "appearance": "Appearance",
