@@ -13,7 +13,7 @@ part of 'api_service.dart';
 
 class _ApiService implements ApiService {
   _ApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'https://hadidi-win-back.inxhub.online/api/mobile/';
+    baseUrl ??= 'http://localhost:8080';
   }
 
   final Dio _dio;
