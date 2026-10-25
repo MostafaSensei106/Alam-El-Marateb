@@ -9,7 +9,7 @@ final class ApiExecutor {
     required Future<T> Function() action,
   }) => Result.tryCatching<T, Failures>(
     action: action,
-    catchErrors: true, // أخطاء الـ parsing هي TypeError
+    catchErrors: true,
     onError: (e, st) => APIErrorHandler.handle(e, stackTrace: st),
   );
 
