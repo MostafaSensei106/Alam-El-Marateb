@@ -102,29 +102,49 @@ abstract final class ApiFailureMapper {
     };
   }
 
-  /// Classifies a transport-level failure.
+  /// Classifies a transport-level failure using the live platform probes.
+  static (ApiErrorModel, ErrorType, int?) _fromTransport(
+    Object? cause, {
+    Uri? uri,
+    String? dioMessage,
+  }) => classifyTransport(
+    cause,
+    uri: uri,
+    dioMessage: dioMessage,
+    deviceOnline: isDeviceOnline,
+    pageSecure: isBrowserPageSecure,
+    pageOrigin: browserPageOrigin,
+  );
+
+  /// Pure, testable transport classifier.
   ///
   /// The same exception type covers several very different causes, so the
   /// order below is deliberate: prove the device is offline first, then detect
-  /// browser-specific blocks (which never reach the network), and only then
-  /// inspect the socket error.
+  /// browser-specific blocks (which never reach the network), then the
+  /// cross-origin ambiguity, and only then inspect the socket error.
   ///
   /// A failed request does **not** imply the device is offline: browsers report
   /// blocked CORS preflights, DNS failures, refused connections and unreachable
   /// hosts identically. "No internet" is reported only when the platform can
   /// prove it.
-  static (ApiErrorModel, ErrorType, int?) _fromTransport(
+  @visibleForTesting
+  static (ApiErrorModel, ErrorType, int?) classifyTransport(
     Object? cause, {
+    required bool deviceOnline,
+    required bool pageSecure,
+    required String? pageOrigin,
     Uri? uri,
     String? dioMessage,
   }) {
-    if (!isDeviceOnline) {
+    if (!deviceOnline) {
       return (_noInternetModel(), ErrorType.offline, null);
     }
 
     // An HTTPS page calling a plain HTTP endpoint is rejected by the browser
-    // before any packet is sent, so this is a deterministic diagnosis.
-    if (isBrowserPageSecure && uri != null && uri.scheme == 'http') {
+    // before any packet is sent, so this is a deterministic diagnosis. Loopback
+    // hosts are exempt: browsers treat `http://localhost` as a trustworthy
+    // origin and do not block it as mixed content.
+    if (pageSecure && uri != null && uri.scheme == 'http' && !_isLoopback(uri)) {
       return (
         _buildModel(HttpMessages.mixedContentBlocked),
         ErrorType.mixedContentBlocked,
@@ -136,7 +156,7 @@ abstract final class ApiFailureMapper {
     // "onError". Dio's web adapter enriches the message with CORS guidance when
     // the request would have required a preflight. Even then the request may
     // simply have failed to connect, so the message stays honest about both.
-    if (_looksLikeCors(dioMessage, uri)) {
+    if (_looksLikeCors(dioMessage, uri, pageOrigin)) {
       return (
         _buildModel(HttpMessages.corsBlocked),
         ErrorType.corsBlocked,

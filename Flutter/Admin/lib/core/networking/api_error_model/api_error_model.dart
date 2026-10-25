@@ -15,8 +15,15 @@ class ApiErrorModel {
 
   Map<String, dynamic> toJson() => _$ApiErrorModelToJson(this);
 
-  final bool? success;
+  @JsonKey(defaultValue: false)
+  final bool success;
   @JsonKey(defaultValue: 'An unexpected error occurred.')
   final String message;
+
+  /// Field-level validation errors, when the backend provides them.
+  ///
+  /// Absent from some error payloads, so it defaults to an empty list instead
+  /// of failing the whole decode.
+  @JsonKey(defaultValue: <String>[])
   final List<String> errors;
 }

@@ -61,37 +61,73 @@ void main() {
   });
 
   group('badResponse', () {
+    DioException response(int statusCode, Object? data) => DioException(
+      requestOptions: options('$Uri.base/api/v1/auth/login'),
+      type: DioExceptionType.badResponse,
+      response: Response<dynamic>(
+        requestOptions: options('$Uri.base/api/v1/auth/login'),
+        statusCode: statusCode,
+        data: data,
+      ),
+    );
+
     test('placeholder backend message falls back to the HTTP status message', () {
       final failure = APIErrorHandler.handle(
-        DioException(
-          requestOptions: options('$Uri.base/api/v1/auth/login'),
-          type: DioExceptionType.badResponse,
-          response: Response<dynamic>(
-            requestOptions: options('$Uri.base/api/v1/auth/login'),
-            statusCode: 401,
-            data: {'message': 'Unauthorized'},
-          ),
-        ),
+        response(401, {'message': 'An unexpected error occurred.'}),
       );
 
       expect(failure.errorType, ErrorType.clientError);
       expect(failure.apiErrorModel.message, HttpMessages.unauthorized);
     });
 
-    test('meaningful backend message is preserved', () {
+    test('meaningful backend message is preserved without an errors array', () {
       final failure = APIErrorHandler.handle(
-        DioException(
-          requestOptions: options('$Uri.base/api/v1/auth/login'),
-          type: DioExceptionType.badResponse,
-          response: Response<dynamic>(
-            requestOptions: options('$Uri.base/api/v1/auth/login'),
-            statusCode: 401,
-            data: {'message': 'Invalid credentials'},
-          ),
-        ),
+        response(401, {'message': 'Invalid credentials'}),
       );
 
+      expect(failure.errorType, ErrorType.clientError);
       expect(failure.apiErrorModel.message, 'Invalid credentials');
+      expect(failure.apiErrorModel.errors, isEmpty);
+    });
+
+    test('meaningful backend message and field errors are both preserved', () {
+      final failure = APIErrorHandler.handle(
+        response(422, {
+          'message': 'Validation failed',
+          'errors': ['email is required', 'password is too short'],
+        }),
+      );
+
+      expect(failure.errorType, ErrorType.clientError);
+      expect(failure.apiErrorModel.message, 'Validation failed');
+      expect(failure.apiErrorModel.errors, hasLength(2));
+    });
+
+    test('field errors survive when the message is a placeholder', () {
+      final failure = APIErrorHandler.handle(
+        response(422, {
+          'message': 'An unexpected error occurred.',
+          'errors': ['email is required'],
+        }),
+      );
+
+      expect(failure.apiErrorModel.message, HttpMessages.unprocessableEntity);
+      expect(failure.apiErrorModel.errors, ['email is required']);
+    });
+
+    test('empty body falls back to the HTTP status message', () {
+      final failure = APIErrorHandler.handle(response(503, null));
+
+      expect(failure.errorType, ErrorType.serverError);
+      expect(failure.apiErrorModel.message, HttpMessages.serviceUnavailable);
+    });
+
+    test('gateway HTML body is never surfaced', () {
+      final failure = APIErrorHandler.handle(
+        response(502, '<html><body>Bad gateway</body></html>'),
+      );
+
+      expect(failure.apiErrorModel.message, HttpMessages.badGateway);
     });
   });
 }
