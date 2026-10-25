@@ -36,7 +36,7 @@ abstract class ApiService {
   /// Accounting
   @GET(ApiRoutes.accountingBalanceSheet)
   @Extra({SecurityConfigs.requireToken: true})
-  Future<ApiResponse<BalanceSheetResponseData>> balanceSheet(
+  Future<ApiResponse<BalanceSheetResponseData>> getBalanceSheet(
     @Query('to') String to,
   );
 }

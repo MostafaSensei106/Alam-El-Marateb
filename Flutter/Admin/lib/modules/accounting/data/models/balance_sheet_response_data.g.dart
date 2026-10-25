@@ -10,9 +10,9 @@ BalanceSheetResponseData _$BalanceSheetResponseDataFromJson(
   Map<String, dynamic> json,
 ) => BalanceSheetResponseData(
   asOf: json['asOf'] as String,
-  assets: (json['assets'] as num).toInt(),
-  liabilities: (json['liabilities'] as num).toInt(),
-  equity: (json['equity'] as num).toInt(),
+  assets: json['assets'] as num,
+  liabilities: json['liabilities'] as num,
+  equity: json['equity'] as num,
 );
 
 Map<String, dynamic> _$BalanceSheetResponseDataToJson(

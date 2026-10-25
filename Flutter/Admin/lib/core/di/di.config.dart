@@ -91,6 +91,12 @@ import 'package:alam_el_marateb_admin/core/utils/theme/data/theme_repository.dar
     as _i958;
 import 'package:alam_el_marateb_admin/core/utils/theme/logic/cubit/theme_cubit.dart'
     as _i573;
+import 'package:alam_el_marateb_admin/modules/accounting/data/interface/accounting_reposiory.dart'
+    as _i113;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/repository/accounting_reposiory_impl.dart'
+    as _i801;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/get_accounting_balance_sheet_usecase.dart'
+    as _i1020;
 import 'package:alam_el_marateb_admin/modules/login/data/interface/login_repository.dart'
     as _i850;
 import 'package:alam_el_marateb_admin/modules/login/logic/cubit/login_cubit.dart'
@@ -242,10 +248,18 @@ extension GetItInjectableX on _i174.GetIt {
       () =>
           _i602.ProfileCubit(getProfileUsecase: gh<_i1028.GetProfileUsecase>()),
     );
+    gh.lazySingleton<_i113.AccountingReposiory>(
+      () => _i801.AccountingReposioryImpl(api: gh<_i425.ApiService>()),
+    );
     gh.lazySingleton<_i850.LoginRepository>(
       () => _i139.LoginRepositoryImpl(
         api: gh<_i425.ApiService>(),
         session: gh<_i173.UserSessionServiceBase>(),
+      ),
+    );
+    gh.factory<_i1020.GetAccountingBalanceSheetUsecase>(
+      () => _i1020.GetAccountingBalanceSheetUsecase(
+        repo: gh<_i113.AccountingReposiory>(),
       ),
     );
     gh.factory<_i172.LoginUsecase>(
@@ -332,8 +346,15 @@ extension GetItInjectableX on _i174.GetIt {
 
   _i602.ProfileCubit get profileCubit => get<_i602.ProfileCubit>();
 
+  _i801.AccountingReposioryImpl get accountingReposioryImpl =>
+      get<_i801.AccountingReposioryImpl>();
+
   _i139.LoginRepositoryImpl get loginRepositoryImpl =>
       get<_i139.LoginRepositoryImpl>();
+
+  _i1020.GetAccountingBalanceSheetUsecase
+  get getAccountingBalanceSheetUsecase =>
+      get<_i1020.GetAccountingBalanceSheetUsecase>();
 
   _i172.LoginUsecase get loginUsecase => get<_i172.LoginUsecase>();
 

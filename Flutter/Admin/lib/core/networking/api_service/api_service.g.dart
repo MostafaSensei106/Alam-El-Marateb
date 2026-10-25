@@ -118,7 +118,9 @@ class _ApiService implements ApiService {
   }
 
   @override
-  Future<ApiResponse<BalanceSheetResponseData>> balanceSheet(String to) async {
+  Future<ApiResponse<BalanceSheetResponseData>> getBalanceSheet(
+    String to,
+  ) async {
     final _extra = <String, dynamic>{'requireToken': true};
     final queryParameters = <String, dynamic>{r'to': to};
     final _headers = <String, dynamic>{};
