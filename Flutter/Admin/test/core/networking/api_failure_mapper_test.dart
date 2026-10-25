@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:alam_el_marateb_admin/core/constants/http_messages.dart';
 import 'package:alam_el_marateb_admin/core/networking/api_error_handler.dart';
 import 'package:alam_el_marateb_admin/core/networking/api_error_model/api_error_model.dart';
 import 'package:alam_el_marateb_admin/core/networking/error_type.dart';
@@ -12,6 +11,10 @@ import 'package:flutter_test/flutter_test.dart';
 /// Transport classification is exercised through the pure
 /// [ApiFailureMapper.classifyTransport] so web-only signals (offline, mixed
 /// content, CORS) can be asserted on the Dart VM instead of only in a browser.
+///
+/// The message assertions are deliberately about the *raw* text: the mapper
+/// classifies failures for internal decisions but never rewrites what the user
+/// sees.
 void main() {
   const loginUrl = 'http://192.168.1.16:8080/api/v1/auth/login';
   const pageOrigin = 'https://admin.example.com';
@@ -36,14 +39,22 @@ void main() {
     int status,
     Object? data, {
     String url = loginUrl,
+    String? statusMessage,
   }) => Response<dynamic>(
     requestOptions: options(url),
     statusCode: status,
+    statusMessage: statusMessage,
     data: data,
   );
 
-  DioException badResponse(int status, Object? data) =>
-      dio(DioExceptionType.badResponse, response: response(status, data));
+  DioException badResponse(
+    int status,
+    Object? data, {
+    String? statusMessage,
+  }) => dio(
+    DioExceptionType.badResponse,
+    response: response(status, data, statusMessage: statusMessage),
+  );
 
   SocketException socket(String message, [int? code]) => SocketException(
     message,
@@ -73,22 +84,25 @@ void main() {
     test(
       'is reported only when the platform proved there is no connection',
       () {
+        final cause = socket('Failed host lookup', -2);
         final result = classify(
-          socket('Failed host lookup', -2),
+          cause,
           deviceOnline: false,
           uri: loginUrl,
         );
 
         expect(result.type, ErrorType.offline);
-        expect(result.model.message, HttpMessages.noInternet);
+        // Even in a proven-offline state the raw exception is what is shown.
+        expect(result.model.message, cause.toString());
       },
     );
 
     test('a failed request while online is never blamed on the user', () {
-      final result = classify(socket('Connection refused', 111), uri: loginUrl);
+      final cause = socket('Connection refused', 111);
+      final result = classify(cause, uri: loginUrl);
 
       expect(result.type, isNot(ErrorType.offline));
-      expect(result.model.message, isNot(HttpMessages.noInternet));
+      expect(result.model.message, cause.toString());
     });
   });
 
@@ -98,10 +112,14 @@ void main() {
         null,
         pageSecure: true,
         uri: 'http://192.168.1.16:8080/api/v1/auth/login',
+        message: 'Mixed Content: The page was loaded over HTTPS.',
       );
 
       expect(result.type, ErrorType.mixedContentBlocked);
-      expect(result.model.message, HttpMessages.mixedContentBlocked);
+      expect(
+        result.model.message,
+        'Mixed Content: The page was loaded over HTTPS.',
+      );
     });
 
     test('an https page calling https is not mixed content', () {
@@ -155,11 +173,7 @@ void main() {
       );
 
       expect(result.type, ErrorType.corsBlocked);
-      expect(result.model.message, HttpMessages.corsBlocked);
-      // The message must name the server as a possible cause, not just the
-      // browser: a server that is down produces the same browser error.
-      expect(result.model.message, contains('server'));
-      expect(result.model.message, contains('browser'));
+      expect(result.model.message, corsMessage);
     });
 
     test('the adapter "preflight" wording is also recognised', () {
@@ -174,15 +188,16 @@ void main() {
     });
 
     test('cross-origin failure without a CORS hint is a server problem', () {
+      const message = 'The connection errored: onError callback was called.';
       final result = classify(
         null,
         origin: pageOrigin,
         uri: loginUrl,
-        message: 'The connection errored: onError callback was called.',
+        message: message,
       );
 
       expect(result.type, ErrorType.serverUnreachable);
-      expect(result.model.message, HttpMessages.serverUnreachable);
+      expect(result.model.message, message);
     });
 
     test('same-origin failure is never blamed on CORS', () {
@@ -248,7 +263,7 @@ void main() {
       );
 
       expect(result.type, isNot(ErrorType.offline));
-      expect(result.model.message, isNot(HttpMessages.noInternet));
+      expect(result.model.message, corsMessage);
     });
   });
 
@@ -259,25 +274,28 @@ void main() {
 
     for (final code in dnsCodes) {
       test('code $code is a DNS failure', () {
-        final result = classify(socket('Failed host lookup', code));
+        final cause = socket('Failed host lookup', code);
+        final result = classify(cause);
         expect(result.type, ErrorType.dnsFailure);
-        expect(result.model.message, HttpMessages.dnsFailure);
+        expect(result.model.message, cause.toString());
       });
     }
 
     for (final code in refusedCodes) {
       test('code $code is a refused connection', () {
-        final result = classify(socket('Connection refused', code));
+        final cause = socket('Connection refused', code);
+        final result = classify(cause);
         expect(result.type, ErrorType.connectionRefused);
-        expect(result.model.message, HttpMessages.connectionRefused);
+        expect(result.model.message, cause.toString());
       });
     }
 
     for (final code in unreachableCodes) {
       test('code $code is an unreachable server', () {
-        final result = classify(socket('Host unreachable', code));
+        final cause = socket('Host unreachable', code);
+        final result = classify(cause);
         expect(result.type, ErrorType.serverUnreachable);
-        expect(result.model.message, HttpMessages.serverUnreachable);
+        expect(result.model.message, cause.toString());
       });
     }
 
@@ -300,61 +318,64 @@ void main() {
     });
 
     test('an unclassified socket error stays generic', () {
-      final result = classify(socket('Operation not permitted', 1));
+      final cause = socket('Operation not permitted', 1);
+      final result = classify(cause);
 
       expect(result.type, ErrorType.network);
-      expect(result.model.message, HttpMessages.connectionFailed);
+      expect(result.model.message, cause.toString());
     });
   });
 
   group('TLS failures', () {
     test('HandshakeException is a certificate failure', () {
-      final result = classify(const HandshakeException('handshake failed'));
+      const cause = HandshakeException('handshake failed');
+      final result = classify(cause);
       expect(result.type, ErrorType.certificate);
-      expect(result.model.message, HttpMessages.badCertificate);
+      expect(result.model.message, cause.toString());
     });
 
     test('TlsException is a certificate failure', () {
-      final result = classify(const TlsException('tls failure'));
+      const cause = TlsException('tls failure');
+      final result = classify(cause);
       expect(result.type, ErrorType.certificate);
+      expect(result.model.message, cause.toString());
     });
   });
 
   group('DioException types', () {
     test('connectionTimeout', () {
-      final failure = APIErrorHandler.handle(
-        dio(DioExceptionType.connectionTimeout),
-      );
+      final error = dio(DioExceptionType.connectionTimeout);
+      final failure = APIErrorHandler.handle(error);
       expect(failure.errorType, ErrorType.connectionTimeout);
-      expect(failure.apiErrorModel.message, HttpMessages.connectionTimeout);
+      expect(failure.apiErrorModel.message, error.toString());
     });
 
     test('receiveTimeout', () {
-      final failure = APIErrorHandler.handle(
-        dio(DioExceptionType.receiveTimeout),
-      );
+      final error = dio(DioExceptionType.receiveTimeout);
+      final failure = APIErrorHandler.handle(error);
       expect(failure.errorType, ErrorType.receiveTimeout);
-      expect(failure.apiErrorModel.message, HttpMessages.receiveTimeout);
+      expect(failure.apiErrorModel.message, error.toString());
     });
 
     test('sendTimeout', () {
-      final failure = APIErrorHandler.handle(dio(DioExceptionType.sendTimeout));
+      final error = dio(DioExceptionType.sendTimeout);
+      final failure = APIErrorHandler.handle(error);
       expect(failure.errorType, ErrorType.sendTimeout);
-      expect(failure.apiErrorModel.message, HttpMessages.sendTimeout);
+      expect(failure.apiErrorModel.message, error.toString());
     });
 
     test('transformTimeout', () {
-      final failure = APIErrorHandler.handle(
-        dio(DioExceptionType.transformTimeout),
-      );
+      final error = dio(DioExceptionType.transformTimeout);
+      final failure = APIErrorHandler.handle(error);
       expect(failure.errorType, ErrorType.timeout);
-      expect(failure.apiErrorModel.message, HttpMessages.gatewayTimeout);
+      expect(failure.apiErrorModel.message, error.toString());
     });
 
     test('cancel', () {
-      final failure = APIErrorHandler.handle(dio(DioExceptionType.cancel));
+      final error = dio(DioExceptionType.cancel);
+      final failure = APIErrorHandler.handle(error);
       expect(failure.errorType, ErrorType.cancelled);
-      expect(failure.apiErrorModel.message, HttpMessages.requestCancelled);
+      expect(failure.apiErrorModel.message, error.toString());
     });
 
     test('cancel keeps the status code when a response exists', () {
@@ -366,28 +387,40 @@ void main() {
     });
 
     test('badCertificate', () {
-      final failure = APIErrorHandler.handle(
-        dio(DioExceptionType.badCertificate),
-      );
+      final error = dio(DioExceptionType.badCertificate);
+      final failure = APIErrorHandler.handle(error);
       expect(failure.errorType, ErrorType.certificate);
-      expect(failure.apiErrorModel.message, HttpMessages.badCertificate);
+      expect(failure.apiErrorModel.message, error.toString());
     });
 
     test('connectionError with a native socket cause is classified', () {
+      final cause = socket('Connection refused', 111);
       final failure = APIErrorHandler.handle(
-        dio(
-          DioExceptionType.connectionError,
-          error: socket('Connection refused', 111),
-        ),
+        dio(DioExceptionType.connectionError, error: cause),
       );
       expect(failure.errorType, ErrorType.connectionRefused);
+      expect(failure.apiErrorModel.message, cause.toString());
+    });
+
+    test('the connection error message is shown exactly as it occurred', () {
+      const message =
+          'The connection errored: No route to host This indicates an error '
+          'which most likely cannot be solved by the library.';
+      final failure = APIErrorHandler.handle(
+        dio(DioExceptionType.connectionError, message: message),
+      );
+
+      expect(failure.errorType, ErrorType.serverUnreachable);
+      expect(failure.apiErrorModel.message, message);
     });
 
     test('unknown with a socket cause is classified', () {
+      final cause = socket('Failed host lookup', -2);
       final failure = APIErrorHandler.handle(
-        dio(DioExceptionType.unknown, error: socket('Failed host lookup', -2)),
+        dio(DioExceptionType.unknown, error: cause),
       );
       expect(failure.errorType, ErrorType.dnsFailure);
+      expect(failure.apiErrorModel.message, cause.toString());
     });
 
     test('unknown with a response keeps the response classification', () {
@@ -396,42 +429,51 @@ void main() {
       );
       expect(failure.errorType, ErrorType.serverError);
       expect(failure.statusCode, 503);
+      expect(failure.apiErrorModel.message, 'HTTP 503');
     });
 
     test('unknown with no cause and no response stays unknown', () {
-      final failure = APIErrorHandler.handle(dio(DioExceptionType.unknown));
+      final error = dio(DioExceptionType.unknown);
+      final failure = APIErrorHandler.handle(error);
       expect(failure.errorType, ErrorType.unknown);
-      expect(failure.apiErrorModel.message, HttpMessages.unknownError);
+      expect(failure.apiErrorModel.message, error.toString());
     });
 
     test('badResponse without a response falls back to unknown', () {
-      final failure = APIErrorHandler.handle(dio(DioExceptionType.badResponse));
+      final error = dio(DioExceptionType.badResponse);
+      final failure = APIErrorHandler.handle(error);
       expect(failure.errorType, ErrorType.unknown);
+      expect(failure.apiErrorModel.message, error.toString());
     });
   });
 
   group('top-level exceptions', () {
     test('SocketException is classified without going through Dio', () {
-      final failure = APIErrorHandler.handle(socket('Connection refused', 111));
+      final cause = socket('Connection refused', 111);
+      final failure = APIErrorHandler.handle(cause);
       expect(failure.errorType, ErrorType.connectionRefused);
+      expect(failure.apiErrorModel.message, cause.toString());
     });
 
     test('HandshakeException is a certificate failure', () {
-      final failure = APIErrorHandler.handle(
-        const HandshakeException('bad cert'),
-      );
+      const cause = HandshakeException('bad cert');
+      final failure = APIErrorHandler.handle(cause);
       expect(failure.errorType, ErrorType.certificate);
+      expect(failure.apiErrorModel.message, cause.toString());
     });
 
     test('TlsException is a certificate failure', () {
-      final failure = APIErrorHandler.handle(const TlsException('bad tls'));
+      const cause = TlsException('bad tls');
+      final failure = APIErrorHandler.handle(cause);
       expect(failure.errorType, ErrorType.certificate);
+      expect(failure.apiErrorModel.message, cause.toString());
     });
 
     test('FormatException is a serialization failure', () {
-      final failure = APIErrorHandler.handle(const FormatException('bad json'));
+      const error = FormatException('bad json');
+      final failure = APIErrorHandler.handle(error);
       expect(failure.errorType, ErrorType.serialization);
-      expect(failure.apiErrorModel.message, HttpMessages.serializationError);
+      expect(failure.apiErrorModel.message, error.toString());
     });
 
     test('TypeError is a serialization failure', () {
@@ -449,12 +491,14 @@ void main() {
 
       expect(captured, isNotNull);
       expect(failure.errorType, ErrorType.serialization);
+      expect(failure.apiErrorModel.message, captured.toString());
     });
 
     test('an unrecognised exception is unknown', () {
-      final failure = APIErrorHandler.handle(Exception('boom'));
+      final error = Exception('boom');
+      final failure = APIErrorHandler.handle(error);
       expect(failure.errorType, ErrorType.unknown);
-      expect(failure.apiErrorModel.message, HttpMessages.unknownError);
+      expect(failure.apiErrorModel.message, error.toString());
     });
 
     test('the original error and stack trace are retained', () {
@@ -490,28 +534,41 @@ void main() {
       expect(failure.apiErrorModel.errors, isEmpty);
     });
 
-    test('a placeholder message is replaced by the HTTP status message', () {
+    test('a backend message wins over the raw status line', () {
+      final failure = APIErrorHandler.handle(
+        badResponse(
+          400,
+          {'message': 'Invalid credentials'},
+          statusMessage: 'Bad Request',
+        ),
+      );
+
+      expect(failure.apiErrorModel.message, 'Invalid credentials');
+    });
+
+    test('a placeholder message falls back to the HTTP status code', () {
       final failure = APIErrorHandler.handle(
         badResponse(401, {'message': 'An unexpected error occurred.'}),
       );
 
-      expect(failure.apiErrorModel.message, HttpMessages.unauthorized);
+      expect(failure.apiErrorModel.message, 'HTTP 401');
     });
 
-    test('an empty message is replaced by the HTTP status message', () {
+    test('an empty message falls back to the HTTP status code', () {
       final failure = APIErrorHandler.handle(
         badResponse(401, {'message': '   '}),
       );
 
-      expect(failure.apiErrorModel.message, HttpMessages.unauthorized);
+      expect(failure.apiErrorModel.message, 'HTTP 401');
     });
 
-    test('the generic unknown message is treated as a placeholder', () {
+    test('a generic-looking backend message is preserved verbatim', () {
+      const message = 'An unexpected error occurred. Please try again.';
       final failure = APIErrorHandler.handle(
-        badResponse(403, {'message': HttpMessages.unknownError}),
+        badResponse(403, {'message': message}),
       );
 
-      expect(failure.apiErrorModel.message, HttpMessages.forbidden);
+      expect(failure.apiErrorModel.message, message);
     });
 
     test('field errors survive a placeholder message', () {
@@ -523,7 +580,7 @@ void main() {
       );
 
       expect(failure.errorType, ErrorType.clientError);
-      expect(failure.apiErrorModel.message, HttpMessages.unprocessableEntity);
+      expect(failure.apiErrorModel.message, 'HTTP 422');
       expect(failure.apiErrorModel.errors, ['email is required']);
     });
 
@@ -531,33 +588,42 @@ void main() {
       final failure = APIErrorHandler.handle(badResponse(400, {'message': 42}));
 
       expect(failure.errorType, ErrorType.clientError);
-      expect(failure.apiErrorModel.message, HttpMessages.badRequest);
+      expect(failure.apiErrorModel.message, 'HTTP 400');
     });
 
     const statusCases = {
-      400: (ErrorType.clientError, HttpMessages.badRequest),
-      401: (ErrorType.clientError, HttpMessages.unauthorized),
-      403: (ErrorType.clientError, HttpMessages.forbidden),
-      404: (ErrorType.clientError, HttpMessages.notFound),
-      409: (ErrorType.clientError, HttpMessages.conflict),
-      429: (ErrorType.clientError, HttpMessages.tooManyRequests),
-      500: (ErrorType.serverError, HttpMessages.internalServerError),
-      501: (ErrorType.serverError, HttpMessages.notImplemented),
-      502: (ErrorType.serverError, HttpMessages.badGateway),
-      503: (ErrorType.serverError, HttpMessages.serviceUnavailable),
-      504: (ErrorType.serverError, HttpMessages.gatewayTimeout),
-      499: (ErrorType.clientError, HttpMessages.badRequest),
-      599: (ErrorType.serverError, HttpMessages.networkConnectTimeoutError),
+      400: ErrorType.clientError,
+      401: ErrorType.clientError,
+      403: ErrorType.clientError,
+      404: ErrorType.clientError,
+      409: ErrorType.clientError,
+      429: ErrorType.clientError,
+      500: ErrorType.serverError,
+      501: ErrorType.serverError,
+      502: ErrorType.serverError,
+      503: ErrorType.serverError,
+      504: ErrorType.serverError,
+      499: ErrorType.clientError,
+      599: ErrorType.serverError,
     };
 
     statusCases.forEach((status, expected) {
-      test('HTTP $status maps to ${expected.$1.name}', () {
+      test('HTTP $status maps to ${expected.name}', () {
         final failure = APIErrorHandler.handle(badResponse(status, null));
 
-        expect(failure.errorType, expected.$1);
+        expect(failure.errorType, expected);
         expect(failure.statusCode, status);
-        expect(failure.apiErrorModel.message, expected.$2);
+        expect(failure.apiErrorModel.message, 'HTTP $status');
       });
+    });
+
+    test('the raw server status line is shown when the body is empty', () {
+      final failure = APIErrorHandler.handle(
+        badResponse(503, null, statusMessage: 'Service Unavailable'),
+      );
+
+      expect(failure.errorType, ErrorType.serverError);
+      expect(failure.apiErrorModel.message, 'Service Unavailable');
     });
 
     test('a short plain-text gateway message is preserved', () {
@@ -569,10 +635,10 @@ void main() {
       expect(failure.apiErrorModel.message, 'upstream connect error');
     });
 
-    test('a long plain-text body is replaced by the status message', () {
+    test('a long plain-text body is replaced by the status line', () {
       final failure = APIErrorHandler.handle(badResponse(500, 'x' * 301));
 
-      expect(failure.apiErrorModel.message, HttpMessages.internalServerError);
+      expect(failure.apiErrorModel.message, 'HTTP 500');
     });
 
     test('an HTML gateway body is never surfaced', () {
@@ -580,25 +646,24 @@ void main() {
         badResponse(502, '<html><body>Bad gateway</body></html>'),
       );
 
-      expect(failure.apiErrorModel.message, HttpMessages.badGateway);
+      expect(failure.apiErrorModel.message, 'HTTP 502');
     });
 
-    test('an unexpected JSON shape is replaced by the status message', () {
+    test('an unexpected JSON shape is replaced by the status line', () {
       final failure = APIErrorHandler.handle(badResponse(500, ['boom']));
 
-      expect(failure.apiErrorModel.message, HttpMessages.internalServerError);
+      expect(failure.apiErrorModel.message, 'HTTP 500');
     });
 
     test('a response with no status code maps to unknown', () {
-      final failure = APIErrorHandler.handle(
-        dio(
-          DioExceptionType.badResponse,
-          response: Response<dynamic>(requestOptions: options(loginUrl)),
-        ),
+      final error = dio(
+        DioExceptionType.badResponse,
+        response: Response<dynamic>(requestOptions: options(loginUrl)),
       );
+      final failure = APIErrorHandler.handle(error);
 
       expect(failure.errorType, ErrorType.unknown);
-      expect(failure.apiErrorModel.message, HttpMessages.unknownError);
+      expect(failure.apiErrorModel.message, error.toString());
     });
   });
 }

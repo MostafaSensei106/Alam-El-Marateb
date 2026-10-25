@@ -1,12 +1,13 @@
 @TestOn('browser')
 library;
 
-import 'package:alam_el_marateb_admin/core/constants/http_messages.dart';
 import 'package:alam_el_marateb_admin/core/networking/api_error_handler.dart';
 import 'package:alam_el_marateb_admin/core/networking/error_type.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+/// Browser-only assertions: the raw adapter text must reach the UI untouched,
+/// and a failed request must never be blamed on the user's connection.
 void main() {
   RequestOptions options(String url) => RequestOptions(path: url);
 
@@ -16,6 +17,26 @@ void main() {
     message: message,
   );
 
+  DioException badResponse(
+    int statusCode,
+    Object? data, {
+    String? statusMessage,
+  }) {
+    final url = '$Uri.base/api/v1/auth/login';
+    return DioException(
+      requestOptions: options(url),
+      type: DioExceptionType.badResponse,
+      response: Response<dynamic>(
+        requestOptions: options(url),
+        statusCode: statusCode,
+        statusMessage: statusMessage,
+        data: data,
+      ),
+    );
+  }
+
+  const loginUrl = 'http://192.168.1.16:8080/api/v1/auth/login';
+
   const browserMessage =
       'The connection errored: The XMLHttpRequest onError callback was called. '
       'This typically indicates an error on the network layer. '
@@ -24,22 +45,23 @@ void main() {
   group('connectionError on web', () {
     test('cross-origin + CORS hint is classified as corsBlocked', () {
       final failure = APIErrorHandler.handle(
-        connectionError('http://192.168.1.16:8080/api/v1/auth/login', browserMessage),
+        connectionError(loginUrl, browserMessage),
       );
 
       expect(failure.errorType, ErrorType.corsBlocked);
-      expect(failure.apiErrorModel.message, HttpMessages.corsBlocked);
+      // The adapter's own wording is what the user sees.
+      expect(failure.apiErrorModel.message, browserMessage);
     });
 
     test('cross-origin without a CORS hint is not blamed on CORS', () {
+      const message =
+          'The connection errored: The XMLHttpRequest onError callback was called.';
       final failure = APIErrorHandler.handle(
-        connectionError(
-          'http://192.168.1.16:8080/api/v1/auth/login',
-          'The connection errored: The XMLHttpRequest onError callback was called.',
-        ),
+        connectionError(loginUrl, message),
       );
 
       expect(failure.errorType, ErrorType.serverUnreachable);
+      expect(failure.apiErrorModel.message, message);
     });
 
     test('same-origin with a CORS hint is not blamed on CORS', () {
@@ -50,41 +72,32 @@ void main() {
       );
 
       expect(failure.errorType, ErrorType.serverUnreachable);
+      expect(failure.apiErrorModel.message, browserMessage);
     });
 
     test('a failed request never reports "no internet" while online', () {
       final failure = APIErrorHandler.handle(
-        connectionError('http://192.168.1.16:8080/api/v1/auth/login', browserMessage),
+        connectionError(loginUrl, browserMessage),
       );
 
       expect(failure.errorType, isNot(ErrorType.offline));
-      expect(failure.apiErrorModel.message, isNot(HttpMessages.noInternet));
+      expect(failure.apiErrorModel.message, browserMessage);
     });
   });
 
   group('badResponse', () {
-    DioException response(int statusCode, Object? data) => DioException(
-      requestOptions: options('$Uri.base/api/v1/auth/login'),
-      type: DioExceptionType.badResponse,
-      response: Response<dynamic>(
-        requestOptions: options('$Uri.base/api/v1/auth/login'),
-        statusCode: statusCode,
-        data: data,
-      ),
-    );
-
-    test('placeholder backend message falls back to the HTTP status message', () {
+    test('placeholder backend message falls back to the HTTP status code', () {
       final failure = APIErrorHandler.handle(
-        response(401, {'message': 'An unexpected error occurred.'}),
+        badResponse(401, {'message': 'An unexpected error occurred.'}),
       );
 
       expect(failure.errorType, ErrorType.clientError);
-      expect(failure.apiErrorModel.message, HttpMessages.unauthorized);
+      expect(failure.apiErrorModel.message, 'HTTP 401');
     });
 
     test('meaningful backend message is preserved without an errors array', () {
       final failure = APIErrorHandler.handle(
-        response(401, {'message': 'Invalid credentials'}),
+        badResponse(401, {'message': 'Invalid credentials'}),
       );
 
       expect(failure.errorType, ErrorType.clientError);
@@ -94,7 +107,7 @@ void main() {
 
     test('meaningful backend message and field errors are both preserved', () {
       final failure = APIErrorHandler.handle(
-        response(422, {
+        badResponse(422, {
           'message': 'Validation failed',
           'errors': ['email is required', 'password is too short'],
         }),
@@ -107,29 +120,38 @@ void main() {
 
     test('field errors survive when the message is a placeholder', () {
       final failure = APIErrorHandler.handle(
-        response(422, {
+        badResponse(422, {
           'message': 'An unexpected error occurred.',
           'errors': ['email is required'],
         }),
       );
 
-      expect(failure.apiErrorModel.message, HttpMessages.unprocessableEntity);
+      expect(failure.apiErrorModel.message, 'HTTP 422');
       expect(failure.apiErrorModel.errors, ['email is required']);
     });
 
-    test('empty body falls back to the HTTP status message', () {
-      final failure = APIErrorHandler.handle(response(503, null));
+    test('empty body falls back to the raw status line', () {
+      final failure = APIErrorHandler.handle(
+        badResponse(503, null, statusMessage: 'Service Unavailable'),
+      );
 
       expect(failure.errorType, ErrorType.serverError);
-      expect(failure.apiErrorModel.message, HttpMessages.serviceUnavailable);
+      expect(failure.apiErrorModel.message, 'Service Unavailable');
+    });
+
+    test('empty body with no status line falls back to the status code', () {
+      final failure = APIErrorHandler.handle(badResponse(503, null));
+
+      expect(failure.errorType, ErrorType.serverError);
+      expect(failure.apiErrorModel.message, 'HTTP 503');
     });
 
     test('gateway HTML body is never surfaced', () {
       final failure = APIErrorHandler.handle(
-        response(502, '<html><body>Bad gateway</body></html>'),
+        badResponse(502, '<html><body>Bad gateway</body></html>'),
       );
 
-      expect(failure.apiErrorModel.message, HttpMessages.badGateway);
+      expect(failure.apiErrorModel.message, 'HTTP 502');
     });
   });
 }

@@ -1,59 +1,77 @@
-import 'dart:developer' as dev;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-/// Production-ready [NavigatorObserver] for tracking screen views,
-/// tab switches, and route transitions in GoRouter.
+/// A pretty logger for GoRouter / Navigator
+/// it will print push/pop/replace/remove info with the same pretty format
+/// used by PrettyDioLogger.
 final class AppNavigatorObserver extends NavigatorObserver {
-  AppNavigatorObserver({this.enableLogging = kDebugMode});
+  /// Default constructor
+  AppNavigatorObserver({
+    this.enabled = kDebugMode,
+    this.maxWidth = 90,
+    this.logPrint = print,
+  });
 
-  /// Controls whether logging is active. Defaults to [kDebugMode].
-  final bool enableLogging;
+  /// Enable logPrint
+  final bool enabled;
 
-  static const String _logName = 'AppNav';
+  /// Width size per logPrint
+  final int maxWidth;
+
+  /// Log printer; defaults logPrint log to console.
+  final void Function(Object object) logPrint;
 
   @override
   void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPush(route, previousRoute);
-    if (!enableLogging) return;
+    if (!enabled) return;
 
     final current = _extractRouteName(route);
     final previous = _extractRouteName(previousRoute);
 
-    dev.log('➡️ PUSH: $current ${'(from: $previous)'}', name: _logName);
+    _printBoxed(header: 'Push ║ $current', text: 'from: $previous');
   }
 
   @override
   void didPop(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didPop(route, previousRoute);
-    if (!enableLogging) return;
+    if (!enabled) return;
 
     final current = _extractRouteName(route);
     final previous = _extractRouteName(previousRoute);
 
-    dev.log('⬅️ POP: $current ${'(returned to: $previous)'}', name: _logName);
+    _printBoxed(header: 'Pop ║ $current', text: 'returned to: $previous');
   }
 
   @override
   void didReplace({Route<dynamic>? newRoute, Route<dynamic>? oldRoute}) {
     super.didReplace(newRoute: newRoute, oldRoute: oldRoute);
-    if (!enableLogging) return;
+    if (!enabled) return;
 
     final newName = _extractRouteName(newRoute);
     final oldName = _extractRouteName(oldRoute);
 
-    dev.log('🔄 REPLACE: $oldName ➔ $newName', name: _logName);
+    _printBoxed(header: 'Replace ║ $oldName ➔ $newName', text: '');
   }
 
   @override
   void didRemove(Route<dynamic> route, Route<dynamic>? previousRoute) {
     super.didRemove(route, previousRoute);
-    if (!enableLogging) return;
+    if (!enabled) return;
 
     final removed = _extractRouteName(route);
-    dev.log('❌ REMOVE: $removed', name: _logName);
+    _printBoxed(header: 'Remove ║ $removed', text: '');
   }
+
+  void _printBoxed({String? header, String? text}) {
+    logPrint('');
+    logPrint('╔╣ $header');
+    logPrint('║  $text');
+    _printLine('╚');
+  }
+
+  void _printLine([String pre = '', String suf = '╝']) =>
+      logPrint('$pre${'═' * maxWidth}$suf');
 
   /// Safely extracts route name, handling GoRouter paths, named routes, and Dialogs.
   String _extractRouteName(Route<dynamic>? route) {

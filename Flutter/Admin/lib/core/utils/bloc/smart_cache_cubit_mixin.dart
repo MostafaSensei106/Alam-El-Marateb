@@ -33,8 +33,8 @@ mixin SmartCacheCubitMixin<State, Data> on CubitSignal<State>
   /// Builds the success state.
   State buildSuccessState(Data data);
 
-  /// Builds the failure state with the typed [Failures] object
-  /// so the UI can localise the message via [FailureLocalizer].
+  /// Builds the failure state with the typed [Failures] object so the UI can
+  /// show its raw error message.
   State buildFailureState(Failures error);
 
   /// Checks if the current state represents a network failure.

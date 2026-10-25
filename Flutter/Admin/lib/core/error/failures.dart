@@ -1,8 +1,6 @@
 import '../networking/api_error_model/api_error_model.dart';
 import '../networking/error_type.dart';
 
-export 'failure_extension.dart';
-
 sealed class Failures {
   const Failures(this.message);
   final String message;

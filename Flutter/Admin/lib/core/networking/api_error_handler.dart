@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 
-import '../constants/http_messages.dart';
-import '../constants/http_status_code.dart';
 import '../error/failures.dart';
 import 'api_error_model/api_error_model.dart';
 import 'error_type.dart';
@@ -14,29 +12,37 @@ import 'platform_connectivity.dart';
 /// into structured domain [ApiFailure] instances.
 ///
 /// Decouples network/Dio exceptions from application business logic.
+///
+/// The [ApiErrorModel.message] is always the raw error text as it occurred
+/// (Dio's message, the exception's `toString()`, the backend message or the
+/// HTTP status line). Failures are classified for internal decisions, but the
+/// displayed text is never translated or rewritten.
 abstract final class ApiFailureMapper {
   /// Placeholder produced by [ApiErrorModel.fromJson] when the payload has no
   /// `message`, so it must not be shown to the user.
   static const _defaultModelMessage = 'An unexpected error occurred.';
+
+  /// Used only when no raw text exists at all.
+  static const _noDetailsMessage = 'Unknown error';
 
   /// Maps any [error] into an [ApiFailure].
   static ApiFailure map(Object error, {StackTrace? stackTrace}) {
     final (model, errorType, statusCode) = switch (error) {
       DioException() => _fromDio(error),
       SocketException() => _fromTransport(error),
-      HandshakeException() => _certificateFailure(),
-      TlsException() => _certificateFailure(),
+      HandshakeException() => _certificateFailure(error.toString()),
+      TlsException() => _certificateFailure(error.toString()),
       FormatException() => (
-        _buildModel(HttpMessages.serializationError),
+        _buildModel(error.toString()),
         ErrorType.serialization,
         null,
       ),
       TypeError() => (
-        _buildModel(HttpMessages.serializationError),
+        _buildModel(error.toString()),
         ErrorType.serialization,
         null,
       ),
-      _ => (_unknownModel(), ErrorType.unknown, null),
+      _ => (_buildModel(error.toString()), ErrorType.unknown, null),
     };
 
     return ApiFailure(
@@ -51,57 +57,64 @@ abstract final class ApiFailureMapper {
   // ── private classification & mapping ───────────────────────────────────────
 
   static (ApiErrorModel, ErrorType, int?) _fromDio(DioException error) {
+    // The raw Dio text is the primary display source; only fall back to the
+    // underlying error when Dio itself has no message.
+    final rawMessage = _rawDioMessage(error);
+
     // Response-first: if the server returned a response, prioritize its status
     // code and payload. Cancellations carry no useful server information, so
     // they are handled before this check.
     if (error.type == DioExceptionType.cancel) {
       return (
-        _buildModel(HttpMessages.requestCancelled),
+        _buildModel(rawMessage),
         ErrorType.cancelled,
         error.response?.statusCode,
       );
     }
 
     if (error.response != null) {
-      return _fromResponse(error.response);
+      return _fromResponse(error.response, fallbackMessage: rawMessage);
     }
 
     return switch (error.type) {
       DioExceptionType.connectionError => _fromTransport(
         error.error,
         uri: error.requestOptions.uri,
-        dioMessage: error.message,
+        dioMessage: rawMessage,
       ),
       DioExceptionType.connectionTimeout => (
-        _buildModel(HttpMessages.connectionTimeout),
+        _buildModel(rawMessage),
         ErrorType.connectionTimeout,
         null,
       ),
       DioExceptionType.receiveTimeout => (
-        _buildModel(HttpMessages.receiveTimeout),
+        _buildModel(rawMessage),
         ErrorType.receiveTimeout,
         null,
       ),
       DioExceptionType.sendTimeout => (
-        _buildModel(HttpMessages.sendTimeout),
+        _buildModel(rawMessage),
         ErrorType.sendTimeout,
         null,
       ),
       DioExceptionType.cancel => (
-        _buildModel(HttpMessages.requestCancelled),
+        _buildModel(rawMessage),
         ErrorType.cancelled,
         null,
       ),
-      DioExceptionType.badCertificate => _certificateFailure(),
-      DioExceptionType.badResponse => _fromResponse(error.response),
+      DioExceptionType.badCertificate => _certificateFailure(rawMessage),
+      DioExceptionType.badResponse => _fromResponse(
+        error.response,
+        fallbackMessage: rawMessage,
+      ),
       DioExceptionType.unknown => _fromUnknown(
         error.error,
         error.response,
         uri: error.requestOptions.uri,
-        dioMessage: error.message,
+        rawMessage: rawMessage,
       ),
       DioExceptionType.transformTimeout => (
-        _buildModel(HttpMessages.gatewayTimeout),
+        _buildModel(rawMessage),
         ErrorType.timeout,
         null,
       ),
@@ -131,8 +144,8 @@ abstract final class ApiFailureMapper {
   ///
   /// A failed request does **not** imply the device is offline: browsers report
   /// blocked CORS preflights, DNS failures, refused connections and unreachable
-  /// hosts identically. "No internet" is reported only when the platform can
-  /// prove it.
+  /// hosts identically. The `offline` classification is reported only when the
+  /// platform can prove it; the displayed message stays the raw one either way.
   @visibleForTesting
   static (ApiErrorModel, ErrorType, int?) classifyTransport(
     Object? cause, {
@@ -142,8 +155,10 @@ abstract final class ApiFailureMapper {
     Uri? uri,
     String? dioMessage,
   }) {
+    final message = _rawMessage(dioMessage, cause);
+
     if (!deviceOnline) {
-      return (_noInternetModel(), ErrorType.offline, null);
+      return (_buildModel(message), ErrorType.offline, null);
     }
 
     // An HTTPS page calling a plain HTTP endpoint is rejected by the browser
@@ -151,44 +166,33 @@ abstract final class ApiFailureMapper {
     // hosts are exempt: browsers treat `http://localhost` as a trustworthy
     // origin and do not block it as mixed content.
     if (pageSecure && uri != null && uri.scheme == 'http' && !_isLoopback(uri)) {
-      return (
-        _buildModel(HttpMessages.mixedContentBlocked),
-        ErrorType.mixedContentBlocked,
-        null,
-      );
+      return (_buildModel(message), ErrorType.mixedContentBlocked, null);
     }
 
     // On web, a cross-origin XHR that fails gives the browser no detail beyond
     // "onError". Dio's web adapter enriches the message with CORS guidance when
     // the request would have required a preflight. Even then the request may
-    // simply have failed to connect, so the message stays honest about both.
+    // simply have failed to connect, so classification stays a hedge.
     if (_looksLikeCors(dioMessage, uri, pageOrigin)) {
-      return (
-        _buildModel(HttpMessages.corsBlocked),
-        ErrorType.corsBlocked,
-        null,
-      );
+      return (_buildModel(message), ErrorType.corsBlocked, null);
     }
 
-    if (cause is SocketException) return _fromSocketException(cause);
+    if (cause is SocketException) return _fromSocketException(cause, message);
 
     if (cause is HandshakeException || cause is TlsException) {
-      return _certificateFailure();
+      return _certificateFailure(message);
     }
 
     // There is a network adapter and nothing more specific to blame: the
     // server is down, unreachable, or dropped the connection.
-    return (
-      _buildModel(HttpMessages.serverUnreachable),
-      ErrorType.serverUnreachable,
-      null,
-    );
+    return (_buildModel(message), ErrorType.serverUnreachable, null);
   }
 
-  /// Native-only: maps a [SocketException] to a precise transport cause using
-  /// the OS error code (POSIX `errno` or Windows `WSA*`) and message.
+  /// Native-only: classifies a [SocketException] using the OS error code
+  /// (POSIX `errno` or Windows `WSA*`) and message.
   static (ApiErrorModel, ErrorType, int?) _fromSocketException(
     SocketException exception,
+    String message,
   ) {
     final osError = exception.osError;
     final code = osError?.errorCode;
@@ -203,20 +207,12 @@ abstract final class ApiFailureMapper {
         text.contains('nodename nor servname') ||
         text.contains('temporary failure in name resolution') ||
         text.contains('no address associated with hostname')) {
-      return (
-        _buildModel(HttpMessages.dnsFailure),
-        ErrorType.dnsFailure,
-        null,
-      );
+      return (_buildModel(message), ErrorType.dnsFailure, null);
     }
 
     // ECONNREFUSED: Linux 111, macOS/BSD 61, Windows WSAECONNREFUSED 10061.
     if (code == 111 || code == 61 || code == 10061) {
-      return (
-        _buildModel(HttpMessages.connectionRefused),
-        ErrorType.connectionRefused,
-        null,
-      );
+      return (_buildModel(message), ErrorType.connectionRefused, null);
     }
 
     // EHOSTUNREACH / ENETUNREACH / ETIMEDOUT equivalents.
@@ -228,48 +224,28 @@ abstract final class ApiFailureMapper {
         code == 110 ||
         code == 60 ||
         code == 10060) {
-      return (
-        _buildModel(HttpMessages.serverUnreachable),
-        ErrorType.serverUnreachable,
-        null,
-      );
+      return (_buildModel(message), ErrorType.serverUnreachable, null);
     }
 
     if (text.contains('timed out') || text.contains('timeout')) {
-      return (
-        _buildModel(HttpMessages.connectionTimeout),
-        ErrorType.connectionTimeout,
-        null,
-      );
+      return (_buildModel(message), ErrorType.connectionTimeout, null);
     }
 
     if (text.contains('connection refused')) {
-      return (
-        _buildModel(HttpMessages.connectionRefused),
-        ErrorType.connectionRefused,
-        null,
-      );
+      return (_buildModel(message), ErrorType.connectionRefused, null);
     }
 
     if (text.contains('unreachable') || text.contains('network is down')) {
-      return (
-        _buildModel(HttpMessages.serverUnreachable),
-        ErrorType.serverUnreachable,
-        null,
-      );
+      return (_buildModel(message), ErrorType.serverUnreachable, null);
     }
 
-    return (_connectionFailedModel(), ErrorType.network, null);
+    return (_buildModel(message), ErrorType.network, null);
   }
 
   /// True when a failed web request was cross-origin *and* the adapter reported
   /// the CORS preflight guidance it only adds when the request was not a
   /// "simple request". Both conditions must hold to avoid blaming CORS for
   /// ordinary same-origin failures.
-  ///
-  /// This is deliberately a *hedge*, not a verdict: a server that is down or
-  /// unreachable produces the exact same browser error, so the caller's message
-  /// must mention both possibilities.
   static bool _looksLikeCors(
     String? message,
     Uri? uri,
@@ -278,8 +254,7 @@ abstract final class ApiFailureMapper {
     if (message == null || uri == null) return false;
 
     final lower = message.toLowerCase();
-    final mentionsCors =
-        lower.contains('cors') || lower.contains('preflight');
+    final mentionsCors = lower.contains('cors') || lower.contains('preflight');
     if (!mentionsCors) return false;
 
     return _isCrossOrigin(uri, pageOrigin);
@@ -311,11 +286,12 @@ abstract final class ApiFailureMapper {
   }
 
   static (ApiErrorModel, ErrorType, int?) _fromResponse(
-    Response<dynamic>? response,
-  ) {
+    Response<dynamic>? response, {
+    required String fallbackMessage,
+  }) {
     final statusCode = response?.statusCode;
     final errorType = _errorTypeFromStatus(statusCode);
-    final fallbackMessage = _httpStatusMessage(statusCode);
+    final fallback = _responseFallback(response, fallbackMessage);
     final data = response?.data;
 
     // 1. Try to parse a structured JSON error body.
@@ -326,12 +302,10 @@ abstract final class ApiFailureMapper {
 
         final message = model.message.trim();
         final isPlaceholder =
-            message.isEmpty ||
-            message == _defaultModelMessage ||
-            message == HttpMessages.unknownError;
+            message.isEmpty || message == _defaultModelMessage;
 
         // Keep the backend's specific message (e.g. "Invalid credentials")
-        // and its field errors. Only replace a placeholder with the status.
+        // and its field errors. Only replace a placeholder with the raw status.
         if (!isPlaceholder) {
           return (model, errorType, statusCode);
         }
@@ -339,14 +313,14 @@ abstract final class ApiFailureMapper {
         return (
           ApiErrorModel(
             success: false,
-            message: fallbackMessage,
+            message: fallback,
             errors: model.errors,
           ),
           errorType,
           statusCode,
         );
       } catch (_) {
-        // Not the expected shape — fall through to the status message.
+        // Not the expected shape — fall through to the status line.
       }
     }
 
@@ -359,38 +333,73 @@ abstract final class ApiFailureMapper {
     }
 
     // 3. Empty body or unparseable payload.
-    return (_buildModel(fallbackMessage), errorType, statusCode);
+    return (_buildModel(fallback), errorType, statusCode);
   }
 
   static (ApiErrorModel, ErrorType, int?) _fromUnknown(
     Object? cause,
     Response<dynamic>? response, {
+    required String rawMessage,
     Uri? uri,
-    String? dioMessage,
   }) {
     // 1. Response check first: retain status code and payload if available
     if (response != null) {
-      return _fromResponse(response);
+      return _fromResponse(response, fallbackMessage: rawMessage);
     }
 
     // 2. Classify the cause when no response is available
     if (cause is SocketException) {
-      return _fromTransport(cause, uri: uri, dioMessage: dioMessage);
+      return _fromTransport(cause, uri: uri, dioMessage: rawMessage);
     }
 
     // A web adapter failure sometimes arrives as `unknown` when the request
     // never reached Dio's own connection-error branch, so the browser-side
     // signals still have to be considered here. Native requests have no page
     // origin and keep the honest `unknown` classification.
-    if (browserPageOrigin != null && uri != null && dioMessage != null) {
-      return _fromTransport(null, uri: uri, dioMessage: dioMessage);
+    if (browserPageOrigin != null && uri != null) {
+      return _fromTransport(null, uri: uri, dioMessage: rawMessage);
     }
 
     if (cause is HandshakeException || cause is TlsException) {
-      return _certificateFailure();
+      return _certificateFailure(rawMessage);
     }
 
-    return (_unknownModel(), ErrorType.unknown, null);
+    return (_buildModel(rawMessage), ErrorType.unknown, null);
+  }
+
+  // ── raw message extraction ─────────────────────────────────────────────────
+
+  /// Prefers Dio's own message, then the underlying error's text, and finally
+  /// Dio's own `toString()` — never an invented sentence.
+  static String _rawDioMessage(DioException error) {
+    final message = error.message;
+    if (message != null && message.trim().isNotEmpty) return message;
+    final cause = error.error;
+    if (cause != null) return cause.toString();
+    return error.toString();
+  }
+
+  static String _rawMessage(String? dioMessage, Object? cause) {
+    if (dioMessage != null && dioMessage.trim().isNotEmpty) return dioMessage;
+    if (cause != null) return cause.toString();
+    return _noDetailsMessage;
+  }
+
+  /// The raw fallback for an HTTP response: the server's status line, then the
+  /// status code, then the original transport text when no response exists.
+  static String _responseFallback(
+    Response<dynamic>? response,
+    String fallbackMessage,
+  ) {
+    final statusMessage = response?.statusMessage;
+    if (statusMessage != null && statusMessage.trim().isNotEmpty) {
+      return statusMessage;
+    }
+
+    final statusCode = response?.statusCode;
+    if (statusCode != null) return 'HTTP $statusCode';
+
+    return fallbackMessage;
   }
 
   // ── error type classification ───────────────────────────────────────────────
@@ -406,89 +415,11 @@ abstract final class ApiFailureMapper {
 
   // ── model factories ─────────────────────────────────────────────────────────
 
-  static (ApiErrorModel, ErrorType, int?) _certificateFailure() => (
-    _buildModel(HttpMessages.badCertificate),
-    ErrorType.certificate,
-    null,
-  );
+  static (ApiErrorModel, ErrorType, int?) _certificateFailure(String message) =>
+      (_buildModel(message), ErrorType.certificate, null);
 
   static ApiErrorModel _buildModel(String message) =>
       ApiErrorModel(success: false, message: message, errors: []);
-
-  static ApiErrorModel _noInternetModel() =>
-      _buildModel(HttpMessages.noInternet);
-
-  static ApiErrorModel _connectionFailedModel() =>
-      _buildModel(HttpMessages.connectionFailed);
-
-  static ApiErrorModel _unknownModel() =>
-      _buildModel(HttpMessages.unknownError);
-
-  // ── HTTP status → message mapping (all HttpStatusCodes) ─────────────────────
-
-  static String _httpStatusMessage(int? statusCode) {
-    if (statusCode == null) return HttpMessages.unknownError;
-
-    return switch (statusCode) {
-      // 4xx Client Errors
-      HttpStatusCodes.badRequest => HttpMessages.badRequest,
-      HttpStatusCodes.unauthorized => HttpMessages.unauthorized,
-      HttpStatusCodes.paymentRequired => HttpMessages.paymentRequired,
-      HttpStatusCodes.forbidden => HttpMessages.forbidden,
-      HttpStatusCodes.notFound => HttpMessages.notFound,
-      HttpStatusCodes.methodNotAllowed => HttpMessages.methodNotAllowed,
-      HttpStatusCodes.notAcceptable => HttpMessages.notAcceptable,
-      HttpStatusCodes.proxyAuthenticationRequired =>
-        HttpMessages.proxyAuthenticationRequired,
-      HttpStatusCodes.requestTimeout => HttpMessages.requestTimeout,
-      HttpStatusCodes.conflict => HttpMessages.conflict,
-      HttpStatusCodes.gone => HttpMessages.gone,
-      HttpStatusCodes.lengthRequired => HttpMessages.lengthRequired,
-      HttpStatusCodes.preconditionFailed => HttpMessages.preconditionFailed,
-      HttpStatusCodes.payloadTooLarge => HttpMessages.payloadTooLarge,
-      HttpStatusCodes.uriTooLong => HttpMessages.uriTooLong,
-      HttpStatusCodes.unsupportedMediaType => HttpMessages.unsupportedMediaType,
-      HttpStatusCodes.rangeNotSatisfiable => HttpMessages.rangeNotSatisfiable,
-      HttpStatusCodes.expectationFailed => HttpMessages.expectationFailed,
-      HttpStatusCodes.imATeapot => HttpMessages.imATeapot,
-      HttpStatusCodes.misdirectedRequest => HttpMessages.misdirectedRequest,
-      HttpStatusCodes.unprocessableEntity => HttpMessages.unprocessableEntity,
-      HttpStatusCodes.locked => HttpMessages.locked,
-      HttpStatusCodes.failedDependency => HttpMessages.failedDependency,
-      HttpStatusCodes.tooEarly => HttpMessages.tooEarly,
-      HttpStatusCodes.upgradeRequired => HttpMessages.upgradeRequired,
-      HttpStatusCodes.preconditionRequired => HttpMessages.preconditionRequired,
-      HttpStatusCodes.tooManyRequests => HttpMessages.tooManyRequests,
-      HttpStatusCodes.requestHeaderFieldsTooLarge =>
-        HttpMessages.requestHeaderFieldsTooLarge,
-      HttpStatusCodes.unavailableForLegalReasons =>
-        HttpMessages.unavailableForLegalReasons,
-
-      // 5xx Server Errors
-      HttpStatusCodes.internalServerError => HttpMessages.internalServerError,
-      HttpStatusCodes.notImplemented => HttpMessages.notImplemented,
-      HttpStatusCodes.badGateway => HttpMessages.badGateway,
-      HttpStatusCodes.serviceUnavailable => HttpMessages.serviceUnavailable,
-      HttpStatusCodes.gatewayTimeout => HttpMessages.gatewayTimeout,
-      HttpStatusCodes.httpVersionNotSupported =>
-        HttpMessages.httpVersionNotSupported,
-      HttpStatusCodes.variantAlsoNegotiates =>
-        HttpMessages.variantAlsoNegotiates,
-      HttpStatusCodes.insufficientStorage => HttpMessages.insufficientStorage,
-      HttpStatusCodes.loopDetected => HttpMessages.loopDetected,
-      HttpStatusCodes.notExtended => HttpMessages.notExtended,
-      HttpStatusCodes.networkAuthenticationRequired =>
-        HttpMessages.networkAuthenticationRequired,
-      HttpStatusCodes.networkConnectTimeoutError =>
-        HttpMessages.networkConnectTimeoutError,
-
-      // Fallbacks within standard HTTP error ranges
-      >= 400 && <= 499 => HttpMessages.badRequest,
-      >= 500 && <= 599 => HttpMessages.internalServerError,
-
-      _ => HttpMessages.unknownError,
-    };
-  }
 }
 
 /// Facade maintaining backward compatibility with the existing codebase.

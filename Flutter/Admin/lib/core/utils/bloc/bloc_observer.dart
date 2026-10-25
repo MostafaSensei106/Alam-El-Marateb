@@ -1,37 +1,36 @@
-import 'dart:developer' as dev;
-
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/foundation.dart';
 
 /// Lightweight, production-safe BlocObserver.
 ///
-/// Set [enableLogging] to `true` (e.g. in debug builds) to print detailed
-/// bloc lifecycle state changes. Defaults to `kDebugMode`.
+/// Prints bloc lifecycle events with the same pretty format used by
+/// PrettyDioLogger. Set [enabled] to `true` (e.g. in debug builds) to print
+/// detailed bloc lifecycle state changes. Defaults to `kDebugMode`.
 final class AppBlocObserver extends BlocSignalObserver {
-  const AppBlocObserver({this.enableLogging = kDebugMode, this.maxWidth = 80});
+  /// Default constructor
+  const AppBlocObserver({
+    this.enabled = kDebugMode,
+    this.maxWidth = 90,
+    this.logPrint = print,
+  });
 
-  /// Controls whether logs are printed. Defaults to `kDebugMode`.
-  final bool enableLogging;
+  /// Enable logPrint
+  final bool enabled;
 
+  /// Width size per logPrint
   final int maxWidth;
 
-  // Pure Dart ANSI Escape Codes
-  static const _resetColor = '\x1B[0m';
-  static const _blueColor = '\x1B[34m';
-  static const _redColor = '\x1B[31m';
-  static const _greenColor = '\x1B[32m';
+  /// Log printer; defaults logPrint log to console.
+  final void Function(Object object) logPrint;
 
-  bool get _shouldLog => kDebugMode && enableLogging;
+  bool get _shouldLog => kDebugMode && enabled;
 
   @override
   void onCreate(BlocSignalBase bloc) {
     super.onCreate(bloc);
     if (!_shouldLog) return;
 
-    _printBoxed(
-      header: '🚀 onCreate ══ ${bloc.runtimeType}',
-      colorAnsi: _greenColor,
-    );
+    _printBoxed(header: '🚀 onCreate ║ ${bloc.runtimeType}');
   }
 
   @override
@@ -40,9 +39,8 @@ final class AppBlocObserver extends BlocSignalObserver {
     if (!_shouldLog) return;
 
     _printBoxed(
-      header: '✨ onChange ══ ${bloc.runtimeType}',
+      header: '✨ onChange ║ ${bloc.runtimeType}',
       text: _formatChange(change),
-      colorAnsi: _blueColor,
     );
   }
 
@@ -52,9 +50,8 @@ final class AppBlocObserver extends BlocSignalObserver {
     if (!_shouldLog) return;
 
     _printBoxed(
-      header: '🚨 onError ══ ${bloc.runtimeType}',
+      header: '🚨 onError ║ ${bloc.runtimeType}',
       text: error.toString(),
-      colorAnsi: _redColor,
     );
   }
 
@@ -63,32 +60,27 @@ final class AppBlocObserver extends BlocSignalObserver {
     super.onClose(bloc);
     if (!_shouldLog) return;
 
-    _printBoxed(
-      header: '👋 onClose ══ ${bloc.runtimeType}',
-      colorAnsi: _redColor,
-    );
+    _printBoxed(header: '👋 onClose ║ ${bloc.runtimeType}');
   }
 
-  void _printBoxed({
-    required String header,
-    required String colorAnsi,
-    String? text,
-  }) {
-    final buffer = StringBuffer()
-      ..writeln('$colorAnsi╔╣ $header')
-      ..writeln('║ ${DateTime.now().toIso8601String()}');
+  void _printBoxed({String? header, String? text}) {
+    logPrint('');
+    logPrint('╔╣ $header');
+    logPrint('║ ${DateTime.now().toIso8601String()}');
 
     if (text != null && text.isNotEmpty) {
-      final lines = _splitLinesIfNeeded(text);
-      for (final line in lines) {
-        buffer.writeln('║ $line');
+      for (final line in text.split('\n')) {
+        for (final chunk in _splitLinesIfNeeded(line)) {
+          logPrint('║ $chunk');
+        }
       }
     }
 
-    buffer.write('╚═${'═' * maxWidth}═╝$_resetColor');
-
-    dev.log(buffer.toString(), name: 'BLOC');
+    _printLine('╚');
   }
+
+  void _printLine([String pre = '', String suf = '╝']) =>
+      logPrint('$pre${'═' * maxWidth}$suf');
 
   String _formatChange(Change change) {
     final current = change.currentState.runtimeType;
