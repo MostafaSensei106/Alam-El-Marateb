@@ -4,10 +4,26 @@
 /// handler classes  so copy-writers and translators have a single file to edit.
 abstract final class HttpMessages {
   // ── Network & Transport ───────────────────────────────────────────────────
+  /// Only used when the platform *proves* there is no connectivity.
   static const noInternet =
-      'No internet connection. Please check your network and try again.';
+      'You appear to be offline. Connect to the internet and try again.';
+
+  /// Generic transport failure. Deliberately avoids blaming the user's network
+  /// because a browser reports CORS blocks, DNS failures and refused
+  /// connections identically.
   static const connectionFailed =
-      'Could not reach the server. Check your connection and try again.';
+      'Could not reach the server. It may be temporarily unavailable.';
+  static const dnsFailure =
+      'Could not find the server. Please check the address and your internet connection.';
+  static const connectionRefused =
+      'The server refused the connection. It may be offline or the port may be closed.';
+  static const serverUnreachable =
+      'The server could not be reached. It may be down or blocked by a firewall.';
+  static const corsBlocked =
+      'The request was blocked before it completed. The server may be unreachable, '
+      'or the browser may have blocked it for security reasons (CORS).';
+  static const mixedContentBlocked =
+      'The page is secure but the request is not. An HTTPS page cannot call an HTTP server.';
   static const connectionTimeout =
       'Connection timed out. Please verify your connection and try again.';
   static const sendTimeout =

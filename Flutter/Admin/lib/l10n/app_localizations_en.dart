@@ -130,11 +130,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get httpNoInternet =>
-      'No internet connection. Please check your network.';
+      'You appear to be offline. Connect to the internet and try again.';
 
   @override
   String get httpConnectionFailed =>
-      'Could not reach the server. Check your connection and try again.';
+      'Could not reach the server. It may be temporarily unavailable.';
 
   @override
   String get httpRequestCancelled => 'The request was cancelled.';
@@ -151,6 +151,38 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get httpUnknownError => 'An unknown error occurred.';
+
+  @override
+  String get httpDnsFailure =>
+      'Could not find the server. Check the address and your internet connection.';
+
+  @override
+  String get httpConnectionRefused =>
+      'The server refused the connection. It may be offline.';
+
+  @override
+  String get httpServerUnreachable =>
+      'Could not reach the server. It may be down or blocked by a firewall.';
+
+  @override
+  String get httpCorsBlocked =>
+      'The browser blocked the request for security reasons. The server may also be unreachable.';
+
+  @override
+  String get httpMixedContentBlocked =>
+      'This page is secure, but the server address is not. An HTTPS page cannot call an HTTP server.';
+
+  @override
+  String get httpConnectionTimeout =>
+      'Connecting to the server timed out. Please try again.';
+
+  @override
+  String get httpReceiveTimeout =>
+      'The server took too long to respond. Please try again.';
+
+  @override
+  String get httpSendTimeout =>
+      'Uploading the request timed out. Please try again.';
 
   @override
   String get error_name_cant_be_empty => 'Name can\'t be empty';

@@ -129,11 +129,12 @@ class AppLocalizationsAr extends AppLocalizations {
   String get partial => 'مدفوع جزئيًا';
 
   @override
-  String get httpNoInternet => 'لا يوجد اتصال بالإنترنت. يرجى التحقق من شبكتك.';
+  String get httpNoInternet =>
+      'يبدو أنك غير متصل بالإنترنت. يرجى الاتصال بالإنترنت والمحاولة مرة أخرى.';
 
   @override
   String get httpConnectionFailed =>
-      'تعذر الوصول إلى الخادم. تحقق من اتصالك وحاول مرة أخرى.';
+      'تعذر الوصول إلى الخادم. قد يكون غير متاح مؤقتًا.';
 
   @override
   String get httpRequestCancelled => 'تم إلغاء الطلب.';
@@ -149,6 +150,38 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get httpUnknownError => 'حدث خطأ غير معروف.';
+
+  @override
+  String get httpDnsFailure =>
+      'تعذر العثور على الخادم. تحقق من العنوان واتصالك بالإنترنت.';
+
+  @override
+  String get httpConnectionRefused =>
+      'رفض الخادم الاتصال. قد يكون متوقفًا عن العمل.';
+
+  @override
+  String get httpServerUnreachable =>
+      'تعذر الوصول إلى الخادم. قد يكون متوقفًا أو محظورًا بواسطة جدار حماية.';
+
+  @override
+  String get httpCorsBlocked =>
+      'حظر المتصفح الطلب لأسباب أمنية. وقد يكون الخادم غير قابل للوصول أيضًا.';
+
+  @override
+  String get httpMixedContentBlocked =>
+      'هذه الصفحة آمنة لكن عنوان الخادم غير آمن. لا يمكن لصفحة HTTPS الاتصال بخادم HTTP.';
+
+  @override
+  String get httpConnectionTimeout =>
+      'انتهت مهلة الاتصال بالخادم. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get httpReceiveTimeout =>
+      'استغرق الخادم وقتًا طويلاً للاستجابة. يرجى المحاولة مرة أخرى.';
+
+  @override
+  String get httpSendTimeout =>
+      'انتهت مهلة إرسال الطلب. يرجى المحاولة مرة أخرى.';
 
   @override
   String get error_name_cant_be_empty => 'لا يمكن أن يكون الاسم فارغًا';

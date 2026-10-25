@@ -323,13 +323,13 @@ abstract class AppLocalizations {
   /// No description provided for @httpNoInternet.
   ///
   /// In en, this message translates to:
-  /// **'No internet connection. Please check your network.'**
+  /// **'You appear to be offline. Connect to the internet and try again.'**
   String get httpNoInternet;
 
   /// No description provided for @httpConnectionFailed.
   ///
   /// In en, this message translates to:
-  /// **'Could not reach the server. Check your connection and try again.'**
+  /// **'Could not reach the server. It may be temporarily unavailable.'**
   String get httpConnectionFailed;
 
   /// No description provided for @httpRequestCancelled.
@@ -361,6 +361,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'An unknown error occurred.'**
   String get httpUnknownError;
+
+  /// No description provided for @httpDnsFailure.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not find the server. Check the address and your internet connection.'**
+  String get httpDnsFailure;
+
+  /// No description provided for @httpConnectionRefused.
+  ///
+  /// In en, this message translates to:
+  /// **'The server refused the connection. It may be offline.'**
+  String get httpConnectionRefused;
+
+  /// No description provided for @httpServerUnreachable.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not reach the server. It may be down or blocked by a firewall.'**
+  String get httpServerUnreachable;
+
+  /// No description provided for @httpCorsBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'The browser blocked the request for security reasons. The server may also be unreachable.'**
+  String get httpCorsBlocked;
+
+  /// No description provided for @httpMixedContentBlocked.
+  ///
+  /// In en, this message translates to:
+  /// **'This page is secure, but the server address is not. An HTTPS page cannot call an HTTP server.'**
+  String get httpMixedContentBlocked;
+
+  /// No description provided for @httpConnectionTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Connecting to the server timed out. Please try again.'**
+  String get httpConnectionTimeout;
+
+  /// No description provided for @httpReceiveTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'The server took too long to respond. Please try again.'**
+  String get httpReceiveTimeout;
+
+  /// No description provided for @httpSendTimeout.
+  ///
+  /// In en, this message translates to:
+  /// **'Uploading the request timed out. Please try again.'**
+  String get httpSendTimeout;
 
   /// No description provided for @error_name_cant_be_empty.
   ///

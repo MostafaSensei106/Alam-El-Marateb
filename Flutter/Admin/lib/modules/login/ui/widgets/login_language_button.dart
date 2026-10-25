@@ -1,7 +1,9 @@
+import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
+import '../../../../core/utils/localization/logic/cubit/localization_cubit.dart';
 import '../../../../core/widgets/buttons/text_button/text_button_component.dart';
 
 /// Language switch shown in the top overlay of the wide login screen.
@@ -10,14 +12,19 @@ final class LoginLanguageButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        TextButtonComponent.icon(
-          label: context.localeKeys.changeLanguage,
-          icon: LucideIcons.languages,
-          onPressed: () {},
-        ),
-      ],
+    return BlocSignalBuilder<LocalizationCubit, LocalizationState>(
+      builder: (context, state) {
+        return Row(
+          children: [
+            TextButtonComponent.icon(
+              label: context.localeKeys.changeLanguage,
+              icon: LucideIcons.languages,
+              onPressed: () =>
+                  context.read<LocalizationCubit>().toggleLanguage(),
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -31,7 +38,7 @@ final class LoginLanguageIconButton extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return IconButton.filledTonal(
-      onPressed: () {},
+      onPressed: () => context.read<LocalizationCubit>().toggleLanguage(),
       tooltip: context.localeKeys.changeLanguage,
       iconSize: 22,
       style: IconButton.styleFrom(

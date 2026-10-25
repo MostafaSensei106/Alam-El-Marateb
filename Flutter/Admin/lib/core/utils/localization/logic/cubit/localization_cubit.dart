@@ -7,13 +7,16 @@ import 'package:injectable/injectable.dart';
 
 import '../../../../services/l10n/l10n_service.dart';
 
-part 'localization_state.dart';
 part 'localization_cubit.freezed.dart';
+part 'localization_state.dart';
 
 @lazySingleton
 class LocalizationCubit extends HydratedCubitSignal<LocalizationState> {
   LocalizationCubit({required L10nService l10nService})
-    : super(initialState: _getInitialState(l10nService));
+    : _l10nService = l10nService,
+      super(initialState: _getInitialState(l10nService));
+
+  final L10nService _l10nService;
 
   static LocalizationState _getInitialState(L10nService l10nService) {
     final systemLangCode = ui.PlatformDispatcher.instance.locale.languageCode;
@@ -34,6 +37,17 @@ class LocalizationCubit extends HydratedCubitSignal<LocalizationState> {
     if (state.value.langCode == langCode) return;
     emit(LocalizationState(langCode: langCode));
     //    await getIt<CacheManager>().refreshAllCache();
+  }
+
+  Future<void> toggleLanguage() async {
+    final supportedLocales = _l10nService.supportedLocales;
+    if (supportedLocales.isEmpty) return;
+
+    final currentIndex = supportedLocales.indexWhere(
+      (locale) => locale.languageCode == state.value.langCode,
+    );
+    final nextIndex = (currentIndex + 1) % supportedLocales.length;
+    await changeLanguage(supportedLocales[nextIndex].languageCode);
   }
 
   @override
