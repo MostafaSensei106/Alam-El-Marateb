@@ -7,9 +7,9 @@ part 'login_response_data.g.dart';
 @JsonSerializable()
 final class LoginResponseData {
   const LoginResponseData({
+    required this.accessToken,
     required this.refreshToken,
     required this.userId,
-    required this.accessToken,
   });
 
   factory LoginResponseData.fromJson(Map<String, dynamic> json) =>

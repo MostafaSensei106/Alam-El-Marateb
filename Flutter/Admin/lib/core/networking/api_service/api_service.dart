@@ -15,10 +15,16 @@ abstract class ApiService {
   /// Creates an instance of [ApiService] with the provided [Dio] client and optional [baseUrl].
   factory ApiService(Dio dio, {String? baseUrl}) = _ApiService;
 
-  // Auth
+  /// Auth
   @POST(ApiRoutes.authLogin)
   @Extra({SecurityConfigs.requireToken: false})
   Future<ApiResponse<LoginResponseData>> login(@Body() LoginRequestBody body);
+
+  @POST(ApiRoutes.authRefresh)
+  @Extra({SecurityConfigs.requireToken: false})
+  Future<ApiResponse<LoginResponseData>> refreshToken(
+    @Body() LoginResponseData body,
+  );
 
   /// Profile
   @GET(ApiRoutes.authMe)
