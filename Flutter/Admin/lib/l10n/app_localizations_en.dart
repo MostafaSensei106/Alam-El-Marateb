@@ -166,7 +166,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get httpCorsBlocked =>
-      'The browser blocked the request for security reasons. The server may also be unreachable.';
+      'The request did not complete. The server may be down or unreachable, or the browser may have blocked it for security reasons (CORS).';
 
   @override
   String get httpMixedContentBlocked =>

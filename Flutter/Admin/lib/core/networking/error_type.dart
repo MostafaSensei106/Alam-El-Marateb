@@ -48,14 +48,24 @@ enum ErrorType {
 
   /// The host could not be reached at all (network unreachable, host down,
   /// firewall dropping packets).
+  ///
+  /// On the web this is also the fallback for a failed request that crossed
+  /// origins without any CORS hint, because the browser hides the real cause.
   serverUnreachable,
 
-  /// The browser blocked the request because the cross-origin preflight
-  /// (`OPTIONS`) was rejected, or the response lacked the CORS headers.
+  /// A cross-origin web request failed before a response arrived.
+  ///
+  /// Most often this is a rejected CORS preflight or missing CORS response
+  /// headers. It is **not** a definitive browser verdict: a server that is down
+  /// or unreachable produces the identical browser error, so the UI message
+  /// must mention both possibilities.
   corsBlocked,
 
   /// An HTTPS page tried to call a plain `http://` endpoint, which browsers
   /// block as mixed content.
+  ///
+  /// Never reported for loopback hosts (`localhost`, `127.0.0.1`, `::1`),
+  /// which browsers treat as trustworthy even from a secure page.
   mixedContentBlocked,
 
   /// The TCP/TLS connection could not be established in time.

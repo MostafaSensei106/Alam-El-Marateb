@@ -68,7 +68,7 @@
   "httpDnsFailure": "Could not find the server. Check the address and your internet connection.",
   "httpConnectionRefused": "The server refused the connection. It may be offline.",
   "httpServerUnreachable": "Could not reach the server. It may be down or blocked by a firewall.",
-  "httpCorsBlocked": "The browser blocked the request for security reasons. The server may also be unreachable.",
+  "httpCorsBlocked": "The request did not complete. The server may be down or unreachable, or the browser may have blocked it for security reasons (CORS).",
   "httpMixedContentBlocked": "This page is secure, but the server address is not. An HTTPS page cannot call an HTTP server.",
   "httpConnectionTimeout": "Connecting to the server timed out. Please try again.",
   "httpReceiveTimeout": "The server took too long to respond. Please try again.",

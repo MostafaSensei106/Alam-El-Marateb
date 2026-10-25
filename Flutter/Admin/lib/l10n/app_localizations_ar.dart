@@ -165,7 +165,7 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get httpCorsBlocked =>
-      'حظر المتصفح الطلب لأسباب أمنية. وقد يكون الخادم غير قابل للوصول أيضًا.';
+      'لم يكتمل الطلب. قد يكون الخادم متوقفًا أو غير قابل للوصول، وقد يكون المتصفح قد حظره لأسباب أمنية (CORS).';
 
   @override
   String get httpMixedContentBlocked =>

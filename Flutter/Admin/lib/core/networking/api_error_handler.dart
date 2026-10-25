@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:meta/meta.dart';
 
 import '../constants/http_messages.dart';
 import '../constants/http_status_code.dart';
@@ -93,7 +94,12 @@ abstract final class ApiFailureMapper {
       ),
       DioExceptionType.badCertificate => _certificateFailure(),
       DioExceptionType.badResponse => _fromResponse(error.response),
-      DioExceptionType.unknown => _fromUnknown(error.error, error.response),
+      DioExceptionType.unknown => _fromUnknown(
+        error.error,
+        error.response,
+        uri: error.requestOptions.uri,
+        dioMessage: error.message,
+      ),
       DioExceptionType.transformTimeout => (
         _buildModel(HttpMessages.gatewayTimeout),
         ErrorType.timeout,
@@ -260,7 +266,15 @@ abstract final class ApiFailureMapper {
   /// the CORS preflight guidance it only adds when the request was not a
   /// "simple request". Both conditions must hold to avoid blaming CORS for
   /// ordinary same-origin failures.
-  static bool _looksLikeCors(String? message, Uri? uri) {
+  ///
+  /// This is deliberately a *hedge*, not a verdict: a server that is down or
+  /// unreachable produces the exact same browser error, so the caller's message
+  /// must mention both possibilities.
+  static bool _looksLikeCors(
+    String? message,
+    Uri? uri,
+    String? pageOrigin,
+  ) {
     if (message == null || uri == null) return false;
 
     final lower = message.toLowerCase();
@@ -268,18 +282,31 @@ abstract final class ApiFailureMapper {
         lower.contains('cors') || lower.contains('preflight');
     if (!mentionsCors) return false;
 
-    return _isCrossOrigin(uri);
+    return _isCrossOrigin(uri, pageOrigin);
   }
 
-  static bool _isCrossOrigin(Uri uri) {
-    final pageOrigin = browserPageOrigin;
+  static bool _isCrossOrigin(Uri uri, String? pageOrigin) {
     if (pageOrigin == null || uri.host.isEmpty) return false;
     return _originOf(uri) != pageOrigin;
   }
 
+  /// Browsers treat loopback hosts as trustworthy, so they are exempt from the
+  /// mixed-content rule even on an HTTPS page.
+  static bool _isLoopback(Uri uri) {
+    final host = uri.host.toLowerCase();
+    return host == 'localhost' ||
+        host.endsWith('.localhost') ||
+        host == '127.0.0.1' ||
+        host == '::1' ||
+        host == '0.0.0.0';
+  }
+
   static String _originOf(Uri uri) {
     final scheme = uri.scheme.isEmpty ? 'http' : uri.scheme;
-    final port = uri.hasPort ? ':${uri.port}' : '';
+    final isDefaultPort =
+        (scheme == 'http' && uri.port == 80) ||
+        (scheme == 'https' && uri.port == 443);
+    final port = uri.hasPort && !isDefaultPort ? ':${uri.port}' : '';
     return '$scheme://${uri.host}$port';
   }
 
@@ -337,8 +364,10 @@ abstract final class ApiFailureMapper {
 
   static (ApiErrorModel, ErrorType, int?) _fromUnknown(
     Object? cause,
-    Response<dynamic>? response,
-  ) {
+    Response<dynamic>? response, {
+    Uri? uri,
+    String? dioMessage,
+  }) {
     // 1. Response check first: retain status code and payload if available
     if (response != null) {
       return _fromResponse(response);
@@ -346,7 +375,15 @@ abstract final class ApiFailureMapper {
 
     // 2. Classify the cause when no response is available
     if (cause is SocketException) {
-      return _fromTransport(cause);
+      return _fromTransport(cause, uri: uri, dioMessage: dioMessage);
+    }
+
+    // A web adapter failure sometimes arrives as `unknown` when the request
+    // never reached Dio's own connection-error branch, so the browser-side
+    // signals still have to be considered here. Native requests have no page
+    // origin and keep the honest `unknown` classification.
+    if (browserPageOrigin != null && uri != null && dioMessage != null) {
+      return _fromTransport(null, uri: uri, dioMessage: dioMessage);
     }
 
     if (cause is HandshakeException || cause is TlsException) {

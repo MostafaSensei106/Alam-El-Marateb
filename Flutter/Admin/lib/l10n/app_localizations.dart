@@ -383,7 +383,7 @@ abstract class AppLocalizations {
   /// No description provided for @httpCorsBlocked.
   ///
   /// In en, this message translates to:
-  /// **'The browser blocked the request for security reasons. The server may also be unreachable.'**
+  /// **'The request did not complete. The server may be down or unreachable, or the browser may have blocked it for security reasons (CORS).'**
   String get httpCorsBlocked;
 
   /// No description provided for @httpMixedContentBlocked.
