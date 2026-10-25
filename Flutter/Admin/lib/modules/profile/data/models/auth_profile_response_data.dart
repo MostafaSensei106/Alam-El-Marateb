@@ -16,6 +16,10 @@ final class AuthProfileResponseData {
     required this.active,
   });
 
+  /// From json
+  factory AuthProfileResponseData.fromJson(Map<String, dynamic> json) =>
+      _$AuthProfileResponseDataFromJson(json);
+
   @JsonKey(name: 'id')
   final String id;
   @JsonKey(name: 'fullName')
@@ -30,6 +34,9 @@ final class AuthProfileResponseData {
   final List<String> roles;
   @JsonKey(name: 'active')
   final bool active;
+
+  /// To Json
+  Map<String, dynamic> toJson() => _$AuthProfileResponseDataToJson(this);
 }
 
 extension AuthProfileX on AuthProfileResponseData {
