@@ -99,6 +99,8 @@ import 'package:alam_el_marateb_admin/modules/login/logic/repository/login_repos
     as _i139;
 import 'package:alam_el_marateb_admin/modules/login/logic/usecase/login_usecase.dart'
     as _i172;
+import 'package:alam_el_marateb_admin/modules/login/logic/usecase/refresh_token_usecase.dart'
+    as _i752;
 import 'package:alam_el_marateb_admin/modules/profile/data/interface/auth_profile_repository.dart'
     as _i680;
 import 'package:alam_el_marateb_admin/modules/profile/logic/cubit/profile_cubit.dart'
@@ -249,6 +251,9 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i172.LoginUsecase>(
       () => _i172.LoginUsecase(repo: gh<_i850.LoginRepository>()),
     );
+    gh.factory<_i752.RefreshTokenUsecase>(
+      () => _i752.RefreshTokenUsecase(repo: gh<_i850.LoginRepository>()),
+    );
     gh.factory<_i826.LoginCubit>(
       () => _i826.LoginCubit(gh<_i172.LoginUsecase>()),
     );
@@ -331,6 +336,9 @@ extension GetItInjectableX on _i174.GetIt {
       get<_i139.LoginRepositoryImpl>();
 
   _i172.LoginUsecase get loginUsecase => get<_i172.LoginUsecase>();
+
+  _i752.RefreshTokenUsecase get refreshTokenUsecase =>
+      get<_i752.RefreshTokenUsecase>();
 
   _i826.LoginCubit get loginCubit => get<_i826.LoginCubit>();
 }
