@@ -136,7 +136,7 @@ final class _RailHeader extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            brandMark,
+            const AdminBrandMark(),
             const SizedBox(height: AppSpacing.xSmall),
             toggle,
           ],
@@ -153,7 +153,7 @@ final class _RailHeader extends StatelessWidget {
       ),
       child: Row(
         children: [
-          brandMark,
+          const AdminBrandMark(),
           const SizedBox(width: AppSpacing.medium),
           Expanded(
             child: Text(
