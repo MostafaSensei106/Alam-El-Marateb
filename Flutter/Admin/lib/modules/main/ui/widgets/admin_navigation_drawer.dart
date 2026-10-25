@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
+import '../../../../core/widgets/display/list_tile/list_tile_icon_component.dart';
 import '../../navigation/admin_modules.dart';
+import 'admin_brand_mark.dart';
 import 'admin_page_frame.dart';
 
 /// Slide-out navigation used on compact windows.
@@ -37,35 +40,30 @@ final class AdminNavigationDrawer extends StatelessWidget {
       child: SafeArea(
         child: Column(
           children: [
-            ListView(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.small,
-                vertical: AppSpacing.small,
-              ),
-              children: [
-                for (final (index, module) in modules.indexed)
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 2),
-                    child: ListTile(
-                      selected: index == selectedIndex,
-                      selectedColor: colorScheme.onPrimaryContainer,
-                      selectedTileColor: colorScheme.primaryContainer,
-                      leading: Icon(module.icon),
-                      title: Text(
-                        module.label,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+            const _DrawerHeader(),
+            const Divider(height: 1),
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.small,
+                  vertical: AppSpacing.small,
+                ),
+                children: [
+                  for (final (index, module) in modules.indexed)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2),
+                      child: ListTileIconComponent(
+                        selected: index == selectedIndex,
+                        leading: module.icon,
+                        title: module.label,
+                        onTap: () {
+                          Navigator.of(context).pop();
+                          onDestinationSelected(index);
+                        },
                       ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(AppRadii.large),
-                      ),
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        onDestinationSelected(index);
-                      },
                     ),
-                  ),
-              ],
+                ],
+              ),
             ),
             const Divider(height: 1),
             _DrawerProfileTile(
@@ -76,6 +74,45 @@ final class AdminNavigationDrawer extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// Brand mark, workspace name and the close control.
+final class _DrawerHeader extends StatelessWidget {
+  const _DrawerHeader();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Padding(
+      padding: const EdgeInsetsDirectional.fromSTEB(
+        AppSpacing.large,
+        AppSpacing.large,
+        AppSpacing.small,
+        AppSpacing.medium,
+      ),
+      child: Row(
+        children: [
+          const AdminBrandMark(),
+          const SizedBox(width: AppSpacing.medium),
+          Expanded(
+            child: Text(
+              context.localeKeys.alm_el_marateb,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.titleSmall,
+            ),
+          ),
+          IconButton(
+            tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
+            onPressed: () => Navigator.of(context).pop(),
+            icon: const Icon(LucideIcons.x, size: 20),
+            visualDensity: VisualDensity.compact,
+          ),
+        ],
       ),
     );
   }
