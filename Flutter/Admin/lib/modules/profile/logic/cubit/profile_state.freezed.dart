@@ -56,13 +56,13 @@ extension ProfileStatePatterns on ProfileState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( Success value)?  success,TResult Function( Failure value)?  failure,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Success value)?  success,TResult Function( _Failure value)?  failure,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Loading() when loading != null:
-return loading(_that);case Success() when success != null:
-return success(_that);case Failure() when failure != null:
+return loading(_that);case _Success() when success != null:
+return success(_that);case _Failure() when failure != null:
 return failure(_that);case _:
   return orElse();
 
@@ -81,13 +81,13 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( Success value)  success,required TResult Function( Failure value)  failure,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Success value)  success,required TResult Function( _Failure value)  failure,}){
 final _that = this;
 switch (_that) {
 case _Initial():
 return initial(_that);case _Loading():
-return loading(_that);case Success():
-return success(_that);case Failure():
+return loading(_that);case _Success():
+return success(_that);case _Failure():
 return failure(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -102,13 +102,13 @@ return failure(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( Success value)?  success,TResult? Function( Failure value)?  failure,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Success value)?  success,TResult? Function( _Failure value)?  failure,}){
 final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial(_that);case _Loading() when loading != null:
-return loading(_that);case Success() when success != null:
-return success(_that);case Failure() when failure != null:
+return loading(_that);case _Success() when success != null:
+return success(_that);case _Failure() when failure != null:
 return failure(_that);case _:
   return null;
 
@@ -126,12 +126,12 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function()?  success,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( ProfileEntity data)?  success,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
-return loading();case Success() when success != null:
-return success();case Failure() when failure != null:
+return loading();case _Success() when success != null:
+return success(_that.data);case _Failure() when failure != null:
 return failure(_that.message);case _:
   return orElse();
 
@@ -150,12 +150,12 @@ return failure(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function()  success,required TResult Function( String message)  failure,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( ProfileEntity data)  success,required TResult Function( String message)  failure,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case _Loading():
-return loading();case Success():
-return success();case Failure():
+return loading();case _Success():
+return success(_that.data);case _Failure():
 return failure(_that.message);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -170,12 +170,12 @@ return failure(_that.message);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function()?  success,TResult? Function( String message)?  failure,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( ProfileEntity data)?  success,TResult? Function( String message)?  failure,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case _Loading() when loading != null:
-return loading();case Success() when success != null:
-return success();case Failure() when failure != null:
+return loading();case _Success() when success != null:
+return success(_that.data);case _Failure() when failure != null:
 return failure(_that.message);case _:
   return null;
 
@@ -251,40 +251,85 @@ String toString() {
 /// @nodoc
 
 
-class Success implements ProfileState {
-  const Success();
+class _Success implements ProfileState {
+  const _Success({required this.data});
   
 
+ final  ProfileEntity data;
 
-
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is Success);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&(identical(other.data, data) || other.data == data));
 }
 
 
 @override
-int get hashCode => runtimeType.hashCode;
+int get hashCode {
+    return Object.hash(runtimeType,data);
+}
 
 @override
 String toString() {
-    return 'ProfileState.success()';
+    return 'ProfileState.success(data: $data)';
 }
 
 
 }
 
+/// @nodoc
+abstract mixin class _$SuccessCopyWith<$Res> implements $ProfileStateCopyWith<$Res> {
+  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
+@useResult
+$Res call({
+ ProfileEntity data
+});
 
 
+$ProfileEntityCopyWith<$Res> get data;
+
+}
+/// @nodoc
+class __$SuccessCopyWithImpl<$Res>
+    implements _$SuccessCopyWith<$Res> {
+  __$SuccessCopyWithImpl(this._self, this._then);
+
+  final _Success _self;
+  final $Res Function(_Success) _then;
+
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') $Res call({Object? data = null,}) {
+  return _then(_Success(
+data: null == data ? _self.data : data // ignore: cast_nullable_to_non_nullable
+as ProfileEntity,
+  ));
+}
+
+/// Create a copy of ProfileState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$ProfileEntityCopyWith<$Res> get data {
+  
+  return $ProfileEntityCopyWith<$Res>(_self.data, (value) {
+    return _then(_self.copyWith(data: value));
+  });
+}
+}
 
 /// @nodoc
 
 
-class Failure implements ProfileState {
-  const Failure({required this.message});
+class _Failure implements ProfileState {
+  const _Failure({required this.message});
   
 
  final  String message;
@@ -293,13 +338,13 @@ class Failure implements ProfileState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$FailureCopyWith<Failure> get copyWith => _$FailureCopyWithImpl<Failure>(this, _$identity);
+_$FailureCopyWith<_Failure> get copyWith => __$FailureCopyWithImpl<_Failure>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is Failure&&(identical(other.message, message) || other.message == message));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Failure&&(identical(other.message, message) || other.message == message));
 }
 
 
@@ -317,8 +362,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $FailureCopyWith<$Res> implements $ProfileStateCopyWith<$Res> {
-  factory $FailureCopyWith(Failure value, $Res Function(Failure) _then) = _$FailureCopyWithImpl;
+abstract mixin class _$FailureCopyWith<$Res> implements $ProfileStateCopyWith<$Res> {
+  factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) _then) = __$FailureCopyWithImpl;
 @useResult
 $Res call({
  String message
@@ -329,17 +374,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$FailureCopyWithImpl<$Res>
-    implements $FailureCopyWith<$Res> {
-  _$FailureCopyWithImpl(this._self, this._then);
+class __$FailureCopyWithImpl<$Res>
+    implements _$FailureCopyWith<$Res> {
+  __$FailureCopyWithImpl(this._self, this._then);
 
-  final Failure _self;
-  final $Res Function(Failure) _then;
+  final _Failure _self;
+  final $Res Function(_Failure) _then;
 
 /// Create a copy of ProfileState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
-  return _then(Failure(
+  return _then(_Failure(
 message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
   ));

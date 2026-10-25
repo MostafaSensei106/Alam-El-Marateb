@@ -101,6 +101,8 @@ import 'package:alam_el_marateb_admin/modules/login/logic/usecase/login_usecase.
     as _i172;
 import 'package:alam_el_marateb_admin/modules/profile/data/interface/auth_profile_repository.dart'
     as _i680;
+import 'package:alam_el_marateb_admin/modules/profile/logic/cubit/profile_cubit.dart'
+    as _i602;
 import 'package:alam_el_marateb_admin/modules/profile/logic/repository/auth_profile_repository_impl.dart'
     as _i84;
 import 'package:alam_el_marateb_admin/modules/profile/logic/usecase/get_profile_usecase.dart'
@@ -234,6 +236,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i1028.GetProfileUsecase>(
       () => _i1028.GetProfileUsecase(gh<_i680.AuthProfileRepository>()),
     );
+    gh.factory<_i602.ProfileCubit>(
+      () =>
+          _i602.ProfileCubit(getProfileUsecase: gh<_i1028.GetProfileUsecase>()),
+    );
     gh.lazySingleton<_i850.LoginRepository>(
       () => _i139.LoginRepositoryImpl(
         api: gh<_i425.ApiService>(),
@@ -318,6 +324,8 @@ extension GetItInjectableX on _i174.GetIt {
 
   _i1028.GetProfileUsecase get getProfileUsecase =>
       get<_i1028.GetProfileUsecase>();
+
+  _i602.ProfileCubit get profileCubit => get<_i602.ProfileCubit>();
 
   _i139.LoginRepositoryImpl get loginRepositoryImpl =>
       get<_i139.LoginRepositoryImpl>();

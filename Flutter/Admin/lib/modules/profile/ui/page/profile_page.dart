@@ -5,13 +5,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
-import '../../../../core/widgets/buttons/text_button/text_button_component.dart';
 import '../../../../core/widgets/design_system/tokens/tokens.dart';
 import '../../../main/navigation/admin_identity.dart';
 import '../../../main/navigation/admin_modules.dart';
 import '../../../main/ui/widgets/admin_account_dialog.dart';
 import '../../../main/ui/widgets/admin_page_frame.dart';
-import '../../../main/ui/widgets/admin_preferences.dart';
 
 /// The signed-in administrator's profile, security controls and permissions.
 final class ProfilePage extends HookWidget {
@@ -20,22 +18,11 @@ final class ProfilePage extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.localeKeys;
-    final twoFactorEnabled = useState(false);
 
     final accountCard = _AccountCard(
       onEdit: () => _notify(context, l10n.profileEditNotReady),
     );
     final permissionsCard = _PermissionsCard();
-    final securityCard = _SecurityCard(
-      twoFactorEnabled: twoFactorEnabled.value,
-      onToggleTwoFactor: (value) {
-        twoFactorEnabled.value = value;
-        _notify(
-          context,
-          value ? l10n.profileTwoFactorOn : l10n.profileTwoFactorOff,
-        );
-      },
-    );
     final signOutCard = _SignOutCard(
       onSignOut: () => unawaited(_confirmSignOut(context)),
     );
@@ -71,11 +58,7 @@ final class ProfilePage extends HookWidget {
                     flex: 2,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        securityCard,
-                        const SizedBox(height: AppSpacing.large),
-                        signOutCard,
-                      ],
+                      children: [signOutCard],
                     ),
                   ),
                 ],
@@ -85,8 +68,6 @@ final class ProfilePage extends HookWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 accountCard,
-                const SizedBox(height: AppSpacing.large),
-                securityCard,
                 const SizedBox(height: AppSpacing.large),
                 permissionsCard,
                 const SizedBox(height: AppSpacing.large),
@@ -203,72 +184,6 @@ final class _AccountCard extends StatelessWidget {
             label: l10n.profileMemberSince,
             value: l10n.profileMemberSinceValue,
             icon: LucideIcons.calendarDays,
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-final class _SecurityCard extends StatelessWidget {
-  const _SecurityCard({
-    required this.twoFactorEnabled,
-    required this.onToggleTwoFactor,
-  });
-
-  final bool twoFactorEnabled;
-  final ValueChanged<bool> onToggleTwoFactor;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.localeKeys;
-
-    return AdminSurfaceCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          AdminSectionHeading(
-            title: l10n.profileSecurity,
-            icon: LucideIcons.shieldCheck,
-          ),
-          const SizedBox(height: AppSpacing.large),
-          AdminPreferenceRow(
-            icon: LucideIcons.lock,
-            label: l10n.profileChangePassword,
-            description: l10n.profileChangePasswordDescription,
-            controlWidth: 170,
-            control: TextButtonComponent(
-              onPressed: () => _notify(context, l10n.profilePasswordNotReady),
-              label: l10n.profileChangePassword,
-            ),
-          ),
-          Divider(
-            height: AppSpacing.xLarge,
-            color: Theme.of(context).colorScheme.outlineVariant,
-          ),
-          AdminPreferenceRow(
-            icon: LucideIcons.shieldCheck,
-            label: l10n.profileTwoFactor,
-            description: l10n.profileTwoFactorDescription,
-            controlWidth: 70,
-            control: Switch.adaptive(
-              value: twoFactorEnabled,
-              onChanged: onToggleTwoFactor,
-            ),
-          ),
-          Divider(
-            height: AppSpacing.xLarge,
-            color: Theme.of(context).colorScheme.outlineVariant,
-          ),
-          AdminPreferenceRow(
-            icon: LucideIcons.monitorSmartphone,
-            label: l10n.profileSessions,
-            description: l10n.profileSessionsDescription,
-            controlWidth: 170,
-            control: OutlinedButton(
-              onPressed: () => _notify(context, l10n.profileSessionsCleared),
-              child: Text(l10n.profileSessions),
-            ),
           ),
         ],
       ),
