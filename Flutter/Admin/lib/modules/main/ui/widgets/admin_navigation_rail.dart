@@ -9,6 +9,7 @@ import '../../../../core/widgets/design_system/tokens/tokens.dart';
 import '../../navigation/admin_module.dart';
 import '../../navigation/admin_modules.dart';
 import 'admin_account_dialog.dart';
+import 'admin_brand_mark.dart';
 import 'admin_page_frame.dart';
 
 /// Adaptive navigation rail used as the admin workspace's primary navigation.
@@ -118,21 +119,6 @@ final class _RailHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
-    final brandMark = DecoratedBox(
-      decoration: BoxDecoration(
-        color: colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(9),
-        child: Icon(
-          LucideIcons.store,
-          size: 22,
-          color: colorScheme.onPrimaryContainer,
-        ),
-      ),
-    );
     final toggle = IconButton(
       onPressed: onToggleExtended,
       tooltip: extended

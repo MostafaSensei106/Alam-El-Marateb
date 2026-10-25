@@ -1,5 +1,6 @@
-package com.mostafasensei.alamelmarateb.modules.security.application
+package com.mostafasensei.alamelmarateb.modules.auth.application
 
+import com.mostafasensei.alamelmarateb.modules.security.application.IdentityService
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
@@ -8,6 +9,7 @@ import java.util.UUID
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertTrue
+
 @SpringBootTest
 @Transactional
 class AuthFlowTest {

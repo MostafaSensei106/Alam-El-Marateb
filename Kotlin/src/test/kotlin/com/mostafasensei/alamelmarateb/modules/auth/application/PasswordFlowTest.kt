@@ -1,4 +1,4 @@
-package com.mostafasensei.alamelmarateb.modules.security.application
+package com.mostafasensei.alamelmarateb.modules.auth.application
 
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.security.JwtTokenProvider
