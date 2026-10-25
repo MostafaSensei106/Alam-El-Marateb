@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 
+import '../../../modules/accounting/data/models/balance_sheet_response_data.dart';
 import '../../../modules/login/data/models/login_request_body.dart';
 import '../../../modules/login/data/models/login_response_data.dart';
 import '../../../modules/login/data/models/refresh_token_request_body.dart';
@@ -31,4 +32,11 @@ abstract class ApiService {
   @GET(ApiRoutes.authMe)
   @Extra({SecurityConfigs.requireToken: true})
   Future<ApiResponse<AuthProfileResponseData>> authMe();
+
+  /// Accounting
+  @GET(ApiRoutes.accountingBalanceSheet)
+  @Extra({SecurityConfigs.requireToken: true})
+  Future<ApiResponse<BalanceSheetResponseData>> balanceSheet(
+    @Query('to') String to,
+  );
 }

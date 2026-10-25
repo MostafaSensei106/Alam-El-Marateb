@@ -19,7 +19,7 @@ final class BalanceSheetResponseData {
   Map<String, dynamic> toJson() => _$BalanceSheetResponseDataToJson(this);
 
   final String asOf;
-  final int assets;
-  final int liabilities;
-  final int equity;
+  final num assets;
+  final num liabilities;
+  final num equity;
 }
