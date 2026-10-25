@@ -518,7 +518,7 @@ class AccountingService(
     // ---- Mappers ----
 
     private fun ChartOfAccountJpaEntity.toView() = AccountView(
-        code, nameAr, nameEn, type, parentCode, branchId,
+        code, nameAr, type, parentCode, branchId,
     )
 
     private fun JournalLineJpaEntity.toView() = JournalLineView(id, accountCode, debit, credit)

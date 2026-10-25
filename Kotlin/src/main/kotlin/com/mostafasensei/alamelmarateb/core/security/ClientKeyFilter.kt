@@ -1,6 +1,7 @@
 package com.mostafasensei.alamelmarateb.core.security
 
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
+import com.mostafasensei.alamelmarateb.core.web.HtmlErrorRenderer
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpMethod
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
@@ -29,6 +31,7 @@ import java.security.MessageDigest
 @Order(Ordered.HIGHEST_PRECEDENCE + 2)
 class ClientKeyFilter(
     private val objectMapper: ObjectMapper,
+    private val html: HtmlErrorRenderer,
     @Value("\${app.clients.enabled:true}") private val enabled: Boolean,
     @Value("\${app.clients.keys:dev-local-key}") keys: String,
     @Value("\${app.docs.enabled:true}") private val docsEnabled: Boolean,
@@ -40,6 +43,7 @@ class ClientKeyFilter(
     companion object {
         const val CLIENT_HEADER = "X-Api-Client"
         const val KEY_HEADER = "X-Api-Key"
+        private const val ERROR_CODE_HEADER = "X-Error-Code"
 
         private val ALWAYS_EXEMPT_PREFIXES = listOf(
             "/actuator/health",
@@ -67,7 +71,7 @@ class ClientKeyFilter(
         val client = request.getHeader(CLIENT_HEADER)?.trim().orEmpty()
         val key = request.getHeader(KEY_HEADER)?.trim().orEmpty()
         if (client.isEmpty() || !isValid(key)) {
-            reject(response)
+            reject(request, response)
             return
         }
         chain.doFilter(request, response)
@@ -94,7 +98,13 @@ class ClientKeyFilter(
         }
     }
 
-    private fun reject(response: HttpServletResponse) {
+    private fun reject(request: HttpServletRequest, response: HttpServletResponse) {
+        // Browser-like caller (no Accept / text/html) gets a static page.
+        if (html.wantsHtml(request)) {
+            response.setHeader(ERROR_CODE_HEADER, "CLIENT_REJECTED")
+            html.write(response, request, HttpStatus.UNAUTHORIZED)
+            return
+        }
         response.contentType = MediaType.APPLICATION_JSON_VALUE
         response.status = HttpServletResponse.SC_UNAUTHORIZED
         objectMapper.writeValue(

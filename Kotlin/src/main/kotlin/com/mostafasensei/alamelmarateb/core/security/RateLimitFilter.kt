@@ -3,6 +3,7 @@ package com.mostafasensei.alamelmarateb.core.security
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.i18n.AppLocaleResolver
 import com.mostafasensei.alamelmarateb.core.i18n.MessageService
+import com.mostafasensei.alamelmarateb.core.web.HtmlErrorRenderer
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.Ordered
 import org.springframework.core.annotation.Order
 import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.stereotype.Component
 import org.springframework.web.filter.OncePerRequestFilter
@@ -27,6 +29,7 @@ class RateLimitFilter(
     private val msg: MessageService,
     private val locales: AppLocaleResolver,
     private val limiter: RedisRateLimiter,
+    private val html: HtmlErrorRenderer,
     @Value("\${app.rate-limit.enabled:true}") private val enabled: Boolean,
     @Value("\${app.rate-limit.login-per-minute:10}") private val loginPerMinute: Int,
     @Value("\${app.rate-limit.preview-per-minute:60}") private val previewPerMinute: Int,
@@ -50,9 +53,14 @@ class RateLimitFilter(
 
         if (!verdict.allowed) {
             val retryAfter = verdict.retryAfterSeconds.coerceAtLeast(1)
+            response.setHeader(HttpHeaders.RETRY_AFTER, retryAfter.toString())
+            if (html.wantsHtml(request)) {
+                response.setHeader(ERROR_CODE_HEADER, "RATE_LIMITED")
+                html.write(response, request, HttpStatus.TOO_MANY_REQUESTS)
+                return
+            }
             response.contentType = MediaType.APPLICATION_JSON_VALUE
             response.status = 429
-            response.setHeader(HttpHeaders.RETRY_AFTER, retryAfter.toString())
             val locale = locales.resolveLocale(request)
             val body = ApiResponse.failure<Nothing>(
                 message = msg.get("error.rate_limited", locale),
@@ -82,5 +90,9 @@ class RateLimitFilter(
     private fun clientIp(request: HttpServletRequest): String {
         val forwarded = request.getHeader("X-Forwarded-For")?.split(",")?.firstOrNull()?.trim()
         return forwarded?.takeIf { it.isNotBlank() } ?: request.remoteAddr ?: "unknown"
+    }
+
+    private companion object {
+        private const val ERROR_CODE_HEADER = "X-Error-Code"
     }
 }

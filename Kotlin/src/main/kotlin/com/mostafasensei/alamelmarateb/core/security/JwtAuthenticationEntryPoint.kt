@@ -3,8 +3,10 @@ package com.mostafasensei.alamelmarateb.core.security
 import com.mostafasensei.alamelmarateb.core.common.api_response.ApiResponse
 import com.mostafasensei.alamelmarateb.core.i18n.AppLocaleResolver
 import com.mostafasensei.alamelmarateb.core.i18n.MessageService
+import com.mostafasensei.alamelmarateb.core.web.HtmlErrorRenderer
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.web.AuthenticationEntryPoint
@@ -17,14 +19,13 @@ class JwtAuthenticationEntryPoint(
     private val msg: MessageService,
     private val locales: AppLocaleResolver,
     private val tokenProvider: JwtTokenProvider,
+    private val html: HtmlErrorRenderer,
 ) : AuthenticationEntryPoint {
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,
         authException: AuthenticationException
     ) {
-        response.contentType = MediaType.APPLICATION_JSON_VALUE
-        response.status = HttpServletResponse.SC_UNAUTHORIZED
         // Security chain runs before MVC: resolve locale straight from the request.
         // Detail is a machine code (locale-independent) so the frontend knows
         // exactly what to do: MISSING/INVALID -> login again, EXPIRED -> refresh.
@@ -37,6 +38,15 @@ class JwtAuthenticationEntryPoint(
                 else -> "TOKEN_INVALID"
             }
         }
+
+        if (html.wantsHtml(request)) {
+            response.setHeader(ERROR_CODE_HEADER, code)
+            html.write(response, request, HttpStatus.UNAUTHORIZED)
+            return
+        }
+
+        response.contentType = MediaType.APPLICATION_JSON_VALUE
+        response.status = HttpServletResponse.SC_UNAUTHORIZED
         val body = ApiResponse.failure<Nothing>(
             message = msg.get("auth.unauthorized", locales.resolveLocale(request)),
             errors = listOf(code),
@@ -45,4 +55,7 @@ class JwtAuthenticationEntryPoint(
         objectMapper.writeValue(response.outputStream, body)
     }
 
+    private companion object {
+        private const val ERROR_CODE_HEADER = "X-Error-Code"
+    }
 }
