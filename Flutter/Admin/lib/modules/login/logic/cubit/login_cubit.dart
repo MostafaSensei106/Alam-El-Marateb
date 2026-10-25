@@ -8,24 +8,21 @@ import 'login_state.dart';
 
 @injectable
 final class LoginCubit extends CubitSignal<LoginState> {
-  LoginCubit(this._u)
+  LoginCubit(this._loginUsecase)
     : super(initialState: const LoginState.initial(LoginFormState()));
 
-  final LoginUsecase _u;
+  final LoginUsecase _loginUsecase;
 
   Future<void> login() async {
     if (state is Loading || !state.value.formState.isValid) return;
-
     emit(LoginState.loading(state.value.formState));
-
     final p = LoginParams(
       phone: state.value.formState.phone.value,
       password: state.value.formState.password.value,
       rememberMe: state.value.formState.rememberMe,
     );
 
-    final response = await _u.call(p);
-
+    final response = await _loginUsecase.call(p);
     response.when(
       success: (s) => emit(LoginState.success(state.value.formState, data: s)),
       failure: (e) =>
