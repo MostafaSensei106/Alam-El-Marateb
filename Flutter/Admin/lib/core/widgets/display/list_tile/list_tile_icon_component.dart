@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../../constants/app_config.dart';
+import '../../../extensions/extensions.dart';
 import 'list_tile_component.dart';
 
 final class ListTileIconComponent extends StatelessWidget {
@@ -65,10 +66,14 @@ final class ListTileIconComponent extends StatelessWidget {
     final iconWidget = Container(
       padding: const EdgeInsets.all(AppConfig.paddingHalf),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(20),
       ),
-      child: Icon(leading, size: AppConfig.iconSize, color: Colors.white),
+      child: Icon(
+        leading,
+        size: AppConfig.iconSize,
+        color: context.colorScheme.onPrimaryContainer,
+      ),
     );
 
     switch (groupType) {

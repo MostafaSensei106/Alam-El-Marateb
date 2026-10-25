@@ -35,44 +35,67 @@ final class AdminNavigationDrawer extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final modules = AdminModules.all(l10n);
 
-    return Drawer(
-      backgroundColor: colorScheme.surfaceContainer,
-      child: SafeArea(
-        child: Column(
-          children: [
-            const _DrawerHeader(),
-            const Divider(height: 1),
-            Expanded(
-              child: ListView(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.small,
-                  vertical: AppSpacing.small,
+    return SizedBox(
+      width: MediaQuery.sizeOf(context).width * 0.85,
+      child: Drawer(
+        backgroundColor: colorScheme.surface,
+        child: SafeArea(
+          child: Column(
+            children: [
+              const _DrawerHeader(),
+              Expanded(
+                child: ListView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.small,
+                    vertical: AppSpacing.small,
+                  ),
+                  children: [
+                    for (final (index, module) in modules.indexed)
+                      if (index == 0)
+                        ListTileIconComponent.top(
+                          selected: index == selectedIndex,
+                          leading: module.icon,
+                          title: module.label,
+                          subtitle: module.description,
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            onDestinationSelected(index);
+                          },
+                        )
+                      else if (index == modules.length - 1)
+                        ListTileIconComponent.bottom(
+                          selected: index == selectedIndex,
+                          leading: module.icon,
+                          title: module.label,
+                          subtitle: module.description,
+                          trailing: const Icon(LucideIcons.chevronRight),
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            onDestinationSelected(index);
+                          },
+                        )
+                      else
+                        ListTileIconComponent.middle(
+                          selected: index == selectedIndex,
+                          leading: module.icon,
+                          title: module.label,
+                          subtitle: module.description,
+                          onTap: () {
+                            Navigator.of(context).pop();
+                            onDestinationSelected(index);
+                          },
+                        ),
+                  ],
                 ),
-                children: [
-                  for (final (index, module) in modules.indexed)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 2),
-                      child: ListTileIconComponent(
-                        selected: index == selectedIndex,
-                        leading: module.icon,
-                        title: module.label,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                          onDestinationSelected(index);
-                        },
-                      ),
-                    ),
-                ],
               ),
-            ),
-            const Divider(height: 1),
-            _DrawerProfileTile(
-              onTap: () {
-                Navigator.of(context).pop();
-                onOpenAccount();
-              },
-            ),
-          ],
+              _DrawerProfileTile(
+                onTap: () {
+                  Navigator.of(context).pop();
+                  onOpenAccount();
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );
