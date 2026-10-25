@@ -547,7 +547,7 @@ void main() {
       503: (ErrorType.serverError, HttpMessages.serviceUnavailable),
       504: (ErrorType.serverError, HttpMessages.gatewayTimeout),
       499: (ErrorType.clientError, HttpMessages.badRequest),
-      599: (ErrorType.serverError, HttpMessages.internalServerError),
+      599: (ErrorType.serverError, HttpMessages.networkConnectTimeoutError),
     };
 
     statusCases.forEach((status, expected) {

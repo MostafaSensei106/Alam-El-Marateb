@@ -1,4 +1,6 @@
-// @TestOn('browser')
+@TestOn('browser')
+library;
+
 import 'package:alam_el_marateb_admin/core/constants/http_messages.dart';
 import 'package:alam_el_marateb_admin/core/networking/api_error_handler.dart';
 import 'package:alam_el_marateb_admin/core/networking/error_type.dart';
