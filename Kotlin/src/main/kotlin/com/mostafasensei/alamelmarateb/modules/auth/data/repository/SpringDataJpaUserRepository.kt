@@ -1,8 +1,7 @@
-package com.mostafasensei.alamelmarateb.modules.security.data.repository
+package com.mostafasensei.alamelmarateb.modules.auth.data.repository
 
-import com.mostafasensei.alamelmarateb.modules.security.domain.entity.BranchJpaEntity
-import com.mostafasensei.alamelmarateb.modules.security.domain.entity.RoleJpaEntity
-import com.mostafasensei.alamelmarateb.modules.security.domain.entity.UserJpaEntity
+import com.mostafasensei.alamelmarateb.modules.auth.domain.entity.RoleJpaEntity
+import com.mostafasensei.alamelmarateb.modules.auth.domain.entity.UserJpaEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.Optional

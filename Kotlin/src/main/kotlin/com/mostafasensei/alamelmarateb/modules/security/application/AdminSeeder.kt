@@ -1,10 +1,10 @@
 package com.mostafasensei.alamelmarateb.modules.security.application
 
 import com.mostafasensei.alamelmarateb.core.security.AppRole
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.SpringDataJpaRoleRepository
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.SpringDataJpaUserRepository
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.SpringDataJpaRoleRepository
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.SpringDataJpaUserRepository
 import com.mostafasensei.alamelmarateb.modules.security.domain.entity.BranchJpaEntity
-import com.mostafasensei.alamelmarateb.modules.security.domain.entity.UserJpaEntity
+import com.mostafasensei.alamelmarateb.modules.auth.domain.entity.UserJpaEntity
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.CommandLineRunner

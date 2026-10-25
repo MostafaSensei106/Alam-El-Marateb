@@ -2,8 +2,8 @@ package com.mostafasensei.alamelmarateb.modules.security.application
 
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.security.JwtTokenProvider
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.PasswordResetTokenRepository
-import com.mostafasensei.alamelmarateb.modules.security.domain.entity.PasswordResetTokenJpaEntity
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.PasswordResetTokenRepository
+import com.mostafasensei.alamelmarateb.modules.auth.domain.entity.PasswordResetTokenJpaEntity
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

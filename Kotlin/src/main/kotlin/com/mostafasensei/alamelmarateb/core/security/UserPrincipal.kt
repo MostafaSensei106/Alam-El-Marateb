@@ -1,6 +1,6 @@
 package com.mostafasensei.alamelmarateb.core.security
 
-import com.mostafasensei.alamelmarateb.modules.security.data.models.User
+import com.mostafasensei.alamelmarateb.modules.auth.data.models.User
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

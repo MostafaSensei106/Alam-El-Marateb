@@ -1,4 +1,4 @@
-package com.mostafasensei.alamelmarateb.modules.security.application
+package com.mostafasensei.alamelmarateb.modules.auth.application
 
 import com.mostafasensei.alamelmarateb.core.audit.AuditLogService
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
@@ -8,13 +8,13 @@ import com.mostafasensei.alamelmarateb.core.security.JwtTokenProvider
 import com.mostafasensei.alamelmarateb.core.security.AppRole
 import com.mostafasensei.alamelmarateb.core.security.UserPrincipal
 import com.mostafasensei.alamelmarateb.modules.notifications.application.NotificationService
-import com.mostafasensei.alamelmarateb.modules.security.data.models.Role
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.PasswordResetTokenRepository
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.SpringDataJpaRoleRepository
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.SpringDataJpaUserRepository
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.UserRepository
-import com.mostafasensei.alamelmarateb.modules.security.domain.entity.PasswordResetTokenJpaEntity
-import com.mostafasensei.alamelmarateb.modules.security.domain.entity.UserJpaEntity
+import com.mostafasensei.alamelmarateb.modules.auth.data.models.Role
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.PasswordResetTokenRepository
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.SpringDataJpaRoleRepository
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.SpringDataJpaUserRepository
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.UserRepository
+import com.mostafasensei.alamelmarateb.modules.auth.domain.entity.PasswordResetTokenJpaEntity
+import com.mostafasensei.alamelmarateb.modules.auth.domain.entity.UserJpaEntity
 import org.slf4j.LoggerFactory
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.crypto.password.PasswordEncoder
@@ -185,7 +185,7 @@ class AuthService(
         auditLog.record("PASSWORD_RESET", "user", entity.id, entity.branchId, entity.id.toString(), null)
     }
 
-    fun managedRole(name: String): com.mostafasensei.alamelmarateb.modules.security.domain.entity.RoleJpaEntity =
+    fun managedRole(name: String): com.mostafasensei.alamelmarateb.modules.auth.domain.entity.RoleJpaEntity =
         jpaRoles.findByName(name).orElseThrow { BadRequestException("error.auth.unknown_role", listOf(name)) }
 
     private fun tokensFor(userId: UUID): TokenPair {

@@ -1,6 +1,6 @@
 package com.mostafasensei.alamelmarateb.core.security
 
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.UserRepository
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.UserRepository
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException

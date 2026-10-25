@@ -1,6 +1,6 @@
-package com.mostafasensei.alamelmarateb.modules.security.data.repository
+package com.mostafasensei.alamelmarateb.modules.auth.data.repository
 
-import com.mostafasensei.alamelmarateb.modules.security.domain.entity.PasswordResetTokenJpaEntity
+import com.mostafasensei.alamelmarateb.modules.auth.domain.entity.PasswordResetTokenJpaEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 import java.util.Optional

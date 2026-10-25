@@ -1,7 +1,7 @@
-package com.mostafasensei.alamelmarateb.modules.security.domain.entity
+package com.mostafasensei.alamelmarateb.modules.auth.domain.entity
 
 import com.mostafasensei.alamelmarateb.core.common.entity.EntityBase
-import com.mostafasensei.alamelmarateb.modules.security.data.models.User
+import com.mostafasensei.alamelmarateb.modules.auth.data.models.User
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.FetchType

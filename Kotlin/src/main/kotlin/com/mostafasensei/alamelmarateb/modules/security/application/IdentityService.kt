@@ -5,10 +5,11 @@ import com.mostafasensei.alamelmarateb.core.cache.RedisCache
 import com.mostafasensei.alamelmarateb.core.exceptions.BadRequestException
 import com.mostafasensei.alamelmarateb.core.exceptions.ConflictException
 import com.mostafasensei.alamelmarateb.core.exceptions.NotFoundException
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.SpringDataJpaRoleRepository
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.SpringDataJpaUserRepository
+import com.mostafasensei.alamelmarateb.modules.auth.application.RoleView
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.SpringDataJpaRoleRepository
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.SpringDataJpaUserRepository
 import com.mostafasensei.alamelmarateb.modules.security.domain.entity.BranchJpaEntity
-import com.mostafasensei.alamelmarateb.modules.security.domain.entity.UserJpaEntity
+import com.mostafasensei.alamelmarateb.modules.auth.domain.entity.UserJpaEntity
 import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Repository

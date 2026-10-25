@@ -18,7 +18,7 @@ import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.LeaveRequestJpaE
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.PayrollLineJpaEntity
 import com.mostafasensei.alamelmarateb.modules.hr.domain.entity.PayrollRunJpaEntity
 import com.mostafasensei.alamelmarateb.modules.sales.application.OrderService
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.UserRepository
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.UserRepository
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.math.BigDecimal

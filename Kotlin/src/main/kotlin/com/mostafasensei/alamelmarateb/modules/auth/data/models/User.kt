@@ -1,4 +1,4 @@
-package com.mostafasensei.alamelmarateb.modules.security.data.models
+package com.mostafasensei.alamelmarateb.modules.auth.data.models
 
 import java.util.UUID
 import kotlin.time.Clock

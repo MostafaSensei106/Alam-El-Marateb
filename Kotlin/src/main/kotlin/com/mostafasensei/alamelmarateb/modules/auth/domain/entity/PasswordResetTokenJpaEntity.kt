@@ -1,4 +1,4 @@
-package com.mostafasensei.alamelmarateb.modules.security.domain.entity
+package com.mostafasensei.alamelmarateb.modules.auth.domain.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity

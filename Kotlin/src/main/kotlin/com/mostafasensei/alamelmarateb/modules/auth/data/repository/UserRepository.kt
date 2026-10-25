@@ -1,7 +1,7 @@
-package com.mostafasensei.alamelmarateb.modules.security.data.repository
+package com.mostafasensei.alamelmarateb.modules.auth.data.repository
 
-import com.mostafasensei.alamelmarateb.modules.security.data.models.User
-import com.mostafasensei.alamelmarateb.modules.security.domain.entity.UserJpaEntity
+import com.mostafasensei.alamelmarateb.modules.auth.data.models.User
+import com.mostafasensei.alamelmarateb.modules.auth.domain.entity.UserJpaEntity
 import java.util.UUID
 
 interface UserRepository {

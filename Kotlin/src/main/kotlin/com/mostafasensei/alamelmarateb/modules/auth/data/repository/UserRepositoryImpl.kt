@@ -1,9 +1,9 @@
-package com.mostafasensei.alamelmarateb.modules.security.repository
+package com.mostafasensei.alamelmarateb.modules.auth.data.repository
 
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.SpringDataJpaUserRepository
-import com.mostafasensei.alamelmarateb.modules.security.data.models.User
-import com.mostafasensei.alamelmarateb.modules.security.data.repository.UserRepository
-import com.mostafasensei.alamelmarateb.modules.security.domain.entity.UserJpaEntity
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.SpringDataJpaUserRepository
+import com.mostafasensei.alamelmarateb.modules.auth.data.models.User
+import com.mostafasensei.alamelmarateb.modules.auth.data.repository.UserRepository
+import com.mostafasensei.alamelmarateb.modules.auth.domain.entity.UserJpaEntity
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 import java.util.UUID
