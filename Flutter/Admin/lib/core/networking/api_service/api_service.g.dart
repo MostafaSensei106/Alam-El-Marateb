@@ -55,7 +55,7 @@ class _ApiService implements ApiService {
 
   @override
   Future<ApiResponse<LoginResponseData>> refreshToken(
-    LoginResponseData body,
+    RefreshTokenRequestBody body,
   ) async {
     final _extra = <String, dynamic>{'requireToken': false};
     final queryParameters = <String, dynamic>{};

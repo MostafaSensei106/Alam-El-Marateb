@@ -7,4 +7,6 @@ abstract interface class LoginRepository {
     required String password,
     required bool rememberMe,
   });
+
+  Future<ApiResult<UserEntity>> refreshToken({required String token});
 }

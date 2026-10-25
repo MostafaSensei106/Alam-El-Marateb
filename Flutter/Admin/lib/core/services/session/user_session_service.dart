@@ -11,12 +11,16 @@ abstract interface class UserSessionServiceBase {
   /// app process lifetime (In-Memory).
   Future<void> saveUserSession({
     required String token,
+    required String refreshToken,
     required bool rememberMe,
   });
 
   /// Synchronously or asynchronously retrieves the cached access token.
   /// Returns `null` if the user is unauthenticated or session expired.
   Future<String?> getToken();
+
+  /// Returns the cached refresh token, or `null` when none is available.
+  Future<String?> getRefreshToken();
 
   /// Returns `true` if a valid user session exists and is not expired.
   Future<bool> isAuthenticated();
@@ -53,6 +57,7 @@ final class UserSessionService implements UserSessionServiceBase {
 
   // Hot RAM Cache
   String? _inMemoryToken;
+  String? _inMemoryRefreshToken;
 
   // Single-flight Hydration Guard
   bool _isHydrated = false;
@@ -69,14 +74,23 @@ final class UserSessionService implements UserSessionServiceBase {
     return _inMemoryToken;
   }
 
+  @override
+  Future<String?> getRefreshToken() async {
+    if (!_isHydrated) await (_hydrationFuture ??= _hydrateToken());
+    return _inMemoryRefreshToken;
+  }
+
   Future<void> _hydrateToken() async {
     try {
       final isRemembered = await isRememberMeEnabled();
 
       if (isRemembered) {
-        _inMemoryToken = await _storageFacade.getData<String>(
-          key: PrefKeys.userToken,
-        );
+        final values = await Future.wait([
+          _storageFacade.getData<String>(key: PrefKeys.userToken),
+          _storageFacade.getData<String>(key: PrefKeys.userRefreshToken),
+        ]);
+        _inMemoryToken = values[0];
+        _inMemoryRefreshToken = values[1];
       }
       _isHydrated = true;
     } finally {
@@ -99,20 +113,27 @@ final class UserSessionService implements UserSessionServiceBase {
   @override
   Future<void> saveUserSession({
     required String token,
+    required String refreshToken,
     required bool rememberMe,
   }) async {
     // Update active memory state immediately
     _inMemoryToken = token;
+    _inMemoryRefreshToken = refreshToken;
     _isHydrated = true;
 
     if (rememberMe) {
       await Future.wait([
         _storageFacade.setData<bool>(key: PrefKeys.isRememberMe, value: true),
         _storageFacade.setData<String>(key: PrefKeys.userToken, value: token),
+        _storageFacade.setData<String>(
+          key: PrefKeys.userRefreshToken,
+          value: refreshToken,
+        ),
       ]);
     } else {
       await Future.wait([
         _storageFacade.removeData(key: PrefKeys.userToken),
+        _storageFacade.removeData(key: PrefKeys.userRefreshToken),
         _storageFacade.setData<bool>(key: PrefKeys.isRememberMe, value: false),
       ]);
     }
@@ -129,6 +150,7 @@ final class UserSessionService implements UserSessionServiceBase {
 
     final results = await Future.wait([
       _storageFacade.removeData(key: PrefKeys.userToken),
+      _storageFacade.removeData(key: PrefKeys.userRefreshToken),
       _storageFacade.setData<bool>(key: PrefKeys.isRememberMe, value: false),
     ]);
 
@@ -142,6 +164,7 @@ final class UserSessionService implements UserSessionServiceBase {
   @override
   void wipeInMemoryToken() {
     _inMemoryToken = null;
+    _inMemoryRefreshToken = null;
   }
 
   @override

@@ -19,6 +19,7 @@ class StorageFacade implements BasePrefStorageService {
     PrefKeys.userToken,
     PrefKeys.fcmToken,
     PrefKeys.userId,
+    PrefKeys.userRefreshToken,
     PrefKeys.hydratedStorageEncryptionKey,
   };
 

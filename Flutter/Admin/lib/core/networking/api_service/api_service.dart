@@ -3,6 +3,7 @@ import 'package:retrofit/retrofit.dart';
 
 import '../../../modules/login/data/models/login_request_body.dart';
 import '../../../modules/login/data/models/login_response_data.dart';
+import '../../../modules/login/data/models/refresh_token_request_body.dart';
 import '../../../modules/profile/data/models/auth_profile_response_data.dart';
 import '../../constants/api_routes.dart';
 import '../../constants/security_configs.dart';
@@ -23,7 +24,7 @@ abstract class ApiService {
   @POST(ApiRoutes.authRefresh)
   @Extra({SecurityConfigs.requireToken: false})
   Future<ApiResponse<LoginResponseData>> refreshToken(
-    @Body() LoginResponseData body,
+    @Body() RefreshTokenRequestBody body,
   );
 
   /// Profile
