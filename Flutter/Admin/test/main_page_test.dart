@@ -36,16 +36,34 @@ void main() {
     await tester.pumpAndSettle();
   }
 
+  Future<void> openDrawer(WidgetTester tester) async {
+    await tester.tap(find.byKey(const ValueKey('admin-navigation-menu')));
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> selectModuleFromDrawer(WidgetTester tester, String label) async {
+    await openDrawer(tester);
+
+    final entry = find.descendant(
+      of: find.byType(Drawer),
+      matching: find.text(label),
+    );
+    final list = find.descendant(
+      of: find.byType(Drawer),
+      matching: find.byType(Scrollable),
+    );
+
+    await tester.scrollUntilVisible(entry, 120, scrollable: list);
+    await tester.ensureVisible(entry);
+    await tester.pumpAndSettle();
+    await tester.tap(entry);
+    await tester.pumpAndSettle();
+  }
+
   Future<void> openIdentityPermissions(WidgetTester tester) async {
     await pumpMainPage(tester, surfaceSize: const Size(411, 900));
 
-    final rail = find.byType(NavigationRail);
-    final identity = find.descendant(of: rail, matching: find.text('Identity'));
-
-    await tester.ensureVisible(identity);
-    await tester.pumpAndSettle();
-    await tester.tap(identity);
-    await tester.pumpAndSettle();
+    await selectModuleFromDrawer(tester, 'Identity');
 
     await openIdentityTab(tester, 'Roles and the permissions matrix');
   }
@@ -60,6 +78,7 @@ void main() {
 
     expect(tester.takeException(), isNull);
     expect(find.byType(NavigationRail), findsOneWidget);
+    expect(find.byType(Drawer), findsNothing);
     // Expanded rail shows the brand name next to the menu mark.
     expect(find.text('Alm-El-Marateb'), findsOneWidget);
   });
@@ -69,6 +88,22 @@ void main() {
 
     expect(tester.takeException(), isNull);
     expect(find.byType(NavigationRail), findsOneWidget);
+  });
+
+  testWidgets('compact windows replace the rail with a drawer', (tester) async {
+    await pumpMainPage(tester, surfaceSize: const Size(411, 900));
+
+    expect(tester.takeException(), isNull);
+    expect(find.byType(NavigationRail), findsNothing);
+
+    await openDrawer(tester);
+
+    expect(tester.takeException(), isNull);
+    expect(find.byType(Drawer), findsOneWidget);
+    expect(
+      find.descendant(of: find.byType(Drawer), matching: find.text('Identity')),
+      findsOneWidget,
+    );
   });
 
   testWidgets('rail toggles between expanded and collapsed', (tester) async {
@@ -86,7 +121,7 @@ void main() {
 
     final rail = tester.widget<NavigationRail>(find.byType(NavigationRail));
 
-    expect(rail.destinations, hasLength(13));
+    expect(rail.destinations, hasLength(14));
 
     await tester.tap(find.text('Identity'));
     await tester.pumpAndSettle();
@@ -100,20 +135,11 @@ void main() {
 
     final l10n = await AppLocalizations.delegate.load(const Locale('en'));
     final modules = AdminModules.all(l10n);
-    final rail = find.byType(NavigationRail);
 
-    expect(modules, hasLength(13));
+    expect(modules, hasLength(14));
 
     for (final module in modules.skip(1)) {
-      final label = find.descendant(
-        of: rail,
-        matching: find.text(module.label),
-      );
-
-      await tester.ensureVisible(label);
-      await tester.pumpAndSettle();
-      await tester.tap(label);
-      await tester.pumpAndSettle();
+      await selectModuleFromDrawer(tester, module.label);
 
       expect(
         tester.takeException(),
@@ -126,13 +152,7 @@ void main() {
   testWidgets('settings exposes an app info tab', (tester) async {
     await pumpMainPage(tester, surfaceSize: const Size(411, 900));
 
-    final rail = find.byType(NavigationRail);
-    final settings = find.descendant(of: rail, matching: find.text('Settings'));
-
-    await tester.ensureVisible(settings);
-    await tester.pumpAndSettle();
-    await tester.tap(settings);
-    await tester.pumpAndSettle();
+    await selectModuleFromDrawer(tester, 'Settings');
 
     final appInfoTab = find.text('App info');
     await tester.ensureVisible(appInfoTab);
@@ -223,15 +243,10 @@ void main() {
 
   testWidgets('planned sections show the pill and disable the create action', (
     tester,
-  ) async {    await pumpMainPage(tester, surfaceSize: const Size(411, 900));
+  ) async {
+    await pumpMainPage(tester, surfaceSize: const Size(411, 900));
 
-    final rail = find.byType(NavigationRail);
-    final crm = find.descendant(of: rail, matching: find.text('CRM'));
-
-    await tester.ensureVisible(crm);
-    await tester.pumpAndSettle();
-    await tester.tap(crm);
-    await tester.pumpAndSettle();
+    await selectModuleFromDrawer(tester, 'CRM');
 
     expect(tester.takeException(), isNull);
     expect(find.text('Warranty registry'), findsWidgets);

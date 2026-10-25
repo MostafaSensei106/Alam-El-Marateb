@@ -1,9 +1,11 @@
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:kaisel/kaisel.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
+import '../../../../core/router/app_router.dart';
 import '../../../../core/utils/validator/login/login_validators.dart';
 import '../../../../core/widgets/buttons/filled_button/filled_button_component.dart';
 import '../../../../core/widgets/buttons/text_button/text_button_component.dart';
@@ -207,7 +209,8 @@ final class _LoginOptionsRow extends StatelessWidget {
             TextButtonComponent(
               label: context.localeKeys.forgetPassword,
               isEnable: state is! Loading,
-              onPressed: () => context.toast.showInfo(context, 'تحت التجريب'),
+              onPressed: () =>
+                  context.router<AppRoute>().replaceTop(const MainRouteEntry()),
             ),
           ],
         );

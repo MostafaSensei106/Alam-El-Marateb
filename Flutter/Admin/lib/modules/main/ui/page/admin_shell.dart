@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
 import '../../../../core/extensions/extensions.dart';
-import '../../../../core/widgets/design_system/tokens/tokens.dart';
+import '../../../../core/widgets/navigation/app_bar/app_bar_component.dart';
 import '../../navigation/admin_module.dart';
 import '../../navigation/admin_modules.dart';
 import '../widgets/admin_account_dialog.dart';
 import '../widgets/admin_navigation_drawer.dart';
 import '../widgets/admin_navigation_rail.dart';
-import '../widgets/admin_page_frame.dart';
 
 /// Chrome shared by every admin branch: navigation plus the active branch
 /// content.
@@ -65,7 +64,7 @@ final class AdminShell extends StatelessWidget {
     final module = AdminModules.all(l10n)[selectedIndex];
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBarComponent(
         leading: Builder(
           builder: (context) => IconButton(
             key: const ValueKey('admin-navigation-menu'),
@@ -74,26 +73,7 @@ final class AdminShell extends StatelessWidget {
             icon: const Icon(LucideIcons.menu),
           ),
         ),
-        title: Text(
-          module.title,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-        actions: [
-          IconButton(
-            tooltip: l10n.openAccountMenu,
-            onPressed: () {
-              unawaited(
-                showAdminAccountDialog(
-                  context,
-                  onSelectModule: onSelectModule,
-                ),
-              );
-            },
-            icon: AdminAvatar(name: l10n.adminDisplayName, size: 28),
-          ),
-          const SizedBox(width: AppSpacing.small),
-        ],
+        title: module.title,
       ),
       drawer: AdminNavigationDrawer(
         selectedIndex: selectedIndex,
