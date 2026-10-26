@@ -7,9 +7,9 @@ import '../../data/interface/accounting_reposiory.dart';
 import '../entity/accounting_balance_sheet_entity.dart';
 
 @injectable
-final class GetAccountingBalanceSheetUsecase
+final class GetBalanceSheetUsecase
     implements UseCaseBase<AccountingBalanceSheetEntity, String> {
-  const GetAccountingBalanceSheetUsecase({required this._repo});
+  const GetBalanceSheetUsecase({required this._repo});
 
   final AccountingReposiory _repo;
   @override

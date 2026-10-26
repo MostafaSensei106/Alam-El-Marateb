@@ -93,10 +93,14 @@ import 'package:alam_el_marateb_admin/core/utils/theme/logic/cubit/theme_cubit.d
     as _i573;
 import 'package:alam_el_marateb_admin/modules/accounting/data/interface/accounting_reposiory.dart'
     as _i113;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_balance_sheet_cubit.dart'
+    as _i1002;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_balance_sheet_state.dart'
+    as _i378;
 import 'package:alam_el_marateb_admin/modules/accounting/logic/repository/accounting_reposiory_impl.dart'
     as _i801;
-import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/get_accounting_balance_sheet_usecase.dart'
-    as _i1020;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/get_balance_sheet_usecase.dart'
+    as _i670;
 import 'package:alam_el_marateb_admin/modules/login/data/interface/login_repository.dart'
     as _i850;
 import 'package:alam_el_marateb_admin/modules/login/logic/cubit/login_cubit.dart'
@@ -257,10 +261,8 @@ extension GetItInjectableX on _i174.GetIt {
         session: gh<_i173.UserSessionServiceBase>(),
       ),
     );
-    gh.factory<_i1020.GetAccountingBalanceSheetUsecase>(
-      () => _i1020.GetAccountingBalanceSheetUsecase(
-        repo: gh<_i113.AccountingReposiory>(),
-      ),
+    gh.factory<_i670.GetBalanceSheetUsecase>(
+      () => _i670.GetBalanceSheetUsecase(repo: gh<_i113.AccountingReposiory>()),
     );
     gh.factory<_i172.LoginUsecase>(
       () => _i172.LoginUsecase(repo: gh<_i850.LoginRepository>()),
@@ -270,6 +272,12 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.factory<_i826.LoginCubit>(
       () => _i826.LoginCubit(gh<_i172.LoginUsecase>()),
+    );
+    gh.factory<_i1002.AccountingBalanceSheetCubit>(
+      () => _i1002.AccountingBalanceSheetCubit(
+        getBalanceSheetUsecase: gh<_i670.GetBalanceSheetUsecase>(),
+        initialState: gh<_i378.AccountingBalanceSheetState>(),
+      ),
     );
     return this;
   }
@@ -352,9 +360,8 @@ extension GetItInjectableX on _i174.GetIt {
   _i139.LoginRepositoryImpl get loginRepositoryImpl =>
       get<_i139.LoginRepositoryImpl>();
 
-  _i1020.GetAccountingBalanceSheetUsecase
-  get getAccountingBalanceSheetUsecase =>
-      get<_i1020.GetAccountingBalanceSheetUsecase>();
+  _i670.GetBalanceSheetUsecase get getBalanceSheetUsecase =>
+      get<_i670.GetBalanceSheetUsecase>();
 
   _i172.LoginUsecase get loginUsecase => get<_i172.LoginUsecase>();
 
@@ -362,6 +369,9 @@ extension GetItInjectableX on _i174.GetIt {
       get<_i752.RefreshTokenUsecase>();
 
   _i826.LoginCubit get loginCubit => get<_i826.LoginCubit>();
+
+  _i1002.AccountingBalanceSheetCubit get accountingBalanceSheetCubit =>
+      get<_i1002.AccountingBalanceSheetCubit>();
 }
 
 class _$InjectionModule extends _i441.InjectionModule {}
