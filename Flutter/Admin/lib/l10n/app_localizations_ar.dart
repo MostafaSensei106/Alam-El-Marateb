@@ -531,10 +531,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountingFeature3 => 'الخزائن والبنوك والتحويلات المالية';
 
   @override
-  String get accountingFeature4 => 'المصروفات والشيكات';
+  String get accountingFeature4 => 'المصروفات والمدفوعات';
 
   @override
   String get accountingFeature5 => 'قائمة الدخل والميزانية والتقارير الضريبية';
+
+  @override
+  String get accountingFeature6 => 'الشيكات الواردة والصادرة';
 
   @override
   String get marketingTitle => 'التسويق';
@@ -3373,4 +3376,452 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get opsStep18 => 'أكد مع مدير الفرع';
+
+  @override
+  String get accountingSave => 'حفظ';
+
+  @override
+  String get accountingBack => 'رجوع';
+
+  @override
+  String get accountingEdit => 'تعديل';
+
+  @override
+  String get accountingAmount => 'المبلغ';
+
+  @override
+  String get accountingDate => 'التاريخ';
+
+  @override
+  String get accountingStatus => 'الحالة';
+
+  @override
+  String get accountingType => 'النوع';
+
+  @override
+  String get accountingName => 'الاسم';
+
+  @override
+  String get accountingCode => 'الكود';
+
+  @override
+  String get accountingBalance => 'الرصيد';
+
+  @override
+  String get accountingBranch => 'الفرع';
+
+  @override
+  String get accountingNotes => 'ملاحظات';
+
+  @override
+  String get accountingReference => 'المرجع';
+
+  @override
+  String get accountingParty => 'الطرف';
+
+  @override
+  String get accountingDirection => 'الاتجاه';
+
+  @override
+  String get accountingSource => 'المصدر';
+
+  @override
+  String get accountingCategory => 'الفئة';
+
+  @override
+  String get accountingFrom => 'من';
+
+  @override
+  String get accountingTo => 'إلى';
+
+  @override
+  String get accountingTotal => 'الإجمالي';
+
+  @override
+  String get accountingDebit => 'مدين';
+
+  @override
+  String get accountingCredit => 'دائن';
+
+  @override
+  String get accountingOpeningBalance => 'الرصيد الافتتاحي';
+
+  @override
+  String get accountingApprovedBy => 'اعتماد';
+
+  @override
+  String get accountingReceipt => 'الإيصال';
+
+  @override
+  String get accountingDueDate => 'تاريخ الاستحقاق';
+
+  @override
+  String get accountingPeriod => 'الفترة';
+
+  @override
+  String get accountingAccount => 'الحساب';
+
+  @override
+  String get accountingTotalDebit => 'إجمالي المدين';
+
+  @override
+  String get accountingTotalCredit => 'إجمالي الدائن';
+
+  @override
+  String get accountingBalanced => 'متوازن';
+
+  @override
+  String get accountingUnbalanced => 'غير متوازن';
+
+  @override
+  String get accountingRunningBalance => 'الرصيد الجاري';
+
+  @override
+  String get accountingAccountCode => 'كود الحساب';
+
+  @override
+  String get accountingNewAccount => 'حساب جديد';
+
+  @override
+  String get accountingAccountDetails => 'تفاصيل الحساب';
+
+  @override
+  String get accountingAccountType => 'نوع الحساب';
+
+  @override
+  String get accountingParentAccount => 'الحساب الأب';
+
+  @override
+  String get accountingParentCode => 'كود الحساب الأب';
+
+  @override
+  String get accountingNameAr => 'الاسم بالعربية';
+
+  @override
+  String get accountingNameEn => 'الاسم بالإنجليزية';
+
+  @override
+  String get accountingMetricAccounts => 'الحسابات';
+
+  @override
+  String get accountingMetricAssets => 'الأصول';
+
+  @override
+  String get accountingMetricLiabilities => 'الالتزامات';
+
+  @override
+  String get accountingMetricEquity => 'حقوق الملكية';
+
+  @override
+  String get accountingMetricRevenue => 'الإيرادات';
+
+  @override
+  String get accountingMetricExpenses => 'المصروفات';
+
+  @override
+  String get accountingMetricCogs => 'تكلفة المبيعات';
+
+  @override
+  String get accountingMetricNetProfit => 'صافي الربح';
+
+  @override
+  String get accountingMetricVat => 'ضريبة القيمة المضافة';
+
+  @override
+  String get accountingSearchAccounts => 'ابحث بالاسم أو الكود';
+
+  @override
+  String get accountingTypeAsset => 'أصول';
+
+  @override
+  String get accountingTypeLiability => 'التزامات';
+
+  @override
+  String get accountingTypeEquity => 'حقوق الملكية';
+
+  @override
+  String get accountingTypeRevenue => 'إيرادات';
+
+  @override
+  String get accountingTypeExpense => 'مصروفات';
+
+  @override
+  String get accountingNewEntry => 'قيد جديد';
+
+  @override
+  String get accountingEntryDetails => 'تفاصيل القيد';
+
+  @override
+  String get accountingEntryDate => 'تاريخ القيد';
+
+  @override
+  String get accountingMemo => 'البيان';
+
+  @override
+  String get accountingLines => 'البنود';
+
+  @override
+  String get accountingAddLine => 'إضافة بند';
+
+  @override
+  String get accountingViewEntries => 'قيود اليومية';
+
+  @override
+  String get accountingViewLedger => 'دفتر الأستاذ';
+
+  @override
+  String get accountingMetricEntries => 'القيود';
+
+  @override
+  String get accountingSearchJournal => 'ابحث بالبيان أو المرجع';
+
+  @override
+  String get accountingSearchLedger => 'ابحث بالحساب أو المرجع';
+
+  @override
+  String get accountingSourceManual => 'قيد يدوي';
+
+  @override
+  String get accountingSourceSales => 'مبيعات';
+
+  @override
+  String get accountingSourcePurchasing => 'مشتريات';
+
+  @override
+  String get accountingSourceExpense => 'مصروفات';
+
+  @override
+  String get accountingSourceTransfer => 'تحويل';
+
+  @override
+  String get accountingNewTreasury => 'خزينة جديدة';
+
+  @override
+  String get accountingTreasuryDetails => 'تفاصيل الخزينة';
+
+  @override
+  String get accountingViewTreasuries => 'الخزائن';
+
+  @override
+  String get accountingViewTransfers => 'التحويلات';
+
+  @override
+  String get accountingNewTransfer => 'تحويل جديد';
+
+  @override
+  String get accountingTransferDetails => 'تفاصيل التحويل';
+
+  @override
+  String get accountingTransferFrom => 'من خزينة';
+
+  @override
+  String get accountingTransferTo => 'إلى خزينة';
+
+  @override
+  String get accountingMetricTreasuries => 'الخزائن';
+
+  @override
+  String get accountingMetricTotalBalance => 'إجمالي الأرصدة';
+
+  @override
+  String get accountingMetricTransfers => 'التحويلات';
+
+  @override
+  String get accountingSearchTreasuries => 'ابحث في الخزائن';
+
+  @override
+  String get accountingSearchTransfers => 'ابحث في التحويلات';
+
+  @override
+  String get accountingNewExpense => 'مصروف جديد';
+
+  @override
+  String get accountingExpenseDetails => 'تفاصيل المصروف';
+
+  @override
+  String get accountingReceiptAttached => 'إيصال مرفق';
+
+  @override
+  String get accountingNoReceipt => 'لا يوجد إيصال مرفق';
+
+  @override
+  String get accountingApprovalPending => 'بانتظار الاعتماد';
+
+  @override
+  String get accountingMetricPendingReview => 'بانتظار الاعتماد';
+
+  @override
+  String get accountingSearchExpenses => 'ابحث في المصروفات';
+
+  @override
+  String get accountingCategoryRent => 'إيجار';
+
+  @override
+  String get accountingCategorySalaries => 'رواتب';
+
+  @override
+  String get accountingCategoryUtilities => 'مرافق';
+
+  @override
+  String get accountingCategoryMarketing => 'تسويق';
+
+  @override
+  String get accountingCategoryMaintenance => 'صيانة';
+
+  @override
+  String get accountingCategoryTransport => 'نقل';
+
+  @override
+  String get accountingCategorySupplies => 'مستلزمات';
+
+  @override
+  String get accountingNewCheck => 'شيك جديد';
+
+  @override
+  String get accountingCheckDetails => 'تفاصيل الشيك';
+
+  @override
+  String get accountingMetricChecks => 'الشيكات';
+
+  @override
+  String get accountingMetricHeld => 'معلقة';
+
+  @override
+  String get accountingMetricCashed => 'محصلة';
+
+  @override
+  String get accountingMetricBounced => 'مرتجعة';
+
+  @override
+  String get accountingMetricIncoming => 'واردة';
+
+  @override
+  String get accountingMetricOutgoing => 'صادرة';
+
+  @override
+  String get accountingMetricDueSoon => 'قريبة الاستحقاق';
+
+  @override
+  String get accountingDirectionIn => 'وارد';
+
+  @override
+  String get accountingDirectionOut => 'صادر';
+
+  @override
+  String get accountingStatusHeld => 'معلق';
+
+  @override
+  String get accountingStatusCashed => 'محصل';
+
+  @override
+  String get accountingStatusBounced => 'مرتجع';
+
+  @override
+  String get accountingStatusReturned => 'مرتد';
+
+  @override
+  String get accountingSearchChecks => 'ابحث بالطرف أو الحالة';
+
+  @override
+  String get accountingReportProfitLoss => 'قائمة الدخل';
+
+  @override
+  String get accountingReportBalanceSheet => 'الميزانية العمومية';
+
+  @override
+  String get accountingReportTax => 'التقرير الضريبي';
+
+  @override
+  String get accountingReportAsOf => 'كما في';
+
+  @override
+  String get accountingReportRevenueInclusive => 'الإيرادات شاملة الضريبة';
+
+  @override
+  String get accountingReportGrossProfit => 'الربح الإجمالي';
+
+  @override
+  String get accountingBalanceSheetEquation =>
+      'الأصول = الالتزامات + حقوق الملكية';
+
+  @override
+  String get accountingAccountCash => 'النقدية بالصندوق';
+
+  @override
+  String get accountingAccountBank => 'بنك - الأهلي';
+
+  @override
+  String get accountingAccountReceivables => 'العملاء';
+
+  @override
+  String get accountingAccountInventory => 'المخزون';
+
+  @override
+  String get accountingAccountPayables => 'الموردون';
+
+  @override
+  String get accountingAccountVatPayable => 'ضريبة القيمة المضافة المستحقة';
+
+  @override
+  String get accountingAccountCapital => 'رأس المال';
+
+  @override
+  String get accountingAccountRetained => 'أرباح محتجزة';
+
+  @override
+  String get accountingAccountSalesRevenue => 'إيرادات المبيعات';
+
+  @override
+  String get accountingAccountCogs => 'تكلفة المبيعات';
+
+  @override
+  String get accountingAccountRent => 'مصروف الإيجار';
+
+  @override
+  String get accountingAccountSalaries => 'مصروف الرواتب';
+
+  @override
+  String get accountingAccountUtilities => 'مصروف المرافق';
+
+  @override
+  String get accountingAccountMarketing => 'مصروف التسويق';
+
+  @override
+  String get accountingAccountPettyCash => 'النثريات';
+
+  @override
+  String get accountingTreasuryMain => 'الخزينة الرئيسية';
+
+  @override
+  String get accountingTreasuryTanta => 'خزينة فرع طنطا';
+
+  @override
+  String get accountingTreasuryCairo => 'خزينة فرع القاهرة';
+
+  @override
+  String get accountingTreasuryBank => 'حساب بنكي - الأهلي';
+
+  @override
+  String get accountingMemoOpening => 'الأرصدة الافتتاحية';
+
+  @override
+  String get accountingMemoSales => 'تسوية مبيعات اليوم';
+
+  @override
+  String get accountingMemoSupplies => 'شراء مستلزمات';
+
+  @override
+  String get accountingMemoRent => 'إيجار أكتوبر';
+
+  @override
+  String get accountingMemoTransfer => 'تحويل بين الخزائن';
+
+  @override
+  String get accountingCreatedBy => 'بواسطة';
+
+  @override
+  String get accountingClosingBalance => 'الرصيد الختامي';
+
+  @override
+  String get accountingTotalMoved => 'إجمالي المحول';
 }

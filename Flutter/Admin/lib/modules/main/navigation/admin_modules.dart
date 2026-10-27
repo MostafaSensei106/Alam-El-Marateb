@@ -406,6 +406,12 @@ abstract final class AdminModules {
           icon: LucideIcons.chartNoAxesCombined,
           wireframe: AdminWireframeKind.stats,
         ),
+        AdminSubSection(
+          id: 'accounting.checks',
+          title: l10n.accountingFeature6,
+          icon: LucideIcons.scrollText,
+          wireframe: AdminWireframeKind.table,
+        ),
       ],
     ),
     AdminModule(

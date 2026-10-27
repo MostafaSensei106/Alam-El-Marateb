@@ -530,11 +530,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountingFeature3 => 'Treasuries, banks and fund transfers';
 
   @override
-  String get accountingFeature4 => 'Expenses and checks';
+  String get accountingFeature4 => 'Expenses and disbursements';
 
   @override
   String get accountingFeature5 =>
       'Income statement, balance sheet and tax reports';
+
+  @override
+  String get accountingFeature6 => 'Checks received and issued';
 
   @override
   String get marketingTitle => 'Marketing';
@@ -3400,4 +3403,451 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get opsStep18 => 'Confirm with the branch manager';
+
+  @override
+  String get accountingSave => 'Save';
+
+  @override
+  String get accountingBack => 'Back';
+
+  @override
+  String get accountingEdit => 'Edit';
+
+  @override
+  String get accountingAmount => 'Amount';
+
+  @override
+  String get accountingDate => 'Date';
+
+  @override
+  String get accountingStatus => 'Status';
+
+  @override
+  String get accountingType => 'Type';
+
+  @override
+  String get accountingName => 'Name';
+
+  @override
+  String get accountingCode => 'Code';
+
+  @override
+  String get accountingBalance => 'Balance';
+
+  @override
+  String get accountingBranch => 'Branch';
+
+  @override
+  String get accountingNotes => 'Notes';
+
+  @override
+  String get accountingReference => 'Reference';
+
+  @override
+  String get accountingParty => 'Party';
+
+  @override
+  String get accountingDirection => 'Direction';
+
+  @override
+  String get accountingSource => 'Source';
+
+  @override
+  String get accountingCategory => 'Category';
+
+  @override
+  String get accountingFrom => 'From';
+
+  @override
+  String get accountingTo => 'To';
+
+  @override
+  String get accountingTotal => 'Total';
+
+  @override
+  String get accountingDebit => 'Debit';
+
+  @override
+  String get accountingCredit => 'Credit';
+
+  @override
+  String get accountingOpeningBalance => 'Opening balance';
+
+  @override
+  String get accountingApprovedBy => 'Approved by';
+
+  @override
+  String get accountingReceipt => 'Receipt';
+
+  @override
+  String get accountingDueDate => 'Due date';
+
+  @override
+  String get accountingPeriod => 'Period';
+
+  @override
+  String get accountingAccount => 'Account';
+
+  @override
+  String get accountingTotalDebit => 'Total debit';
+
+  @override
+  String get accountingTotalCredit => 'Total credit';
+
+  @override
+  String get accountingBalanced => 'Balanced';
+
+  @override
+  String get accountingUnbalanced => 'Unbalanced';
+
+  @override
+  String get accountingRunningBalance => 'Running balance';
+
+  @override
+  String get accountingAccountCode => 'Account code';
+
+  @override
+  String get accountingNewAccount => 'New account';
+
+  @override
+  String get accountingAccountDetails => 'Account details';
+
+  @override
+  String get accountingAccountType => 'Account type';
+
+  @override
+  String get accountingParentAccount => 'Parent account';
+
+  @override
+  String get accountingParentCode => 'Parent code';
+
+  @override
+  String get accountingNameAr => 'Arabic name';
+
+  @override
+  String get accountingNameEn => 'English name';
+
+  @override
+  String get accountingMetricAccounts => 'Accounts';
+
+  @override
+  String get accountingMetricAssets => 'Assets';
+
+  @override
+  String get accountingMetricLiabilities => 'Liabilities';
+
+  @override
+  String get accountingMetricEquity => 'Equity';
+
+  @override
+  String get accountingMetricRevenue => 'Revenue';
+
+  @override
+  String get accountingMetricExpenses => 'Expenses';
+
+  @override
+  String get accountingMetricCogs => 'Cost of goods sold';
+
+  @override
+  String get accountingMetricNetProfit => 'Net profit';
+
+  @override
+  String get accountingMetricVat => 'VAT portion';
+
+  @override
+  String get accountingSearchAccounts => 'Search by name or code';
+
+  @override
+  String get accountingTypeAsset => 'Asset';
+
+  @override
+  String get accountingTypeLiability => 'Liability';
+
+  @override
+  String get accountingTypeEquity => 'Equity';
+
+  @override
+  String get accountingTypeRevenue => 'Revenue';
+
+  @override
+  String get accountingTypeExpense => 'Expense';
+
+  @override
+  String get accountingNewEntry => 'New entry';
+
+  @override
+  String get accountingEntryDetails => 'Entry details';
+
+  @override
+  String get accountingEntryDate => 'Entry date';
+
+  @override
+  String get accountingMemo => 'Memo';
+
+  @override
+  String get accountingLines => 'Lines';
+
+  @override
+  String get accountingAddLine => 'Add line';
+
+  @override
+  String get accountingViewEntries => 'Journal entries';
+
+  @override
+  String get accountingViewLedger => 'General ledger';
+
+  @override
+  String get accountingMetricEntries => 'Entries';
+
+  @override
+  String get accountingSearchJournal => 'Search by memo or reference';
+
+  @override
+  String get accountingSearchLedger => 'Search by account or reference';
+
+  @override
+  String get accountingSourceManual => 'Manual entry';
+
+  @override
+  String get accountingSourceSales => 'Sales';
+
+  @override
+  String get accountingSourcePurchasing => 'Purchasing';
+
+  @override
+  String get accountingSourceExpense => 'Expenses';
+
+  @override
+  String get accountingSourceTransfer => 'Transfer';
+
+  @override
+  String get accountingNewTreasury => 'New treasury';
+
+  @override
+  String get accountingTreasuryDetails => 'Treasury details';
+
+  @override
+  String get accountingViewTreasuries => 'Treasuries';
+
+  @override
+  String get accountingViewTransfers => 'Transfers';
+
+  @override
+  String get accountingNewTransfer => 'New transfer';
+
+  @override
+  String get accountingTransferDetails => 'Transfer details';
+
+  @override
+  String get accountingTransferFrom => 'From treasury';
+
+  @override
+  String get accountingTransferTo => 'To treasury';
+
+  @override
+  String get accountingMetricTreasuries => 'Treasuries';
+
+  @override
+  String get accountingMetricTotalBalance => 'Total balance';
+
+  @override
+  String get accountingMetricTransfers => 'Transfers';
+
+  @override
+  String get accountingSearchTreasuries => 'Search treasuries';
+
+  @override
+  String get accountingSearchTransfers => 'Search transfers';
+
+  @override
+  String get accountingNewExpense => 'New expense';
+
+  @override
+  String get accountingExpenseDetails => 'Expense details';
+
+  @override
+  String get accountingReceiptAttached => 'Receipt attached';
+
+  @override
+  String get accountingNoReceipt => 'No receipt attached';
+
+  @override
+  String get accountingApprovalPending => 'Pending approval';
+
+  @override
+  String get accountingMetricPendingReview => 'Awaiting approval';
+
+  @override
+  String get accountingSearchExpenses => 'Search expenses';
+
+  @override
+  String get accountingCategoryRent => 'Rent';
+
+  @override
+  String get accountingCategorySalaries => 'Salaries';
+
+  @override
+  String get accountingCategoryUtilities => 'Utilities';
+
+  @override
+  String get accountingCategoryMarketing => 'Marketing';
+
+  @override
+  String get accountingCategoryMaintenance => 'Maintenance';
+
+  @override
+  String get accountingCategoryTransport => 'Transport';
+
+  @override
+  String get accountingCategorySupplies => 'Supplies';
+
+  @override
+  String get accountingNewCheck => 'New check';
+
+  @override
+  String get accountingCheckDetails => 'Check details';
+
+  @override
+  String get accountingMetricChecks => 'Checks';
+
+  @override
+  String get accountingMetricHeld => 'Held';
+
+  @override
+  String get accountingMetricCashed => 'Cashed';
+
+  @override
+  String get accountingMetricBounced => 'Bounced';
+
+  @override
+  String get accountingMetricIncoming => 'Incoming';
+
+  @override
+  String get accountingMetricOutgoing => 'Outgoing';
+
+  @override
+  String get accountingMetricDueSoon => 'Due soon';
+
+  @override
+  String get accountingDirectionIn => 'Incoming';
+
+  @override
+  String get accountingDirectionOut => 'Outgoing';
+
+  @override
+  String get accountingStatusHeld => 'Held';
+
+  @override
+  String get accountingStatusCashed => 'Cashed';
+
+  @override
+  String get accountingStatusBounced => 'Bounced';
+
+  @override
+  String get accountingStatusReturned => 'Returned';
+
+  @override
+  String get accountingSearchChecks => 'Search by party or status';
+
+  @override
+  String get accountingReportProfitLoss => 'Income statement';
+
+  @override
+  String get accountingReportBalanceSheet => 'Balance sheet';
+
+  @override
+  String get accountingReportTax => 'Tax report';
+
+  @override
+  String get accountingReportAsOf => 'As of';
+
+  @override
+  String get accountingReportRevenueInclusive => 'Revenue (VAT inclusive)';
+
+  @override
+  String get accountingReportGrossProfit => 'Gross profit';
+
+  @override
+  String get accountingBalanceSheetEquation => 'Assets = Liabilities + Equity';
+
+  @override
+  String get accountingAccountCash => 'Cash on hand';
+
+  @override
+  String get accountingAccountBank => 'Bank - NBE';
+
+  @override
+  String get accountingAccountReceivables => 'Accounts receivable';
+
+  @override
+  String get accountingAccountInventory => 'Inventory';
+
+  @override
+  String get accountingAccountPayables => 'Accounts payable';
+
+  @override
+  String get accountingAccountVatPayable => 'VAT payable';
+
+  @override
+  String get accountingAccountCapital => 'Capital';
+
+  @override
+  String get accountingAccountRetained => 'Retained earnings';
+
+  @override
+  String get accountingAccountSalesRevenue => 'Sales revenue';
+
+  @override
+  String get accountingAccountCogs => 'Cost of goods sold';
+
+  @override
+  String get accountingAccountRent => 'Rent expense';
+
+  @override
+  String get accountingAccountSalaries => 'Salaries expense';
+
+  @override
+  String get accountingAccountUtilities => 'Utilities expense';
+
+  @override
+  String get accountingAccountMarketing => 'Marketing expense';
+
+  @override
+  String get accountingAccountPettyCash => 'Petty cash';
+
+  @override
+  String get accountingTreasuryMain => 'Main treasury';
+
+  @override
+  String get accountingTreasuryTanta => 'Tanta branch treasury';
+
+  @override
+  String get accountingTreasuryCairo => 'Cairo branch treasury';
+
+  @override
+  String get accountingTreasuryBank => 'Bank account - NBE';
+
+  @override
+  String get accountingMemoOpening => 'Opening balances';
+
+  @override
+  String get accountingMemoSales => 'Daily sales settlement';
+
+  @override
+  String get accountingMemoSupplies => 'Purchasing supplies';
+
+  @override
+  String get accountingMemoRent => 'October rent';
+
+  @override
+  String get accountingMemoTransfer => 'Treasury transfer';
+
+  @override
+  String get accountingCreatedBy => 'Created by';
+
+  @override
+  String get accountingClosingBalance => 'Closing balance';
+
+  @override
+  String get accountingTotalMoved => 'Total transferred';
 }

@@ -1068,7 +1068,7 @@ abstract class AppLocalizations {
   /// No description provided for @accountingFeature4.
   ///
   /// In en, this message translates to:
-  /// **'Expenses and checks'**
+  /// **'Expenses and disbursements'**
   String get accountingFeature4;
 
   /// No description provided for @accountingFeature5.
@@ -1076,6 +1076,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Income statement, balance sheet and tax reports'**
   String get accountingFeature5;
+
+  /// No description provided for @accountingFeature6.
+  ///
+  /// In en, this message translates to:
+  /// **'Checks received and issued'**
+  String get accountingFeature6;
 
   /// No description provided for @marketingTitle.
   ///
@@ -6468,6 +6474,900 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Confirm with the branch manager'**
   String get opsStep18;
+
+  /// No description provided for @accountingSave.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get accountingSave;
+
+  /// No description provided for @accountingBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Back'**
+  String get accountingBack;
+
+  /// No description provided for @accountingEdit.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit'**
+  String get accountingEdit;
+
+  /// No description provided for @accountingAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount'**
+  String get accountingAmount;
+
+  /// No description provided for @accountingDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Date'**
+  String get accountingDate;
+
+  /// No description provided for @accountingStatus.
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get accountingStatus;
+
+  /// No description provided for @accountingType.
+  ///
+  /// In en, this message translates to:
+  /// **'Type'**
+  String get accountingType;
+
+  /// No description provided for @accountingName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get accountingName;
+
+  /// No description provided for @accountingCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get accountingCode;
+
+  /// No description provided for @accountingBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance'**
+  String get accountingBalance;
+
+  /// No description provided for @accountingBranch.
+  ///
+  /// In en, this message translates to:
+  /// **'Branch'**
+  String get accountingBranch;
+
+  /// No description provided for @accountingNotes.
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get accountingNotes;
+
+  /// No description provided for @accountingReference.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get accountingReference;
+
+  /// No description provided for @accountingParty.
+  ///
+  /// In en, this message translates to:
+  /// **'Party'**
+  String get accountingParty;
+
+  /// No description provided for @accountingDirection.
+  ///
+  /// In en, this message translates to:
+  /// **'Direction'**
+  String get accountingDirection;
+
+  /// No description provided for @accountingSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Source'**
+  String get accountingSource;
+
+  /// No description provided for @accountingCategory.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get accountingCategory;
+
+  /// No description provided for @accountingFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From'**
+  String get accountingFrom;
+
+  /// No description provided for @accountingTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To'**
+  String get accountingTo;
+
+  /// No description provided for @accountingTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get accountingTotal;
+
+  /// No description provided for @accountingDebit.
+  ///
+  /// In en, this message translates to:
+  /// **'Debit'**
+  String get accountingDebit;
+
+  /// No description provided for @accountingCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Credit'**
+  String get accountingCredit;
+
+  /// No description provided for @accountingOpeningBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening balance'**
+  String get accountingOpeningBalance;
+
+  /// No description provided for @accountingApprovedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Approved by'**
+  String get accountingApprovedBy;
+
+  /// No description provided for @accountingReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
+  String get accountingReceipt;
+
+  /// No description provided for @accountingDueDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Due date'**
+  String get accountingDueDate;
+
+  /// No description provided for @accountingPeriod.
+  ///
+  /// In en, this message translates to:
+  /// **'Period'**
+  String get accountingPeriod;
+
+  /// No description provided for @accountingAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get accountingAccount;
+
+  /// No description provided for @accountingTotalDebit.
+  ///
+  /// In en, this message translates to:
+  /// **'Total debit'**
+  String get accountingTotalDebit;
+
+  /// No description provided for @accountingTotalCredit.
+  ///
+  /// In en, this message translates to:
+  /// **'Total credit'**
+  String get accountingTotalCredit;
+
+  /// No description provided for @accountingBalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Balanced'**
+  String get accountingBalanced;
+
+  /// No description provided for @accountingUnbalanced.
+  ///
+  /// In en, this message translates to:
+  /// **'Unbalanced'**
+  String get accountingUnbalanced;
+
+  /// No description provided for @accountingRunningBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Running balance'**
+  String get accountingRunningBalance;
+
+  /// No description provided for @accountingAccountCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Account code'**
+  String get accountingAccountCode;
+
+  /// No description provided for @accountingNewAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'New account'**
+  String get accountingNewAccount;
+
+  /// No description provided for @accountingAccountDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Account details'**
+  String get accountingAccountDetails;
+
+  /// No description provided for @accountingAccountType.
+  ///
+  /// In en, this message translates to:
+  /// **'Account type'**
+  String get accountingAccountType;
+
+  /// No description provided for @accountingParentAccount.
+  ///
+  /// In en, this message translates to:
+  /// **'Parent account'**
+  String get accountingParentAccount;
+
+  /// No description provided for @accountingParentCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Parent code'**
+  String get accountingParentCode;
+
+  /// No description provided for @accountingNameAr.
+  ///
+  /// In en, this message translates to:
+  /// **'Arabic name'**
+  String get accountingNameAr;
+
+  /// No description provided for @accountingNameEn.
+  ///
+  /// In en, this message translates to:
+  /// **'English name'**
+  String get accountingNameEn;
+
+  /// No description provided for @accountingMetricAccounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts'**
+  String get accountingMetricAccounts;
+
+  /// No description provided for @accountingMetricAssets.
+  ///
+  /// In en, this message translates to:
+  /// **'Assets'**
+  String get accountingMetricAssets;
+
+  /// No description provided for @accountingMetricLiabilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Liabilities'**
+  String get accountingMetricLiabilities;
+
+  /// No description provided for @accountingMetricEquity.
+  ///
+  /// In en, this message translates to:
+  /// **'Equity'**
+  String get accountingMetricEquity;
+
+  /// No description provided for @accountingMetricRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get accountingMetricRevenue;
+
+  /// No description provided for @accountingMetricExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get accountingMetricExpenses;
+
+  /// No description provided for @accountingMetricCogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost of goods sold'**
+  String get accountingMetricCogs;
+
+  /// No description provided for @accountingMetricNetProfit.
+  ///
+  /// In en, this message translates to:
+  /// **'Net profit'**
+  String get accountingMetricNetProfit;
+
+  /// No description provided for @accountingMetricVat.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT portion'**
+  String get accountingMetricVat;
+
+  /// No description provided for @accountingSearchAccounts.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name or code'**
+  String get accountingSearchAccounts;
+
+  /// No description provided for @accountingTypeAsset.
+  ///
+  /// In en, this message translates to:
+  /// **'Asset'**
+  String get accountingTypeAsset;
+
+  /// No description provided for @accountingTypeLiability.
+  ///
+  /// In en, this message translates to:
+  /// **'Liability'**
+  String get accountingTypeLiability;
+
+  /// No description provided for @accountingTypeEquity.
+  ///
+  /// In en, this message translates to:
+  /// **'Equity'**
+  String get accountingTypeEquity;
+
+  /// No description provided for @accountingTypeRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue'**
+  String get accountingTypeRevenue;
+
+  /// No description provided for @accountingTypeExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense'**
+  String get accountingTypeExpense;
+
+  /// No description provided for @accountingNewEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'New entry'**
+  String get accountingNewEntry;
+
+  /// No description provided for @accountingEntryDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry details'**
+  String get accountingEntryDetails;
+
+  /// No description provided for @accountingEntryDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry date'**
+  String get accountingEntryDate;
+
+  /// No description provided for @accountingMemo.
+  ///
+  /// In en, this message translates to:
+  /// **'Memo'**
+  String get accountingMemo;
+
+  /// No description provided for @accountingLines.
+  ///
+  /// In en, this message translates to:
+  /// **'Lines'**
+  String get accountingLines;
+
+  /// No description provided for @accountingAddLine.
+  ///
+  /// In en, this message translates to:
+  /// **'Add line'**
+  String get accountingAddLine;
+
+  /// No description provided for @accountingViewEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'Journal entries'**
+  String get accountingViewEntries;
+
+  /// No description provided for @accountingViewLedger.
+  ///
+  /// In en, this message translates to:
+  /// **'General ledger'**
+  String get accountingViewLedger;
+
+  /// No description provided for @accountingMetricEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'Entries'**
+  String get accountingMetricEntries;
+
+  /// No description provided for @accountingSearchJournal.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by memo or reference'**
+  String get accountingSearchJournal;
+
+  /// No description provided for @accountingSearchLedger.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by account or reference'**
+  String get accountingSearchLedger;
+
+  /// No description provided for @accountingSourceManual.
+  ///
+  /// In en, this message translates to:
+  /// **'Manual entry'**
+  String get accountingSourceManual;
+
+  /// No description provided for @accountingSourceSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get accountingSourceSales;
+
+  /// No description provided for @accountingSourcePurchasing.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchasing'**
+  String get accountingSourcePurchasing;
+
+  /// No description provided for @accountingSourceExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'Expenses'**
+  String get accountingSourceExpense;
+
+  /// No description provided for @accountingSourceTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer'**
+  String get accountingSourceTransfer;
+
+  /// No description provided for @accountingNewTreasury.
+  ///
+  /// In en, this message translates to:
+  /// **'New treasury'**
+  String get accountingNewTreasury;
+
+  /// No description provided for @accountingTreasuryDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury details'**
+  String get accountingTreasuryDetails;
+
+  /// No description provided for @accountingViewTreasuries.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasuries'**
+  String get accountingViewTreasuries;
+
+  /// No description provided for @accountingViewTransfers.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfers'**
+  String get accountingViewTransfers;
+
+  /// No description provided for @accountingNewTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'New transfer'**
+  String get accountingNewTransfer;
+
+  /// No description provided for @accountingTransferDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfer details'**
+  String get accountingTransferDetails;
+
+  /// No description provided for @accountingTransferFrom.
+  ///
+  /// In en, this message translates to:
+  /// **'From treasury'**
+  String get accountingTransferFrom;
+
+  /// No description provided for @accountingTransferTo.
+  ///
+  /// In en, this message translates to:
+  /// **'To treasury'**
+  String get accountingTransferTo;
+
+  /// No description provided for @accountingMetricTreasuries.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasuries'**
+  String get accountingMetricTreasuries;
+
+  /// No description provided for @accountingMetricTotalBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Total balance'**
+  String get accountingMetricTotalBalance;
+
+  /// No description provided for @accountingMetricTransfers.
+  ///
+  /// In en, this message translates to:
+  /// **'Transfers'**
+  String get accountingMetricTransfers;
+
+  /// No description provided for @accountingSearchTreasuries.
+  ///
+  /// In en, this message translates to:
+  /// **'Search treasuries'**
+  String get accountingSearchTreasuries;
+
+  /// No description provided for @accountingSearchTransfers.
+  ///
+  /// In en, this message translates to:
+  /// **'Search transfers'**
+  String get accountingSearchTransfers;
+
+  /// No description provided for @accountingNewExpense.
+  ///
+  /// In en, this message translates to:
+  /// **'New expense'**
+  String get accountingNewExpense;
+
+  /// No description provided for @accountingExpenseDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Expense details'**
+  String get accountingExpenseDetails;
+
+  /// No description provided for @accountingReceiptAttached.
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt attached'**
+  String get accountingReceiptAttached;
+
+  /// No description provided for @accountingNoReceipt.
+  ///
+  /// In en, this message translates to:
+  /// **'No receipt attached'**
+  String get accountingNoReceipt;
+
+  /// No description provided for @accountingApprovalPending.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending approval'**
+  String get accountingApprovalPending;
+
+  /// No description provided for @accountingMetricPendingReview.
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting approval'**
+  String get accountingMetricPendingReview;
+
+  /// No description provided for @accountingSearchExpenses.
+  ///
+  /// In en, this message translates to:
+  /// **'Search expenses'**
+  String get accountingSearchExpenses;
+
+  /// No description provided for @accountingCategoryRent.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent'**
+  String get accountingCategoryRent;
+
+  /// No description provided for @accountingCategorySalaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Salaries'**
+  String get accountingCategorySalaries;
+
+  /// No description provided for @accountingCategoryUtilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Utilities'**
+  String get accountingCategoryUtilities;
+
+  /// No description provided for @accountingCategoryMarketing.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketing'**
+  String get accountingCategoryMarketing;
+
+  /// No description provided for @accountingCategoryMaintenance.
+  ///
+  /// In en, this message translates to:
+  /// **'Maintenance'**
+  String get accountingCategoryMaintenance;
+
+  /// No description provided for @accountingCategoryTransport.
+  ///
+  /// In en, this message translates to:
+  /// **'Transport'**
+  String get accountingCategoryTransport;
+
+  /// No description provided for @accountingCategorySupplies.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplies'**
+  String get accountingCategorySupplies;
+
+  /// No description provided for @accountingNewCheck.
+  ///
+  /// In en, this message translates to:
+  /// **'New check'**
+  String get accountingNewCheck;
+
+  /// No description provided for @accountingCheckDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Check details'**
+  String get accountingCheckDetails;
+
+  /// No description provided for @accountingMetricChecks.
+  ///
+  /// In en, this message translates to:
+  /// **'Checks'**
+  String get accountingMetricChecks;
+
+  /// No description provided for @accountingMetricHeld.
+  ///
+  /// In en, this message translates to:
+  /// **'Held'**
+  String get accountingMetricHeld;
+
+  /// No description provided for @accountingMetricCashed.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashed'**
+  String get accountingMetricCashed;
+
+  /// No description provided for @accountingMetricBounced.
+  ///
+  /// In en, this message translates to:
+  /// **'Bounced'**
+  String get accountingMetricBounced;
+
+  /// No description provided for @accountingMetricIncoming.
+  ///
+  /// In en, this message translates to:
+  /// **'Incoming'**
+  String get accountingMetricIncoming;
+
+  /// No description provided for @accountingMetricOutgoing.
+  ///
+  /// In en, this message translates to:
+  /// **'Outgoing'**
+  String get accountingMetricOutgoing;
+
+  /// No description provided for @accountingMetricDueSoon.
+  ///
+  /// In en, this message translates to:
+  /// **'Due soon'**
+  String get accountingMetricDueSoon;
+
+  /// No description provided for @accountingDirectionIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Incoming'**
+  String get accountingDirectionIn;
+
+  /// No description provided for @accountingDirectionOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Outgoing'**
+  String get accountingDirectionOut;
+
+  /// No description provided for @accountingStatusHeld.
+  ///
+  /// In en, this message translates to:
+  /// **'Held'**
+  String get accountingStatusHeld;
+
+  /// No description provided for @accountingStatusCashed.
+  ///
+  /// In en, this message translates to:
+  /// **'Cashed'**
+  String get accountingStatusCashed;
+
+  /// No description provided for @accountingStatusBounced.
+  ///
+  /// In en, this message translates to:
+  /// **'Bounced'**
+  String get accountingStatusBounced;
+
+  /// No description provided for @accountingStatusReturned.
+  ///
+  /// In en, this message translates to:
+  /// **'Returned'**
+  String get accountingStatusReturned;
+
+  /// No description provided for @accountingSearchChecks.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by party or status'**
+  String get accountingSearchChecks;
+
+  /// No description provided for @accountingReportProfitLoss.
+  ///
+  /// In en, this message translates to:
+  /// **'Income statement'**
+  String get accountingReportProfitLoss;
+
+  /// No description provided for @accountingReportBalanceSheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Balance sheet'**
+  String get accountingReportBalanceSheet;
+
+  /// No description provided for @accountingReportTax.
+  ///
+  /// In en, this message translates to:
+  /// **'Tax report'**
+  String get accountingReportTax;
+
+  /// No description provided for @accountingReportAsOf.
+  ///
+  /// In en, this message translates to:
+  /// **'As of'**
+  String get accountingReportAsOf;
+
+  /// No description provided for @accountingReportRevenueInclusive.
+  ///
+  /// In en, this message translates to:
+  /// **'Revenue (VAT inclusive)'**
+  String get accountingReportRevenueInclusive;
+
+  /// No description provided for @accountingReportGrossProfit.
+  ///
+  /// In en, this message translates to:
+  /// **'Gross profit'**
+  String get accountingReportGrossProfit;
+
+  /// No description provided for @accountingBalanceSheetEquation.
+  ///
+  /// In en, this message translates to:
+  /// **'Assets = Liabilities + Equity'**
+  String get accountingBalanceSheetEquation;
+
+  /// No description provided for @accountingAccountCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash on hand'**
+  String get accountingAccountCash;
+
+  /// No description provided for @accountingAccountBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank - NBE'**
+  String get accountingAccountBank;
+
+  /// No description provided for @accountingAccountReceivables.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts receivable'**
+  String get accountingAccountReceivables;
+
+  /// No description provided for @accountingAccountInventory.
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory'**
+  String get accountingAccountInventory;
+
+  /// No description provided for @accountingAccountPayables.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounts payable'**
+  String get accountingAccountPayables;
+
+  /// No description provided for @accountingAccountVatPayable.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT payable'**
+  String get accountingAccountVatPayable;
+
+  /// No description provided for @accountingAccountCapital.
+  ///
+  /// In en, this message translates to:
+  /// **'Capital'**
+  String get accountingAccountCapital;
+
+  /// No description provided for @accountingAccountRetained.
+  ///
+  /// In en, this message translates to:
+  /// **'Retained earnings'**
+  String get accountingAccountRetained;
+
+  /// No description provided for @accountingAccountSalesRevenue.
+  ///
+  /// In en, this message translates to:
+  /// **'Sales revenue'**
+  String get accountingAccountSalesRevenue;
+
+  /// No description provided for @accountingAccountCogs.
+  ///
+  /// In en, this message translates to:
+  /// **'Cost of goods sold'**
+  String get accountingAccountCogs;
+
+  /// No description provided for @accountingAccountRent.
+  ///
+  /// In en, this message translates to:
+  /// **'Rent expense'**
+  String get accountingAccountRent;
+
+  /// No description provided for @accountingAccountSalaries.
+  ///
+  /// In en, this message translates to:
+  /// **'Salaries expense'**
+  String get accountingAccountSalaries;
+
+  /// No description provided for @accountingAccountUtilities.
+  ///
+  /// In en, this message translates to:
+  /// **'Utilities expense'**
+  String get accountingAccountUtilities;
+
+  /// No description provided for @accountingAccountMarketing.
+  ///
+  /// In en, this message translates to:
+  /// **'Marketing expense'**
+  String get accountingAccountMarketing;
+
+  /// No description provided for @accountingAccountPettyCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Petty cash'**
+  String get accountingAccountPettyCash;
+
+  /// No description provided for @accountingTreasuryMain.
+  ///
+  /// In en, this message translates to:
+  /// **'Main treasury'**
+  String get accountingTreasuryMain;
+
+  /// No description provided for @accountingTreasuryTanta.
+  ///
+  /// In en, this message translates to:
+  /// **'Tanta branch treasury'**
+  String get accountingTreasuryTanta;
+
+  /// No description provided for @accountingTreasuryCairo.
+  ///
+  /// In en, this message translates to:
+  /// **'Cairo branch treasury'**
+  String get accountingTreasuryCairo;
+
+  /// No description provided for @accountingTreasuryBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank account - NBE'**
+  String get accountingTreasuryBank;
+
+  /// No description provided for @accountingMemoOpening.
+  ///
+  /// In en, this message translates to:
+  /// **'Opening balances'**
+  String get accountingMemoOpening;
+
+  /// No description provided for @accountingMemoSales.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily sales settlement'**
+  String get accountingMemoSales;
+
+  /// No description provided for @accountingMemoSupplies.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchasing supplies'**
+  String get accountingMemoSupplies;
+
+  /// No description provided for @accountingMemoRent.
+  ///
+  /// In en, this message translates to:
+  /// **'October rent'**
+  String get accountingMemoRent;
+
+  /// No description provided for @accountingMemoTransfer.
+  ///
+  /// In en, this message translates to:
+  /// **'Treasury transfer'**
+  String get accountingMemoTransfer;
+
+  /// No description provided for @accountingCreatedBy.
+  ///
+  /// In en, this message translates to:
+  /// **'Created by'**
+  String get accountingCreatedBy;
+
+  /// No description provided for @accountingClosingBalance.
+  ///
+  /// In en, this message translates to:
+  /// **'Closing balance'**
+  String get accountingClosingBalance;
+
+  /// No description provided for @accountingTotalMoved.
+  ///
+  /// In en, this message translates to:
+  /// **'Total transferred'**
+  String get accountingTotalMoved;
 }
 
 class _AppLocalizationsDelegate
