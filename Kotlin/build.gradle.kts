@@ -4,6 +4,7 @@ plugins {
     id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
     kotlin("plugin.jpa") version "2.3.21"
+    id("com.github.ben-manes.versions") version "0.53.0"
 }
 
 group = "com.mostafasensei"
