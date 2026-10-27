@@ -31,6 +31,7 @@ data class AccountView(
     val type: String,
     val parentCode: String?,
     val branchId: UUID?,
+    val balance: BigDecimal,
 )
 
 data class JournalLineInput(
@@ -42,6 +43,7 @@ data class JournalLineInput(
 data class JournalLineView(
     val id: UUID?,
     val accountCode: String,
+    val accountName: String,
     val debit: BigDecimal,
     val credit: BigDecimal,
 )
@@ -64,8 +66,10 @@ data class LedgerLineView(
     val source: String,
     val ref: String?,
     val accountCode: String,
+    val accountName: String,
     val debit: BigDecimal,
     val credit: BigDecimal,
+    val runningBalance: BigDecimal,
 )
 
 data class TreasuryView(
@@ -91,6 +95,7 @@ data class ExpenseView(
     val amount: BigDecimal,
     val receiptPhoto: String?,
     val approvedBy: String?,
+    val createdAt: kotlin.time.Instant,
 )
 
 data class CheckView(
@@ -100,6 +105,7 @@ data class CheckView(
     val dueDate: LocalDate?,
     val status: String,
     val party: String?,
+    val createdAt: kotlin.time.Instant,
 )
 
 data class ProfitLossView(
@@ -124,6 +130,9 @@ data class TaxReportView(
     val to: LocalDate,
     val revenueInclusive: BigDecimal,
     val vatPortion: BigDecimal,
+    val purchasesInclusive: BigDecimal,
+    val inputVat: BigDecimal,
+    val netVatPayable: BigDecimal,
 )
 
 @Service
@@ -141,17 +150,48 @@ class AccountingService(
         const val COGS_CODE = "5010"
         private val VAT_RATE = BigDecimal("14")
         private val VAT_DIVISOR = BigDecimal("114")
+        private val CREDIT_NORMAL_TYPES = setOf("LIABILITY", "EQUITY", "REVENUE")
+        private val CHECK_STATUSES = setOf("held", "cashed", "bounced", "returned")
     }
 
     private fun BigDecimal.money(): BigDecimal = setScale(2, RoundingMode.HALF_EVEN)
 
+    private fun signedAmount(type: String?, debit: BigDecimal, credit: BigDecimal): BigDecimal =
+        if (type in CREDIT_NORMAL_TYPES) credit.subtract(debit) else debit.subtract(credit)
+
+    private fun normalizeDirection(raw: String): String = when (raw.trim().lowercase()) {
+        "in", "incoming" -> "in"
+        "out", "outgoing" -> "out"
+        else -> throw BadRequestException("error.accounting.check_direction")
+    }
+
+    private fun normalizeStatus(raw: String): String = raw.trim().lowercase()
+
+    private fun inRange(date: LocalDate?, from: LocalDate?, to: LocalDate?): Boolean {
+        if (date == null) return from == null && to == null
+        if (from != null && date.isBefore(from)) return false
+        if (to != null && date.isAfter(to)) return false
+        return true
+    }
+
     // ---- Chart of accounts ----
 
     @Transactional(readOnly = true)
-    fun accounts(): List<AccountView> = accountRepository.findAll().map { it.toView() }
+    fun accounts(): List<AccountView> {
+        val accounts = accountRepository.findAll()
+        val linesByAccount = lineRepository.findAll().groupBy { it.accountCode }
+        return accounts.map { it.toView(balanceOf(it, linesByAccount[it.code] ?: emptyList())) }
+    }
 
     @Transactional(readOnly = true)
-    fun account(code: String): AccountView = getAccount(code).toView()
+    fun account(code: String): AccountView {
+        val entity = getAccount(code)
+        return entity.toView(balanceOf(entity, lineRepository.findByAccountCode(code)))
+    }
+
+    private fun balanceOf(account: ChartOfAccountJpaEntity, lines: List<JournalLineJpaEntity>): BigDecimal =
+        lines.fold(BigDecimal.ZERO) { acc, line -> acc.add(signedAmount(account.type, line.debit, line.credit)) }
+            .money()
 
     @Transactional
     fun createAccount(
@@ -168,7 +208,7 @@ class AccountingService(
                 parentCode = parentCode, branchId = branchId,
             ),
         )
-        return saved.toView()
+        return saved.toView(BigDecimal.ZERO.setScale(2))
     }
 
     @Transactional
@@ -182,7 +222,8 @@ class AccountingService(
         if (nameAr != null) entity.nameAr = nameAr
         if (nameEn != null) entity.nameEn = nameEn
         if (type != null) entity.type = type
-        return accountRepository.save(entity).toView()
+        return accountRepository.save(entity)
+            .toView(balanceOf(entity, lineRepository.findByAccountCode(code)))
     }
 
     @Transactional

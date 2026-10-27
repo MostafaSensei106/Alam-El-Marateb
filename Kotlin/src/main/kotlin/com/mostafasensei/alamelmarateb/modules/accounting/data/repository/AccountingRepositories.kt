@@ -30,6 +30,7 @@ interface JournalLineRepository : JpaRepository<JournalLineJpaEntity, UUID> {
     fun findByEntryId(entryId: UUID): List<JournalLineJpaEntity>
     fun findByEntryIdIn(entryIds: Collection<UUID>): List<JournalLineJpaEntity>
     fun existsByAccountCode(accountCode: String): Boolean
+    fun findByAccountCode(accountCode: String): List<JournalLineJpaEntity>
 }
 
 @Repository
@@ -40,6 +41,7 @@ interface TreasuryRepository : JpaRepository<TreasuryJpaEntity, UUID> {
 @Repository
 interface TreasuryTransferRepository : JpaRepository<TreasuryTransferJpaEntity, UUID> {
     fun existsByFromIdOrToId(fromId: UUID, toId: UUID): Boolean
+    fun findByFromIdOrToId(fromId: UUID, toId: UUID): List<TreasuryTransferJpaEntity>
 }
 
 @Repository

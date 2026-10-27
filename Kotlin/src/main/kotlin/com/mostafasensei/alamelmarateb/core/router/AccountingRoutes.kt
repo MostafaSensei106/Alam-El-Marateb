@@ -15,6 +15,7 @@ object AccountingRoutes {
     const val GENERAL_LEDGER = "$PREFIX/general-ledger"
     const val TREASURIES = "$PREFIX/treasuries"
     const val TREASURY_TRANSFERS = "$PREFIX/treasuries/transfers"
+    const val TREASURY_TRANSFER_BY_ID = "$PREFIX/treasuries/transfers/{id}"
     const val EXPENSES = "$PREFIX/expenses"
     const val EXPENSE_BY_ID = "$PREFIX/expenses/{id}"
     const val CHECKS = "$PREFIX/checks"
