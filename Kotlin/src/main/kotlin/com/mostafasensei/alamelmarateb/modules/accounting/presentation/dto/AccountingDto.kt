@@ -73,7 +73,7 @@ data class UpdateExpenseRequest(
 )
 
 data class CheckRequest(
-    @field:Pattern(regexp = "in|out") val direction: String,
+    @field:Pattern(regexp = "(?i)\\s*(in|out|incoming|outgoing)\\s*") val direction: String,
     @field:NotNull @field:DecimalMin("0.01") val amount: BigDecimal,
     val dueDate: LocalDate? = null,
     val party: String? = null,

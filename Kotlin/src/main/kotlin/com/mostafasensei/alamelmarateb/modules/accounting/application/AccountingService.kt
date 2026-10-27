@@ -247,6 +247,7 @@ class AccountingService(
         ref: String?, memo: String?, lines: List<JournalLineInput>, by: String?,
     ): JournalView {
         if (lines.isEmpty()) throw BadRequestException("error.accounting.journal_empty")
+        val names = mutableMapOf<String, String>()
         val normalized = lines.map { line ->
             val debit = line.debit.money()
             val credit = line.credit.money()
@@ -255,7 +256,7 @@ class AccountingService(
             if (debitPositive == creditPositive) {
                 throw BadRequestException("error.accounting.journal_line_invalid", listOf(line.accountCode))
             }
-            getAccount(line.accountCode)
+            names[line.accountCode] = getAccount(line.accountCode).nameAr
             Triple(line.accountCode, debit, credit)
         }
         val totalDebit = normalized.fold(BigDecimal.ZERO) { acc, l -> acc.add(l.second) }.money()
@@ -274,46 +275,62 @@ class AccountingService(
                 JournalLineJpaEntity(entryId = entry.id, accountCode = code, debit = debit, credit = credit),
             )
         }
-        return entry.toView(savedLines.map { it.toView() })
+        return entry.toView(savedLines.map { it.toView(names[it.accountCode] ?: it.accountCode) })
     }
 
     @Transactional(readOnly = true)
-    fun journals(branchId: UUID?): List<JournalView> {
-        val entries = if (branchId != null) entryRepository.findByBranchId(branchId) else entryRepository.findAll()
+    fun journals(branchId: UUID?, from: LocalDate?, to: LocalDate?, source: String?): List<JournalView> {
+        val entries = (if (branchId != null) entryRepository.findByBranchId(branchId) else entryRepository.findAll())
+            .filter { inRange(it.entryDate, from, to) }
+            .filter { source == null || it.source == source }
+            .sortedWith(compareBy({ it.entryDate }, { it.createdAt }))
         if (entries.isEmpty()) return emptyList()
         val ids = entries.mapNotNull { it.id }
         val byEntry = lineRepository.findByEntryIdIn(ids).groupBy { it.entryId }
-        return entries.map { it.toView((byEntry[it.id] ?: emptyList()).map { l -> l.toView() }) }
+        val names = accountNames()
+        return entries.map { entry ->
+            entry.toView(
+                (byEntry[entry.id] ?: emptyList()).map { line ->
+                    line.toView(names[line.accountCode] ?: line.accountCode)
+                },
+            )
+        }
     }
 
     @Transactional(readOnly = true)
     fun journal(id: UUID): JournalView {
         val entry = entryRepository.findById(id)
             .orElseThrow { NotFoundException("error.accounting.journal_not_found", listOf(id)) }
-        return entry.toView(lineRepository.findByEntryId(id).map { it.toView() })
+        val names = accountNames()
+        return entry.toView(
+            lineRepository.findByEntryId(id).map { line ->
+                line.toView(names[line.accountCode] ?: line.accountCode)
+            },
+        )
     }
 
     @Transactional(readOnly = true)
     fun generalLedger(accountCode: String, from: LocalDate?, to: LocalDate?): List<LedgerLineView> {
-        getAccount(accountCode)
-        val entries = when {
-            from != null && to != null -> entryRepository.findByEntryDateBetween(from, to)
-            to != null -> entryRepository.findByEntryDateLessThanEqual(to)
-            else -> entryRepository.findAll()
-        }.sortedWith(compareBy({ it.entryDate }, { it.createdAt }))
+        val account = getAccount(accountCode)
+        val entries = (if (to != null) entryRepository.findByEntryDateLessThanEqual(to) else entryRepository.findAll())
+            .sortedWith(compareBy({ it.entryDate }, { it.createdAt }))
         if (entries.isEmpty()) return emptyList()
         val byEntry = lineRepository.findByEntryIdIn(entries.mapNotNull { it.id }).groupBy { it.entryId }
-        return entries.flatMap { entry ->
-            (byEntry[entry.id] ?: emptyList())
-                .filter { it.accountCode == accountCode }
-                .map { line ->
-                    LedgerLineView(
-                        entryId = entry.id, entryDate = entry.entryDate, source = entry.source,
-                        ref = entry.ref, accountCode = line.accountCode,
-                        debit = line.debit, credit = line.credit,
-                    )
-                }
+        var running = BigDecimal.ZERO
+        val rows = mutableListOf<LedgerLineView>()
+        for (entry in entries) {
+            val lines = (byEntry[entry.id] ?: emptyList()).filter { it.accountCode == accountCode }
+            for (line in lines) {
+                running = running.add(signedAmount(account.type, line.debit, line.credit))
+                if (!inRange(entry.entryDate, from, to)) continue
+                rows += LedgerLineView(
+                    entryId = entry.id, entryDate = entry.entryDate, source = entry.source,
+                    ref = entry.ref, accountCode = line.accountCode, accountName = account.nameAr,
+                    debit = line.debit, credit = line.credit, runningBalance = running.money(),
+                )
+            }
         }
+        return rows
     }
 
     // ---- Treasuries ----
@@ -375,6 +392,22 @@ class AccountingService(
         return saved.toView()
     }
 
+    @Transactional(readOnly = true)
+    fun transfers(treasuryId: UUID?): List<TransferView> {
+        val list = if (treasuryId != null) {
+            transferRepository.findByFromIdOrToId(treasuryId, treasuryId)
+        } else {
+            transferRepository.findAll()
+        }
+        return list.sortedWith(compareBy({ it.at }, { it.id })).map { it.toView() }
+    }
+
+    @Transactional(readOnly = true)
+    fun transferById(id: UUID): TransferView =
+        transferRepository.findById(id)
+            .orElseThrow { NotFoundException("error.accounting.transfer_not_found", listOf(id)) }
+            .toView()
+
     private fun getTreasury(id: UUID): TreasuryJpaEntity =
         treasuryRepository.findById(id)
             .orElseThrow { NotFoundException("error.accounting.treasury_not_found", listOf(id)) }
@@ -430,8 +463,10 @@ class AccountingService(
 
     @Transactional(readOnly = true)
     fun checks(status: String?): List<CheckView> {
-        val list = if (status != null) checkRepository.findByStatus(status) else checkRepository.findAll()
-        return list.map { it.toView() }
+        if (status == null) return checkRepository.findAll().map { it.toView() }
+        val normalized = normalizeStatus(status)
+        if (normalized !in CHECK_STATUSES) return emptyList()
+        return checkRepository.findByStatus(normalized).map { it.toView() }
     }
 
     @Transactional(readOnly = true)
@@ -441,7 +476,7 @@ class AccountingService(
     fun createCheck(direction: String, amount: BigDecimal, dueDate: LocalDate?, party: String?): CheckView {
         val saved = checkRepository.save(
             CheckJpaEntity(
-                direction = direction, amount = amount.money(),
+                direction = normalizeDirection(direction), amount = amount.money(),
                 dueDate = dueDate, party = party, status = "held",
             ),
         )
@@ -465,12 +500,13 @@ class AccountingService(
     fun checkStatus(id: UUID, status: String): CheckView {
         val entity = getCheck(id)
         if (entity.status == "cashed" || entity.status == "bounced") {
-            throw ConflictException("error.accounting.check_status", listOf(id, entity.status))
+            throw ConflictException("error.accounting.check_status", listOf(entity.status))
         }
-        if (status != "cashed" && status != "bounced" && status != "returned") {
-            throw BadRequestException("error.accounting.check_status", listOf(id, status))
+        val normalized = normalizeStatus(status)
+        if (normalized != "cashed" && normalized != "bounced" && normalized != "returned") {
+            throw BadRequestException("error.accounting.check_status", listOf(normalized))
         }
-        entity.status = status
+        entity.status = normalized
         return checkRepository.save(entity).toView()
     }
 
@@ -495,6 +531,9 @@ class AccountingService(
 
     private fun accountTypes(): Map<String, String> =
         accountRepository.findAll().associate { it.code to it.type }
+
+    private fun accountNames(): Map<String, String> =
+        accountRepository.findAll().associate { it.code to it.nameAr }
 
     private fun vatPortion(inclusiveTotal: BigDecimal): BigDecimal {
         if (inclusiveTotal.compareTo(BigDecimal.ZERO) == 0) return BigDecimal.ZERO.setScale(2)
@@ -548,21 +587,36 @@ class AccountingService(
     fun taxReport(from: LocalDate?, to: LocalDate?): TaxReportView {
         val (f, t) = reportRange(from, to)
         val types = accountTypes()
-        var total = BigDecimal.ZERO
+        var revenue = BigDecimal.ZERO
+        var purchases = BigDecimal.ZERO
         for (line in linesInRange(f, t)) {
-            if (types[line.accountCode] == "REVENUE") total = total.add(line.credit.subtract(line.debit))
+            when (types[line.accountCode]) {
+                "REVENUE" -> revenue = revenue.add(line.credit.subtract(line.debit))
+                "EXPENSE" -> purchases = purchases.add(line.debit.subtract(line.credit))
+            }
         }
-        total = total.money()
-        return TaxReportView(f, t, total, vatPortion(total))
+        revenue = revenue.money()
+        purchases = purchases.money()
+        val outputVat = vatPortion(revenue)
+        val inputVat = vatPortion(purchases)
+        return TaxReportView(
+            from = f, to = t,
+            revenueInclusive = revenue,
+            vatPortion = outputVat,
+            purchasesInclusive = purchases,
+            inputVat = inputVat,
+            netVatPayable = outputVat.subtract(inputVat).money(),
+        )
     }
 
     // ---- Mappers ----
 
-    private fun ChartOfAccountJpaEntity.toView() = AccountView(
-        code, nameAr, type, parentCode, branchId,
+    private fun ChartOfAccountJpaEntity.toView(balance: BigDecimal) = AccountView(
+        code, nameAr, type, parentCode, branchId, balance,
     )
 
-    private fun JournalLineJpaEntity.toView() = JournalLineView(id, accountCode, debit, credit)
+    private fun JournalLineJpaEntity.toView(accountName: String) =
+        JournalLineView(id, accountCode, accountName, debit, credit)
 
     private fun JournalEntryJpaEntity.toView(lines: List<JournalLineView>) = JournalView(
         id = id, branchId = branchId, entryDate = entryDate, source = source,
@@ -575,7 +629,9 @@ class AccountingService(
 
     private fun TreasuryTransferJpaEntity.toView() = TransferView(id, fromId, toId, amount, at, by)
 
-    private fun ExpenseJpaEntity.toView() = ExpenseView(id, branchId, category, amount, receiptPhoto, approvedBy)
+    private fun ExpenseJpaEntity.toView() =
+        ExpenseView(id, branchId, category, amount, receiptPhoto, approvedBy, createdAt)
 
-    private fun CheckJpaEntity.toView() = CheckView(id, direction, amount, dueDate, status, party)
+    private fun CheckJpaEntity.toView() =
+        CheckView(id, direction, amount, dueDate, status, party, createdAt)
 }

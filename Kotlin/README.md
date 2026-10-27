@@ -1236,24 +1236,25 @@ Audience: Certified Accountants and Branch Finance Officers.
 
 | Method | Endpoint | Allowed Roles | Description |
 | :---: | :--- | :---: | :--- |
-| `GET` | `/api/v1/accounting/chart-of-accounts` | `ACCOUNTANT` | View hierarchical Chart of Accounts (Assets, Liabilities...) |
+| `GET` | `/api/v1/accounting/chart-of-accounts` | `ACCOUNTANT` | View hierarchical Chart of Accounts (Assets, Liabilities...) with its `balance` (credit-normal accounts report `credit − debit`) |
 | `POST` | `/api/v1/accounting/chart-of-accounts` | `ACCOUNTANT` | Create sub-account (`{code, nameAr, type: ASSET\|LIABILITY\|EQUITY\|REVENUE\|EXPENSE}`) |
 | `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/accounting/chart-of-accounts/{code}` | `ACCOUNTANT` | Retrieve / update / remove an account |
-| `GET` | `/api/v1/accounting/journal-entries` | `ACCOUNTANT` | Search double-entry journal vouchers |
+| `GET` | `/api/v1/accounting/journal-entries` | `ACCOUNTANT` | Search double-entry journal vouchers (`?branchId=&from=&to=&source=`, dates `YYYY-MM-DD`; lines carry `accountName`) |
 | `POST` | `/api/v1/accounting/journal-entries` | `ACCOUNTANT` | Post balanced journal voucher ($\sum \text{Debit} = \sum \text{Credit}$, else 400) |
 | `GET` | `/api/v1/accounting/journal-entries/{id}` | `ACCOUNTANT` | Retrieve a journal voucher |
-| `GET` | `/api/v1/accounting/general-ledger` | `ACCOUNTANT` | Extract General Ledger report for specific account code |
+| `GET` | `/api/v1/accounting/general-ledger` | `ACCOUNTANT` | Extract General Ledger for an account code (`?accountCode=&from=&to=`); each row has `accountName` + `runningBalance`, and `from` carries the opening balance |
 | `GET` / `POST` | `/api/v1/accounting/treasuries` | `ACCOUNTANT` | List / create showroom cash safes (`{branchId?, name, openingBalance?}`) |
 | `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/accounting/treasuries/{id}` | `ACCOUNTANT` | Retrieve / update / remove a treasury |
-| `POST` | `/api/v1/accounting/treasuries/transfers`| `ACCOUNTANT`| Record fund transfer between treasuries (`{fromId, toId, amount}`  UUIDs) |
-| `GET` / `POST` | `/api/v1/accounting/expenses` | `ACCOUNTANT` | List / register branch operating expenses (`{branchId?, category, amount}`) |
+| `GET` / `POST` | `/api/v1/accounting/treasuries/transfers`| `ACCOUNTANT`| List (`?treasuryId=` matches sender or receiver) / record fund transfers (`{fromId, toId, amount}` UUIDs) |
+| `GET` | `/api/v1/accounting/treasuries/transfers/{id}`| `ACCOUNTANT`| Retrieve a treasury transfer |
+| `GET` / `POST` | `/api/v1/accounting/expenses` | `ACCOUNTANT` | List / register branch operating expenses (`{branchId?, category, amount}`); views include `createdAt` |
 | `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/accounting/expenses/{id}` | `ACCOUNTANT` | Retrieve / update / remove an expense |
-| `GET` / `POST` | `/api/v1/accounting/checks` | `ACCOUNTANT` | List / register commercial checks (`{direction: in\|out, amount, dueDate?, party?}`) |
-| `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/accounting/checks/{id}` | `ACCOUNTANT` | Retrieve / update / remove a check |
-| `POST` | `/api/v1/accounting/checks/{id}/status`| `ACCOUNTANT` | Update check status (`{status}`, e.g. `CASHED`) |
+| `GET` / `POST` | `/api/v1/accounting/checks` | `ACCOUNTANT` | List (`?status=`, case-insensitive; unknown status → empty list) / register checks (`{direction: in\|out\|incoming\|outgoing, amount, dueDate?, party?}`) |
+| `GET` / `PATCH` / `PUT` / `DELETE` | `/api/v1/accounting/checks/{id}` | `ACCOUNTANT` | Retrieve / update / remove a check (`createdAt` included) |
+| `POST` | `/api/v1/accounting/checks/{id}/status`| `ACCOUNTANT` | Update check status (`{status}`, case-insensitive: `held`, `cashed`, `bounced`, `returned`) |
 | `GET` | `/api/v1/accounting/reports/profit-loss`| `ACCOUNTANT` | Generate real-time Income Statement (P&L, `?from=&to=`) |
 | `GET` | `/api/v1/accounting/reports/balance-sheet`| `ACCOUNTANT`| Generate Balance Sheet report (`?to=`) |
-| `GET` | `/api/v1/accounting/reports/tax` | `ACCOUNTANT` | Generate sales and purchase VAT report (`?from=&to=`) |
+| `GET` | `/api/v1/accounting/reports/tax` | `ACCOUNTANT` | Sales + purchase VAT report (`?from=&to=`): `revenueInclusive`, `vatPortion` (output VAT), `purchasesInclusive`, `inputVat`, `netVatPayable` |
 
 ---
 

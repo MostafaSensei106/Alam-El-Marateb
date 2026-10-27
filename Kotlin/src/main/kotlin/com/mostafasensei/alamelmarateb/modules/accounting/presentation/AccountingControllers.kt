@@ -127,8 +127,13 @@ class JournalEntriesController(
 
     @Operation(summary = "List journals")
     @GetMapping
-    fun list(@RequestParam(required = false) branchId: UUID?): ResponseEntity<ApiResponse<List<JournalView>>> =
-        ok(accountingService.journals(branchId))
+    fun list(
+        @RequestParam(required = false) branchId: UUID?,
+        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) from: LocalDate?,
+        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) to: LocalDate?,
+        @RequestParam(required = false) source: String?,
+    ): ResponseEntity<ApiResponse<List<JournalView>>> =
+        ok(accountingService.journals(branchId, from, to, source))
 
     @Operation(summary = "Get journal by id")
     @GetMapping("/{id}")
@@ -215,6 +220,16 @@ class TreasuryTransfersController(
         @AuthenticationPrincipal principal: UserPrincipal,
     ): ResponseEntity<ApiResponse<TransferView>> =
         created(accountingService.transfer(request.fromId, request.toId, request.amount, principal.fullName))
+
+    @Operation(summary = "List treasury transfers")
+    @GetMapping
+    fun list(@RequestParam(required = false) treasuryId: UUID?): ResponseEntity<ApiResponse<List<TransferView>>> =
+        ok(accountingService.transfers(treasuryId))
+
+    @Operation(summary = "Get treasury transfer by id")
+    @GetMapping("/{id}")
+    fun get(@PathVariable id: UUID): ResponseEntity<ApiResponse<TransferView>> =
+        ok(accountingService.transferById(id))
 }
 
 @Tag(name = "Accounting  expenses", description = "Expenses  ACCOUNTANT")

@@ -143,6 +143,10 @@ class EstimatorSpinFlowTest {
 
     @Test
     fun `no active campaign and unknown campaign`() {
+        // Isolate from dev rows: deactivate leftover campaigns inside the test transaction
+        // (rolled back afterwards, so seeded data stays untouched).
+        jdbc.update("UPDATE spin_campaigns SET is_active = false WHERE is_active = true")
+
         assertFailsWith<NotFoundException> { spinService.spin(seedUser(), null) }
         assertFailsWith<NotFoundException> { spinService.spin(seedUser(), UUID.randomUUID()) }
     }

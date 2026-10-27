@@ -125,14 +125,14 @@ class DeliveryFlowTest {
         assertEquals("truck", updated.kind)
         assertEquals("maintenance", updated.status)
 
-        assertEquals(1, deliveryService.vehicles().size)
+        assertEquals(1, deliveryService.vehicles().count { it.branchId == branchId })
         assertEquals("ABC-123", deliveryService.vehicle(vehicleId).plate)
 
         val missing = assertFailsWith<NotFoundException> { deliveryService.vehicle(UUID.randomUUID()) }
         assertEquals("error.delivery.vehicle_not_found", missing.errorKey)
 
         deliveryService.deleteVehicle(vehicleId, "test")
-        assertTrue(deliveryService.vehicles().isEmpty())
+        assertTrue(deliveryService.vehicles().none { it.branchId == branchId })
     }
 
     @Test
