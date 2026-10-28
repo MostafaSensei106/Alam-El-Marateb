@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AccountingBalanceSheetEntity {
 
- String get asOf; num get assets; num get liabilities; num get equity;
+ DateTime get asOf; num get assets; num get liabilities; num get equity;
 /// Create a copy of AccountingBalanceSheetEntity
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -51,7 +51,7 @@ abstract mixin class $AccountingBalanceSheetEntityCopyWith<$Res>  {
   factory $AccountingBalanceSheetEntityCopyWith(AccountingBalanceSheetEntity value, $Res Function(AccountingBalanceSheetEntity) _then) = _$AccountingBalanceSheetEntityCopyWithImpl;
 @useResult
 $Res call({
- String asOf, num assets, num liabilities, num equity
+ DateTime asOf, num assets, num liabilities, num equity
 });
 
 
@@ -71,7 +71,7 @@ class _$AccountingBalanceSheetEntityCopyWithImpl<$Res>
 @pragma('vm:prefer-inline') @override $Res call({Object? asOf = null,Object? assets = null,Object? liabilities = null,Object? equity = null,}) {
   return _then(AccountingBalanceSheetEntity(
 asOf: null == asOf ? _self.asOf : asOf // ignore: cast_nullable_to_non_nullable
-as String,assets: null == assets ? _self.assets : assets // ignore: cast_nullable_to_non_nullable
+as DateTime,assets: null == assets ? _self.assets : assets // ignore: cast_nullable_to_non_nullable
 as num,liabilities: null == liabilities ? _self.liabilities : liabilities // ignore: cast_nullable_to_non_nullable
 as num,equity: null == equity ? _self.equity : equity // ignore: cast_nullable_to_non_nullable
 as num,
@@ -156,7 +156,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String asOf,  num assets,  num liabilities,  num equity)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( DateTime asOf,  num assets,  num liabilities,  num equity)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _AccountingBalanceSheetEntity() when $default != null:
 return $default(_that.asOf,_that.assets,_that.liabilities,_that.equity);case _:
@@ -177,7 +177,7 @@ return $default(_that.asOf,_that.assets,_that.liabilities,_that.equity);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String asOf,  num assets,  num liabilities,  num equity)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( DateTime asOf,  num assets,  num liabilities,  num equity)  $default,) {final _that = this;
 switch (_that) {
 case _AccountingBalanceSheetEntity():
 return $default(_that.asOf,_that.assets,_that.liabilities,_that.equity);}
@@ -194,7 +194,7 @@ return $default(_that.asOf,_that.assets,_that.liabilities,_that.equity);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String asOf,  num assets,  num liabilities,  num equity)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( DateTime asOf,  num assets,  num liabilities,  num equity)?  $default,) {final _that = this;
 switch (_that) {
 case _AccountingBalanceSheetEntity() when $default != null:
 return $default(_that.asOf,_that.assets,_that.liabilities,_that.equity);case _:
@@ -208,11 +208,11 @@ return $default(_that.asOf,_that.assets,_that.liabilities,_that.equity);case _:
 /// @nodoc
 
 
-class _AccountingBalanceSheetEntity implements AccountingBalanceSheetEntity {
-  const _AccountingBalanceSheetEntity({required this.asOf, required this.assets, required this.liabilities, required this.equity});
+class _AccountingBalanceSheetEntity extends AccountingBalanceSheetEntity {
+  const _AccountingBalanceSheetEntity({required this.asOf, required this.assets, required this.liabilities, required this.equity}): super._();
   
 
-@override final  String asOf;
+@override final  DateTime asOf;
 @override final  num assets;
 @override final  num liabilities;
 @override final  num equity;
@@ -249,7 +249,7 @@ abstract mixin class _$AccountingBalanceSheetEntityCopyWith<$Res> implements $Ac
   factory _$AccountingBalanceSheetEntityCopyWith(_AccountingBalanceSheetEntity value, $Res Function(_AccountingBalanceSheetEntity) _then) = __$AccountingBalanceSheetEntityCopyWithImpl;
 @override @useResult
 $Res call({
- String asOf, num assets, num liabilities, num equity
+ DateTime asOf, num assets, num liabilities, num equity
 });
 
 
@@ -269,7 +269,7 @@ class __$AccountingBalanceSheetEntityCopyWithImpl<$Res>
 @override @pragma('vm:prefer-inline') $Res call({Object? asOf = null,Object? assets = null,Object? liabilities = null,Object? equity = null,}) {
   return _then(_AccountingBalanceSheetEntity(
 asOf: null == asOf ? _self.asOf : asOf // ignore: cast_nullable_to_non_nullable
-as String,assets: null == assets ? _self.assets : assets // ignore: cast_nullable_to_non_nullable
+as DateTime,assets: null == assets ? _self.assets : assets // ignore: cast_nullable_to_non_nullable
 as num,liabilities: null == liabilities ? _self.liabilities : liabilities // ignore: cast_nullable_to_non_nullable
 as num,equity: null == equity ? _self.equity : equity // ignore: cast_nullable_to_non_nullable
 as num,

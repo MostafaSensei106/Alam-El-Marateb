@@ -380,14 +380,22 @@ final class ApiRoutes {
 
   static const String accountingTreasuries = '$apiV1/accounting/treasuries';
   static const String accountingTreasuryCreate = '$apiV1/accounting/treasuries';
+  static const String accountingTreasuryById =
+      '$apiV1/accounting/treasuries/{treasuryId}';
   static const String accountingTreasuryTransfer =
       '$apiV1/accounting/treasuries/transfers';
+  static const String accountingTreasuryTransferById =
+      '$apiV1/accounting/treasuries/transfers/{transferId}';
 
   static const String accountingExpenses = '$apiV1/accounting/expenses';
   static const String accountingExpenseCreate = '$apiV1/accounting/expenses';
+  static const String accountingExpenseById =
+      '$apiV1/accounting/expenses/{expenseId}';
 
   static const String accountingChecks = '$apiV1/accounting/checks';
   static const String accountingCheckCreate = '$apiV1/accounting/checks';
+  static const String accountingCheckById =
+      '$apiV1/accounting/checks/{checkId}';
   static const String accountingCheckStatus =
       '$apiV1/accounting/checks/{checkId}/status';
 

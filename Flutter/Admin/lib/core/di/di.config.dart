@@ -93,14 +93,40 @@ import 'package:alam_el_marateb_admin/core/utils/theme/logic/cubit/theme_cubit.d
     as _i573;
 import 'package:alam_el_marateb_admin/modules/accounting/data/interface/accounting_reposiory.dart'
     as _i113;
-import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_balance_sheet_cubit.dart'
-    as _i1002;
-import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_balance_sheet_state.dart'
-    as _i378;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_accounts_cubit.dart'
+    as _i656;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_checks_cubit.dart'
+    as _i451;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_expenses_cubit.dart'
+    as _i224;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_journal_cubit.dart'
+    as _i391;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_ledger_cubit.dart'
+    as _i990;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_reports_cubit.dart'
+    as _i352;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_transfers_cubit.dart'
+    as _i147;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/cubit/accounting_treasuries_cubit.dart'
+    as _i949;
 import 'package:alam_el_marateb_admin/modules/accounting/logic/repository/accounting_reposiory_impl.dart'
     as _i801;
-import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/get_balance_sheet_usecase.dart'
-    as _i670;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/account_usecases.dart'
+    as _i146;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/check_usecases.dart'
+    as _i53;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/expense_usecases.dart'
+    as _i749;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/journal_usecases.dart'
+    as _i665;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/ledger_usecases.dart'
+    as _i276;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/report_usecases.dart'
+    as _i942;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/transfer_usecases.dart'
+    as _i608;
+import 'package:alam_el_marateb_admin/modules/accounting/logic/usecase/treasury_usecases.dart'
+    as _i372;
 import 'package:alam_el_marateb_admin/modules/login/data/interface/login_repository.dart'
     as _i850;
 import 'package:alam_el_marateb_admin/modules/login/logic/cubit/login_cubit.dart'
@@ -261,8 +287,104 @@ extension GetItInjectableX on _i174.GetIt {
         session: gh<_i173.UserSessionServiceBase>(),
       ),
     );
-    gh.factory<_i670.GetBalanceSheetUsecase>(
-      () => _i670.GetBalanceSheetUsecase(repo: gh<_i113.AccountingReposiory>()),
+    gh.factory<_i146.GetAccountsUsecase>(
+      () => _i146.GetAccountsUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i146.GetAccountUsecase>(
+      () => _i146.GetAccountUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i146.CreateAccountUsecase>(
+      () => _i146.CreateAccountUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i146.UpdateAccountUsecase>(
+      () => _i146.UpdateAccountUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i53.GetChecksUsecase>(
+      () => _i53.GetChecksUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i53.GetCheckUsecase>(
+      () => _i53.GetCheckUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i53.CreateCheckUsecase>(
+      () => _i53.CreateCheckUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i53.UpdateCheckUsecase>(
+      () => _i53.UpdateCheckUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i53.UpdateCheckStatusUsecase>(
+      () =>
+          _i53.UpdateCheckStatusUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i749.GetExpensesUsecase>(
+      () => _i749.GetExpensesUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i749.GetExpenseUsecase>(
+      () => _i749.GetExpenseUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i749.CreateExpenseUsecase>(
+      () => _i749.CreateExpenseUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i749.UpdateExpenseUsecase>(
+      () => _i749.UpdateExpenseUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i665.GetJournalEntriesUsecase>(
+      () =>
+          _i665.GetJournalEntriesUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i665.GetJournalEntryUsecase>(
+      () => _i665.GetJournalEntryUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i665.PostJournalEntryUsecase>(
+      () =>
+          _i665.PostJournalEntryUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i276.GetGeneralLedgerUsecase>(
+      () =>
+          _i276.GetGeneralLedgerUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i942.GetProfitLossUsecase>(
+      () => _i942.GetProfitLossUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i942.GetTaxReportUsecase>(
+      () => _i942.GetTaxReportUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i942.GetBalanceSheetUsecase>(
+      () => _i942.GetBalanceSheetUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i608.GetTransfersUsecase>(
+      () => _i608.GetTransfersUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i608.GetTransferUsecase>(
+      () => _i608.GetTransferUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i608.CreateTransferUsecase>(
+      () => _i608.CreateTransferUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i372.GetTreasuriesUsecase>(
+      () => _i372.GetTreasuriesUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i372.GetTreasuryUsecase>(
+      () => _i372.GetTreasuryUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i372.CreateTreasuryUsecase>(
+      () => _i372.CreateTreasuryUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i372.UpdateTreasuryUsecase>(
+      () => _i372.UpdateTreasuryUsecase(repo: gh<_i113.AccountingReposiory>()),
+    );
+    gh.factory<_i352.AccountingReportsCubit>(
+      () => _i352.AccountingReportsCubit(
+        getProfitLoss: gh<_i942.GetProfitLossUsecase>(),
+        getTaxReport: gh<_i942.GetTaxReportUsecase>(),
+        getBalanceSheet: gh<_i942.GetBalanceSheetUsecase>(),
+      ),
+    );
+    gh.factory<_i949.AccountingTreasuriesCubit>(
+      () => _i949.AccountingTreasuriesCubit(
+        getTreasuries: gh<_i372.GetTreasuriesUsecase>(),
+        createTreasury: gh<_i372.CreateTreasuryUsecase>(),
+        updateTreasury: gh<_i372.UpdateTreasuryUsecase>(),
+      ),
     );
     gh.factory<_i172.LoginUsecase>(
       () => _i172.LoginUsecase(repo: gh<_i850.LoginRepository>()),
@@ -270,13 +392,47 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i752.RefreshTokenUsecase>(
       () => _i752.RefreshTokenUsecase(repo: gh<_i850.LoginRepository>()),
     );
+    gh.factory<_i990.AccountingLedgerCubit>(
+      () => _i990.AccountingLedgerCubit(
+        getGeneralLedger: gh<_i276.GetGeneralLedgerUsecase>(),
+      ),
+    );
+    gh.factory<_i147.AccountingTransfersCubit>(
+      () => _i147.AccountingTransfersCubit(
+        getTransfers: gh<_i608.GetTransfersUsecase>(),
+        createTransfer: gh<_i608.CreateTransferUsecase>(),
+      ),
+    );
     gh.factory<_i826.LoginCubit>(
       () => _i826.LoginCubit(gh<_i172.LoginUsecase>()),
     );
-    gh.factory<_i1002.AccountingBalanceSheetCubit>(
-      () => _i1002.AccountingBalanceSheetCubit(
-        getBalanceSheetUsecase: gh<_i670.GetBalanceSheetUsecase>(),
-        initialState: gh<_i378.AccountingBalanceSheetState>(),
+    gh.factory<_i656.AccountingAccountsCubit>(
+      () => _i656.AccountingAccountsCubit(
+        getAccounts: gh<_i146.GetAccountsUsecase>(),
+        createAccount: gh<_i146.CreateAccountUsecase>(),
+        updateAccount: gh<_i146.UpdateAccountUsecase>(),
+      ),
+    );
+    gh.factory<_i451.AccountingChecksCubit>(
+      () => _i451.AccountingChecksCubit(
+        getChecks: gh<_i53.GetChecksUsecase>(),
+        createCheck: gh<_i53.CreateCheckUsecase>(),
+        updateCheck: gh<_i53.UpdateCheckUsecase>(),
+        updateCheckStatus: gh<_i53.UpdateCheckStatusUsecase>(),
+      ),
+    );
+    gh.factory<_i391.AccountingJournalCubit>(
+      () => _i391.AccountingJournalCubit(
+        getJournalEntries: gh<_i665.GetJournalEntriesUsecase>(),
+        getJournalEntry: gh<_i665.GetJournalEntryUsecase>(),
+        postJournalEntry: gh<_i665.PostJournalEntryUsecase>(),
+      ),
+    );
+    gh.factory<_i224.AccountingExpensesCubit>(
+      () => _i224.AccountingExpensesCubit(
+        getExpenses: gh<_i749.GetExpensesUsecase>(),
+        createExpense: gh<_i749.CreateExpenseUsecase>(),
+        updateExpense: gh<_i749.UpdateExpenseUsecase>(),
       ),
     );
     return this;
@@ -360,18 +516,115 @@ extension GetItInjectableX on _i174.GetIt {
   _i139.LoginRepositoryImpl get loginRepositoryImpl =>
       get<_i139.LoginRepositoryImpl>();
 
-  _i670.GetBalanceSheetUsecase get getBalanceSheetUsecase =>
-      get<_i670.GetBalanceSheetUsecase>();
+  _i146.GetAccountsUsecase get getAccountsUsecase =>
+      get<_i146.GetAccountsUsecase>();
+
+  _i146.GetAccountUsecase get getAccountUsecase =>
+      get<_i146.GetAccountUsecase>();
+
+  _i146.CreateAccountUsecase get createAccountUsecase =>
+      get<_i146.CreateAccountUsecase>();
+
+  _i146.UpdateAccountUsecase get updateAccountUsecase =>
+      get<_i146.UpdateAccountUsecase>();
+
+  _i53.GetChecksUsecase get getChecksUsecase => get<_i53.GetChecksUsecase>();
+
+  _i53.GetCheckUsecase get getCheckUsecase => get<_i53.GetCheckUsecase>();
+
+  _i53.CreateCheckUsecase get createCheckUsecase =>
+      get<_i53.CreateCheckUsecase>();
+
+  _i53.UpdateCheckUsecase get updateCheckUsecase =>
+      get<_i53.UpdateCheckUsecase>();
+
+  _i53.UpdateCheckStatusUsecase get updateCheckStatusUsecase =>
+      get<_i53.UpdateCheckStatusUsecase>();
+
+  _i749.GetExpensesUsecase get getExpensesUsecase =>
+      get<_i749.GetExpensesUsecase>();
+
+  _i749.GetExpenseUsecase get getExpenseUsecase =>
+      get<_i749.GetExpenseUsecase>();
+
+  _i749.CreateExpenseUsecase get createExpenseUsecase =>
+      get<_i749.CreateExpenseUsecase>();
+
+  _i749.UpdateExpenseUsecase get updateExpenseUsecase =>
+      get<_i749.UpdateExpenseUsecase>();
+
+  _i665.GetJournalEntriesUsecase get getJournalEntriesUsecase =>
+      get<_i665.GetJournalEntriesUsecase>();
+
+  _i665.GetJournalEntryUsecase get getJournalEntryUsecase =>
+      get<_i665.GetJournalEntryUsecase>();
+
+  _i665.PostJournalEntryUsecase get postJournalEntryUsecase =>
+      get<_i665.PostJournalEntryUsecase>();
+
+  _i276.GetGeneralLedgerUsecase get getGeneralLedgerUsecase =>
+      get<_i276.GetGeneralLedgerUsecase>();
+
+  _i942.GetProfitLossUsecase get getProfitLossUsecase =>
+      get<_i942.GetProfitLossUsecase>();
+
+  _i942.GetTaxReportUsecase get getTaxReportUsecase =>
+      get<_i942.GetTaxReportUsecase>();
+
+  _i942.GetBalanceSheetUsecase get getBalanceSheetUsecase =>
+      get<_i942.GetBalanceSheetUsecase>();
+
+  _i608.GetTransfersUsecase get getTransfersUsecase =>
+      get<_i608.GetTransfersUsecase>();
+
+  _i608.GetTransferUsecase get getTransferUsecase =>
+      get<_i608.GetTransferUsecase>();
+
+  _i608.CreateTransferUsecase get createTransferUsecase =>
+      get<_i608.CreateTransferUsecase>();
+
+  _i372.GetTreasuriesUsecase get getTreasuriesUsecase =>
+      get<_i372.GetTreasuriesUsecase>();
+
+  _i372.GetTreasuryUsecase get getTreasuryUsecase =>
+      get<_i372.GetTreasuryUsecase>();
+
+  _i372.CreateTreasuryUsecase get createTreasuryUsecase =>
+      get<_i372.CreateTreasuryUsecase>();
+
+  _i372.UpdateTreasuryUsecase get updateTreasuryUsecase =>
+      get<_i372.UpdateTreasuryUsecase>();
+
+  _i352.AccountingReportsCubit get accountingReportsCubit =>
+      get<_i352.AccountingReportsCubit>();
+
+  _i949.AccountingTreasuriesCubit get accountingTreasuriesCubit =>
+      get<_i949.AccountingTreasuriesCubit>();
 
   _i172.LoginUsecase get loginUsecase => get<_i172.LoginUsecase>();
 
   _i752.RefreshTokenUsecase get refreshTokenUsecase =>
       get<_i752.RefreshTokenUsecase>();
 
+  _i990.AccountingLedgerCubit get accountingLedgerCubit =>
+      get<_i990.AccountingLedgerCubit>();
+
+  _i147.AccountingTransfersCubit get accountingTransfersCubit =>
+      get<_i147.AccountingTransfersCubit>();
+
   _i826.LoginCubit get loginCubit => get<_i826.LoginCubit>();
 
-  _i1002.AccountingBalanceSheetCubit get accountingBalanceSheetCubit =>
-      get<_i1002.AccountingBalanceSheetCubit>();
+  _i656.AccountingAccountsCubit get accountingAccountsCubit =>
+      get<_i656.AccountingAccountsCubit>();
+
+  _i451.AccountingChecksCubit get accountingChecksCubit =>
+      get<_i451.AccountingChecksCubit>();
+
+  _i391.AccountingJournalCubit get accountingJournalCubit =>
+      get<_i391.AccountingJournalCubit>();
+
+  _i224.AccountingExpensesCubit get accountingExpensesCubit =>
+      get<_i224.AccountingExpensesCubit>();
 }
 
 class _$InjectionModule extends _i441.InjectionModule {}

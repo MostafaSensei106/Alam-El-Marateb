@@ -1,8 +1,8 @@
 /// Small helpers shared by every accounting screen.
 ///
-/// They only translate sample records into the labels, tones and date strings
-/// the shared detail kit expects, so the tabs stay free of duplicated switch
-/// statements.
+/// They only translate live accounting entities into the labels, tones and date
+/// strings the shared detail kit expects, so the tabs stay free of duplicated
+/// switch statements.
 library;
 
 import 'package:flutter/material.dart';
@@ -13,23 +13,16 @@ import '../../../../../core/widgets/design_system/tokens/tokens.dart';
 import '../../../../../l10n/app_localizations.dart';
 import '../../../../main/ui/widgets/admin_detail_kit.dart';
 import '../../../../main/ui/widgets/admin_page_frame.dart';
-import '../sample/accounting_models.dart';
-
-/// Placeholder action used by every sample button until the wiring lands.
-void accountingShowSampleAction(BuildContext context) {
-  final messenger = ScaffoldMessenger.maybeOf(context);
-  if (messenger == null) return;
-
-  messenger
-    ..hideCurrentSnackBar()
-    ..showSnackBar(
-      SnackBar(content: Text(context.localeKeys.adminSampleActionMessage)),
-    );
-}
+import '../../../logic/entity/accounting_enums.dart';
+import '../../../logic/entity/accounting_expense_entity.dart';
 
 /// `2026-10-21` rendered with the active locale.
 String accountingDateLabel(BuildContext context, DateTime date) =>
     MaterialLocalizations.of(context).formatMediumDate(date);
+
+/// `2026-10-21` rendered for a nullable date, with a dash when absent.
+String accountingOptionalDateLabel(BuildContext context, DateTime? date) =>
+    date == null ? '—' : accountingDateLabel(context, date);
 
 /// `from – to` used by the report headers.
 String accountingDateRangeLabel(
@@ -84,23 +77,12 @@ final class AccountingViewSwitch<T> extends StatelessWidget {
 /// Which of the two journal views is on screen.
 enum JournalViewMode { entries, ledger }
 
-/// Which of the two treasury views is on screen.
-enum TreasuryViewMode { treasuries, transfers }
-
 String accountingJournalViewLabel(
   AppLocalizations l10n,
   JournalViewMode mode,
 ) => switch (mode) {
   JournalViewMode.entries => l10n.accountingViewEntries,
   JournalViewMode.ledger => l10n.accountingViewLedger,
-};
-
-String accountingTreasuryViewLabel(
-  AppLocalizations l10n,
-  TreasuryViewMode mode,
-) => switch (mode) {
-  TreasuryViewMode.treasuries => l10n.accountingViewTreasuries,
-  TreasuryViewMode.transfers => l10n.accountingViewTransfers,
 };
 
 // ---------------------------------------------------------------------------
@@ -114,6 +96,7 @@ String accountingAccountTypeLabel(AppLocalizations l10n, AccountType type) =>
       AccountType.equity => l10n.accountingTypeEquity,
       AccountType.revenue => l10n.accountingTypeRevenue,
       AccountType.expense => l10n.accountingTypeExpense,
+      AccountType.other => l10n.accountingTypeOther,
     };
 
 AdminPillTone accountingAccountTypeTone(AccountType type) => switch (type) {
@@ -122,6 +105,7 @@ AdminPillTone accountingAccountTypeTone(AccountType type) => switch (type) {
   AccountType.equity => AdminPillTone.success,
   AccountType.revenue => AdminPillTone.success,
   AccountType.expense => AdminPillTone.warning,
+  AccountType.other => AdminPillTone.muted,
 };
 
 String accountingSourceLabel(AppLocalizations l10n, JournalSource source) =>
@@ -131,6 +115,7 @@ String accountingSourceLabel(AppLocalizations l10n, JournalSource source) =>
       JournalSource.purchasing => l10n.accountingSourcePurchasing,
       JournalSource.expense => l10n.accountingSourceExpense,
       JournalSource.transfer => l10n.accountingSourceTransfer,
+      JournalSource.other => l10n.accountingSourceOther,
     };
 
 AdminPillTone accountingSourceTone(JournalSource source) => switch (source) {
@@ -139,6 +124,7 @@ AdminPillTone accountingSourceTone(JournalSource source) => switch (source) {
   JournalSource.purchasing => AdminPillTone.primary,
   JournalSource.expense => AdminPillTone.warning,
   JournalSource.transfer => AdminPillTone.primary,
+  JournalSource.other => AdminPillTone.muted,
 };
 
 String accountingCategoryLabel(AppLocalizations l10n, ExpenseCategory value) =>
@@ -150,6 +136,7 @@ String accountingCategoryLabel(AppLocalizations l10n, ExpenseCategory value) =>
       ExpenseCategory.maintenance => l10n.accountingCategoryMaintenance,
       ExpenseCategory.transport => l10n.accountingCategoryTransport,
       ExpenseCategory.supplies => l10n.accountingCategorySupplies,
+      ExpenseCategory.other => l10n.accountingCategoryOther,
     };
 
 String accountingDirectionLabel(
@@ -167,6 +154,7 @@ String accountingCheckStatusLabel(AppLocalizations l10n, CheckStatus status) =>
       CheckStatus.cashed => l10n.accountingStatusCashed,
       CheckStatus.bounced => l10n.accountingStatusBounced,
       CheckStatus.returned => l10n.accountingStatusReturned,
+      CheckStatus.other => l10n.accountingStatusOther,
     };
 
 AdminPillTone accountingCheckStatusTone(CheckStatus status) => switch (status) {
@@ -174,13 +162,17 @@ AdminPillTone accountingCheckStatusTone(CheckStatus status) => switch (status) {
   CheckStatus.cashed => AdminPillTone.success,
   CheckStatus.bounced => AdminPillTone.warning,
   CheckStatus.returned => AdminPillTone.muted,
+  CheckStatus.other => AdminPillTone.muted,
 };
 
-/// Approval state of an [ExpenseRow].
-String accountingApprovalLabel(AppLocalizations l10n, ExpenseRow expense) =>
+/// Approval state of an [AccountingExpenseEntity].
+String accountingApprovalLabel(
+  AppLocalizations l10n,
+  AccountingExpenseEntity expense,
+) =>
     expense.approved
     ? l10n.accountingApprovedBy
     : l10n.accountingApprovalPending;
 
-AdminPillTone accountingApprovalTone(ExpenseRow expense) =>
+AdminPillTone accountingApprovalTone(AccountingExpenseEntity expense) =>
     expense.approved ? AdminPillTone.success : AdminPillTone.warning;

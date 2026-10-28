@@ -162,15 +162,20 @@ final class AccountingDropdownField<T> extends StatelessWidget {
 }
 
 /// Save/discard row shared by the create and edit forms.
+///
+/// [saving] disables the save button while the cubit is writing so a slow
+/// request cannot be submitted twice.
 final class AccountingFormActions extends StatelessWidget {
   const AccountingFormActions({
     required this.onSave,
     required this.onCancel,
     super.key,
+    this.saving = false,
   });
 
   final VoidCallback onSave;
   final VoidCallback onCancel;
+  final bool saving;
 
   @override
   Widget build(BuildContext context) {
@@ -181,8 +186,13 @@ final class AccountingFormActions extends StatelessWidget {
       runSpacing: AppSpacing.small,
       children: [
         FilledButton.icon(
-          onPressed: onSave,
-          icon: const Icon(LucideIcons.check, size: AppIconSizes.small),
+          onPressed: saving ? null : onSave,
+          icon: saving
+              ? const SizedBox.square(
+                  dimension: AppIconSizes.small,
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                )
+              : const Icon(LucideIcons.check, size: AppIconSizes.small),
           label: Text(l10n.accountingSave),
         ),
         OutlinedButton.icon(
