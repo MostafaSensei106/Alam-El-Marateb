@@ -14,7 +14,7 @@ sealed class AccountingJournalState with _$AccountingJournalState {
     required List<AccountingJournalEntryEntity> items,
     @Default(false) bool isSaving,
     String? errorMessage,
-  }) = _Success;
+  }) = Success;
 
   const factory AccountingJournalState.failure({required String message}) =
       _Failure;

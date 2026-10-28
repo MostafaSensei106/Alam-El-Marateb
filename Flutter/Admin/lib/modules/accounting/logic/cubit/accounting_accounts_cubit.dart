@@ -21,7 +21,7 @@ final class AccountingAccountsCubit
   final UpdateAccountUsecase _updateAccount;
 
   List<AccountingAccountEntity> get _items => switch (state.value) {
-    AccountingAccountsSuccess(:final items) => items,
+    Success(:final items) => items,
     _ => const [],
   };
 

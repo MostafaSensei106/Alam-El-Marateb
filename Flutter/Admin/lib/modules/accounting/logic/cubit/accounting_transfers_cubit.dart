@@ -19,7 +19,7 @@ final class AccountingTransfersCubit
   String? _treasuryId;
 
   List<AccountingTransferEntity> get items => switch (state.value) {
-    AccountingTransfersSuccess(:final items) => items,
+    Success(:final items) => items,
     _ => const [],
   };
 

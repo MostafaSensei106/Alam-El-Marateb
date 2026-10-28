@@ -14,7 +14,7 @@ sealed class AccountingExpensesState with _$AccountingExpensesState {
     required List<AccountingExpenseEntity> items,
     @Default(false) bool isSaving,
     String? errorMessage,
-  }) = _Success;
+  }) = Success;
 
   const factory AccountingExpensesState.failure({required String message}) =
       _Failure;

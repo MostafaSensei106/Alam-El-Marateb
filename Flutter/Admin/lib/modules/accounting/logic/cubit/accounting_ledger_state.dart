@@ -12,7 +12,7 @@ sealed class AccountingLedgerState with _$AccountingLedgerState {
 
   const factory AccountingLedgerState.success({
     required List<AccountingLedgerLineEntity> items,
-  }) = _Success;
+  }) = Success;
 
   const factory AccountingLedgerState.failure({required String message}) =
       _Failure;

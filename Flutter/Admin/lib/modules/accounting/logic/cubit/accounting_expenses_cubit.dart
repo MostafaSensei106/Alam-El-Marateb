@@ -22,7 +22,7 @@ final class AccountingExpensesCubit
   String? _branchId;
 
   List<AccountingExpenseEntity> get items => switch (state.value) {
-    AccountingExpensesSuccess(:final items) => items,
+    Success(:final items) => items,
     _ => const [],
   };
 

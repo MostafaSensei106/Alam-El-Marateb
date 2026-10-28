@@ -7,16 +7,15 @@ import 'accounting_ledger_state.dart';
 
 @injectable
 final class AccountingLedgerCubit extends CubitSignal<AccountingLedgerState> {
-  AccountingLedgerCubit({required GetGeneralLedgerUsecase getGeneralLedger})
-    : _getGeneralLedger = getGeneralLedger,
-      super(initialState: const AccountingLedgerState.initial());
+  AccountingLedgerCubit({required this._getGeneralLedger})
+    : super(initialState: const AccountingLedgerState.initial());
 
   final GetGeneralLedgerUsecase _getGeneralLedger;
 
   GetGeneralLedgerParams _params = const GetGeneralLedgerParams();
 
   List<AccountingLedgerLineEntity> get items => switch (state.value) {
-    AccountingLedgerSuccess(:final items) => items,
+    Success(:final items) => items,
     _ => const [],
   };
 

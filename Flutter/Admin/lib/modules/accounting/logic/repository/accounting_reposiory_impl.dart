@@ -189,10 +189,8 @@ final class AccountingReposioryImpl implements AccountingReposiory {
     required String id,
     String? name,
   }) => ApiExecutor.executeMapped(
-    action: () => _api.updateTreasury(
-      id,
-      UpdateTreasuryRequestBody(name: name),
-    ),
+    action: () =>
+        _api.updateTreasury(id, UpdateTreasuryRequestBody(name: name)),
     mapper: (dto) => dto.data.toEntity(),
   );
 
@@ -237,12 +235,11 @@ final class AccountingReposioryImpl implements AccountingReposiory {
   );
 
   @override
-  Future<ApiResult<AccountingExpenseEntity>> getExpense({
-    required String id,
-  }) => ApiExecutor.executeMapped(
-    action: () => _api.getExpense(id),
-    mapper: (dto) => dto.data.toEntity(),
-  );
+  Future<ApiResult<AccountingExpenseEntity>> getExpense({required String id}) =>
+      ApiExecutor.executeMapped(
+        action: () => _api.getExpense(id),
+        mapper: (dto) => dto.data.toEntity(),
+      );
 
   @override
   Future<ApiResult<AccountingExpenseEntity>> createExpense({
@@ -354,10 +351,8 @@ final class AccountingReposioryImpl implements AccountingReposiory {
     required DateTime from,
     required DateTime to,
   }) => ApiExecutor.executeMapped(
-    action: () => _api.getProfitLoss(
-      from: formatDateOnly(from),
-      to: formatDateOnly(to),
-    ),
+    action: () =>
+        _api.getProfitLoss(from: formatDateOnly(from), to: formatDateOnly(to)),
     mapper: (dto) => dto.data.toEntity(),
   );
 
@@ -366,10 +361,8 @@ final class AccountingReposioryImpl implements AccountingReposiory {
     required DateTime from,
     required DateTime to,
   }) => ApiExecutor.executeMapped(
-    action: () => _api.getTaxReport(
-      from: formatDateOnly(from),
-      to: formatDateOnly(to),
-    ),
+    action: () =>
+        _api.getTaxReport(from: formatDateOnly(from), to: formatDateOnly(to)),
     mapper: (dto) => dto.data.toEntity(),
   );
 

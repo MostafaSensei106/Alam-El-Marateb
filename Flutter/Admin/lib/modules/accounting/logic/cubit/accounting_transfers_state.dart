@@ -14,7 +14,7 @@ sealed class AccountingTransfersState with _$AccountingTransfersState {
     required List<AccountingTransferEntity> items,
     @Default(false) bool isSaving,
     String? errorMessage,
-  }) = _Success;
+  }) = Success;
 
   const factory AccountingTransfersState.failure({required String message}) =
       _Failure;
