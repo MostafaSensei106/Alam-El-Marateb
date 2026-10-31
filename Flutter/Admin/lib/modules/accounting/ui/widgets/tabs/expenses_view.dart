@@ -131,8 +131,8 @@ final class ExpensesView extends HookWidget {
                     : AdminPillTone.muted,
               ),
               AdminStatusPill(
-                label: accountingApprovalLabel(l10n, expense),
-                tone: accountingApprovalTone(expense),
+                label: accountingApprovalLabel(l10n, expense.approved),
+                tone: accountingApprovalTone(expense.approved),
               ),
               Text(
                 adminFormatAmount(context, expense.amount),

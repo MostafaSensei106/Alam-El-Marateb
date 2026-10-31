@@ -15,7 +15,7 @@ final class AccountingLedgerCubit extends CubitSignal<AccountingLedgerState> {
   GetGeneralLedgerParams _params = const GetGeneralLedgerParams();
 
   List<AccountingLedgerLineEntity> get items => switch (state.value) {
-    Success(:final items) => items,
+    AccountingLedgerSuccess(:final items) => items,
     _ => const [],
   };
 

@@ -6,16 +6,15 @@ part 'accounting_transfers_state.freezed.dart';
 
 @freezed
 sealed class AccountingTransfersState with _$AccountingTransfersState {
-  const factory AccountingTransfersState.initial() = _Initial;
+  const factory AccountingTransfersState.initial() = AccountingTransfersInitial;
 
-  const factory AccountingTransfersState.loading() = _Loading;
+  const factory AccountingTransfersState.loading() = AccountingTransfersLoading;
 
   const factory AccountingTransfersState.success({
     required List<AccountingTransferEntity> items,
     @Default(false) bool isSaving,
     String? errorMessage,
-  }) = Success;
+  }) = AccountingTransfersSuccess;
 
-  const factory AccountingTransfersState.failure({required String message}) =
-      _Failure;
+  const factory AccountingTransfersState.failure({required String message}) = AccountingTransfersFailure;
 }

@@ -8,9 +8,9 @@ part 'accounting_reports_state.freezed.dart';
 
 @freezed
 sealed class AccountingReportsState with _$AccountingReportsState {
-  const factory AccountingReportsState.initial() = _Initial;
+  const factory AccountingReportsState.initial() = AccountingReportsInitial;
 
-  const factory AccountingReportsState.loading() = _Loading;
+  const factory AccountingReportsState.loading() = AccountingReportsLoading;
 
   const factory AccountingReportsState.success({
     required DateTime from,
@@ -18,8 +18,7 @@ sealed class AccountingReportsState with _$AccountingReportsState {
     required AccountingProfitLossEntity profitLoss,
     required AccountingBalanceSheetEntity balanceSheet,
     required AccountingTaxReportEntity taxReport,
-  }) = _Success;
+  }) = AccountingReportsSuccess;
 
-  const factory AccountingReportsState.failure({required String message}) =
-      _Failure;
+  const factory AccountingReportsState.failure({required String message}) = AccountingReportsFailure;
 }

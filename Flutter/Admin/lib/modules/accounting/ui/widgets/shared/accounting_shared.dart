@@ -14,7 +14,6 @@ import '../../../../../l10n/app_localizations.dart';
 import '../../../../main/ui/widgets/admin_detail_kit.dart';
 import '../../../../main/ui/widgets/admin_page_frame.dart';
 import '../../../logic/entity/accounting_enums.dart';
-import '../../../logic/entity/accounting_expense_entity.dart';
 
 /// `2026-10-21` rendered with the active locale.
 String accountingDateLabel(BuildContext context, DateTime date) =>
@@ -84,6 +83,27 @@ String accountingJournalViewLabel(
   JournalViewMode.entries => l10n.accountingViewEntries,
   JournalViewMode.ledger => l10n.accountingViewLedger,
 };
+
+/// Which of the two treasury views is on screen.
+enum TreasuryViewMode { treasuries, transfers }
+
+String accountingTreasuryViewLabel(
+  AppLocalizations l10n,
+  TreasuryViewMode mode,
+) => switch (mode) {
+  TreasuryViewMode.treasuries => l10n.accountingViewTreasuries,
+  TreasuryViewMode.transfers => l10n.accountingViewTransfers,
+};
+
+/// Placeholder feedback for actions that are not wired to the API yet.
+void accountingShowSampleAction(BuildContext context) {
+  final messenger = ScaffoldMessenger.maybeOf(context);
+  if (messenger == null) return;
+
+  messenger.showSnackBar(
+    SnackBar(content: Text(context.localeKeys.adminSampleActionMessage)),
+  );
+}
 
 // ---------------------------------------------------------------------------
 // Enum labels and tones
@@ -165,14 +185,9 @@ AdminPillTone accountingCheckStatusTone(CheckStatus status) => switch (status) {
   CheckStatus.other => AdminPillTone.muted,
 };
 
-/// Approval state of an [AccountingExpenseEntity].
-String accountingApprovalLabel(
-  AppLocalizations l10n,
-  AccountingExpenseEntity expense,
-) =>
-    expense.approved
-    ? l10n.accountingApprovedBy
-    : l10n.accountingApprovalPending;
+/// Approval state of an expense (live entity or sample row).
+String accountingApprovalLabel(AppLocalizations l10n, bool approved) =>
+    approved ? l10n.accountingApprovedBy : l10n.accountingApprovalPending;
 
-AdminPillTone accountingApprovalTone(AccountingExpenseEntity expense) =>
-    expense.approved ? AdminPillTone.success : AdminPillTone.warning;
+AdminPillTone accountingApprovalTone(bool approved) =>
+    approved ? AdminPillTone.success : AdminPillTone.warning;

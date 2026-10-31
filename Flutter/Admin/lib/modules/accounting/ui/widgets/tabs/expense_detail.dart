@@ -47,9 +47,9 @@ final class ExpenseDetail extends StatelessWidget {
         ),
         AdminMetric(
           label: l10n.accountingStatus,
-          value: accountingApprovalLabel(l10n, expense),
+          value: accountingApprovalLabel(l10n, expense.approved),
           icon: expense.approved ? LucideIcons.check : LucideIcons.clock,
-          tone: accountingApprovalTone(expense),
+          tone: accountingApprovalTone(expense.approved),
         ),
       ],
       body: AdminSurfaceCard(

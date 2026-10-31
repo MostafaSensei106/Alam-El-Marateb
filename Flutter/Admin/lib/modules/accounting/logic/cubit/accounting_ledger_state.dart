@@ -6,14 +6,13 @@ part 'accounting_ledger_state.freezed.dart';
 
 @freezed
 sealed class AccountingLedgerState with _$AccountingLedgerState {
-  const factory AccountingLedgerState.initial() = _Initial;
+  const factory AccountingLedgerState.initial() = AccountingLedgerInitial;
 
-  const factory AccountingLedgerState.loading() = _Loading;
+  const factory AccountingLedgerState.loading() = AccountingLedgerLoading;
 
   const factory AccountingLedgerState.success({
     required List<AccountingLedgerLineEntity> items,
-  }) = Success;
+  }) = AccountingLedgerSuccess;
 
-  const factory AccountingLedgerState.failure({required String message}) =
-      _Failure;
+  const factory AccountingLedgerState.failure({required String message}) = AccountingLedgerFailure;
 }

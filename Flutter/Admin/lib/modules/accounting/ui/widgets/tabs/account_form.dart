@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 
-import '../../../../../core/di/di.dart';
 import '../../../../../core/extensions/extensions.dart';
 import '../../../logic/cubit/accounting_accounts_cubit.dart';
 import '../../../logic/cubit/accounting_accounts_state.dart';

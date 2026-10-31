@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
@@ -35,9 +37,13 @@ final class AccountDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) =>
       BlocSignalProvider<AccountingLedgerCubit>(
-        create: (_) =>
-            getIt<AccountingLedgerCubit>()
-              ..load(params: GetGeneralLedgerParams(accountCode: account.code)),
+        create: (_) {
+          final cubit = getIt<AccountingLedgerCubit>();
+          unawaited(
+            cubit.load(params: GetGeneralLedgerParams(accountCode: account.code)),
+          );
+          return cubit;
+        },
         child: BlocSignalBuilder<AccountingLedgerCubit, AccountingLedgerState>(
           builder: (context, state) => _AccountDetailBody(
             account: account,

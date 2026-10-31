@@ -56,13 +56,13 @@ extension AccountingLedgerStatePatterns on AccountingLedgerState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( Success value)?  success,TResult Function( _Failure value)?  failure,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( AccountingLedgerInitial value)?  initial,TResult Function( AccountingLedgerLoading value)?  loading,TResult Function( AccountingLedgerSuccess value)?  success,TResult Function( AccountingLedgerFailure value)?  failure,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case Success() when success != null:
-return success(_that);case _Failure() when failure != null:
+case AccountingLedgerInitial() when initial != null:
+return initial(_that);case AccountingLedgerLoading() when loading != null:
+return loading(_that);case AccountingLedgerSuccess() when success != null:
+return success(_that);case AccountingLedgerFailure() when failure != null:
 return failure(_that);case _:
   return orElse();
 
@@ -81,13 +81,13 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( Success value)  success,required TResult Function( _Failure value)  failure,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( AccountingLedgerInitial value)  initial,required TResult Function( AccountingLedgerLoading value)  loading,required TResult Function( AccountingLedgerSuccess value)  success,required TResult Function( AccountingLedgerFailure value)  failure,}){
 final _that = this;
 switch (_that) {
-case _Initial():
-return initial(_that);case _Loading():
-return loading(_that);case Success():
-return success(_that);case _Failure():
+case AccountingLedgerInitial():
+return initial(_that);case AccountingLedgerLoading():
+return loading(_that);case AccountingLedgerSuccess():
+return success(_that);case AccountingLedgerFailure():
 return failure(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -102,13 +102,13 @@ return failure(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( Success value)?  success,TResult? Function( _Failure value)?  failure,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( AccountingLedgerInitial value)?  initial,TResult? Function( AccountingLedgerLoading value)?  loading,TResult? Function( AccountingLedgerSuccess value)?  success,TResult? Function( AccountingLedgerFailure value)?  failure,}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case Success() when success != null:
-return success(_that);case _Failure() when failure != null:
+case AccountingLedgerInitial() when initial != null:
+return initial(_that);case AccountingLedgerLoading() when loading != null:
+return loading(_that);case AccountingLedgerSuccess() when success != null:
+return success(_that);case AccountingLedgerFailure() when failure != null:
 return failure(_that);case _:
   return null;
 
@@ -128,10 +128,10 @@ return failure(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<AccountingLedgerLineEntity> items)?  success,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case Success() when success != null:
-return success(_that.items);case _Failure() when failure != null:
+case AccountingLedgerInitial() when initial != null:
+return initial();case AccountingLedgerLoading() when loading != null:
+return loading();case AccountingLedgerSuccess() when success != null:
+return success(_that.items);case AccountingLedgerFailure() when failure != null:
 return failure(_that.message);case _:
   return orElse();
 
@@ -152,10 +152,10 @@ return failure(_that.message);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<AccountingLedgerLineEntity> items)  success,required TResult Function( String message)  failure,}) {final _that = this;
 switch (_that) {
-case _Initial():
-return initial();case _Loading():
-return loading();case Success():
-return success(_that.items);case _Failure():
+case AccountingLedgerInitial():
+return initial();case AccountingLedgerLoading():
+return loading();case AccountingLedgerSuccess():
+return success(_that.items);case AccountingLedgerFailure():
 return failure(_that.message);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -172,10 +172,10 @@ return failure(_that.message);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<AccountingLedgerLineEntity> items)?  success,TResult? Function( String message)?  failure,}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case Success() when success != null:
-return success(_that.items);case _Failure() when failure != null:
+case AccountingLedgerInitial() when initial != null:
+return initial();case AccountingLedgerLoading() when loading != null:
+return loading();case AccountingLedgerSuccess() when success != null:
+return success(_that.items);case AccountingLedgerFailure() when failure != null:
 return failure(_that.message);case _:
   return null;
 
@@ -187,8 +187,8 @@ return failure(_that.message);case _:
 /// @nodoc
 
 
-class _Initial implements AccountingLedgerState {
-  const _Initial();
+class AccountingLedgerInitial implements AccountingLedgerState {
+  const AccountingLedgerInitial();
   
 
 
@@ -198,7 +198,7 @@ class _Initial implements AccountingLedgerState {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountingLedgerInitial);
 }
 
 
@@ -219,8 +219,8 @@ String toString() {
 /// @nodoc
 
 
-class _Loading implements AccountingLedgerState {
-  const _Loading();
+class AccountingLedgerLoading implements AccountingLedgerState {
+  const AccountingLedgerLoading();
   
 
 
@@ -230,7 +230,7 @@ class _Loading implements AccountingLedgerState {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountingLedgerLoading);
 }
 
 
@@ -251,8 +251,8 @@ String toString() {
 /// @nodoc
 
 
-class Success implements AccountingLedgerState {
-  const Success({required  List<AccountingLedgerLineEntity> items}): _items = items;
+class AccountingLedgerSuccess implements AccountingLedgerState {
+  const AccountingLedgerSuccess({required  List<AccountingLedgerLineEntity> items}): _items = items;
   
 
  final  List<AccountingLedgerLineEntity> _items;
@@ -267,13 +267,13 @@ class Success implements AccountingLedgerState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-$SuccessCopyWith<Success> get copyWith => _$SuccessCopyWithImpl<Success>(this, _$identity);
+$AccountingLedgerSuccessCopyWith<AccountingLedgerSuccess> get copyWith => _$AccountingLedgerSuccessCopyWithImpl<AccountingLedgerSuccess>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is Success&&const DeepCollectionEquality().equals(other.items, _items));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountingLedgerSuccess&&const DeepCollectionEquality().equals(other.items, _items));
 }
 
 
@@ -291,8 +291,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class $SuccessCopyWith<$Res> implements $AccountingLedgerStateCopyWith<$Res> {
-  factory $SuccessCopyWith(Success value, $Res Function(Success) _then) = _$SuccessCopyWithImpl;
+abstract mixin class $AccountingLedgerSuccessCopyWith<$Res> implements $AccountingLedgerStateCopyWith<$Res> {
+  factory $AccountingLedgerSuccessCopyWith(AccountingLedgerSuccess value, $Res Function(AccountingLedgerSuccess) _then) = _$AccountingLedgerSuccessCopyWithImpl;
 @useResult
 $Res call({
  List<AccountingLedgerLineEntity> items
@@ -303,17 +303,17 @@ $Res call({
 
 }
 /// @nodoc
-class _$SuccessCopyWithImpl<$Res>
-    implements $SuccessCopyWith<$Res> {
-  _$SuccessCopyWithImpl(this._self, this._then);
+class _$AccountingLedgerSuccessCopyWithImpl<$Res>
+    implements $AccountingLedgerSuccessCopyWith<$Res> {
+  _$AccountingLedgerSuccessCopyWithImpl(this._self, this._then);
 
-  final Success _self;
-  final $Res Function(Success) _then;
+  final AccountingLedgerSuccess _self;
+  final $Res Function(AccountingLedgerSuccess) _then;
 
 /// Create a copy of AccountingLedgerState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? items = null,}) {
-  return _then(Success(
+  return _then(AccountingLedgerSuccess(
 items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
 as List<AccountingLedgerLineEntity>,
   ));
@@ -325,8 +325,8 @@ as List<AccountingLedgerLineEntity>,
 /// @nodoc
 
 
-class _Failure implements AccountingLedgerState {
-  const _Failure({required this.message});
+class AccountingLedgerFailure implements AccountingLedgerState {
+  const AccountingLedgerFailure({required this.message});
   
 
  final  String message;
@@ -335,13 +335,13 @@ class _Failure implements AccountingLedgerState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$FailureCopyWith<_Failure> get copyWith => __$FailureCopyWithImpl<_Failure>(this, _$identity);
+$AccountingLedgerFailureCopyWith<AccountingLedgerFailure> get copyWith => _$AccountingLedgerFailureCopyWithImpl<AccountingLedgerFailure>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Failure&&(identical(other.message, message) || other.message == message));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountingLedgerFailure&&(identical(other.message, message) || other.message == message));
 }
 
 
@@ -359,8 +359,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$FailureCopyWith<$Res> implements $AccountingLedgerStateCopyWith<$Res> {
-  factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) _then) = __$FailureCopyWithImpl;
+abstract mixin class $AccountingLedgerFailureCopyWith<$Res> implements $AccountingLedgerStateCopyWith<$Res> {
+  factory $AccountingLedgerFailureCopyWith(AccountingLedgerFailure value, $Res Function(AccountingLedgerFailure) _then) = _$AccountingLedgerFailureCopyWithImpl;
 @useResult
 $Res call({
  String message
@@ -371,17 +371,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$FailureCopyWithImpl<$Res>
-    implements _$FailureCopyWith<$Res> {
-  __$FailureCopyWithImpl(this._self, this._then);
+class _$AccountingLedgerFailureCopyWithImpl<$Res>
+    implements $AccountingLedgerFailureCopyWith<$Res> {
+  _$AccountingLedgerFailureCopyWithImpl(this._self, this._then);
 
-  final _Failure _self;
-  final $Res Function(_Failure) _then;
+  final AccountingLedgerFailure _self;
+  final $Res Function(AccountingLedgerFailure) _then;
 
 /// Create a copy of AccountingLedgerState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
-  return _then(_Failure(
+  return _then(AccountingLedgerFailure(
 message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
   ));

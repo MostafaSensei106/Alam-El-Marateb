@@ -6,16 +6,15 @@ part 'accounting_journal_state.freezed.dart';
 
 @freezed
 sealed class AccountingJournalState with _$AccountingJournalState {
-  const factory AccountingJournalState.initial() = _Initial;
+  const factory AccountingJournalState.initial() = AccountingJournalInitial;
 
-  const factory AccountingJournalState.loading() = _Loading;
+  const factory AccountingJournalState.loading() = AccountingJournalLoading;
 
   const factory AccountingJournalState.success({
     required List<AccountingJournalEntryEntity> items,
     @Default(false) bool isSaving,
     String? errorMessage,
-  }) = Success;
+  }) = AccountingJournalSuccess;
 
-  const factory AccountingJournalState.failure({required String message}) =
-      _Failure;
+  const factory AccountingJournalState.failure({required String message}) = AccountingJournalFailure;
 }

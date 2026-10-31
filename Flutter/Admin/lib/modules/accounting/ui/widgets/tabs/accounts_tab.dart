@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc_signals_flutter/bloc_signals_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -7,6 +9,7 @@ import '../../../../../core/di/di.dart';
 import '../../../../../core/extensions/extensions.dart';
 import '../../../../main/navigation/admin_module.dart';
 import '../../../../main/ui/widgets/admin_detail_kit.dart';
+import '../../../../main/ui/widgets/admin_page_frame.dart';
 import '../../../logic/cubit/accounting_accounts_cubit.dart';
 import '../../../logic/cubit/accounting_accounts_state.dart';
 import '../../../logic/entity/accounting_account_entity.dart';
@@ -28,7 +31,11 @@ final class AccountsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => BlocSignalProvider<AccountingAccountsCubit>(
-    create: (_) => getIt<AccountingAccountsCubit>()..load(),
+    create: (_) {
+      final cubit = getIt<AccountingAccountsCubit>();
+      unawaited(cubit.load());
+      return cubit;
+    },
     child: _AccountsFlow(section: section),
   );
 }

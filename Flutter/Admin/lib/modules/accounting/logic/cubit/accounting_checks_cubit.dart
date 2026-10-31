@@ -23,7 +23,7 @@ final class AccountingChecksCubit extends CubitSignal<AccountingChecksState> {
   CheckStatus? _status;
 
   List<AccountingCheckEntity> get items => switch (state.value) {
-    Success(:final items) => items,
+    AccountingChecksSuccess(:final items) => items,
     _ => const [],
   };
 

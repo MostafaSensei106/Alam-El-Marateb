@@ -9,6 +9,7 @@ import '../../data/models/accounting_account_models.dart';
 import '../../data/models/accounting_check_models.dart';
 import '../../data/models/accounting_expense_models.dart';
 import '../../data/models/accounting_journal_models.dart';
+import '../../data/models/accounting_report_models.dart';
 import '../../data/models/accounting_treasury_models.dart';
 import '../entity/accounting_account_entity.dart';
 import '../entity/accounting_balance_sheet_entity.dart';

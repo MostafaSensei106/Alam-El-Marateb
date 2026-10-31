@@ -6,16 +6,15 @@ part 'accounting_treasuries_state.freezed.dart';
 
 @freezed
 sealed class AccountingTreasuriesState with _$AccountingTreasuriesState {
-  const factory AccountingTreasuriesState.initial() = _Initial;
+  const factory AccountingTreasuriesState.initial() = AccountingTreasuriesInitial;
 
-  const factory AccountingTreasuriesState.loading() = _Loading;
+  const factory AccountingTreasuriesState.loading() = AccountingTreasuriesLoading;
 
   const factory AccountingTreasuriesState.success({
     required List<AccountingTreasuryEntity> items,
     @Default(false) bool isSaving,
     String? errorMessage,
-  }) = _Success;
+  }) = AccountingTreasuriesSuccess;
 
-  const factory AccountingTreasuriesState.failure({required String message}) =
-      _Failure;
+  const factory AccountingTreasuriesState.failure({required String message}) = AccountingTreasuriesFailure;
 }

@@ -6,31 +6,9 @@
 /// sample-only additions the screens need to render a realistic table.
 library;
 
-/// `AccountView.type`
-enum AccountType { asset, liability, equity, revenue, expense }
+import '../../../logic/entity/accounting_enums.dart';
 
-/// `JournalView.source`
-///
-/// The backend keeps this as a free string; the sample data only uses the
-/// sources the rest of the admin actually posts (`MANUAL` in Postman).
-enum JournalSource { manual, sales, purchasing, expense, transfer }
-
-/// `ExpenseView.category`
-enum ExpenseCategory {
-  rent,
-  salaries,
-  utilities,
-  marketing,
-  maintenance,
-  transport,
-  supplies,
-}
-
-/// `CheckView.direction`
-enum CheckDirection { incoming, outgoing }
-
-/// `CheckView.status`
-enum CheckStatus { held, cashed, bounced, returned }
+export '../../../logic/entity/accounting_enums.dart';
 
 /// One row of the chart of accounts.
 final class AccountRow {

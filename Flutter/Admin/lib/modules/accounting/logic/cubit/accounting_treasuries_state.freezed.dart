@@ -56,13 +56,13 @@ extension AccountingTreasuriesStatePatterns on AccountingTreasuriesState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _Initial value)?  initial,TResult Function( _Loading value)?  loading,TResult Function( _Success value)?  success,TResult Function( _Failure value)?  failure,required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( AccountingTreasuriesInitial value)?  initial,TResult Function( AccountingTreasuriesLoading value)?  loading,TResult Function( AccountingTreasuriesSuccess value)?  success,TResult Function( AccountingTreasuriesFailure value)?  failure,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Success() when success != null:
-return success(_that);case _Failure() when failure != null:
+case AccountingTreasuriesInitial() when initial != null:
+return initial(_that);case AccountingTreasuriesLoading() when loading != null:
+return loading(_that);case AccountingTreasuriesSuccess() when success != null:
+return success(_that);case AccountingTreasuriesFailure() when failure != null:
 return failure(_that);case _:
   return orElse();
 
@@ -81,13 +81,13 @@ return failure(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _Initial value)  initial,required TResult Function( _Loading value)  loading,required TResult Function( _Success value)  success,required TResult Function( _Failure value)  failure,}){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( AccountingTreasuriesInitial value)  initial,required TResult Function( AccountingTreasuriesLoading value)  loading,required TResult Function( AccountingTreasuriesSuccess value)  success,required TResult Function( AccountingTreasuriesFailure value)  failure,}){
 final _that = this;
 switch (_that) {
-case _Initial():
-return initial(_that);case _Loading():
-return loading(_that);case _Success():
-return success(_that);case _Failure():
+case AccountingTreasuriesInitial():
+return initial(_that);case AccountingTreasuriesLoading():
+return loading(_that);case AccountingTreasuriesSuccess():
+return success(_that);case AccountingTreasuriesFailure():
 return failure(_that);}
 }
 /// A variant of `map` that fallback to returning `null`.
@@ -102,13 +102,13 @@ return failure(_that);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _Initial value)?  initial,TResult? Function( _Loading value)?  loading,TResult? Function( _Success value)?  success,TResult? Function( _Failure value)?  failure,}){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( AccountingTreasuriesInitial value)?  initial,TResult? Function( AccountingTreasuriesLoading value)?  loading,TResult? Function( AccountingTreasuriesSuccess value)?  success,TResult? Function( AccountingTreasuriesFailure value)?  failure,}){
 final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial(_that);case _Loading() when loading != null:
-return loading(_that);case _Success() when success != null:
-return success(_that);case _Failure() when failure != null:
+case AccountingTreasuriesInitial() when initial != null:
+return initial(_that);case AccountingTreasuriesLoading() when loading != null:
+return loading(_that);case AccountingTreasuriesSuccess() when success != null:
+return success(_that);case AccountingTreasuriesFailure() when failure != null:
 return failure(_that);case _:
   return null;
 
@@ -128,10 +128,10 @@ return failure(_that);case _:
 
 @optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( List<AccountingTreasuryEntity> items,  bool isSaving,  String? errorMessage)?  success,TResult Function( String message)?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Success() when success != null:
-return success(_that.items,_that.isSaving,_that.errorMessage);case _Failure() when failure != null:
+case AccountingTreasuriesInitial() when initial != null:
+return initial();case AccountingTreasuriesLoading() when loading != null:
+return loading();case AccountingTreasuriesSuccess() when success != null:
+return success(_that.items,_that.isSaving,_that.errorMessage);case AccountingTreasuriesFailure() when failure != null:
 return failure(_that.message);case _:
   return orElse();
 
@@ -152,10 +152,10 @@ return failure(_that.message);case _:
 
 @optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( List<AccountingTreasuryEntity> items,  bool isSaving,  String? errorMessage)  success,required TResult Function( String message)  failure,}) {final _that = this;
 switch (_that) {
-case _Initial():
-return initial();case _Loading():
-return loading();case _Success():
-return success(_that.items,_that.isSaving,_that.errorMessage);case _Failure():
+case AccountingTreasuriesInitial():
+return initial();case AccountingTreasuriesLoading():
+return loading();case AccountingTreasuriesSuccess():
+return success(_that.items,_that.isSaving,_that.errorMessage);case AccountingTreasuriesFailure():
 return failure(_that.message);}
 }
 /// A variant of `when` that fallback to returning `null`
@@ -172,10 +172,10 @@ return failure(_that.message);}
 
 @optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( List<AccountingTreasuryEntity> items,  bool isSaving,  String? errorMessage)?  success,TResult? Function( String message)?  failure,}) {final _that = this;
 switch (_that) {
-case _Initial() when initial != null:
-return initial();case _Loading() when loading != null:
-return loading();case _Success() when success != null:
-return success(_that.items,_that.isSaving,_that.errorMessage);case _Failure() when failure != null:
+case AccountingTreasuriesInitial() when initial != null:
+return initial();case AccountingTreasuriesLoading() when loading != null:
+return loading();case AccountingTreasuriesSuccess() when success != null:
+return success(_that.items,_that.isSaving,_that.errorMessage);case AccountingTreasuriesFailure() when failure != null:
 return failure(_that.message);case _:
   return null;
 
@@ -187,8 +187,8 @@ return failure(_that.message);case _:
 /// @nodoc
 
 
-class _Initial implements AccountingTreasuriesState {
-  const _Initial();
+class AccountingTreasuriesInitial implements AccountingTreasuriesState {
+  const AccountingTreasuriesInitial();
   
 
 
@@ -198,7 +198,7 @@ class _Initial implements AccountingTreasuriesState {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Initial);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountingTreasuriesInitial);
 }
 
 
@@ -219,8 +219,8 @@ String toString() {
 /// @nodoc
 
 
-class _Loading implements AccountingTreasuriesState {
-  const _Loading();
+class AccountingTreasuriesLoading implements AccountingTreasuriesState {
+  const AccountingTreasuriesLoading();
   
 
 
@@ -230,7 +230,7 @@ class _Loading implements AccountingTreasuriesState {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Loading);
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountingTreasuriesLoading);
 }
 
 
@@ -251,8 +251,8 @@ String toString() {
 /// @nodoc
 
 
-class _Success implements AccountingTreasuriesState {
-  const _Success({required  List<AccountingTreasuryEntity> items, this.isSaving = false, this.errorMessage}): _items = items;
+class AccountingTreasuriesSuccess implements AccountingTreasuriesState {
+  const AccountingTreasuriesSuccess({required  List<AccountingTreasuryEntity> items, this.isSaving = false, this.errorMessage}): _items = items;
   
 
  final  List<AccountingTreasuryEntity> _items;
@@ -269,13 +269,13 @@ class _Success implements AccountingTreasuriesState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$SuccessCopyWith<_Success> get copyWith => __$SuccessCopyWithImpl<_Success>(this, _$identity);
+$AccountingTreasuriesSuccessCopyWith<AccountingTreasuriesSuccess> get copyWith => _$AccountingTreasuriesSuccessCopyWithImpl<AccountingTreasuriesSuccess>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Success&&const DeepCollectionEquality().equals(other.items, _items)&&(identical(other.isSaving, isSaving) || other.isSaving == isSaving)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountingTreasuriesSuccess&&const DeepCollectionEquality().equals(other.items, _items)&&(identical(other.isSaving, isSaving) || other.isSaving == isSaving)&&(identical(other.errorMessage, errorMessage) || other.errorMessage == errorMessage));
 }
 
 
@@ -293,8 +293,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$SuccessCopyWith<$Res> implements $AccountingTreasuriesStateCopyWith<$Res> {
-  factory _$SuccessCopyWith(_Success value, $Res Function(_Success) _then) = __$SuccessCopyWithImpl;
+abstract mixin class $AccountingTreasuriesSuccessCopyWith<$Res> implements $AccountingTreasuriesStateCopyWith<$Res> {
+  factory $AccountingTreasuriesSuccessCopyWith(AccountingTreasuriesSuccess value, $Res Function(AccountingTreasuriesSuccess) _then) = _$AccountingTreasuriesSuccessCopyWithImpl;
 @useResult
 $Res call({
  List<AccountingTreasuryEntity> items, bool isSaving, String? errorMessage
@@ -305,17 +305,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$SuccessCopyWithImpl<$Res>
-    implements _$SuccessCopyWith<$Res> {
-  __$SuccessCopyWithImpl(this._self, this._then);
+class _$AccountingTreasuriesSuccessCopyWithImpl<$Res>
+    implements $AccountingTreasuriesSuccessCopyWith<$Res> {
+  _$AccountingTreasuriesSuccessCopyWithImpl(this._self, this._then);
 
-  final _Success _self;
-  final $Res Function(_Success) _then;
+  final AccountingTreasuriesSuccess _self;
+  final $Res Function(AccountingTreasuriesSuccess) _then;
 
 /// Create a copy of AccountingTreasuriesState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? items = null,Object? isSaving = null,Object? errorMessage = freezed,}) {
-  return _then(_Success(
+  return _then(AccountingTreasuriesSuccess(
 items: null == items ? _self._items : items // ignore: cast_nullable_to_non_nullable
 as List<AccountingTreasuryEntity>,isSaving: null == isSaving ? _self.isSaving : isSaving // ignore: cast_nullable_to_non_nullable
 as bool,errorMessage: freezed == errorMessage ? _self.errorMessage : errorMessage // ignore: cast_nullable_to_non_nullable
@@ -329,8 +329,8 @@ as String?,
 /// @nodoc
 
 
-class _Failure implements AccountingTreasuriesState {
-  const _Failure({required this.message});
+class AccountingTreasuriesFailure implements AccountingTreasuriesState {
+  const AccountingTreasuriesFailure({required this.message});
   
 
  final  String message;
@@ -339,13 +339,13 @@ class _Failure implements AccountingTreasuriesState {
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
 @pragma('vm:prefer-inline')
-_$FailureCopyWith<_Failure> get copyWith => __$FailureCopyWithImpl<_Failure>(this, _$identity);
+$AccountingTreasuriesFailureCopyWith<AccountingTreasuriesFailure> get copyWith => _$AccountingTreasuriesFailureCopyWithImpl<AccountingTreasuriesFailure>(this, _$identity);
 
 
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Failure&&(identical(other.message, message) || other.message == message));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is AccountingTreasuriesFailure&&(identical(other.message, message) || other.message == message));
 }
 
 
@@ -363,8 +363,8 @@ String toString() {
 }
 
 /// @nodoc
-abstract mixin class _$FailureCopyWith<$Res> implements $AccountingTreasuriesStateCopyWith<$Res> {
-  factory _$FailureCopyWith(_Failure value, $Res Function(_Failure) _then) = __$FailureCopyWithImpl;
+abstract mixin class $AccountingTreasuriesFailureCopyWith<$Res> implements $AccountingTreasuriesStateCopyWith<$Res> {
+  factory $AccountingTreasuriesFailureCopyWith(AccountingTreasuriesFailure value, $Res Function(AccountingTreasuriesFailure) _then) = _$AccountingTreasuriesFailureCopyWithImpl;
 @useResult
 $Res call({
  String message
@@ -375,17 +375,17 @@ $Res call({
 
 }
 /// @nodoc
-class __$FailureCopyWithImpl<$Res>
-    implements _$FailureCopyWith<$Res> {
-  __$FailureCopyWithImpl(this._self, this._then);
+class _$AccountingTreasuriesFailureCopyWithImpl<$Res>
+    implements $AccountingTreasuriesFailureCopyWith<$Res> {
+  _$AccountingTreasuriesFailureCopyWithImpl(this._self, this._then);
 
-  final _Failure _self;
-  final $Res Function(_Failure) _then;
+  final AccountingTreasuriesFailure _self;
+  final $Res Function(AccountingTreasuriesFailure) _then;
 
 /// Create a copy of AccountingTreasuriesState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') $Res call({Object? message = null,}) {
-  return _then(_Failure(
+  return _then(AccountingTreasuriesFailure(
 message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
 as String,
   ));

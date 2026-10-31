@@ -21,7 +21,7 @@ final class AccountingJournalCubit extends CubitSignal<AccountingJournalState> {
   GetJournalEntriesParams _params = const GetJournalEntriesParams();
 
   List<AccountingJournalEntryEntity> get _items => switch (state.value) {
-    Success(:final items) => items,
+    AccountingJournalSuccess(:final items) => items,
     _ => const [],
   };
 

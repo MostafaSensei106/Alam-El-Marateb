@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../../main/navigation/admin_module.dart';
 import '../sample/accounting_models.dart';
+import '../shared/accounting_shared.dart';
 import 'expense_detail.dart';
 import 'expense_form.dart';
 import 'expenses_view.dart';
