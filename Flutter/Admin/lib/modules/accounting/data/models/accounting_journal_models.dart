@@ -139,13 +139,15 @@ final class JournalLineRequestBody {
     this.credit = 0,
   });
 
-  factory JournalLineRequestBody.fromEntity(
-    AccountingJournalLineInput input,
-  ) => JournalLineRequestBody(
-    accountCode: input.accountCode,
-    debit: input.debit,
-    credit: input.credit,
-  );
+  factory JournalLineRequestBody.fromEntity(AccountingJournalLineInput input) =>
+      JournalLineRequestBody(
+        accountCode: input.accountCode,
+        debit: input.debit,
+        credit: input.credit,
+      );
+
+  factory JournalLineRequestBody.fromJson(Map<String, dynamic> json) =>
+      _$JournalLineRequestBodyFromJson(json);
 
   Map<String, dynamic> toJson() => _$JournalLineRequestBodyToJson(this);
 
@@ -165,6 +167,9 @@ final class PostJournalRequestBody {
     this.ref,
     this.memo,
   });
+
+  factory PostJournalRequestBody.fromJson(Map<String, dynamic> json) =>
+      _$PostJournalRequestBodyFromJson(json);
 
   Map<String, dynamic> toJson() => _$PostJournalRequestBodyToJson(this);
 
