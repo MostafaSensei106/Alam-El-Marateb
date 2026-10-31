@@ -40,7 +40,7 @@ class CommissionRuleJpaEntity(
 @Table(name = "employees")
 class EmployeeJpaEntity(
     @Column(name = "user_id", nullable = false, unique = true, columnDefinition = "UUID")
-    var userId: UUID? = null,
+    var userId: UUID,
 
     @Column(name = "branch_id", columnDefinition = "UUID")
     var branchId: UUID? = null,
@@ -65,7 +65,7 @@ class EmployeeJpaEntity(
 @Table(name = "leave_requests")
 class LeaveRequestJpaEntity(
     @Column(name = "employee_id", nullable = false, columnDefinition = "UUID")
-    var employeeId: UUID? = null,
+    var employeeId: UUID,
 
     @Column(name = "type", nullable = false, length = 30)
     var type: String = "",
@@ -87,7 +87,7 @@ class LeaveRequestJpaEntity(
 @Table(name = "advances")
 class AdvanceJpaEntity(
     @Column(name = "employee_id", nullable = false, columnDefinition = "UUID")
-    var employeeId: UUID? = null,
+    var employeeId: UUID,
 
     @Column(name = "amount", nullable = false, precision = 12, scale = 2)
     var amount: BigDecimal = BigDecimal.ZERO,
@@ -103,7 +103,7 @@ class AdvanceJpaEntity(
 @Table(name = "deductions")
 class DeductionJpaEntity(
     @Column(name = "employee_id", nullable = false, columnDefinition = "UUID")
-    var employeeId: UUID? = null,
+    var employeeId: UUID,
 
     @Column(name = "amount", nullable = false, precision = 12, scale = 2)
     var amount: BigDecimal = BigDecimal.ZERO,
@@ -132,10 +132,10 @@ class PayrollRunJpaEntity(
 @Table(name = "payroll_lines")
 class PayrollLineJpaEntity(
     @Column(name = "run_id", nullable = false, columnDefinition = "UUID")
-    var runId: UUID? = null,
+    var runId: UUID,
 
     @Column(name = "employee_id", nullable = false, columnDefinition = "UUID")
-    var employeeId: UUID? = null,
+    var employeeId: UUID,
 
     @Column(name = "base_amount", nullable = false, precision = 12, scale = 2)
     var baseAmount: BigDecimal = BigDecimal.ZERO,

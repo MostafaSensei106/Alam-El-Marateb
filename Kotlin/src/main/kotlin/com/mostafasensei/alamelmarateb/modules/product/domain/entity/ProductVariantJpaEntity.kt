@@ -12,7 +12,7 @@ import java.util.UUID
 @Table(name = "product_variants")
 class ProductVariantJpaEntity(
     @Column(name = "product_id", nullable = false, columnDefinition = "UUID")
-    var productId: UUID? = null,
+    var productId: UUID,
 
     @Column(name = "sku", nullable = false, unique = true, length = 60)
     var sku: String = "",

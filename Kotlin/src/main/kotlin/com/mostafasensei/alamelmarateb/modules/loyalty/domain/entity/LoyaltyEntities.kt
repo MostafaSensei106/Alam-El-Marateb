@@ -13,7 +13,7 @@ import java.util.UUID
 class LoyaltyAccountJpaEntity(
     @Id
     @Column(name = "user_id", nullable = false, columnDefinition = "UUID")
-    var userId: UUID? = null,
+    var userId: UUID,
 
     @Column(name = "points", nullable = false)
     var points: Int = 0,
@@ -38,10 +38,10 @@ class LoyaltyLedgerJpaEntity(
     @Id
     @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null,
+    var id: UUID,
 
     @Column(name = "user_id", nullable = false, columnDefinition = "UUID")
-    var userId: UUID? = null,
+    var userId: UUID,
 
     @Column(name = "order_id", columnDefinition = "UUID")
     var orderId: UUID? = null,

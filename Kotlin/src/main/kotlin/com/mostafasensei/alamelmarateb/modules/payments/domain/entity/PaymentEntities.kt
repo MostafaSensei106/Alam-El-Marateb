@@ -11,7 +11,7 @@ import java.util.UUID
 @Table(name = "payment_intents")
 class PaymentIntentJpaEntity(
     @Column(name = "order_id", nullable = false, columnDefinition = "UUID")
-    var orderId: UUID? = null,
+    var orderId: UUID,
 
     @Column(name = "gateway", nullable = false, length = 20)
     var gateway: String = "fake",

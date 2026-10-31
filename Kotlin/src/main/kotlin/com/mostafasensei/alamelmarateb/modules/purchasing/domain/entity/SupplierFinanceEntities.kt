@@ -13,7 +13,7 @@ import java.util.UUID
 @Table(name = "supplier_shipments")
 class SupplierShipmentJpaEntity(
     @Column(name = "supplier_id", nullable = false, columnDefinition = "UUID")
-    var supplierId: UUID? = null,
+    var supplierId: UUID,
 
     @Column(name = "shipment_no", nullable = false, length = 60)
     var shipmentNo: String = "",
@@ -29,7 +29,7 @@ class SupplierShipmentJpaEntity(
 @Table(name = "supplier_invoices")
 class SupplierInvoiceJpaEntity(
     @Column(name = "supplier_id", nullable = false, columnDefinition = "UUID")
-    var supplierId: UUID? = null,
+    var supplierId: UUID,
 
     @Column(name = "invoice_no", nullable = false, length = 60)
     var invoiceNo: String = "",
@@ -48,18 +48,17 @@ class SupplierInvoiceJpaEntity(
 @Table(name = "invoice_shipment_allocations")
 class InvoiceShipmentAllocationJpaEntity(
     @Column(name = "invoice_id", nullable = false, columnDefinition = "UUID")
-    var invoiceId: UUID? = null,
+    var invoiceId: UUID,
 
     @Column(name = "shipment_id", nullable = false, columnDefinition = "UUID")
-    var shipmentId: UUID? = null,
+    var shipmentId: UUID,
 
     @Column(name = "amount", nullable = false, precision = 12, scale = 2)
     var amount: BigDecimal = BigDecimal.ZERO,
 ) {
     @jakarta.persistence.Id
-    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null
+    var id: UUID = UUID.randomUUID()
 
     @Column(name = "created_at", nullable = false, updatable = false)
     var createdAt: Instant = Instant.now()
@@ -69,7 +68,7 @@ class InvoiceShipmentAllocationJpaEntity(
 @Table(name = "supplier_installments")
 class SupplierInstallmentJpaEntity(
     @Column(name = "invoice_id", nullable = false, columnDefinition = "UUID")
-    var invoiceId: UUID? = null,
+    var invoiceId: UUID,
 
     @Column(name = "amount", nullable = false, precision = 12, scale = 2)
     var amount: BigDecimal = BigDecimal.ZERO,
@@ -88,7 +87,7 @@ class SupplierInstallmentJpaEntity(
 @Table(name = "supplier_payments")
 class SupplierPaymentJpaEntity(
     @Column(name = "supplier_id", nullable = false, columnDefinition = "UUID")
-    var supplierId: UUID? = null,
+    var supplierId: UUID,
 
     @Column(name = "invoice_id", columnDefinition = "UUID")
     var invoiceId: UUID? = null,

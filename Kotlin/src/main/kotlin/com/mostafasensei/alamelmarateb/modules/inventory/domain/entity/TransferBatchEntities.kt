@@ -15,10 +15,10 @@ import java.util.UUID
 @Table(name = "transfer_dispatch_layers")
 class TransferDispatchLayerJpaEntity(
     @Column(name = "transfer_id", nullable = false, columnDefinition = "UUID")
-    var transferId: UUID? = null,
+    var transferId: UUID,
 
     @Column(name = "src_batch_id", nullable = false, columnDefinition = "UUID")
-    var srcBatchId: UUID? = null,
+    var srcBatchId: UUID,
 
     @Column(name = "qty", nullable = false)
     var qty: Int = 0,
@@ -33,9 +33,8 @@ class TransferDispatchLayerJpaEntity(
     var mirroredQty: Int = 0,
 ) {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null
+    var id: UUID = UUID.randomUUID()
 
     @Column(name = "created_at", nullable = false, updatable = false)
     var createdAt: Instant = Instant.now()
@@ -46,13 +45,13 @@ class TransferDispatchLayerJpaEntity(
 @Table(name = "transfer_batch_links")
 class TransferBatchLinkJpaEntity(
     @Column(name = "transfer_id", nullable = false, columnDefinition = "UUID")
-    var transferId: UUID? = null,
+    var transferId: UUID,
 
     @Column(name = "src_batch_id", nullable = false, columnDefinition = "UUID")
-    var srcBatchId: UUID? = null,
+    var srcBatchId: UUID,
 
     @Column(name = "dst_batch_id", nullable = false, columnDefinition = "UUID")
-    var dstBatchId: UUID? = null,
+    var dstBatchId: UUID,
 
     @Column(name = "qty", nullable = false)
     var qty: Int = 0,
@@ -64,9 +63,8 @@ class TransferBatchLinkJpaEntity(
     var landedUnitCost: BigDecimal = BigDecimal.ZERO,
 ) {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null
+    var id: UUID = UUID.randomUUID()
 
     @Column(name = "created_at", nullable = false, updatable = false)
     var createdAt: Instant = Instant.now()

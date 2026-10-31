@@ -15,10 +15,10 @@ class InventoryBatchJpaEntity(
     var batchNo: String = "",
 
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "warehouse_id", nullable = false, columnDefinition = "UUID")
-    var warehouseId: UUID? = null,
+    var warehouseId: UUID,
 
     @Column(name = "receipt_id", columnDefinition = "UUID")
     var receiptId: UUID? = null,

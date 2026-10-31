@@ -35,7 +35,7 @@ object LandedStatus {
 @Table(name = "shipment_landed_costs")
 class ShipmentLandedCostJpaEntity(
     @Column(name = "shipment_id", nullable = false, columnDefinition = "UUID")
-    var shipmentId: UUID? = null,
+    var shipmentId: UUID,
 
     @Column(name = "kind", nullable = false, length = 20)
     var kind: String = LandedKind.FREIGHT,
@@ -60,10 +60,10 @@ class ShipmentLandedCostJpaEntity(
 @Table(name = "shipment_landed_cost_allocations")
 class ShipmentLandedCostAllocationJpaEntity(
     @Column(name = "landed_cost_id", nullable = false, columnDefinition = "UUID")
-    var landedCostId: UUID? = null,
+    var landedCostId: UUID,
 
     @Column(name = "batch_id", nullable = false, columnDefinition = "UUID")
-    var batchId: UUID? = null,
+    var batchId: UUID,
 
     @Column(name = "allocated_qty", nullable = false)
     var allocatedQty: Int = 0,
@@ -75,9 +75,8 @@ class ShipmentLandedCostAllocationJpaEntity(
     var allocatedUnitCost: BigDecimal = BigDecimal.ZERO,
 ) {
     @jakarta.persistence.Id
-    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null
+    var id: UUID = UUID.randomUUID()
 
     @Column(name = "created_at", nullable = false, updatable = false)
     var createdAt: Instant = Instant.now()

@@ -19,7 +19,7 @@ class PasswordResetTokenJpaEntity(
     var id: UUID = UUID.randomUUID(),
 
     @Column(name = "user_id", nullable = false)
-    var userId: UUID? = null,
+    var userId: UUID,
 
     @Column(name = "token_hash", nullable = false, unique = true, length = 64)
     var tokenHash: String = "",

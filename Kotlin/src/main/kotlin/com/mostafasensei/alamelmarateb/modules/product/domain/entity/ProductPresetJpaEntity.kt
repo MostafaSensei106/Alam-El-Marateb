@@ -15,7 +15,7 @@ import java.util.UUID
 @Table(name = "product_presets")
 class ProductPresetJpaEntity(
     @Column(name = "category_id", nullable = false, columnDefinition = "UUID")
-    var categoryId: UUID? = null,
+    var categoryId: UUID,
 
     @Column(name = "name", nullable = false, length = 150)
     var name: String = "",

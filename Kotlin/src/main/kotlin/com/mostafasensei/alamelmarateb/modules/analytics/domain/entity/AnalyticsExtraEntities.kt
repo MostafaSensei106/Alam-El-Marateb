@@ -51,7 +51,6 @@ class AppEventJpaEntity(
     var createdAt: java.time.Instant? = null,
 ) {
     @jakarta.persistence.Id
-    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null
+    var id: UUID = UUID.randomUUID()
 }

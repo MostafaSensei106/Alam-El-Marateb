@@ -18,7 +18,7 @@ class EstimateRunJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null,
+    var id: UUID,
 
     @Column(name = "user_id", columnDefinition = "UUID")
     var userId: UUID? = null,
@@ -64,7 +64,7 @@ class SpinCampaignJpaEntity(
 @Table(name = "spin_prizes")
 class SpinPrizeJpaEntity(
     @Column(name = "campaign_id", nullable = false, columnDefinition = "UUID")
-    var campaignId: UUID? = null,
+    var campaignId: UUID,
 
     @Column(name = "label", nullable = false, length = 150)
     var label: String = "",
@@ -94,13 +94,13 @@ class SpinPlayJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null,
+    var id: UUID,
 
     @Column(name = "campaign_id", nullable = false, columnDefinition = "UUID")
-    var campaignId: UUID? = null,
+    var campaignId: UUID,
 
     @Column(name = "user_id", nullable = false, columnDefinition = "UUID")
-    var userId: UUID? = null,
+    var userId: UUID,
 
     @Column(name = "prize_id", columnDefinition = "UUID")
     var prizeId: UUID? = null,

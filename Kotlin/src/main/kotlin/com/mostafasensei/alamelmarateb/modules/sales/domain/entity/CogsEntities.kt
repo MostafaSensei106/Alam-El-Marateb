@@ -11,10 +11,10 @@ import java.util.UUID
 @Table(name = "order_item_batches")
 class OrderItemBatchJpaEntity(
     @Column(name = "order_item_id", nullable = false, columnDefinition = "UUID")
-    var orderItemId: UUID? = null,
+    var orderItemId: UUID,
 
     @Column(name = "batch_id", nullable = false, columnDefinition = "UUID")
-    var batchId: UUID? = null,
+    var batchId: UUID,
 
     @Column(name = "qty", nullable = false)
     var qty: Int = 0,

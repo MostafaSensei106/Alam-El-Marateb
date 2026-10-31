@@ -11,7 +11,7 @@ import java.util.UUID
 @Table(name = "customer_profiles")
 class CustomerProfileJpaEntity(
     @Column(name = "user_id", nullable = false, columnDefinition = "UUID")
-    var userId: UUID? = null,
+    var userId: UUID,
 
     @Column(name = "governorate", length = 100)
     var governorate: String? = null,
@@ -35,7 +35,7 @@ class CustomerProfileJpaEntity(
 @Table(name = "customer_addresses")
 class CustomerAddressJpaEntity(
     @Column(name = "user_id", nullable = false, columnDefinition = "UUID")
-    var userId: UUID? = null,
+    var userId: UUID,
 
     @Column(name = "label", nullable = false, length = 60)
     var label: String = "home",
@@ -63,17 +63,17 @@ class CustomerAddressJpaEntity(
 @Table(name = "favorites")
 class FavoriteJpaEntity(
     @Column(name = "user_id", nullable = false, columnDefinition = "UUID")
-    var userId: UUID? = null,
+    var userId: UUID,
 
     @Column(name = "product_id", nullable = false, columnDefinition = "UUID")
-    var productId: UUID? = null,
+    var productId: UUID,
 ) : EntityBase()
 
 @Entity
 @Table(name = "warranties")
 class WarrantyJpaEntity(
     @Column(name = "invoice_id", nullable = false, unique = true, columnDefinition = "UUID")
-    var invoiceId: UUID? = null,
+    var invoiceId: UUID,
 
     @Column(name = "covers_until", nullable = false)
     var coversUntil: LocalDate? = null,
@@ -86,7 +86,7 @@ class WarrantyJpaEntity(
 @Table(name = "warranty_claims")
 class WarrantyClaimJpaEntity(
     @Column(name = "warranty_id", nullable = false, columnDefinition = "UUID")
-    var warrantyId: UUID? = null,
+    var warrantyId: UUID,
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "reported",

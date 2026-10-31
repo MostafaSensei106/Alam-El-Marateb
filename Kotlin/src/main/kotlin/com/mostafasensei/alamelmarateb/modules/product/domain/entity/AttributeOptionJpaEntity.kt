@@ -15,7 +15,7 @@ import java.util.UUID
 )
 class AttributeOptionJpaEntity(
     @Column(name = "attribute_id", nullable = false, columnDefinition = "UUID")
-    var attributeId: UUID? = null,
+    var attributeId: UUID,
 
     @Column(name = "option_value", nullable = false, length = 100)
     var value: String = "",

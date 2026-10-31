@@ -33,10 +33,10 @@ class BrandJpaEntity(
 @Table(name = "product_reviews")
 class ProductReviewJpaEntity(
     @Column(name = "product_id", nullable = false, columnDefinition = "UUID")
-    var productId: UUID? = null,
+    var productId: UUID,
 
     @Column(name = "user_id", nullable = false, columnDefinition = "UUID")
-    var userId: UUID? = null,
+    var userId: UUID,
 
     @Column(name = "rating", nullable = false)
     var rating: Int = 5,
@@ -64,10 +64,10 @@ class ProductReviewJpaEntity(
 @Table(name = "product_questions")
 class ProductQuestionJpaEntity(
     @Column(name = "product_id", nullable = false, columnDefinition = "UUID")
-    var productId: UUID? = null,
+    var productId: UUID,
 
     @Column(name = "user_id", nullable = false, columnDefinition = "UUID")
-    var userId: UUID? = null,
+    var userId: UUID,
 
     @Column(name = "question", nullable = false, columnDefinition = "TEXT")
     var question: String = "",
@@ -99,7 +99,7 @@ class QuizQuestionJpaEntity(
 @Table(name = "quiz_options")
 class QuizOptionJpaEntity(
     @Column(name = "question_id", nullable = false, columnDefinition = "UUID")
-    var questionId: UUID? = null,
+    var questionId: UUID,
 
     @Column(name = "scores", nullable = false, columnDefinition = "JSONB")
     @org.hibernate.annotations.ColumnTransformer(write = "?::jsonb")
@@ -112,7 +112,7 @@ class RecommendationRunJpaEntity(
     @jakarta.persistence.Id
     @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null,
+    var id: UUID,
 
     @Column(name = "user_id", columnDefinition = "UUID")
     var userId: UUID? = null,
@@ -133,10 +133,10 @@ class RecommendationRunJpaEntity(
 @Table(name = "variant_attribute_values")
 class VariantAttributeValueJpaEntity(
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "attribute_id", nullable = false, columnDefinition = "UUID")
-    var attributeId: UUID? = null,
+    var attributeId: UUID,
 
     @Column(name = "value_type", nullable = false, length = 20)
     var valueType: String = "TEXT",
@@ -162,7 +162,7 @@ class VariantAttributeValueJpaEntity(
 )
 class QuizQuestionTranslationJpaEntity(
     @Column(name = "question_id", nullable = false, columnDefinition = "UUID")
-    var questionId: UUID? = null,
+    var questionId: UUID,
 
     @Column(name = "lang", nullable = false, length = 10)
     var lang: String = "",
@@ -178,7 +178,7 @@ class QuizQuestionTranslationJpaEntity(
 )
 class QuizOptionTranslationJpaEntity(
     @Column(name = "option_id", nullable = false, columnDefinition = "UUID")
-    var optionId: UUID? = null,
+    var optionId: UUID,
 
     @Column(name = "lang", nullable = false, length = 10)
     var lang: String = "",

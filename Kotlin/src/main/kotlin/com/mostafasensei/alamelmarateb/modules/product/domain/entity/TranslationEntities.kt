@@ -14,7 +14,7 @@ import java.util.UUID
 )
 class ProductTranslationJpaEntity(
     @Column(name = "product_id", nullable = false, columnDefinition = "UUID")
-    var productId: UUID? = null,
+    var productId: UUID,
 
     @Column(name = "lang", nullable = false, length = 10)
     var lang: String = "",
@@ -33,7 +33,7 @@ class ProductTranslationJpaEntity(
 )
 class CategoryTranslationJpaEntity(
     @Column(name = "category_id", nullable = false, columnDefinition = "UUID")
-    var categoryId: UUID? = null,
+    var categoryId: UUID,
 
     @Column(name = "lang", nullable = false, length = 10)
     var lang: String = "",
@@ -52,7 +52,7 @@ class CategoryTranslationJpaEntity(
 )
 class BrandTranslationJpaEntity(
     @Column(name = "brand_id", nullable = false, columnDefinition = "UUID")
-    var brandId: UUID? = null,
+    var brandId: UUID,
 
     @Column(name = "lang", nullable = false, length = 10)
     var lang: String = "",
@@ -71,7 +71,7 @@ class BrandTranslationJpaEntity(
 )
 class AttributeTranslationJpaEntity(
     @Column(name = "attribute_id", nullable = false, columnDefinition = "UUID")
-    var attributeId: UUID? = null,
+    var attributeId: UUID,
 
     @Column(name = "lang", nullable = false, length = 10)
     var lang: String = "",
@@ -87,7 +87,7 @@ class AttributeTranslationJpaEntity(
 )
 class AttributeOptionTranslationJpaEntity(
     @Column(name = "option_id", nullable = false, columnDefinition = "UUID")
-    var optionId: UUID? = null,
+    var optionId: UUID,
 
     @Column(name = "lang", nullable = false, length = 10)
     var lang: String = "",

@@ -87,7 +87,7 @@ class JournalEntryJpaEntity(
 @Table(name = "journal_lines")
 class JournalLineJpaEntity(
     @Column(name = "entry_id", nullable = false, columnDefinition = "UUID")
-    var entryId: UUID? = null,
+    var entryId: UUID,
 
     @Column(name = "account_code", nullable = false, length = 20)
     var accountCode: String = "",
@@ -116,10 +116,10 @@ class TreasuryJpaEntity(
 @Table(name = "treasury_transfers")
 class TreasuryTransferJpaEntity(
     @Column(name = "from_id", nullable = false, columnDefinition = "UUID")
-    var fromId: UUID? = null,
+    var fromId: UUID,
 
     @Column(name = "to_id", nullable = false, columnDefinition = "UUID")
-    var toId: UUID? = null,
+    var toId: UUID,
 
     @Column(name = "amount", nullable = false, precision = 12, scale = 2)
     var amount: BigDecimal = BigDecimal.ZERO,

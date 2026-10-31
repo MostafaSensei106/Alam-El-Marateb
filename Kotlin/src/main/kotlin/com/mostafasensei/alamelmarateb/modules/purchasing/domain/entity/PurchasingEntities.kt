@@ -39,7 +39,7 @@ class SupplierJpaEntity(
 @Table(name = "purchase_orders")
 class PurchaseOrderJpaEntity(
     @Column(name = "supplier_id", nullable = false, columnDefinition = "UUID")
-    var supplierId: UUID? = null,
+    var supplierId: UUID,
 
     @Column(name = "branch_id", columnDefinition = "UUID")
     var branchId: UUID? = null,
@@ -62,7 +62,7 @@ class PurchaseOrderItemJpaEntity(
     var order: PurchaseOrderJpaEntity? = null,
 
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "qty", nullable = false)
     var qty: Int = 0,
@@ -75,10 +75,10 @@ class PurchaseOrderItemJpaEntity(
 @Table(name = "goods_receipts")
 class GoodsReceiptJpaEntity(
     @Column(name = "po_id", nullable = false, columnDefinition = "UUID")
-    var poId: UUID? = null,
+    var poId: UUID,
 
     @Column(name = "warehouse_id", nullable = false, columnDefinition = "UUID")
-    var warehouseId: UUID? = null,
+    var warehouseId: UUID,
 
     @Column(name = "shipment_id", columnDefinition = "UUID")
     var shipmentId: UUID? = null,
@@ -101,7 +101,7 @@ class ReceiptItemJpaEntity(
     var receipt: GoodsReceiptJpaEntity? = null,
 
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "expected_qty", nullable = false)
     var expectedQty: Int = 0,

@@ -33,10 +33,10 @@ class DeliveryTripJpaEntity(
     var branchId: UUID? = null,
 
     @Column(name = "driver_id", nullable = false, columnDefinition = "UUID")
-    var driverId: UUID? = null,
+    var driverId: UUID,
 
     @Column(name = "vehicle_id", nullable = false, columnDefinition = "UUID")
-    var vehicleId: UUID? = null,
+    var vehicleId: UUID,
 
     @Column(name = "trip_date", nullable = false)
     var tripDate: LocalDate? = null,
@@ -49,10 +49,10 @@ class DeliveryTripJpaEntity(
 @Table(name = "trip_stops")
 class TripStopJpaEntity(
     @Column(name = "trip_id", nullable = false, columnDefinition = "UUID")
-    var tripId: UUID? = null,
+    var tripId: UUID,
 
     @Column(name = "order_id", nullable = false, columnDefinition = "UUID")
-    var orderId: UUID? = null,
+    var orderId: UUID,
 
     @Column(name = "seq", nullable = false)
     var seq: Int = 0,

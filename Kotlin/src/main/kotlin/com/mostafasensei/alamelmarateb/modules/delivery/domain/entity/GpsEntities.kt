@@ -16,10 +16,10 @@ class TripLocationJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null,
+    var id: UUID,
 
     @Column(name = "trip_id", nullable = false, columnDefinition = "UUID")
-    var tripId: UUID? = null,
+    var tripId: UUID,
 
     @Column(name = "lat", nullable = false)
     var lat: Double = 0.0,
@@ -40,13 +40,13 @@ class DriverRatingJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null,
+    var id: UUID,
 
     @Column(name = "order_id", nullable = false, columnDefinition = "UUID")
-    var orderId: UUID? = null,
+    var orderId: UUID,
 
     @Column(name = "driver_id", nullable = false, columnDefinition = "UUID")
-    var driverId: UUID? = null,
+    var driverId: UUID,
 
     @Column(name = "rating", nullable = false)
     var rating: Int = 5,

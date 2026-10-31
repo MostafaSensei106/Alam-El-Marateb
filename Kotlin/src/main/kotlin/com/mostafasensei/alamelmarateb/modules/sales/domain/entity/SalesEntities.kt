@@ -154,7 +154,7 @@ class OrderItemJpaEntity(
     var order: OrderJpaEntity? = null,
 
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "qty", nullable = false)
     var qty: Int = 0,
@@ -188,7 +188,7 @@ class OrderItemJpaEntity(
 @Table(name = "invoices")
 class InvoiceJpaEntity(
     @Column(name = "order_id", nullable = false, unique = true, columnDefinition = "UUID")
-    var orderId: UUID? = null,
+    var orderId: UUID,
 
     @Column(name = "serial", nullable = false, unique = true, length = 60)
     var serial: String = "",
@@ -204,7 +204,7 @@ class InvoiceJpaEntity(
 @Table(name = "returns")
 class ReturnJpaEntity(
     @Column(name = "order_id", nullable = false, columnDefinition = "UUID")
-    var orderId: UUID? = null,
+    var orderId: UUID,
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "requested",
@@ -232,7 +232,7 @@ class ReservationJpaEntity(
     var guestPhone: String? = null,
 
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "qty", nullable = false)
     var qty: Int = 0,
@@ -257,7 +257,7 @@ class ReservationJpaEntity(
 @Table(name = "installment_plans")
 class InstallmentPlanJpaEntity(
     @Column(name = "order_id", nullable = false, columnDefinition = "UUID")
-    var orderId: UUID? = null,
+    var orderId: UUID,
 
     @Column(name = "total", nullable = false, precision = 12, scale = 2)
     var total: BigDecimal = BigDecimal.ZERO,
@@ -344,7 +344,7 @@ class CartItemJpaEntity(
     var cart: CartJpaEntity? = null,
 
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "qty", nullable = false)
     var qty: Int = 0,
@@ -386,10 +386,10 @@ class CashDropJpaEntity(
     @jakarta.persistence.Id
     @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null,
+    var id: UUID,
 
     @Column(name = "shift_id", nullable = false, columnDefinition = "UUID")
-    var shiftId: UUID? = null,
+    var shiftId: UUID,
 
     @Column(name = "amount", nullable = false, precision = 12, scale = 2)
     var amount: BigDecimal = BigDecimal.ZERO,
@@ -408,7 +408,7 @@ class CashDropJpaEntity(
 )
 class DeliveryZoneTranslationJpaEntity(
     @Column(name = "zone_id", nullable = false, columnDefinition = "UUID")
-    var zoneId: UUID? = null,
+    var zoneId: UUID,
 
     @Column(name = "lang", nullable = false, length = 10)
     var lang: String = "",
@@ -424,7 +424,7 @@ class DeliveryZoneTranslationJpaEntity(
 @Table(name = "reservation_payments")
 class ReservationPaymentJpaEntity(
     @Column(name = "reservation_id", nullable = false, columnDefinition = "UUID")
-    var reservationId: UUID? = null,
+    var reservationId: UUID,
 
     @Column(name = "amount", nullable = false, precision = 12, scale = 2)
     var amount: BigDecimal = BigDecimal.ZERO,
@@ -442,7 +442,6 @@ class ReservationPaymentJpaEntity(
     var createdAt: java.time.Instant? = null,
 ) {
     @jakarta.persistence.Id
-    @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID? = null
+    var id: UUID = UUID.randomUUID()
 }

@@ -15,10 +15,10 @@ import java.util.UUID
 @Table(name = "stock_transfers")
 class StockTransferJpaEntity(
     @Column(name = "from_warehouse_id", nullable = false, columnDefinition = "UUID")
-    var fromWarehouseId: UUID? = null,
+    var fromWarehouseId: UUID,
 
     @Column(name = "to_warehouse_id", nullable = false, columnDefinition = "UUID")
-    var toWarehouseId: UUID? = null,
+    var toWarehouseId: UUID,
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "draft",
@@ -38,7 +38,7 @@ class TransferItemJpaEntity(
     var transfer: StockTransferJpaEntity? = null,
 
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "sent_qty", nullable = false)
     var sentQty: Int = 0,
@@ -54,7 +54,7 @@ class TransferItemJpaEntity(
 @Table(name = "stock_audits")
 class StockAuditJpaEntity(
     @Column(name = "warehouse_id", nullable = false, columnDefinition = "UUID")
-    var warehouseId: UUID? = null,
+    var warehouseId: UUID,
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "open",
@@ -74,7 +74,7 @@ class AuditCountJpaEntity(
     var audit: StockAuditJpaEntity? = null,
 
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "system_qty", nullable = false)
     var systemQty: Int = 0,

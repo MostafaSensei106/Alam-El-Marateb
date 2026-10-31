@@ -15,7 +15,7 @@ import java.util.UUID
 )
 class MeterPriceJpaEntity(
     @Column(name = "product_id", nullable = false, columnDefinition = "UUID")
-    var productId: UUID? = null,
+    var productId: UUID,
 
     @Column(name = "shape", nullable = false, length = 20)
     var shape: String = "RECT",

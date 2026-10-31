@@ -10,7 +10,7 @@ import java.util.UUID
 @Table(name = "product_images")
 class ProductImageJpaEntity(
     @Column(name = "product_id", nullable = false, columnDefinition = "UUID")
-    var productId: UUID? = null,
+    var productId: UUID,
 
     @Column(name = "url", nullable = false, columnDefinition = "TEXT")
     var url: String = "",

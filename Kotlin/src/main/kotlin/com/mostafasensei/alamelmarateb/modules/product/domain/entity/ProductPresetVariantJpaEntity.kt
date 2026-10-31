@@ -16,7 +16,7 @@ import java.util.UUID
 )
 class ProductPresetVariantJpaEntity(
     @Column(name = "preset_id", nullable = false, columnDefinition = "UUID")
-    var presetId: UUID? = null,
+    var presetId: UUID,
 
     @Column(name = "width_cm", nullable = false)
     var widthCm: Int = 0,

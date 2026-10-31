@@ -10,10 +10,10 @@ import java.util.UUID
 @Table(name = "stock_levels")
 class StockLevelJpaEntity(
     @Column(name = "warehouse_id", nullable = false, columnDefinition = "UUID")
-    var warehouseId: UUID? = null,
+    var warehouseId: UUID,
 
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "qty", nullable = false)
     var qty: Int = 0,
@@ -29,10 +29,10 @@ class StockLevelJpaEntity(
 @Table(name = "stock_moves")
 class StockMoveJpaEntity(
     @Column(name = "warehouse_id", nullable = false, columnDefinition = "UUID")
-    var warehouseId: UUID? = null,
+    var warehouseId: UUID,
 
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "qty_signed", nullable = false)
     var qtySigned: Int = 0,

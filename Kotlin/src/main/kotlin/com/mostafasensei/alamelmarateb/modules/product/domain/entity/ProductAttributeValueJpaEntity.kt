@@ -24,10 +24,10 @@ import java.util.UUID
 )
 class ProductAttributeValueJpaEntity(
     @Column(name = "product_id", nullable = false, columnDefinition = "UUID")
-    var productId: UUID? = null,
+    var productId: UUID,
 
     @Column(name = "attribute_id", nullable = false, columnDefinition = "UUID")
-    var attributeId: UUID? = null,
+    var attributeId: UUID,
 
     @Enumerated(EnumType.STRING)
     @Column(name = "value_type", nullable = false, length = 20)

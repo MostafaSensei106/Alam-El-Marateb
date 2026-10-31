@@ -40,7 +40,7 @@ class NotificationJpaEntity(
 )
 class NotificationTranslationJpaEntity(
     @Column(name = "notification_id", nullable = false, columnDefinition = "UUID")
-    var notificationId: UUID? = null,
+    var notificationId: UUID,
 
     @Column(name = "lang", nullable = false, length = 10)
     var lang: String = "",

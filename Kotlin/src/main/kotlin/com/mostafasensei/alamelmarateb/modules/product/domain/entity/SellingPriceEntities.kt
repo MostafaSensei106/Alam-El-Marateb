@@ -12,7 +12,7 @@ import java.util.UUID
 @Table(name = "supplier_price_sheets")
 class SupplierPriceSheetJpaEntity(
     @Column(name = "supplier_id", nullable = false, columnDefinition = "UUID")
-    var supplierId: UUID? = null,
+    var supplierId: UUID,
 
     @Column(name = "sheet_no", nullable = false, length = 60)
     var sheetNo: String = "",
@@ -31,10 +31,10 @@ class SupplierPriceSheetJpaEntity(
 @Table(name = "price_sheet_lines")
 class PriceSheetLineJpaEntity(
     @Column(name = "sheet_id", nullable = false, columnDefinition = "UUID")
-    var sheetId: UUID? = null,
+    var sheetId: UUID,
 
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "list_cost", nullable = false, precision = 12, scale = 2)
     var listCost: BigDecimal = BigDecimal.ZERO,
@@ -47,7 +47,7 @@ class PriceSheetLineJpaEntity(
 @Table(name = "selling_prices")
 class SellingPriceJpaEntity(
     @Column(name = "variant_id", nullable = false, columnDefinition = "UUID")
-    var variantId: UUID? = null,
+    var variantId: UUID,
 
     @Column(name = "channel", nullable = false, length = 20)
     var channel: String = "STAFF",
