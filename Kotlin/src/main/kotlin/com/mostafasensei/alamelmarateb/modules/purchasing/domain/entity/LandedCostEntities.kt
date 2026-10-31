@@ -54,7 +54,7 @@ class ShipmentLandedCostJpaEntity(
 
     @Column(name = "finalized_at")
     var finalizedAt: Instant? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "shipment_landed_cost_allocations")

@@ -24,7 +24,7 @@ class VehicleJpaEntity(
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "active",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "delivery_trips")
@@ -43,7 +43,7 @@ class DeliveryTripJpaEntity(
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "draft",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "trip_stops")
@@ -78,4 +78,4 @@ class TripStopJpaEntity(
 
     @Column(name = "lng")
     var lng: Double? = null,
-) : EntityBase<UUID>()
+) : EntityBase()

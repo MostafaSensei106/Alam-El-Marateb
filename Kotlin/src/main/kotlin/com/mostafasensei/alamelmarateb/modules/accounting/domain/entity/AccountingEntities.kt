@@ -81,7 +81,7 @@ class JournalEntryJpaEntity(
 
     @Column(name = "memo", columnDefinition = "TEXT")
     var memo: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "journal_lines")
@@ -97,7 +97,7 @@ class JournalLineJpaEntity(
 
     @Column(name = "credit", nullable = false, precision = 12, scale = 2)
     var credit: BigDecimal = BigDecimal.ZERO,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "treasuries")
@@ -110,7 +110,7 @@ class TreasuryJpaEntity(
 
     @Column(name = "balance", nullable = false, precision = 12, scale = 2)
     var balance: BigDecimal = BigDecimal.ZERO,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "treasury_transfers")
@@ -129,7 +129,7 @@ class TreasuryTransferJpaEntity(
 
     @Column(name = "by_name", length = 100)
     var by: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "expenses")
@@ -148,7 +148,7 @@ class ExpenseJpaEntity(
 
     @Column(name = "approved_by", length = 100)
     var approvedBy: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "checks")
@@ -167,4 +167,4 @@ class CheckJpaEntity(
 
     @Column(name = "party", length = 150)
     var party: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()

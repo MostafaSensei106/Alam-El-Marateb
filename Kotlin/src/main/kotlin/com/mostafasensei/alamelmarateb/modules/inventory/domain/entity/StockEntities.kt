@@ -23,7 +23,7 @@ class StockLevelJpaEntity(
 
     @Column(name = "min_qty")
     var minQty: Int? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "stock_moves")
@@ -51,4 +51,4 @@ class StockMoveJpaEntity(
 
     @Column(name = "note", columnDefinition = "TEXT")
     var note: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()

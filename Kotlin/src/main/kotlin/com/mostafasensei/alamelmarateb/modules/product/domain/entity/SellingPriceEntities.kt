@@ -25,7 +25,7 @@ class SupplierPriceSheetJpaEntity(
 
     @Column(name = "notes", columnDefinition = "TEXT")
     var notes: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "price_sheet_lines")
@@ -41,7 +41,7 @@ class PriceSheetLineJpaEntity(
 
     @Column(name = "suggested_selling", nullable = false, precision = 12, scale = 2)
     var suggestedSelling: BigDecimal = BigDecimal.ZERO,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "selling_prices")
@@ -57,4 +57,4 @@ class SellingPriceJpaEntity(
 
     @Column(name = "effective_from", nullable = false)
     var effectiveFrom: Instant = Instant.now(),
-) : EntityBase<UUID>()
+) : EntityBase()

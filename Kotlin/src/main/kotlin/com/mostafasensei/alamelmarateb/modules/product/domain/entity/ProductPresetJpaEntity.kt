@@ -39,7 +39,7 @@ class ProductPresetJpaEntity(
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     @JoinColumn(name = "preset_id")
     var variants: MutableList<ProductPresetVariantJpaEntity> = mutableListOf()
-) : EntityBase<UUID>() {
+) : EntityBase() {
 
     fun toDomain(): ProductPreset =
         ProductPreset(

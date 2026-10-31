@@ -29,7 +29,7 @@ class InquiryJpaEntity(
 
     @Column(name = "customer_phone", length = 20)
     var customerPhone: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "app_events")

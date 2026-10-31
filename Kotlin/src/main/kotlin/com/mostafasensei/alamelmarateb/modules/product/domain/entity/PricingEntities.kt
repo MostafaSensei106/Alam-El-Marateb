@@ -22,7 +22,7 @@ class MeterPriceJpaEntity(
 
     @Column(name = "price", nullable = false, precision = 12, scale = 2)
     var price: BigDecimal = BigDecimal.ZERO,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "operating_brackets")
@@ -38,4 +38,4 @@ class OperatingBracketJpaEntity(
 
     @Column(name = "pct", nullable = false)
     var pct: Int = 0,
-) : EntityBase<UUID>()
+) : EntityBase()

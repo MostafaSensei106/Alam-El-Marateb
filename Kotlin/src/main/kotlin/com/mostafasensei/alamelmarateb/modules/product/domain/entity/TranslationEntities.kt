@@ -24,7 +24,7 @@ class ProductTranslationJpaEntity(
 
     @Column(name = "description", columnDefinition = "TEXT")
     var description: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(
@@ -43,7 +43,7 @@ class CategoryTranslationJpaEntity(
 
     @Column(name = "description", columnDefinition = "TEXT")
     var description: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(
@@ -62,7 +62,7 @@ class BrandTranslationJpaEntity(
 
     @Column(name = "description", columnDefinition = "TEXT")
     var description: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(
@@ -78,7 +78,7 @@ class AttributeTranslationJpaEntity(
 
     @Column(name = "name", length = 150)
     var name: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(
@@ -94,4 +94,4 @@ class AttributeOptionTranslationJpaEntity(
 
     @Column(name = "label", length = 150)
     var label: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()

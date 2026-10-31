@@ -34,7 +34,7 @@ class CommissionRuleJpaEntity(
 
     @Column(name = "applies_to_category", columnDefinition = "UUID")
     var appliesToCategory: UUID? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "employees")
@@ -59,7 +59,7 @@ class EmployeeJpaEntity(
 
     @Column(name = "is_active", nullable = false)
     var isActive: Boolean = true,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "leave_requests")
@@ -81,7 +81,7 @@ class LeaveRequestJpaEntity(
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "pending",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "advances")
@@ -97,7 +97,7 @@ class AdvanceJpaEntity(
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "open",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "deductions")
@@ -113,7 +113,7 @@ class DeductionJpaEntity(
 
     @Column(name = "payroll_id", columnDefinition = "UUID")
     var payrollId: UUID? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "payroll_runs")
@@ -126,7 +126,7 @@ class PayrollRunJpaEntity(
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "draft",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "payroll_lines")
@@ -151,4 +151,4 @@ class PayrollLineJpaEntity(
 
     @Column(name = "net_amount", nullable = false, precision = 12, scale = 2)
     var netAmount: BigDecimal = BigDecimal.ZERO,
-) : EntityBase<UUID>()
+) : EntityBase()

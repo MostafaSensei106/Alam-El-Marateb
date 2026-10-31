@@ -18,10 +18,20 @@ data class BundleRequirement(
     val requiredQty: Int = 1,
 )
 
+/**
+ * Promotional rule.
+ *
+ * Required: [id] (always assigned, never null), [code], [name], [type].
+ * Optional: all value/target/gift/bundle fields; which ones apply depends on [type].
+ */
 data class Promotion(
-    val id: UUID? = null,
+    /** **Required.** Assigned at construction; identical to the persisted primary key. */
+    val id: UUID = UUID.randomUUID(),
+    /** **Required.** Unique coupon code. */
     val code: String,
+    /** **Required.** Display name. */
     val name: String,
+    /** **Required.** Discount shape. */
     val type: PromoType,
     val valuePercent: BigDecimal? = null,
     val valueAmount: BigDecimal? = null,

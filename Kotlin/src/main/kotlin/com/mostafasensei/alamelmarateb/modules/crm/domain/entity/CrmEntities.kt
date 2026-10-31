@@ -27,7 +27,7 @@ class CustomerProfileJpaEntity(
 
     @Column(name = "birth_date")
     var birthDate: LocalDate? = null,
-) : EntityBase<UUID>() {
+) : EntityBase() {
     // NOTE: user_id doubles as the business key; UUID PK `id` satisfies EntityBase.
 }
 
@@ -57,7 +57,7 @@ class CustomerAddressJpaEntity(
 
     @Column(name = "is_default", nullable = false)
     var isDefault: Boolean = false,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "favorites")
@@ -67,7 +67,7 @@ class FavoriteJpaEntity(
 
     @Column(name = "product_id", nullable = false, columnDefinition = "UUID")
     var productId: UUID? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "warranties")
@@ -80,7 +80,7 @@ class WarrantyJpaEntity(
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "active",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "warranty_claims")
@@ -102,4 +102,4 @@ class WarrantyClaimJpaEntity(
 
     @Column(name = "resolution", length = 20)
     var resolution: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()

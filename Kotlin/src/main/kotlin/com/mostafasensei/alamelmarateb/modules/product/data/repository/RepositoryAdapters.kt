@@ -21,15 +21,18 @@ import java.util.UUID
 
 /**
  * Port adapters: domain ports → Spring Data JPA.
- * IDs are DB-generated (gen_random_uuid); null ids on save mean "new".
+ * IDs are assigned in the domain layer (never null); a missing row simply means "new".
  */
 
 /**
  * fromDomain always builds version 0: on update, carry the live version or
  * @Version merge fails after the first write (second update -> 500).
+ *
+ * Because [id] is always present, the lookup is unconditional: a new entity
+ * yields no row and keeps `version = null`, so Hibernate persists it.
  */
-internal fun <E : EntityBase<UUID>> E.withLiveVersion(id: UUID?, find: (UUID) -> E?): E {
-    if (id != null) find(id)?.let { this.version = it.version }
+internal fun <E : EntityBase> E.withLiveVersion(id: UUID, find: (UUID) -> E?): E {
+    find(id)?.let { this.version = it.version }
     return this
 }
 @Repository
@@ -55,12 +58,12 @@ class ProductRepositoryAdapter(
      * (no detached merge → no optimistic-lock surprises).
      */
     override fun save(product: Product): Product {
-        val existing = product.id?.let { jpa.findById(it).orElse(null) }
+        val existing = jpa.findById(product.id).orElse(null)
         if (existing == null) {
             val parent = jpa.save(
                 ProductJpaEntity.fromDomain(product.copy(attributes = emptyList(), variants = emptyList())),
             )
-            val pid = parent.id!!
+            val pid = parent.id
             parent.attributeValues = product.attributes.map { attr ->
                 attrJpa.save(attr.toJpa(attr.attributeId).also { it.productId = pid })
             }.toMutableList()
@@ -168,12 +171,12 @@ class ProductPresetRepositoryAdapter(
 
     /** Two-phase save (same NOT NULL child-FK reason as products); updates mutate managed. */
     override fun save(preset: ProductPreset): ProductPreset {
-        val existing = preset.id?.let { jpa.findById(it).orElse(null) }
+        val existing = jpa.findById(preset.id).orElse(null)
         if (existing == null) {
             val parent = jpa.save(
                 ProductPresetJpaEntity.fromDomain(preset.copy(attributes = emptyList(), variants = emptyList())),
             )
-            val pid = parent.id!!
+            val pid = parent.id
             parent.attributeValues = preset.attributes.map { attr ->
                 attrJpa.save(
                     PresetAttributeValueJpaEntity.fromDomain(attr).also { it.presetId = pid },

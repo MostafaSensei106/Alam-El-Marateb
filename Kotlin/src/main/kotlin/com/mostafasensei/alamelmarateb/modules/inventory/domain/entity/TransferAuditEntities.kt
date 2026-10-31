@@ -28,7 +28,7 @@ class StockTransferJpaEntity(
 
     @OneToMany(mappedBy = "transfer", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     var items: MutableList<TransferItemJpaEntity> = mutableListOf(),
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "transfer_items")
@@ -48,7 +48,7 @@ class TransferItemJpaEntity(
 
     @Column(name = "damaged_qty", nullable = false)
     var damagedQty: Int = 0,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "stock_audits")
@@ -64,7 +64,7 @@ class StockAuditJpaEntity(
 
     @OneToMany(mappedBy = "audit", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     var counts: MutableList<AuditCountJpaEntity> = mutableListOf(),
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "audit_counts")
@@ -81,4 +81,4 @@ class AuditCountJpaEntity(
 
     @Column(name = "counted_qty", nullable = false)
     var countedQty: Int = 0,
-) : EntityBase<UUID>()
+) : EntityBase()

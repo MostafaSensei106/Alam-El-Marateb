@@ -35,7 +35,7 @@ class ProductPresetVariantJpaEntity(
 
     @Column(name = "is_active", nullable = false)
     var isActive: Boolean = true
-) : EntityBase<UUID>() {
+) : EntityBase() {
 
     fun toDomain(): ProductPresetVariant =
         ProductPresetVariant(

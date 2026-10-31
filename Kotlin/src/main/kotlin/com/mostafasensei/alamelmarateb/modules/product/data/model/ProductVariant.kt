@@ -5,8 +5,17 @@ import java.util.UUID
 import kotlin.time.Clock
 import kotlin.time.Instant
 
+/**
+ * Sellable unit of a product.
+ *
+ * Required: [id] (always assigned, never null), [sku], [widthCm], [lengthCm], [heightCm], [costPrice],
+ * [sellingPrice], [createdAt], [updatedAt].
+ * Optional: [productId] (set once the variant is attached to a parent), [barcode].
+ */
 data class ProductVariant(
-    val id: UUID? = null,
+    /** **Required.** Assigned at construction; identical to the persisted primary key. */
+    val id: UUID = UUID.randomUUID(),
+    /** **Optional.** Parent product; `null` only for a detached/new variant. */
     val productId: UUID? = null,
     val sku: String,
     val barcode: String?,

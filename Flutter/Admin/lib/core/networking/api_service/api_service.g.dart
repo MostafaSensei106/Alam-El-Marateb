@@ -13,7 +13,7 @@ part of 'api_service.dart';
 
 class _ApiService implements ApiService {
   _ApiService(this._dio, {this.baseUrl, this.errorLogger}) {
-    baseUrl ??= 'http://192.168.1.9:8080';
+    baseUrl ??= 'http://192.168.1.16:8080';
   }
 
   final Dio _dio;
@@ -33,7 +33,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/auth/login',
+            'http://192.168.1.16:8080/api/v1/auth/login',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -66,7 +66,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/auth/refresh',
+            'http://192.168.1.16:8080/api/v1/auth/refresh',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -96,7 +96,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/auth/me',
+            'http://192.168.1.16:8080/api/v1/auth/me',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -127,7 +127,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/chart-of-accounts',
+            'http://192.168.1.16:8080/api/v1/accounting/chart-of-accounts',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -167,7 +167,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/chart-of-accounts',
+            'http://192.168.1.16:8080/api/v1/accounting/chart-of-accounts',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -199,7 +199,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/chart-of-accounts/${accountCode}',
+            'http://192.168.1.16:8080/api/v1/accounting/chart-of-accounts/${accountCode}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -233,7 +233,7 @@ class _ApiService implements ApiService {
       Options(method: 'PATCH', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/chart-of-accounts/${accountCode}',
+            'http://192.168.1.16:8080/api/v1/accounting/chart-of-accounts/${accountCode}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -274,7 +274,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/journal-entries',
+            'http://192.168.1.16:8080/api/v1/accounting/journal-entries',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -314,7 +314,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/journal-entries',
+            'http://192.168.1.16:8080/api/v1/accounting/journal-entries',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -346,7 +346,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/journal-entries/${journalId}',
+            'http://192.168.1.16:8080/api/v1/accounting/journal-entries/${journalId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -385,7 +385,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/general-ledger',
+            'http://192.168.1.16:8080/api/v1/accounting/general-ledger',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -426,7 +426,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/treasuries',
+            'http://192.168.1.16:8080/api/v1/accounting/treasuries',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -467,7 +467,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/treasuries',
+            'http://192.168.1.16:8080/api/v1/accounting/treasuries',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -499,7 +499,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/treasuries/${treasuryId}',
+            'http://192.168.1.16:8080/api/v1/accounting/treasuries/${treasuryId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -533,7 +533,7 @@ class _ApiService implements ApiService {
       Options(method: 'PATCH', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/treasuries/${treasuryId}',
+            'http://192.168.1.16:8080/api/v1/accounting/treasuries/${treasuryId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -566,7 +566,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/treasuries/transfers',
+            'http://192.168.1.16:8080/api/v1/accounting/treasuries/transfers',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -607,7 +607,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/treasuries/transfers',
+            'http://192.168.1.16:8080/api/v1/accounting/treasuries/transfers',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -639,7 +639,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/treasuries/transfers/${transferId}',
+            'http://192.168.1.16:8080/api/v1/accounting/treasuries/transfers/${transferId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -672,7 +672,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/expenses',
+            'http://192.168.1.16:8080/api/v1/accounting/expenses',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -712,7 +712,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/expenses',
+            'http://192.168.1.16:8080/api/v1/accounting/expenses',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -742,7 +742,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/expenses/${expenseId}',
+            'http://192.168.1.16:8080/api/v1/accounting/expenses/${expenseId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -776,7 +776,7 @@ class _ApiService implements ApiService {
       Options(method: 'PATCH', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/expenses/${expenseId}',
+            'http://192.168.1.16:8080/api/v1/accounting/expenses/${expenseId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -809,7 +809,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/checks',
+            'http://192.168.1.16:8080/api/v1/accounting/checks',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -849,7 +849,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/checks',
+            'http://192.168.1.16:8080/api/v1/accounting/checks',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -879,7 +879,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/checks/${checkId}',
+            'http://192.168.1.16:8080/api/v1/accounting/checks/${checkId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -913,7 +913,7 @@ class _ApiService implements ApiService {
       Options(method: 'PATCH', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/checks/${checkId}',
+            'http://192.168.1.16:8080/api/v1/accounting/checks/${checkId}',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -947,7 +947,7 @@ class _ApiService implements ApiService {
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/checks/${checkId}/status',
+            'http://192.168.1.16:8080/api/v1/accounting/checks/${checkId}/status',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -981,7 +981,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/reports/profit-loss',
+            'http://192.168.1.16:8080/api/v1/accounting/reports/profit-loss',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -1015,7 +1015,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/reports/tax',
+            'http://192.168.1.16:8080/api/v1/accounting/reports/tax',
             queryParameters: queryParameters,
             data: _data,
           )
@@ -1047,7 +1047,7 @@ class _ApiService implements ApiService {
       Options(method: 'GET', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
-            'http://192.168.1.9:8080/api/v1/accounting/reports/balance-sheet',
+            'http://192.168.1.16:8080/api/v1/accounting/reports/balance-sheet',
             queryParameters: queryParameters,
             data: _data,
           )

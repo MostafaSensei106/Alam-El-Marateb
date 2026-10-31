@@ -63,7 +63,7 @@ class PromotionJpaEntity(
 
     @OneToMany(mappedBy = "promotion", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     var bundleItems: MutableList<PromotionBundleItemJpaEntity> = mutableListOf(),
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "promotion_bundle_items")
@@ -80,7 +80,7 @@ class PromotionBundleItemJpaEntity(
 
     @Column(name = "required_qty", nullable = false)
     var requiredQty: Int = 1,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "orders")
@@ -144,7 +144,7 @@ class OrderJpaEntity(
 
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     var lines: MutableList<OrderItemJpaEntity> = mutableListOf(),
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "order_items")
@@ -182,7 +182,7 @@ class OrderItemJpaEntity(
 
     @Column(name = "custom_spec", columnDefinition = "TEXT")
     var customSpec: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "invoices")
@@ -198,7 +198,7 @@ class InvoiceJpaEntity(
 
     @Column(name = "issued_at", nullable = false)
     var issuedAt: java.time.Instant = java.time.Instant.now(),
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "returns")
@@ -217,7 +217,7 @@ class ReturnJpaEntity(
 
     @Column(name = "refund_method", length = 20)
     var refundMethod: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "reservations")
@@ -251,7 +251,7 @@ class ReservationJpaEntity(
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "active",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "installment_plans")
@@ -276,7 +276,7 @@ class InstallmentPlanJpaEntity(
 
     @OneToMany(mappedBy = "plan", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     var installments: MutableList<InstallmentJpaEntity> = mutableListOf(),
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "installments")
@@ -296,7 +296,7 @@ class InstallmentJpaEntity(
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "pending",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "cash_shifts")
@@ -321,7 +321,7 @@ class CashShiftJpaEntity(
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "open",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "carts")
@@ -334,7 +334,7 @@ class CartJpaEntity(
 
     @OneToMany(mappedBy = "cart", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     var items: MutableList<CartItemJpaEntity> = mutableListOf(),
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "cart_items")
@@ -348,7 +348,7 @@ class CartItemJpaEntity(
 
     @Column(name = "qty", nullable = false)
     var qty: Int = 0,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 // Owned by delivery module later; needed now for shipping estimates.
 @Entity
@@ -365,7 +365,7 @@ class DeliveryZoneJpaEntity(
 
     @Column(name = "is_active", nullable = false)
     var isActive: Boolean = true,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "carry_up_fees")
@@ -378,7 +378,7 @@ class CarryUpFeeJpaEntity(
 
     @Column(name = "fee", nullable = false, precision = 12, scale = 2)
     var fee: BigDecimal = BigDecimal.ZERO,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "cash_drops")
@@ -418,7 +418,7 @@ class DeliveryZoneTranslationJpaEntity(
 
     @Column(name = "area", length = 150)
     var area: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "reservation_payments")

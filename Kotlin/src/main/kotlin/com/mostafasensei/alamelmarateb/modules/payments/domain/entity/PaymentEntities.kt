@@ -31,4 +31,4 @@ class PaymentIntentJpaEntity(
     @Column(name = "payload", nullable = false, columnDefinition = "JSONB")
     @org.hibernate.annotations.ColumnTransformer(write = "?::jsonb")
     var payload: String = "{}",
-) : EntityBase<UUID>()
+) : EntityBase()

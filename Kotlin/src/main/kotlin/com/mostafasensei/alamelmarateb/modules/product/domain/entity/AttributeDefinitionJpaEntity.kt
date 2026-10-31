@@ -35,7 +35,7 @@ class AttributeDefinitionJpaEntity(
     @JoinColumn(name = "attribute_id")
     @OrderBy("sortOrder ASC")
     var options: MutableList<AttributeOptionJpaEntity> = mutableListOf()
-) : EntityBase<UUID>() {
+) : EntityBase() {
 
     fun toDomain(): ProductAttributeDefinition =
         ProductAttributeDefinition(

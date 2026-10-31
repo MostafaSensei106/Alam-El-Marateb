@@ -27,7 +27,7 @@ final class ApiRoutes {
   ApiRoutes._();
 
   /// Backend origin used for local development.
-  static const String apiBaseURL = 'http://192.168.1.9:8080';
+  static const String apiBaseURL = 'http://192.168.1.16:8080';
 
   /// Versioned API prefix as a full URL.
   static const String apiV1 = '$apiBaseURL/api/v1';

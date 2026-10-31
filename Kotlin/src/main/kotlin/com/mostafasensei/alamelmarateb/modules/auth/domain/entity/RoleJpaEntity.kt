@@ -15,7 +15,7 @@ class RoleJpaEntity(
 
     @Column(name = "description", length = 255)
     var description: String? = null
-) : EntityBase<UUID>() {
+) : EntityBase() {
 
     fun toDomain(): Role =
         Role(

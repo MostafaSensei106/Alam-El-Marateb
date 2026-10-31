@@ -33,7 +33,7 @@ class SupplierJpaEntity(
 
     @Column(name = "is_active", nullable = false)
     var isActive: Boolean = true,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "purchase_orders")
@@ -52,7 +52,7 @@ class PurchaseOrderJpaEntity(
 
     @OneToMany(mappedBy = "order", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     var items: MutableList<PurchaseOrderItemJpaEntity> = mutableListOf(),
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "po_items")
@@ -69,7 +69,7 @@ class PurchaseOrderItemJpaEntity(
 
     @Column(name = "unit_cost", nullable = false, precision = 12, scale = 2)
     var unitCost: BigDecimal = BigDecimal.ZERO,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "goods_receipts")
@@ -91,7 +91,7 @@ class GoodsReceiptJpaEntity(
 
     @OneToMany(mappedBy = "receipt", cascade = [CascadeType.ALL], fetch = FetchType.LAZY, orphanRemoval = true)
     var items: MutableList<ReceiptItemJpaEntity> = mutableListOf(),
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "receipt_items")
@@ -111,4 +111,4 @@ class ReceiptItemJpaEntity(
 
     @Column(name = "damaged_qty", nullable = false)
     var damagedQty: Int = 0,
-) : EntityBase<UUID>()
+) : EntityBase()

@@ -26,4 +26,4 @@ class AuditLogJpaEntity(
 
     @Column(name = "details", columnDefinition = "TEXT")
     var details: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()

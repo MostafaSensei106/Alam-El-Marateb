@@ -27,7 +27,7 @@ class BrandJpaEntity(
 
     @Column(name = "is_active", nullable = false)
     var isActive: Boolean = true,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "product_reviews")
@@ -58,7 +58,7 @@ class ProductReviewJpaEntity(
 
     @Column(name = "photo_urls", nullable = false, columnDefinition = "TEXT")
     var photoUrls: String = "",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "product_questions")
@@ -80,7 +80,7 @@ class ProductQuestionJpaEntity(
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "pending",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "quiz_questions")
@@ -93,7 +93,7 @@ class QuizQuestionJpaEntity(
 
     @Column(name = "is_active", nullable = false)
     var isActive: Boolean = true,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "quiz_options")
@@ -104,7 +104,7 @@ class QuizOptionJpaEntity(
     @Column(name = "scores", nullable = false, columnDefinition = "JSONB")
     @org.hibernate.annotations.ColumnTransformer(write = "?::jsonb")
     var scores: String = "{}",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "recommendation_runs")
@@ -152,7 +152,7 @@ class VariantAttributeValueJpaEntity(
 
     @Column(name = "value_option_id", columnDefinition = "UUID")
     var valueOptionId: UUID? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 
 @Entity
@@ -169,7 +169,7 @@ class QuizQuestionTranslationJpaEntity(
 
     @Column(name = "text", columnDefinition = "TEXT")
     var text: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(
@@ -185,4 +185,4 @@ class QuizOptionTranslationJpaEntity(
 
     @Column(name = "label", columnDefinition = "TEXT")
     var label: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()

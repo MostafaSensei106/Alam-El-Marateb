@@ -28,9 +28,20 @@ data class OrderLine(
     val customSpec: String? = null,
 )
 
+/**
+ * Customer order.
+ *
+ * Required: [id] (always assigned, never null), [channel], [status], [paymentStatus], money totals,
+ * [createdAt]-equivalent timestamps live on the persistence layer.
+ * Optional: [branchId], [customerId], [guestPhone], [paymentMethod], [deliveryZoneId], [floorNumber],
+ * [trackingNumber], [salesRepId]; [lines] defaults to empty.
+ */
 data class Order(
-    val id: UUID? = null,
+    /** **Required.** Assigned at construction; identical to the persisted primary key. */
+    val id: UUID = UUID.randomUUID(),
+    /** **Optional.** Fulfilling branch. */
     val branchId: UUID? = null,
+    /** **Optional.** Registered customer; `null` for guest checkout. */
     val customerId: UUID? = null,
     val guestPhone: String? = null,
     val channel: String = "pos",

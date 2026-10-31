@@ -34,20 +34,40 @@ data class ProductAttributeValue(
     val value: AttributeValue
 )
 
+/**
+ * Selectable value of an attribute definition (e.g. colour "Red").
+ *
+ * Required: [id] (always assigned, never null), [value], [label].
+ * Optional: [attributeId] (set once attached to a definition), [sortOrder], [translations].
+ */
 data class ProductAttributeOption(
-    val id: UUID? = null,
+    /** **Required.** Assigned at construction; identical to the persisted primary key. */
+    val id: UUID = UUID.randomUUID(),
+    /** **Optional.** Owning definition; `null` only before attachment. */
     val attributeId: UUID? = null,
+    /** **Required.** Machine value. */
     val value: String,
+    /** **Required.** Human label. */
     val label: String,
     val sortOrder: Int = 0,
     @get:JsonIgnore
     val translations: Map<String, Map<String, String?>> = emptyMap(),
 )
 
+/**
+ * Attribute definition (e.g. "Colour", "Fabric").
+ *
+ * Required: [id] (always assigned, never null), [name], [key], [type], [createdAt], [updatedAt].
+ * Optional: [options], [translations]; [isActive] defaults to true.
+ */
 data class ProductAttributeDefinition(
-    val id: UUID? = null,
+    /** **Required.** Assigned at construction; identical to the persisted primary key. */
+    val id: UUID = UUID.randomUUID(),
+    /** **Required.** Display name. */
     val name: String,
+    /** **Required.** Stable machine key. */
     val key: String,
+    /** **Required.** Value type. */
     val type: AttributeType,
     val options: List<ProductAttributeOption> = emptyList(),
     val isActive: Boolean = true,

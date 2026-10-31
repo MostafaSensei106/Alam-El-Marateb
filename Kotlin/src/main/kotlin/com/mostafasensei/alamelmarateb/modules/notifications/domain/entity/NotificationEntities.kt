@@ -31,7 +31,7 @@ class NotificationJpaEntity(
 
     @Column(name = "sent_at")
     var sentAt: Instant? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(
@@ -50,4 +50,4 @@ class NotificationTranslationJpaEntity(
 
     @Column(name = "body", columnDefinition = "TEXT")
     var body: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()

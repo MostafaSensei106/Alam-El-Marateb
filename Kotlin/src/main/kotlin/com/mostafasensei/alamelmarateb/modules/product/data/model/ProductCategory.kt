@@ -11,8 +11,16 @@ data class CategoryAttribute(
     val sortOrder: Int = 0,
 )
 
+/**
+ * Category aggregate as seen by the domain layer.
+ *
+ * Required: [id] (always assigned, never null), [name], [slug], [createdAt], [updatedAt].
+ * Optional: [description], [translations]; [attributes] defaults to empty.
+ */
 data class ProductCategory(
-    val id: UUID? = null,
+    /** **Required.** Assigned at construction; identical to the persisted primary key. */
+    val id: UUID = UUID.randomUUID(),
+    /** **Required.** Display name. */
     val name: String,
     val slug: String,
     val description: String? = null,

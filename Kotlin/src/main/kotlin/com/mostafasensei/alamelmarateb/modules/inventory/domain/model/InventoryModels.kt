@@ -29,10 +29,20 @@ enum class MoveType {
     RETURN,
 }
 
+/**
+ * Physical stocking location.
+ *
+ * Required: [id] (always assigned, never null), [name], [code].
+ * Optional: [branchId]; [isActive] defaults to true.
+ */
 data class Warehouse(
-    val id: UUID? = null,
+    /** **Required.** Assigned at construction; identical to the persisted primary key. */
+    val id: UUID = UUID.randomUUID(),
+    /** **Optional.** Owning branch. */
     val branchId: UUID? = null,
+    /** **Required.** Display name. */
     val name: String,
+    /** **Required.** Short unique code. */
     val code: String,
     val isActive: Boolean = true,
 )
@@ -66,11 +76,22 @@ data class TransferItem(
     val remaining: Int get() = sentQty - receivedQty
 }
 
+/**
+ * Stock transfer between two warehouses.
+ *
+ * Required: [id] (always assigned, never null), [fromWarehouseId], [toWarehouseId], [status].
+ * Optional: [note]; [items] defaults to empty.
+ */
 data class Transfer(
-    val id: UUID? = null,
+    /** **Required.** Assigned at construction; identical to the persisted primary key. */
+    val id: UUID = UUID.randomUUID(),
+    /** **Required.** Source warehouse. */
     val fromWarehouseId: UUID,
+    /** **Required.** Destination warehouse. */
     val toWarehouseId: UUID,
+    /** **Required.** Lifecycle status. */
     val status: TransferStatus,
+    /** **Optional.** Free-text note. */
     val note: String? = null,
     val items: List<TransferItem> = emptyList(),
 )

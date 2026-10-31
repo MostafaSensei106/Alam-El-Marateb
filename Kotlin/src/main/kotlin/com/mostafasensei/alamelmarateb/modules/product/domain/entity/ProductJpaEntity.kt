@@ -51,7 +51,7 @@ class ProductJpaEntity(
     @OneToMany(cascade = [CascadeType.ALL], fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     var variants: MutableList<ProductVariantJpaEntity> = mutableListOf()
-) : EntityBase<UUID>() {
+) : EntityBase() {
 
     fun toDomain(): Product =
         Product(

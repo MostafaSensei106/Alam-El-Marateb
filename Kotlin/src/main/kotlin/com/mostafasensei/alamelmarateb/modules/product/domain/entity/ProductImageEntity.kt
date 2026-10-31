@@ -17,4 +17,4 @@ class ProductImageJpaEntity(
 
     @Column(name = "sort_order", nullable = false)
     var sortOrder: Int = 0,
-) : EntityBase<UUID>()
+) : EntityBase()

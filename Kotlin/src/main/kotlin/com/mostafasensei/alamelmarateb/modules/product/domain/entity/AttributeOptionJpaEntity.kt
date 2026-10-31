@@ -25,7 +25,7 @@ class AttributeOptionJpaEntity(
 
     @Column(name = "sort_order", nullable = false)
     var sortOrder: Int = 0
-) : EntityBase<UUID>() {
+) : EntityBase() {
 
     fun toDomain(): ProductAttributeOption =
         ProductAttributeOption(

@@ -21,4 +21,4 @@ class OrderItemBatchJpaEntity(
 
     @Column(name = "unit_cost", nullable = false, precision = 12, scale = 2)
     var unitCost: BigDecimal = BigDecimal.ZERO,
-) : EntityBase<UUID>()
+) : EntityBase()

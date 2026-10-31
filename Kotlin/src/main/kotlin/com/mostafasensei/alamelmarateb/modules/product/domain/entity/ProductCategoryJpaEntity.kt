@@ -29,7 +29,7 @@ class ProductCategoryJpaEntity(
     @OneToMany(mappedBy = "category", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
     @OrderBy("sortOrder ASC")
     var categoryAttributes: MutableList<CategoryAttributeJpaEntity> = mutableListOf()
-) : EntityBase<UUID>() {
+) : EntityBase() {
 
     fun toDomain(): ProductCategory =
         ProductCategory(

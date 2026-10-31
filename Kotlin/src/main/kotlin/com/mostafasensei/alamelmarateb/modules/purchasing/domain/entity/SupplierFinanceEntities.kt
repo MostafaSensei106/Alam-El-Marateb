@@ -23,7 +23,7 @@ class SupplierShipmentJpaEntity(
 
     @Column(name = "note", columnDefinition = "TEXT")
     var note: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "supplier_invoices")
@@ -42,7 +42,7 @@ class SupplierInvoiceJpaEntity(
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "confirmed",
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "invoice_shipment_allocations")
@@ -82,7 +82,7 @@ class SupplierInstallmentJpaEntity(
 
     @Column(name = "paid_amount", nullable = false, precision = 12, scale = 2)
     var paidAmount: BigDecimal = BigDecimal.ZERO,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "supplier_payments")
@@ -107,4 +107,4 @@ class SupplierPaymentJpaEntity(
 
     @Column(name = "ref", length = 120)
     var ref: String? = null,
-) : EntityBase<UUID>()
+) : EntityBase()

@@ -58,7 +58,7 @@ class SpinCampaignJpaEntity(
 
     @Column(name = "spins_per_customer", nullable = false)
     var spinsPerCustomer: Int = 1,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "spin_prizes")
@@ -86,7 +86,7 @@ class SpinPrizeJpaEntity(
 
     @Column(name = "sort_order", nullable = false)
     var sortOrder: Int = 0,
-) : EntityBase<UUID>()
+) : EntityBase()
 
 @Entity
 @Table(name = "spin_plays")

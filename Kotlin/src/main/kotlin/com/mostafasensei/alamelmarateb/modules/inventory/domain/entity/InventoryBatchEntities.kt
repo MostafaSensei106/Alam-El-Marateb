@@ -37,4 +37,4 @@ class InventoryBatchJpaEntity(
 
     @Column(name = "received_at", nullable = false)
     var receivedAt: Instant = Instant.now(),
-) : EntityBase<UUID>()
+) : EntityBase()

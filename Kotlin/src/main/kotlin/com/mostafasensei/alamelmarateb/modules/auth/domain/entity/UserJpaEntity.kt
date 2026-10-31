@@ -42,7 +42,7 @@ class UserJpaEntity(
         inverseJoinColumns = [JoinColumn(name = "role_id")]
     )
     var roles: MutableSet<RoleJpaEntity> = mutableSetOf()
-) : EntityBase<UUID>() {
+) : EntityBase() {
 
     fun toDomain(): User =
         User(

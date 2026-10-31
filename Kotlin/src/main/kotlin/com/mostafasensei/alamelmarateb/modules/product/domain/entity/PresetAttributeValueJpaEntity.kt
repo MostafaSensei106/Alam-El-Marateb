@@ -49,7 +49,7 @@ class PresetAttributeValueJpaEntity(
     @CollectionTable(name = "product_preset_attribute_value_options", joinColumns = [JoinColumn(name = "value_id")])
     @Column(name = "option_id", columnDefinition = "UUID")
     var selectedOptionIds: MutableSet<UUID> = mutableSetOf()
-) : EntityBase<UUID>() {
+) : EntityBase() {
 
     fun toDomain(): ProductAttributeValue =
         ProductAttributeValue(

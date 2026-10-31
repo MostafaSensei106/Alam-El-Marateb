@@ -20,4 +20,4 @@ class WarehouseJpaEntity(
 
     @Column(name = "is_active", nullable = false)
     var isActive: Boolean = true,
-) : EntityBase<UUID>()
+) : EntityBase()
