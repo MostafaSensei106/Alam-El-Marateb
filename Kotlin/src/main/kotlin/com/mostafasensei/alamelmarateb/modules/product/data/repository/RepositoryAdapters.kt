@@ -154,7 +154,7 @@ class ProductAttributeOptionRepositoryAdapter(
     override fun findByAttributeId(attributeId: UUID): List<ProductAttributeOption> =
         jpa.findByAttributeId(attributeId).map { it.toDomain() }
     override fun save(option: ProductAttributeOption): ProductAttributeOption =
-        jpa.save(AttributeOptionJpaEntity.fromDomain(option).withLiveVersion(option.id) { jpa.findById(it).orElse(null) }).toDomain()
+        jpa.save(AttributeOptionJpaEntity.fromDomain(option, requireNotNull(option.attributeId)).withLiveVersion(option.id) { jpa.findById(it).orElse(null) }).toDomain()
     override fun deleteById(id: UUID) = jpa.deleteById(id)
 }
 
@@ -179,11 +179,11 @@ class ProductPresetRepositoryAdapter(
             val pid = parent.id
             parent.attributeValues = preset.attributes.map { attr ->
                 attrJpa.save(
-                    PresetAttributeValueJpaEntity.fromDomain(attr).also { it.presetId = pid },
+                    PresetAttributeValueJpaEntity.fromDomain(attr, pid),
                 )
             }.toMutableList()
             parent.variants = preset.variants.map { v ->
-                variantJpa.save(ProductPresetVariantJpaEntity.fromDomain(v).also { it.presetId = pid })
+                variantJpa.save(ProductPresetVariantJpaEntity.fromDomain(v, pid))
             }.toMutableList()
             return parent.toDomain()
         }
@@ -198,11 +198,11 @@ class ProductPresetRepositoryAdapter(
         existing.variants.clear()
         preset.attributes.mapTo(existing.attributeValues) { attr ->
             attrJpa.save(
-                PresetAttributeValueJpaEntity.fromDomain(attr).also { it.presetId = existing.id },
+                PresetAttributeValueJpaEntity.fromDomain(attr, existing.id),
             )
         }
         preset.variants.mapTo(existing.variants) { v ->
-            variantJpa.save(ProductPresetVariantJpaEntity.fromDomain(v).also { it.presetId = existing.id })
+            variantJpa.save(ProductPresetVariantJpaEntity.fromDomain(v, existing.id))
         }
         return jpa.save(existing).toDomain()
     }

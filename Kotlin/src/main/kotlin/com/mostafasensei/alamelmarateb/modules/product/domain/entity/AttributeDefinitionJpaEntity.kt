@@ -57,7 +57,7 @@ class AttributeDefinitionJpaEntity(
                 type = domain.type,
                 isActive = domain.isActive,
                 options = domain.options
-                    .map { AttributeOptionJpaEntity.fromDomain(it) }
+                    .map { AttributeOptionJpaEntity.fromDomain(it, domain.id) }
                     .toMutableList()
             )
             entity.id = domain.id

@@ -58,7 +58,7 @@ class ProductVariantJpaEntity(
     companion object {
         fun fromDomain(domain: ProductVariant): ProductVariantJpaEntity {
             val entity = ProductVariantJpaEntity(
-                productId = domain.productId,
+                productId = requireNotNull(domain.productId) { "variant.productId must be set before persistence" },
                 sku = domain.sku,
                 barcode = domain.barcode,
                 widthCm = domain.widthCm,

@@ -49,8 +49,9 @@ class ProductPresetVariantJpaEntity(
         )
 
     companion object {
-        fun fromDomain(domain: ProductPresetVariant): ProductPresetVariantJpaEntity {
+        fun fromDomain(domain: ProductPresetVariant, presetId: UUID): ProductPresetVariantJpaEntity {
             val entity = ProductPresetVariantJpaEntity(
+                presetId = presetId,
                 widthCm = domain.widthCm,
                 lengthCm = domain.lengthCm,
                 heightCm = domain.heightCm,

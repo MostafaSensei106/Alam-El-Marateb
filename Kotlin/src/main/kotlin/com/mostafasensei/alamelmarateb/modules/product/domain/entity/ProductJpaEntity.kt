@@ -86,9 +86,11 @@ class ProductJpaEntity(
                 isActive = domain.isActive,
                 isFeatured = domain.isFeatured,
                 attributeValues = domain.attributes
-                    .map { ProductAttributeValueJpaEntity.fromDomain(it) }
+                    .map { ProductAttributeValueJpaEntity.fromDomain(it, domain.id) }
                     .toMutableList(),
-                variants = domain.variants.map { ProductVariantJpaEntity.fromDomain(it) }.toMutableList()
+                variants = domain.variants
+                    .map { ProductVariantJpaEntity.fromDomain(it.copy(productId = it.productId ?: domain.id)) }
+                    .toMutableList()
             )
             entity.id = domain.id
             return entity

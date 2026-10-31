@@ -53,8 +53,7 @@ class PresetAttributeValueJpaEntity(
 
     fun toDomain(): ProductAttributeValue =
         ProductAttributeValue(
-            attributeId = this.attributeId
-                ?: throw IllegalStateException("AttributeId cannot be null"),
+            attributeId = this.attributeId,
             value = when (valueType) {
                 AttributeType.TEXT -> AttributeValue.Text(valueText ?: "")
                 AttributeType.NUMBER -> AttributeValue.Number(valueNumber ?: BigDecimal.ZERO)
@@ -67,34 +66,39 @@ class PresetAttributeValueJpaEntity(
         )
 
     companion object {
-        fun fromDomain(domain: ProductAttributeValue): PresetAttributeValueJpaEntity =
+        fun fromDomain(domain: ProductAttributeValue, presetId: UUID): PresetAttributeValueJpaEntity =
             when (val value = domain.value) {
                 is AttributeValue.Text ->
                     PresetAttributeValueJpaEntity(
+                        presetId = presetId,
                         attributeId = domain.attributeId,
                         valueType = AttributeType.TEXT,
                         valueText = value.value
                     )
                 is AttributeValue.Number ->
                     PresetAttributeValueJpaEntity(
+                        presetId = presetId,
                         attributeId = domain.attributeId,
                         valueType = AttributeType.NUMBER,
                         valueNumber = value.value
                     )
                 is AttributeValue.Boolean ->
                     PresetAttributeValueJpaEntity(
+                        presetId = presetId,
                         attributeId = domain.attributeId,
                         valueType = AttributeType.BOOLEAN,
                         valueBoolean = value.value
                     )
                 is AttributeValue.Option ->
                     PresetAttributeValueJpaEntity(
+                        presetId = presetId,
                         attributeId = domain.attributeId,
                         valueType = AttributeType.SELECT,
                         valueOptionId = value.optionId
                     )
                 is AttributeValue.MultiOption ->
                     PresetAttributeValueJpaEntity(
+                        presetId = presetId,
                         attributeId = domain.attributeId,
                         valueType = AttributeType.MULTI_SELECT,
                         selectedOptionIds = value.optionIds.toMutableSet()

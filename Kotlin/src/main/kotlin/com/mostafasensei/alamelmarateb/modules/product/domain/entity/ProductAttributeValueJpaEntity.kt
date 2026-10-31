@@ -53,8 +53,7 @@ class ProductAttributeValueJpaEntity(
 
     fun toDomain(): ProductAttributeValue =
         ProductAttributeValue(
-            attributeId = this.attributeId
-                ?: throw IllegalStateException("AttributeId cannot be null"),
+            attributeId = this.attributeId,
             value = when (valueType) {
                 AttributeType.TEXT -> AttributeValue.Text(valueText ?: "")
                 AttributeType.NUMBER -> AttributeValue.Number(valueNumber ?: BigDecimal.ZERO)
@@ -67,34 +66,39 @@ class ProductAttributeValueJpaEntity(
         )
 
     companion object {
-        fun fromDomain(domain: ProductAttributeValue): ProductAttributeValueJpaEntity =
+        fun fromDomain(domain: ProductAttributeValue, productId: UUID): ProductAttributeValueJpaEntity =
             when (val value = domain.value) {
                 is AttributeValue.Text ->
                     ProductAttributeValueJpaEntity(
+                        productId = productId,
                         attributeId = domain.attributeId,
                         valueType = AttributeType.TEXT,
                         valueText = value.value
                     )
                 is AttributeValue.Number ->
                     ProductAttributeValueJpaEntity(
+                        productId = productId,
                         attributeId = domain.attributeId,
                         valueType = AttributeType.NUMBER,
                         valueNumber = value.value
                     )
                 is AttributeValue.Boolean ->
                     ProductAttributeValueJpaEntity(
+                        productId = productId,
                         attributeId = domain.attributeId,
                         valueType = AttributeType.BOOLEAN,
                         valueBoolean = value.value
                     )
                 is AttributeValue.Option ->
                     ProductAttributeValueJpaEntity(
+                        productId = productId,
                         attributeId = domain.attributeId,
                         valueType = AttributeType.SELECT,
                         valueOptionId = value.optionId
                     )
                 is AttributeValue.MultiOption ->
                     ProductAttributeValueJpaEntity(
+                        productId = productId,
                         attributeId = domain.attributeId,
                         valueType = AttributeType.MULTI_SELECT,
                         selectedOptionIds = value.optionIds.toMutableSet()

@@ -66,10 +66,10 @@ class ProductPresetJpaEntity(
                 description = domain.description,
                 isActive = domain.isActive,
                 attributeValues = domain.attributes
-                    .map { PresetAttributeValueJpaEntity.fromDomain(it) }
+                    .map { PresetAttributeValueJpaEntity.fromDomain(it, domain.id) }
                     .toMutableList(),
                 variants = domain.variants
-                    .map { ProductPresetVariantJpaEntity.fromDomain(it) }
+                    .map { ProductPresetVariantJpaEntity.fromDomain(it, domain.id) }
                     .toMutableList()
             )
             entity.id = domain.id

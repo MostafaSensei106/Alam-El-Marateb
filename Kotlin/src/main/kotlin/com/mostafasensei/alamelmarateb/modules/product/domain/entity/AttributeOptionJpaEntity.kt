@@ -37,9 +37,9 @@ class AttributeOptionJpaEntity(
         )
 
     companion object {
-        fun fromDomain(domain: ProductAttributeOption): AttributeOptionJpaEntity {
+        fun fromDomain(domain: ProductAttributeOption, attributeId: UUID): AttributeOptionJpaEntity {
             val entity = AttributeOptionJpaEntity(
-                attributeId = domain.attributeId,
+                attributeId = attributeId,
                 value = domain.value,
                 label = domain.label,
                 sortOrder = domain.sortOrder
