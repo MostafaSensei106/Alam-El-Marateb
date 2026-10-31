@@ -18,7 +18,7 @@ class EstimateRunJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID,
+    var id: UUID = UUID.randomUUID(),
 
     @Column(name = "user_id", columnDefinition = "UUID")
     var userId: UUID? = null,
@@ -94,7 +94,7 @@ class SpinPlayJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID,
+    var id: UUID = UUID.randomUUID(),
 
     @Column(name = "campaign_id", nullable = false, columnDefinition = "UUID")
     var campaignId: UUID,

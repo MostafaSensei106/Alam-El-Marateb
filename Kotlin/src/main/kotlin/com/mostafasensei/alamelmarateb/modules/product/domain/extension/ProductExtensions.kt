@@ -36,9 +36,9 @@ fun ProductAttributeValue.toResponse(): ProductAttributeResponse =
         }
     )
 
-fun ProductAttributeValue.toJpa(attributeId: UUID): ProductAttributeValueJpaEntity =
+fun ProductAttributeValue.toJpa(attributeId: UUID, productId: UUID): ProductAttributeValueJpaEntity =
     ProductAttributeValueJpaEntity(
-        productId = null,
+        productId = productId,
         attributeId = attributeId,
         valueType = when (value) {
             is AttributeValue.Text -> AttributeType.TEXT
@@ -72,7 +72,7 @@ fun ProductAttributeValue.toJpa(attributeId: UUID): ProductAttributeValueJpaEnti
 
 fun ProductAttributeValueJpaEntity.toDomain(): ProductAttributeValue =
     ProductAttributeValue(
-        attributeId = attributeId ?: throw IllegalStateException("attributeId needed"),
+        attributeId = attributeId,
         value = when (valueType) {
             AttributeType.TEXT -> AttributeValue.Text(valueText ?: "")
             AttributeType.NUMBER -> AttributeValue.Number(valueNumber ?: BigDecimal.ZERO)

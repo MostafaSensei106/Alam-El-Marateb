@@ -386,7 +386,7 @@ class CashDropJpaEntity(
     @jakarta.persistence.Id
     @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID,
+    var id: UUID = UUID.randomUUID(),
 
     @Column(name = "shift_id", nullable = false, columnDefinition = "UUID")
     var shiftId: UUID,

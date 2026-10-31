@@ -65,7 +65,7 @@ class ProductRepositoryAdapter(
             )
             val pid = parent.id
             parent.attributeValues = product.attributes.map { attr ->
-                attrJpa.save(attr.toJpa(attr.attributeId).also { it.productId = pid })
+                attrJpa.save(attr.toJpa(attr.attributeId, pid))
             }.toMutableList()
             parent.variants = product.variants.map { v ->
                 variantJpa.save(ProductVariantJpaEntity.fromDomain(v.copy(productId = pid)))
@@ -85,7 +85,7 @@ class ProductRepositoryAdapter(
         existing.attributeValues.clear()
         existing.variants.clear()
         product.attributes.mapTo(existing.attributeValues) { attr ->
-            attrJpa.save(attr.toJpa(attr.attributeId).also { it.productId = existing.id })
+            attrJpa.save(attr.toJpa(attr.attributeId, existing.id))
         }
         product.variants.mapTo(existing.variants) { v ->
             variantJpa.save(ProductVariantJpaEntity.fromDomain(v.copy(productId = existing.id)))

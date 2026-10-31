@@ -112,7 +112,7 @@ class RecommendationRunJpaEntity(
     @jakarta.persistence.Id
     @jakarta.persistence.GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID,
+    var id: UUID = UUID.randomUUID(),
 
     @Column(name = "user_id", columnDefinition = "UUID")
     var userId: UUID? = null,

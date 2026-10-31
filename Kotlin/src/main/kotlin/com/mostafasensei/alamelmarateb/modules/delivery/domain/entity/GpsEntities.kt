@@ -16,7 +16,7 @@ class TripLocationJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID,
+    var id: UUID = UUID.randomUUID(),
 
     @Column(name = "trip_id", nullable = false, columnDefinition = "UUID")
     var tripId: UUID,
@@ -40,7 +40,7 @@ class DriverRatingJpaEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false, columnDefinition = "UUID")
-    var id: UUID,
+    var id: UUID = UUID.randomUUID(),
 
     @Column(name = "order_id", nullable = false, columnDefinition = "UUID")
     var orderId: UUID,

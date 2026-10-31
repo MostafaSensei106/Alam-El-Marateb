@@ -170,7 +170,7 @@ class OrderService(
             val gross = line.unitPrice.multiply(line.qty.toBigDecimal())
             order.lines.add(
                 OrderItemJpaEntity(
-                    order = order, variantId = line.variantId, qty = line.qty,
+                    order = order, variantId = requireNotNull(line.variantId), qty = line.qty,
                     unitPrice = line.unitPrice, discount = BigDecimal.ZERO, net = gross,
                 ),
             )
@@ -248,7 +248,7 @@ class OrderService(
         preview.lines.forEach { line ->
             order.lines.add(
                 OrderItemJpaEntity(
-                    order = order, variantId = line.variantId, qty = line.qty,
+                    order = order, variantId = requireNotNull(line.variantId), qty = line.qty,
                     unitPrice = line.unitPrice, discount = line.discount, net = line.net,
                     appliedPromoCodes = line.appliedCodes.joinToString(","),
                     isGift = line.isGift,
