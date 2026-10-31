@@ -3573,6 +3573,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountingTypeExpense => 'Expense';
 
   @override
+  String get accountingTypeOther => 'Other';
+
+  @override
   String get accountingNewEntry => 'New entry';
 
   @override
@@ -3619,6 +3622,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountingSourceTransfer => 'Transfer';
+
+  @override
+  String get accountingSourceOther => 'Other';
 
   @override
   String get accountingNewTreasury => 'New treasury';
@@ -3702,6 +3708,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountingCategorySupplies => 'Supplies';
 
   @override
+  String get accountingCategoryOther => 'Other';
+
+  @override
   String get accountingNewCheck => 'New check';
 
   @override
@@ -3745,6 +3754,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get accountingStatusReturned => 'Returned';
+
+  @override
+  String get accountingStatusOther => 'Other';
 
   @override
   String get accountingSearchChecks => 'Search by party or status';

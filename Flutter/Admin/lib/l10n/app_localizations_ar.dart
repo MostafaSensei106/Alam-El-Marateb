@@ -3546,6 +3546,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountingTypeExpense => 'مصروفات';
 
   @override
+  String get accountingTypeOther => 'أخرى';
+
+  @override
   String get accountingNewEntry => 'قيد جديد';
 
   @override
@@ -3592,6 +3595,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accountingSourceTransfer => 'تحويل';
+
+  @override
+  String get accountingSourceOther => 'أخرى';
 
   @override
   String get accountingNewTreasury => 'خزينة جديدة';
@@ -3675,6 +3681,9 @@ class AppLocalizationsAr extends AppLocalizations {
   String get accountingCategorySupplies => 'مستلزمات';
 
   @override
+  String get accountingCategoryOther => 'أخرى';
+
+  @override
   String get accountingNewCheck => 'شيك جديد';
 
   @override
@@ -3718,6 +3727,9 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get accountingStatusReturned => 'مرتد';
+
+  @override
+  String get accountingStatusOther => 'أخرى';
 
   @override
   String get accountingSearchChecks => 'ابحث بالطرف أو الحالة';

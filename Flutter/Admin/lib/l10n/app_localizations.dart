@@ -6811,6 +6811,12 @@ abstract class AppLocalizations {
   /// **'Expense'**
   String get accountingTypeExpense;
 
+  /// No description provided for @accountingTypeOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get accountingTypeOther;
+
   /// No description provided for @accountingNewEntry.
   ///
   /// In en, this message translates to:
@@ -6906,6 +6912,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Transfer'**
   String get accountingSourceTransfer;
+
+  /// No description provided for @accountingSourceOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get accountingSourceOther;
 
   /// No description provided for @accountingNewTreasury.
   ///
@@ -7069,6 +7081,12 @@ abstract class AppLocalizations {
   /// **'Supplies'**
   String get accountingCategorySupplies;
 
+  /// No description provided for @accountingCategoryOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get accountingCategoryOther;
+
   /// No description provided for @accountingNewCheck.
   ///
   /// In en, this message translates to:
@@ -7158,6 +7176,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Returned'**
   String get accountingStatusReturned;
+
+  /// No description provided for @accountingStatusOther.
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get accountingStatusOther;
 
   /// No description provided for @accountingSearchChecks.
   ///
