@@ -32,16 +32,16 @@ class ChartOfAccountJpaEntity(
     var nameAr: String = "",
 
     @Column(name = "name_en", length = 150)
-    var nameEn: String? = null,
+    var nameEn: String?,
 
     @Column(name = "type", nullable = false, length = 20)
     var type: String = "",
 
     @Column(name = "parent_code", length = 20)
-    var parentCode: String? = null,
+    var parentCode: String?,
 
     @Column(name = "branch_id", columnDefinition = "UUID")
-    var branchId: UUID? = null,
+    var branchId: UUID,
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false, nullable = false)
@@ -53,11 +53,11 @@ class ChartOfAccountJpaEntity(
 
     @CreatedBy
     @Column(name = "created_by", nullable = false, updatable = false)
-    var createdBy: String? = null,
+    var createdBy: String?,
 
     @LastModifiedBy
     @Column(name = "updated_by")
-    var updatedBy: String? = null,
+    var updatedBy: String?,
 
     @Version
     @Column(name = "version", nullable = false)
@@ -68,19 +68,19 @@ class ChartOfAccountJpaEntity(
 @Table(name = "journal_entries")
 class JournalEntryJpaEntity(
     @Column(name = "branch_id", columnDefinition = "UUID")
-    var branchId: UUID? = null,
+    var branchId: UUID,
 
     @Column(name = "entry_date", nullable = false)
-    var entryDate: LocalDate? = null,
+    var entryDate: LocalDate?,
 
     @Column(name = "source", nullable = false, length = 30)
     var source: String = "",
 
     @Column(name = "ref", length = 100)
-    var ref: String? = null,
+    var ref: String?,
 
     @Column(name = "memo", columnDefinition = "TEXT")
-    var memo: String? = null,
+    var memo: String?,
 ) : EntityBase()
 
 @Entity
@@ -103,7 +103,7 @@ class JournalLineJpaEntity(
 @Table(name = "treasuries")
 class TreasuryJpaEntity(
     @Column(name = "branch_id", columnDefinition = "UUID")
-    var branchId: UUID? = null,
+    var branchId: UUID,
 
     @Column(name = "name", nullable = false, length = 150)
     var name: String = "",
@@ -128,14 +128,14 @@ class TreasuryTransferJpaEntity(
     var at: java.time.Instant = java.time.Instant.now(),
 
     @Column(name = "by_name", length = 100)
-    var by: String? = null,
+    var by: String?,
 ) : EntityBase()
 
 @Entity
 @Table(name = "expenses")
 class ExpenseJpaEntity(
     @Column(name = "branch_id", columnDefinition = "UUID")
-    var branchId: UUID? = null,
+    var branchId: UUID,
 
     @Column(name = "category", nullable = false, length = 100)
     var category: String = "",
@@ -144,10 +144,10 @@ class ExpenseJpaEntity(
     var amount: BigDecimal = BigDecimal.ZERO,
 
     @Column(name = "receipt_photo", columnDefinition = "TEXT")
-    var receiptPhoto: String? = null,
+    var receiptPhoto: String?,
 
     @Column(name = "approved_by", length = 100)
-    var approvedBy: String? = null,
+    var approvedBy: String?,
 ) : EntityBase()
 
 @Entity
@@ -160,11 +160,11 @@ class CheckJpaEntity(
     var amount: BigDecimal = BigDecimal.ZERO,
 
     @Column(name = "due_date")
-    var dueDate: LocalDate? = null,
+    var dueDate: LocalDate?,
 
     @Column(name = "status", nullable = false, length = 20)
     var status: String = "held",
 
     @Column(name = "party", length = 150)
-    var party: String? = null,
+    var party: String?,
 ) : EntityBase()

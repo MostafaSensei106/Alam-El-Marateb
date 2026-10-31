@@ -30,7 +30,7 @@ data class AccountView(
     val name: String,
     val type: String,
     val parentCode: String?,
-    val branchId: UUID?,
+    val branchId: UUID,
     val balance: BigDecimal,
 )
 
@@ -41,7 +41,7 @@ data class JournalLineInput(
 )
 
 data class JournalLineView(
-    val id: UUID?,
+    val id: UUID,
     val accountCode: String,
     val accountName: String,
     val debit: BigDecimal,
@@ -49,8 +49,8 @@ data class JournalLineView(
 )
 
 data class JournalView(
-    val id: UUID?,
-    val branchId: UUID?,
+    val id: UUID,
+    val branchId: UUID,
     val entryDate: LocalDate?,
     val source: String,
     val ref: String?,
@@ -61,7 +61,7 @@ data class JournalView(
 )
 
 data class LedgerLineView(
-    val entryId: UUID?,
+    val entryId: UUID,
     val entryDate: LocalDate?,
     val source: String,
     val ref: String?,
@@ -73,24 +73,24 @@ data class LedgerLineView(
 )
 
 data class TreasuryView(
-    val id: UUID?,
-    val branchId: UUID?,
+    val id: UUID,
+    val branchId: UUID,
     val name: String,
     val balance: BigDecimal,
 )
 
 data class TransferView(
-    val id: UUID?,
-    val fromId: UUID?,
-    val toId: UUID?,
+    val id: UUID,
+    val fromId: UUID,
+    val toId: UUID,
     val amount: BigDecimal,
     val at: Instant?,
     val by: String?,
 )
 
 data class ExpenseView(
-    val id: UUID?,
-    val branchId: UUID?,
+    val id: UUID,
+    val branchId: UUID,
     val category: String,
     val amount: BigDecimal,
     val receiptPhoto: String?,
@@ -99,7 +99,7 @@ data class ExpenseView(
 )
 
 data class CheckView(
-    val id: UUID?,
+    val id: UUID,
     val direction: String,
     val amount: BigDecimal,
     val dueDate: LocalDate?,
@@ -196,7 +196,7 @@ class AccountingService(
     @Transactional
     fun createAccount(
         code: String, nameAr: String, nameEn: String?, type: String,
-        parentCode: String?, branchId: UUID?,
+        parentCode: String?, branchId: UUID,
     ): AccountView {
         if (accountRepository.existsById(code)) {
             throw ConflictException("error.accounting.account_code_exists", listOf(code))
@@ -243,7 +243,7 @@ class AccountingService(
 
     @Transactional
     fun postJournal(
-        branchId: UUID?, entryDate: LocalDate, source: String,
+        branchId: UUID, entryDate: LocalDate, source: String,
         ref: String?, memo: String?, lines: List<JournalLineInput>, by: String?,
     ): JournalView {
         if (lines.isEmpty()) throw BadRequestException("error.accounting.journal_empty")
@@ -279,7 +279,7 @@ class AccountingService(
     }
 
     @Transactional(readOnly = true)
-    fun journals(branchId: UUID?, from: LocalDate?, to: LocalDate?, source: String?): List<JournalView> {
+    fun journals(branchId: UUID, from: LocalDate?, to: LocalDate?, source: String?): List<JournalView> {
         val entries = (if (branchId != null) entryRepository.findByBranchId(branchId) else entryRepository.findAll())
             .filter { inRange(it.entryDate, from, to) }
             .filter { source == null || it.source == source }
@@ -336,7 +336,7 @@ class AccountingService(
     // ---- Treasuries ----
 
     @Transactional(readOnly = true)
-    fun treasuries(branchId: UUID?): List<TreasuryView> {
+    fun treasuries(branchId: UUID): List<TreasuryView> {
         val list = if (branchId != null) treasuryRepository.findByBranchId(branchId) else treasuryRepository.findAll()
         return list.map { it.toView() }
     }
@@ -345,7 +345,7 @@ class AccountingService(
     fun treasury(id: UUID): TreasuryView = getTreasury(id).toView()
 
     @Transactional
-    fun createTreasury(branchId: UUID?, name: String, openingBalance: BigDecimal?): TreasuryView {
+    fun createTreasury(branchId: UUID, name: String, openingBalance: BigDecimal?): TreasuryView {
         val saved = treasuryRepository.save(
             TreasuryJpaEntity(
                 branchId = branchId, name = name,
@@ -393,7 +393,7 @@ class AccountingService(
     }
 
     @Transactional(readOnly = true)
-    fun transfers(treasuryId: UUID?): List<TransferView> {
+    fun transfers(treasuryId: UUID): List<TransferView> {
         val list = if (treasuryId != null) {
             transferRepository.findByFromIdOrToId(treasuryId, treasuryId)
         } else {
@@ -415,7 +415,7 @@ class AccountingService(
     // ---- Expenses ----
 
     @Transactional(readOnly = true)
-    fun expenses(branchId: UUID?): List<ExpenseView> {
+    fun expenses(branchId: UUID): List<ExpenseView> {
         val list = if (branchId != null) expenseRepository.findByBranchId(branchId) else expenseRepository.findAll()
         return list.map { it.toView() }
     }
@@ -425,7 +425,7 @@ class AccountingService(
 
     @Transactional
     fun createExpense(
-        branchId: UUID?, category: String, amount: BigDecimal,
+        branchId: UUID, category: String, amount: BigDecimal,
         receiptPhoto: String?, approvedBy: String?,
     ): ExpenseView {
         val saved = expenseRepository.save(
